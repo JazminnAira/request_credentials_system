@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Clearance Form Database</title>
+</head>
+
+
+<style>
+    .table-icon {
+        background-color: #dedede;
+        color: #000;
+        align-content: center;
+    }
+
+    .table-i{
+        padding: 0%;
+    }
+
+    #all_52:hover, #unapproveds_52:hover, #approveds_52:hover{
+        background-color: #c51d3a;
+        color: #fff;
+    }
+    
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+    
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+    
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }   
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    #list_tbl_52 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_52 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_52 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_52 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+    
+    a {
+        font-style: italic;
+        color: #000;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    
+    #backtotop_btn_52 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_52::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_52:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_52:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_52.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    #list_tbl_52 {
+        
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 100%;
+        margin-bottom: 50px;
+        table-layout: auto; /* TO MAKE ROW FIT*/
+        border-collapse: separate;
+    }
+    #list_tbl_52 .absorbing-column {
+    width: 100%;
+    }
+    
+    #list_tbl_52 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    #list_tbl2_52 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl2_52 td {
+        border-width: 2px 0;}
+    
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    /* .tab.tab-active {
+        background-color: #c51d3a;
+        color: white;
+    } */
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+
+    #table_main{
+        padding: 6px 15px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+    
+    a :hover {
+        color: #fff;
+    }
+    
+    #dashboard_header_52 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+    
+    #search_box_52 {
+        width: 54%;
+        border-radius: 30px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_52 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_52:hover {
+        color: #c51d3a;
+    }
+    
+    #list_tbl_52 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_52 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_52 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_52 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_52 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_52 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+    
+    #request_box_52 {
+        width: auto;
+        margin: 0 0 10px 5px;
+    }
+    
+    #schoolyear_box_52 {
+        margin: 0 0 10px 5px;
+    }
+    
+    #course_box_52 {
+        margin: 0 0 10px 5px;
+    }
+    
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    #clearance_header_52,
+    #graduation_header_52 {
+        background-color: #c51d3a;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+    .highlight {
+     background-color:transparent;
+    animation: highlightRow 2s ease-in-out;
+    }
+
+    @keyframes highlightRow {
+    0%  { background-color: red; }
+    100% { background-color: transparent; }
+    }
+
+</style>
+
+
+<body>
+    
+    <!--NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_52">
+        <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" style="font-size:30px;"><i class="fa fa-home">
+            </i> </a>
+        <a href="{% url 'faculty_dashboard_clearance_list' %}" id="home_button" data-toggle="tooltip" data-placement="right" title="Refresh" style="font-size:25px;"><i class="fa fa-refresh">
+            </i> </a>
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_52" name="search_box_052" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+
+        <!--SEARCH BUTTON
+        <a><button onClick="return search()" type = "button" id="search_btn">Search</button></a>-->
+
+    </div>
+    {% include 'html_files/message.html'%}
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_52"></a>
+
+    
+    <!--CLEARANCE STATUS MODAL-->
+    <div class="modal fade" id="ClearanceStatus_modal_52" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header" id="clearance_header_52">
+                    <h6 class="modal-title" id="header_lbl_52"><b>THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE  (To be signed by the responsible officials concerned.)</b></h6>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" id="close_btn_52" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="right" title="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+
+                <!--MODAL BODY-->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label for="accnt_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="accnt_lbl_52">1.ACOUNTANT:</i></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="accnt_box_52" nameass="form-co0ntrol" readonly>
+                            </div>
+                        </div>
+                        <label for="dfiled" id="dfiled_lbl_52"><b>2.DEAPARTMENT HEADS:</b></label>
+
+                        <div class="form-group row">
+                            <label for="la_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="la_lbl_52">a.LIBERAL ARTS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="la_box_52" name="la_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="mathsci_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="mathsci_lbl_52">b.MATH & SCIENCES:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="mathsci_box_52" name="mathsci_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="dpecs_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="dpecs_lbl_52">b.DPECS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="dpecs_box_52" name="dpecs_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <p><b>d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL EDUCATION/ENGINEERING:</b></p>
+
+                        <div class="form-group row">
+                            <label for="it_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="it_lbl_52"><i>(Please underline the appropriate department)</i></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="it_box_52" name="it_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="crsshop_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="crsshop_lbl_52">3.COURSE/SHOP ADVISER:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="crsshop_box_52" name="crsshop_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cl_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="cl_lbl_52">4.CAMPUS LIBRARIAN:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="cl_box_52" name="cl_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gc_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="gc_lbl_52">5.GUIDANCE COUNSELOR:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="gc_box_52" nameass="form0-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="hosf_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="hosf_lbl_52">6.HEAD OF STUDENT AFFAIRS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="hosf_box_52" name="hosf_box_052" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="adfac_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="adfac_lbl_52">7.ASST. DIR. FOR ACADEMIC AFFAIRS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="adfac_box_52"="amedfac_box_52" 0 class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!--FORM FOOTER-->
+                        <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="appointmentmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-confirm">
+            <div class="modal-content">
+                <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
+                    border-radius: 10px; width: 800px; height: max-content;" >
+                    <div class="modal-header modal-1"  style="width: 100%;">
+                            <h3 class="modal-title w-100 text-center">Set an Appointment
+                            </h3>
+                
+                            <!--MODAL CLOSE BUTTON-->
+                            <button type="button" class="close_btn" data-placement="right" title="Close" 
+                            onclick="window.location.assign('faculty_dashboard_clearance_list')">x</button>
+                    </div>
+                    <form method="POST" action="appointment" style="height:100%;" >
+                        {% csrf_token %}
+                        <input type="text" hidden value="{id}"> 
+                        <div class="modal-body ">
+                            <input type="hidden" name="usertype_001" id="usertype" value="">
+                            
+                            <!--DATE OF APPOINTMENT-->
+                            <div class="form-group">
+                                <label for="idnum">ID Number:</label>
+                                <input type="text" id="date" name="date_appointment" class="form-control input-field" 
+                                style="height: 50px; margin-bottom: 20px;" >
+                                <p id="sid_error_01"></p>
+                            </div>
+            
+                            <!--TIME OF APPOINTMENT-->
+                            <div class="form-group" id="course_input">
+                                <label for="course">Course:</label>
+                                <input type="text" id="time" name="time_appointment" class="form-control input-field" 
+                                style="height: 50px; margin-bottom: 20px;" >
+                                <p id="sc_error_01"></p>
+                            </div>
+                            
+                            <!--ADDITIONAL MESSAGE-->
+                            <div class="form-group">
+                                <label for="cnum">Additional Message: (Optional)</label>
+                                <input type="text" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
+                                style="height: 50px; margin-bottom: 20px;" >
+                                <p id="scn_error_01"></p>
+                            </div>
+                        </div>
+                        <!--MODAL FOOTER-->
+                        <div class="modal-footer">
+            
+                            <!--SIGNUP BUTTON-->
+                            <button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
+                            id="Ssubmit_btn_01" >Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--MAIN-->
+    <h3 style="text-align:center;" id="h3_title"> &nbsp;</h3>
+    <form method="POST" id="valdet">
+        {% csrf_token %}
+        <div id="nav_bar_btns">
+            <a class="tab"  id="all_52" value="2">All</a>
+            <a class="tab"  id="unapproveds_52" value="UNAPPROVED" >Unapproved Students</a>
+            <a class="tab"  id="approveds_52" value="APPROVED">Approved Students</a>
+        
+        </div>
+        <input type="text" hidden name="userdeterminer" id="userdeterminer" value="{{request.user.department}}">
+        <input type="text" hidden name="valdeterminer" id="valdeterminer">
+        <input type="text" hidden name="statusdeterminer" id="statdeterminer" value="">
+    </form>
+    
+    <script> 
+        $('#nav_bar_btns a').click(function(e) {
+        var target = $(e.target).attr("value")
+        $('input[name=valdeterminer]').val(target);
+        $('#valdet').submit()});
+    </script>
+    <form method="POST" action="faculty_dashboard_clearance_list" id="table_main">
+        {% csrf_token %}
+        <table class="table results table-hover table-sortable" id="list_tbl_52">
+            <thead style="height: 70px;">
+                <tr>
+                    <th> # </th>
+                    <th>Student's Name</th>
+                    <th>Course</th>
+                    <th>ID Number</th>
+                    <th>Purpose of Request</th>
+                    <th>Appointment</th>
+                    <th id="Viewform"> View Form</th>  
+                    <th id="Messagebutton"> Message</th>
+                    {% if val == 'APPROVED' %}
+                    <th>Approval Status</th>
+                    {% elif val == 'UNAPPROVED' %}
+                    <th id="Approvalbutton"></th>
+                    {% endif %}
+                </tr>
+                <tr class="warning no-result">
+                    <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                </tr>
+            </thead>
+            
+            {% for instance in st %}
+            <tbody>
+                <tr id="Add">        
+                    <td>{{instance.id}}</td>
+                    <td>{{instance.name}}</td> 
+                    <td>{{instance.course}}</td>
+                    <td>{{instance.student_id}}</td>
+                    <td>{{instance.purpose_of_request}}</td>
+                    <td>{{instance.appointment}}</td>
+                    <td><a href="display_clearform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
+                    <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                    <!-- <td><a data-toggle="modal" data-target="#appointmentmodal"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                    -->
+                    {% if val == 'UNAPPROVED' %}
+                    <script>h3_title.innerText = "Unapproved Students";</script>
+                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                    <button class="button" id="appr_btn"><a style="color: #fff;" href="update/{{ instance.id }}" onclick="fun()">Approve</a></button></td>
+                    
+                    {% elif val == 'APPROVED' %}
+                    <script>h3_title.innerText = "Approved Students";</script>
+                    <td>APPROVED</td>
+
+                    {% elif val == '2' %}
+                    <script>h3_title.innerText = "All Clearance Forms";</script>
+                    {% endif %}
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </form>
+
+        <p class="text-center text-bold" id="p6_52"></p>
+
+            <!-- APPROVED TAB
+            <div id="tab2_52" data-tab-content="1" class="tab-content">
+                <div class="wrapper_all">
+                    <table class="table results table-hover table-sortable" id="list_tbl2_52">
+                        <thead>
+                            <tr>
+                                <th> # (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th>Student's Name (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th>Course(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th>ID Number(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th>Purpose of Request (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th>Appointment (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                                <th id="Viewform"></th>
+                                <th id="Approvalbutton"></th>  
+                                <th id="Messagebutton"></th>
+                            </tr>
+                            <tr class="warning no-result">
+                                <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            </tr>
+                        </thead>
+                        {% for instance in st %}
+                        <tbody>
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{instance.date_filed}}</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td><button type="button">View Form</button></td>
+                                <td><button type="button">Approve</button></td>
+                                <td><button type="button">Message</button></td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div> -->
+    </div>
+    </hr>
+    <p class="text-center text-bold" id="p6_52"></p>
+</body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
+
+</html>
+
+
+<script>
+    function openfdb() {
+        window.location.replace("{% url 'faculty_dashboard' %}");
+    }
+
+    function openfdbc() {
+        window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
+    }
+
+    // TAB JS
+    var items = document.querySelectorAll('#tabz_52');
+    for (var i = 0, len = items.length; i < len; i++) {
+        (function() {
+                var t, e = this,
+                    a = "[data-tab]",
+                    n = document.body,
+                    r = n.matchesSelector || n.webkitMatchesSelector || n.mozMatchesSelector || n.msMatchesSelector,
+                    o = function() {
+                        var a = e.querySelectorAll("[data-tab-content]") || [];
+                        for (t = 0; t < a.length; t++) a[t].style.display = "none"
+                    },
+                    i = function(n) {
+                        var r = e.querySelectorAll(a) || [];
+                        for (t = 0; t < r.length; t++) {
+                            var i = r[t],
+                                s = i.className.replace("tab-active", "").trim();
+                            i.className = s
+                        }
+                        o(), n.className += " tab-active";
+                        var l = n.getAttribute("href"),
+                            c = e.querySelector(l);
+                        c && (c.style.display = "")
+                    },
+                    s = e.querySelector(".tab-active" + a);
+                s = s || e.querySelector(a), s && i(s), e.addEventListener("click", function(t) {
+                    var e = t.target;
+                    r.call(e, a) && i(e)
+                })
+            }
+            .bind(items[i]))();
+    }
+
+    // TO APPROVE STUDENT
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_52").deleteRow(i);
+        swal({
+            title: "Done",
+            text: "Application Approved!",
+            icon: "success",
+            button: "Ok",
+        })
+    }
+
+    // TRIGGER ENTER BUTTON
+    $("#search_box_52").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#search_btn_52").click();
+        }
+    });
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#search_box', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    //MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#search_box_52");
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+    });
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_52");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // SEARCH1
+    function searching1() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SEARCH2
+    function searching2() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SORTING 
+
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
+    
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; // if no `<thead>` then do nothing
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // PREVENT SCROLLING WHILE SWITCHING TABS
+    $('#tabz_52 a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+
+        var checked = $(this).find('input').prop('checked');
+        $(this).find('input').prop('checked', !checked);
+    });
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_52").value = "";
+    });
+   
+</script>
+
+<!-- DISABLE BACK BUTTON ON BROWSER -->
+<script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    
+</script> 
+<script>
+
+// TABLE ROW SELECTOR
+//     $("#list_tbl_52 tr").click(function(){
+// $(this).addClass('selected').siblings().removeClass('selected');    
+// var value=$(this).find('td:first').html();
+// alert(value);    
+// });
+
+// $('.ok').on('click', function(e){
+// alert($("#list_tbl_52 tr.selected td:first").html());
+// });
+    // function approval() {
+    //     if (window.confirm('Approve this form?'))
+    //     document.getElementById("unapproveds_52").click();
+    // {   document.location.href = "{% url 'faculty_dashboard_clearance_list' %}";
+    // }}
+    $("appr_btn").on("click", function () {
+    $("tr").each(function () {
+        $(this).removeClass("highlight");
+    });
+    $(this).closest("tr").addClass("highlight");
+});    
+</script>

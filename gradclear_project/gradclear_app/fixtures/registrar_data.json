@@ -1,0 +1,16 @@
+
+[{
+  "model":"gradclear_app.user_table", 
+  "pk": "1",
+  "fields":{
+               "last_name":"VELOS",
+               "first_name": "SARAH JANE",
+               "id_number": "00-0000",
+               "contact_number": "0997-371-1790",
+               "email": "tupc_registrar@gsfe.tupcavite.edu.ph",
+               "user_type": "REGISTRAR",
+               "username": "TUPC-00-0000",
+               "is_superuser": true,
+               "is_active": true
+               } 
+}]

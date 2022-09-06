@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Graduation Form </title>
+</head>
+
+<style>
+    #more {
+    cursor: pointer;
+    background: #eee;
+}
+    #backtotop_btn_43 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_43::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_43:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_43:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_43.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    td,
+    th {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    th {
+        background-color: #c51d3a;
+        color: #ffff;
+    }
+    
+    tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    tr:hover {
+        background-color: #636363;
+        color: #ffff;
+    }
+    
+    .myDiv {
+        max-width: 1000px;
+        width: 100%;
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        margin: 20px auto;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+    }
+    
+    label {
+        color: #757575;
+    }
+    
+    #course_drp_43,
+    #course_drp2_43,
+    #instructor_box_43,
+    #instructor2_box_43,
+    #day_box1_43,
+    #day_box2_43,
+    #day_box3_43,
+    #day2_box1_43,
+    #day2_box2_43,
+    #day2_box3_43,
+    #day3_drp2_43,
+    #sub_box_43,
+    #room_box_43,
+    #sub2_box_43,
+    #room2_box_43 {
+        background-color: #e7dfe4;
+        border: 1px solid #616161;
+    }
+    #ln_box_43,
+    #fn_box_43,
+    #mn_box_43,
+    #course_drp1_43{
+        background-color: #e7dfe4;
+        border: 1px solid #ccc9c9;
+    }
+    
+    #button {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #button:hover {
+        background-color: #616161;
+    }
+    
+    #addsub_btn_43,
+    #addsub_btn3_43,
+    #addopen2_43,
+    #del_43,
+    #del2_43,
+    #canceladd_btn_43,
+    #canceladd_btn2_43,
+    #addopen_43 {
+        color: white;
+        background-color: #c51d3a;
+    }
+    
+    #addsub_btn3_43:hover,
+    #addsub_btn_43:hover,
+    #addopen2_43:hover,
+    #del_43:hover,
+    #del2_43:hover,
+    #canceladd_btn_43:hover,
+    #canceladd_btn2_43:hover,
+    #addopen_43:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+    
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    td,
+    th {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    th {
+        background-color: #c51d3a;
+        color: #ffff;
+    }
+    
+    tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    tr:hover {
+        background-color: #636363;
+        color: #ffff;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+    }
+    
+    .modal-header {
+        background-color: #c51d3a;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+    
+    #submit_btn_43 {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #submit_btn_43:hover,
+    #button:hover {
+        background-color: #616161;
+    }
+    
+    .input-icon {
+        position: relative;
+    }
+    
+    .input-icon>i {
+        position: absolute;
+        display: block;
+        transform: translate(0, -50%);
+        top: 50%;
+        pointer-events: none;
+        width: 25px;
+        text-align: center;
+        font-style: normal;
+    }
+    
+    .input-icon>input {
+        padding-left: 25px;
+        padding-right: 0;
+    }
+    th.rm1,
+    th.rm {
+        width: 18%;
+    }
+    
+    th.sub,
+    th.sub1{
+        width: 20%;
+    }
+    th.ins,
+    th.ins1 {
+        width: 22%;
+    }
+    th.sched,
+    th.sched1 {40%;
+    }
+    
+    a.float+div.label-container {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s ease;
+    }
+    
+    a.float:hover+div.label-container {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    a.float:hover {
+        color: #fff;
+    }
+    
+    .label-container {
+        position: fixed;
+        bottom: 30px;
+        left: 105px;
+        display: table;
+        visibility: hidden;
+    }
+    
+    .label-text {
+        color: #fff;
+        background: rgba(51, 51, 51, 0.5);
+        display: table-cell;
+        vertical-align: middle;
+        padding: 10px;
+        border-radius: 3px;
+    }
+    
+    .label-arrow {
+        display: table-cell;
+        vertical-align: middle;
+        color: #424242;
+        opacity: 0.5s;
+        right: 10;
+    }
+    
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        left: 40px;
+        background-color: #c51d3a;
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #dedede;
+    }
+    
+    .my-float:nth-child(1) {
+        background: #c51d3a;
+    }
+    
+    .my-float:after {
+        animation: shine 3s ease-in-out infinite;
+        animation-fill-mode: forwards;
+        content: "";
+        position: absolute;
+        top: -110%;
+        left: -210%;
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+        transform: rotate(30deg);
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0) 100%);
+    }
+    
+    .my-float:active:after {
+        opacity: 0;
+    }
+    
+    .btn-group {
+        left: 85%;
+    }
+    
+    #print_table,
+    #print_tr {
+        border: 1px solid black;
+        text-align: center;
+        width: 100%;
+        background-color: 0;
+    }
+    
+    #print_tabl {
+        border: none;
+        text-align: center;
+        width: 100%;
+        background-color: none;
+    }
+    
+    td.td {
+        border: none;
+        background-color: none;
+        color: #000000;
+    }
+    
+    tr.tr {
+        background-color: none;
+    }
+    
+    #print_tr1 {
+        border-top: 2px solid black;
+        font-style: bold;
+    }
+    
+    #print_td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td2 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 80%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td3 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_graduate {
+        align-content: center;
+        width: 100%;
+    }
+    
+    #print_td4 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 70%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_td5 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 10%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    @keyframes shine {
+        10% {
+            opacity: 1;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+            transition-duration: 0.3s, 0.3s, 0.3s;
+            transition-timing-function: ease;
+        }
+        100% {
+            opacity: 0;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+        }
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    @media print {
+        .float,
+        #backtotop_btn_43,
+        #submit_btn_43 {
+            display: none;
+        }
+    }
+    
+    ul {
+        position: fixed;
+        left: 0px;
+        padding-bottom: 20px;
+        bottom: 50px;
+        z-index: 100;
+    }
+    
+    ul li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    
+    ul li a {
+        background-color: #757575;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+        width: 60px;
+        height: 60px;
+        display: block;
+    }
+    
+    ul:hover {
+        visibility: visible!important;
+        opacity: 1!important;
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    a#menu-share+ul {
+        visibility: hidden;
+    }
+    
+    a#menu-share:hover+ul {
+        visibility: visible;
+        animation: scale-in 0.5s;
+    }
+    
+    a#menu-share i {
+        animation: rotate-in 0.5s;
+    }
+    
+    a#menu-share:hover>i {
+        animation: rotate-out 0.5s;
+    }
+    
+    @keyframes bot-to-top {
+        0% {
+            bottom: -40px
+        }
+        50% {
+            bottom: 40px
+        }
+    }
+    
+    @keyframes scale-in {
+        from {
+            transform: scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes rotate-in {
+        from {
+            transform: rotate(0deg);
+        }
+        To {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes rotate-out {
+        from {
+            transform: rotate(360deg);
+        }
+        to {
+            transform: rotate(0deg);
+        }
+    }
+    
+    .fa-ellipsis-v,
+    .fa-print,
+    .fa-home {
+        color: white;
+        font-size: 30px;
+        padding-top: 15px;
+    }
+</style>
+
+
+<body>
+
+    <!--PRINT AND HOME BUTTON-->
+    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+        <i class="fa fa-ellipsis-v"></i>
+    </a>
+    <ul>
+        <li>
+            <a href="#" onclick="to_beprinted('print_graduate')" data-toggle="tooltip" data-placement="right" title="Print">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
+
+    </ul>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_43"></a>
+
+
+    <!--MAIN-->
+    <div class="myDiv" id="myDiv">
+        <form method="POST" action="graduation_form" id="grad_form" >
+            {% csrf_token %}
+            <!--SECTION RADIO BOX-->
+            <div class="radio" onkeyup="isEmpty()" id="radio_43">
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
+                </label>
+            </div>
+            <div class="radio">
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve
+                </label>
+            </div>
+            <div id="dayeve_error_43"></div>
+            <hr>
+
+            <!--NAME BOX-->
+            <div class="form-row">
+                <input type="text" hidden name="id_getter" value="{{request.user.username}}">
+                <input type="text" hidden name="course_getter" value="{{request.user.course}}">
+
+                <div class="form-inline">
+                    <label for="name" class="my-1 mr-2" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
+
+                    <div>
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            readonly required autofocus>
+                            
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            readonly required>
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" id="mn_box_43" class="form-control mr-3" placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            readonly>
+
+                    </div>
+                </div><br>
+
+
+
+                <!--COURSE DROPDOWN BOX-->
+                <div class="form-inline col-sm-3">
+                    <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
+
+                    <div>
+                        <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
+                            <option value="1" selected>{{request.user.course}}</option>
+                            <option value="" hidden>--SELECT--</option>
+                            <option value="BSCE">BSCE</option>
+                            <option value="BSEE">BSEE</option>
+                            <option value="BSME">BSME</option>
+                            <option value="BSIE-ICT">BSIE-ICT</option>
+                            <option value="BSIE-HE">BSIE-HE</option>
+                            <option value="BTTE-CP">BTTE-CP</option>
+                            <option value="BTTE-EI">BTTE-EI</option>
+                            <option value="BTTE-AU">BTTE-AU</option>
+                            <option value="BTTE-HVAC">BTTE-HVAC</option>
+                            <option value="BTTE-E">BTTE-E</option>
+                            <option value="BGT-AT">BGT-AT</option>
+                            <option value="BET-CT">BET-CT</option>
+                            <option value="BET-ET">BET-ET</option>
+                            <option value="BET-EsET">BET-EsET</option>
+                            <option value="BET-CoET">BET-CoET</option>
+                            <option value="BET-MT">BET-MT</option>
+                            <option value="BET-PPT">BET-PPT</option>
+                            <option value="BET-AT">BET-AT</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <!--STUDY LOAD BOX-->
+            <div class="form-inline">
+                <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()"required>Semester
+                </label>
+                <label class="my-1 mr-3" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" required>Summer    
+                </label>
+
+
+                 <!--ENROLLED THIS SEM BOX-->
+                 <div class="form-inline">
+                    <label for="Esum/Esem" id="Esum/Esem_lbl_43"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+
+                    <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" onkeypress="isNumber(event)" disabled required>
+
+
+                    <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
+                        <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" required>Yes
+                        
+                    </label>
+
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" required>No
+                    </label>
+                </div>
+            </div><br>
+
+            <!--SUBJECT TABLE-->
+            
+            <table class="table-responsive-sm tablesorter" id="subj_tbl">
+            <thead>
+                <tr>
+                    <th class="sub">Subject</th>
+                    <th class="sched">Schedule</th>
+                    <th class="rm">Room</th>
+                    <th class="ins">Instructor's Name and Signature</th>
+                </tr>
+            </thead>
+                <tbody id="Add">
+                <tr>
+                    <td>{{form.subject1}}</td>
+                    <td>
+                        <div class="input-group">
+                           
+                        {{form.starttime1_1}}
+                        {{form.endtime1_1}}
+                        {{form.day1_1}}
+                        </div>
+                    </td>
+                    <td>{{form.room1}}</td>
+                    <td><select name="faculty1" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+            <tr>
+                <td>{{form.subject2}}</td>
+                <td>
+                    <div class="input-group">
+                       
+                    {{form.starttime1_2}}
+                    {{form.endtime1_2}}
+                    {{form.day1_2}}
+                    </div>
+                </td>
+                <td>{{form.room2}}</td>
+                <td><select name="faculty2" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject3}}</td>
+                <td>
+                    <div class="input-group">
+                       
+                    {{form.starttime1_3}}
+                    {{form.endtime1_3}}
+                    {{form.day1_3}}
+                    </div>
+                </td>
+                <td>{{form.room3}}</td>
+                <td><select name="faculty3" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject4}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_4}}
+                    {{form.endtime1_4}}
+                    {{form.day1_4}}
+                    </div>
+                </td>
+                <td>{{form.room4}}</td>
+                <td><select name="faculty4" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject5}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_5}}
+                    {{form.endtime1_5}}
+                    {{form.day1_5}}
+                    </div>
+                </td>
+                <td>{{form.room5}}</td>
+                <td><select name="faculty5" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject6}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_6}}
+                    {{form.endtime1_6}}
+                    {{form.day1_6}}
+                    </div>
+                </td>
+                <td>{{form.room6}}</td>
+                <td><select name="faculty6" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject7}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_7}}
+                    {{form.endtime1_7}}
+                    {{form.day1_7}}
+                    </div>
+                </td>
+                <td>{{form.room7}}</td>
+                <td><select name="faculty7" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject8}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_8}}
+                    {{form.endtime1_8}}
+                    {{form.day1_8}}
+                    </div>
+                </td>
+                <td>{{form.room8}}</td>
+                <td><select name="faculty8" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject9}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_9}}
+                    {{form.endtime1_9}}
+                    {{form.day1_9}}
+                    </div>
+                </td>
+                <td>{{form.room9}}</td>
+                <td><select name="faculty9" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            <tr>
+                <td>{{form.subject10}}</td>
+                <td>
+                    <div class="input-group">
+                    {{form.starttime1_10}}
+                    {{form.endtime1_10}}
+                    {{form.day1_10}}
+                    </div>
+                </td>
+                <td>{{form.room10}}</td>
+                <td><select name="faculty10" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select></td>
+            </tr>
+            </table><br><br>
+
+    
+
+            <!--ADDITIONAL SUBJECTS TABLE-->
+            <p1>Additional Subjects. <em>(Indicate if Day or Evening)</em></p1>
+            <table class="table-responsive-sm" id="addSubject_table_43">
+                <thead>
+                <tr>
+                    <th class="sub1">Subject</th>
+                    <th class="sched1">Schedule</th>
+                    <th class="rm1">Room</th>
+                    <th class="ins1">Instructor's Name and Signature</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{form.addsubject1}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_1}}
+                        {{form.add_endtime1_1}}
+                        {{form.addday1_1}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom1}}</td>
+                    <td><select name="addfaculty1" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject2}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_2}}
+                        {{form.add_endtime1_2}}
+                        {{form.addday1_2}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom2}}</td>
+                    <td><select name="addfaculty2" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject3}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_3}}
+                        {{form.add_endtime1_3}}
+                        {{form.addday1_3}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom3}}</td>
+                    <td><select name="addfaculty3" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject4}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_4}}
+                        {{form.add_endtime1_4}}
+                        {{form.addday1_4}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom4}}</td>
+                    <td><select name="addfaculty4" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject5}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_5}}
+                        {{form.add_endtime1_5}}
+                        {{form.addday1_5}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom5}}</td>
+                    <td><select name="addfaculty5" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject6}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_6}}
+                        {{form.add_endtime1_6}}
+                        {{form.addday1_6}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom6}}</td>
+                    <td><select name="addfaculty6" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject7}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_7}}
+                        {{form.add_endtime1_7}}
+                        {{form.addday1_7}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom7}}</td>
+                    <td><select name="addfaculty7" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject8}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_8}}
+                        {{form.add_endtime1_8}}
+                        {{form.addday1_8}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom8}}</td>
+                    <td><select name="addfaculty8" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject9}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_9}}
+                        {{form.add_endtime1_9}}
+                        {{form.addday1_9}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom9}}</td>
+                    <td><select name="addfaculty9" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+                <tr>
+                    <td>{{form.addsubject10}}</td>
+                    <td>
+                        <div class="input-group">
+                        {{form.add_starttime1_10}}
+                        {{form.add_endtime1_10}}
+                        {{form.addday1_10}}
+                        </div>
+                    </td>
+                    <td>{{form.addroom10}}</td>
+                    <td><select name="addfaculty10" class="form-control" >
+                        <option value="1" select>--SELECT--</option>
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select></td>
+                </tr>
+
+            </tbody>
+            </table><br><br>
+
+          
+
+           <!--DEADLINE BOX-->
+            <div class="form-inline">
+                <label for="name" class="col-sm-0 col-form-label col-form-label-mb">If no, file your application papers. Deadline:</label>
+                <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control mx-sm-3" oninput="enter_deadline()" disabled required>
+            </div>
+
+
+            <!--SUPERVISED INDUSTRIAL TRAINING BOX-->
+            <p2 style="color: #757575;"> <b> B. Supervised Industrial Training: </b><em>(Optional)</em></p2><br>
+            <p4>If you have undergone Supervised Industrial Training<em>(12 Unit).</em></p4><br>
+            <p4><em>Please fill up the following:</em></p4><br>
+
+            <!--PERIOD OF TRAINING BOX-->
+            <div class="form-inline">
+                <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="potF_lbl_43">1. Period of Training From:</label>
+                <input type="date" id="potF_box_43" name="trainP_startdate"  class="form-control mx-sm-3">
+
+                <label for="To" id="potT_lbl_43"> To:</label>
+                <input type="date" id="potT_box_43" name="trainP_enddate" class="form-control mx-sm-3">
+
+            </div>
+
+            <!--SIT INSTRUCTOR BOX-->
+            <div class="form-inline">
+                <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:</label>
+                <input type="text" oninput="this.value = this.value.toUpperCase()" id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+            </div>
+
+
+            <!--SUBMIT BUTTON-->
+            <div style = "display: flex; justify-content:flex-end">
+                <button class="btn btn-secondary " id="submit_btn_43"  type="submit" disabled>Submit</button>
+            </div>
+
+
+            <!--FORM FOOTER-->
+            <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+
+            <!--HOME BUTTON
+            <a onclick="opensdb()" class="float">
+                <i class='fa fa-home my-float'></i>
+            </a>
+
+            <div class="label-container">
+                <div class="label-text">Home</div>
+            </div>-->
+        </form>
+    </div>
+    <!--Print Area
+    <button type="button" onclick="to_beprinted('print_graduate')"> Print</button>-->
+    <!--Just for testing-->
+
+    <!--TO BE PRINTED FORMAT-->
+    <!--Note this is only to get and hidden-->
+
+
+    <div id="print_graduate" hidden>
+        <div>
+            <!--Print Header-->
+            <table id="print_table">
+                <tr class="col-sm-md-12" id="print_tr">
+                    <td id="print_td"><img src="static/Media/tup_logo.png" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
+                    <td colspan="2" id="print_td2">
+                        <p style="font-size :18px; font-style:bold; text-align: center;">TECHNOLOGIGAL UNIVERSITY OF THE PHILIPPINES<br> CAVITE CAMPUS</p>
+                        <p style="font-size :15px; text-align: center;">Carlos Q. Trinidad Avenue, Salawag, Dasmarinas City,Cavite, Philippines<br> Telefax: (046) 416-4920<br> Email: cavite@tup.edu.ph │ Website: www.tup.edu.ph</p>
+                    </td>
+                </tr>
+                <tr class="col-sm-md-12" id="print_tr">
+                    <td id="print_td3">OCR</td>
+                    <td id="print_td4">
+                        APPLICATION FOR GRADUATION
+                    </td>
+                    <td id="print_td4">
+                        Page 1/1
+                    </td>
+                </tr>
+            </table>
+
+            <!--Main Clearance PRINT-->
+            <p></p>
+            <div>
+                <label class="pr-3" style="color:#000000">Day</label><input type="checkbox" value="day"><br>
+                <label class="pr-3" style="color:#000000">Eve</label><input type="checkbox" value="eve"><br>
+                <label style="color:#000000"><b>PRINT ALL ENTRIES CLEARLY</b></label>
+
+                <table id="print_tabl" class="table">
+                    <tr class="tr" id="print_tr2" style="text-align: center;">
+                        <td class="td" id="surname_p43" style="text-align: center;">Dela Cruz</td>
+                        <td class="td" id="firstname_p43" style="text-align: center;">Juan</td>
+                        <td class="td" id="middlename_p43" style="text-align: center;">Fernando</td>
+                        <td class="td" id="course_p43" style="text-align: center;">BET-COET-3A</td>
+                    </tr>
+                    <tr id="print_tr1" class="tr" style="text-align: center;">
+                        <td class="td" style="text-align: center;"><b>Surname</b></td>
+                        <td class="td" style="text-align: center;"><b>First Name</b></td>
+                        <td class="td" style="text-align: center;"><b>Middle Name</b></td>
+                        <td class="td" style="text-align: center;"><b>Course</b></td>
+                    </tr>
+                    <tr class="tr" style="text-align:center;">
+                        <td class="td" style="width: 15%;">Study Load For:</td>
+                        <td class="td" id="studyload" name="studyload_p43" style="text-align: center;">Summer</td>
+                    </tr>
+                    <tr style="text-align:center;" class="tr" style="text-align: center;">
+                        <td class="td">&nbsp;</td>
+                        <td class="td" style="border-top: 2px solid black; text-align:center;">Semester/Summer</td>
+                    </tr>
+                </table>
+                <table style="border:none;">
+                    <tr>
+                        <td style="border:none;width:27%;">
+                            A. Enrolled this Semester/Summer
+                        </td>
+                        <td id="enrolled" name="enrolled_p43" style="border:none;text-align:left;">2022</td>
+                        <td style="border:none;">
+                            Yes <input type="checkbox" value="yes_enrolled43"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No<input type="checkbox" value="no_enrolled43">
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table style="border:2px solid black;" class="pb-3">
+                    <tr>
+                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
+                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
+                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
+                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
+                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
+                    </tr>
+                    <tr>
+                        <td>Subjects</td>
+                        <td>Time</td>
+                        <td>Room</td>
+                        <td>Days</td>
+                        <td>Instructor’s Name & Signature</td>
+                    </tr>
+                </table>
+
+                <!--Just for spacing-->
+                <p></p>
+
+                <table style="border:none;" class="pt-2">
+                    <tr class="pt-3">Additional Subjects<em>(Indicate if Day or Evening)</em></tr>
+                </table>
+
+                <table style="border:2px solid black;">
+                    <tr>
+                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
+                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
+                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
+                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
+                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
+                    </tr>
+                    <tr>
+                        <td>Subjects</td>
+                        <td>Time</td>
+                        <td>Room</td>
+                        <td>Days</td>
+                        <td>Instructor’s Name & Signature</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td class="td">
+                            If no, file your application papers<b> (Deadline:<label id ="deadline" name="dealine_p43" style ="color:#000000;">Jan 3,2022</label>)</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3 td">
+                            1. Period of Training From:
+                            <label id="frompreiod" name="fromperiod_traning_p43" style="color:#000000;">Jan 2022</label> To:
+                            <label id="topreiod" name="toperiod_traningp43" style="color:#000000;">Dec 2022</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3 td">
+                            2. Name of Instructor Assigned on your SIT:
+                            <label id="SIT_intructor" name="SIT_intructor_p43" style="color:#000000;">Prof Pedro</label>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+
+        </div>
+        <p class="pt-1">TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+
+    </div>
+
+
+
+</body>
+
+</html>
+
+
+<script>
+
+
+    function opensdb() {
+        window.location.replace("{% url 'student_dashboard' %}");
+    }
+
+    // SUBMIT_CONFIRMATION MSGBOX_BANNER
+    // function submitForm(form) {
+    //     swal({
+    //             title: "Are you sure?",
+    //             text: "This form will be submitted",
+    //             icon: "warning",
+    //             buttons: true,
+    //             dangerMode: true,
+    //         })
+    //         .then(function(isOkay) {
+    //             if (isOkay) {
+    //                 alert("Successfully Submitted!");
+    //                 $('#status').modal('show');
+    //                 var btn = document.getElementById('submit_btn_43');
+    //                 btn.disabled = true;
+    //                 btn.innerText = 'Submitted'
+    //                 document.getElementById("addopen_43").style.display = "none";
+    //                 document.getElementById("addopen2_43").style.display = "none";
+    //                 document.getElementById("del_43").style.display = "none";
+    //                 document.getElementById("del2_43").style.display = "none";
+    //                 document.getElementById("day_radio_43").disabled = true;
+    //                 document.getElementById("eve_radio_43").disabled = true;
+    //                 document.getElementById("ln_box_43").disabled = true;
+    //                 document.getElementById("fn_box_43").disabled = true;
+    //                 document.getElementById("mn_box_43").disabled = true;
+    //                 document.getElementById("course_drp1_43").disabled = true;
+    //                 document.getElementById("semester_radio_43").disabled = true;
+    //                 document.getElementById("summer_radio_43").disabled = true;
+    //                 document.getElementById("enrolledthsisem_box_43").disabled = true;
+    //                 document.getElementById("yes_radio_43").disabled = true;
+    //                 document.getElementById("no_radio_43").disabled = true;
+    //                 document.getElementById("deadline_box_43").disabled = true;
+    //                 document.getElementById("potF_box_43").disabled = true;
+    //                 document.getElementById("potT_box_43").disabled = true;
+    //                 document.getElementById("noIns_box_43").disabled = true;
+
+
+    //             }
+    //         });
+    //     return false;
+    // }
+
+    // SUBJECT ADDER_CONFIRMATION MSGBOX
+    function addSubject(form) {
+        swal({
+            title: "Done",
+            text: "Subject added succefully!",
+            icon: "success",
+            button: "Ok",
+        });
+    }
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_43");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    document.getElementById("enrolledthsisem_box_43").required = false;
+    document.getElementById("deadline_box_43").required = false;
+
+    // CHECK EMPTY AND REQUIRED INPUTBOXES
+
+    // Day & Eve Check 
+    function dayeve_check() {
+        if (document.getElementById("day_radio_43").checked || document.getElementById("eve_radio_43").checked) {
+            return true;
+        } else {
+
+            var dayeve = "*This field is required.";
+            document.getElementById("dayeve_error").style.color = "red";
+            document.getElementById("dayeve_error").style.fontSize = "13px";
+
+            document.getElementById("dayeve_error").innerHTML = dayeve;
+        }
+    }
+
+    // Name Check 
+    function name_check() {
+        var last = document.getElementById("ln_box_43").value;
+        var first = document.getElementById("fn_box_43").value;
+
+        if (last && first != "") {
+            return true;
+        } else if (last == "" && first != "") {
+            document.getElementById("ln_box_43").style.borderColor = "red";
+
+
+        } else if (last != "" && first == "") {
+            document.getElementById("fn_box_43").style.borderColor = "red";
+
+        } else {
+            var name = "*This field is required";
+
+
+            document.getElementById("ln_box_43").style.borderColor = "red";
+            document.getElementById("fn_box_43").style.borderColor = "red";
+
+        }
+    }
+
+    // Course Check 
+    function course_check() {
+        var course_input = document.getElementById("course_drp1_43").value;
+
+        if (course_input != "sel_course") {
+            enter_course();
+        }
+    }
+    course_check();
+
+    function course_checkbtn() {
+        var c_input = document.getElementById("course_drp1_43").value;
+        if (c_input == "sel_course") {
+
+            document.getElementById("course_drp1_43").style.borderColor = "red";
+
+        } else {
+            enter_course();
+        }
+    }
+
+    // Study Load Check
+    function study_check() {
+        if (document.getElementById("semester_radio_43").checked || document.getElementById("summer_radio_43").checked) {
+            return true;
+        } else {
+            var study = "*This field is required.";
+            document.getElementById("study_error").style.color = "red";
+            document.getElementById("study_error").style.fontSize = "13px";
+
+            document.getElementById("study_error").innerHTML = study;
+        }
+    }
+
+    // Enrolled Check
+    function enroll_check() {
+        if (document.getElementById("yes_radio_43").checked) {
+
+            document.getElementById("enrolledthsisem_box_43").required = true;
+
+            var check_enroll = document.getElementById("enrolledthsisem_box_43").value;
+            if (check_enroll == "") {
+
+                document.getElementById("enrolledthsisem_box_43").style.borderColor = "red";
+
+            } else {
+                return submitForm();
+            }
+
+        } else if (document.getElementById("no_radio_43").checked) {
+            document.getElementById("deadline_box_43").required = true;
+            var ded = document.getElementById("deadline_box_43").value;
+
+            if (!ded) {
+
+                document.getElementById("deadline_box_43").style.borderColor = "red";
+
+            } else {
+                return submitForm();
+            }
+        } else {
+            alert("Input Fields are Incomplete!")
+        }
+    }
+
+    function gradform_check() {
+        dayeve_check();
+        name_check();
+        course_checkbtn();
+        study_check();
+        enroll_check();
+        event.preventDefault();
+    }
+
+    // DISABLE ERRORS IN REQUIRED INPUTS
+
+    // Day eve Dissable Error
+    function enter_dayeve() {
+        if (document.getElementById('day_radio_43').checked || document.getElementById('eve_radio_43').checked) {
+            var check_success = "";
+            document.getElementById("dayeve_error").innerHTML = check_success;
+        }
+    }
+
+    // Name Dissable Error
+    function enter_name1() {
+        document.getElementById("ln_box_43").style.removeProperty('border');
+
+    }
+
+    function enter_name2() {
+        document.getElementById("fn_box_43").style.removeProperty('border');
+
+    }
+
+    // course Dissbale error
+    function enter_course() {
+        var course_input = document.getElementById("course_drp1_43");
+        var selectedcourse = course_input.options[course_input.selectedIndex].value;
+        if (selectedcourse != "sel_course") {
+            document.getElementById("course_drp1_43").style.removeProperty('border');
+
+        }
+    }
+
+    // Study load Dissable Error
+    function enter_study() {
+        if (document.getElementById('semester_radio_43').checked || document.getElementById('summer_radio_43').checked) {
+
+        }
+    }
+
+    // Enroll Dissable Error
+    function enter_enroll() {
+        document.getElementById("enrolledthsisem_box_43").style.removeProperty('border');
+
+    }
+
+    function enter_deadline() {
+        document.getElementById("deadline_box_43").style.removeProperty('border');
+
+
+    }
+
+    // ONLY NUMBERS IN INPUT BOX JS
+    function isNumber(evt) {
+        if (event.key.length === 1 && /\D/.test(event.key)) {
+            event.preventDefault();
+        }
+    }
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#ln_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#fn_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#mn_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#noIns_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+
+    $(function() {
+        $('body').on('keydown', '#sub_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#room_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#sub2_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#room2_box_43', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    // MULTIPLE SPACING REMOVER
+    $(function() {
+        var txt1 = $("#ln_box_43");
+        var txt2 = $("#fn_box_43");
+        var txt3 = $("#mn_box_43");
+        var txt4 = $("#noIns_box_43");
+        var txt5 = $("#sub_box_43");
+        var txt6 = $("#sub2_box_43");
+        var txt7 = $("#room_box_43");
+        var txt8 = $("#room2_box_43");
+
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+
+        var func = function() {
+            txt2.val(txt2.val().replace(/\s\s+/g, ' '));
+        }
+        txt2.keyup(func).blur(func);
+
+        var func = function() {
+            txt3.val(txt3.val().replace(/\s\s+/g, ' '));
+        }
+        txt3.keyup(func).blur(func);
+
+        var func = function() {
+            txt4.val(txt4.val().replace(/\s\s+/g, ' '));
+        }
+        txt4.keyup(func).blur(func);
+
+        var func = function() {
+            txt5.val(txt5.val().replace(/\s\s+/g, ' '));
+        }
+        txt5.keyup(func).blur(func);
+
+        var func = function() {
+            txt6.val(txt6.val().replace(/\s\s+/g, ' '));
+        }
+        txt6.keyup(func).blur(func);
+
+        var func = function() {
+            txt7.val(txt7.val().replace(/\s\s+/g, ' '));
+        }
+        txt7.keyup(func).blur(func);
+
+        var func = function() {
+            txt8.val(txt8.val().replace(/\s\s+/g, ' '));
+        }
+        txt8.keyup(func).blur(func);
+    });
+</script>
+
+
+
+
+<script>
+    // DISABLE BTN WHEN FORM INCOMPLETE
+
+    function isEmpty() {
+        let radio = document.getElementById("radio_43").value;
+        let ln_box = document.getElementById("ln_box_43").value;
+        let fn_box = document.getElementById("fn_box_43").value;
+        let mn_box = document.getElementById("mn_box_43").value;
+        let stdfor_radio = document.getElementsByName("stdfor_radio_43").value;
+        let enrolled_option = document.getElementsByName("enrolled_option_43").value;
+
+        if (radio != "" && ln_box != "" && fn_box != "" && mn_box != "" && stdfor_radio != "" && enrolled_option != "") {
+            document.getElementById("submit_btn_43").removeAttribute("disabled");
+
+        }
+
+    }
+
+    function isEmpty1() {
+        let sub_box = document.getElementById("sub_box_43").value;
+        let room_box = document.getElementById("room_box_43").value;
+
+        if (sub_box != "" && room_box != "" && instructor_box != "") {
+            document.getElementById("addsub_btn_43").removeAttribute("hidden");
+
+        }
+
+    }
+
+    function isEmpty2() {
+        let sub2_box = document.getElementById("sub2_box_43").value;
+        let room2_box = document.getElementById("room2_box_43").value;
+
+        if (sub2_box != "" && room2_box != "" && instructor2_box != "") {
+            document.getElementById("addsub_btn3_43").removeAttribute("hidden");
+
+        }
+
+    }
+
+    function EnableDisableEnrolled() {
+
+        var yes_radio = document.getElementById("yes_radio_43");
+        var enrolledthsisem_box = document.getElementById("enrolledthsisem_box_43");
+        enrolledthsisem_box.disabled = yes_radio.checked ? false : true;
+
+        if (!enrolledthsisem_box.disabled) {
+            enrolledthsisem_box.focus();
+
+        }
+    }
+
+    function EnableDisableDeadline() {
+
+        var no_radio = document.getElementById("no_radio_43");
+        var deadline_box = document.getElementById("deadline_box_43");
+        deadline_box.disabled = no_radio.checked ? false : true;
+
+        if (!deadline_box.disabled) {
+            deadline_box.focus();
+
+        }
+    }
+
+    function getStdfor() {
+        var ele = document.getElementsByName('stdfor_option');
+        var flag = 0;
+        for (var i = 0; i < ele.length; i++) {
+            if (ele[i].checked)
+                flag = 1;
+
+        }
+        if (flag == 1)
+            document.getElementById('submit_btn_43').disabled = false;
+    }
+
+   
+    function getCourse() {
+
+
+        $("#course_drp1_43").on("change", function() {
+            var selVal = $(this).val();
+            $("h2").html(selVal);
+
+            if (selVal == 0) {
+                $('#submit_btn_43').prop("disabled", true);
+            } else {
+                $('#submit_btn_43').prop("disabled", false);
+            }
+        })
+
+    }
+
+
+    function getDay() {
+        $("#day_box1_43").on("change", function() {
+            var selVal = $(this).val();
+            $("h2").html(selVal);
+
+            if (selVal == 0) {
+                $('#addsub_btn_43').prop("hidden", true);
+            } else {
+                $('#addsub_btn_43').prop("hidden", false);
+            }
+        })
+
+    }
+
+
+    function getDay1() {
+        $("#day2_box1_43").on("change", function() {
+            var selVal = $(this).val();
+            $("h2").html(selVal);
+
+            if (selVal == 0) {
+                $('#addsub_btn3_43').prop("hidden", true);
+            } else {
+                $('#addsub_btn3_43').prop("hidden", false);
+            }
+        })
+
+    }
+
+
+
+    //Add Subject 
+    function addRow() {
+        var addsub = document.getElementById('sub_box_43').value;
+
+        var add_sched1 = document.getElementById('day_box1_43');
+        var schedy1 = add_sched1.options[add_sched1.selectedIndex].text;
+
+        var add_sched2 = document.getElementById('day_box2_43');
+        var schedy2 = add_sched2.options[add_sched2.selectedIndex].text;
+
+        var add_sched3 = document.getElementById('day_box3_43');
+        var schedy3 = add_sched3.options[add_sched3.selectedIndex].text;
+
+        var stime1 = document.getElementById('start_box1_43').value;
+        var stime2 = document.getElementById('start_box2_43').value;
+        var stime3 = document.getElementById('start_box3_43').value;
+
+        var etime1 = document.getElementById('end_box1_43').value;
+        var etime2 = document.getElementById('end_box2_43').value;
+        var etime3 = document.getElementById('end_box3_43').value;
+
+        var room = document.getElementById('room_box_43').value;
+
+        var instruc = document.getElementById('instructor_box_43');
+        var instructor = instruc.options[instruc.selectedIndex].text;
+
+        var sub_table = document.getElementsByTagName('table')[0];
+
+        // INSERT ROW AT THE END
+        var newRow = sub_table.insertRow(-1);
+
+        // ADD CELLS TO THE ROWS
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+
+        // ENTER SCHEDULE
+        cell1.innerHTML = addsub;
+        if (schedy1 != "selday1" && stime1 && etime1) {
+            cell2.innerHTML = schedy1 + " " + stime1 + "-" + etime1;
+            if (schedy2 != "selday2" && stime2 && etime2) {
+                cell2.innerHTML = schedy1 + " " + stime1 + "-" + etime1 + "/" + schedy2 + " " + stime2 + "-" + etime2;
+                if (!schedy3 != "selday3" && stime3 && etime3) {
+                    cell2.innerHTML = schedy1 + " " + stime1 + "-" + etime1 + "/" + schedy2 + " " + stime2 + "-" + etime2 + "/" + schedy3 + " " + stime3 + "-" + etime3;
+                }
+            }
+        } else {
+            alert("No Schedule Assigned")
+        }
+        cell3.innerHTML = room;
+        cell4.innerHTML = instructor;
+
+
+        document.getElementById("sub_box_43").value = "sub1";
+        document.getElementById("day_box1_43").value = "selday1";
+        document.getElementById("day_box2_43").value = "selday2";
+        document.getElementById("day_box3_43").value = "selday3";
+        document.getElementById("start_box1_43").value = "";
+        document.getElementById("start_box2_43").value = "";
+        document.getElementById("start_box3_43").value = "";
+        document.getElementById("end_box1_43").value = "";
+        document.getElementById("end_box2_43").value = "";
+        document.getElementById("end_box3_43").value = "";
+        document.getElementById("room_box_43").value = "rm1";
+        document.getElementById("instructor_box_43").value = "ins1";
+
+        document.getElementById("addopen_43").style.display = "block";
+        document.getElementById("del_43").style.display = "block";
+    }
+
+    //CANCEL ADDING OF SUBJECT
+    function cancel() {
+
+        document.getElementById("sub_box_43").value = "sub1";
+        document.getElementById("day_box1_43").value = "selday1";
+        document.getElementById("day_box2_43").value = "selday2";
+        document.getElementById("day_box3_43").value = "selday3";
+        document.getElementById("start_box1_43").value = "";
+        document.getElementById("start_box2_43").value = "";
+        document.getElementById("start_box3_43").value = "";
+        document.getElementById("end_box1_43").value = "";
+        document.getElementById("end_box2_43").value = "";
+        document.getElementById("end_box3_43").value = "";
+        document.getElementById("room_box_43").value = "rm1";
+        document.getElementById("instructor_box_43").value = "ins1";
+
+        document.getElementById("addopen_43").style.display = "block";
+        document.getElementById("del_43").style.display = "block";
+
+    }
+
+
+    //Delete Last in the Row Subject
+    function delSub() {
+        var tableTr = document.getElementById("subject_table_43").rows.length;
+        if (tableTr > 1) {
+            document.getElementById("subject_table_43").deleteRow(-1);
+        }
+    }
+
+    //Hide Add and Delete Icon button
+    function hide_adddel() {
+        document.getElementById("addopen_43").style.display = "none";
+        document.getElementById("del_43").style.display = "none";
+    }
+
+
+    //ADD ANOTHER Subject 
+    function addRow2() {
+        var addsub2 = document.getElementById('sub2_box_43').value;
+
+        var add_sched12 = document.getElementById('day2_box1_43');
+        var schedy12 = add_sched12.options[add_sched12.selectedIndex].text;
+
+        var add_sched22 = document.getElementById('day2_box2_43');
+        var schedy22 = add_sched22.options[add_sched22.selectedIndex].text;
+
+        var add_sched32 = document.getElementById('day2_box3_43');
+        var schedy32 = add_sched32.options[add_sched32.selectedIndex].text;
+
+        var stime12 = document.getElementById('start2_box1_43').value;
+        var stime22 = document.getElementById('start2_box2_43').value;
+        var stime32 = document.getElementById('start2_box3_43').value;
+
+        var etime12 = document.getElementById('end2_box1_43').value;
+        var etime22 = document.getElementById('end2_box2_43').value;
+        var etime32 = document.getElementById('end2_box3_43').value;
+
+        var room2 = document.getElementById('room2_box_43').value;
+
+        var instruc2 = document.getElementById('instructor2_box_43');
+        var instructor2 = instruc2.options[instruc2.selectedIndex].text;
+
+        var sub_table2 = document.getElementsByTagName('table')[1];
+
+        // INSERT ROW AT THE END
+        var newRow2 = sub_table2.insertRow(-1);
+
+        // ADD CELLS TO THE ROWS
+        var cell1 = newRow2.insertCell(0);
+        var cell2 = newRow2.insertCell(1);
+        var cell3 = newRow2.insertCell(2);
+        var cell4 = newRow2.insertCell(3);
+
+        // ENTER SCHEDULE
+        cell1.innerHTML = addsub2;
+        if (schedy12 != "selday1_1" && stime12 && etime12) {
+            cell2.innerHTML = schedy12 + " " + stime12 + "-" + etime12;
+            if (schedy22 != "selday2_2" && stime22 && etime22) {
+                cell2.innerHTML = schedy12 + " " + stime12 + "-" + etime12 + "/" + schedy22 + " " + stime22 + "-" + etime22;
+                if (schedy32 != "selday3_3" && stime32 && etime32) {
+                    cell2.innerHTML = schedy12 + " " + stime12 + "-" + etime12 + "/" + schedy22 + " " + stime22 + "-" + etime22 + "/" + schedy32 + " " + stime32 + "-" + etime32;
+                }
+            }
+        } else {
+            alert("No Schedule Assigned")
+        }
+        cell3.innerHTML = room2;
+        cell4.innerHTML = instructor2;
+
+        document.getElementById("sub2_box_43").value = "sub2";
+        document.getElementById("day2_box1_43").value = "selday1_1";
+        document.getElementById("day2_box2_43").value = "selday2_2";
+        document.getElementById("day2_box3_43").value = "selday3_3";
+        document.getElementById("start2_box1_43").value = "";
+        document.getElementById("start2_box2_43").value = "";
+        document.getElementById("start2_box3_43").value = "";
+        document.getElementById("end2_box1_43").value = "";
+        document.getElementById("end2_box2_43").value = "";
+        document.getElementById("end2_box3_43").value = "";
+        document.getElementById("room2_box_43").value = "rm2";
+        document.getElementById("instructor2_box_43").value = "ins2";
+
+        document.getElementById("addopen2_43").style.display = "block";
+        document.getElementById("del2_43").style.display = "block";
+
+        event.preventDefault();
+    }
+
+    //CANCEL ADDING OF SUBJECT
+    function cancel2() {
+
+        document.getElementById("sub2_box_43").value = "sub2";
+        document.getElementById("day2_box1_43").value = "selday1_1";
+        document.getElementById("day2_box2_43").value = "selday2_2";
+        document.getElementById("day2_box3_43").value = "selday3_3";
+        document.getElementById("start2_box1_43").value = "";
+        document.getElementById("start2_box2_43").value = "";
+        document.getElementById("start2_box3_43").value = "";
+        document.getElementById("end2_box1_43").value = "";
+        document.getElementById("end2_box2_43").value = "";
+        document.getElementById("end2_box3_43").value = "";
+        document.getElementById("room2_box_43").value = "rm2";
+        document.getElementById("instructor2_box_43").value = "ins2";
+
+        document.getElementById("addopen2_43").style.display = "block";
+        document.getElementById("del2_43").style.display = "block";
+
+        event.preventDefault();
+
+    }
+
+
+    //Delete Last in the Row Subject
+    function delSub2() {
+        var tableTr = document.getElementById("addSubject_table_43").rows.length;
+        if (tableTr > 1) {
+            document.getElementById("addSubject_table_43").deleteRow(-1);
+        }
+    }
+
+    //Hide Add and Delete Icon button
+    function hide_adddel2() {
+        document.getElementById("addopen2_43").style.display = "none";
+        document.getElementById("del2_43").style.display = "none";
+    }
+
+    //Printing function
+    function to_beprinted(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+</script>
+
+<script>
+    let select = document.querySelector('select');
+    let radioButtons = document.querySelectorAll('input[type="radio"]');
+
+    select.addEventListener('change', () => {
+        let result = select.options[select.selectedIndex].value;
+
+        if (result == 'no') radioButtons.forEach(radioButton => radioButton.disabled = true)
+        else radioButtons.forEach(radioButton => radioButton.disabled = false)
+    });
+
+    var numShown = 5; // Initial rows shown & index
+    var numMore = 1;  // Increment
+
+    var $table = $('#subj_tbl').find('tbody');  // tbody containing all the rows
+    var numRows = $table.find('tr').length; // Total # rows
+
+    $(function () {
+        // Hide rows and add clickable div
+        $table.find('tr:gt(' + (numShown - 1) + ')').hide().end()
+            .after('<tbody id="more"><tr><td colspan="' +
+                $table.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
+                numMore + '</span> Subject</div</tbody></td></tr>');
+
+        $('#more').click(function() {
+            numShown = numShown + numMore;
+            // no more "show more" if done
+            if (numShown >= numRows) {
+                $('#more').remove();
+            }
+            // change rows remaining if less than increment
+            if (numRows - numShown < numMore) {
+                $('#more span').html(numRows - numShown);
+            }
+            $table.find('tr:lt(' + numShown + ')').show();
+        });
+
+    });
+
+    
+
+    var numShown1 = 3; // Initial rows shown & index
+    var numMore1 = 1;  // Increment
+
+    var $table1 = $('#addSubject_table_43').find('tbody');  // tbody containing all the rows
+    var numRows1 = $table1.find('tr').length; // Total # rows
+
+    $(function () {
+        // Hide rows and add clickable div
+        $table1.find('tr:gt(' + (numShown1 - 1) + ')').hide().end()
+            .after('<tbody id="more1"><tr><td colspan="' +
+                $table1.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
+                numMore1 + '</span> Subject</div</tbody></td></tr>');
+
+        $('#more1').click(function() {
+            numShown1 = numShown1 + numMore1;
+            // no more "show more" if done
+            if (numShown1 >= numRows1) {
+                $('#more1').remove();
+            }
+            // change rows remaining if less than increment
+            if (numRows1 - numShown1 < numMore1) {
+                $('#more1 span').html(numRows1 - numShown1);
+            }
+            $table1.find('tr:lt(' + numShown1 + ')').show();
+        });
+
+    });
+</script>

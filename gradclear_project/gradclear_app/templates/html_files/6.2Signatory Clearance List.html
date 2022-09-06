@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Clearance Form Database</title>
+</head>
+
+
+<style>
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+    
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+    
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    #list_tbl_62 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_62 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_62 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_62 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+    
+    a {
+        font-style: italic;
+        color: #000;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    
+    #backtotop_btn_62 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_62::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_62:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_62:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_62.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    #list_tbl_62 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    
+    #list_tbl_62 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+        margin-bottom: 50px;
+    }
+    
+    #list_tbl_62 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl_62 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    #list_tbl2_62 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl2_62 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab.tab-active {
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+    
+    a :hover {
+        color: #fff;
+    }
+    
+    #dashboard_header_62 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+    
+    #search_box_62 {
+        width: 54%;
+        border-radius: 30px;
+        padding-left: 10px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_62 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_62:hover {
+        color: #c51d3a;
+    }
+    
+    #list_tbl_62 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_62 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_62 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_62 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_62 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_62 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #request_box_62 {
+        width: auto;
+        margin: 0 0 10px 5px;
+    }
+    
+    #schoolyear_box_62 {
+        margin: 0 0 10px 5px;
+    }
+    
+    #course_box_62 {
+        margin: 0 0 10px 5px;
+    }
+    
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+    
+    #clearance_header_62 {
+        background-color: #c51d3a;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+</style>
+
+
+<body>
+    <!-- NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_62">
+        <a href="{% url 'signatory_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
+        <a href="{% url 'signatory_dashboard_clearance_list' %}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_62" name="search_box_062" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+
+        <!--SEARCH BUTTON
+        <a><button onClick="return search()" type = "button" id="search_btn">Search</button></a>-->
+
+    </div>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_62"></a>
+
+    <!--CLEARANCE STATUS MODAL-->
+    <div class="modal fade" id="ClearanceStatus_modal_62" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header" id="clearance_header_62">
+                    <h6 class="modal-title" id="header_lbl_62"><b>THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE  (To be signed by the responsible officials concerned.)</b></h6>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" id="close_btn_62" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="right" title="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+
+                <!--MODAL BODY-->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label for="accnt" class="col-sm-2 col-form-label col-form-label-sm" id="accnt_lbl_62">1.ACOUNTANT:</i></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="accnt_box_62" name="accnt_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <label for="dfiled" id="dfiled_lbl_62"><b>2.DEAPARTMENT HEADS:</b></label>
+
+                        <div class="form-group row">
+                            <label for="la" class="col-sm-2 col-form-label col-form-label-sm" id="la_lbl_62">a.LIBERAL ARTS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="la_box_62" name="la_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="mathsci" class="col-sm-2 col-form-label col-form-label-sm" id="mathsci_lbl_62">b.MATH & SCIENCES:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="mathsci_box_62" name="mathsci_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="dpecs" class="col-sm-2 col-form-label col-form-label-sm" id="dpecs_lbl_62">b.DPECS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="dpecs_box_62" name="dpecs_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <p><b>d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL EDUCATION/ENGINEERING:</b></p>
+
+                        <div class="form-group row">
+                            <label for="it" class="col-sm-2 col-form-label col-form-label-sm" id="it_lbl_62"><i>(Please underline the appropriate department)</i></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="it_box_62" name="it_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="crsshop" class="col-sm-2 col-form-label col-form-label-sm" id="crsshop_lbl_62">3.COURSE/SHOP ADVISER:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="crsshop_box_62" name="crsshop_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cl" class="col-sm-2 col-form-label col-form-label-sm" id="cl_lbl_62">4.CAMPUS LIBRARIAN:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="cl_box_62" name="cl_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gc" class="col-sm-2 col-form-label col-form-label-sm" id="gc_lbl_62">5.GUIDANCE COUNSELOR:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="gc_box_62" name="gc_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="hosf" class="col-sm-2 col-form-label col-form-label-sm" id="hosf_lbl_62">6.HEAD OF STUDENT AFFAIRS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="hosf_box_62" name="hosf_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="adfac" class="col-sm-2 col-form-label col-form-label-sm" id="adfac_lbl_62">7.ASST. DIR. FOR ACADEMIC AFFAIRS:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="adfac_box_62" name="adfac_box_062" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!--FORM FOOTER-->
+                        <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN-->
+    <h3 style="text-align:center;">Clearance Form</h3>
+    <div data-tabs="1" id="tabz_62">
+        <nav data-tab-container="1" class="tab-container">
+            <a href="#tab1_62" data-tab="1" class="tab" id="unapproveds_62">Unapproved Students</a>
+            <a href="#tab2_62" data-tab="1" class="tab" id="approveds_62">Approved Students</a>
+        </nav>
+
+        <!--UNAPPROVED TAB-->
+        <div id="tab1_62" data-tab-content="1" class="tab-content">
+            <div class="wrapper_all">
+                <table class="table results table-hover table-sortable" id="list_tbl_62">
+                    <thead>
+                        <tr>
+                            <th>#<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th> Student Name<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>Course and Section<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>School Year<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>Requested Form<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th></th>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="6"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>1</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b> Juan Dela Cruz </b></td>
+                            <td>BET-COET-3A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td><button type="button" onclick="deleteRow(this)">Approve</button></td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b> Pedro Dela Cruz </b></td>
+                            <td>BET-COET-3A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td><button type="button" onclick="deleteRow(this)">Approve</button></td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b> Raul Dela Cruz </b></td>
+                            <td>BET-COET-3A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td><button type="button" onclick="deleteRow(this)">Approve</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <p class="text-center text-bold" id="p6_62"></p>
+
+        <!--APPROVED TAB-->
+        <div id="tab2_62" data-tab-content="1" class="tab-content">
+            <div class="wrapper_all">
+                <table class="table results tbale-hover table-sortable" id="list_tbl2_62">
+                    <thead>
+                        <tr>
+                            <th>#<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th> Student Name<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>Course and Section<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>School Year<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th>Requested Form<i class="fa fa-sort" aria-hidden="true"></i>&nbsp;</th>
+                            <th></th>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="6"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>5</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b> Sarrah Geromino</b></td>
+                            <td>BET-COET-2A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td>Approved</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b>Alfonso Makaraig</b></td>
+                            <td>BET-COET-2A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td>Approved</td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td><i aria-hidden="true" class="fa fa-user" style="font-size:40px; padding-right: 10px; "></i><b>Ed Caluag</b></td>
+                            <td>BET-COET-2A</td>
+                            <td>2021-2022</td>
+                            <td>Clearance Form</td>
+                            <td>Approved</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    </hr>
+    <p class="text-center text-bold" id="p6_62"></p>
+</body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
+
+</html>
+
+
+<script>
+    function opensigdb() {
+        window.location.replace("{% url 'signatory_dashboard' %}");
+    }
+
+    function opensigdbc() {
+        window.location.replace("{% url 'signatory_dashboard_clearance_list' %}");
+    }
+
+    // TAB JS
+    var items = document.querySelectorAll('#tabz_62');
+    for (var i = 0, len = items.length; i < len; i++) {
+        (function() {
+                var t, e = this,
+                    a = "[data-tab]",
+                    n = document.body,
+                    r = n.matchesSelector || n.webkitMatchesSelector || n.mozMatchesSelector || n.msMatchesSelector,
+                    o = function() {
+                        var a = e.querySelectorAll("[data-tab-content]") || [];
+                        for (t = 0; t < a.length; t++) a[t].style.display = "none"
+                    },
+                    i = function(n) {
+                        var r = e.querySelectorAll(a) || [];
+                        for (t = 0; t < r.length; t++) {
+                            var i = r[t],
+                                s = i.className.replace("tab-active", "").trim();
+                            i.className = s
+                        }
+                        o(), n.className += " tab-active";
+                        var l = n.getAttribute("href"),
+                            c = e.querySelector(l);
+                        c && (c.style.display = "")
+                    },
+                    s = e.querySelector(".tab-active" + a);
+                s = s || e.querySelector(a), s && i(s), e.addEventListener("click", function(t) {
+                    var e = t.target;
+                    r.call(e, a) && i(e)
+                })
+            }
+            .bind(items[i]))();
+    }
+
+    // TO APPROVE STUDENT
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_62").deleteRow(i);
+        swal({
+            title: "Done",
+            text: "Application Approved!",
+            icon: "success",
+            button: "Ok",
+        })
+    }
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#search_box_62', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    //MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#search_box_62");
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+    });
+
+    // TRIGGER ENTER BUTTON
+    $("#search_box_62").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#search_btn_62").click();
+        }
+    });
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_62");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // SEARCH1
+    function searching1() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SEARCH2
+    function searching2() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SORTING 
+
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
+    
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; // if no `<thead>` then do nothing
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // PREVENT SCROLLING WHILE SWITCHING TABS
+    $('#tabz_62 a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+
+        var checked = $(this).find('input').prop('checked');
+        $(this).find('input').prop('checked', !checked);
+    });
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_62").value = "";
+    });
+</script>

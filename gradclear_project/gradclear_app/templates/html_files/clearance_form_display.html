@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="eng">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+    <title>Clearance Form </title>
+
+</head>
+
+<style>
+    
+    .myDiv {
+        max-width: 900px;
+        width: 100%;
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        margin: 20px auto;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+        /* -webkit-print-color-adjust: exact; */
+    }
+    
+    #footer {
+        background: #424242;
+    }
+    
+    #backtotop_btn_42 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_42::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_42:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_42:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_42.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    @media print {
+        #backtotop_btn_42 {
+            display: none;
+        }
+    }
+    
+    .note {
+        background-color: #e1a19d;
+        padding: 5px;
+        text-align: left;
+        font-size: 16px;
+    }
+    
+    h3 {
+        color: #ffff;
+        background-color: #c51d3a;
+        padding: 5px;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    label {
+        width: 240px;
+        display: inline-block;
+        margin: 5px 10px 5px 0;
+    }
+    
+    #course_42 {
+        background-color: #e7dfe4;
+        border: 1px solid #ccc9c9;
+    }
+    
+    button {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #button:hover {
+        background-color: #616161;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+    }
+    
+    .modal-footer {
+        background: #424242;
+    }
+    
+    .modal-header {
+        background-color: #c51d3a;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+    
+    label {
+        width: 200px;
+        color: #757575;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+    
+    p {
+        color: #757575;
+        font-size: 16px;
+    }
+    
+    #submit_btn_42 {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #submit_btn_42:hover,
+    button:hover {
+        background-color: #616161;
+    }
+    
+    .input-icon {
+        position: relative;
+    }
+    
+    .input-icon>i {
+        position: absolute;
+        display: block;
+        transform: translate(0, -50%);
+        top: 50%;
+        pointer-events: none;
+        width: 25px;
+        text-align: center;
+        font-style: normal;
+    }
+    
+    .input-icon>input {
+        padding-left: 25px;
+        padding-right: 0;
+    }
+    
+    a.float+div.label-container {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s ease;
+    }
+    
+    a.float:hover+div.label-container {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    a.float:hover {
+        color: #fff;
+    }
+    
+    .label-container {
+        position: fixed;
+        bottom: 30px;
+        left: 105px;
+        display: table;
+        visibility: hidden;
+    }
+    
+    .label-text {
+        color: #fff;
+        background: rgba(51, 51, 51, 0.5);
+        display: table-cell;
+        vertical-align: middle;
+        padding: 10px;
+        border-radius: 3px;
+    }
+    
+    .label-arrow {
+        display: table-cell;
+        vertical-align: middle;
+        color: #424242;
+        opacity: 0.5s;
+        right: 10;
+    }
+    
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        left: 40px;
+        background-color: #c51d3a;
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #dedede;
+    }
+    
+    .my-float:nth-child(1) {
+        background: #c51d3a;
+    }
+    
+    .my-float:after {
+        animation: shine 3s ease-in-out infinite;
+        animation-fill-mode: forwards;
+        content: "";
+        position: absolute;
+        top: -110%;
+        left: -210%;
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+        transform: rotate(30deg);
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0) 100%);
+    }
+    
+    .my-float:active:after {
+        opacity: 0;
+    }
+    
+    #print_table,
+    #print_tr {
+        border: 1px solid black;
+        text-align: center;
+        width: 100%;
+    }
+    
+    #print_td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td2 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 80%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td3 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_clearance {
+        align-content: center;
+        width: 100%;
+    }
+    
+    #print_td4 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 70%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_td5 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 10%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_td6 {
+        background-color: black;
+        border: 1px solid black;
+        border-collapse: collapse;
+        color: white;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    @keyframes shine {
+        10% {
+            opacity: 1;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+            transition-duration: 0.3s, 0.3s, 0.3s;
+            transition-timing-function: ease;
+        }
+        100% {
+            opacity: 0;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+        }
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    @media print {
+        .float,
+        #submit_btn_42 {
+            display: none;
+        }
+    }
+    
+    ul {
+        position: fixed;
+        left: 0px;
+        padding-bottom: 20px;
+        bottom: 50px;
+        z-index: 100;
+    }
+    
+    ul li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    
+    ul li a {
+        background-color: #757575;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+        width: 60px;
+        height: 60px;
+        display: block;
+    }
+    
+    ul:hover {
+        visibility: visible!important;
+        opacity: 1!important;
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    a#menu-share+ul {
+        visibility: hidden;
+    }
+    
+    a#menu-share:hover+ul {
+        visibility: visible;
+        animation: scale-in 0.5s;
+    }
+    
+    a#menu-share i {
+        animation: rotate-in 0.5s;
+    }
+    
+    a#menu-share:hover>i {
+        animation: rotate-out 0.5s;
+    }
+    
+    @keyframes bot-to-top {
+        0% {
+            bottom: -40px
+        }
+        50% {
+            bottom: 40px
+        }
+    }
+    
+    @keyframes scale-in {
+        from {
+            transform: scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes rotate-in {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes rotate-out {
+        from {
+            transform: rotate(360deg);
+        }
+        to {
+            transform: rotate(0deg);
+        }
+    }
+    
+    .fa-ellipsis-v,
+    .fa-print,
+    .fa-home {
+        color: white;
+        font-size: 30px;
+        padding-top: 15px;
+    }
+</style>
+
+
+<body>
+    
+    {% for i in clearance %}
+    <!--PRINT AND HOME BUTTON-->
+    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+        <i class="fa fa-ellipsis-v"></i>
+    </a>
+    <ul>
+        <li>
+            <a href="{% url 'clearance_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+        <li>
+            {% if request.user.user_type == "STUDENT" %}
+            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "FACULTY" %}
+            <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% endif %}
+        </li>
+
+    </ul>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_42"></a>
+
+
+    <!--MAIN-->
+    <div class="myDiv" id="myDiv">
+        
+        <form method="POST" action="clearance_form" id="clear_form">
+            {% csrf_token %}
+            <h3><b>Personal Information</b></h3>
+
+            <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
+            <input type="text" name="stud_id_420" value="{{request.user.username}}" hidden>
+            <!--NAME BOX-->
+            <div class="form-inline">
+                {% if request.user.user_type == "STUDENT"%}
+                    <label for="name_42" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_42" style="padding-right:100px;">Name:<span id="asteris_42" style="color:red;">*</span></label>
+                    <div>
+                        <input type="text" id="ln_box_42" name="ln_box_420" disabled class="form-control "  value="{{request.user.last_name}}"
+                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            required>
+                        <input type="text" id="fn_box_42" name="fn_box_420" disabled class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}"
+                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            required>
+                        <input type="text" id="mn_box_42" name="mn_box_420" disabled class="form-control " placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}"
+                        oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+                        <p id="name_error_42"></p>
+                    </div>
+                {% else %}
+                    <label for="name_42" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_42" style="padding-right:100px;">Name:<span id="asteris_42" style="color:red;">*</span></label>
+                    <div>
+                        <input type="text" id="ln_box_42" size="77" name="ln_box_420" disabled class="form-control "  value="{{i.name}}"
+                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            required>
+                    </div>
+                {% endif %}
+            </div><br>
+
+            <!--DATE FILED BOX-->
+            <div class="form-group row">
+                <label for="dfiled2_42" class="col-sm-2 col-form-label col-form-label-sm " id="dfiled_lbl2_42" >Date Filed:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="date" id="dfiled_box_42" name="dfiled_box_420" class="form-control" value="{{i.date_filed}}" disabled required>
+                </div>
+            </div>
+
+            <!--PRESENT ADDRESS BOX-->
+            <div class="form-group row">
+                <label for="padd_42" class="col-sm-2 col-form-label col-form-label-sm" id="padd_lbl_42">Present Address:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="padd_box_42" name="padd_box_420" value="{{i.present_address}}" disabled class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" oninput="enter_padd()" required>
+                    <p id="padd_error_42"></p>
+                </div>
+            </div>
+
+            <!--DATE ADMITTED BOX-->
+            <div class="form-group row">
+                <label for="dait_42" class="col-sm-2 col-form-label col-form-label-sm" id="dait_lbl_42">Date admitted in TUPC:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="date" id="dait_box_42" name="dait_box_420" value="{{i.date_admitted_in_tup}}" disabled class="form-control" onkeyup="isEmpty()" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+            </div>
+
+            <!--COURSE DROPDOWN BOX-->
+            <div class="form-group row">
+                <label for="course_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_42">Course:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" class="form-control" onkeyup="isEmpty()" value="{{i.course}}" disabled oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+            </div>
+            <br>
+
+            <!--HIGHSCHOOL GRADUATED BOX-->
+            <div class="form-group row">
+                <label for="hswg_42" class="col-sm-2 col-form-label col-form-label-sm" id="hswg_lbl_42">High School where Graduated:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="hswg_box_42" name="hswg_box_420" value="{{i.highschool_graduated}}" disabled class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" oninput="enter_hswg()" required>
+                    <p id="hswg_error_42"></p>
+                </div>
+            </div>
+
+            <!--TUPC GRADUATE BOX-->
+            <div class="form-group row">
+                <label for="dygt_42" class="col-sm-3 col-form-label col-form-label-sm" id="dygt_lbl_42">Did you graduate at TUPC:<span id="asteris_42" style="color:red;">*</span></label>
+                <div>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" >Yes
+                </label>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()">No
+                </label>
+                    <p id="tupcans_error_42"></p>
+                </div>
+            </div>
+
+            <!--HIGHSCHOOL GRADUATED DATE BOX-->
+            <div class="form-group row">
+                <label for="iypitd_42" class="col-sm-2 col-form-label col-form-label-sm" id="dfiled_lbl3_42">If yes please indicate the date :</label>
+                <div class="col-sm-9">
+                    <input type="date" id="iydfiled_box_42" name="iydfiled_box_420" value="{{i.year_graduated_in_tupc}}" disabled class="form-control" oninput="enter_iydfilled()" required>
+                    <p id="hgdate_error_42"></p>
+                </div>
+            </div>
+
+            <!--TERMS BOX-->
+            <div class="form-group row">
+                <label for="notit_42" class="col-sm-2 col-form-label col-form-label-sm" id="notit_lbl_42">Number of Terms in TUPC: Sem./Sum.:</label>
+                <div class="col-sm-9">
+                    <input type="text" min="1" max="50" id="notit_box_42" name="notit_box_420" value="{{i.number_of_terms_in_tupc}}" disabled class="form-control" oninput="enter_notit()" onkeypress="isNumber(event)" required>
+                    <p id="notit_error_42"></p>
+                </div>
+            </div>
+
+            <hr><br>
+
+            <!--AMOUNT BOX-->
+            <div class="form-group row">
+                <label for="amountp_42" class="col-sm-2 col-form-label col-form-label-sm" id="amountp_lbl_42">Amount Paid:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <div class="input-icon">
+                        <input type="text" id="amountp_box_42" name="amountp_box_420" value="{{i.amount_paid}}" disabled maxlength="14" class="form-control col-form-label-sm" onkeyup="isEmpty()" placeholder="0.00" oninput="enter_amount()" data-type="currency" required>
+                        <i>₱</i>
+                        <p id="amount_error_42"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!--OR NUMBER BOX-->
+            <div class="form-group row">
+                <label for="receiptnum_42" class="col-sm-2 col-form-label col-form-label-sm" id="receiptnum_lbl_42">Official Receipt Number:</label>
+                <div class="col-sm-9">
+                    <input type="number" id="receiptnum_box_42" name="receiptnum_box_42" value="{{i.id}}" disabled class="form-control" >
+                </div>
+            </div>
+
+            <!--REQUESTED FORMS CHECK BOX-->
+            <div class="form-group row">
+                <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
+                <div>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()">Yes
+                </label>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()">No
+                </label>
+                    <p id="req_error_42"></p>
+                </div>
+            </div>
+
+            <!--REQUESTED FORMS DATE BOX-->
+            <div class="form-group row">
+                <label for="dbrtime_42" class="col-sm-2 col-form-label col-form-label-sm" id="dbrtime_lbl_42">If yes, please indicate the date before its respective item(s):</label>
+                <div class="col-sm-9">
+                    <input type="date" id="dbrtime_box_42" name="dbrtime_box_420" value="{{i.date_of_previously_requested_form}}" disabled class="form-control" oninput="enter_dbrtime()" required>
+                    <p id="dbrtime_error_42"></p>
+                </div>
+            </div>
+
+            <!--LAST TERM BOX-->
+            <div class="form-group row">
+                <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" value="{{i.last_term_in_tupc}}" disabled class="form-control" oninput="enter_lterm()" onkeypress="isNumber(event)" required>
+                    <p id="lterm_error_42"></p>
+                </div>
+            </div>
+
+            <!--PURPOSE OF REQUEST BOX-->
+            <div class="form-group row">
+                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="preq_box_42" name="preq_box_420" value="{{i.purpose_of_request_reason}}" disabled class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+
+            <!--PURPOSE OF REQUEST CHECK BOXES-->
+            
+                <h3><b>CLEARANCE REQUESTED FOR:<em>(Check items below)</em><span id="asteris_42" style="color:rgb(255, 196, 196);">*</span></b></h3>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" disabled value="Honorable Dismissal">
+                    <label class="form-check-label" for="inlineCheckbox1_42">Honorable Dismissal</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation">
+                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_42" name="purpose_request_420" disabled value="Transcript of Records">
+                    <label class="form-check-label" for="inlineCheckbox3_42">Transcript of Records</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" disabled value="Re-Evaluation">
+                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_42" name="purpose_request_420" disabled value="Diploma">
+                    <label class="form-check-label" for="inlineCheckbox5_42">Diploma</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" disabled value="Application for Graduation">
+                    <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_42" name="purpose_request_420" disabled value="Certification">
+                    <label class="form-check-label" for="inlineCheckbox7_42">Certification</label>
+                </div>
+                <div style="margin-left:20px;">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_42" disabled  oninput="insert_others()">
+                    <label for="others" id="others_lbl_42"><em>Others (please specify):</em></label>
+                    <input type="text" id="others_box_42" name="purpose_request_420" class="col-sm-3 col-form-label col-form-label-sm" 
+                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" disabled><br><br>
+                </div>
+
+
+            <div class="note">
+                <p>Note:</p>
+                <p>1. This clearance form should be accomplished within the semester it was initially requested.</p>
+                <p>2. Not valid with alteration.</p>
+            </div>
+
+            <br>
+
+            <!--SUBMIT BUTTON onclick="forms_check()"-->
+            
+
+
+
+
+            <!--FORM FOOTER-->
+            <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)
+            </p>
+        </form>
+    {% endfor %}
+    </div>
+
+    <!--HOME BUTTON
+    <a href="4.1Student Dashboard.html" class="float ">
+        <i class='fa fa-home my-float'></i>
+    </a>
+
+    <div class="label-container ">
+        <div class="label-text ">Home</div>
+    </div>-->
+
+
+    <!--TO BE PRINTED FORMAT-->
+    <!--Note this is only to get and hidden-->
+
+
+    <div id="print_clearance" hidden>
+        <div>
+            <!--Print Header-->
+            <table id="print_table">
+                <tr class="col-sm-md-12" id="print_tr">
+                    <td id="print_td"><img src="static/Media/tup_logo.png" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
+                    <td colspan="2" id="print_td2">
+                        <p style="font-size :18px; font-style:bold; text-align: center;">TECHNOLOGIGAL UNIVERSITY OF THE PHILIPPINES<br> CAVITE CAMPUS</p>
+                        <p style="font-size :15px; text-align: center;">Carlos Q. Trinidad Avenue, Salawag, Dasmarinas City,Cavite, Philippines<br> Telefax: (046) 416-4920<br> Email: cavite@tup.edu.ph │ Website: www.tup.edu.ph</p>
+                    </td>
+                </tr>
+                <tr class="col-sm-md-12" id="print_tr">
+                    <td id="print_td3">OCR</td>
+                    <td id="print_td4">
+                        STUDENTS'CLEARANCE FORM
+                    </td>
+                    <td id="print_td4">
+                        Page 1/1
+                    </td>
+                </tr>
+            </table>
+
+            <!--Main Clearance PRINT-->
+            <div>
+                <p></p>
+                <table style="width:100%; border:1px solid black;">
+                    <tr class="col-sm-md-12 p-2">
+                        <td id="print_td6" colspan="2" class="p-3">
+                            PERSONAL INFORMATION
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            Name: <label class="pl-2" id="name_p42">Juan Dela Cruz</label>
+                        </td>
+                        <td style="width:40%;" class="pl-3">
+                            Date: <label class="pl-2" id="date_p42">Feb 20,2022</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="pl-3">
+                            Present Address: <label class="pl-2" id="add_p42">Dasmarinas Cavite</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            Date Admitted in TUPC:<label class="pl-2" id="datead_p42">Jan 20,2020</label>
+                        </td>
+                        <td rowspan="7" class="pl-3">
+                            <table style="border:3px solid black;width:100%;">
+                                <tr>
+                                    <td class="pl-3">
+                                        Amount Paid:<label class="pl-2" id="amount_p42">2k</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-3">
+                                        Official Receipt Number: <label class="pl-2" id="offrecpt_p42">2k</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-3">
+                                        Have You Requested for the checked items below <br> previously?<br>
+                                        <input type="checkbox" id="Reqyes_p42" value="Yes">
+                                        <label for="Reqyes_p42">Yes</label>
+                                        <br>
+                                        <input type="checkbox" id="Reqno_p42" value="No">
+                                        <label for="Reqno_p42">No</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-3">
+                                        If yes,please indicate the date before its respective<br> item(s):
+                                        <label class="pl-2" id="indate_p42">2k</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-3">
+                                        Last Term in TUPC:<label class="pl-2" id="lastterm_p42">2k</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-3">
+                                        Purpose of Request:<label class="pl-2" id="por_p42">2k</label>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            Course & Major:<label class="pl-2" id="cmajor_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            HighSchool Were Graduated:<label class="pl-2" id="highgrad_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            Did You Graduate At TUPC?<br>
+                            <input type="checkbox" id="Gradyes_p" value="Yes">
+                            <label for="Gradyes_p"> Yes</label>
+
+                            <input type="checkbox" id="Gradno_p" value="No">
+                            <label for="Gradno_p">No</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            If yes, indicate the date:<label class="pl-2" id="indate1_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            Number of Terms in TUPC: Sem/Sum:<label class="pl-2" id="numsem_p42">2k</label>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <p></p>
+
+            <!--For Checking the requested Form-->
+            <div>
+                <table style="width:100%; border:1px solid black;">
+                    <tr class="col-sm-md-12">
+                        <td id="print_td6" colspan="2" class="p-3">
+                            CLEARANCE REQUESTED FOR: (Check items below)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            <input type="checkbox" id="Hon_dis" value="Honorable Dismissal">
+                            <label for="Hon_dis">Honorable Dismissal</label>
+                        </td>
+                        <td class="pl-3">
+                            <input type="checkbox" id="eval" value="Evaluation">
+                            <label for="eval">Honorable Evaluation</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            <input type="checkbox" id="trans_rec" value="Transript of Records">
+                            <label for="trans_rec">Transript of Records</label>
+                        </td>
+                        <td class="pl-3">
+                            <input type="checkbox" id="re_eval" value="Re-evaluation">
+                            <label for="re_eval">Re-evaluation</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            <input type="checkbox" id="dip" value="Diploma">
+                            <label for="dip">Diploma</label>
+                        </td>
+                        <td class="pl-3">
+                            <input type="checkbox" id="ap_grad" value="Application for Graduation">
+                            <label for="ap_grad">Application for Graduation</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            <input type="checkbox" id="cert" value="Certificate">
+                            <label for="cert">Certificate</label>
+                        </td>
+                        <td class="pl-3">
+                            <label>Others<em>(please specify)</em>:</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--For signing -->
+            <p></p>
+            <div>
+                <table style="width:100%; border:1px solid black;">
+                    <tr class="col-sm-md-12">
+                        <td id="print_td6" colspan="2" class="p-3">
+                            THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE
+                            <br><em>(To be signed by the responsible officials concerned.)</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-3">
+                            1. ACCOUNTANT: <label class="pl-2 pb-1" id="acct_p42">2k</label>
+                        </td>
+                        <td>
+                            3.COURSE/SHOP ADVISER:<label class="pl-2 pb-1" id="csadvider_p42">2k</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="pl-4">
+                            2.DEPARTMENT HEADS
+                        </td>
+                        <td>
+                            4. CAMPUS LIBRARIAN:<label class="pl-2 pb-1" id="librarian_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-5">
+                            a. LIBERAL ARTS:<label class="pl-2 pb-1" id="libarts_p42">2k</label>
+                        </td>
+                        <td>
+                            5. GUIDANCE COUNSELOR:<label class="pl-2 pb-1" id="guidecoun_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-5">
+                            b. MATH & SCIENCES:<label class="pl-2 pb-1" id="math_p42">hi</label>
+                            <td>
+                                6. HEAD OF STUDENT AFFAIRS:<label class="pl-2 pb-1" id="headsa_p42">2k</label>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-5">
+                            c. DPECS:<label class="pl-2 pb-1" id="dpecs_p42">2k</label>
+                        </td>
+                        <td>
+                            7. ASST. DIR. FOR ACADEMIC AFFAIRS:<label class="pl-2 pb-1" id="asaffair_p42">2k</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl-5">
+                            d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL<br> EDUCATION/ENGINEERING: <br>
+                            <em>(Please underline the appropriate department)</em> <br>
+                            <label class="pl-2 pb-1" id="indus_p42">2k</label>
+
+                        </td>
+                        <td rowspan="2">
+                            <table style="border:3px solid black; width:100%;">
+                                <tr>
+                                    <td class="pl-3">
+                                        Note:<br>
+                                        <label class="pl-2">
+                                            1.	This clearance form should be accomplished<br> within the semester it was initially requested.
+                                        </label><br>
+                                        <label class="pl-2">
+                                            2.	Not valid with alteration. 
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <p class="p-2"></p>
+        <p>TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    
+
+    // CONFIRMATION MSGBOX_BANNER
+    function submitForm(form) {
+
+        swal({
+            title: "Are you sure?",
+            text: "This form will be submitted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then(function(isOkay) {
+            if (isOkay) {
+                var btn = document.getElementById('submit_btn_42');
+                btn.disabled = true;
+                btn.innerText = 'Submitted'
+                document.getElementById("ln_box_42").disabled = true;
+                document.getElementById("fn_box_42").disabled = true;
+                document.getElementById("mn_box_42").disabled = true;
+                document.getElementById("dfiled_box_42").disabled = true;
+                document.getElementById("padd_box_42").disabled = true;
+                document.getElementById("dait_box_42").disabled = true;
+                document.getElementById("course_42").disabled = true;
+                document.getElementById("hswg_box_42").disabled = true;
+                document.getElementById("gradYes_radio_42").checked = true;
+                document.getElementById("gradNo_radio_42").checked = true;
+                document.getElementById("iydfiled_box_42").disabled = true;
+                document.getElementById("notit_box_42").disabled = true;
+                document.getElementById("amountp_box_42").disabled = true;
+                document.getElementById("receiptnum_box_42").value = '';
+                document.getElementById("reqYes_radio_42").checked = true;
+                document.getElementById("reqNo_radio_42").checked = true;
+                document.getElementById("dbrtime_box_42").disabled = true;
+                document.getElementById("lasterm_box_42").disabled = true;
+                document.getElementById("preq_box_42").disabled = true;
+                document.getElementById("HonorableDismissal_check_42").checked = false;
+                document.getElementById("Evaluation_check_42").checked = false;
+                document.getElementById("TranscriptofRecords_check_42").checked = false;
+                document.getElementById("ReEvaluation_check_42").checked = false;
+                document.getElementById("Diploma_check_42").checked = false;
+                document.getElementById("ApplicationforGraduation_check_42").checked = false;
+                document.getElementById("Certification_check_42").checked = false;
+                document.getElementById("others_box_42").checked = false;
+
+
+
+            }
+        });
+        return false;
+    }
+
+    // BACK TO TOP FUNCTION
+
+    var btn = $("#backtotop_btn_42");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // EMPTY INPUTS CHECKER
+    // Name Check
+    function name_check() {
+        var lname = document.getElementById("ln_box_42").value;
+        var fname = document.getElementById('fn_box_42').value;
+
+        if (lname && fname != "") {
+            return true;
+        } else if (lname != "" && fname == "") {
+            var sign_error = document.getElementById("fn_box_42");
+
+            sign_error.style.borderColor = "red";
+
+        } else if (lname == "" && fname != "") {
+            var sign_error1 = document.getElementById("ln_box_42");
+
+            sign_error1.style.borderColor = "red";
+
+        } else {
+            var sign_error01 = document.getElementById("ln_box_42");
+            var sign_error012 = document.getElementById("fn_box_42");
+
+            sign_error01.style.borderColor = "red";
+            sign_error012.style.borderColor = "red";
+            return false;
+        }
+    }
+
+    // Present Address Check
+    function present_add() {
+        var present_input = document.getElementById("padd_box_42").value;
+
+        if (present_input != "") {
+            return true;
+        } else {
+            var sign_error05 = document.getElementById("padd_box_42");
+
+            sign_error05.style.borderColor = "red";
+        }
+    }
+
+    // Date Admitted Check
+    function dait_check() {
+        var dait_input = document.getElementById("dait_box_42").value;
+        if (!dait_input) {
+            var sign_error6 = document.getElementById("dait_box_42");
+
+            sign_error6.style.borderColor = "red";
+
+        } else {
+            return true;
+        }
+    }
+
+    // Course Check
+    function course_check() {
+        var course_input = document.getElementById("course_42");
+        var selectedcourse = course_input.options[course_input.selectedIndex].value;
+        if (selectedcourse == "") {
+
+            var sign_error08 = document.getElementById("course_42");
+
+            sign_error08.style.borderColor = "red";
+        } else {
+            return true;
+        }
+    }
+
+    // Where HS graduated Check
+    function hswg_check() {
+        var hswg_input = document.getElementById("hswg_box_42").value;
+
+        if (hswg_input != "") {
+            return true;
+        } else {
+            var sign_error06 = document.getElementById("hswg_box_42");
+
+            sign_error06.style.borderColor = "red";
+        }
+    }
+
+    // TUPC HS graduated Check
+    function grad_check() {
+        if (document.getElementById('gradYes_radio_42').checked) {
+            var grad_input = document.getElementById("iydfiled_box_42").value;
+            var tupterms_input = document.getElementById("notit_box_42").value;
+
+
+            if (!grad_input && tupterms_input == "") {
+                var sign_error8 = document.getElementById("iydfiled_box_42");
+                var sign_error11 = document.getElementById("notit_box_42");
+
+                sign_error8.style.borderColor = "red";
+                sign_error11.style.borderColor = "red";
+
+            } else if (!grad_input && tupterms_input != "") {
+                var sign_error8 = document.getElementById("iydfiled_box_42");
+
+                sign_error8.style.borderColor = "red";
+
+            } else if (grad_input && tupterms_input == "") {
+                var sign_error11 = document.getElementById("notit_box_42");
+
+                sign_error11.style.borderColor = "red";
+
+            } else {
+                return true;
+            }
+
+        } else if (document.getElementById('gradNo_radio_42').checked) {
+
+            return false;
+
+        } else {
+            return false;
+        }
+    }
+
+    // Amount Check
+    function amount_check() {
+        var amount_input = document.getElementById("amountp_box_42").value;
+
+        if (amount_input != "") {
+            return true;
+
+        } else {
+            var sign_error13 = document.getElementById("amountp_box_42");
+
+            sign_error13.style.borderColor = "red";
+        }
+    }
+
+    // Past Requested Form Check
+    function pastrequest_check() {
+        if (document.getElementById('reqYes_radio_42').checked) {
+            var termreq_input = document.getElementById("lasterm_box_42").value;
+            var purreq_input = document.getElementById("preq_box_42").value;
+            var dbrtime_input = document.getElementById("dbrtime_box_42").value;
+
+
+            if (!dbrtime_input && termreq_input == "" && purreq_input == "") {
+                var sign_error17 = document.getElementById("lasterm_box_42");
+                var sign_error18 = document.getElementById("preq_box_42");
+                var sign_error26 = document.getElementById("dbrtime_box_42");
+
+                sign_error17.style.borderColor = "red";
+                sign_error18.style.borderColor = "red";
+                sign_error26.style.borderColor = "red";
+
+            } else if (!dbrtime_input && termreq_input == "" && purreq_input != "") {
+                var sign_error21 = document.getElementById("dbrtime_box_42");
+                var sign_error28 = document.getElementById("lasterm_box_42");
+
+                sign_error21.style.borderColor = "red";
+
+                sign_error28.style.borderColor = "red";
+
+
+            } else if (!dbrtime_input && termreq_input != "" && purreq_input == "") {
+                var sign_error32 = document.getElementById("preq_box_42");
+                var sign_error34 = document.getElementById("dbrtime_box_42");
+
+                sign_error32.style.borderColor = "red";
+
+                sign_error34.style.borderColor = "red";
+
+            } else if (!dbrtime_input && termreq_input != "" && purreq_input != "") {
+                var sign_error30 = document.getElementById("dbrtime_box_42");
+
+                sign_error30.style.borderColor = "red";
+
+
+            } else if (dbrtime_input && termreq_input == "" && purreq_input == "") {
+                var sign_error23 = document.getElementById("lasterm_box_42");
+                var sign_error28 = document.getElementById("preq_box_42");
+
+                sign_error23.style.borderColor = "red";
+
+                sign_error28.style.borderColor = "red";
+
+            } else if (dbrtime_input && termreq_input != "" && purreq_input == "") {
+                var sign_error36 = document.getElementById("preq_box_42");
+
+                sign_error36.style.borderColor = "red";
+
+
+            } else if (dbrtime_input && termreq_input == "" && purreq_input != "") {
+                var sign_error38 = document.getElementById("lasterm_box_42");
+
+                sign_error38.style.borderColor = "red";
+
+            } else {
+                return true;
+            }
+
+        } else if (document.getElementById('reqNo_radio_42').checked) {
+
+            return false;
+
+        } else {
+            var sign_error25 = document.getElementById("req_error_42");
+            var undefined_answer = "*Please answer this field"
+
+            sign_error25.style.color = "red";
+            sign_error25.style.fontSize = "13px";
+
+            document.getElementById("req_error_42").innerHTML = undefined_answer;
+        }
+    }
+
+    // Request Check
+    function req_check() {
+        var a = document.getElementById('HonorableDismissal_check_42').checked;
+        var b = document.getElementById('Evaluation_check_42').checked;
+        var c = document.getElementById('TranscriptofRecords_check_42').checked;
+        var d = document.getElementById('ReEvaluation_check_42').checked;
+        var e = document.getElementById('Diploma_check_42').checked;
+        var f = document.getElementById('ApplicationforGraduation_check_42').checked;
+        var g = document.getElementById('Certification_check_42').checked;
+        var h = document.getElementById('others_box_42').value;
+
+        if (a == true || b == true || c == true || d == true || e == true || f == true || g == true) {
+            submitForm();
+        } else {
+            if (h != "") {
+                submitForm();
+                return true;
+            } else {
+                alert("Input Fields are Incomplete!")
+            }
+        }
+    }
+
+    // Overall Check
+    function forms_check() {
+        name_check();
+        present_add();
+        dait_check();
+        course_check();
+        hswg_check();
+        grad_check();
+        amount_check();
+        pastrequest_check();
+        req_check();
+        event.preventDefault()
+    }
+
+    // DISABLE ERROR
+    // Last Name dissable error
+    function enter_name1() {
+        document.getElementById("ln_box_42").style.removeProperty('border');
+    }
+
+    // First Name dissable error
+    function enter_name2() {
+        document.getElementById("fn_box_42").style.removeProperty('border');
+    }
+
+    function enter_padd() {
+        document.getElementById("padd_box_42").style.removeProperty('border');
+    }
+
+    // date admitted dissable error
+    function enter_dait() {
+        document.getElementById("dait_box_42").style.removeProperty('border');
+    }
+
+    // course dissable error
+    function enter_course() {
+        var selected_course = document.getElementById("course_42");
+        var selectedcourse = selected_course.options[selected_course.selectedIndex].value;
+        if (selectedcourse != "") {
+            document.getElementById("course_42").style.removeProperty('border');
+        }
+    }
+
+    // Where HS graduate dissable error
+    function enter_hswg() {
+        document.getElementById("hswg_box_42").style.removeProperty('border');
+    }
+
+    // TUPC radio choices yes dissable error
+    function enter_tupgradYes() {
+        var check_success = "";
+        document.getElementById("tupcans_error_42").innerHTML = check_success;
+
+    }
+
+    //tupc radio choices no dissable error
+    function enter_tupgradNo() {
+        var check_success = "";
+        document.getElementById("tupcans_error_42").innerHTML = check_success;
+    }
+
+    // Date filled dissable error
+    function enter_iydfilled() {
+        document.getElementById("iydfiled_box_42").style.removeProperty('border');
+    }
+
+    // Tupc terms dissable error
+    function enter_notit() {
+        document.getElementById("notit_box_42").style.removeProperty('border');
+    }
+
+    // amount dissable error
+    function enter_amount() {
+        document.getElementById("amountp_box_42").style.removeProperty('border');
+    }
+    // recent request choices yes dissable error
+    function enter_lastreqYes() {
+        var check_success = "";
+        document.getElementById("req_error_42").innerHTML = check_success;
+
+    }
+
+    // recent request choices no dissable error
+    function enter_lastreqNo() {
+        var check_success = "";
+        document.getElementById("req_error_42").innerHTML = check_success;
+
+    }
+
+    // date when requested dissable error
+    function enter_dbrtime() {
+        document.getElementById("dbrtime_box_42").style.removeProperty('border');
+    }
+
+    // last term dissable error
+    function enter_lterm() {
+        document.getElementById("lasterm_box_42").style.removeProperty('border');
+    }
+
+    // purpose dissable error
+    function enter_purpose() {
+        document.getElementById("preq_box_42").style.removeProperty('border');
+    }
+
+    // MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#ln_box_42");
+        var txt2 = $("#fn_box_42");
+        var txt3 = $("#mn_box_42");
+        var txt4 = $("#padd_box_42");
+        var txt5 = $("#hswg_box_42");
+        var txt6 = $("#notit_box_42");
+        var txt7 = $("#receiptnum_box_42");
+        var txt8 = $("#preq_box_42");
+        var txt9 = $("#others_box_42");
+
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+
+        var func = function() {
+            txt2.val(txt2.val().replace(/\s\s+/g, ' '));
+        }
+        txt2.keyup(func).blur(func);
+
+        var func = function() {
+            txt3.val(txt3.val().replace(/\s\s+/g, ' '));
+        }
+        txt3.keyup(func).blur(func);
+
+        var func = function() {
+            txt4.val(txt4.val().replace(/\s\s+/g, ' '));
+        }
+        txt4.keyup(func).blur(func);
+
+        var func = function() {
+            txt5.val(txt5.val().replace(/\s\s+/g, ' '));
+        }
+        txt5.keyup(func).blur(func);
+
+        var func = function() {
+            txt6.val(txt6.val().replace(/\s\s+/g, ' '));
+        }
+        txt6.keyup(func).blur(func);
+
+        var func = function() {
+            txt7.val(txt7.val().replace(/\s\s+/g, ' '));
+        }
+        txt7.keyup(func).blur(func);
+
+        var func = function() {
+            txt8.val(txt8.val().replace(/\s\s+/g, ' '));
+        }
+        txt8.keyup(func).blur(func);
+
+        var func = function() {
+            txt9.val(txt9.val().replace(/\s\s+/g, ' '));
+        }
+        txt9.keyup(func).blur(func);
+    });
+
+    // FIRST SPACE REMOVER
+    $(function() {
+        $('body').on('keydown', '#ln_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#fn_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#mn_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#padd_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#hswg_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#notit_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#receiptnum_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#lasterm_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#preq_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#others_box_42', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    // ONLY NUMBERS IN INPUT BOX JS
+    function isNumber(evt) {
+        if (event.key.length === 1 && /\D/.test(event.key)) {
+            event.preventDefault();
+        }
+    }
+    $.fn.digits = function() {
+        return this.each(function() {
+            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        })
+    }
+    $("span.numbers").digits();
+</script>
+
+
+
+<script>
+    // DISABLE BTN WHEN FORM INCOMPLETE
+    function isEmpty() {
+        let ln_box = document.getElementById("ln_box_42").value;
+        let fn_box = document.getElementById("fn_box_42").value;
+        let padd_box = document.getElementById("padd_box_42").value;
+        let dait_box = document.getElementById("dait_box_42").value;
+        let course_drp = document.getElementById("course_42").value;
+        let hswg_box = document.getElementById("hswg_box_42").value;
+        let amountp_box = document.getElementById("amountp_box_42").value;
+
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && amountp_box != "") {
+            document.getElementById("submit_btn_42").removeAttribute("disabled");
+        }
+
+    }
+
+    function EnableDisableTextBox() {
+        var gradYes_radio = document.getElementById("gradYes_radio_42");
+        var iydfiled_box = document.getElementById("iydfiled_box_42");
+        var notit_box = document.getElementById("notit_box_42");
+        iydfiled_box.disabled = gradYes_radio.checked ? false : true;
+        notit_box.disabled = gradYes_radio.checked ? false : true;
+
+        if (!iydfiled_box.disabled && !notit_box.disabled) {
+            iydfiled_box.focus();
+
+        }
+    }
+
+    function EnableDisableTextBox1() {
+        var reqYes_radio = document.getElementById("reqYes_radio_42");
+        var dbrtime_box = document.getElementById("dbrtime_box_42");
+        var lasterm_box = document.getElementById("lasterm_box_42");
+        var preq_box = document.getElementById("preq_box_42");
+        dbrtime_box.disabled = reqYes_radio.checked ? false : true;
+        lasterm_box.disabled = reqYes_radio.checked ? false : true;
+        preq_box.disabled = reqYes_radio.checked ? false : true;
+
+        if (!dbrtime_box.disabled && !lasterm_box.disabled && !preq_box.disabled) {
+            dbrtime_box.focus();
+            lasterm_box.focus();
+            preq_box.focus();
+
+        }
+    }
+
+    // MONEY FORMATTER
+    $("input[data-type='currency']").on({
+        keyup: function() {
+            formatCurrency($(this));
+        },
+        blur: function() {
+            formatCurrency($(this), "blur");
+        }
+    });
+
+    // AMOUNT COMMA INSERTER
+    function formatNumber(n) {
+        // format number 1000000 to 1,234,567
+        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    function formatCurrency(input, blur) {
+
+        var input_val = input.val();
+
+        // don't validate empty input
+        if (input_val === "") {
+            return;
+        }
+
+        // original length
+        var original_len = input_val.length;
+
+        // initial caret position 
+        var caret_pos = input.prop("selectionStart");
+
+        // check for decimal
+        if (input_val.indexOf(".") >= 0) {
+
+            // get position of first decimal
+            // this prevents multiple decimals from
+            // being entered
+            var decimal_pos = input_val.indexOf(".");
+
+            // split number by decimal point
+            var left_ = input_val.substring(0, decimal_pos);
+            var right_ = input_val.substring(decimal_pos);
+
+            // add commas to left  of number
+            left_ = formatNumber(left_);
+
+            // validate right 
+            right_ = formatNumber(right_);
+
+            // On blur make sure 2 numbers after decimal
+            if (blur === "blur") {
+                right_ += "00";
+            }
+
+            // Limit decimal to only 2 digits
+            right_ = right_.substring(0, 2);
+
+            // join number by .
+            input_val = left_ + "." + right_;
+
+        } else {
+            // no decimal entered
+            // add commas to number
+            // remove all non-digits
+            input_val = formatNumber(input_val);
+            input_val = input_val;
+
+            // final formatting
+            if (blur === "blur") {
+                input_val += ".00";
+            }
+        }
+
+        // send updated string to input
+        input.val(input_val);
+
+        // put caret back in the right position
+        var updated_len = input_val.length;
+        caret_pos = updated_len - original_len + caret_pos;
+        input[0].setSelectionRange(caret_pos, caret_pos);
+    }
+
+    function to_beprinted(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+
+    // INPUTBOX ENTER BTN LISTENER
+    var input = document.getElementById("preq_box_42");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("submit_btn_42").click();
+        }
+    });
+
+    //Show Others Check Box 
+    function insert_others() {
+        var othersbox = document.getElementById("Others_check_42").checked;
+
+        if (othersbox == true) {
+            document.getElementById("others_box_42").style.display = "block";
+        } else {
+            document.getElementById("others_box_42").style.display = "none";
+        }
+    }
+
+    document.getElementById("others_box_42").style.display = "none";
+
+
+    // SET ONE CHECKBOX TO CHOOSE ONLY
+    $('input.chk').on('change', function() {
+    $('input.chk').not(this).prop('checked', false);  
+});
+
+// RESET FORMS
+function reset_form(){
+    document.getElementById("clear_form").reset();
+}
+
+// GET OTHERS PURPOSE INPUT
+function get_other_purpose(){
+    others= document.getElementById("others_box_42").value;
+    document.getElementById("others_box_42").value = "Others:" + others;
+}
+
+</script>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Faculty Database</title>
+</head>
+
+
+<style>
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    i {
+        padding-left: 10px;
+    }
+
+    hr {
+        border-top: 2px solid black;
+    }
+
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+        padding-top: 40px;
+    }
+
+    a {
+        font-style: italic;
+        color: black;
+    }
+
+    p1 {
+        font-size: 30px;
+    }
+
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    thead td {
+        text-align: center;
+        background-color: #dedede;
+        color: black;
+    }
+
+    #backtotop_btn_74 {
+        display: inline-block;
+        background-color: #e1a19d;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+
+    #backtotop_btn_74::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+
+    #backtotop_btn_74:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+
+    #backtotop_btn_74:active {
+        background-color: #555;
+    }
+
+    #backtotop_btn_74.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #list_tbl_74 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+    #list_tbl_74 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+        text-align: left;
+        padding-left: 30px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+
+    #search_box_74 {
+        border-radius: 30px;
+        padding-right: 15px;
+        padding-left: 17px;
+        width: 50%;
+        margin: 10px 0 0 11px;
+    }
+
+    #search_btn_74 {
+        background-color: #dedede;
+        color: black;
+        max-width: 204px;
+        padding: 1px 15px 1px 15px;
+        margin: 10px 0 0 7px;
+    }
+
+    a :hover {
+        color: #fff;
+    }
+
+    #dashboard_header_74 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 4px;
+        padding-bottom: 6px;
+        text-align: center;
+    }
+
+    #department_box_74 {
+        width: auto;
+        background-color: #e7dfe4;
+        margin: 10px 0 0 10px;
+    }
+
+    #add_btn_74 {
+        padding: 1px 10px 1px 10px;
+        margin: 10px 0 0 9px;
+    }
+
+    .fas {
+        padding-right: 10px;
+    }
+
+    button {
+        padding: 0 20px 2px 20px;
+    }
+
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+
+    #list_tbl_74 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+
+    #list_tbl_74 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+
+    .modal-confirm {
+        color: #636363;
+        width: 325px;
+        margin: 30px auto;
+    }
+
+    .modal-confirm .btn:hover,
+    .modal-confirm .btn:focus {
+        background: #d3324d;
+        outline: none;
+    }
+
+    .modal-confirm .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .modal-confirm .modal-header {
+        border-bottom: none;
+        position: relative;
+    }
+
+    .modal-confirm h4 {
+        text-align: center;
+        font-size: 26px;
+        margin: 30px 0 -15px;
+    }
+
+    .modal-confirm .form-control,
+    .modal-confirm .btn {
+        min-height: 40px;
+        border-radius: 3px;
+    }
+
+    .modal-confirm .close {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+    }
+
+    .modal-confirm .modal-footer {
+        border: none;
+        text-align: center;
+        border-radius: 0px 0px 10px 10px;
+        font-size: 13px;
+    }
+
+    .modal-confirm .icon-box {
+        color: #fff;
+        position: absolute;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: -70px;
+        width: 95px;
+        height: 95px;
+        border-radius: 50%;
+        z-index: 9;
+        background: #424242;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-confirm .icon-box i {
+        font-size: 58px;
+        position: relative;
+        top: 3px;
+    }
+
+    .modal-confirm.modal-dialog {
+        margin-top: 80px;
+    }
+
+    .modal-confirm .btn {
+        color: #fff;
+        border-radius: 4px;
+        background: #c51d3a;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        border: none;
+    }
+
+    .modal-confirm .btn:hover,
+    .modal-confirm .btn:focus {
+        background: #d3324d;
+        outline: none;
+    }
+</style>
+
+<body>
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_74"></a>
+
+    <!-- FACULTY ADDER MODAL -->
+    <div id="FacultyAdder_74" class="modal fade">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header">
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" onClick="resetter()" class="close" data-dismiss="modal" data-toggle="tooltip" data-placement="right" title="Close">x
+                    </button>
+                </div>
+
+                <!--MODAL BODY-->
+                    <div class="modal-body" style="background-color: white;">
+                        <div class="row">
+                            <!--NAME BOX-->
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="firstname_box_074">First Name: </label>
+                                    <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="firstname_box_74" name="firstname_box_074" placeholder="Enter first name" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" required autofocus>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="middlename_box">Middle Name: </label>
+                                    <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="middlename_box_74" name="middlename_box_074" aria-describedby="name-help" placeholder="Enter middle name" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+                                    <small id="name-help_74" class="form-text text-muted">This section is not required.</small>
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="surname_box_074">Last Name: </label>
+                                    <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="surname_box_74" name="surname_box_074" placeholder="Enter last name" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--DEPARTMENT DROPDOWN BOX-->
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="department-dropdown">Department: </label>
+                                <select id="department_modal_box_74" name="department_modal_box_074" style="background-color: #e7dfe4; color: #424242; padding-left: 5px;" required>
+                                    <option value="selectdepart" hidden>--SELECT--</option>
+                                    <option value="DIT">Industrial Technology Department (DIT)</option>
+                                    <option value="DED">Industrial Educational Department (DED)</option>
+                                    <option value="IED">Industrial Engineering Department (IED)</option>
+                                    <option value="DLA">Liberal Arts Department (DLA)</option>
+                                    <option value="DMS">Math and Science Department (DMS)</option>
+                                    <option value="OGS">Guidance (OGS)</option>
+                                    <option value="OCL">Library (OCL)</option>
+                                    <option value="OSA">Student Affairs (OSA)</option>
+                                    <option value="DOE">Department of Engineering (DOE)</option>
+                                    <option value="OAC">ADAA (OAC)</option>
+                                    <option value="DPE">Department of Physical Education Culture and Sports (DPE)</option>
+                                    <option value="OCS">Accountant (OCS)</option>
+                                    <option value="OES">Extension Services (OES)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--MODAL FOOTER-->
+                    <div class="modal-footer" style="background-color: #c51d3a; ">
+
+                        <!--ADD FACULTY  BUTTON-->
+                        <button type="button submit" id="adder_btn_74" style="background-color: #424242; color: #fff; height: 50px; width: 20%; border-radius: 10px;" name="submit1">Add Faculty</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MAIN-->
+
+    <!--NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_74">
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
+        <a href="{% url 'registrar_dashboard_faculty_list' %}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; " id="search_box_74" name="search_box_074" placeholder="Search" onkeyup="searching()" onsearch="OnSearch (this)" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+
+        <!--SEARCH BUTTON
+        <button onClick="return search()" type="button" id="search_btn_74">Search</button>-->
+
+        <!--ADD FACULTY BUTTON-->
+        <button type="button" id="add_74" data-toggle="modal" data-target="#FacultyAdder_74">Add Faculty</button>
+
+        <!--DEPARTMENT DROPDOWN BOX
+        <select style="width:auto; background-color: #e7dfe4;" id="department_box_74" name="department">
+            <option value ="Department" hidden> Department</option>
+            <option value="DIT">Department</option>
+            <option value="DIT">DIT</option>
+            <option value="DED">DED</option>
+            <option value="DMS">DMS</option>
+            <option value="DOE">DOE</option>
+            <option value="DPE">DPE</option>
+            <option value="OAC">OAC(ADAA)</option>
+            <option value="OAD">OAD(Admission)</option>
+            <option value="OCS">OCS(Cashier)</option>
+            <option value="OHS">OHS(Clinic)</option>
+            <option value="OES">OES(Extension Services)</option>
+            <option value="OSH">OSH(Guard House)</option>
+            <option value="OGS">OGS(Guidance)</option>
+            <option value="DLA">DLA(</option>
+            <option value="OCL">OCL(Library)</option>
+            <option value="OCR">OCR(Registrar)</option>
+            <option value="ORS">ORS(Research Serices)</option>
+            <option value="OSA">OSA(Student Affairs)</option>
+            <option value="OIT">OIT(Information Technology)</option>
+            <option value="PMC">PMC)</option>
+            <option value="GAD">GAD</option>
+        </select>-->
+
+
+    </div>
+    <br>
+    <h3 style="text-align:center;"><b>Faculty List</b></h3>
+
+    <!--MAIN TABLE-->
+    <div class="wrapper_all">
+        <table class="table-sortable table table-hover results" id="list_tbl_74">
+            <thead style="background-color: #c51d3a; color: white;">
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th title="Sur Name"> Surname (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                    <th title="First Name"> First Name (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                    <th title="Middle Name">Middle Name (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                    <th title="Department">Department (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
+                    <th></th>
+                </tr>
+                <tr class="warning no-result">
+                    <td colspan="7" style="text-align: center;"><i class="fa fa-warning"></i> No result</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+
+    <p class="text-center text-bold " id="p6_74 "></p>
+
+
+</body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
+
+</html>
+
+
+<script>
+    function openrdb() {
+        window.location.replace("{% url 'registrar_dashboard' %} ");
+    }
+
+    function openrdbf() {
+        window.location.replace("{% url 'registrar_dashboard_faculty_list' %} ");
+    }
+
+    // FACULTY ADDER
+    function add_faculty() {
+        var fn = document.getElementById("firstname_box_74 ").value;
+        var mn = document.getElementById("middlename_box_74 ").value;
+        var ln = document.getElementById("surname_box_74 ").value;
+        var drp = document.getElementById("department_modal_box_74 ").value;
+
+        if (fn && ln != " ") {
+            if (drp != 'selectdepart') {
+                var table = document.getElementById("list_tbl_74 ");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var e = document.getElementById("department_modal_box_74 ");
+                var value = e.options[e.selectedIndex].value; // get selected option value
+                var text = e.options[e.selectedIndex].text;
+                var name = fn + " " + mn + " " + ln;
+                let btn = document.createElement("button ");
+                btn.innerHTML = "Delete ";
+                cell1.innerHTML = "true ";
+                cell2.innerHTML = name.bold();
+                cell3.innerHTML = text;
+                cell4.innerHTML = '<button type="button " onclick="deleteRow(this) ">Delete</button>';
+                $('#FacultyAdder_74').modal('hide');
+                $('td:contains("true ")').html("<i class='fas fa-user-tie' style='font-size:40px;' aria-hidden='true'></i>");
+                document.getElementById("firstname_box_74").value = "";
+                document.getElementById("middlename_box_74").value = "";
+                document.getElementById("surname_box_74").value = "";
+                document.getElementById("department_modal_box_74").value = 'selectdepart';
+            } else {
+                alert("Please choose a department.");
+            }
+        } else if (fn != "" && ln == "") {
+            if (drp != 'department_modal_box') {} else {
+                alert("Please choose a department.");
+            }
+            alert("Please enter a surname.");
+        } else if (fn == "" && ln != "") {
+            if (drp != 'department_modal_box') {} else {
+                alert("Please choose a department.");
+            }
+            alert("Please enter a first name.");
+        } else {
+            if (drp != 'department_modal_box') {} else {
+                alert("Please choose a department.");
+            }
+            alert("Please fill out all fields.");
+        }
+    }
+
+    /*RETURN TO NORMAL WHEN BACKSPACE IN SEARCH 
+    var filtered = tData.filter(function(_, index) {
+        if (searchFiled.value) {
+            return rows.indexOf(index) >= 0;
+        } else {
+            return true;
+        }
+    });*/
+
+    // SEARCH
+    function searching() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_74");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // RESET WHEN CLOSING
+    function resetter() {
+        document.getElementById("firstname_box_74").value = '';
+        document.getElementById("surname_box_74").value = '';
+        document.getElementById("middlename_box_74").value = '';
+        document.getElementById("department_modal_box_74").value = "selectdepart";
+
+    }
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#surname_box_74', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#firstname_box_74', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#middlename_box_74', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    $(function() {
+        $('body').on('keydown', '#search_box_74', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    //DELETE ROWS
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_74").deleteRow(i);
+    }
+
+    // MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#firstname_box_74");
+        var txt2 = $("#middlename_box_74");
+        var txt3 = $("#surname_box_74");
+        var txt4 = $("#search_box_74");
+
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+
+        var func = function() {
+            txt2.val(txt2.val().replace(/\s\s+/g, ' '));
+        }
+        txt2.keyup(func).blur(func);
+
+        var func = function() {
+            txt3.val(txt3.val().replace(/\s\s+/g, ' '));
+        }
+        txt3.keyup(func).blur(func);
+
+        var func = function() {
+            txt4.val(txt4.val().replace(/\s\s+/g, ' '));
+        }
+        txt4.keyup(func).blur(func);
+    });
+
+    //SORT
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        /* Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }*/
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable th").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_74").value = "";
+    });
+
+    // RESET FORMS WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("firstname_box_74").value = "";
+        document.getElementById("middlename_box_74").value = "";
+        document.getElementById("surname_box_74").value = "";
+        document.getElementById("department_modal_box_74").value = "selectdepart";
+    });     document.getElementById("department_modal_box_74").value = "selectdepart";
+        
+</script>

@@ -1,0 +1,702 @@
+<!--
+BET-COET-3A 2021-2022
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Application for Graduation and Clearance</title>
+</head>              
+
+<style>
+    #maincontent_01{
+        overflow-y: unset;
+    }
+
+    #person_01{
+        float: center;
+    }
+    * {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    
+    body {
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/bg.png' %}");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        margin: 0;
+        min-height: 400px;
+        margin-bottom: 100px;
+        clear: both;
+    }
+    .normal {
+    background-color: #dedede;
+    }
+
+    .active {
+    background-color: #747474;
+    }
+    h1 {
+        font-size: 60px;
+        margin-top: 80px;
+    }
+    
+    .i2{
+        color: #fff;
+    }
+
+    .i2:hover{
+        color: #d3324d;
+        border: #d3324d;
+    
+    }
+
+    .img-fluid {
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+    
+    .btn-1 {
+        margin: 0px 0px 0px 10px;
+        color: white;
+        background-color: #c51d3a;
+        border: #c51d3a;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        padding: 15px;
+        width: 19%;
+    }
+    
+    .btn-1:hover {
+        color: #dedede;
+        background-color: #d3324d;
+        border: #d3324d;
+    }
+    
+    .btn-2 {
+        color: #ffff;
+        background-color: #424242;
+        margin: 0px 0px 0px 10px;
+        border-radius: 10px;
+        border: #424242;
+    }
+    
+    .btn-2:hover {
+        color: #ffff;
+        background-color: #616161;
+        border: #616161;
+    }
+    
+    .btn-3 {
+        margin: 0px 0px 0px 15px;
+        color: black;
+        border-radius: 10px;
+        background-color: #dedede;
+        width: 25%;
+    }
+    
+    .btn-3:hover {
+        color: black;
+        background-color: #f5f0f6;
+    }
+    
+    .btn-4 {
+        color: white;
+        font-size: 20px;
+        padding: 0 50 0 0;
+    }
+    
+    .btn-4:hover {
+        color: #c51d3a;
+        text-decoration: underline;
+        transition: 0.5s;
+    }
+    
+    .btn-5 {
+        color: white;
+        background-color: #c51d3a;
+        width: 25%;
+    }
+    
+    .btn-5:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        /* background-color: #323336; */
+        /* background:rgba(255, 255, 255, .15);  
+        backdrop-filter: blur(5px); */
+        color: white;
+    }
+    
+    .modal-footer {
+        background-color: #c51d3a;
+    }
+    
+    .modal-1 {
+        background-color: #424242;
+        color: white;
+    }
+    
+    .input-group-addon,
+    .input-group-addon:hover {
+        border: 1px;
+        padding: 5px;
+        background-color: #dedede;
+    }
+    
+    i {
+        color: black;
+    }
+    
+    h6 {
+        overflow: hidden;
+        text-align: center;
+        padding: 5px;
+    }
+    
+    h6:before,
+    h6:after {
+        background-color: #000;
+        content: "";
+        display: inline-block;
+        height: 1px;
+        position: relative;
+        vertical-align: middle;
+        width: 50%;
+    }
+    
+    h6:before {
+        right: 0.5em;
+        margin-left: -50%;
+    }
+    
+    h6:after {
+        left: 0.5em;
+        margin-right: -50%;
+    }
+    
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+    
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    .modal-body {
+        max-height: calc(100vh - 210px);
+        overflow-y: auto;
+    }
+    
+    .close_btn {
+        border: 0 none !important;
+        color: #fff7cc;
+        background-color: #424242;
+    }
+    
+    p {
+        border-color: red;
+        color: red;
+        font-size: 13px;
+    }
+    
+    #displink:hover {
+        color: #c51d3a;
+    }
+    
+    #displink {
+        color: black;
+        font-style: italic;
+    }
+    
+    #maincontent_01 {
+        background-color: #dedede;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        padding-top: 40px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border: 1px solid;
+    }
+    
+    #des_01 {
+        /* padding-left: 30px; */
+        display: inline;
+        text-align: center;
+        line-height: 25px;
+        font-size: 20px;
+        letter-spacing: -1px;
+    }
+    
+    #person_01 {
+        font-size: 20px;
+        padding-top: 40px;
+        padding: 40px 15px 0 15px;
+        margin: 0 54.5px 0 17.5px;
+    }
+    
+    #form_01 {
+        padding-top: 50px;
+        text-align: center;
+        padding: 50px 15px 0 15px;
+    }
+    
+    #officername_01 {
+        margin: 0 0 0 6px;
+        display: inline;
+        width: 6px;
+        padding: 0 0 0 3px;
+        font-size: 20px;
+        text-decoration: none;
+    }
+    
+    #nametitle_01 {
+        font-size: 25px;
+        display: inline;
+        overflow-wrap: break-word;
+    }
+    
+    #info_cir {
+        color: black;
+        text-shadow: none;
+    }
+    
+    .modal-footer1 {
+        background-color: #c51d3a;
+    }
+    
+    #main {
+        margin-left: 20px;
+        margin-right: 20px;
+        overflow-wrap: break-word;
+    }
+    
+    #title1_lbl {
+        background-color: #dedede;
+    }
+    
+    #location_lbl {
+        padding-top: 35px;
+        padding-bottom: 20px;
+    }
+    
+    #mail_lbl {
+        padding-top: 25px;
+        padding-bottom: 20px;
+    }
+    
+    #facebook_lbl {
+        padding-top: 25px;
+        padding-bottom: 80px;
+    }
+    
+    a {
+        color: black;
+    }
+    
+    #info_div {
+        padding-left: 50px;
+    }
+    
+    #contact_phonelogo {
+        color: black;
+        text-shadow: none;
+    }
+    
+    a:hover {
+        color: #c51d3a;
+    }
+    
+    .fa-facebook-square:hover {
+        color: #c51d3a;
+    }
+    
+    .fa-map-marker:hover {
+        color: #c51d3a;
+    }
+    
+    .fa-envelope:hover {
+        color: #c51d3a;
+    }
+</style>
+
+<body>
+    <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
+    <!--FOR LETTERS WITH SPACE ONLY onkeypress="return (event.charCode > 64 && event.charCode < 91)
+        || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"-->
+
+    <!-- MESSAGE BANNER -->
+    {% include 'html_files/message.html'%}
+
+    <!--PRE SIGNUP MODAL-->
+    <div class="modal fade" id="PreSignUp_modal_01" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width: 80%;">
+
+                <!--PRE SIGNUP MODAL HEADER-->
+                <div class="modal-header">
+                    <h3 class="modal-title">Are you a...</h3>
+
+                    <!--PRE SIGNUP MODAL CLOSE BUTTON-->
+                    <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
+                     data-placement="right" title="Close">x</button>
+                </div>
+                
+                <!--PRE SIGNUP MODAL BODY-->
+                <div class="modal-body w-100 text-center">
+
+                    <!--PRE SIGNUP MODAL STUDENT SIGN UP BUTTON-->
+                    <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark "
+                     id="studentsignup_btn_01" style="width: max-content;"> I'm a Student
+                        </a>
+
+                    <!--PRE SIGNUP MODAL FACULTY SIGN UP BUTTON-->
+                    <a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 border-dark "
+                     id="facultysignup_btn_01" style="width: max-content;">I'm a Faculty
+                        </a>
+                </div>
+                
+                <!--PRE SIGNUP MODAL FOOTER-->
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MAIN SCREEN-->
+    <div class="container p-sm-4 mt-5 container-1">
+        <div class="row">
+            <div class="col-sm-7">
+                <h1 class=" text-white" style="margin-top: 110px;"> Application for Graduation and Clearance</h1>
+                <h3 class="text-white">TUP-CAVITE</h3>
+            </div>
+
+            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div style="margin-bottom: 30px;">
+
+                        <!--EMAIL INPUT BOX-->
+                        <div class="container" style="margin-top: 30px;">
+                            <div class="input-group">
+                                <input type="text" id="email_box_01" name="email_box_01" class="form-control input-field" 
+                                placeholder="Username" style="height: 50px; margin-bottom: 20px;" required autofocus>
+                            </div>
+                        </div>
+        
+                        <!--PASSWORD INPUT BOX-->
+                        <div class="container">
+                            <div class="input-group" id="show_hide_password6_01">
+                                <input class="form-control input-field" type="password" name="password_box_01"
+                                placeholder="Password" id="password_box_01" style="height: 50px; margin-bottom: 15px;"
+                                required>
+                            </div>
+
+                            <!-- SHOW PASSWORD CHECKBOX -->
+                            <div>
+                                <input type="checkbox" id="showPassword1"/>
+                                <label for="showPassword1">Show password</label>
+                            </div>
+                        </div>
+    
+                        <!--LOGIN OR SIGN UP BUTTON-->
+                        <div class="container text-center">
+        
+                            <!--LOGIN BUTTON-->
+                            <a><button type="submit" class="btn btn-5 " name="login_btn" 
+                                id="login_btn_01" style="height: 50px; width: 100%;">Login</button></a>
+
+                            <!-- OR LABEL -->
+                            <h6 style="margin-top: 10px; margin-bottom: 10px;">OR</h6>
+        
+                            <!--SIGNUP BUTTON-->
+                            <a href="#PreSignUp_modal_01" data-toggle="modal" data-dismiss="modal">
+                                <button type="button" class="btn btn-5" id="signup_btn_01" 
+                                style="height: 50px; width: 50%; background-color: #424242">Sign Up</button></a>
+
+                            <!-- FORGOT PASSWORD LABEL -->
+                            <!-- <div class="container" style="margin-top: 10px; ">
+                                <a class="text-red" id="forgetpass_lbl"><i>Forgot password?</i></a>
+                            </div> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--ABOUT US MODAL-->
+    <div id="AboutUs_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="aboutus_modal">
+            <div class="modal-content">
+
+                <!--ABOUT US MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>About Us</b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-info-circle">
+                        </i>
+                    </h3>
+
+                    <!--ABOUT US MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">×</button>
+                </div>
+
+                <!--ABOUT US MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+
+                    <!--DESCRIPTION LABEL-->
+                    <div id="des_01" class="container-fluid" style="float: center;">
+                        <h5 style="float: center;">Services at the Registrar&#039;s Office such as requests
+                             for Transcript of Records,Diploma,Certifications, Subject Descriptions, 
+                             Evaluation of Grades,Authentication of Documents are exclusively
+                             offered to TUP-CAVITE students</h5>
+                    </div>
+
+                    <!--OFFICER IN CHARGE LABEL-->
+                    <div id="person_01" class="container-fluid">
+                        <h5 id="officername_01" style="float: center;"><b>Officer-in-Charge:Ms. Sarah Jane Velos</b></h5>
+                    </div>
+
+                    <!--FORM LINK LABEL-->
+                    <div id="form_01" class="container-fluid">
+                        <div class="container-fluid">To request Forms this is the link:</div>
+                        <div id="docslink">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" 
+                            id="displink">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABOUT US MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CONTACT US MODAL-->
+    <div id="ContactUs_modal_01" class="modal fade">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered">
+            <div class="modal-content">
+
+                <!--CONTACT US MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>Contact Us</b>
+                        <i class="fa fa-phone " id="contact_phonelogo" aria-hidden="true"></i>
+                    </h3>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip"
+                     data-placement="right" title="Close">×</button>
+                </div>
+
+                <!--CONTACT US MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+
+                    <!--DESCRIPTION LABEL-->
+                    <div class="row" id="main">
+                        <div class="col-xs-8 col-sm-offset-1 col-sm-7 d-flex justify-content-center"></div>
+                        <div class="container p-3" id="title1_lbl">
+                            <p1 style="font-size: 20px;"> You can also contact us through the following:</p1><br />
+                            <div class="container" id="info_div">
+
+                                <!--LOCATION LABEL-->
+                                <div class="row" id="location_lbl">
+                                    <div class="col-xs-1 col-sm-1" id="location_icn">
+                                        <a href="https://www.google.com/maps/place/Technological+University+of+the+
+                                        Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4
+                                        !1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">
+                                            <i class="fa fa-map-marker" aria-hidden="true" style="font-size: 50px">
+                                            </i>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-11 col-md-11">
+                                        <div><b>Address:</b></div>
+                                        <div><a href="https://www.google.com/maps/place/Technological+University+of+the
+                                            +Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!
+                                            3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">
+                                            Carlos Trinidad Ave, Salawag, Dasmariñas, Cavite</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--EMAIL LABEL-->
+                                <div class="row" id="mail_lbl">
+                                    <div class="col-xs-1 col-sm-1" id="mail_icn">
+                                        <a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">
+                                            <i class="fa fa-envelope" aria-hidden="true" style="font-size: 40px">
+                                                </i>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-11 col-md-11">
+                                        <div><b>Email:</b></div>
+                                        <div>
+                                            <a href="https://mail.google.com/mail/u/0/?
+                                            fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">tupc_registrar@tup.edu.ph</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--FACEBOOK LABEL-->
+                                <div class="row" id="facebook_lbl">
+                                    <div class="col-xs-1 col-sm-1" id="facebook_icn">
+                                        <a href="https://www.facebook.com/TUPCavite.registrar">
+                                            <i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 50px"></i></a>
+                                    </div>
+
+                                    <div class="col-xs-11 col-md-11">
+                                        <div><b>Facebook Page:</b></div>
+                                        <div><a href="https://www.facebook.com/TUPCavite.registrar">
+                                            https://www.facebook.com/TUPCavite.registrar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--CONTACT US MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <div>
+        <!-- CONTACT US AND ABOUT US BUTTONS -->
+        <p style="color: white; border-color: none; text-align: center;">
+            <div style="float: center; padding-right: 10px;" >
+
+                <!-- ABOUT US BUTTON -->
+                <a data-toggle="modal" data-target="#AboutUs_modal_01" class="btn btn-4" 
+                id="about_btn_01" style="padding:0;"><span class="fa-stack fa-lg ">
+                    <i class="fa fa-circle-thin fa-stack-2x i2 "></i>
+                    <i class="fa fa-info fa-stack-lg i2"></i>
+                  </span></a>
+
+                <!-- CONTACT US BUTTON -->
+                <a data-toggle="modal" data-target="#ContactUs_modal_01" class="btn btn-4 " 
+                id="contact_btn_01" style="padding:0;"><span class="fa-stack fa-lg">
+                    <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
+                    <i class="fa fa-phone fa-stack-lg i2" ></i> 
+                  </span></a>&nbsp; &nbsp;<b>© Copyright 2021 </b></div>
+        </p>
+    </div>
+</footer>
+</html>
+
+<script>
+    $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
+    $(this)
+        .find("input,textarea,select")
+        .val('')
+        .end()
+        .find("input[type=checkbox], input[type=radio]")
+        .prop("checked", "")
+        .end();
+    })
+
+    //AUTOMATICALLY CAPITALIZE TEXTS
+    $("#id_last_name, #id_middle_name, #id_first_name,#id_username, #email_box_01").on('input', function(evt) {
+        var input = $(this);
+        var start = input[0].selectionStart;
+        $(this).val(function (_, val) {
+          return val.toUpperCase();
+        });
+        input[0].selectionStart = input[0].selectionEnd = start;
+      });
+
+    // PREVENT LEADING WHITE SPACES
+    $("input").on("keypress", function(e) {
+        if (e.which === 32 && !this.value.length){
+        e.preventDefault();
+        }
+    });
+
+    // PREVENT MULTIPLE SPACES
+    $('input').bind('DOMAttrModified textInput input keyup paste',function(){
+        var sspace = $(this).val().replace(/ +/g, ' ');
+           if ($(this).val() != sspace)
+               $(this).val(sspace);
+         });
+
+    $(function () {
+        $('#id_id_number').keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            $text = $(this); 
+            if (key !== 8 && key !== 9) {
+                if ($text.val().length === 2) {
+                    $text.val($text.val() + '-');
+                }
+            }
+            return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+            
+        })
+    });
+
+    $(function () {
+        $('#id_contact_number').keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            $text = $(this); 
+            if (key !== 8 && key !== 9) {
+                if ($text.val().length === 4) {
+                    $text.val($text.val() + '-');
+                }
+                if ($text.val().length === 8) {
+                    $text.val($text.val() + '-');
+                }
+            }
+            return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+            
+        })
+    });
+
+    // SHOW AND HIDE PASSWORD
+    document.getElementById('showPassword1').onclick = function() {
+    if ( this.checked ) {
+       document.getElementById('password_box_01').type = "text";
+    } else {
+       document.getElementById('password_box_01').type = "password";
+    }
+};
+</script>
+
+

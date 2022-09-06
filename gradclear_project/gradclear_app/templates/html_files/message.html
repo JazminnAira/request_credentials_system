@@ -1,0 +1,10 @@
+{%if messages%}
+{%for message in messages%}
+<div class = 'fade alert {{ message.tags}} m-2 alert-dismissible show' id ="msg" role="alert"  >
+    <b>{{message}}</b><button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+</div>
+{% endfor%}
+
+{%endif%}
