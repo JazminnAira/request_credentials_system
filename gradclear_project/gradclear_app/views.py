@@ -397,7 +397,7 @@ def clearance_print(request, id):
     #Merging 2 Pdfs
     buffer.seek(0)
     infos = PdfFileReader(buffer)
-    clearance_pdf = PdfFileReader(open(r'C:\Users\jazmi\tupc_credentials\gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
+    clearance_pdf = PdfFileReader(open(r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
     
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -405,7 +405,7 @@ def clearance_print(request, id):
     output = PdfFileWriter()
     
     output.addPage(info_page)
-    to_merge = open(r'C:\Users\jazmi\tupc_credentials\gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
+    to_merge = open(r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
     
