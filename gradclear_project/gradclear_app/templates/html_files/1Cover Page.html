@@ -27,10 +27,25 @@ Adviser:
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <title>Application for Graduation and Clearance</title>
+    <title>TUPC Registrar</title>
 </head>              
 
 <style>
+    #mid_div{
+  
+    background: rgba(197, 29, 58, 0.53);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.1px);
+    -webkit-backdrop-filter: blur(4.1px);
+    border: 1px solid rgba(197, 29, 58, 0.48);
+    padding-right: 40px;
+    padding-bottom: 90px;
+    margin-top: 50px;
+
+    
+    }
+
     #maincontent_01{
         overflow-y: unset;
     }
@@ -43,7 +58,8 @@ Adviser:
     }
     
     body {
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/bg.png' %}");
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+         url("{% static 'Media/tup.jpg' %}");
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
@@ -409,12 +425,10 @@ Adviser:
 <body>
     <ul>
         <li><a href="#services">Services</a></li>
-        <li><a href="#guide">Guide</a></li>
+        <li><a href="#how_to">How To</a></li>
         <li><a href="#people">People</a></li>
-        <li><a href="#mission">Mission</a></li>
-        <li><a href="#vission">Vission</a></li>
-        <li style="float:right"><a class="active" data-toggle="modal" data-target="#AboutUs_modal_01" >About</a></li>
-      </ul>
+        <li><a href="#about" data-toggle="modal" data-target="#AboutUs_modal_01">About</a></li>
+    </ul>
     
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
     <!--FOR LETTERS WITH SPACE ONLY onkeypress="return (event.charCode > 64 && event.charCode < 91)
@@ -422,7 +436,7 @@ Adviser:
 
     <!-- MESSAGE BANNER -->
     {% include 'html_files/message.html'%}
-
+    
     <!--PRE SIGNUP MODAL-->
     <div class="modal fade" id="PreSignUp_modal_01" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -446,7 +460,7 @@ Adviser:
                         </a>
 
                     <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark "
-                     id="studentsignup_btn_01" style="width: max-content;"> I'm an Alumni
+                     id="studentsignup_btn_01" style="width: max-content;"> I'm an Alumnus
                         </a>
 
                     <!--PRE SIGNUP MODAL FACULTY SIGN UP BUTTON-->
@@ -467,13 +481,15 @@ Adviser:
 
     <!--MAIN SCREEN-->
     <div class="container p-sm-4 mt-5 container-1">
-        <div class="row">
-            <div class="col-sm-7">
-                <h1 class=" text-white" style="margin-top: 110px;"> Application for Graduation and Clearance</h1>
-                <h3 class="text-white">TUP-CAVITE</h3>
+        <div class="row container-fluid" id="mid_div" > 
+            <div class="col-sm-7 ">
+                <h1 class=" text-white" style="margin-top: 110px;"> Office of the Registrar</h1>
+                <h2 class=" text-white">TUP Cavite</h2>
+    
             </div>
-
+            
             <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;">
+                
                 <form method="POST">
                     {% csrf_token %}
                     <div style="margin-bottom: 30px;">
@@ -671,23 +687,37 @@ Adviser:
     <div>
         <!-- CONTACT US AND ABOUT US BUTTONS -->
         <p style="color: white; border-color: none; text-align: center;">
-            <div style="float: center; padding-right: 10px;" >
+            <div style="float: center; padding-right: 10px;">
+                
+                <!-- CONTACTS FOOTER -->
 
-                <!-- ABOUT US BUTTON -->
-                <a data-toggle="modal" data-target="#AboutUs_modal_01" class="btn btn-4" 
-                id="about_btn_01" style="padding:0;"><span class="fa-stack fa-lg " data-toggle="tooltip" 
-                data-placement="left" title="About Us">
+                <!-- LOCATION BUTTON -->
+                <a href="https://www.google.com/maps/place/Technological+University+of+the+
+                Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4
+                !1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019" 
+                    class="btn btn-4" id="loc_btn_01" style="padding:0;"><span class="fa-stack fa-lg "
+                    data-toggle="tooltip" data-placement="left" title="Maps">
                     <i class="fa fa-circle-thin fa-stack-2x i2 "></i>
-                    <i class="fa fa-info fa-stack-lg i2"></i>
+                    <i class="fa fa-map-marker fa-stack-lg i2"></i>
                   </span></a>
 
-                <!-- CONTACT US BUTTON -->
-                <a data-toggle="modal" data-target="#ContactUs_modal_01" class="btn btn-4 " 
-                id="contact_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
-                data-placement="right" title="Contact Us">
+                <!-- EMAIL BUTTON -->
+                <a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm"
+                    class="btn btn-4 " id="email_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
+                    data-placement="right" title="Mail">
                     <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
-                    <i class="fa fa-phone fa-stack-lg i2" ></i> 
-                  </span></a>&nbsp; &nbsp;<b>© Copyright 2021 </b></div>
+                    <i class="fa fa-envelope-o fa-stack-lg i2" ></i> 
+                
+                <!-- FACEBOOK BUTTON -->
+                <a href="https://www.facebook.com/TUPCavite.registrar"
+                class="btn btn-4 " id="facebook_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
+                data-placement="right" title="Facebook">
+                <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
+                <i class="fa fa-facebook fa-stack-lg i2" ></i> 
+
+                  </span></a>&nbsp; &nbsp;<b> Copyright © All Rights Reserved 2022 </b>
+               
+                </div>
         </p>
     </div>
 </footer>
