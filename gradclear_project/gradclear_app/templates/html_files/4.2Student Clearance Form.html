@@ -111,7 +111,8 @@
     #receiptnum_box_42,
     #ln_box_42,
     #fn_box_42,
-    #mn_box_42 {
+    #mn_box_42,
+    #padd_box_42 {
         background-color: #e7dfe4;
         border: 1px solid #ccc9c9;
     }
@@ -517,7 +518,7 @@
             <div class="form-group row">
                 <label for="padd_42" class="col-sm-2 col-form-label col-form-label-sm" id="padd_lbl_42">Present Address:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="padd_box_42" name="padd_box_420" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" oninput="enter_padd()" required>
+                    <input type="text" id="padd_box_42" name="padd_box_420" class="form-control"  onkeyup="isEmpty()" value="{{request.user.address}}" oninput="this.value = this.value.toUpperCase()" oninput="enter_padd()" readonly required>
                     <p id="padd_error_42"></p>
                 </div>
             </div>

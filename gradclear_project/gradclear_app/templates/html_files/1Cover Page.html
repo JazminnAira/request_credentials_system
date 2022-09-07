@@ -52,6 +52,7 @@ Adviser:
         min-height: 400px;
         margin-bottom: 100px;
         clear: both;
+        
     }
     .normal {
     background-color: #dedede;
@@ -145,6 +146,17 @@ Adviser:
     .btn-5:hover {
         color: white;
         background-color: #d3324d;
+    }
+
+    .btn-6 {
+        color: white;
+        background-color: #424242;
+        width: 25%;
+    }
+    
+    .btn-6:hover {
+        color: white;
+        background-color: #616161;
     }
     
     footer {
@@ -445,8 +457,8 @@ Adviser:
         
                             <!--SIGNUP BUTTON-->
                             <a href="#PreSignUp_modal_01" data-toggle="modal" data-dismiss="modal">
-                                <button type="button" class="btn btn-5" id="signup_btn_01" 
-                                style="height: 50px; width: 50%; background-color: #424242">Sign Up</button></a>
+                                <button type="button" class="btn btn-6" id="signup_btn_01" 
+                                style="height: 50px; width: 50%;">Sign Up</button></a>
 
                             <!-- FORGOT PASSWORD LABEL -->
                             <!-- <div class="container" style="margin-top: 10px; ">
@@ -607,14 +619,16 @@ Adviser:
 
                 <!-- ABOUT US BUTTON -->
                 <a data-toggle="modal" data-target="#AboutUs_modal_01" class="btn btn-4" 
-                id="about_btn_01" style="padding:0;"><span class="fa-stack fa-lg ">
+                id="about_btn_01" style="padding:0;"><span class="fa-stack fa-lg " data-toggle="tooltip" 
+                data-placement="left" title="About Us">
                     <i class="fa fa-circle-thin fa-stack-2x i2 "></i>
                     <i class="fa fa-info fa-stack-lg i2"></i>
                   </span></a>
 
                 <!-- CONTACT US BUTTON -->
                 <a data-toggle="modal" data-target="#ContactUs_modal_01" class="btn btn-4 " 
-                id="contact_btn_01" style="padding:0;"><span class="fa-stack fa-lg">
+                id="contact_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
+                data-placement="right" title="Contact Us">
                     <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
                     <i class="fa fa-phone fa-stack-lg i2" ></i> 
                   </span></a>&nbsp; &nbsp;<b>© Copyright 2021 </b></div>

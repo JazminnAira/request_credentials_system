@@ -14,13 +14,15 @@ class signup_form(UserCreationForm):
 
     class Meta(UserCreationForm):
         model = user_table
-        fields = ['email', 'first_name', 'last_name', 'middle_name', 'course', 'password1',
+        fields = ['email', 'first_name', 'last_name', 'middle_name','address', 'gender', 'course', 'password1',
                   'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'middle_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Middle Name'}),
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'TUPC-00-0000'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
             'id_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'year_and_section': forms.Select(attrs={'class': 'form-control'}),

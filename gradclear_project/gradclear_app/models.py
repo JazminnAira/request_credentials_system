@@ -57,12 +57,21 @@ class user_table(AbstractUser):
         ('DOE', 'Department of Engineering (DOE)'),
         # KULANG SHOP ADVISER SA CLEARANCE
     ]
+
+    gender = [
+        ('', '--SELECT--'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
     
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", null=True)
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
+    address = models.CharField(max_length=100, verbose_name="Address")
+    gender = models.CharField(
+        max_length=100, choices=gender, null=True, blank=True)
     id_number = models.CharField(
         max_length=7, verbose_name="ID Number", validators=[MinLengthValidator(7)],  unique=True)
     course = models.CharField(
