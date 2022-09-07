@@ -364,9 +364,58 @@ Adviser:
     .fa-envelope:hover {
         color: #c51d3a;
     }
+    ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #c51d3a;
+   
+    }
+
+    li {
+    float: left;
+    border-right:1px solid #bbb;
+    }
+
+    li:last-child {
+    border-right: none;
+    }
+
+    li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 30px;
+    text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        color: white;
+        background-color: #d3324d;
+        
+    }
+
+    .active {
+        background-color: #424242;
+    }
+    .active:hover{
+        color: white;
+        background-color: #616161;
+    }
 </style>
 
+
 <body>
+    <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#guide">Guide</a></li>
+        <li><a href="#people">People</a></li>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#vission">Vission</a></li>
+        <li style="float:right"><a class="active" data-toggle="modal" data-target="#AboutUs_modal_01" >About</a></li>
+      </ul>
+    
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
     <!--FOR LETTERS WITH SPACE ONLY onkeypress="return (event.charCode > 64 && event.charCode < 91)
         || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"-->
@@ -396,10 +445,17 @@ Adviser:
                      id="studentsignup_btn_01" style="width: max-content;"> I'm a Student
                         </a>
 
+                    <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark "
+                     id="studentsignup_btn_01" style="width: max-content;"> I'm a Alumni
+                        </a>
+
                     <!--PRE SIGNUP MODAL FACULTY SIGN UP BUTTON-->
-                    <a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 border-dark "
+                    <a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 mt-2 border-dark "
                      id="facultysignup_btn_01" style="width: max-content;">I'm a Faculty
                         </a>
+
+                    
+
                 </div>
                 
                 <!--PRE SIGNUP MODAL FOOTER-->
