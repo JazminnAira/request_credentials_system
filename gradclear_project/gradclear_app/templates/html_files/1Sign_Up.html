@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2022
+BET-COET-A 2021-2022
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -8,6 +8,7 @@ Programmers:
 Adviser:
         Mr.Jay Victor Gumboc
 -->
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -31,9 +32,10 @@ Adviser:
 
 
 <style>
-    .form-group{
-        margin-bottom: 0rem;
-    }
+    .mt-4, .my-4 {
+    margin-top: 0.7rem!important;
+    margin-bottom: 0.7rem!important;
+}
 
     * {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -364,14 +366,12 @@ Adviser:
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" >
                     <div class="modal-header modal-1"  style="width: 100%;">
-                         <h3 class="modal-title w-100 text-center">Sign Up
-                         </h3>
-             
+                        <h3 class="modal-title w-100 text-center">Sign Up</h3>
+
                          <!--MODAL CLOSE BUTTON-->
-                         <button type="button" class="close_btn" data-placement="right" title="Close"
-                          onclick="window.location.assign('/')">x
-                             </button>
-                     </div>
+                        <button type="button" class="close_btn" data-placement="right" title="Close" 
+                        onclick="window.location.assign('/')">x</button>
+                    </div>
 
                     {% if user == "STUDENT" %}
                         <form id="stud_form_01" method="POST" action="student_signup" style="height:100%;" enctype="multipart/form-data">
