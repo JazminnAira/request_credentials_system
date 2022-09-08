@@ -15,7 +15,7 @@ class signup_form(UserCreationForm):
     class Meta(UserCreationForm):
         model = user_table
         fields = ['email', 'first_name', 'last_name', 'middle_name','address', 'gender', 'course', 'password1',
-                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture']
+                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture','course_graduated','year_graduated']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
@@ -28,7 +28,9 @@ class signup_form(UserCreationForm):
             'year_and_section': forms.Select(attrs={'class': 'form-control'}),
             'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(09)00-000-0000'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'firstname.lastname@gsfe.tupcavite.edu.ph'}),
-            'department': forms.Select(attrs={'class': 'form-control'})
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'course_graduated': forms.Select(attrs={'class': 'form-control'}),
+            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2000-2001'})
         }
 
 class TimePickerInput(forms.TimeInput):
