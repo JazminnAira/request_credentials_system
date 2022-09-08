@@ -398,8 +398,8 @@ Adviser:
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 30px;
-    text-decoration: none;
+    padding: 14px 60px;
+    text-decoration none;
     }
 
     li a:hover:not(.active) {
@@ -420,10 +420,9 @@ Adviser:
 
 <body>
     <ul id="navbar">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#how_to">How To</a></li>
-        <li><a href="#people">People</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
+        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
+        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#AboutUs_modal_01">About</a></li>
     </ul>
     
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
@@ -536,6 +535,170 @@ Adviser:
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!--ABOUT US MODAL-->
+    <div id="AboutUs_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="aboutus_modal">
+            <div class="modal-content">
+
+                <!--ABOUT US MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>About Us</b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-info-circle">
+                        </i>
+                    </h3>
+
+                    <!--ABOUT US MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">×</button>
+                </div>
+
+                <!--ABOUT US MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+
+                    <!--DESCRIPTION LABEL-->
+                    <div id="des_01" class="container-fluid" style="float: center;">
+                        <h5 style="float: center;">Services at the Registrar&#039;s Office such as requests
+                             for Transcript of Records,Diploma,Certifications, Subject Descriptions, 
+                             Evaluation of Grades,Authentication of Documents are exclusively
+                             offered to TUP-CAVITE students</h5>
+                    </div>
+
+                    <!--OFFICER IN CHARGE LABEL-->
+                    <div id="person_01" class="container-fluid">
+                        <h3 id="officername_01" style="float: center;"><b>Officer-in-Charge:Ms. Sarah Jane Velos</b></h3>
+                    </div>
+
+                    <!--FORM LINK LABEL-->
+                    <div id="form_01" class="container-fluid">
+                        <div class="container-fluid">To request Forms this is the link:</div>
+                        <div id="docslink">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" 
+                            id="displink">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABOUT US MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--HOW_TO-->
+    <div id="HowTo_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="services_modal">
+            <div class="modal-content">
+
+                <!--HOW TO MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>How To</b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-pencil-square-o"></i>
+                        </i>
+                    </h3>
+
+                    <!--HOW TO CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">×</button>
+                </div>
+
+                <!--HOW TO MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+
+                    <!--DESCRIPTION LABEL-->
+                    <div id="des_01" class="container-fluid" style="float: center;">
+                        <h3 style="float: center; letter-spacing: 2px;" ><b>TUP-C CREDENTIAL SYSTEM WEBSITE</b></h3>
+                    </div>
+
+                    <!--USER MANUAL LABEL-->
+                    <div id="user_01" class="container-fluid">
+                        <h4 id="officername_01" style="float: center;"><b>User Manual</b></h4>
+                    </div><br>
+
+                    <div id="user_01" class="container-fluid">
+                        <h5 style="text-indent: 50px;"><i>1. Create Account based of the designated position.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>2. Log In to the account created.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>3. Proceed to dashboard.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>4. Perform task.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>5. Get Updates and Notification.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>6. Monitor ongoing and done task on dashboard.</i></h5>
+                    </div>
+                    <br>
+
+                    <!--REQUEST MANUAL LABEL-->
+                    <div id="request_01" class="container-fluid">
+                        <h4 id="officername_01" style="float: center;"><b>Guide on Requesting Credential Sytem</b></h4>
+                    </div><br>
+
+                    <div id="request_01" class="container-fluid">
+                        <h5 style="text-indent: 50px;"><i>1. Fill out online request form.</i> </h5>
+                        <h5 style="text-indent: 50px;"><i>2. Complete all requirements needed for the request document.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>3. Secure list of payments from OCR to pay at the cashier office.</i></h5>
+                        <h5 style="text-indent: 65px;"><i> (only for documents with payments)</i></h5>
+                        <h5 style="text-indent: 50px;"><i>4. Present official receipt and claim stub to the office of the</i></h5>
+                        <h5 style="text-indent: 65px;"><i> registrar for the acceptance of documents issued.</i></h5>
+                       
+                    </div> <br><br>
+                </div>
+               
+
+                <!-- HOW TO MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <!--SERVICES MODAL-->
+     <div id="Services_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="services_modal">
+            <div class="modal-content">
+
+                <!--SERVICES MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>Services</b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-cogs"></i>
+                    </h3>
+
+                    <!--SERVICES CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">×</button>
+                </div>
+
+                <!--SERVICES MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+
+                    <!--DESCRIPTION LABEL-->
+                    <div id="des_01" class="container-fluid" style="float: center;">
+                        <h5 style="text-indent: 50px;">Services at the Registrar&#039;s Office such as requests
+                             for Transcript of Records,Diploma,Certifications, Subject Descriptions, 
+                             Evaluation of Grades,Authentication of Documents are exclusively
+                             offered to TUP-CAVITE students</h5>
+                    </div>
+
+                    <!--OFFICER IN CHARGE LABEL-->
+                    <div id="services_01" class="container-fluid">
+                        <h3 id="officername_01" style="float: center;"><b>Services Offered</b></h3>
+                    </div><br>
+
+                    <div id="user_01" class="container-fluid">
+                        <h5 style="text-indent: 50px;"><i>1. Application for Clearance.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>2. Application for Graduation.</i></h5>
+                        <h5 style="text-indent: 50px;"><i>3. Request Credentials.</i></h5>
+                        <h5 style="text-indent: 65px;"><i>- Certification.</i></h5>
+                        <h5 style="text-indent: 65px;"><i>- TOR.</i></h5>
+                    </div><br><br>
+
+                </div>
+
+                <!-- Services FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
             </div>
         </div>
     </div>
