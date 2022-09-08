@@ -231,6 +231,12 @@ Adviser:
         color: red;
         font-size: 13px;
     }
+
+    p3 {
+        border-color: red;
+        color: red;
+        font-size: 13px;
+    }
     
     #displink:hover {
         color: #c51d3a;
@@ -351,6 +357,15 @@ Adviser:
     .fa-envelope:hover {
         color: #c51d3a;
     }
+
+    .add-border-green{
+        border: 2px solid #7DE278 !important;
+    }
+    
+    .add-border-red{
+        border: 2px solid #E2788A !important;
+    }
+
 </style>
 
 
@@ -468,7 +483,7 @@ Adviser:
                                 <div class="form-group">
                                     <label for="cnum">Contact Number:</label><label id="Scnum_aste01" style="color:red;">*</label>
                                     {{form.contact_number}}
-                                    <p id="scn_error_01"></p>
+                                    <p3 id="scn_error_01"></p3>
                                 </div>
                 
                                 <!--EMAIL ADDRESS BOX-->
@@ -614,6 +629,23 @@ Adviser:
         document.getElementById('id_password2').type = "password";
         }
     };
+
+    $(document).ready(function(){
+        $('#id_contact_number').blur(function(){
+            var currentValue = $(this).val();
+            var result = currentValue.substr(0, 2);
+
+            if(result == '09'){
+                $(this).addClass('add-border-green');
+                $(this).removeClass('add-border-red');
+            }else {
+                $(this).addClass('add-border-red');
+                $(this).removeClass('add-border-green');
+                $('p3').html("Invalid mobile number").addClass("error").show();
+            }
+            event.preventDefault();
+        });
+    });
 
 
 </script>

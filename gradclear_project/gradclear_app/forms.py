@@ -27,7 +27,7 @@ class signup_form(UserCreationForm):
             'course': forms.Select(attrs={'class': 'form-control'}),
             'year_and_section': forms.Select(attrs={'class': 'form-control'}),
             'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(09)00-000-0000'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'firstname.lastname@gsfe.tupcavite.edu.ph'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
             'course_graduated': forms.Select(attrs={'class': 'form-control'}),
             'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2000-2001'})
