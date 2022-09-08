@@ -152,8 +152,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'chimkenflet@gmail.com'
-EMAIL_HOST_PASSWORD = 'lpivhmcexizboeex'
+EMAIL_HOST_USER = 'tupcaviteregistrar@gmail.com'
+EMAIL_HOST_PASSWORD = 'tjuawlgaipplkhhg'
 
 # EMAIL_USE_SSL= False
 # EMAIL_TIMEOUT= None
@@ -169,5 +169,5 @@ EMAIL_HOST_PASSWORD = 'lpivhmcexizboeex'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
-ADMINS= [('John', 'chimkenflet@gmail.com'),] 
-MANAGERS= [('John', 'chimkenflet@gmail.com'),] 
+ADMINS= [('', 'tupcaviteregistrar@gmail.com'),] 
+MANAGERS= [('', 'tupcaviteregistrar@gmail.com'),] 

@@ -33,17 +33,15 @@ Adviser:
 <style>
     #mid_div{
   
-    background: rgba(197, 29, 58, 0.53);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.1px);
-    -webkit-backdrop-filter: blur(4.1px);
-    border: 1px solid rgba(197, 29, 58, 0.48);
+    background: rgba( 255, 255, 255, 0.35 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding-right: 40px;
     padding-bottom: 90px;
     margin-top: 50px;
-
-    
     }
 
     #maincontent_01{
@@ -58,8 +56,7 @@ Adviser:
     }
     
     body {
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-         url("{% static 'Media/tup.jpg' %}");
+        background-image:url("{% static 'Media/tup_bg.png' %}");
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
@@ -484,7 +481,7 @@ Adviser:
     <div class="container p-sm-4 mt-5 container-1">
         <div class="row container-fluid" id="mid_div" > 
             <div class="col-sm-7 ">
-                <h1 class=" text-white" style="margin-top: 110px;"> Office of the Registrar</h1>
+                <h1  style="margin-top: 110px; color: #fff;"> Office of the Registrar</h1>
                 <h2 class=" text-white">TUP Cavite</h2>
     
             </div>
@@ -685,20 +682,19 @@ Adviser:
 </body>
 
 <footer>
+    
     <div>
-        <!-- CONTACT US AND ABOUT US BUTTONS -->
+        
         <p style="color: white; border-color: none; text-align: center;">
             <div style="float: center; padding-right: 10px;">
                 
-                <!-- CONTACTS FOOTER -->
-
                 <!-- LOCATION BUTTON -->
                 <a href="https://www.google.com/maps/place/Technological+University+of+the+
                 Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4
                 !1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019" 
                     class="btn btn-4" id="loc_btn_01" style="padding:0;"><span class="fa-stack fa-lg "
                     data-toggle="tooltip" data-placement="left" title="Maps">
-                    <i class="fa fa-circle-thin fa-stack-2x i2 "></i>
+                    <i class="fa fa-circle-thin fa-stack-2x i2 " ></i>
                     <i class="fa fa-map-marker fa-stack-lg i2"></i>
                   </span></a>
 
