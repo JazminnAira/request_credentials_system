@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.conf import settings
-from django.core.mail import send_mail, send_mass_mail, mail_admins,mail_managers,EmailMessage,EmailMultiAlternatives
+from django.core.mail import send_mail, send_mass_mail, mail_admins, mail_managers, EmailMessage, EmailMultiAlternatives
 from django.core import mail
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -19,32 +19,31 @@ from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 
 
-def graduation_print(request,id):
+def graduation_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
     content = graduation_form_table.objects.get(id=id)
     textob = p.beginText()
-    
-    
-    lines=[]
+
+    lines = []
 
     day_eve = content.shift
     if day_eve == "DAY":
         p.drawString(65, 805, '/')
     else:
         p.drawString(65, 792, '/')
-        
+
     p.drawString(80, 755, f'{content.name}')
     p.drawString(500, 755, f'{content.course}')
     p.drawString(120, 710, f'{content.study_load}')
-    stat= content.status
+    stat = content.status
     if stat == "YES":
         p.drawString(390, 670, '/')
     else:
         p.drawString(490, 670, '/')
     p.drawString(220, 670, f'{content.enrolled_term}')
-    
-    #subjects
+
+    # subjects
     p.setFont("Helvetica", 10)
     p.drawString(33, 640, f'{content.subject1}')
     p.drawString(33, 625, f'{content.subject2}')
@@ -56,8 +55,8 @@ def graduation_print(request,id):
     p.drawString(33, 542, f'{content.subject8}')
     p.drawString(33, 529, f'{content.subject9}')
     p.drawString(33, 515, f'{content.subject10}')
-    
-    #time
+
+    # time
     p.setFont("Helvetica", 8)
     p.drawString(204, 640, f'{content.starttime1_1} - {content.starttime1_1}')
     p.drawString(204, 625, f'{content.starttime1_2} - {content.starttime1_2}')
@@ -68,9 +67,10 @@ def graduation_print(request,id):
     p.drawString(204, 555, f'{content.starttime1_7} - {content.starttime1_7}')
     p.drawString(204, 542, f'{content.starttime1_8} - {content.starttime1_8}')
     p.drawString(204, 529, f'{content.starttime1_9} - {content.starttime1_9}')
-    p.drawString(204, 515, f'{content.starttime1_10} - {content.starttime1_10}')
-    
-    #room
+    p.drawString(
+        204, 515, f'{content.starttime1_10} - {content.starttime1_10}')
+
+    # room
     p.setFont("Helvetica", 8)
     p.drawString(279, 640, f'{content.room1}')
     p.drawString(279, 625, f'{content.room2}')
@@ -82,8 +82,8 @@ def graduation_print(request,id):
     p.drawString(279, 542, f'{content.room8}')
     p.drawString(279, 529, f'{content.room9}')
     p.drawString(279, 515, f'{content.room10}')
-    
-    #days
+
+    # days
     p.drawString(323, 640, f'{content.day1_1}')
     p.drawString(323, 625, f'{content.day1_2}')
     p.drawString(323, 611, f'{content.day1_3}')
@@ -94,70 +94,69 @@ def graduation_print(request,id):
     p.drawString(323, 542, f'{content.day1_8}')
     p.drawString(323, 529, f'{content.day1_9}')
     p.drawString(323, 515, f'{content.day1_10}')
-    
-#instructor
-    sig1=content.signature1
+
+# instructor
+    sig1 = content.signature1
     if sig1 == "1_sig":
         p.drawString(380, 640, 'Unapproved')
     else:
         p.drawString(380, 640, f'{content.signature1}')
-    
-    sig2=content.signature2
+
+    sig2 = content.signature2
     if sig2 == "1_sig":
         p.drawString(380, 625, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 625, f'{content.signature2}')
-    
-    sig3=content.signature3
+
+    sig3 = content.signature3
     if sig3 == "1_sig":
         p.drawString(380, 611, 'Unapproved')
-    else:    
+    else:
         p.drawString(380, 611, f'{content.signature3}')
-    
-    sig4=content.signature4
+
+    sig4 = content.signature4
     if sig4 == "1_sig":
         p.drawString(380, 597, 'Unapproved')
     else:
         p.drawString(380, 597, f'{content.signature4}')
-        
-    sig5=content.signature5
+
+    sig5 = content.signature5
     if sig5 == "1_sig":
         p.drawString(380, 584, 'Unapproved')
     else:
         p.drawString(380, 584, f'{content.signature5}')
-        
-    sig6=content.signature6
+
+    sig6 = content.signature6
     if sig6 == "1_sig":
         p.drawString(380, 570, 'Unapproved')
     else:
         p.drawString(380, 570, f'{content.signature6}')
-        
-    sig7=content.signature7
+
+    sig7 = content.signature7
     if sig7 == "1_sig":
         p.drawString(380, 555, 'Unapproved')
     else:
         p.drawString(380, 555, f'{content.signature7}')
-        
-    sig8=content.signature8
+
+    sig8 = content.signature8
     if sig8 == "1_sig":
         p.drawString(380, 542, 'Unapproved')
     else:
         p.drawString(380, 542, f'{content.signature8}')
-        
-    sig9=content.signature9
-    if sig9  == "1_sig":
+
+    sig9 = content.signature9
+    if sig9 == "1_sig":
         p.drawString(380, 529, 'Unapproved')
-    else: 
+    else:
         p.drawString(380, 529, f'{content.signature9}')
-        
-    sig10=content.signature10
+
+    sig10 = content.signature10
     if sig10 == "1_sig":
         p.drawString(380, 515, 'Unapproved')
-    else:    
+    else:
         p.drawString(380, 515, f'{content.signature10}')
-    
-    
-    #additional subject
+
+    # additional subject
     p.setFont("Helvetica", 10)
     p.drawString(33, 305, f'{content.addsubject1}')
     p.drawString(33, 290, f'{content.addsubject2}')
@@ -169,21 +168,31 @@ def graduation_print(request,id):
     p.drawString(33, 207, f'{content.addsubject8}')
     p.drawString(33, 193, f'{content.addsubject9}')
     p.drawString(33, 180, f'{content.addsubject10}')
-    
-    #addtl time
-    p.setFont("Helvetica", 8)
-    p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_starttime1_1}')
-    p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_starttime1_2}')
-    p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_starttime1_3}')
-    p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_starttime1_4}')
-    p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_starttime1_5}')
-    p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_starttime1_6}')
-    p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_starttime1_7}')
-    p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_starttime1_8}')
-    p.drawString(204, 193, f'{content.add_starttime1_9} - {content.add_starttime1_9}')
-    p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_starttime1_10}')
 
-    #addtl room
+    # addtl time
+    p.setFont("Helvetica", 8)
+    p.drawString(
+        204, 305, f'{content.add_starttime1_1} - {content.add_starttime1_1}')
+    p.drawString(
+        204, 290, f'{content.add_starttime1_2} - {content.add_starttime1_2}')
+    p.drawString(
+        204, 276, f'{content.add_starttime1_3} - {content.add_starttime1_3}')
+    p.drawString(
+        204, 262, f'{content.add_starttime1_4} - {content.add_starttime1_4}')
+    p.drawString(
+        204, 249, f'{content.add_starttime1_5} - {content.add_starttime1_5}')
+    p.drawString(
+        204, 235, f'{content.add_starttime1_6} - {content.add_starttime1_6}')
+    p.drawString(
+        204, 220, f'{content.add_starttime1_7} - {content.add_starttime1_7}')
+    p.drawString(
+        204, 207, f'{content.add_starttime1_8} - {content.add_starttime1_8}')
+    p.drawString(
+        204, 193, f'{content.add_starttime1_9} - {content.add_starttime1_9}')
+    p.drawString(
+        204, 180, f'{content.add_starttime1_10} - {content.add_starttime1_10}')
+
+    # addtl room
     p.drawString(279, 305, f'{content.addroom1}')
     p.drawString(279, 290, f'{content.addroom2}')
     p.drawString(279, 276, f'{content.addroom3}')
@@ -194,8 +203,8 @@ def graduation_print(request,id):
     p.drawString(279, 207, f'{content.addroom8}')
     p.drawString(279, 193, f'{content.addroom9}')
     p.drawString(279, 180, f'{content.addroom10}')
-    
-    #addtl days
+
+    # addtl days
     p.drawString(323, 305, f'{content.addday1_1}')
     p.drawString(323, 290, f'{content.addday1_2}')
     p.drawString(323, 276, f'{content.addday1_3}')
@@ -206,119 +215,116 @@ def graduation_print(request,id):
     p.drawString(323, 207, f'{content.addday1_8}')
     p.drawString(323, 193, f'{content.addday1_9}')
     p.drawString(323, 180, f'{content.addday1_10}')
-    
-#addtl instructor's signature
-    asig1=content.addsignature1
-    if asig1  == "1_sig":
+
+# addtl instructor's signature
+    asig1 = content.addsignature1
+    if asig1 == "1_sig":
         p.drawString(380, 305, 'Unapproved')
-    else: 
+    else:
         p.drawString(380, 305, f'{content.addsignature1}')
-    
-    asig2=content.addsignature2
-    if asig2  == "1_sig":
+
+    asig2 = content.addsignature2
+    if asig2 == "1_sig":
         p.drawString(380, 290, 'Unapproved')
-    else: 
+    else:
         p.drawString(380, 290, f'{content.addsignature2}')
-        
-    asig3=content.addsignature3
-    if asig3  == "1_sig":
+
+    asig3 = content.addsignature3
+    if asig3 == "1_sig":
         p.drawString(380, 276, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 276, f'{content.addsignature3}')
-        
-    asig4=content.addsignature4
-    if asig4  == "1_sig":
+
+    asig4 = content.addsignature4
+    if asig4 == "1_sig":
         p.drawString(380, 262, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 262, f'{content.addsignature4}')
-        
-    asig5=content.addsignature5
+
+    asig5 = content.addsignature5
     if asig5 == "1_sig":
         p.drawString(380, 249, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 249, f'{content.addsignature5}')
-        
-    asig6 =content.addsignature6
-    if asig6  == "1_sig":
+
+    asig6 = content.addsignature6
+    if asig6 == "1_sig":
         p.drawString(380, 235, 'Unapproved')
-    else: 
+    else:
         p.drawString(380, 235, f'{content.addsignature6}')
-        
-    asig7=content.addsignature7
+
+    asig7 = content.addsignature7
     if asig7 == "1_sig":
         p.drawString(380, 220, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 220, f'{content.addsignature7}')
-        
-    asig8=content.addsignature8
-    if asig8  == "1_sig":
+
+    asig8 = content.addsignature8
+    if asig8 == "1_sig":
         p.drawString(380, 207, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 207, f'{content.addsignature8}')
-        
-    asig9=content.addsignature9
-    if asig9  == "1_sig":
+
+    asig9 = content.addsignature9
+    if asig9 == "1_sig":
         p.drawString(380, 193, 'Unapproved')
-    else: 
+    else:
         p.drawString(380, 193, f'{content.addsignature9}')
-        
-    asig10=content.addsignature10
-    if asig10  == "1_sig":
+
+    asig10 = content.addsignature10
+    if asig10 == "1_sig":
         p.drawString(380, 180, 'Unapproved')
-    else:     
+    else:
         p.drawString(380, 180, f'{content.addsignature10}')
-    
-    
+
     p.setFont("Helvetica", 10)
     p.drawString(235, 151, f'{content.unenrolled_application_deadline}')
     p.drawString(195, 73, f'{content.trainP_startdate}')
-    p.drawString(390, 73, f'{content.trainP_enddate}')    
-    p.drawString(258, 58, f'{content.trainP_enddate}') 
-        
-        
-        
+    p.drawString(390, 73, f'{content.trainP_enddate}')
+    p.drawString(258, 58, f'{content.trainP_enddate}')
+
     for line in lines:
-            textob.textLine(line)
-    
-    
+        textob.textLine(line)
+
     #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
-    
+
     p.drawText(textob)
     p.showPage()
     p.save()
 
-    #Merging 2 Pdfs
+    # Merging 2 Pdfs
     buffer.seek(0)
     infos = PdfFileReader(buffer)
-    clearance_pdf = PdfFileReader(open(r'C:/Users/jazmi/request_credentials_system/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Graduation_form.pdf', 'rb'))
-    
+    clearance_pdf = PdfFileReader(open(
+        r'C:/Users/jazmi/request_credentials_system/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Graduation_form.pdf', 'rb'))
+
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
-    
+
     output = PdfFileWriter()
-    
+
     output.addPage(info_page)
-    to_merge = open(r'C:/Users/jazmi/request_credentials_system/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'wb')
+    to_merge = open(
+        r'C:/Users/jazmi/request_credentials_system/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
-    
+
     with open(r'C:/Users/jazmi/request_credentials_system/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
-def clearance_print(request, id):    
+
+def clearance_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
     content = clearance_form_table.objects.get(id=id)
     textob = p.beginText()
-    
-    
-    
-    print (content)
+
+    print(content)
     print("hello world")
-    
-    lines=[]
+
+    lines = []
 
     p.drawString(80, 755, f'{content.name}')
     p.drawString(400, 755, f'{content.date_filed}')
@@ -329,30 +335,29 @@ def clearance_print(request, id):
     p.drawString(400, 681, f'{content.amount_paid}')
     p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
     p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
-    
-    
-    #signature
+
+    # signature
     p.drawString(130, 290, f'{content.accountant_signature}')
     p.drawString(150, 240, f'{content.approval_status}')
-    #wala sa liberal arts
-    #temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
+    # wala sa liberal arts
+    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
     p.drawString(100, 115, f'{content.it_dept_signature}')
     p.drawString(435, 290, f'{content.it_dept_signature}')
-    
+
     p.drawString(169, 215, f'{content.mathsci_dept_signature}')
     p.drawString(120, 190, f'{content.pe_dept_signature}')
     p.drawString(425, 265, f'{content.library_signature}')
     p.drawString(435, 240, f'{content.guidance_office_signature}')
     p.drawString(455, 215, f'{content.osa_signature}')
     p.drawString(482, 190, f'{content.academic_affairs_signature}')
-    
+
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
         p.drawString(208, 580, '/')
         p.drawString(183, 555, f'{content.year_graduated_in_tupc}')
     else:
         p.drawString(270, 580, '/')
-        
+
     prev_form = content.have_previously_requested_form
     if prev_form == "YES":
         p.drawString(428, 611, '/')
@@ -360,106 +365,113 @@ def clearance_print(request, id):
         p.drawString(430, 505, f'{content.purpose_of_request_reason}')
     else:
         p.drawString(490, 611, '/')
-        
-    
-    #purpose
+
+    # purpose
     form_purpose = content.purpose_of_request
-    
+
     if form_purpose == "Honorable Dismissal":
-        p.drawString(45, 434, '/') 
-    elif form_purpose =="Evaluation":
+        p.drawString(45, 434, '/')
+    elif form_purpose == "Evaluation":
         p.drawString(298, 434, '/')
-    elif form_purpose =="Transcript of Records":
-        p.drawString(45, 412, '/') 
-    elif form_purpose =="Re-Evaluation":  
-        p.drawString(298, 412, '/') 
-    elif form_purpose=="Diploma":
+    elif form_purpose == "Transcript of Records":
+        p.drawString(45, 412, '/')
+    elif form_purpose == "Re-Evaluation":
+        p.drawString(298, 412, '/')
+    elif form_purpose == "Diploma":
         p.drawString(45, 390, '/')
-    elif form_purpose =="Application for Graduation":
+    elif form_purpose == "Application for Graduation":
         p.drawString(298, 390, '/')
-    elif form_purpose =="Certification":
-        p.drawString(45, 370, '/') 
+    elif form_purpose == "Certification":
+        p.drawString(45, 370, '/')
     else:
         p.drawString(400, 370, f'{content.purpose_of_request}')
-    
-        
-    
+
     for line in lines:
         textob.textLine(line)
-    
-    
+
     #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
-    
+
     p.drawText(textob)
     p.showPage()
     p.save()
 
-    #Merging 2 Pdfs
+    # Merging 2 Pdfs
     buffer.seek(0)
     infos = PdfFileReader(buffer)
-    clearance_pdf = PdfFileReader(open(r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
-    
+    clearance_pdf = PdfFileReader(open(
+        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
+
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
-    
+
     output = PdfFileWriter()
-    
+
     output.addPage(info_page)
-    to_merge = open(r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
+    to_merge = open(
+        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
-    
+
     with open(r'C:\Users\jazmi\tupc_credentials\gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 
-def appointment(request,id):
-    email_temp = clearance_form_table.objects.filter(id=id).values_list('student_id',flat=True).distinct()
-    email = user_table.objects.filter(username=email_temp[0]).values_list('email',flat=True).distinct()    
-                
+def appointment(request, id):
+    email_temp = clearance_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+    email = user_table.objects.filter(
+        username=email_temp[0]).values_list('email', flat=True).distinct()
+
     rec_email = email[0]
 
     subject = 'Appointment Request for Clearance Form'
 
     message1 = 'Greetings,<br><br>'
-    message2 = 'Mr./Ms. ' + "<strong>"+ request.user.last_name + "</strong>" + ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + request.user.email +'".<br>'
-    message3= '<br> <br>Note: This is an automated message, do not reply.'
+    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
+        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
+        request.user.email + '".<br>'
+    message3 = '<br> <br>Note: This is an automated message, do not reply.'
 
-    message = message1 + message2 + message3 
+    message = message1 + message2 + message3
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
-    msg = EmailMessage( subject, message, email_from, recipient_list,)
+    msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send()
 
     messages.success(request, "Email Sent.")
     return redirect('faculty_dashboard_clearance_list')
 
-def appointmentgrad(request,id):
-    email_temp = graduation_form_table.objects.filter(id=id).values_list('student_id',flat=True).distinct()
-    email = user_table.objects.filter(username=email_temp[0]).values_list('email',flat=True).distinct()    
-                
+
+def appointmentgrad(request, id):
+    email_temp = graduation_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+    email = user_table.objects.filter(
+        username=email_temp[0]).values_list('email', flat=True).distinct()
+
     rec_email = email[0]
 
     subject = 'Appointment Request for Graduation Form'
 
     message1 = 'Greetings,<br><br>'
-    message2 = 'Mr./Ms. ' + "<strong>"+ request.user.last_name + "</strong>" + ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + request.user.email +'".<br>'
-    message3= '<br> <br>Note: This is an automated message, do not reply.'
+    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
+        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
+        request.user.email + '".<br>'
+    message3 = '<br> <br>Note: This is an automated message, do not reply.'
 
-    message = message1 + message2 + message3 
+    message = message1 + message2 + message3
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
-    msg = EmailMessage( subject, message, email_from, recipient_list,)
+    msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send()
 
     messages.success(request, "Email Sent.")
     return redirect('faculty_dashboard_graduation_list')
 
-        
+
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get('email_box_01')
@@ -510,7 +522,7 @@ def student_registration(request):
             form.instance.user_type = "STUDENT"
             form.instance.full_name = last + ", " + first
 
-            form.save() 
+            form.save()
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -524,8 +536,8 @@ def student_registration(request):
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "STUDENT"
-    context = {'form': form, 'img_object': img_object, 'user':user_identifier}
-    return render(request, 'html_files/1Student Signup.html', context)
+    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    return render(request, 'html_files/1Sign_Up.html', context)
 
 
 def faculty_registration(request):
@@ -553,8 +565,8 @@ def faculty_registration(request):
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "FACULTY"
-    context = {'form': form, 'img_object': img_object, 'user':user_identifier}
-    return render(request, 'html_files/1Student Signup.html', context)
+    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    return render(request, 'html_files/1Sign_Up.html', context)
 
 
 def alumnus_registration(request):
@@ -582,8 +594,9 @@ def alumnus_registration(request):
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "ALUMNUS"
-    context = {'form': form, 'img_object': img_object, 'user':user_identifier}
-    return render(request, 'html_files/1Student Signup.html', context)
+    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    return render(request, 'html_files/1Sign_Up.html', context)
+
 
 def cover(request):
     return render(request, 'html_files/1Cover Page.html')
@@ -873,7 +886,9 @@ def graduation_form(request):
     form = Graduation_form_table(request.POST or None)
     return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a})
 
-#alumnus not yet working
+# alumnus not yet working
+
+
 @login_required(login_url='/')
 def alumnus_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
@@ -887,6 +902,7 @@ def alumnus_dashboard(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
+
 
 @login_required(login_url='/')
 def clearance_form(request):
@@ -1081,63 +1097,64 @@ def faculty_dashboard_clearance_list(request):
 def update(request, id):
     print('here')
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        name_temp = clearance_form_table.objects.filter(id=id).values_list('name',flat=True).distinct()
-        email_temp = clearance_form_table.objects.filter(id=id).values_list('student_id',flat=True).distinct()
-        email = user_table.objects.filter(username=email_temp[0]).values_list('email',flat=True).distinct()
-         
-        
+        name_temp = clearance_form_table.objects.filter(
+            id=id).values_list('name', flat=True).distinct()
+        email_temp = clearance_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+
         rec_email = email[0]
         print(rec_email)
         if request.user.department == "OCS":
             clearance_form_table.objects.filter(
                 id=id).update(accountant_signature="APPROVED")
-            
+
         elif request.user.department == "DMS":
             clearance_form_table.objects.filter(id=id).update(
                 mathsci_dept_signature="APPROVED")
-            
+
         elif request.user.department == "DPECS":
             clearance_form_table.objects.filter(
                 id=id).update(pe_dept_signature="APPROVED")
-            
+
         elif request.user.department == "DED":
             clearance_form_table.objects.filter(
                 id=id).update(ieduc_dept_signature="APPROVED")
-            
+
         elif request.user.department == "DIT":
             clearance_form_table.objects.filter(
                 id=id).update(it_dept_signature="APPROVED")
-            
+
         elif request.user.department == "DIE":
             clearance_form_table.objects.filter(
                 id=id).update(ieng_dept_signature="APPROVED")
-            
+
         elif request.user.department == "OCL":
             clearance_form_table.objects.filter(
                 id=id).update(library_signature="APPROVED")
-            
+
         elif request.user.department == "OGS":
             clearance_form_table.objects.filter(id=id).update(
                 guidance_office_signature="APPROVED")
-            
+
         elif request.user.department == "OSA":
             clearance_form_table.objects.filter(
                 id=id).update(osa_signature="APPROVED")
-            
+
         elif request.user.department == "ADAA":
             clearance_form_table.objects.filter(id=id).update(
                 academic_affairs_signature="APPROVED")
-            
-         
+
         subject = 'Clearance Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [rec_email, ]
-        send_mail( subject, message, email_from, recipient_list,fail_silently=False,auth_user=None,
-         auth_password=None, connection=None, html_message=None )
+        send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
+                  auth_password=None, connection=None, html_message=None)
 
         messages.success(request, "Form Approved.")
-    else: 
+    else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
@@ -1196,9 +1213,11 @@ def faculty_dashboard_graduation_list(request):
 @login_required(login_url='/')
 def updategrad(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        email_temp = graduation_form_table.objects.filter(id=id).values_list('student_id',flat=True).distinct()
-        email = user_table.objects.filter(username=email_temp[0]).values_list('email',flat=True).distinct()
-        
+        email_temp = graduation_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+
         rec_email = email[0]
         print(rec_email)
         print("this is f_n", f_n)
@@ -1323,13 +1342,13 @@ def updategrad(request, id):
             graduation_form_table.objects.filter(
                 id=id).update(addsignature10=approval)
             messages.success(request, "Form Approved.")
-        
+
         subject = 'Graduation Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [rec_email, ]
-        send_mail( subject, message, email_from, recipient_list,fail_silently=False,auth_user=None,
-        auth_password=None, connection=None, html_message=None )
+        send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
+                  auth_password=None, connection=None, html_message=None)
 
         return redirect(faculty_dashboard_graduation_list)
     else:
@@ -1788,35 +1807,39 @@ def registrar_dashboard_graduation_list(request, id):
     return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
 
 
-def set_appointment(request,id):
+def set_appointment(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        date=""
-        time=""
-        
+        date = ""
+        time = ""
+
         if request.method == "POST":
             print("1")
             date = request.post.get('date_appointment')
             time = request.post.get('time_appointment')
             print("2")
-            name_temp = clearance_form_table.objects.filter(id=id).values_list('name',flat=True).distinct()
-            name =user_table.objects.filter(full_name=name_temp[0]).values_list('first_name',flat=True).distinct()
-            email_temp = clearance_form_table.objects.filter(id=id).values_list('student_id',flat=True).distinct()
-            email = user_table.objects.filter(username=email_temp[0]).values_list('email',flat=True).distinct()
-                    
-                        
+            name_temp = clearance_form_table.objects.filter(
+                id=id).values_list('name', flat=True).distinct()
+            name = user_table.objects.filter(full_name=name_temp[0]).values_list(
+                'first_name', flat=True).distinct()
+            email_temp = clearance_form_table.objects.filter(
+                id=id).values_list('student_id', flat=True).distinct()
+            email = user_table.objects.filter(
+                username=email_temp[0]).values_list('email', flat=True).distinct()
+
             rec_email = email[0]
             print(rec_email)
             print(date)
             subject = 'Appointment Request for Clearance Form'
 
             message1 = 'Greetings,<br> <br>'
-            message2 = 'Mr./Ms. ' + "<strong>"+ request.user.first_name + "</strong>" + ' would like to speak with you regarding with the clearance form you requested. An appointment with him/her has been set on the following date and time below.<br>'
-            message3= '<br> <br>Appointment: ' + date + " ," + time + '<br>'
-            message4= '<br> <br>Please be guided accordingly.'
+            message2 = 'Mr./Ms. ' + "<strong>" + request.user.first_name + "</strong>" + \
+                ' would like to speak with you regarding with the clearance form you requested. An appointment with him/her has been set on the following date and time below.<br>'
+            message3 = '<br> <br>Appointment: ' + date + " ," + time + '<br>'
+            message4 = '<br> <br>Please be guided accordingly.'
             message = message1 + message2 + message3 + message4
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [rec_email, ]
-            msg = EmailMessage( subject, message, email_from, recipient_list,)
+            msg = EmailMessage(subject, message, email_from, recipient_list,)
             msg.content_subtype = "html"
             msg.send()
             return redirect('faculty_dashboard_clearance_list')
