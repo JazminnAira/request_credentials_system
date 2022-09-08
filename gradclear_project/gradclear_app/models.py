@@ -89,8 +89,9 @@ class user_table(AbstractUser):
     profile_picture = models.ImageField(upload_to='uploads/') # PIP INSTALL PILLOW
     REQUIRED_FIELDS = ('email',)
     
+    # WHAT SHOWS IN ADMIN PAGE
     def __str__(self):
-        return self.course
+        return self.username
  
 
 class clearance_form_table(models.Model):
@@ -1109,3 +1110,6 @@ class graduation_form_table(models.Model):
     addsignature8 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature9 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature10 = models.CharField(max_length=100, default="UNAPPROVED")
+
+    def __str__(self):
+        return self.student_id
