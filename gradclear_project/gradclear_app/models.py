@@ -78,6 +78,10 @@ class user_table(AbstractUser):
         max_length=100, choices=courses, null=True, blank=True)
     department = models.CharField(
         max_length=100, choices=department, verbose_name="Department", null=True, blank=True)
+    course_graduated = models.CharField(
+        max_length=100, choices=courses, null=True, blank=True)
+    year_graduated = models.CharField(
+        max_length=100, verbose_name="Year Graduated", null=True, blank=True)
     year_and_section = models.CharField(
         max_length=100, choices=year, null=True, blank=True)
     contact_number = models.CharField(
