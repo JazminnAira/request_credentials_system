@@ -473,6 +473,8 @@ def login_user(request):
             va = p[0]
             if va == "STUDENT":
                 return redirect('student_dashboard')
+            elif va == "ALUMNUS":
+                return redirect('student_dashboard')
             elif va == "FACULTY":
                 return redirect('faculty_dashboard')
             elif va == "REGISTRAR":
@@ -589,7 +591,7 @@ def cover(request):
 
 @login_required(login_url='/')
 def student_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS":
         username = request.user.username
         print(username)
 
