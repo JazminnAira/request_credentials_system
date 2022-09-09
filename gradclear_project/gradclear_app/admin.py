@@ -13,4 +13,4 @@ class graduation_form_table_admin(admin.ModelAdmin):
 admin.site.register(user_table, user_table_admin)
 admin.site.register(clearance_form_table, clearance_form_table_admin)
 admin.site.register(graduation_form_table, graduation_form_table_admin)
-
+admin.site.register(Enrolled)

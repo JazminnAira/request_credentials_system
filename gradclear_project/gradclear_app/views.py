@@ -17,7 +17,7 @@ from reportlab.lib.colors import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-
+import my_csv, io
 
 def graduation_print(request, id):
     buffer = BytesIO()
@@ -1845,5 +1845,33 @@ def set_appointment(request, id):
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
-def csv(request):
-    return render (request, 'html_files/Csv File.html')
+def csv_upload(request):
+    # declaring template
+    template = "html_files/CsvFileUpload.html"
+    data = Enrolled.objects.all()
+# prompt is a context variable that can have different values      depending on their context
+    prompt = {
+        'order': 'Order of the CSV should be No, Name, Id_number',
+        'profiles': data    
+              }
+    # GET request returns the value of the data with the specified key.
+    if request.method == "GET":
+        return render(request, template, prompt)
+    
+    csv_file = request.FILES['file']
+    # let's check if it is a csv file
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'THIS IS NOT A CSV FILE')
+    data_set = csv_file.read().decode('UTF-8')
+    # setup a stream which is when we loop through each line we are able to handle a data in a stream
+    
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Enrolled.objects.update_or_create(
+            No = column[0],
+            Name = column[1],
+            Id_number = column[2],
+        )
+    context = {}
+    return render(request, template, context)
