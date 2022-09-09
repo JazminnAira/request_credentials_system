@@ -382,7 +382,8 @@ Adviser:
     padding: 0;
     overflow: hidden;
     background-color: #c51d3a;
-   
+    color: white;
+    font-size: 18px;
     }
 
     li {
@@ -409,6 +410,11 @@ Adviser:
     }
 
     .active {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration none;
         background-color: #424242;
     }
     .active:hover{
@@ -420,9 +426,10 @@ Adviser:
 
 <body>
     <ul id="navbar">
-        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
-        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
-        <li><a style="color: white;font-style: italic; font-size: 18px;" data-toggle="modal" data-target="#AboutUs_modal_01">About</a></li>
+        <li><a  data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
+        <li><a  data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
+        <li><a  data-toggle="modal" data-target="#AboutUs_modal_01">About</a></li>
+        <li style="float:right;"><a  class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
     </ul>
     
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
