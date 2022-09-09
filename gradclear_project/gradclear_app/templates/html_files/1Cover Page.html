@@ -378,17 +378,17 @@ Adviser:
     }
     #navbar {
     list-style-type: none;
+    
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #c51d3a;
-    color: white;
+    background-color: transparent;
+    font-weight: bolder;
     font-size: 18px;
     }
 
     li {
     float: left;
-    border-right:1px solid #bbb;
     }
 
     li:last-child {
@@ -397,13 +397,18 @@ Adviser:
 
     li a {
     display: block;
-    color: white;
+    color: #c31d35;
     text-align: center;
-    padding: 14px 60px;
-    text-decoration none;
+    padding: 14px 50px;
+    text-decoration: none;
     }
 
     li a:hover:not(.active) {
+        color: white;
+        background-color: #d3324d;
+        
+    }
+    #navbar :hover:not(.active) {
         color: white;
         background-color: #d3324d;
         
@@ -414,7 +419,7 @@ Adviser:
         color: white;
         text-align: center;
         padding: 14px 16px;
-        text-decoration none;
+        text-decoration: none;
         background-color: #424242;
     }
     .active:hover{
@@ -426,10 +431,12 @@ Adviser:
 
 <body>
     <ul id="navbar">
-        <li><a  data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
-        <li><a  data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
-        <li><a  data-toggle="modal" data-target="#AboutUs_modal_01">About</a></li>
-        <li style="float:right;"><a  class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
+        <li><a href="" data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
+        <li><a href="" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
+        <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li>
+        <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li>    
+        <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li>
+        <li style="float:right;"><a class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
     </ul>
     
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
@@ -442,7 +449,7 @@ Adviser:
     <!--PRE SIGNUP MODAL-->
     <div class="modal fade" id="PreSignUp_modal_01" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="width: 80%;">
+            <div class="modal-content" style="width: 100%;">
 
                 <!--PRE SIGNUP MODAL HEADER-->
                 <div class="modal-header">
@@ -725,30 +732,6 @@ Adviser:
         <p style="color: white; border-color: none; text-align: center;">
             <div style="float: center; padding-right: 10px;">
                 
-                <!-- LOCATION BUTTON -->
-                <a href="https://www.google.com/maps/place/Technological+University+of+the+
-                Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4
-                !1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019" 
-                    class="btn btn-4" id="loc_btn_01" style="padding:0;"><span class="fa-stack fa-lg "
-                    data-toggle="tooltip" data-placement="left" title="Maps">
-                    <i class="fa fa-circle-thin fa-stack-2x i2 " ></i>
-                    <i class="fa fa-map-marker fa-stack-lg i2"></i>
-                  </span></a>
-
-                <!-- EMAIL BUTTON -->
-                <a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm"
-                    class="btn btn-4 " id="email_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
-                    data-placement="right" title="Mail">
-                    <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
-                    <i class="fa fa-envelope-o fa-stack-lg i2" ></i> 
-                
-                <!-- FACEBOOK BUTTON -->
-                <a href="https://www.facebook.com/TUPCavite.registrar"
-                class="btn btn-4 " id="facebook_btn_01" style="padding:0;"><span class="fa-stack fa-lg" data-toggle="tooltip" 
-                data-placement="right" title="Facebook">
-                <i class="fa fa-circle-thin fa-stack-2x i2" ></i>
-                <i class="fa fa-facebook fa-stack-lg i2" ></i> 
-
                   </span></a>&nbsp; &nbsp;<b> Copyright © All Rights Reserved 2022 </b>
                
                 </div>
