@@ -631,19 +631,30 @@ Adviser:
     };
 
     $(document).ready(function(){
-        $('#id_contact_number').blur(function(){
-            var currentValue = $(this).val();
-            var result = currentValue.substr(0, 2);
+        $('#id_contact_number').keyup(function(){
+            var mob = /^[1-9]{1}[0-9]{9}$/;
+                
+                var currentValue = $('#id_contact_number').val();
+                var result = currentValue.substr(0, 2);
 
-            if(result == '09'){
-                $(this).addClass('add-border-green');
-                $(this).removeClass('add-border-red');
+            if(result == ''){
+                $('p3').html("Please Enter Contact Number").addClass("error").show();
             }else {
-                $(this).addClass('add-border-red');
-                $(this).removeClass('add-border-green');
-                $('p3').html("Invalid mobile number").addClass("error").show();
+                if(result == '09'){
+                    $(this).removeClass('add-border-red');
+                    $('p3').html("Invalid mobile number").addClass("error").hide();
+
+                    if($(this).val().length != 13){
+                        $('p3').html("Incomplete mobile number").addClass("error").show();
+                    }else {
+                        $('p3').html("number").addClass("error").hide();
+                    }
+                }else {
+                    $(this).addClass('add-border-red');
+                    $('p3').html("Invalid mobile number").addClass("error").show();
+                }
+                event.preventDefault();
             }
-            event.preventDefault();
         });
     });
 
