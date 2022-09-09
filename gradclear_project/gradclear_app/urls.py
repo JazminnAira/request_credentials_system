@@ -54,6 +54,7 @@ urlpatterns = [
      path('appointmentgrad/<int:id>', views.appointmentgrad, name='appointmentgrad'),
      path('clearance_print/<str:id>', clearance_print, name='clearance_print'),
      path('graduation_print/<str:id>', graduation_print, name='graduation_print'),
+     path('csv', csv, name='csv'),
     ] 
 
 if settings.DEBUG:

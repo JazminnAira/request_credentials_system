@@ -1844,3 +1844,6 @@ def set_appointment(request, id):
             msg.send()
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
+
+def csv(request):
+    return render (request, 'html_files/Csv File.html')
