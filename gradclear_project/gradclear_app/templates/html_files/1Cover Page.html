@@ -241,7 +241,7 @@ Adviser:
     }
     
     .modal-body {
-        max-height: calc(100vh - 210px);
+        max-height: calc(500vh - 850px);
         overflow-y: auto;
     }
     
@@ -378,28 +378,31 @@ Adviser:
     }
     #navbar {
     list-style-type: none;
-    
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: transparent;
     font-weight: bolder;
-    font-size: 18px;
+    font-size: 20px;
+    text-align:center
+    
+    
     }
 
     li {
-    float: left;
+    display:inline-block
     }
 
     li:last-child {
     border-right: none;
+    
     }
 
     li a {
     display: block;
     color: #c31d35;
     text-align: center;
-    padding: 14px 50px;
+    padding: 14px 55px;
     text-decoration: none;
     }
 
@@ -553,56 +556,6 @@ Adviser:
         </div>
     </div>
 
-    <!--ABOUT US MODAL-->
-    <div id="AboutUs_modal_01" class="modal fade" style="width: 100%;">
-        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="aboutus_modal">
-            <div class="modal-content">
-
-                <!--ABOUT US MODAL HEADER-->
-                <div class="modal-header">
-                    <h3><b>About Us</b>
-                        <i id="info_cir" aria-hidden="true" class="fa fa-info-circle">
-                        </i>
-                    </h3>
-
-                    <!--ABOUT US MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
-                    data-placement="right" title="Close">×</button>
-                </div>
-
-                <!--ABOUT US MODAL BODY-->
-                <div class="modal-body" id="maincontent_01">
-
-                    <!--DESCRIPTION LABEL-->
-                    <div id="des_01" class="container-fluid" style="float: center;">
-                        <h5 style="float: center;">Services at the Registrar&#039;s Office such as requests
-                             for Transcript of Records,Diploma,Certifications, Subject Descriptions, 
-                             Evaluation of Grades,Authentication of Documents are exclusively
-                             offered to TUP-CAVITE students</h5>
-                    </div>
-
-                    <!--OFFICER IN CHARGE LABEL-->
-                    <div id="person_01" class="container-fluid">
-                        <h3 id="officername_01" style="float: center;"><b>Officer-in-Charge:Ms. Sarah Jane Velos</b></h3>
-                    </div>
-
-                    <!--FORM LINK LABEL-->
-                    <div id="form_01" class="container-fluid">
-                        <div class="container-fluid">To request Forms this is the link:</div>
-                        <div id="docslink">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" 
-                            id="displink">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ABOUT US MODAL FOOTER-->
-                <div class="modal-footer modal-footer1">
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--HOW_TO-->
     <div id="HowTo_modal_01" class="modal fade" style="width: 100%;">
         <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="services_modal">
@@ -640,8 +593,8 @@ Adviser:
                         <h5 style="text-indent: 65px;"><i> - Faculty</i></h5>
                         <h5 style="text-indent: 50px;">2. Log In to the account created.</h5>
                         <h5 style="text-indent: 50px;">3. Proceed to dashboard.</h5>
-                        <h5 style="text-indent: 65px;"><i> - Student Dashboard (Clearance Form, Garduation Form) </i></h5>
-                        <h5 style="text-indent: 65px;"><i> - Faculty Dashboard (Clearance List, Garduation List) </i></h5>
+                        <h5 style="text-indent: 65px;"><i> - Student Dashboard (Clearance Form, Graduation Form) </i></h5>
+                        <h5 style="text-indent: 65px;"><i> - Faculty Dashboard (Clearance List, Graduation List) </i></h5>
                         <h5 style="text-indent: 50px;">4. Perform task.</h5>
                         <h5 style="text-indent: 50px;">5. Get Updates and Notification.</h5>
                         <h5 style="text-indent: 50px;">6. Monitor ongoing and done request or task on dashboard.</h5>
@@ -657,7 +610,7 @@ Adviser:
                         <h5 style="text-indent: 50px;">1. Fill out online request form.</h5>
                         <h5 style="text-indent: 50px;">2. Complete all requirements needed for the request document.</h5>
                         <h5 style="text-indent: 50px;">3. Secure list of payments from OCR to pay at the cashier office.</h5>
-                        <h5 style="text-indent: 65px;"> (only for documents with payments)</h5>
+                        <h5 style="text-indent: 65px;"> (only for paid documents)</h5>
                         <h5 style="text-indent: 50px;">4. Present official receipt and claim stub to the office of the</h5>
                         <h5 style="text-indent: 65px;">registrar for the acceptance of documents issued.</h5>
                        
@@ -692,29 +645,35 @@ Adviser:
                 <!--SERVICES MODAL BODY-->
                 <div class="modal-body" id="maincontent_01">
 
-                    <!--DESCRIPTION LABEL-->
-                    <div id="des_01" class="container-fluid" style="float: center;">
-                        <h5 style="text-indent: 50px;">Services at the Registrar&#039;s Office such as requests
-                             for Transcript of Records,Diploma,Certifications, Subject Descriptions, 
-                             Evaluation of Grades,Authentication of Documents are exclusively
-                             offered to TUP-CAVITE students</h5>
-                    </div>
-
+                    
                     <!--OFFICER IN CHARGE LABEL-->
                     <div id="services_01" class="container-fluid">
-                        <h3 id="officername_01" style="float: center;"><b>Services Offered</b></h3>
+                        <h3 id="officername_01" style="float: center;"><b> Services Offered</b></h3>
                     </div><br>
 
                     <div id="user_01" class="container-fluid">
                         <h5 style="text-indent: 50px;">1. Application for Clearance.</h5>
                         <h5 style="text-indent: 50px;">2. Application for Graduation.</h5>
                         <h5 style="text-indent: 50px;">3. Request Credentials.</h5>
-                        <h5 style="text-indent: 65px;"><i>  * Requirements</i></h5>
-                        <h5 style="text-indent: 70px;"><i>- Certification.</i></h5>
+                        <h5 style="text-indent: 70px;"><i>- Certification. (Php 100.00)</i></h5>
                         <h5 style="text-indent: 70px;"><i>- TOR.</i></h5>
-                    </div><br><br>
+                        <h5 style="text-indent: 50px;">4. Transcript of Records. (Php 100.00)</h5>
+                        <h5 style="text-indent: 50px;">5. Diploma. (Php 150.00)</h5>
+                        <h5 style="text-indent: 50px;">6. Evaluation of Grades. (Php 60.00)</h5>
+                        <h5 style="text-indent: 50px;">7.  Authentication of Documents. (Php 100.00)</h5>
+                       
+                    </div>
+                    
+                    <!--OFFICER IN CHARGE LABEL-->
+                <div id="person_01" class="container-fluid">
+                    <h3 id="officername_01" style="float: center;"><b>Officer-in-Charge:Ms. Sarah Jane Velos</b></h3>
+                </div>
+                <br><br>
+
 
                 </div>
+
+                
 
                 <!-- Services FOOTER-->
                 <div class="modal-footer modal-footer1">
