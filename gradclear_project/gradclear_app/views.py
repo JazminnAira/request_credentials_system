@@ -522,15 +522,23 @@ def student_registration(request):
             form.instance.user_type = "STUDENT"
             form.instance.full_name = last + ", " + first
 
-            form.save()
-            # subject = 'SIGNUP SUCCESS'
-            # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
-            # email_from = settings.EMAIL_HOST_USER
-            # recipient_list = [email, ]
-            # send_mail( subject, message, email_from, recipient_list )
-            messages.success(
-                request, 'Account Saved. Keep in mind that your username is: ' + username)
-            return redirect('/')
+            SearchUser = first + " " + last
+            e = Enrolled.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
+            if e:
+                va= e[0]
+                if va == SearchUser:
+                    form.save()
+                    # subject = 'SIGNUP SUCCESS'
+                    # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
+                    # email_from = settings.EMAIL_HOST_USER
+                    # recipient_list = [email, ]
+                    # send_mail( subject, message, email_from, recipient_list )
+                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+                    return redirect('/')
+                else:
+                    messages.error(request, "Unregistered Alumni")
+            else:
+                    messages.error(request, "Unregistered Alumni")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
@@ -584,11 +592,23 @@ def alumnus_registration(request):
             form.instance.user_type = "ALUMNUS"
             form.instance.full_name = last + ", " + first + " " + middle
 
-            form.save()
-            messages.success(
-                request, 'Account Saved. Keep in mind that your username is: ' + username)
-
-            return redirect('/')
+            SearchUser = first + " " + last
+            a = Enrolled.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
+            if a:
+                va= a[0]
+                if va == SearchUser:
+                    form.save()
+                    # subject = 'SIGNUP SUCCESS'
+                    # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
+                    # email_from = settings.EMAIL_HOST_USER
+                    # recipient_list = [email, ]
+                    # send_mail( subject, message, email_from, recipient_list )
+                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+                    return redirect('/')
+                else:
+                    messages.error(request, "Unenrolled Student")
+            else:
+                    messages.error(request, "Unenrolled Student")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
