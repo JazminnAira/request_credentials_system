@@ -632,9 +632,9 @@
     
     #Rmodal_size {
         min-width: 240px;
-        max-width: 420px;
+        max-width: 500px;
         min-height: 370px;
-        max-height: 600px;
+        max-height: 700px;
         width: auto;
     }
     
@@ -1032,8 +1032,6 @@
         </i></a> -->
     <!--<a data-toggle="modal" data-placement="right" data-target="#FacultyAdder_modal_71" title="Add Faculty" class="link"><i class="fa fa-user-plus">
         </i></a>-->
-    <a data-toggle="modal" data-placement="right" data-target="#AboutUs_modal_71" title="About" class="link" class="trigger-btn"><i class="fa fa-info">
-        </i></a>
     <a data-toggle="modal" data-placement="right" data-target="#Settings_modal_71" title="Settings" class="link" class="trigger-btn"><i class="fa fa-cogs">
         </i></a>
 
@@ -1211,53 +1209,7 @@
         </div>
     </div>
 
-    <!-- ABOUT US MODAL -->
-    <div id="AboutUs_modal_71" class="modal fade">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-
-                <!--MODAL HEADER-->
-                <div class="modal-header">
-                    <h3><b>About Us</b>
-                        <i aria-hidden="true" class="fa fa-info-circle"></i>
-                    </h3>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
-                </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body" id="maincontent_71">
-
-                    <!--DESCRIPTION LABEL-->
-                    <div id="des_71" class="container">
-                        Services at the Registrar&#039;s Office such as requests for Transcript of Records, Diploma, Certifications, Subject Descriptions, Evaluation of Grades, Authentication of Documents are exclusively offered to TUP-CAVITE students
-                    </div>
-
-                    <!--OFFICER IN CHARGE LABEL-->
-                    <div id="person_71" class="container">
-                        <p1 id="nametitle_71">Officer-in-Charge:</p1>
-
-                        <!--OIC VARIABLE-->
-                        <p2 id="officername_71"><b>Ms Sarrah Jane Velos</b></p2>
-                    </div>
-
-                    <!--FORM LINK-->
-                    <div id="form_71" class="container">
-                        <div>To request Forms this is the link:
-                        </div>
-                        <div id="docslink_71">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" id="displink_71">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!--MODAL FOOTER-->
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <!-- SETTINGS MODAL -->
     <div id="Settings_modal_71" class="modal fade" id="exampleModal_71" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -1987,7 +1939,7 @@
         console.log(validInputs)
 
         if (validInputs != 0) {
-            confirm("Your changes will not be saved once you close it.Continue");
+            // confirm("Your changes will not be saved once you close it.Continue");
 
             document.getElementById('ln_box_71').value = '';
             document.getElementById('fn_box_71').value = '';
