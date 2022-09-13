@@ -297,7 +297,7 @@
         border-radius: 0.25rem;
     }
     
-    .app {
+    .content {
         display: grid;
         grid-gap: 10px;
         grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
@@ -1011,6 +1011,19 @@
         color: #000;
         width: max-content;
     }
+
+    button {
+    margin-top: 30px;
+    }
+    .back {
+        display: none;
+    }
+    .next {
+        margin-left: 50px;
+    }
+    .end {
+        display: none;
+    }
 </style>
 
 
@@ -1414,16 +1427,17 @@
         </div>
     </div>
 
+    
     <hr style="border: 1px solid #424242;">
-
     <!--PROGRESS BARS-->
     <div class="container-fluid" id="main2_71">
 
         <!-- CARDS -->
-        <h1 class="center">Clearance Forms</h1>
+        <h1 class="center"  id="center1" style="display: inline-block">Clearance Forms</h1>
+        <button type="button" class="next" >Next</button>
         <hr>
-        
-        <div style="margin-bottom: 3em;" class="app ">
+        <div class="content-holder">
+        <div style="margin-bottom: 3em;" class="content" id="content-1" style="display: block;">
             <ul class="list" style="display: contents;">
                 <li style="display: block;">
                     
@@ -1645,13 +1659,16 @@
                         </div>
                     </a>
                 </li>
-            
             </ul>
-        
         </div>
-        <h1 class="center">Graduation Forms</h1>
+    </div>
+
+       
+        
+        <h1 class="center" id="center2" style="display: inline-block">Graduation Forms</h1>
+        <button type="button" class="back">Back</button>
         <hr>
-        <div style="margin-bottom: 3em;" class="app ">
+        <div style="margin-bottom: 3em;" class="content" id="content-2" style="display: none;">
             <ul class="list" style="display: contents;">
                 <li style="display: block;">
                     
@@ -1864,8 +1881,12 @@
                         </div>
                     </a>
             </ul>
+           
         </div>
     </div>
+    </div>
+
+    
 
         <!--ACCESS BAR-->
         <!-- <div class="row">
@@ -2434,4 +2455,59 @@
     function openclear() {
         window.location.replace("{% url 'clearance_form' %}");
     }
+
+// ------------- Previous & Next--------------
+    $('#content-2').hide();
+    $('#center2').hide();
+    var counter = 1;
+    $('body').on('click', '.next', function() { 
+        $('.content').hide();
+        $('#center1').hide();
+        
+        
+        
+    counter++;
+	$('#content-'+counter+'').show();
+    $('#center2').show();
+    
+    
+	if(counter > 1) {
+		$('.back').show();
+        $('.next').hide();
+        
+        
+        
+        
+	};
+	if(counter > 2) {
+		$('.content-holder').hide();
+		$('.end').show();
+	};
+        
+    });
+
+    $('body').on('click', '.back', function() { 
+        //alert(counter);
+        counter--;
+        $('.content').hide();
+        $('#center1').show();
+        $('#center2').hide();
+        var id = counter;    
+        $('#content-'+id).show();
+        if(counter<2){
+                $('.back').hide();
+                $('.next').show();
+                
+               
+        }
+        
+        
+    });
+
+    $('body').on('click', '.back', function() { 
+        $('.end').show();
+        $('.content-holder').show();
+        $('#content-2').hide();
+    });
+
 </script>
