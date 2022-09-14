@@ -299,6 +299,18 @@
         grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
         justify-items: center;
     }
+    button {
+    margin-top: 30px;
+    }
+    .back {
+        display: none;
+    }
+    .next {
+        margin-left: 50px;
+    }
+    .end {
+        display: none;
+    }
     
     .display-4 {
         font-size: 1.5rem;
@@ -2489,5 +2501,56 @@ function toggleSidebar() {
     this.mini = true;
   }
 }
+
+// ------------- Previous & Next--------------
+$('#content-2').hide();
+    $('#center2').hide();
+    var counter = 1;
+    $('body').on('click', '.next', function() { 
+        $('.content').hide();
+        $('#center1').hide();
+
+
+
+    counter++;
+	$('#content-'+counter+'').show();
+    $('#center2').show();
+
+
+	if(counter > 1) {
+		$('.back').show();
+        $('.next').hide();
+
+
+	};
+	if(counter > 2) {
+		$('.content-holder').hide();
+		$('.end').show();
+	};
+
+    });
+
+    $('body').on('click', '.back', function() { 
+        //alert(counter);
+        counter--;
+        $('.content').hide();
+        $('#center1').show();
+        $('#center2').hide();
+        var id = counter;    
+        $('#content-'+id).show();
+        if(counter<2){
+                $('.back').hide();
+                $('.next').show();
+
+
+        }
+
+    });
+
+    $('body').on('click', '.back', function() { 
+        $('.end').show();
+        $('.content-holder').show();
+        $('#content-2').hide();
+    });
 
 </script>

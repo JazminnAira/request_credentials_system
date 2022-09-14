@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gradclear_database',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'HOST': 'localhost', 
         'OPTIONS': {"init_command": "SET foreign_key_checks = 0;",},
 
