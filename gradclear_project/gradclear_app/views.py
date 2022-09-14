@@ -886,7 +886,9 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     context = {}
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
+        user = request.user.user_type
+        print(user)
         if request.method == "POST":
             form = clearance_form
 
@@ -1170,49 +1172,49 @@ def alumnus_dashboard(request):
     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
 
 
-@login_required(login_url='/')
-def clearance_form(request):
-    context = {}
-    if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-        if request.method == "POST":
-            form = clearance_form
+# @login_required(login_url='/')
+# def clearance_form(request):
+#     context = {}
+#     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
+#         if request.method == "POST":
+#             form = clearance_form
 
-            # id_number = request.user.id()
-            student_id = request.POST.get('stud_id_420')
-            last_name = request.POST.get('ln_box_420')
-            first_name = request.POST.get('fn_box_420')
-            middle_name = request.POST.get('mn_box_420')
-            name = last_name + ", " + first_name + " " + middle_name
-            present_address = request.POST.get('padd_box_420')
-            course = request.POST.get('course_420')
-            date_filed = request.POST.get('dfiled_box_420')
-            date_admitted = request.POST.get('dait_box_420')
-            highschool_graduated = request.POST.get('hswg_box_420')
-            tupc_graduate = request.POST.get('grad_option_420')
-            highschool_graduated_date = request.POST.get('iydfiled_box_420')
-            terms = request.POST.get('notit_box_420')
-            amount = request.POST.get('amountp_box_420')
-            or_number = request.POST.get('receiptnum_box_42')
-            last_request = request.POST.get('requested_option_420')
-            last_request_date = request.POST.get('dbrtime_box_420')
-            last_term = request.POST.get('lasterm_box_420')
-            purpose_reason = request.POST.get('preq_box_420')
-            purpose = request.POST.get('purpose_request_420')
-            form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
-                                                       date_filed=date_filed, date_admitted_in_tup=date_admitted,
-                                                       highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
-                                                       number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
-                                                       date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
-            form.save()
+#             # id_number = request.user.id()
+#             student_id = request.POST.get('stud_id_420')
+#             last_name = request.POST.get('ln_box_420')
+#             first_name = request.POST.get('fn_box_420')
+#             middle_name = request.POST.get('mn_box_420')
+#             name = last_name + ", " + first_name + " " + middle_name
+#             present_address = request.POST.get('padd_box_420')
+#             course = request.POST.get('course_420')
+#             date_filed = request.POST.get('dfiled_box_420')
+#             date_admitted = request.POST.get('dait_box_420')
+#             highschool_graduated = request.POST.get('hswg_box_420')
+#             tupc_graduate = request.POST.get('grad_option_420')
+#             highschool_graduated_date = request.POST.get('iydfiled_box_420')
+#             terms = request.POST.get('notit_box_420')
+#             amount = request.POST.get('amountp_box_420')
+#             or_number = request.POST.get('receiptnum_box_42')
+#             last_request = request.POST.get('requested_option_420')
+#             last_request_date = request.POST.get('dbrtime_box_420')
+#             last_term = request.POST.get('lasterm_box_420')
+#             purpose_reason = request.POST.get('preq_box_420')
+#             purpose = request.POST.get('purpose_request_420')
+#             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
+#                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
+#                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
+#                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
+#                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
+#                                                        purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
+#             form.save()
 
-            return redirect('alumnus_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
+#             return redirect('alumnus_dashboard')
+#     else:
+#         messages.error(
+#             request, "You are trying to access an unauthorized page and is forced to logout.")
+#         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', context)
+#     return render(request, 'html_files/4.2Student Clearance Form.html', context)
 
 
 @login_required(login_url='/')
