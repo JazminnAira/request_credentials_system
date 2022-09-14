@@ -431,9 +431,6 @@
         padding-left: 10px;
     }
     
-    #main2_71 {
-        padding-left: 10px;
-    }
     
     .sidebar {
     height: 100%;
@@ -456,7 +453,7 @@
         display: block;       
     }
 
-    .active,
+    .sidebar .active,
     .sidebar a:hover{
         color: #fff;
         background-color: #424242;
@@ -927,6 +924,7 @@
         background: #424242;
         color: white;
         padding-top: 10px;
+        margin-left: -20px;
     }
     
     .modal-body {
@@ -961,9 +959,13 @@
     .card-header:hover {
         background-color: #616161;
     }
+
+    #carouselExampleControls .active{
+        background-color: transparent;
+    }
     
     .card-body {
-        background-color: #f5f0f6;
+        background-color: #fff;
         width: 100%;
     }
     
@@ -1059,6 +1061,41 @@
         display: none;
     }
 
+.cards-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+  border-radius: 0;
+  width: 400px;
+
+}
+.carousel-inner {
+  padding: 1em;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #d1cdcd;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 768px) {
+  .card img {
+    height: 11em;
+  }
+}
 </style>
 
 
@@ -1248,8 +1285,6 @@
         </div>
     </div>
 
-   
-
     <!-- SETTINGS MODAL -->
     <div id="Settings_modal_71" class="modal fade" id="exampleModal_71" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog" style="max-width: 51%;" role="document">
@@ -1268,7 +1303,7 @@
                 <div class="modal-body">
                     <div class="container">
                         <div id="accordion">
-                            <div class="card">
+                            <div>
 
                                 <!--NAME CARD-->
                                 <form method="POST" action="reg_updateName">
@@ -1436,17 +1471,16 @@
     </div>
 
     <!--MAIN-->
-    <div class="container-fluid">
+    <div class="container-fluid" >
         <div class="row" style="padding-right: 0px;">
-            <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
-            text-align: right;">
+            <div class="col-12" style="padding-right: 10px; background-color: transparent; height: 24px; text-align: right;">
                 <p id="date_text_lbl_71"></p>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid" id="main_71">
-        <div class="row">
+    <div class="container-fluid" id="main_71" >
+        <div class="row" >
             <div class="col-12" style="height: 70px; margin-top: 100px;">
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
                 <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
@@ -1455,465 +1489,196 @@
     </div>
 
     
-    <hr style="border: 1px solid #424242;">
-    <!--PROGRESS BARS-->
-    <div class="container-fluid" id="main2_71">
-
-        <!-- CARDS -->
-        <h1 class="center"  id="center1" style="display: inline-block">Clearance Forms</h1>
-        <button type="button" class="next" >Next</button>
-        <hr>
-        <div class="content-holder">
-        <div style="margin-bottom: 3em;" class="content" id="content-1" style="display: block;">
-            <ul class="list" style="display: contents;">
-                <li style="display: block;">
-                    
-                    <a  href="{% url 'registrar_dashboard_clearance_list' id='BET-CoET' %}"  class="card tile text-dark">
-                        
-                        <div class="card-header topper" style="background-color: green;"></div>
-                        <div style="display: flex;" class="card-body flex-column">    
-                            <strong class="display-4 Title">BET-COET</strong>
-                            <br>
-                            
-                            <h1>{{cBET_CoET}}</h1>
-                        </div>
-                    
-                </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSCE' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #0a216a;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSCE</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BSCE"> 
-                            <h1>{{cBSCE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSEE'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #757b75;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSEE</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BSEE"> 
-                           
-                            <h1>{{cBSEE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-ICT'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #923127;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSIE-ICT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BSIE-ICT"> 
-                            <h1>{{cBSIE_ICT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-HE'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #f0d715;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSIE-HE</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BSIE-HE"> 
-                            <h1>{{cBSIE_HE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-HVACT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #5ecfe8;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-HVAC</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BTTE-HVACT"> 
-                            <h1>{{cBTTE_HVACT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-EI' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #151e56;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-EI</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BTTE-EI"> 
-                            <h1>{{cBTTE_EI}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-E'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #000000;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-E</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BTTE-E">
-                            <h1>{{cBTTE_E}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BGT-AT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #8d6b6b;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BGT-AT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BGT-AT">
-                            <h1>{{cBGT_AT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-ET'%}"   class="card tile text-dark">
-                        
-                        <div class="card-header topper" style="background-color: #7ec1c5;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-ET</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-ET">
-                            <h1>{{cBET_ET}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-ESET' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #ae6889;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-ESET</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-EsET">
-                            <h1>{{cBET_EsET}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BET-MT'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #bb3775;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-MT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-MT">
-                            <h1>{{cBET_MT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BET-AT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c74520;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-AT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-AT">
-                            <h1>{{cBET_AT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BTTE-AU'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #803622;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-AU</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BTTE-AU">
-                            <h1>{{cBTTE_AU}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BSME' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #333333;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSME</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BSME">
-                            <h1>{{cBSME}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTE-CP' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #e31f41;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-CP</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BTTE-CP">
-                            <h1>{{cBTTE_CP}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BET-CT'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c57e7e;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-CT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-CT">
-                            <h1>{{cBET_CT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_clearance_list'  id='BET-PPT'%}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c75b20;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-PPT</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_identifier" value="BET-PPT">
-                            <h1>{{cBET_PPT}}</h1>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-       
-        
-        <h1 class="center" id="center2" style="display: inline-block">Graduation Forms</h1>
-        <button type="button" class="back">Back</button>
-        <hr>
-        <div style="margin-bottom: 3em;" class="content" id="content-2" style="display: none;">
-            <ul class="list" style="display: contents;">
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-CoET' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: green;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-COET</strong>
-                            <br>
-                            <input type="text" hidden id="course_geter" name="course_getter" value="BET-CoET">
-                            <h1>{{gBET_CoET}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSCE' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #0a216a;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSCE</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BSCE">
-                            <h1>{{gBSCE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSEE' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #757b75;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSEE</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BSEE">
-                            <h1>{{gBSEE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-ICT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #923127;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSIE-ICT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BSEE">
-                            <h1>{{gBSIE_ICT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-HE' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #f0d715;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSIE-HE</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BSIE-HE">
-                            <h1>{{gBSIE_HE}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-HVACT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #5ecfe8;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-HVAC</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BTTE-HVACT">
-                            <h1>{{gBTTE_HVACT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-EI' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #151e56;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-EI</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BTTE-EI">
-                            <h1>{{gBTTE_EI}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-E' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #000000;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-E</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BTTE-E">
-                            <h1>{{gBTTE_E}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BGT-AT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #8d6b6b;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BGT-AT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BGT-AT">
-                            <h1>{{gBGT_AT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-ET' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #7ec1c5;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-ET</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-E">
-                            <h1>{{gBET_ET}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-ESET' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #ae6889;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-ESET</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-EsET">
-                            <h1>{{gBET_EsET}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-MT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #bb3775;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-MT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-MT">
-                            <h1>{{gBET_MT}}</h1>
-                        </div>
-                    </a>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-AT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c74520;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-AT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-AT">
-                            <h1>{{gBET_AT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-AU' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #803622;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-AU</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-AU">
-                            <h1>{{gBTTE_AU}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSME' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #333333;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BSME</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BSME">
-                            <h1>{{gBSME}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-CP' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #e31f41;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BTTE-CP</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BTTE-CP">
-                            <h1>{{gBTTE_CP}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-CT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c57e7e;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-CT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-CT">
-                            <h1>{{gBET_CT}}</h1>
-                        </div>
-                    </a>
-                </li>
-                <li style="display: block;">
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BET-PPT' %}"   class="card tile text-dark">
-                        <div class="card-header topper" style="background-color: #c75b20;"></div>
-                        <div style="display: flex;" class="card-body flex-column">
-                            <strong class="display-4 Title">BET-PPT</strong>
-                            <br>
-                            <input type="text" hidden id= "course_geter" name="course_getter" value="BET-PPT">
-                            <h1>{{gBET_PPT}}</h1>
-                        </div>
-                    </a>
-            </ul>
-           
-        </div>
-    </div>
-    </div>
-
-    
+    <hr style="border: 1px solid #424242; ">
+    <!--COURSE CARDS-->
+    <div class="container-fluid" >
+        <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="cards-wrapper">
+                <div class="card">
+                  <div class="card-course-header" style="background-color: #0a216a;height: 50px;"></div>
+                  <div class="card-body">
+                    <h5 class="card-title">BSCE</h5>
+                    <p class="card-text">BS Civil Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BSCE' %}" >Clearance Forms:&nbsp; {{cBSCE}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSCE' %}" >Graduation Forms:&nbsp; {{gBSCE}}</a>
+                  </div>
+                </div>
+                <div class="card d-none d-md-block">
+                  <div class="card-course-header" style="background-color: #757b75;height: 50px;"></div>
+                  <div class="card-body">
+                    <h5 class="card-title">BSEE</h5>
+                    <p class="card-text">BS Electrical Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BSEE' %}" >Clearance Forms:&nbsp; {{cBSEE}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSEE' %}" >Graduation Forms:&nbsp; {{gBSEE}}</a>
+                  </div>
+                </div>
+                <div class="card d-none d-md-block">
+                  <div class="card-course-header" style="background-color: #333333;height: 50px;"></div>
+                  <div class="card-body">
+                    <h5 class="card-title">BSME</h5>
+                    <p class="card-text">BS Mechanical Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BSME'%}" >Clearance Forms:&nbsp; {{cBSME}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSME' %}" >Graduation Forms:&nbsp; {{gBSME}}</a>
+                  </div>
+                </div>
+                <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: green;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-CPET</h5>
+                      <p class="card-text">BET Computer Engineering Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-CoET' %}" >Clearance Forms:&nbsp; {{cBET_CoET}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-CoET' %}" >Graduation Forms:&nbsp; {{gBET_CoET}}</a>
+                    </div>
+                </div>
+                <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #c57e7e;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-CT</h5>
+                      <p class="card-text">BET Construction Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-CT'%}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-CT' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+                    </div>
+                </div>
+                <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #8d6b6b;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BGT-AT</h5>
+                      <p class="card-text">BGT </p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BGT-AT' %}" >Clearance Forms:&nbsp; {{cBGT_AT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BGT-AT' %}" >Graduation Forms:&nbsp; {{gBGT_AT}}</a>
+                    </div>
+                </div>
+              </div>
+              </div>
+              <div class="carousel-item">
+                <div class="cards-wrapper">
+                  <div class="card">
+                    <div class="card-course-header" style="background-color: #7ec1c5;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-ET</h5>
+                      <p class="card-text">BET Electrical Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-ET' %}" >Clearance Forms:&nbsp; {{cBET_ET}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-ET' %}" >Graduation Forms:&nbsp; {{gBET_ET}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #ae6889;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-ESET</h5>
+                      <p class="card-text">BET Electronics Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-ESET'%}" >Clearance Forms:&nbsp; {{cBET_EsET}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-ESET' %}" >Graduation Forms:&nbsp; {{gBET_EsET}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #bb3775;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-MT</h5>
+                      <p class="card-text">BET Mechanical Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-MT' %}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-MT' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #c74520;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-MET-AT</h5>
+                      <p class="card-text">BET Mechanical Automotive Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-AT'%}" >Clearance Forms:&nbsp; {{cBET_AT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-AT' %}" >Graduation Forms:&nbsp; {{gBET_AT}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #c75b20;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BET-MET-PPT</h5>
+                      <p class="card-text">BET Mechanical Powerplant Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-PPT'%}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-PPT' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #151e56;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BTTE-EI</h5>
+                      <p class="card-text">BTTE </p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-EI' %}" >Clearance Forms:&nbsp; {{cBTTE_EI}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-EI' %}" >Graduation Forms:&nbsp; {{gBTTE_EI}}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="carousel-item">
+                <div class="cards-wrapper">
+                  <div class="card">
+                    <div class="card-course-header" style="background-color: #f0d715;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BSIE-HE</h5>
+                      <p class="card-text">BSIE Home Economics</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-HE' %}" >Clearance Forms:&nbsp; {{cBSIE_HE}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-HE' %}" >Graduation Forms:&nbsp; {{gBSIE_HE}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #803622;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BSIE-IA LINK IS BTTE-AU</h5>
+                      <p class="card-text">BSIE Industrial Arts</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-AU'%}" >Clearance Forms:&nbsp; {{cBET_AU}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-AU' %}" >Graduation Forms:&nbsp; {{gBET_AU}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #923127;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BSIE-ICT</h5>
+                      <p class="card-text">BSIE Information and Communication Technology</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-ICT' %}" >Clearance Forms:&nbsp; {{cBSIE_ICT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-ICT' %}" >Graduation Forms:&nbsp; {{gBSIE_ICT}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #e31f41;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BTTE-CP</h5>
+                      <p class="card-text">BTTE Computer Programming</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTE-CP'%}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTE-CP' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #000000;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BTTE-EL</h5>
+                      <p class="card-text">BTTE Electrical</p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-E'%}" >Clearance Forms:&nbsp; {{cBTTE_E}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-E' %}" >Graduation Forms:&nbsp; {{gBTTE_E}}</a>
+                    </div>
+                  </div>
+                  <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #5ecfe8;height: 50px;"></div>
+                    <div class="card-body">
+                      <h5 class="card-title">BTTE-HVACT</h5>
+                      <p class="card-text">BTTE </p>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-HVACT' %}" >Clearance Forms:&nbsp; {{cBTTE_HVACT}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-HVACT' %}" >Graduation Forms:&nbsp; {{gBTTE_HVACT}}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
 
         <!--ACCESS BAR-->
         <!-- <div class="row">
@@ -1966,7 +1731,6 @@
     </div> -->
     <!-- <p class="text-center text-bold" id="p6_71"></p> -->
 </body>
-
 
 <footer>
     <div>
@@ -2552,5 +2316,6 @@ $('#content-2').hide();
         $('.content-holder').show();
         $('#content-2').hide();
     });
+    
 
 </script>
