@@ -42,246 +42,492 @@ def graduation_print(request, id):
     else:
         p.drawString(490, 670, '/')
     p.drawString(220, 670, f'{content.enrolled_term}')
-
-    # subjects
+    
+    #revised
     p.setFont("Helvetica", 10)
-    p.drawString(33, 640, f'{content.subject1}')
-    p.drawString(33, 625, f'{content.subject2}')
-    p.drawString(33, 611, f'{content.subject3}')
-    p.drawString(33, 597, f'{content.subject4}')
-    p.drawString(33, 584, f'{content.subject5}')
-    p.drawString(33, 570, f'{content.subject6}')
-    p.drawString(33, 555, f'{content.subject7}')
-    p.drawString(33, 542, f'{content.subject8}')
-    p.drawString(33, 529, f'{content.subject9}')
-    p.drawString(33, 515, f'{content.subject10}')
-
-    # time
-    p.setFont("Helvetica", 8)
-    p.drawString(204, 640, f'{content.starttime1_1} - {content.starttime1_1}')
-    p.drawString(204, 625, f'{content.starttime1_2} - {content.starttime1_2}')
-    p.drawString(204, 611, f'{content.starttime1_3} - {content.starttime1_3}')
-    p.drawString(204, 597, f'{content.starttime1_4} - {content.starttime1_4}')
-    p.drawString(204, 584, f'{content.starttime1_5} - {content.starttime1_5}')
-    p.drawString(204, 570, f'{content.starttime1_6} - {content.starttime1_6}')
-    p.drawString(204, 555, f'{content.starttime1_7} - {content.starttime1_7}')
-    p.drawString(204, 542, f'{content.starttime1_8} - {content.starttime1_8}')
-    p.drawString(204, 529, f'{content.starttime1_9} - {content.starttime1_9}')
-    p.drawString(
-        204, 515, f'{content.starttime1_10} - {content.starttime1_10}')
-
-    # room
-    p.setFont("Helvetica", 8)
-    p.drawString(279, 640, f'{content.room1}')
-    p.drawString(279, 625, f'{content.room2}')
-    p.drawString(279, 611, f'{content.room3}')
-    p.drawString(279, 597, f'{content.room4}')
-    p.drawString(279, 584, f'{content.room5}')
-    p.drawString(279, 570, f'{content.room6}')
-    p.drawString(279, 555, f'{content.room7}')
-    p.drawString(279, 542, f'{content.room8}')
-    p.drawString(279, 529, f'{content.room9}')
-    p.drawString(279, 515, f'{content.room10}')
-
-    # days
-    p.drawString(323, 640, f'{content.day1_1}')
-    p.drawString(323, 625, f'{content.day1_2}')
-    p.drawString(323, 611, f'{content.day1_3}')
-    p.drawString(323, 597, f'{content.day1_4}')
-    p.drawString(323, 584, f'{content.day1_5}')
-    p.drawString(323, 570, f'{content.day1_6}')
-    p.drawString(323, 555, f'{content.day1_7}')
-    p.drawString(323, 542, f'{content.day1_8}')
-    p.drawString(323, 529, f'{content.day1_9}')
-    p.drawString(323, 515, f'{content.day1_10}')
-
-# instructor
-    sig1 = content.signature1
-    if sig1 == "1_sig":
-        p.drawString(380, 640, 'Unapproved')
+    sub1 = content.subject1
+    if len(sub1) == 0:
+        p.drawString(33, 640, ' ')
+        p.drawString(204, 640,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279, 640, ' ')
+        p.drawString(323, 640, ' ')
+        p.drawString(380, 640, ' ')
+        
     else:
-        p.drawString(380, 640, f'{content.signature1}')
-
-    sig2 = content.signature2
-    if sig2 == "1_sig":
-        p.drawString(380, 625, 'Unapproved')
-    else:
-        p.drawString(380, 625, f'{content.signature2}')
-
-    sig3 = content.signature3
-    if sig3 == "1_sig":
-        p.drawString(380, 611, 'Unapproved')
-    else:
-        p.drawString(380, 611, f'{content.signature3}')
-
-    sig4 = content.signature4
-    if sig4 == "1_sig":
-        p.drawString(380, 597, 'Unapproved')
-    else:
-        p.drawString(380, 597, f'{content.signature4}')
-
-    sig5 = content.signature5
-    if sig5 == "1_sig":
-        p.drawString(380, 584, 'Unapproved')
-    else:
-        p.drawString(380, 584, f'{content.signature5}')
-
-    sig6 = content.signature6
-    if sig6 == "1_sig":
-        p.drawString(380, 570, 'Unapproved')
-    else:
-        p.drawString(380, 570, f'{content.signature6}')
-
-    sig7 = content.signature7
-    if sig7 == "1_sig":
-        p.drawString(380, 555, 'Unapproved')
-    else:
-        p.drawString(380, 555, f'{content.signature7}')
-
-    sig8 = content.signature8
-    if sig8 == "1_sig":
-        p.drawString(380, 542, 'Unapproved')
-    else:
-        p.drawString(380, 542, f'{content.signature8}')
-
-    sig9 = content.signature9
-    if sig9 == "1_sig":
-        p.drawString(380, 529, 'Unapproved')
-    else:
-        p.drawString(380, 529, f'{content.signature9}')
-
-    sig10 = content.signature10
-    if sig10 == "1_sig":
-        p.drawString(380, 515, 'Unapproved')
-    else:
-        p.drawString(380, 515, f'{content.signature10}')
-
-    # additional subject
+        p.drawString(33, 640, f'{content.subject1}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 640, f'{content.starttime1_1} - {content.endtime1_1}')
+        p.drawString(279, 640, f'{content.room1}')
+        p.drawString(323, 640, f'{content.day1_1}')
+        sig1 = content.signature1
+        if sig1 == "1_sig":
+            p.drawString(380, 640, 'Unapproved')
+        else:
+            p.drawString(380, 640, f'{content.signature1}')
+            
     p.setFont("Helvetica", 10)
-    p.drawString(33, 305, f'{content.addsubject1}')
-    p.drawString(33, 290, f'{content.addsubject2}')
-    p.drawString(33, 276, f'{content.addsubject3}')
-    p.drawString(33, 262, f'{content.addsubject4}')
-    p.drawString(33, 249, f'{content.addsubject5}')
-    p.drawString(33, 235, f'{content.addsubject6}')
-    p.drawString(33, 220, f'{content.addsubject7}')
-    p.drawString(33, 207, f'{content.addsubject8}')
-    p.drawString(33, 193, f'{content.addsubject9}')
-    p.drawString(33, 180, f'{content.addsubject10}')
-
-    # addtl time
-    p.setFont("Helvetica", 8)
-    p.drawString(
-        204, 305, f'{content.add_starttime1_1} - {content.add_starttime1_1}')
-    p.drawString(
-        204, 290, f'{content.add_starttime1_2} - {content.add_starttime1_2}')
-    p.drawString(
-        204, 276, f'{content.add_starttime1_3} - {content.add_starttime1_3}')
-    p.drawString(
-        204, 262, f'{content.add_starttime1_4} - {content.add_starttime1_4}')
-    p.drawString(
-        204, 249, f'{content.add_starttime1_5} - {content.add_starttime1_5}')
-    p.drawString(
-        204, 235, f'{content.add_starttime1_6} - {content.add_starttime1_6}')
-    p.drawString(
-        204, 220, f'{content.add_starttime1_7} - {content.add_starttime1_7}')
-    p.drawString(
-        204, 207, f'{content.add_starttime1_8} - {content.add_starttime1_8}')
-    p.drawString(
-        204, 193, f'{content.add_starttime1_9} - {content.add_starttime1_9}')
-    p.drawString(
-        204, 180, f'{content.add_starttime1_10} - {content.add_starttime1_10}')
-
-    # addtl room
-    p.drawString(279, 305, f'{content.addroom1}')
-    p.drawString(279, 290, f'{content.addroom2}')
-    p.drawString(279, 276, f'{content.addroom3}')
-    p.drawString(279, 262, f'{content.addroom4}')
-    p.drawString(279, 249, f'{content.addroom5}')
-    p.drawString(279, 235, f'{content.addroom6}')
-    p.drawString(279, 220, f'{content.addroom7}')
-    p.drawString(279, 207, f'{content.addroom8}')
-    p.drawString(279, 193, f'{content.addroom9}')
-    p.drawString(279, 180, f'{content.addroom10}')
-
-    # addtl days
-    p.drawString(323, 305, f'{content.addday1_1}')
-    p.drawString(323, 290, f'{content.addday1_2}')
-    p.drawString(323, 276, f'{content.addday1_3}')
-    p.drawString(323, 262, f'{content.addday1_4}')
-    p.drawString(323, 249, f'{content.addday1_5}')
-    p.drawString(323, 235, f'{content.addday1_6}')
-    p.drawString(323, 220, f'{content.addday1_7}')
-    p.drawString(323, 207, f'{content.addday1_8}')
-    p.drawString(323, 193, f'{content.addday1_9}')
-    p.drawString(323, 180, f'{content.addday1_10}')
-
-# addtl instructor's signature
-    asig1 = content.addsignature1
-    if asig1 == "1_sig":
-        p.drawString(380, 305, 'Unapproved')
+    sub2 = content.subject2
+    if len(sub2) == 0:
+        p.drawString(33, 625, ' ')
+        p.drawString(204, 625,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,625, ' ')
+        p.drawString(323, 625, ' ')
+        p.drawString(380, 625, ' ')
+        
     else:
-        p.drawString(380, 305, f'{content.addsignature1}')
-
-    asig2 = content.addsignature2
-    if asig2 == "1_sig":
-        p.drawString(380, 290, 'Unapproved')
+        p.drawString(33, 625, f'{content.subject2}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
+        p.drawString(279, 625, f'{content.room2}')
+        p.drawString(323, 625, f'{content.day1_2}')
+        sig2 = content.signature2
+        if sig2 == "1_sig":
+            p.drawString(380, 625, 'Unapproved')
+        else:
+            p.drawString(380, 625, f'{content.signature2}')
+            
+    p.setFont("Helvetica", 10)
+    sub3 = content.subject3
+    if len(sub3) == 0:
+        p.drawString(33, 611, ' ')
+        p.drawString(204, 611,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,611, ' ')
+        p.drawString(323, 611, ' ')
+        p.drawString(380, 611, ' ')
+        
     else:
-        p.drawString(380, 290, f'{content.addsignature2}')
-
-    asig3 = content.addsignature3
-    if asig3 == "1_sig":
-        p.drawString(380, 276, 'Unapproved')
+        p.drawString(33, 611, f'{content.subject3}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
+        p.drawString(279, 611, f'{content.room3}')
+        p.drawString(323, 611, f'{content.day1_3}')
+        sig3 = content.signature3
+        if sig3 == "1_sig":
+            p.drawString(380, 611, 'Unapproved')
+        else:
+            p.drawString(380, 611, f'{content.signature3}')
+            
+    
+    p.setFont("Helvetica", 10)
+    sub4 = content.subject4
+    if len(sub4) == 0:
+        p.drawString(33, 597, ' ')
+        p.drawString(204, 597,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,597, ' ')
+        p.drawString(323, 597, ' ')
+        p.drawString(380, 597, ' ')
+        
     else:
-        p.drawString(380, 276, f'{content.addsignature3}')
-
-    asig4 = content.addsignature4
-    if asig4 == "1_sig":
-        p.drawString(380, 262, 'Unapproved')
+        p.drawString(33, 597, f'{content.subject4}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
+        p.drawString(279, 597, f'{content.room4}')
+        p.drawString(323, 597, f'{content.day1_4}')
+        sig4 = content.signature4
+        if sig4 == "1_sig":
+            p.drawString(380, 597, 'Unapproved')
+        else:
+            p.drawString(380, 597, f'{content.signature4}')
+    
+    
+    p.setFont("Helvetica", 10)
+    sub5 = content.subject5
+    if len(sub5) == 0:
+        p.drawString(33, 584, ' ')
+        p.drawString(204, 584,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,584, ' ')
+        p.drawString(323, 584, ' ')
+        p.drawString(380, 584, ' ')
+        
     else:
-        p.drawString(380, 262, f'{content.addsignature4}')
-
-    asig5 = content.addsignature5
-    if asig5 == "1_sig":
-        p.drawString(380, 249, 'Unapproved')
+        p.drawString(33, 584, f'{content.subject5}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
+        p.drawString(279, 584, f'{content.room5}')
+        p.drawString(323, 584, f'{content.day1_5}')
+        sig5 = content.signature5
+        if sig5 == "1_sig":
+            p.drawString(380, 584, 'Unapproved')
+        else:
+            p.drawString(380, 584, f'{content.signature5}')
+            
+            
+    p.setFont("Helvetica", 10)
+    sub6 = content.subject6
+    if len(sub6) == 0:
+        p.drawString(33, 570, ' ')
+        p.drawString(204, 570,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,570, ' ')
+        p.drawString(323, 570, ' ')
+        p.drawString(380, 570, ' ')
+        
     else:
-        p.drawString(380, 249, f'{content.addsignature5}')
-
-    asig6 = content.addsignature6
-    if asig6 == "1_sig":
-        p.drawString(380, 235, 'Unapproved')
+        p.drawString(33, 570, f'{content.subject6}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
+        p.drawString(279, 570, f'{content.room6}')
+        p.drawString(323, 570, f'{content.day1_6}')
+        sig6 = content.signature6
+        if sig6 == "1_sig":
+            p.drawString(380, 570, 'Unapproved')
+        else:
+            p.drawString(380, 570, f'{content.signature6}')
+            
+            
+    p.setFont("Helvetica", 10)
+    sub7 = content.subject7
+    if len(sub7) == 0:
+        p.drawString(33, 555, ' ')
+        p.drawString(204, 555,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,555, ' ')
+        p.drawString(323, 555, ' ')
+        p.drawString(380, 555, ' ')
+        
     else:
-        p.drawString(380, 235, f'{content.addsignature6}')
+        p.drawString(33, 555, f'{content.subject7}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
+        p.drawString(279, 555, f'{content.room7}')
+        p.drawString(323, 555, f'{content.day1_7}')
+        sig7 = content.signature7
+        if sig7 == "1_sig":
+            p.drawString(380, 555, 'Unapproved')
+        else:
+            p.drawString(380, 555, f'{content.signature7}')
+            
 
-    asig7 = content.addsignature7
-    if asig7 == "1_sig":
-        p.drawString(380, 220, 'Unapproved')
+    p.setFont("Helvetica", 10)
+    sub8 = content.subject8
+    if len(sub8) == 0:
+        p.drawString(33, 542, ' ')
+        p.drawString(204, 542,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,542, ' ')
+        p.drawString(323, 542, ' ')
+        p.drawString(380, 542, ' ')
+        
     else:
-        p.drawString(380, 220, f'{content.addsignature7}')
+        p.drawString(33, 542, f'{content.subject8}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
+        p.drawString(279, 542, f'{content.room8}')
+        p.drawString(323, 542, f'{content.day1_8}')
+        sig8 = content.signature8
+        if sig8 == "1_sig":
+            p.drawString(380, 542, 'Unapproved')
+        else:
+            p.drawString(380, 542, f'{content.signature8}')
+            
+    p.setFont("Helvetica", 10)
+    sub9 = content.subject9
+    if len(sub9) == 0:
+        p.drawString(33, 529, ' ')
+        p.drawString(204, 529,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,529, ' ')
+        p.drawString(323, 529, ' ')
+        p.drawString(380, 529, ' ')
+        
+    else:
+        p.drawString(33, 529, f'{content.subject9}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
+        p.drawString(279, 529, f'{content.room9}')
+        p.drawString(323, 529, f'{content.day1_9}')
+        sig9 = content.signature9
+        if sig9 == "1_sig":
+            p.drawString(380, 529, 'Unapproved')
+        else:
+            p.drawString(380, 529, f'{content.signature9}')
+            
+    
+    
+    p.setFont("Helvetica", 10)
+    sub10 = content.subject10
+    if len(sub10) == 0:
+        p.drawString(33, 515, ' ')
+        p.drawString(204, 515,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,515, ' ')
+        p.drawString(323, 515, ' ')
+        p.drawString(380, 515, ' ')
+        
+    else:
+        p.drawString(33, 515, f'{content.subject10}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
+        p.drawString(279, 515, f'{content.room10}')
+        p.drawString(323, 515, f'{content.day1_10}')
+        sig10 = content.signature10
+        if sig10 == "1_sig":
+            p.drawString(380, 515, 'Unapproved')
+        else:
+            p.drawString(380, 515, f'{content.signature10}')
+    
+    #additional subj
+    
+    p.setFont("Helvetica", 10)
+    addsub1 = content.addsubject1
+    if len(addsub1) == 0:
+        p.drawString(33, 305, ' ')
+        p.drawString(204, 305,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,305, ' ')
+        p.drawString(323, 305, ' ')
+        p.drawString(380, 305, ' ')
+        
+    else:
+        p.drawString(33, 305, f'{content.addsubject1}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_endtime1_1}')
+        p.drawString(279, 305, f'{content.addroom1}')
+        p.drawString(323, 305, f'{content.addday1_1}')
+        addsig1 = content.addsignature1
+        if addsig1 == "1_sig":
+            p.drawString(380, 305, 'Unapproved')
+        else:
+            p.drawString(380, 305, f'{content.addsignature1}')
+    
+    p.setFont("Helvetica", 10)
+    addsub2 = content.addsubject2
+    if len(addsub2) == 0:
+        p.drawString(33, 290, ' ')
+        p.drawString(204, 290,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,290, ' ')
+        p.drawString(323, 290, ' ')
+        p.drawString(380, 290, ' ')
+        
+    else:
+        p.drawString(33, 290, f'{content.addsubject2}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
+        p.drawString(279, 290, f'{content.addroom2}')
+        p.drawString(323, 290, f'{content.addday1_2}')
+        addsig2 = content.addsignature2
+        if addsig2 == "1_sig":
+            p.drawString(380, 290, 'Unapproved')
+        else:
+            p.drawString(380, 290, f'{content.addsignature2}')
+            
+    
+    p.setFont("Helvetica", 10)
+    addsub3 = content.addsubject3
+    if len(addsub3) == 0:
+        p.drawString(33, 276, ' ')
+        p.drawString(204, 276,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,276, ' ')
+        p.drawString(323, 276, ' ')
+        p.drawString(380, 276, ' ')
+        
+    else:
+        p.drawString(33, 276, f'{content.addsubject3}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
+        p.drawString(279, 276, f'{content.addroom3}')
+        p.drawString(323, 276, f'{content.addday1_3}')
+        addsig3 = content.addsignature3
+        if addsig3 == "1_sig":
+            p.drawString(380, 276, 'Unapproved')
+        else:
+            p.drawString(380, 276, f'{content.addsignature3}')
+            
+            
 
-    asig8 = content.addsignature8
-    if asig8 == "1_sig":
-        p.drawString(380, 207, 'Unapproved')
+    p.setFont("Helvetica", 10)
+    addsub4 = content.addsubject4
+    if len(addsub4) == 0:
+        print ("empty")
+        p.drawString(33, 262, ' ')
+        p.drawString(204, 262,' ')
+        p.setFont("Helvetica", 8)
+        p.drawString(279,262, ' ')
+        p.drawString(323, 262, ' ')
+        p.drawString(380, 262, ' ')
+        
     else:
-        p.drawString(380, 207, f'{content.addsignature8}')
+        p.drawString(33, 262, f'{content.addsubject4}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
+        p.drawString(279, 262, f'{content.addroom4}')
+        p.drawString(323, 262, f'{content.addday1_4}')
+        addsig4 = content.addsignature4
+        if addsig4 == "1_sig":
+            p.drawString(380, 262, 'Unapproved')
+        else:
+            p.drawString(380, 262, f'{content.addsignature4}')
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub5 = content.addsubject5
+    if len(addsub5) == 0:
+        p.drawString(33, 249, ' ')
+        p.drawString(204, 249,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,249, ' ')
+        p.drawString(323, 249, ' ')
+        p.drawString(380, 249, ' ')
+        
+    else:
+        p.drawString(33, 249, f'{content.addsubject5}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
+        p.drawString(279, 249, f'{content.addroom5}')
+        p.drawString(323, 249, f'{content.addday1_5}')
+        addsig5 = content.addsignature5
+        if addsig5 == "1_sig":
+            p.drawString(380, 249, 'Unapproved')
+        else:
+            p.drawString(380, 249, f'{content.addsignature5}')
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub6 = content.addsubject6
+    if len(addsub6) == 0:
+        p.drawString(33, 235, ' ')
+        p.drawString(204, 235,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,235, ' ')
+        p.drawString(323, 235, ' ')
+        p.drawString(380, 235, ' ')
+        
+    else:
+        p.drawString(33, 235, f'{content.addsubject6}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_endtime1_6}')
+        p.drawString(279, 235, f'{content.addroom6}')
+        p.drawString(323, 235, f'{content.addday1_6}')
+        addsig6 = content.addsignature6
+        if addsig6 == "1_sig":
+            p.drawString(380, 235, 'Unapproved')
+        else:
+            p.drawString(380, 235, f'{content.addsignature6}')
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub7 = content.addsubject7
+    if len(addsub7) == 0:
+        p.drawString(33, 220, ' ')
+        p.drawString(204, 220,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,220, ' ')
+        p.drawString(323, 220, ' ')
+        p.drawString(380, 220, ' ')
+    else:
+        p.drawString(33, 220, f'{content.addsubject7}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_endtime1_7}')
+        p.drawString(279, 220, f'{content.addroom7}')
+        p.drawString(323, 220, f'{content.addday1_7}')
+        addsig7 = content.addsignature7
+        if addsig7 == "1_sig":
+            p.drawString(380, 220, 'Unapproved')
+        else:
+            p.drawString(380, 220, f'{content.addsignature7}')
+            
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub8 = content.addsubject8
+    if len(addsub8) == 0:
+        p.drawString(33, 207, ' ')
+        p.drawString(204, 207,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,207, ' ')
+        p.drawString(323, 207, ' ')
+        p.drawString(380, 207, ' ')
+        
+    else:
+        p.drawString(33, 207, f'{content.addsubject8}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_endtime1_8}')
+        p.drawString(279, 207, f'{content.addroom8}')
+        p.drawString(323, 207, f'{content.addday1_8}')
+        addsig8 = content.addsignature8
+        if addsig8 == "1_sig":
+            p.drawString(380, 207, 'Unapproved')
+        else:
+            p.drawString(380, 207, f'{content.addsignature8}')
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub9 = content.addsubject9
+    if len(addsub9) == 0:
+        p.drawString(33,193, ' ')
+        p.drawString(204,193,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279,193, ' ')
+        p.drawString(323,193, ' ')
+        p.drawString(380,193, ' ')
+        
+    else:
+        p.drawString(33, 193, f'{content.addsubject9}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204,193, f'{content.add_starttime1_9} - {content.add_endtime1_9}')
+        p.drawString(279,193, f'{content.addroom9}')
+        p.drawString(323,193, f'{content.addday1_9}')
+        addsig9 = content.addsignature9
+        if addsig9 == "1_sig":
+            p.drawString(380,193, 'Unapproved')
+        else:
+            p.drawString(380,193, f'{content.addsignature9}')
+            
+            
+    p.setFont("Helvetica", 10)
+    addsub10 = content.addsubject10
+    if len(addsub10) == 0:
+        p.drawString(33, 180, ' ')
+        p.drawString(204, 180,' ')
+        
+        p.setFont("Helvetica", 8)
+        p.drawString(279, 180, ' ')
+        p.drawString(323, 180, ' ')
+        p.drawString(380, 180, ' ')
+        
+    else:
+        p.drawString(33, 180, f'{content.addsubject10}')
+        p.setFont("Helvetica", 8)
+        p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_endtime1_10}')
+        p.drawString(279, 180, f'{content.addroom10}')
+        p.drawString(323, 180, f'{content.addday1_10}')
+        addsig10 = content.addsignature10
+        if addsig10 == "1_sig":
+            p.drawString(380, 180, 'Unapproved')
+        else:
+            p.drawString(380, 180, f'{content.addsignature10}')
 
-    asig9 = content.addsignature9
-    if asig9 == "1_sig":
-        p.drawString(380, 193, 'Unapproved')
-    else:
-        p.drawString(380, 193, f'{content.addsignature9}')
-
-    asig10 = content.addsignature10
-    if asig10 == "1_sig":
-        p.drawString(380, 180, 'Unapproved')
-    else:
-        p.drawString(380, 180, f'{content.addsignature10}')
 
     p.setFont("Helvetica", 10)
     p.drawString(235, 151, f'{content.unenrolled_application_deadline}')
     p.drawString(195, 73, f'{content.trainP_startdate}')
     p.drawString(390, 73, f'{content.trainP_enddate}')
-    p.drawString(258, 58, f'{content.trainP_enddate}')
+    p.drawString(258, 58, f'{content.instructor_name}')
 
     for line in lines:
         textob.textLine(line)
@@ -295,8 +541,7 @@ def graduation_print(request, id):
     # Merging 2 Pdfs
     buffer.seek(0)
     infos = PdfFileReader(buffer)
-    clearance_pdf = PdfFileReader(open(
-        r'C:/Users/jazmi/request_credentials_system/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Graduation_form.pdf', 'rb'))
+    clearance_pdf = PdfFileReader(open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -305,14 +550,15 @@ def graduation_print(request, id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:/Users/jazmi/request_credentials_system/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'wb')
+        r'C:/Users/Acer/request_credentials_system/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:/Users/jazmi/request_credentials_system/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
+
 
 
 def clearance_print(request, id):
