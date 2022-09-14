@@ -131,6 +131,8 @@ class clearance_form_table(models.Model):
 
     approval_status = models.CharField(max_length=15,
         verbose_name="Approval Status", default="UNAPPROVED")
+    liberal_arts_signature = models.CharField(max_length=15,
+        verbose_name="Liberal Art Signature", default="UNAPPROVED")
     accountant_signature = models.CharField(max_length=15,
         verbose_name="Accountant Signature", default="UNAPPROVED")
     mathsci_dept_signature = models.CharField(max_length=15,

@@ -18,6 +18,7 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 import my_csv, io
+from textwrap import wrap
 
 def graduation_print(request, id):
     buffer = BytesIO()
@@ -574,7 +575,10 @@ def clearance_print(request, id):
 
     p.drawString(80, 755, f'{content.name}')
     p.drawString(400, 755, f'{content.date_filed}')
-    p.drawString(130, 710, f'{content.present_address}')
+    # p.drawString(130, 710, f'{content.present_address}')
+    
+    address = content.present_address
+    
     p.drawString(150, 681, f'{content.date_admitted_in_tup}')
     p.drawString(120, 655, f'{content.course}')
     p.drawString(180, 629, f'{content.highschool_graduated}')
@@ -584,14 +588,18 @@ def clearance_print(request, id):
 
     # signature
     p.drawString(130, 290, f'{content.accountant_signature}')
-    p.drawString(150, 240, f'{content.approval_status}')
-    # wala sa liberal arts
-    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
-    p.drawString(100, 115, f'{content.it_dept_signature}')
-    p.drawString(435, 290, f'{content.it_dept_signature}')
-
+    p.drawString(150, 240, f'{content.liberal_arts_signature}')
     p.drawString(169, 215, f'{content.mathsci_dept_signature}')
     p.drawString(120, 190, f'{content.pe_dept_signature}')
+    # wala sa liberal arts
+    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
+    
+    p.drawString(100, 115, f'{content.ieduc_dept_signature}')
+    p.drawString(435, 290, f'{content.it_dept_signature}')
+    
+
+    
+    
     p.drawString(425, 265, f'{content.library_signature}')
     p.drawString(435, 240, f'{content.guidance_office_signature}')
     p.drawString(455, 215, f'{content.osa_signature}')
@@ -645,7 +653,7 @@ def clearance_print(request, id):
     buffer.seek(0)
     infos = PdfFileReader(buffer)
     clearance_pdf = PdfFileReader(open(
-        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -654,13 +662,13 @@ def clearance_print(request, id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:\Users\jazmi\tupc_credentials\gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 
