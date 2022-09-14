@@ -18,6 +18,7 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 import my_csv, io
+from textwrap import wrap
 
 def graduation_print(request, id):
     buffer = BytesIO()
@@ -574,7 +575,10 @@ def clearance_print(request, id):
 
     p.drawString(80, 755, f'{content.name}')
     p.drawString(400, 755, f'{content.date_filed}')
-    p.drawString(130, 710, f'{content.present_address}')
+    # p.drawString(130, 710, f'{content.present_address}')
+    
+    address = content.present_address
+    
     p.drawString(150, 681, f'{content.date_admitted_in_tup}')
     p.drawString(120, 655, f'{content.course}')
     p.drawString(180, 629, f'{content.highschool_graduated}')
@@ -584,14 +588,18 @@ def clearance_print(request, id):
 
     # signature
     p.drawString(130, 290, f'{content.accountant_signature}')
-    p.drawString(150, 240, f'{content.approval_status}')
-    # wala sa liberal arts
-    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
-    p.drawString(100, 115, f'{content.it_dept_signature}')
-    p.drawString(435, 290, f'{content.it_dept_signature}')
-
+    p.drawString(150, 240, f'{content.liberal_arts_signature}')
     p.drawString(169, 215, f'{content.mathsci_dept_signature}')
     p.drawString(120, 190, f'{content.pe_dept_signature}')
+    # wala sa liberal arts
+    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
+    
+    p.drawString(100, 115, f'{content.ieduc_dept_signature}')
+    p.drawString(435, 290, f'{content.it_dept_signature}')
+    
+
+    
+    
     p.drawString(425, 265, f'{content.library_signature}')
     p.drawString(435, 240, f'{content.guidance_office_signature}')
     p.drawString(455, 215, f'{content.osa_signature}')
@@ -645,7 +653,7 @@ def clearance_print(request, id):
     buffer.seek(0)
     infos = PdfFileReader(buffer)
     clearance_pdf = PdfFileReader(open(
-        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form.pdf', 'rb'))
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -654,13 +662,13 @@ def clearance_print(request, id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:/Users/jazmi/tupc_credentials/gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'wb')
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:\Users\jazmi\tupc_credentials\gradclear_project/gradclear_app/static/pdf/Clearance_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 
@@ -886,7 +894,9 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     context = {}
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
+        user = request.user.user_type
+        print(user)
         if request.method == "POST":
             form = clearance_form
 
@@ -1170,49 +1180,49 @@ def alumnus_dashboard(request):
     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
 
 
-@login_required(login_url='/')
-def clearance_form(request):
-    context = {}
-    if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-        if request.method == "POST":
-            form = clearance_form
+# @login_required(login_url='/')
+# def clearance_form(request):
+#     context = {}
+#     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
+#         if request.method == "POST":
+#             form = clearance_form
 
-            # id_number = request.user.id()
-            student_id = request.POST.get('stud_id_420')
-            last_name = request.POST.get('ln_box_420')
-            first_name = request.POST.get('fn_box_420')
-            middle_name = request.POST.get('mn_box_420')
-            name = last_name + ", " + first_name + " " + middle_name
-            present_address = request.POST.get('padd_box_420')
-            course = request.POST.get('course_420')
-            date_filed = request.POST.get('dfiled_box_420')
-            date_admitted = request.POST.get('dait_box_420')
-            highschool_graduated = request.POST.get('hswg_box_420')
-            tupc_graduate = request.POST.get('grad_option_420')
-            highschool_graduated_date = request.POST.get('iydfiled_box_420')
-            terms = request.POST.get('notit_box_420')
-            amount = request.POST.get('amountp_box_420')
-            or_number = request.POST.get('receiptnum_box_42')
-            last_request = request.POST.get('requested_option_420')
-            last_request_date = request.POST.get('dbrtime_box_420')
-            last_term = request.POST.get('lasterm_box_420')
-            purpose_reason = request.POST.get('preq_box_420')
-            purpose = request.POST.get('purpose_request_420')
-            form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
-                                                       date_filed=date_filed, date_admitted_in_tup=date_admitted,
-                                                       highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
-                                                       number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
-                                                       date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
-            form.save()
+#             # id_number = request.user.id()
+#             student_id = request.POST.get('stud_id_420')
+#             last_name = request.POST.get('ln_box_420')
+#             first_name = request.POST.get('fn_box_420')
+#             middle_name = request.POST.get('mn_box_420')
+#             name = last_name + ", " + first_name + " " + middle_name
+#             present_address = request.POST.get('padd_box_420')
+#             course = request.POST.get('course_420')
+#             date_filed = request.POST.get('dfiled_box_420')
+#             date_admitted = request.POST.get('dait_box_420')
+#             highschool_graduated = request.POST.get('hswg_box_420')
+#             tupc_graduate = request.POST.get('grad_option_420')
+#             highschool_graduated_date = request.POST.get('iydfiled_box_420')
+#             terms = request.POST.get('notit_box_420')
+#             amount = request.POST.get('amountp_box_420')
+#             or_number = request.POST.get('receiptnum_box_42')
+#             last_request = request.POST.get('requested_option_420')
+#             last_request_date = request.POST.get('dbrtime_box_420')
+#             last_term = request.POST.get('lasterm_box_420')
+#             purpose_reason = request.POST.get('preq_box_420')
+#             purpose = request.POST.get('purpose_request_420')
+#             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
+#                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
+#                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
+#                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
+#                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
+#                                                        purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
+#             form.save()
 
-            return redirect('alumnus_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
+#             return redirect('alumnus_dashboard')
+#     else:
+#         messages.error(
+#             request, "You are trying to access an unauthorized page and is forced to logout.")
+#         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', context)
+#     return render(request, 'html_files/4.2Student Clearance Form.html', context)
 
 
 @login_required(login_url='/')
@@ -2112,7 +2122,7 @@ def set_appointment(request, id):
     return render(request, 'html_files/appointment.html')
 
 @login_required(login_url='/')
-def csv_list(request):
+def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
     enrolled_data = Enrolled.objects.all()
@@ -2139,6 +2149,32 @@ def csv_list(request):
             Id_number = column[1],
             Status = column[2],
         )
-    data2 = Enrolled.objects.all()
-    context = {'data':data2}
+    
+    context = {'data':enrolled_data}
     return render(request, template, context)
+
+@login_required(login_url='/')
+def registrar_dashboard_faculty_list(request):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+    
+        all_faculty = user_table.objects.filter(user_type = "FACULTY")
+    
+        faculty_data = {
+            'all':all_faculty,
+        }
+        return render(request,  'html_files/7.4Registrar Faculty List.html', faculty_data)
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
+
+def faculty_list_update(request, id):
+    pos_change = request.POST.get('positionSelect')
+    print(pos_change)
+    
+    user_table.objects.filter(id=id).update(position=pos_change)
+    print('done')
+    return redirect(registrar_dashboard_faculty_list)
+
