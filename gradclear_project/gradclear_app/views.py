@@ -2122,7 +2122,7 @@ def set_appointment(request, id):
     return render(request, 'html_files/appointment.html')
 
 @login_required(login_url='/')
-def csv_list(request):
+def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
     enrolled_data = Enrolled.objects.all()
@@ -2149,6 +2149,32 @@ def csv_list(request):
             Id_number = column[1],
             Status = column[2],
         )
-    data2 = Enrolled.objects.all()
-    context = {'data':data2}
+    
+    context = {'data':enrolled_data}
     return render(request, template, context)
+
+@login_required(login_url='/')
+def registrar_dashboard_faculty_list(request):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+    
+        all_faculty = user_table.objects.filter(user_type = "FACULTY")
+    
+        faculty_data = {
+            'all':all_faculty,
+        }
+        return render(request,  'html_files/7.4Registrar Faculty List.html', faculty_data)
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
+
+def faculty_list_update(request, id):
+    pos_change = request.POST.get('positionSelect')
+    print(pos_change)
+    
+    user_table.objects.filter(id=id).update(position=pos_change)
+    print('done')
+    return redirect(registrar_dashboard_faculty_list)
+
