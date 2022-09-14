@@ -322,7 +322,7 @@
         text-align: center;
     }
     
-    .card.tile:hover {
+    .card:hover {
         box-shadow: 0 0 1rem 0 #00000040;
         transform: scale(1.05);
     }
@@ -1061,41 +1061,54 @@
         display: none;
     }
 
-.cards-wrapper {
-  display: flex;
-  justify-content: center;
-}
+    .cards-wrapper {
+    display: flex;
+    justify-content: center;
+    }
 
-.card img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.card {
-  margin: 0 0.5em;
-  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-  border: none;
-  border-radius: 0;
-  width: 400px;
+    .card img {
+    max-width: 100%;
+    max-height: 100%;
+    }
 
-}
-.carousel-inner {
-  padding: 1em;
-}
-.carousel-control-prev,
-.carousel-control-next {
-  background-color: #d1cdcd;
-  width: 5vh;
-  height: 5vh;
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-}
+    .card {
+    margin: 0 0.5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    border: none;
+    border-radius: 0;
+    width: 400px;
+    }
 
-@media (min-width: 768px) {
-  .card img {
-    height: 11em;
-  }
-}
+    .card:hover {
+        box-shadow: 0 0 1rem 0 #00000040;
+        transform: scale(1.05);
+        }
+
+    .card a{
+        color: #626262;
+        text-decoration: underline !important;
+    }
+    .card a:hover{
+        color: red;
+    }
+    .carousel-inner {
+    padding: 1em;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+    background-color: #d1cdcd;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    }
+
+    @media (min-width: 768px) {
+    .card img {
+        height: 11em;
+    }
+    }
 </style>
 
 
@@ -1494,6 +1507,8 @@
     <div class="container-fluid" >
         <div id="carouselExampleControls" class="carousel slide" data-interval="false">
             <div class="carousel-inner">
+
+            <!-- FIRST PAGE -->
               <div class="carousel-item active">
                 <div class="cards-wrapper">
                 <div class="card">
@@ -1552,6 +1567,8 @@
                 </div>
               </div>
               </div>
+
+            <!-- SECOND PAGE -->
               <div class="carousel-item">
                 <div class="cards-wrapper">
                   <div class="card">
@@ -1610,7 +1627,8 @@
                   </div>
                 </div>
               </div>
-              
+
+            <!-- THIRD PAGE -->
               <div class="carousel-item">
                 <div class="cards-wrapper">
                   <div class="card">
@@ -1670,6 +1688,8 @@
                 </div>
               </div>
             </div>
+
+            <!-- CONTROLS (PREVIOUS AND NEXT) -->
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
