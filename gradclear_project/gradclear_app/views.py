@@ -1865,6 +1865,7 @@ def set_appointment(request, id):
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
+@login_required(login_url='/')
 def csv_list(request):
     # declaring template
     template = "html_files/Student list.html"
