@@ -1865,14 +1865,13 @@ def set_appointment(request, id):
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
-def csv_upload(request):
+def csv_list(request):
     # declaring template
-    template = "html_files/CsvFileUpload.html"
-    data = Enrolled.objects.all()
+    template = "html_files/Student list.html"
+    enrolled_data = Enrolled.objects.all()
 # prompt is a context variable that can have different values      depending on their context
     prompt = {
-        'order': 'Order of the CSV should be No, Name, Id_number',
-        'profiles': data    
+        'data': enrolled_data
               }
     # GET request returns the value of the data with the specified key.
     if request.method == "GET":
@@ -1889,9 +1888,10 @@ def csv_upload(request):
     next(io_string)
     for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
         _, created = Enrolled.objects.update_or_create(
-            No = column[0],
-            Name = column[1],
-            Id_number = column[2],
+            Name = column[0],
+            Id_number = column[1],
+            Status = column[2],
         )
-    context = {}
+    data2 = Enrolled.objects.all()
+    context = {'data':data2}
     return render(request, template, context)
