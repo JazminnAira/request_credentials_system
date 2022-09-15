@@ -1742,23 +1742,20 @@ def name_list(request):
 
 
 @login_required(login_url='/')
-def updateName(request):
+def updateAddress(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT":
+        print('here')
         if request.method == "POST":
-            slast_name = request.POST.get('ln_box_041')
-            sfirst_name = request.POST.get('fn_box_041')
-            smiddle_name = request.POST.get('mn_box_041')
+            saddress = request.POST.get('address_box_041')
             a = request.POST.get('validator')
 
-            user_table.objects.filter(id_number=a).update(
-                last_name=slast_name, first_name=sfirst_name, middle_name=smiddle_name, )
+            user_table.objects.filter(id_number=a).update(address=saddress)
             return redirect('/student_dashboard')
-
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-
+    print('running')
     return render(request, 'html_files/4.1Student Dashboard.html')
 
 
@@ -1846,17 +1843,14 @@ def updateContact(request):
 
 
 @login_required(login_url='/')
-def faculty_updateName(request):
+def faculty_updateAddress(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         print('here')
         if request.method == "POST":
-            flast_name = request.POST.get('ln_box_051')
-            ffirst_name = request.POST.get('fn_box_051')
-            fmiddle_name = request.POST.get('mn_box_051')
+            faddress = request.POST.get('address_box_051')
             a = request.POST.get('validator')
 
-            user_table.objects.filter(id_number=a).update(
-                last_name=flast_name, first_name=ffirst_name, middle_name=fmiddle_name, )
+            user_table.objects.filter(id_number=a).update(address=faddress)
             return redirect('/faculty_dashboard')
     else:
         messages.error(
@@ -1936,17 +1930,14 @@ def faculty_updateContact(request):
 
 
 @login_required(login_url='/')
-def reg_updateName(request):
+def reg_updateAddress(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         print('here')
         if request.method == "POST":
-            relast_name = request.POST.get('ln_box_071')
-            refirst_name = request.POST.get('fn_box_071')
-            remiddle_name = request.POST.get('mn_box_071')
+            readdress = request.POST.get('address_box_071')
             a = request.POST.get('validator')
 
-            user_table.objects.filter(id_number=a).update(
-                last_name=relast_name, first_name=refirst_name, middle_name=remiddle_name, )
+            user_table.objects.filter(id_number=a).update(address=readdress)
             return redirect('/registrar_dashboard')
     else:
         messages.error(

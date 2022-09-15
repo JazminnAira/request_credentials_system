@@ -318,9 +318,9 @@
     
     #Fmodal_size {
         min-width: 240px;
-        max-width: 420px;
+        max-width: 500px;
         min-height: 370px;
-        max-height: 600px;
+        max-height: 700px;
         width: auto;
     }
     
@@ -543,7 +543,7 @@
     }
     
     #button_51,
-    #namesavechanges_btn_51,
+    #addresssavechanges_btn_51,
     #emailsavechanges_btn_51,
     #passwordsavechanges_btn_51,
     #cancel_btn1_51,
@@ -556,7 +556,7 @@
         border-radius: 10px;
     }
     
-    #namesavechanges_btn_51:hover,
+    #addresssavechanges_btn_51:hover,
     #emailsavechanges_btn_51:hover,
     #passwordsavechanges_btn_51:hover,
     #cancel_btn1_51:hover,
@@ -803,53 +803,39 @@
                         <div id="accordion_51">
                             <div class="card">
 
-                                <!--NAME CARD-->
-                                <form method="POST" action="faculty_updateName">
-                                    {% csrf_token %}
+                                <!--ADRESS CARD-->
                                 <div class="card-header">
-                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_51">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_51">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex justify-content">
-                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="uname_lbl_51">
-                                                    User Name: {{request.user.first_name}} {{request.user.middle_name}} {{request.user.last_name}}</div>
-                                                <div class="d-flex justify-content-end" style="color: #000000;" id="edit_btn_51">
-                                                    <button class="btn btn-secondary btn-sm" type="submit" id="edit_btn_51">Edit<i class="fa fa-edit"></i>
-                                                    
-                                                </div>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="address" id="address_lbl_51">
+                                                    Address: {{request.user.address}}</div>
+                                                <div class="d-flex justify-content-end" style="color: #000000;"
+                                                 id="edit_btn_51"><button class="btn btn-secondary btn-sm" 
+                                                 type="submit">Edit<i class="fa fa-edit"></i></div>
                                             </div>
                                         </table>
                                     </a>
                                 </div>
-                                <form action="5.1Faculty Dashboard.html">
+                                <form method = "POST" action="faculty_updateAddress">
                                     {% csrf_token %}
-                                    <div id="collapseOne_51" class="collapse" data-parent="#accordion_51">
+                                    <div id="collapseTwo_51" class="collapse" data-parent="#accordion_51">
                                         <div class="card-body">
                                             <div class="form-inline">
-
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="name_51" class="my-1 mr-2" id="name_lbl_51">Name:</label>
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()"
-                                                 id="ln_box_51" name="ln_box_051"  value="{{ request.GET.ln_box_051 }}" class="form-control mr-1" 
-                                                 placeholder="Last Name" onkeypress="return (event.charCode > 64 && event.charCode < 91) || 
-                                                 (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()"
-                                                 id="fn_box_51" name="fn_box_051" value="{{ request.GET.fn_box_051 }}" class="form-control mr-1" placeholder="First Name" 
-                                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                                                  (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()" 
-                                                id="mn_box_51" name="mn_box_051" value="{{ request.GET.mn_box_051 }}" class="form-control mr-1" placeholder="Middle Name" 
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || 
-                                                (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                
-                                                <button class="btn btn-secondary btn-sm mr-1" id="namesavechanges_btn_51"
-                                                 name="submit1" type="submit" onclick="">Save Changes</button><br>
+                                                <input type="address" hidden name="validator" value= {{request.user.id_number}}> 
+                                                <label for="name" class="my-1 mr-4" id="address_lbl_51">Address:</label>
+                                                <input type="address" id="address_box_51" name="address_box_051" value="{{ request.GET.address_box_051 }}" class="form-control 
+                                                 col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
+                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit6"
+                                                 id="addresssavechanges_btn_51" type="submit">Save Changes</button><br>
                                                 </div><br>
                                             </div>
                                 </div>
                                 </form>
+
                                 <!--EMAIL CARD-->
                                 <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_51">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_51">
                                         <table class="table-responsive-sm">
                                             <div class="d-flex justify-content">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="uemail_lbl_51">
@@ -863,14 +849,14 @@
                                 </div>
                                 <form method = "POST" action="faculty_updateEmail">
                                     {% csrf_token %}
-                                    <div id="collapseTwo_51" class="collapse" data-parent="#accordion_51">
+                                    <div id="collapseThree_51" class="collapse" data-parent="#accordion_51">
                                         <div class="card-body">
                                             <p>Note: Your email address should include your authentic name.</p>
                                             <div class="form-inline">
                                                 <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
                                                 <label for="email_51" class="my-1 mr-4" id="email_lbl_51">Email:</label>
                                                 <input type="text" id="ea_box_51" name="ea_box_051" value="{{ request.GET.ea_box_051 }}" class="form-control col-sm-5 mr-1 "
-                                                 placeholder="firstname.lastname@gsfe.tupcavite.edu.ph" required>
+                                                 placeholder="abcd@gmail.com" required>
                                                 <button class="btn btn-secondary btn-sm mr-1" id="emailsavechanges_btn_51" 
                                                 name="submit2" type="submit" onclick="emailValidatorset()">Save Changes</button><br>
                                                 </div><br>
@@ -879,7 +865,7 @@
                                 </form>
                                 <!--PASSWORD CARD-->
                                 <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_51">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour_51">
                                         <table class="table-responsive-sm">
                                             <div class="d-flex bd-highlight">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_51">Password </div>
@@ -892,7 +878,7 @@
                                 </div>
                                 <form method="POST" action="faculty_updatePassword">
                                     {% csrf_token %}
-                                    <div id="collapseThree_51" class="collapse" data-parent="#accordion_51">
+                                    <div id="collapseFour_51" class="collapse" data-parent="#accordion_51">
                                         <div class="card-body ">
                                             <div class="input-group">
                                             <input type="text" hidden name="validator2" value= {{request.user.username}}> 
@@ -1086,11 +1072,10 @@
         console.log(validInputs)
 
         if (validInputs != 0) {
-            confirm("Your changes will not be saved once you close it.Continue");
+            // confirm("Your changes will not be saved once you close it.Continue");
 
-            document.getElementById('ln_box_51').value = '';
-            document.getElementById('fn_box_51').value = '';
-            document.getElementById('mn_box_51').value = '';
+        
+            document.getElementById('address_box_51').value = '';
             document.getElementById('ea_box_51').value = '';
             document.getElementById('oldpass_51').value = '';
             document.getElementById('new_pass_51').value = '';
@@ -1266,6 +1251,7 @@
             return false;
         }
     }
+
 
     // TRIGGER ENTER BUTTON
     $("#search_box_51").keyup(function(event) {
@@ -1471,11 +1457,11 @@
     }
 
     //NAME SETTING ENTER BUTTON
-    var namelast_input = document.getElementById("mn_box_51");
+    var namelast_input = document.getElementById("address_box_51");
     namelast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            document.getElementById("namesavechanges_btn_51").click();
+            document.getElementById("addresssavechanges_btn_51").click();
         }
     });
 

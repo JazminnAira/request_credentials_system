@@ -974,7 +974,7 @@
     }
     
     #button_71,
-    #namesavechanges_btn_71,
+    #addresssavechanges_btn_71,
     #emailsavechanges_btn_71,
     #passwordsavechanges_btn_71,
     #cancel_btn1_71,
@@ -987,7 +987,7 @@
         border-radius: 10px;
     }
     
-    #namesavechanges_btn_71:hover,
+    #addresssavechanges_btn_71:hover,
     #emailsavechanges_btn_71:hover,
     #passwordsavechanges_btn_71:hover,
     #cancel_btn1_71:hover,
@@ -1178,7 +1178,8 @@
                         </tr>
 
                         <tr>
-                            <td><b>Administrator</b> </td>
+                            <td><b>Position:</b></td>
+                            <td>Administrator</td>
                         </tr>
 
                         <tr>
@@ -1318,15 +1319,13 @@
                         <div id="accordion">
                             <div>
 
-                                <!--NAME CARD-->
-                                <form method="POST" action="reg_updateName">
-                                    {% csrf_token %}
+                                <!--ADRESS CARD-->
                                 <div class="card-header">
-                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_71">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_71">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex justify-content">
-                                                <div class="p-2 flex-fill " style="color: #000000;" id="uname_lbl_71">
-                                                     User Name: {{request.user.first_name}} {{request.user.middle_name}} {{request.user.last_name}} </div>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="address" id="address_lbl_71">
+                                                    Address: {{request.user.address}}</div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;"
                                                  id="edit_btn_71"><button class="btn btn-secondary btn-sm" 
                                                  type="submit">Edit<i class="fa fa-edit"></i></div>
@@ -1334,27 +1333,17 @@
                                         </table>
                                     </a>
                                 </div>
-                                
-                                    <div id="collapseOne_71" class="collapse" data-parent="#accordion">
+                                <form method = "POST" action="reg_updateAddress">
+                                    {% csrf_token %}
+                                    <div id="collapseTwo_71" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <div class="form-inline">
-
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="name" class="my-1 mr-4">Name:</label>
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()"
-                                                 id="ln_box_71" name="ln_box_071" value="{{ request.GET.ln_box_071 }}" class="form-control mr-1" placeholder="Last Name" 
-                                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                                                  (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" required>
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()" 
-                                                id="fn_box_71" name="fn_box_071" value="{{ request.GET.fn_box_071 }}" class="form-control mr-1" placeholder="First Name" 
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || 
-                                                (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()"
-                                                 id="mn_box_71" name="mn_box_071" value="{{ request.GET.mn_box_071 }}" class="form-control  mr-1" placeholder="Middle Name"
-                                                  onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                                                   (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <button class="btn btn-secondary btn-sm" name="submit2" id="namesavechanges_btn_71"
-                                                 type="submit">Save Changes</button><br>
+                                                <input type="address" hidden name="validator" value= {{request.user.id_number}}> 
+                                                <label for="name" class="my-1 mr-4" id="address_lbl_71">Address:</label>
+                                                <input type="address" id="address_box_71" name="address_box_071" value="{{ request.GET.address_box_071 }}" class="form-control 
+                                                 col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
+                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit3"
+                                                 id="addresssavechanges_btn_71" type="submit" >Save Changes</button><br>
                                                 </div><br>
                                             </div>
                                 </div>
@@ -1364,7 +1353,7 @@
 
                                 <!--EMAIL CARD-->
                                 <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_71">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_71">
                                         <table class="table-responsive-sm">
                                             <div class="d-flex bd-highlight">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="email" id="uemail_lbl_71">
@@ -1378,15 +1367,15 @@
                                 </div>
                                 <form method = "POST" action="reg_updateEmail">
                                     {% csrf_token %}
-                                    <div id="collapseTwo_71" class="collapse" data-parent="#accordion">
+                                    <div id="collapseThree_71" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <p>Note: Your email address should include your authentic name.</p>
                                             <div class="form-inline">
                                                 <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
                                                 <label for="name" class="my-1 mr-4" id="email_lbl_71">Email:</label>
                                                 <input type="text" id="email_box_71" name="ea_box_071" value="{{ request.GET.ea_box_071 }}" class="form-control 
-                                                 col-sm-5 mr-1" placeholder="firstname.lastname@gsfe.tupcavite.edu.ph" required>
-                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit3"
+                                                 col-md-6 mr-1" placeholder="abcd@gmail.com" required>
+                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit4"
                                                  id="emailsavechanges_btn_71" type="submit" onclick= "emailValidatorset()">Save Changes</button><br>
                                                 </div><br>
                                             </div>
@@ -1396,7 +1385,7 @@
                                 <!--PASSWORD CARD-->
                                 
                                     <div class="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_71">
+                                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour_71">
                                             <table class="table-responsive-sm">
                                                 <div class="d-flex bd-highlight">
                                                     <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_71">Password </div>
@@ -1409,7 +1398,7 @@
                                     </div>
                                     <form method="POST" action="reg_updatePassword">
                                         {% csrf_token %}
-                                        <div id="collapseThree_71" class="collapse" data-parent="#accordion">
+                                        <div id="collapseFour_71" class="collapse" data-parent="#accordion">
                                             <div class="card-body ">
                                                 
                                                 
@@ -1428,7 +1417,7 @@
                                                   oninput="confirm_pass_length(),match_confirm_pass(),new_old_pass_detect()"required>
                                                 <div class="input-group-append " >
                                                     <button class="btn btn-secondary btn-sm "  type="submit"
-                                                     name="submit4" id="passwordsavechanges_btn_71">Save Changes</button>
+                                                     name="submit5" id="passwordsavechanges_btn_71">Save Changes</button>
                                                     </div>
                                                 </div>
                                                 <p id="sp_error_71" style="color:red;"></p>
@@ -1773,9 +1762,7 @@
         if (validInputs != 0) {
             // confirm("Your changes will not be saved once you close it.Continue");
 
-            document.getElementById('ln_box_71').value = '';
-            document.getElementById('fn_box_71').value = '';
-            document.getElementById('mn_box_71').value = '';
+            document.getElementById('address_box_71').value = '';
             document.getElementById('email_box_71').value = '';
             document.getElementById('old_pass_71').value = '';
             document.getElementById('new_pass_71').value = '';
@@ -1817,6 +1804,19 @@
         }
     }
 
+    function checkcpnumnotif() {
+        var st_cpnum = document.getElementById("cnum_box_71").value;
+        var result = st_cpnum.substring(0, 2);
+
+        if (result != "09") {
+            alert("Please follow the given format");
+            document.getElementById("cnum_box_71").value = "";
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     // LOGIN EMAIL VALIDATOR
     function emailValidatorset() {
         var email_input = document.getElementById("email_box_71").value;
@@ -1830,18 +1830,8 @@
         }
     }
 
-    function checkcpnumnotif() {
-        var st_cpnum = document.getElementById("cnum_box_71").value;
-        var result = st_cpnum.substring(0, 2);
 
-        if (result != "09") {
-            alert("Please follow the given format");
-            document.getElementById("cnum_box_71").value = "";
-            return false;
-        } else {
-            return true;
-        }
-    }
+   
 
     
 
@@ -2221,17 +2211,7 @@
         }
     }
 
-    //NAME SETTING ENTER BUTTON
-    var namelast_input = document.getElementById("mn_box_71");
-    namelast_input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("namesavechanges_btn_71").click();
-        }
-    });
-
-
-
+ 
     //EMAIL SETTING ENTER BUTTON
     var emaillast_input = document.getElementById("email_box_71");
     emaillast_input.addEventListener("keyup", function(event) {

@@ -341,9 +341,9 @@
     
     #Smodal_size {
         min-width: 240px;
-        max-width: 420px;
+        max-width: 500px;
         min-height: 370px;
-        max-height: 600px;
+        max-height: 700px;
         width: auto;
     }
     
@@ -533,13 +533,12 @@
     }
     
     #dropdown,
-    #course_drp_41,
     #yrsec_drp_41 {
         background-color: #e7dfe4;
     }
     
     #button,
-    #namesavechanges_btn_41,
+    #addresssavechanges_btn_41,
     #emailsavechanges_btn_41,
     #coursesavechanges_btn_41,
     #passwordsavechanges_btn_41,
@@ -549,7 +548,7 @@
         border-radius: 10px;
     }
     
-    #namesavechanges_btn_41:hover,
+    #addresssavechanges_btn_41:hover,
     #emailsavechanges_btn_41:hover,
     #coursesavechanges_btn_41:hover,
     #passwordsavechanges_btn_41:hover,
@@ -967,51 +966,40 @@
                     <div class="container">
                         <div id="accordion">
                             <div class="card">
-                                <!--NAME CARD-->
-                                <form method="POST" action="updateName">
+
+                                 <!--ADRESS CARD-->
+                                 <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                        <table class="table-responsive-sm">
+                                            <div class="d-flex bd-highlight">
+                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="address" id="address_lbl_41">
+                                                    Address: {{request.user.address}}</div>
+                                                <div class="d-flex justify-content-end" style="color: #000000;"
+                                                 id="edit_btn_41"><button class="btn btn-secondary btn-sm" 
+                                                 type="submit">Edit<i class="fa fa-edit"></i></div>
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                <form method = "POST" action="updateAddress">
                                     {% csrf_token %}
-                                    
-                                    <div class="card-header">
-                                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                                            <table class="table-responsive-sm">
-                                                <div class="d-flex justify-content">
-                                                    <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="uname_lbl_41">
-                                                        User Name: {{request.user.first_name}} {{request.user.middle_name}} {{request.user.last_name}}
-                                                    </div>
-                                                    <div class="d-flex justify-content-end" style="color: #000000;" id="edit_btn1_41">
-                                                        <button class="btn btn-secondary btn-sm accord_collapsible" type="submit" id="edit_btn2_41">Edit<i class="fa fa-edit"></i>
-                                                    </div>
-                                                </div>
-                                            </table>
-                                        </a>
-                                    </div>
-                                    <div id="collapseOne" class= "collapse" data-parent="#accordion">
+                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <div class="form-inline">
-                                                
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="ln_box_041" class="my-1 mr-2" id="name_lbl">Name:</label>
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()" id="ln_box_41"
-                                                 name="ln_box_041" value="{{ request.GET.ln_box_041 }}" class="form-control mr-1" placeholder="Last Name"
-                                                  onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()" id="fn_box_41"
-                                                 name="fn_box_041" value="{{ request.GET.fn_box_041 }}" class="form-control mr-1" placeholder="First Name" 
-                                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                <input type="text" oninput="this.value = this.value.toUpperCase()" id="mn_box_41"
-                                                 name="mn_box_041" value="{{ request.GET.mn_box_041 }}" class="form-control mr-1" placeholder="Middle Name" 
-                                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                                
-
-                                               
-                                                <button class="btn btn-secondary btn-sm mr-1 " type="submit"  name="submit1" id="namesavechanges_btn_41">Save Changes</button><br>
-                                                 
-                                                    </div><br>
-                                                </div>
-                                    </div>
+                                                <input type="address" hidden name="validator" value= {{request.user.id_number}}> 
+                                                <label for="name" class="my-1 mr-4" id="address_lbl_41">Address:</label>
+                                                <input type="address" id="address_box_41" name="address_box_041" value="{{ request.GET.address_box_041 }}" class="form-control 
+                                                 col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
+                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit6"
+                                                 id="addresssavechanges_btn_41" type="submit">Save Changes</button><br>
+                                                </div><br>
+                                            </div>
+                                </div>
                                 </form>
+
                                 <!--EMAIL CARD-->
                                 <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
                                         <table class="table-responsive-sm">
                                             <div class="d-flex justify-content">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="email" id="uemail_lbl">
@@ -1024,14 +1012,14 @@
                                 </div>
                                 <form method= "POST" action="updateEmail">
                                     {% csrf_token %}
-                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <p>Note: Your email address should include your authentic name.</p>
                                             <div class="form-inline">
                                                 <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
                                                 <label for="ea_box_041" class="my-1 mr-4" id="email_lbl">Email:</label>
                                                 <input type="text" id="ea_box_41" name="ea_box_041" value="{{ request.GET.ea_box_041 }}" class="form-control col-sm-5 mr-1 "
-                                                 placeholder="firstname.lastname@gsfe.tupcavite.edu.ph" required>
+                                                 placeholder="abcd@gmail.com" required>
 
                                                 <button class="btn btn-secondary btn-sm mr-1" id="emailsavechanges_btn_41" type="submit" 
                                                 name="submit2" onclick="emailValidatorset()">Save Changes</button><br>
@@ -1039,62 +1027,14 @@
                                             </div>
                                 </div>
                                 </form>
-                                <!--COURSE CARD-->
-                                <form method= "POST" action="updateCourse">
-                                    {% csrf_token %}
-                                    <div class="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-                                            <table class="table-responsive-sm">
-                                                <div class="d-flex justify-content">
-                                                    <div class="p-2 flex-fill bd-highlight" id="coursename_lbl_41" style="color: #000000;">Course: {{request.user.course}} </div>
-                                                    <div class="d-flex justify-content-end" id="edit_btn4_41" style="color: #000000;">
-                                                        <button class="btn btn-secondary btn-sm" type="submit">Edit<i class="fa fa-edit"></i></div>
-                                                </div>
-                                            </table>
-                                        </a>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <div class="input-group">
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="course" class="my-1 mr-4" id="course_lbl">Course & Major:</label>
-                                                <select class="custom-select mr-1" id="course_drp_41" name="course_drp_041" value="{{ request.GET.course_drp_041 }}" aria-label="Example select with button addon">
-                                                    <option value="select_41" hidden>--SELECT--</option>
-                                                    <option value="BSCE">Bachelor of Science in Civil Engineering</option>
-                                                    <option value="BSEE">Bachelor of Science in Electrical Engineering</option>
-                                                    <option value="BSME">Bachelor of Science in Mechanical Engineering</option>
-                                                    <option value="BSIE-ICT">Bachelor of Science in Industrial Education major in Information and Communication Technology</option>
-                                                    <option value="BSIE-HE">Bachelor of Science in Industrial Education major in Home Economics</option>
-                                                    <option value="BTTE-CP">Bachelor of Technical Teachers Education major in Computer Programming</option>
-                                                    <option value="BTTE-EI">Bachelor of Technical Teachers Education major in Electronics</option>
-                                                    <option value="BTTE-AU">Bachelor of Technical Teachers Education major in Automotive</option>
-                                                    <option value="BTTE-HVACT">Bachelor of Technical Teachers Education major in Heatingg, Ventilation 
-                                                        and Air Conditioning Tecnology</option>
-                                                    <option value="BTTE-E">Bachelor of Technical Teachers Education major in Electrical</option>
-                                                    <option value="BGT-AT">Bachelor of Engineering Technolgy major in Architecture Technology</option>
-                                                    <option value="BET-CT">Bachelor of Engineering Technolgy major in Civil Engineering Technology</option>
-                                                    <option value="BET-ET">Bachelor of Engineering Technolgy major in Electrical Engineering Technology</option>
-                                                    <option value="BET-EsET">Bachelor of Engineering Technolgy major in Electronics Engineering Technology</option>
-                                                    <option value="BET-CoET">Bachelor of Engineering Technolgy major in Computer Engineering Technology</option>
-                                                    <option value="BET-MT">Bachelor of Engineering Technolgy major in Mechanical & Production Engineering Technology</option>
-                                                    <option value="BET-PPT">Bachelor of Engineering Technolgy major in Power Plant Engineering Technology</option>
-                                                    <option value="BET-AUT">Bachelor of Engineering Technolgy major in Automotive Engineering Technology</option>
-                                                </select>
-                                                
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-secondary" type="submit" name="submit3" id="coursesavechanges_btn_41">Save Changes</button><br>
-                                                    </div>
-                                                </div><br>
-                                    </div>
-                            </div>
-                            </form>
+
                             <!--PASSWORD CARD-->
                             <form method= "POST" action="updatePassword">
                                 {% csrf_token %}
                                 
                                 <div class="card">
                                     <div class="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
                                             
                                             <table class="table-responsive-sm">
                                                 <div class="d-flex justify-content">
@@ -1106,7 +1046,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                    <div id="collapseFive" class="collapse" data-parent="#accordion">
                                         
                                         <div class="card-body ">
                                             <div class="input-group">
@@ -1139,36 +1079,7 @@
                             </form>    
                         </div>
                         
-                        <!--CONTACT NUMBER CARD-->
-                        <div class="card">
-                            <div class="card-header">
-                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
-                                    <table class="table-responsive-sm">
-                                        <div class="d-flex bd-highlight">
-                                            <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="fnum_lbl_41"> 
-                                                Contact Number: {{request.user.contact_number}}</div>
-                                            <div class="d-flex justify-content-end" style="color: #000000;" id="edit_btn6_41">
-                                                <button class="btn btn-secondary btn-sm" type="submit">Edit<i class="fa fa-edit"></i></div>
-                                                </div>
-                                            </table>
-                                        </a>
-                                    </div>
-                                </div>
-                                <form action="updateContact" method = "POST">
-                                    {% csrf_token%}
-                                    <div id="collapseFive" class="collapse" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <div class="form-inline">
-                                                <label for="cnum_box_041" class="my-1 mr-4" id="cnum_lbl_41">Contact Number:</label>
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <input type="text" id="cnum_box_41" name="cnum_box_041" value="{{ request.GET.cnum_box_041 }}" class="form-control mr-1" 
-                                                onkeypress="isNumber(event)" oninput = "checkcpnum()" maxlength="13" minlength="13" placeholder="09**-***-****" required>
-                                                <button class="btn btn-secondary btn-sm mr-1" type="submit" name="submit5" 
-                                                id="add_btn_41" onclick = "checkcpnumnotif()" >Save Changes</button><br>
-                                            </div>
-                                            <p id="scn_error_41" style="color: red; font-size: 10px; padding-left: 150px;"></p>
-                                            <br>
-                                        </div></form>
+                    
                             </div>
                             
                         </div>
@@ -1290,13 +1201,11 @@
         console.log(validInputs)
 
         if (validInputs != 0) {
-            confirm("Your changes will not be saved once you close it.Continue");
+            // confirm("Your changes will not be saved once you close it.Continue");
 
-            document.getElementById('ln_box_41').value = '';
-            document.getElementById('fn_box_41').value = '';
-            document.getElementById('mn_box_41').value = '';
+
+            document.getElementById('address_box_41').value = '';
             document.getElementById('ea_box_41').value = '';
-            document.getElementById('course_drp_41').value = "";
             document.getElementById('old_pass_41').value = '';
             document.getElementById('new_pass_41').value = '';
             document.getElementById('confirm_pass_41').value = '';
@@ -1697,11 +1606,11 @@
     }
 
     //NAME SETTING ENTER BUTTON
-    var namelast_input = document.getElementById("mn_box_41");
+    var namelast_input = document.getElementById("address_box_41");
     namelast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            document.getElementById("namesavechanges_btn_41").click();
+            document.getElementById("addresssavechanges_btn_41").click();
         }
     });
 
