@@ -299,9 +299,6 @@
         grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
         justify-items: center;
     }
-    button {
-    margin-top: 30px;
-    }
     .back {
         display: none;
     }
@@ -1048,9 +1045,6 @@
         width: max-content;
     }
 
-    button {
-    margin-top: 30px;
-    }
     .back {
         display: none;
     }
@@ -1342,7 +1336,7 @@
                                                 <label for="name" class="my-1 mr-4" id="address_lbl_71">Address:</label>
                                                 <input type="address" id="address_box_71" name="address_box_071" value="{{ request.GET.address_box_071 }}" class="form-control 
                                                  col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
-                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit3"
+                                                <button class="btn btn-secondary btn-sm mr-1" name="submit3"
                                                  id="addresssavechanges_btn_71" type="submit" >Save Changes</button><br>
                                                 </div><br>
                                             </div>
@@ -1455,7 +1449,7 @@
                                                  type="submit" onclick = "checkcpnumnotif()">Save Changes</button><br>
                                             </div>
                                             <p id="scn_error_71" style="color: red; font-size: 10px; padding-left: 150px;"></p>
-                                            <br>
+                                            
                                         </div>
                             </div>
                             </form>
@@ -2211,6 +2205,14 @@
         }
     }
 
+    //ADDRESS SETTING ENTER BUTTON
+    var namelast_input = document.getElementById("address_box_71");
+    namelast_input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("addresssavechanges_btn_71").click();
+        }
+    });
  
     //EMAIL SETTING ENTER BUTTON
     var emaillast_input = document.getElementById("email_box_71");
