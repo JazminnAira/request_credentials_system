@@ -804,9 +804,9 @@ def student_registration(request):
                     messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
                     return redirect('/')
                 else:
-                    messages.error(request, "Unregistered Alumni")
+                    messages.error(request, "Unenrolled Student")
             else:
-                    messages.error(request, "Unregistered Alumni")
+                    messages.error(request, "Unenrolled Student")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
@@ -860,11 +860,11 @@ def alumnus_registration(request):
             form.instance.user_type = "ALUMNUS"
             form.instance.full_name = last + ", " + first + " " + middle
 
-            SearchUser = first + " " + last
-            a = Enrolled.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
+            SearchUser2 = first + " " + last
+            a = Alumnus.objects.filter(Name=SearchUser2).values_list('Name', flat=True).distinct()
             if a:
                 va= a[0]
-                if va == SearchUser:
+                if va == SearchUser2:
                     form.save()
                     # subject = 'SIGNUP SUCCESS'
                     # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
@@ -874,9 +874,9 @@ def alumnus_registration(request):
                     messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
                     return redirect('/')
                 else:
-                    messages.error(request, "Unenrolled Student")
+                    messages.error(request, "Unregistered Alumni")
             else:
-                    messages.error(request, "Unenrolled Student")
+                    messages.error(request, "Unregistered Alumni")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
