@@ -575,13 +575,27 @@ def clearance_print(request, id):
 
     p.drawString(80, 755, f'{content.name}')
     p.drawString(400, 755, f'{content.date_filed}')
-    # p.drawString(130, 710, f'{content.present_address}')
-    
-    address = content.present_address
-    
+    p.setFont("Helvetica", 9)
+    p.drawString(130, 710, f'{content.present_address}')
+    p.setFont("Helvetica", 10)
     p.drawString(150, 681, f'{content.date_admitted_in_tup}')
     p.drawString(120, 655, f'{content.course}')
-    p.drawString(180, 629, f'{content.highschool_graduated}')
+    # p.drawString(180, 629, f'{content.highschool_graduated}')
+
+    hs_grad = content.highschool_graduated
+    num=len(hs_grad.split())
+    
+    if num > 3:
+        p.setFont("Helvetica", 9)
+        result =' '.join(hs_grad.split()[:3])
+        p.drawString(180, 629, f"""{result}""")
+        result1 =' '.join(hs_grad.split()[3:])
+        p.drawString(43, 605, f"""{result1}""")
+    else: 
+        p.setFont("Helvetica", 9)
+        p.drawString(180, 629, f'{content.highschool_graduated}')
+        
+    p.setFont("Helvetica", 10)  
     p.drawString(400, 681, f'{content.amount_paid}')
     p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
     p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
