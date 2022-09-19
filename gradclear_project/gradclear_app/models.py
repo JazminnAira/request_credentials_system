@@ -1125,17 +1125,19 @@ class graduation_form_table(models.Model):
 class Enrolled(models.Model):
     id = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=150)
-    Id_number = models.CharField(max_length=50)
-    Status = models.CharField(max_length=50)
+    TOR = models.CharField(max_length=50)
+    form_137 = models.CharField(max_length=50)
+    Status = models.CharField(max_length=50, default="ENROLLED")
    
     def __str__(self):
         return self.Name
     
-class Alumni(models.Model):
+class Alumnus(models.Model):
     id = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=150)
-    Id_number = models.CharField(max_length=50)
-    Status = models.CharField(max_length=50)
+    TOR = models.CharField(max_length=50)
+    form_137 = models.CharField(max_length=50)
+    Status = models.CharField(max_length=50, default="ALUMNI")
    
     def __str__(self):
         return self.Name

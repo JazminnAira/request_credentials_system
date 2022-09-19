@@ -377,16 +377,19 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="">All</a>
+                    <a class="dropdown-item" href="">OCS</a>
+                    <a class="dropdown-item" href="">OGS</a>
+                    <a class="dropdown-item" href="">OSA</a>
+                    <a class="dropdown-item" href="">ADAA</a>
+                    <a class="dropdown-item" href="">OES</a>
+                    <a class="dropdown-item" href="">OCL</a>
+                    <a class="dropdown-item" href="">DMS</a>
+                    <a class="dropdown-item" href="">DPECS</a>
+                    <a class="dropdown-item" href="">DED</a>
                     <a class="dropdown-item" href="">DIT</a>
-                    <a class="dropdown-item" href="">BSCE</a>
-                    <a class="dropdown-item" href="">BSEE</a>
-                    <a class="dropdown-item" href="">BSIE-ICT</a>
-                    <a class="dropdown-item" href="">BSIE-HE</a>
-                    <a class="dropdown-item" href="">BTTE-HVACT</a>
-                    <a class="dropdown-item" href="">BTTE-EI</a>
-                    <a class="dropdown-item" href="">BTTE-E</a>
-                    <a class="dropdown-item" href="">BGT-AT</a>
-                    <a class="dropdown-item" href="">BET-ET</a>
+                    <a class="dropdown-item" href="">DIE</a>
+                    <a class="dropdown-item" href="">DLA</a>
+                    <a class="dropdown-item" href="">DOE</a>
                 </div>
 
         <!--SEARCH BUTTON
@@ -431,8 +434,9 @@
                             <th>ID Number</th>
                             <th>Email</th>
                             <th>Gender</th>
-                            <th>Position</th>
                             <th>Activation</th>
+                            <th>Position</th>     
+                            <th></th>
                             <th></th>
                             <!--{% if val == 'APPROVED' %}
                             <th>Approval Status</th>
@@ -441,7 +445,7 @@
                             {% endif %}-->
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
@@ -454,28 +458,29 @@
                             <td>{{instance.id_number}}</td>
                             <td>{{instance.email}}</td>
                             <td>{{instance.gender}}</td>
+                            <td>Activate</td>
                             <td>   
+                
                                 <form name="change_position" id="change" action="faculty_list_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
                                     <select onchange="this.form.submit()" name="positionSelect" id="changer"> 
-                                        <option >{{instance.position }}
+                                        <option value="">{{instance.position }}
                                         <option value="STAFF">STAFF
                                         <option value="HEAD">HEAD
                                         <option value="PART TIMER">PART TIMER
                                     </select>
-                                </form>
+                                </form> 
                             </td>
-                            <td>Activate</td>
-                            <td>
-                                <button class="button"><a style="color: #fff;" href="" onclick="fun()">Add</a></button></td>
+                            <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                                <button class="button"><a style="color: #fff;" href="registrar_faculty_approval/{{ instance.id }}">Add</a></button></td>
                             </td>
                             <td>
                                 <button class="button"><a style="color: #fff;" href="" onclick="fun()">Delete</a></button></td>
                             </td>
                         </tr>
                     </tbody>
-                    {% endfor %}
-                </table>
+                    {% endfor %} 
+                </table
             </div>
         </div>
 
@@ -499,6 +504,7 @@
 
 
 <script>
+    
 
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
@@ -711,4 +717,3 @@
     });
 
     
-</script>

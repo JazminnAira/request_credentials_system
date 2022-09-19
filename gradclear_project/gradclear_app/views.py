@@ -2137,11 +2137,43 @@ def registrar_dashboard_student_list(request):
     for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
         _, created = Enrolled.objects.update_or_create(
             Name = column[0],
-            Id_number = column[1],
-            Status = column[2],
+            TOR = column[1],
+            form_137 = column[2],
         )
     
     context = {'data':enrolled_data}
+    return render(request, template, context)
+
+@login_required(login_url='/')
+def registrar_dashboard_alumni_list(request):
+    # declaring template
+    template = "html_files/Alumni List.html"
+    alumnus_data = Alumnus.objects.all()
+# prompt is a context variable that can have different values      depending on their context
+    prompt = {
+        'data': alumnus_data
+              }
+    # GET request returns the value of the data with the specified key.
+    if request.method == "GET":
+        return render(request, template, prompt)
+    
+    csv_file = request.FILES['file1']
+    # let's check if it is a csv file
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'THIS IS NOT A CSV FILE')
+    data_set = csv_file.read().decode('UTF-8')
+    # setup a stream which is when we loop through each line we are able to handle a data in a stream
+    
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
+        _, created = Alumnus.objects.update_or_create(
+            Name = column[0],
+            TOR = column[1],
+            form_137 = column[2],
+        )
+    
+    context = {'data':alumnus_data}
     return render(request, template, context)
 
 @login_required(login_url='/')
@@ -2149,7 +2181,6 @@ def registrar_dashboard_faculty_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
     
         all_faculty = user_table.objects.filter(user_type = "FACULTY")
-    
         faculty_data = {
             'all':all_faculty,
         }
@@ -2159,7 +2190,7 @@ def registrar_dashboard_faculty_list(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
+    # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
 
 def faculty_list_update(request, id):
     pos_change = request.POST.get('positionSelect')
@@ -2167,5 +2198,5 @@ def faculty_list_update(request, id):
     
     user_table.objects.filter(id=id).update(position=pos_change)
     print('done')
+    
     return redirect(registrar_dashboard_faculty_list)
-

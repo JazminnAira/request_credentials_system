@@ -29,6 +29,7 @@ urlpatterns = [
           name='registrar_dashboard_graduation_list'),
      path('registrar_dashboard_faculty_list', registrar_dashboard_faculty_list, name="registrar_dashboard_faculty_list"),
      path('registrar_dashboard_student_list', registrar_dashboard_student_list, name="registrar_dashboard_student_list"),
+     path('registrar_dashboard_alumni_list', registrar_dashboard_alumni_list, name="registrar_dashboard_alumni_list"),
      path('faculty_list_update/<int:id>', views.faculty_list_update, name='faculty_list_update'),
      path('update/<int:id>', views.update, name='update'),
      path('updategrad/<int:id>', views.updategrad, name='updategrad'),
