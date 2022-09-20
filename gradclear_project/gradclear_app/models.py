@@ -147,6 +147,8 @@ class clearance_form_table(models.Model):
         verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
     ieng_dept_signature = models.CharField(max_length=15,
         verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
+    course_adviser = models.CharField(max_length=15,
+        verbose_name="Course/Shop Adviser", default="UNAPPROVED")
     library_signature = models.CharField(max_length=15,
         verbose_name="Library Signature", default="UNAPPROVED")
     guidance_office_signature = models.CharField(max_length=15,
