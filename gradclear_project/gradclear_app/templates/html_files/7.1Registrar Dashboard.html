@@ -428,7 +428,6 @@
         padding-left: 10px;
     }
     
-    
     .sidebar {
     height: 100%;
     width: 70px;
@@ -492,7 +491,7 @@
     }
 
     
-    #logo {
+    #logo_71 {
         padding-left: 3px;
         padding-top: 5px;
         width: 65px;
@@ -1110,7 +1109,7 @@
 <!--SIDEBAR -->
 
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-    <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
+    <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_71"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
     <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
@@ -1119,7 +1118,7 @@
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_alumni_list'%}"><i class="fa fa fa-table material-icons"></i><span class="icon-text">Alumni</span></a><br>
     <a style="padding-left: 21px;" href=""><i class="fa fa fa-comments-o material-icons"></i><span class="icon-text">Requests</span></a><br>
     <a style="padding-left: 19px;" href="" data-toggle="modal" data-target="#Settings_modal_71"><i class="fa fa-cogs material-icons"></i><span class="icon-text">Settings<span></a>
-    <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="logo_71" style="position: absolute;bottom: 10px;">
+    <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="left_logo_71" style="position: absolute;bottom: 10px;">
 
 </div>
   
@@ -1647,8 +1646,8 @@
                     <div class="card-body">
                       <h5 class="card-title">BTTE-CP</h5>
                       <p class="card-text">BTTE Computer Programming</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTE-CP'%}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTE-CP' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
+                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-CP'%}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
+                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-CP' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
                     </div>
                   </div>
                   <div class="card d-none d-md-block">
@@ -2250,21 +2249,20 @@
         window.location.replace("{% url 'clearance_form' %}");
     }
 
+    
+// COLLAPSIBLE SIDEBAR
     var mini = true;
 
-// COLLAPSIBLE SIDEBAR
 function toggleSidebar() {
   if (mini) {
-    console.log("opening sidebar");
     document.getElementById("sidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("logo_71").style.marginLeft = "90px";
+    document.getElementById("left_logo_71").style.marginLeft = "90px";
     this.mini = false;
   } else {
-    console.log("closing sidebar");
     document.getElementById("sidebar").style.width = "70px";
     document.getElementById("main").style.marginLeft = "70px";
-    document.getElementById("logo_71").style.marginLeft = "3px";
+    document.getElementById("left_logo_71").style.marginLeft = "3px";
     this.mini = true;
   }
 }
