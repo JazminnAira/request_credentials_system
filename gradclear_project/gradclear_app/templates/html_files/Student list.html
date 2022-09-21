@@ -417,10 +417,12 @@
                 <table class="table results table-hover table-sortable" id="list_tbl_75">
                     <thead>
                         <tr>
-                            <th> # </th>
+                            <th>#</th>
                             <th>Student's Name</th>
                             <th>Form 137-A</th>
                             <th>TOR</th>
+                            <th>Clearance</th>
+                            <th>Graduation</th>
                             <th>Status</th>
                         </tr>
                         <tr class="warning no-result">
@@ -433,8 +435,27 @@
                         <tr>
                             <td>{{instance.id}}</td>
                             <td>{{instance.Name}}</td>
-                            <td>{{instance.TOR}}</td>
-                            <td>{{instance.form_137}}</td>
+                            <td>
+                                <form name="change_position" id="change" action="student_form137_update/{{ instance.id }}" method=POST>
+                                {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="form137_select" id="changer"> 
+                                        <option value="">{{instance.form_137}}
+                                        <option value="✔">✔
+                                        <option value="❌">❌
+                                    </select>
+                                </form>  
+                            </td>
+                            <td><form name="change_position" id="change" action="student_TOR_update/{{ instance.id }}" method=POST>
+                                {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
+                                        <option value="">{{instance.TOR}}
+                                        <option value="✔">✔
+                                        <option value="❌">❌
+                                    </select>
+                                </form>  
+                            </td>
+                            <td>{{instance.clearance}}</td>
+                            <td>{{instance.graduation}}</td>
                             <td>{{instance.Status}}</td>
                         </tr>
                     </tbody>

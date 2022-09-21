@@ -1129,6 +1129,8 @@ class Enrolled(models.Model):
     Name = models.CharField(max_length=150)
     TOR = models.CharField(max_length=50)
     form_137 = models.CharField(max_length=50)
+    clearance = models.CharField(max_length=50, default="❌")
+    graduation = models.CharField(max_length=50, default="❌")
     Status = models.CharField(max_length=50, default="ENROLLED")
    
     def __str__(self):

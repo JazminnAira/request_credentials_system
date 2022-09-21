@@ -2126,6 +2126,7 @@ def set_appointment(request, id):
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
+
 @login_required(login_url='/')
 def registrar_dashboard_student_list(request):
     # declaring template
@@ -2151,12 +2152,23 @@ def registrar_dashboard_student_list(request):
     for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
         _, created = Enrolled.objects.update_or_create(
             Name = column[0],
-            TOR = column[1],
-            form_137 = column[2],
+            form_137 = column[1],
+            TOR = column[2],
         )
-    
+        
     context = {'data':enrolled_data}
     return render(request, template, context)
+
+def student_form137_update(request, id):
+    form_change = request.POST.get('form137_select')
+    Enrolled.objects.filter(id=id).update(form_137=form_change)
+    return redirect(registrar_dashboard_student_list)
+
+def student_TOR_update(request, id):
+    form_change = request.POST.get('TOR_select')
+    Enrolled.objects.filter(id=id).update(TOR=form_change)
+    return redirect(registrar_dashboard_student_list)
+
 
 @login_required(login_url='/')
 def registrar_dashboard_alumni_list(request):
