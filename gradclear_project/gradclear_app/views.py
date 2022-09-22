@@ -2132,6 +2132,7 @@ def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
     enrolled_data = Enrolled.objects.all()
+    
 # prompt is a context variable that can have different values      depending on their context
     prompt = {
         'data': enrolled_data
@@ -2155,6 +2156,10 @@ def registrar_dashboard_student_list(request):
             form_137 = column[1],
             TOR = column[2],
         )
+        
+    for row in Enrolled.objects.all().reverse():
+        if Enrolled.objects.filter(Name=row.Name).count() > 1:
+            row.delete()
         
     context = {'data':enrolled_data}
     return render(request, template, context)
