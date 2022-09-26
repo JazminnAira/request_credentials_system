@@ -1162,10 +1162,10 @@ def graduation_form(request):
                                                         addsubject9=o9, addroom9=p9, addfaculty9=t9, add_starttime1_9=w1_9, add_endtime1_9=x1_9, addday1_9=r1_9,
                                                         addsubject10=o10, addroom10=p10, addfaculty10=t10, add_starttime1_10=w1_10, add_endtime1_10=x1_10, addday1_10=r1_10,
 
-                                                        signature1=s1 + "_sig", signature2=s2 + "_sig", signature3=s3 + "_sig", signature4=s4 + "_sig", signature5=s5 + "_sig",
-                                                        signature6=s6 + "_sig", signature7=s7 + "_sig", signature8=s8 + "_sig", signature9=s9 + "_sig", signature10=s10 + "_sig",
-                                                        addsignature1=t1 + "_sig", addsignature2=t2 + "_sig", addsignature3=t3 + "_sig", addsignature4=t4 + "_sig", addsignature5=t5 + "_sig",
-                                                        addsignature6=t6 + "_sig", addsignature7=t7 + "_sig", addsignature8=t8 + "_sig", addsignature9=t9 + "_sig", addsignature10=t10 + "_sig")
+                                                        signature1=s1 + "_UNAPPROVED", signature2=s2 + "_UNAPPROVED", signature3=s3 + "_UNAPPROVED", signature4=s4 + "_UNAPPROVED", signature5=s5 + "_UNAPPROVED",
+                                                        signature6=s6 + "_UNAPPROVED", signature7=s7 + "_UNAPPROVED", signature8=s8 + "_UNAPPROVED", signature9=s9 + "_UNAPPROVED", signature10=s10 + "_UNAPPROVED",
+                                                        addsignature1=t1 + "_UNAPPROVED", addsignature2=t2 + "_UNAPPROVED", addsignature3=t3 + "_UNAPPROVED", addsignature4=t4 + "_UNAPPROVED", addsignature5=t5 + "_UNAPPROVED",
+                                                        addsignature6=t6 + "_UNAPPROVED", addsignature7=t7 + "_UNAPPROVED", addsignature8=t8 + "_UNAPPROVED", addsignature9=t9 + "_UNAPPROVED", addsignature10=t10 + "_UNAPPROVED")
             form.save()
             print('8')
             return redirect('student_dashboard')
@@ -1242,7 +1242,7 @@ def alumnus_dashboard(request):
 @login_required(login_url='/')
 def faculty_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        unapproved = request.user.full_name + "_sig"
+        unapproved = request.user.full_name + "_UNAPPROVED"
         st = graduation_form_table.objects.filter(Q(signature1=unapproved) | Q(signature2=unapproved) | Q(signature3=unapproved) |
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
@@ -1461,43 +1461,69 @@ def faculty_dashboard_graduation_list(request):
         global field_sig
         field_sig = ""
         temp = request.POST.get('namedeterminer2')
-        temp = str(temp) + "_sig"
+        temp = str(temp) + "_UNAPPROVED"
         f_n = temp
+        print('trial')
+        print(f_n)
         val = request.POST.get('valdeterminer')
 
         # USE REQUEST.USER TO AUTO SHOW DATA
-        full_name = request.user.full_name
-        st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) | Q(faculty3=full_name) |
-                                                  Q(faculty4=full_name) | Q(faculty5=full_name) | Q(faculty6=full_name) |
-                                                  Q(faculty7=full_name) | Q(faculty8=full_name) | Q(faculty9=full_name) | Q(faculty10=full_name) |
-                                                  Q(addfaculty1=full_name) | Q(addfaculty2=full_name) | Q(addfaculty3=full_name) |
-                                                  Q(addfaculty4=full_name) | Q(addfaculty5=full_name) | Q(addfaculty6=full_name) |
-                                                  Q(addfaculty7=full_name) | Q(addfaculty8=full_name) | Q(addfaculty9=full_name) | Q(addfaculty10=full_name))
+        full_name = request.user.full_name +"_UNAPPROVED"
+        # st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) | Q(faculty3=full_name) |
+        #                                           Q(faculty4=full_name) | Q(faculty5=full_name) | Q(faculty6=full_name) |
+        #                                           Q(faculty7=full_name) | Q(faculty8=full_name) | Q(faculty9=full_name) | Q(faculty10=full_name) |
+        #                                           Q(addfaculty1=full_name) | Q(addfaculty2=full_name) | Q(addfaculty3=full_name) |
+        #                                           Q(addfaculty4=full_name) | Q(addfaculty5=full_name) | Q(addfaculty6=full_name) |
+        #                                           Q(addfaculty7=full_name) | Q(addfaculty8=full_name) | Q(addfaculty9=full_name) | Q(addfaculty10=full_name))
+        st =""
+        res= graduation_form_table.objects.filter(
+            Q(signature1__contains=full_name) |
+            Q(signature2__contains=full_name) |
+            Q(signature3__contains=full_name) |
+            Q(signature4__contains=full_name) |
+            Q(signature5__contains=full_name) |
+            Q(signature6__contains=full_name) |
+            Q(signature7__contains=full_name) |
+            Q(signature8__contains=full_name) |
+            Q(signature9__contains=full_name) |
+            Q(signature10__contains=full_name) |
+            Q(addsignature1__contains=full_name) |
+            Q(addsignature2__contains=full_name) |
+            Q(addsignature3__contains=full_name) |
+            Q(addsignature4__contains=full_name) |
+            Q(addsignature5__contains=full_name) |
+            Q(addsignature6__contains=full_name) |
+            Q(addsignature7__contains=full_name) |
+            Q(addsignature8__contains=full_name) |
+            Q(addsignature9__contains=full_name) |
+            Q(addsignature10__contains=full_name) 
+        )
+        if res:
 
-        if val == "UNAPPROVED":
-            full_name = request.user.full_name + "_sig"
-            print(full_name)
+        # if val == "UNAPPROVED":
+        #     full_name = request.user.full_name + "_UNAPPROVED"
+        #     print(full_name)
             st = graduation_form_table.objects.filter(Q(signature1=full_name) | Q(signature2=full_name) | Q(signature3=full_name) |
                                                       Q(signature4=full_name) | Q(signature5=full_name) | Q(signature6=full_name) |
                                                       Q(signature7=full_name) | Q(signature8=full_name) | Q(signature9=full_name) | Q(signature10=full_name) |
                                                       Q(addsignature1=full_name) | Q(addsignature2=full_name) | Q(addsignature3=full_name) |
                                                       Q(addsignature4=full_name) | Q(addsignature5=full_name) | Q(addsignature6=full_name) |
                                                       Q(addsignature7=full_name) | Q(addsignature8=full_name) | Q(addsignature9=full_name) | Q(addsignature10=full_name))
-        elif val == "APPROVED":
-            approval = request.user.full_name + "_APPROVED"
-            st = graduation_form_table.objects.filter(Q(signature1=approval) | Q(signature2=approval) | Q(signature3=approval) |
-                                                      Q(signature4=approval) | Q(signature5=approval) | Q(signature6=approval) |
-                                                      Q(signature7=approval) | Q(signature8=approval) | Q(signature9=approval) | Q(signature10=approval) |
-                                                      Q(addsignature1=approval) | Q(addsignature2=approval) | Q(addsignature3=approval) |
-                                                      Q(addsignature4=approval) | Q(addsignature5=approval) | Q(addsignature6=approval) |
-                                                      Q(addsignature7=approval) | Q(addsignature8=approval) | Q(addsignature9=approval) | Q(addsignature10=approval))
-
+        # elif val == "APPROVED":
+        approval = request.user.full_name + "_APPROVED"
+        st1 = graduation_form_table.objects.filter(Q(signature1=approval) | Q(signature2=approval) | Q(signature3=approval) |
+                                                    Q(signature4=approval) | Q(signature5=approval) | Q(signature6=approval) |
+                                                    Q(signature7=approval) | Q(signature8=approval) | Q(signature9=approval) | Q(signature10=approval) |
+                                                    Q(addsignature1=approval) | Q(addsignature2=approval) | Q(addsignature3=approval) |
+                                                    Q(addsignature4=approval) | Q(addsignature5=approval) | Q(addsignature6=approval) |
+                                                    Q(addsignature7=approval) | Q(addsignature8=approval) | Q(addsignature9=approval) | Q(addsignature10=approval))
+    
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'val': val})
+    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'val': val, 'st1': st1})
 
 
 @login_required(login_url='/')
@@ -1509,130 +1535,132 @@ def updategrad(request, id):
             username=email_temp[0]).values_list('email', flat=True).distinct()
 
         rec_email = email[0]
-        print(rec_email)
-        print("this is f_n", f_n)
+        print(rec_email) 
+        f_n1 = request.user.full_name + '_UNAPPROVED'
+        print("this is f_n", f_n1)  
         a = graduation_form_table.objects.filter(
-            signature1__contains=f_n, id=id)
+            signature1__contains=f_n1, id=id)
         b = graduation_form_table.objects.filter(
-            signature2__contains=f_n, id=id)
+            signature2__contains=f_n1, id=id)
         c = graduation_form_table.objects.filter(
-            signature3__contains=f_n, id=id)
+            signature3__contains=f_n1, id=id)
         d = graduation_form_table.objects.filter(
-            signature4__contains=f_n, id=id)
+            signature4__contains=f_n1, id=id)
         e = graduation_form_table.objects.filter(
-            signature5__contains=f_n, id=id)
+            signature5__contains=f_n1, id=id)
         f = graduation_form_table.objects.filter(
-            signature6__contains=f_n, id=id)
+            signature6__contains=f_n1, id=id)
         g = graduation_form_table.objects.filter(
-            signature7__contains=f_n, id=id)
+            signature7__contains=f_n1, id=id)
         h = graduation_form_table.objects.filter(
-            signature8__contains=f_n, id=id)
+            signature8__contains=f_n1, id=id)
         i = graduation_form_table.objects.filter(
-            signature9__contains=f_n, id=id)
+            signature9__contains=f_n1, id=id)
         j = graduation_form_table.objects.filter(
-            signature10__contains=f_n, id=id)
+            signature10__contains=f_n1, id=id)
         k = graduation_form_table.objects.filter(
-            addsignature1__contains=f_n, id=id)
+            addsignature1__contains=f_n1, id=id)
         l = graduation_form_table.objects.filter(
-            addsignature2__contains=f_n, id=id)
+            addsignature2__contains=f_n1, id=id)
         m = graduation_form_table.objects.filter(
-            addsignature3__contains=f_n, id=id)
+            addsignature3__contains=f_n1, id=id)
         n = graduation_form_table.objects.filter(
-            addsignature4__contains=f_n, id=id)
+            addsignature4__contains=f_n1, id=id)
         o = graduation_form_table.objects.filter(
-            addsignature5__contains=f_n, id=id)
+            addsignature5__contains=f_n1, id=id)
         p = graduation_form_table.objects.filter(
-            addsignature6__contains=f_n, id=id)
+            addsignature6__contains=f_n1, id=id)
         q = graduation_form_table.objects.filter(
-            addsignature7__contains=f_n, id=id)
+            addsignature7__contains=f_n1, id=id)
         r = graduation_form_table.objects.filter(
-            addsignature8__contains=f_n, id=id)
+            addsignature8__contains=f_n1, id=id)
         s = graduation_form_table.objects.filter(
-            addsignature9__contains=f_n, id=id)
+            addsignature9__contains=f_n1, id=id)
         t = graduation_form_table.objects.filter(
-            addsignature10__contains=f_n, id=id)
-        approval = request.user.full_name + "_APPROVED"
+            addsignature10__contains=f_n1, id=id)
+            
+        approval =request.user.full_name + "_APPROVED"
         if a.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature1=approval)
-            messages.success(request, "Form Approved.")
-        if b.exists():
+
+        if b.exists(): 
             graduation_form_table.objects.filter(
                 id=id).update(signature2=approval)
-            messages.success(request, "Form Approved.")
+            
         if c.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature3=approval)
-            messages.success(request, "Form Approved.")
+            
         if d.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature4=approval)
-            messages.success(request, "Form Approved.")
+            
         if e.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature5=approval)
-            messages.success(request, "Form Approved.")
+            
         if f.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature6=approval)
-            messages.success(request, "Form Approved.")
+            
         if g.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature7=approval)
-            messages.success(request, "Form Approved.")
+            
         if h.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature8=approval)
-            messages.success(request, "Form Approved.")
+            
         if i.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature9=approval)
-            messages.success(request, "Form Approved.")
+            
         if j.exists():
             graduation_form_table.objects.filter(
                 id=id).update(signature10=approval)
-            messages.success(request, "Form Approved.")
+            
         if k.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature1=approval)
-            messages.success(request, "Form Approved.")
+            
         if l.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature2=approval)
-            messages.success(request, "Form Approved.")
+            
         if m.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature3=approval)
-            messages.success(request, "Form Approved.")
+            
         if n.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature4=approval)
-            messages.success(request, "Form Approved.")
+            
         if o.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature5=approval)
-            messages.success(request, "Form Approved.")
+            
         if p.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature6=approval)
-            messages.success(request, "Form Approved.")
+            
         if q.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature7=approval)
-            messages.success(request, "Form Approved.")
+            
         if r.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature8=approval)
-            messages.success(request, "Form Approved.")
+            
         if s.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature9=approval)
-            messages.success(request, "Form Approved.")
+            
         if t.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature10=approval)
-            messages.success(request, "Form Approved.")
-
+            
+        messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
         email_from = settings.EMAIL_HOST_USER
