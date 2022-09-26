@@ -1673,14 +1673,14 @@
             </div>
 
             <!-- CONTROLS (PREVIOUS AND NEXT) -->
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <!-- <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
-            </a>
+            </a> -->
           </div>
 
         <!--ACCESS BAR-->
@@ -2268,55 +2268,55 @@ function toggleSidebar() {
 }
 
 // ------------- Previous & Next--------------
-$('#content-2').hide();
-    $('#center2').hide();
-    var counter = 1;
-    $('body').on('click', '.next', function() { 
-        $('.content').hide();
-        $('#center1').hide();
+// $('#content-2').hide();
+//     $('#center2').hide();
+//     var counter = 1;
+//     $('body').on('click', '.next', function() { 
+//         $('.content').hide();
+//         $('#center1').hide();
 
 
 
-    counter++;
-	$('#content-'+counter+'').show();
-    $('#center2').show();
+//     counter++;
+// 	$('#content-'+counter+'').show();
+//     $('#center2').show();
 
 
-	if(counter > 1) {
-		$('.back').show();
-        $('.next').hide();
+// 	if(counter > 1) {
+// 		$('.back').show();
+//         $('.next').hide();
 
 
-	};
-	if(counter > 2) {
-		$('.content-holder').hide();
-		$('.end').show();
-	};
+// 	};
+// 	if(counter > 2) {
+// 		$('.content-holder').hide();
+// 		$('.end').show();
+// 	};
 
-    });
+//     });
 
-    $('body').on('click', '.back', function() { 
-        //alert(counter);
-        counter--;
-        $('.content').hide();
-        $('#center1').show();
-        $('#center2').hide();
-        var id = counter;    
-        $('#content-'+id).show();
-        if(counter<2){
-                $('.back').hide();
-                $('.next').show();
+//     $('body').on('click', '.back', function() { 
+//         //alert(counter);
+//         counter--;
+//         $('.content').hide();
+//         $('#center1').show();
+//         $('#center2').hide();
+//         var id = counter;    
+//         $('#content-'+id).show();
+//         if(counter<2){
+//                 $('.back').hide();
+//                 $('.next').show();
 
 
-        }
+//         }
 
-    });
+//     });
 
-    $('body').on('click', '.back', function() { 
-        $('.end').show();
-        $('.content-holder').show();
-        $('#content-2').hide();
-    });
+//     $('body').on('click', '.back', function() { 
+//         $('.end').show();
+//         $('.content-holder').show();
+//         $('#content-2').hide();
+//     });
     
 
 </script>
