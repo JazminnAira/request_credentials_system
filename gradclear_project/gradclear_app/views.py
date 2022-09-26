@@ -2259,3 +2259,74 @@ def faculty_list_update(request, id):
     print('done')
     
     return redirect(registrar_dashboard_faculty_list)
+
+@login_required(login_url='/')
+def registrar_dashboard_request_list(request):
+    requests = request_form_table.objects.all()
+    
+    return render(request,'html_files/Request List.html', {'data': requests})
+
+@login_required(login_url='/')
+def request_form(request):
+    context = {}
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
+        user = request.user.user_type
+        print(user)
+        if request.method == "POST":
+            form = request_form
+            student_id = request.POST.get('stud_id_pre')
+            last_name = request.POST.get('ln_box_pre')
+            first_name = request.POST.get('fn_box_pre')
+            middle_name = request.POST.get('mn_box_pre')
+            course = request.POST.get('course_pre')
+            date = request.POST.get('date_pre')
+            control_num = request.POST.get('control_pre')
+            address = request.POST.get('add_box_pre')
+            contact_num = request.POST.get('contact_pre')
+            current_stat = request.POST.get('check_status_pre')
+            purpose = request.POST.get('purpose')
+            request = request.POST.get('purpose_request_pre')
+            
+            name = last_name + ", " + first_name + " " + middle_name
+            name2 = first_name + " " + last_name
+            
+            if current_stat == "Enrolled":
+                check_form137 = Enrolled.objects.filter(Name = name2).values('form_137').distinct()
+                check_TOR = Enrolled.objects.filter(Name = name2).values('TOR').distinct()
+                check_clearance = Enrolled.objects.filter(Name = name2).values('clearance').distinct()
+                  
+                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
+                                                     address=address, course=course,date=date, control_number=control_num,
+                                                     contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     request=request, form_137=check_form137, TOR=check_TOR, clearance=check_clearance)
+                form.save()
+                return redirect('student_dashboard')
+            
+            elif current_stat == "Old Student":
+                check_form137 = Enrolled.objects.filter(Name = name2).values('form_137').distinct()
+                check_TOR = Enrolled.objects.filter(Name = name2).values('TOR').distinct()
+                check_clearance = Enrolled.objects.filter(Name = name2).values('clearance').distinct()
+                  
+                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
+                                                     address=address, course=course,date=date, control_number=control_num,
+                                                     contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     request=request, form_137=check_form137, TOR=check_TOR, clearance=check_clearance)
+                form.save()
+                return redirect('student_dashboard')
+            
+            else: 
+                check_form137 = Alumnus.objects.filter(Name = name2).values('form_137').distinct()
+                check_TOR = Alumnus.objects.filter(Name = name2).values('TOR').distinct()
+
+                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
+                                                     address=address, course=course,date=date, control_number=control_num,
+                                                     contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     request=request, form_137=check_form137, TOR=check_TOR)
+                form.save()
+                return redirect('student_dashboard')         
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+
+    return render(request,'html_files/Request form.html', context)

@@ -1145,3 +1145,32 @@ class Alumnus(models.Model):
    
     def __str__(self):
         return self.Name
+    
+class request_form_table(models.Model):
+    student_id = models.CharField(max_length=20, verbose_name="Student Id")
+    name = models.CharField(max_length=100, verbose_name="Student Name")
+    name2 = models.CharField(max_length=100, verbose_name="2nd Format Student Name")
+    address = models.CharField(max_length=100, verbose_name="Address")
+    course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
+    date = models.CharField(max_length=20, verbose_name="Date")
+    control_number = models.CharField(max_length=50, verbose_name="Control Number",null=True,default="NONE")
+    contact_number = models.CharField( max_length=13, verbose_name="Contact Number", validators=[MinLengthValidator(13)])
+    current_status = models.CharField(max_length=100, verbose_name="Current Status",null=True)
+    request = models.CharField(
+        max_length=100, verbose_name="Request", default="NONE", null=True)
+    purpose_of_request_reason = models.CharField(
+        max_length=100, verbose_name="Purpose of Request",null=True)
+    
+    TOR = models.CharField(max_length=50,default="❌")
+    form_137 = models.CharField(max_length=50, default="❌")
+    clearance = models.CharField(max_length=50, default="❌")
+    official_receipt = models.CharField(max_length=50, default="❌")
+    claim = models.CharField(max_length=50, default="Unclaimed", null=True)
+
+    approval_status = models.CharField(max_length=15,
+        verbose_name="Approval Status", default="UNAPPROVED")
+    appointment = models.CharField(
+        max_length=100, verbose_name="Appointment", default="NONE", null=True)
+
+    def __str__(self):
+        return self.student_id

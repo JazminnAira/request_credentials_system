@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="eng">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <title>Request Form </title>
+    {% load static %}
+    
+</head>
+
+<style>
+    .myDiv {
+        max-width: 900px;
+        width: 100%;
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        margin: 20px auto;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+        /* -webkit-print-color-adjust: exact; */
+    }
+    
+    #footer {
+        background: #424242;
+    }
+    
+    #backtotop_btn_pre {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_pre::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_pre:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_pre:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_pre.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    @media print {
+        #backtotop_btn_pre {
+            display: none;
+        }
+    }
+    
+    .note {
+        background-color: #e1a19d;
+        padding: 5px;
+        text-align: left;
+        font-size: 16px;
+    }
+    
+    h3 {
+        color: #ffff;
+        background-color: #c51d3a;
+        padding: 5px;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    label {
+        width: 240px;
+        display: inline-block;
+        margin: 5px 10px 5px 0;
+    }
+    
+    #course_pre,
+    #receiptnum_box_pre,
+    #ln_box_pre,
+    #fn_box_pre,
+    #mn_box_pre {
+        background-color: #e7dfe4;
+        border: 1px solid #ccc9c9;
+    }
+    
+    button {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #button:hover {
+        background-color: #616161;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+    }
+    
+    .modal-footer {
+        background: #424242;
+    }
+    
+    .modal-header {
+        background-color: #c51d3a;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+    
+    label {
+        width: 200px;
+        color: #757575;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+    
+    p {
+        color: #757575;
+        font-size: 16px;
+    }
+    
+    #submit_btn_pre {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+    
+    #submit_btn_pre:hover,
+    button:hover {
+        background-color: #616161;
+    }
+    
+    .input-icon {
+        position: relative;
+    }
+    
+    .input-icon>i {
+        position: absolute;
+        display: block;
+        transform: translate(0, -50%);
+        top: 50%;
+        pointer-events: none;
+        width: 25px;
+        text-align: center;
+        font-style: normal;
+    }
+    
+    .input-icon>input {
+        padding-left: 25px;
+        padding-right: 0;
+    }
+    
+    a.float+div.label-container {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s ease;
+    }
+    
+    a.float:hover+div.label-container {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    a.float:hover {
+        color: #fff;
+    }
+    
+    .label-container {
+        position: fixed;
+        bottom: 30px;
+        left: 105px;
+        display: table;
+        visibility: hidden;
+    }
+    
+    .label-text {
+        color: #fff;
+        background: rgba(51, 51, 51, 0.5);
+        display: table-cell;
+        vertical-align: middle;
+        padding: 10px;
+        border-radius: 3px;
+    }
+    
+    .label-arrow {
+        display: table-cell;
+        vertical-align: middle;
+        color: #424242;
+        opacity: 0.5s;
+        right: 10;
+    }
+    
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        left: 40px;
+        background-color: #c51d3a;
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #dedede;
+    }
+    
+    .my-float:nth-child(1) {
+        background: #c51d3a;
+    }
+    
+    .my-float:after {
+        animation: shine 3s ease-in-out infinite;
+        animation-fill-mode: forwards;
+        content: "";
+        position: absolute;
+        top: -110%;
+        left: -210%;
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+        transform: rotate(30deg);
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0) 100%);
+    }
+    
+    .my-float:active:after {
+        opacity: 0;
+    }
+    
+    #print_table,
+    #print_tr {
+        border: 1px solid black;
+        text-align: center;
+        width: 100%;
+    }
+    
+    #print_td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td2 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 80%;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    
+    #print_td3 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 20%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_request {
+        align-content: center;
+        width: 100%;
+    }
+    
+    #print_td4 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 70%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_td5 {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        width: 10%;
+        padding: 3px;
+        font-style: bold;
+    }
+    
+    #print_td6 {
+        background-color: black;
+        border: 1px solid black;
+        border-collapse: collapse;
+        color: white;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    @keyframes shine {
+        10% {
+            opacity: 1;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+            transition-duration: 0.3s, 0.3s, 0.3s;
+            transition-timing-function: ease;
+        }
+        100% {
+            opacity: 0;
+            top: -30%;
+            left: -30%;
+            transition-property: left, top, opacity;
+        }
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    @media print {
+        .float,
+        #submit_btn_pre {
+            display: none;
+        }
+    }
+    
+    ul {
+        position: fixed;
+        left: 0px;
+        padding-bottom: 20px;
+        bottom: 50px;
+        z-index: 100;
+    }
+    
+    ul li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    
+    ul li a {
+        background-color: #757575;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+        width: 60px;
+        height: 60px;
+        display: block;
+    }
+    
+    ul:hover {
+        visibility: visible!important;
+        opacity: 1!important;
+    }
+    
+    .my-float {
+        font-size: 24px;
+        margin-top: 18px;
+    }
+    
+    a#menu-share+ul {
+        visibility: hidden;
+    }
+    
+    a#menu-share:hover+ul {
+        visibility: visible;
+        animation: scale-in 0.5s;
+    }
+    
+    a#menu-share i {
+        animation: rotate-in 0.5s;
+    }
+    
+    a#menu-share:hover>i {
+        animation: rotate-out 0.5s;
+    }
+    
+    @keyframes bot-to-top {
+        0% {
+            bottom: -40px
+        }
+        50% {
+            bottom: 40px
+        }
+    }
+    
+    @keyframes scale-in {
+        from {
+            transform: scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes rotate-in {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes rotate-out {
+        from {
+            transform: rotate(360deg);
+        }
+        to {
+            transform: rotate(0deg);
+        }
+    }
+    
+    .fa-ellipsis-v,
+    .fa-print,
+    .fa-home {
+        color: white;
+        font-size: 30px;
+        padding-top: 15px;
+    }
+
+</style>
+
+
+<body>
+    {% load static %}
+
+    <!--PRINT AND HOME BUTTON-->
+    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+        <i class="fa fa-ellipsis-v"></i>
+    </a>
+    <ul>
+        <li>
+            <a href="#" onclick="to_beprinted('print_request')" data-toggle="tooltip" data-placement="right" title="Print">
+                <i class="fa fa-print"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
+
+    </ul>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_pre"></a>
+
+
+    <!--MAIN-->
+    <div class="myDiv" id="myDiv">
+        <form method="POST" action="request_form">
+            {% csrf_token %}
+            <h3><b>REQUEST FORM</b></h3>
+
+            <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
+            <input type="text" name="stud_id_pre" value="{{request.user.username}}" hidden>
+
+            <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
+            <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
+            
+            <!--NAME BOX-->
+            <div class="form-inline">
+                <label for="name_pre" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_pre" style="padding-right:100px;">Full Name:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div>
+                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
+                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
+                    <input type="text" id="fn_box_pre" name="fn_box_pre" class="form-control " placeholder="First Name"  value="{{request.user.first_name}}"
+                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
+                    <input type="text" id="mn_box_pre" name="mn_box_pre" class="form-control " placeholder="Middle Name" value="{{request.user.middle_name}}"
+                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                    <p id="name_error_pre"></p>
+                </div>
+            </div><br>
+
+            <!--COURSE DROPDOWN BOX-->
+            <div class="form-group row">
+                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
+                </div>
+            </div>
+
+            <!--DATE-->
+            <div class="form-group row">
+                <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="date" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" required>
+                </div>
+            </div>
+
+            <!--CONTROL NUMBER-->
+            <div class="form-group row">
+                <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="control_pre" name="control_pre" class="form-control">
+                    
+                </div>
+            </div>
+
+            <!--ADDRESS-->
+            <div class="form-group row">
+                <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()"required>
+                </div>
+            </div>
+
+            <!--CONTACT NUMBER-->
+            <div class="form-group row">
+                <label for="contactnum_pre" class="col-sm-2 col-form-label col-form-label-sm" id="contact_pre">Contact Number:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}">
+                </div>
+            </div>
+
+            <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
+            <div class="form-group row pl-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="Enrolled" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="Old Student" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="Graduated" onchange= "choose_enrolled()" oninput="get_year_graduated()">
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
+                    <input class="form-control chk" type="text" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_year_graduated()">
+                </div>
+            </div>
+
+            <!--PURPOSE OF REQUEST CHECK BOXES-->
+            
+                <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal">
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification">
+                    <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records">
+                    <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description">
+                    <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma">
+                    <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV">
+                    <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="Certification" oninput="get_certificate()">
+                    <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
+                    <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
+                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_certificate()"><br><br>
+
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" oninput="get_other_purpose()">
+                    <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
+                    <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
+                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_other_purpose()"><br><br>
+                </div>
+                <br>
+                <br>
+
+            <!--PURPOSE OF REQUEST-->
+            <div class="form-group row">
+                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()"required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+
+            <div>
+                <p><strong>Please submit the following documents/requirements</strong></p>
+                <p>1. Form 137-A</p>
+                <p>2. Clearance</p>
+                <p>3. Official Receipt <em>(This receipt can be claim after payment)</em></p>
+                <p><em>*Please submit the following requirements to be able to claim the requested credential/s</em></p>
+            </div>
+
+            <!--Admin display
+            <div id = "admin_display" hidden>
+                <p><strong>Submitted Requirements:</strong></p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="form137_A" name="form137_A" value="Form 137-A">
+                    <label class="form-check-label" for="inlineCheckbox2_pre">Form 137-A</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="clearance" name="clearance" value="Clearance">
+                    <label class="form-check-label" for="inlineCheckbox3_pre">Clearance</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="official_receipt" name="official_receipt" value="Official Receipt">
+                    <label class="form-check-label" for="inlineCheckbox4_pre">Official Receipt</label>
+                </div>
+                
+                <br>
+                <br>
+
+                <div class="form-group row">
+                    <label for="Date of Release" class="col-sm-2 col-form-label col-form-label-sm" id="date_of_release">Date of Release:</label>
+                    <div class="col-sm-9">
+                        <input class = "form-control" type="date" id="purpose_of_request" name="purpose_of_request">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Purchase by" class="col-sm-2 col-form-label col-form-label-sm" id="purchase_by">Purchase by:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" id="purchase_by" name="purchase_by">
+                    </div>
+                </div>
+
+            </div>-->
+            
+
+            <!--SUBMIT BUTTON onclick="forms_check()"-->
+            <p align="right">
+                <button class="btn btn-secondary" type="submit" id="submit_button" name="submit_btn_pre">Submit</button>
+            </p>
+
+            <!--FORM FOOTER-->
+            <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+        </form>
+    </div>
+    
+</body>
+
+</html>
+
+<script>
+    function submitForm(form) {
+
+        swal({
+            title: "Are you sure?",
+            text: "This form will be submitted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then(function(isOkay) {
+            if (isOkay) {
+                var btn = document.getElementById('submit_button');
+                btn.disabled = true;
+                btn.innerText = 'Submitted'
+                document.getElementById("ln_box_pre").disabled = true;
+                document.getElementById("fn_box_pre").disabled = true;
+                document.getElementById("mn_box_pre").disabled = true;
+                document.getElementById("date_pre").disabled = true;
+                document.getElementById("add_box_pre").disabled = true;
+                document.getElementById("course_pre").disabled = true;
+                document.getElementById("control_pre").disabled = true;
+                document.getElementById("contact_pre").disabled = true;
+                document.getElementById("purpose_of_request").disabled = true;
+                document.getElementById("certification_box").disabled = true;
+                document.getElementById("others_box_pre").disabled = true;
+                document.getElementById("year_graduated_pre").disabled = true;
+            }
+        });
+        return false;
+    }
+
+    function isEmpty() {
+        let date_box = document.getElementById("date_pre").value;
+        let address_box = document.getElementById("add_box_pre").value;
+        let purpose_req = document.getElementById("purpose").value;
+    
+        if (date_box != "" && address_box != "" && purpose_req != "") {
+            document.getElementById("submit_button").removeAttribute("disabled");
+        }
+    }
+    
+    //back to top function
+    var button = $("#backtotop_btn_pre");
+    
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 40) {
+            button.addClass("show");
+        } else {
+            button.removeClass("show");
+        }
+    });
+    
+    button.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "50");
+    });
+    
+    //check only one in enrolled status
+    function choose_enrolled() {
+        var current_student = document.getElementById("currently_enrolled_pre");
+        var oldstudent = document.getElementById("old_student_pre");
+        var graduate_student = document.getElementById("year_graduated_check_pre");
+    
+        if (current_student.checked) {
+            document.getElementById("old_student_pre").checked = false;
+            document.getElementById("year_graduated_check_pre").checked = false;
+        } else if (oldstudent.checked) {
+            document.getElementById("year_graduated_check_pre").checked = false;
+            document.getElementById("currently_enrolled_pre").checked = false;
+        } else {
+            document.getElementById("old_student_pre").checked = false;
+            document.getElementById("currently_enrolled_pre").checked = false;
+        }
+    }
+
+    function get_other_purpose(){
+        others= document.getElementById("others_box_pre").value;
+        document.getElementById("Others_check_pre").value = "Others:" + others;
+    }
+
+    function get_year_graduated(){
+        year = document.getElementById("year_graduated_pre").value;
+        document.getElementById("year_graduated_check_pre").value = "Graduated:" + year;
+    }
+
+    function get_certificate(){
+        cert = document.getElementById("certification_box").value;
+        document.getElementById("Certification_check_pre").value = "Certification:" + cert;
+    }
+
+</script>
+

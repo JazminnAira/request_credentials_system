@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Request List</title>
+
+</head>
+
+
+<style>
+    .table-icon {
+        background-color: #dedede;
+        color: #000;
+        align-content: center;
+    }
+
+    .table-i{
+        padding: 0%;
+    }
+
+    #unapproveds_77:hover, #approveds_77:hover{
+        background-color: #c51d3a;
+        color: #fff;
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+    
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+    
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+    
+    a {
+        font-style: italic;
+        color: #000;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    
+    #backtotop_btn_77 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_77::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_77:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_77:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_77.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    #list_tbl_77 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    
+    #list_tbl_77 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    #list_tbl2_77 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl2_77 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+    
+    a :hover {
+        color: #fff;
+    }
+    
+    #dashboard_header_77 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+    
+    #search_box_77 {
+        width: 54%;
+        border-radius: 30px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_77 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_77:hover {
+        color: #c51d3a;
+    }
+    
+    #list_tbl_77 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_77 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_77 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_77 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_77 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_77 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #request_box_77 {
+        width: auto;
+        margin: 0 0 10px 5px;
+    }
+    
+    #schoolyear_box_77 {
+        margin: 0 0 10px 5px;
+    }
+    
+    #course_box_77 {
+        margin: 0 0 10px 5px;
+    }
+    
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    #list_tbl_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+    
+    #clearance_header_77 {
+        background-color: #c51d3a;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+
+    #drpdwn{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+
+    #changer  {
+        background-color: #f5f0f6;
+        border:none;
+    }
+
+    #changer:hover {
+        background-color:#636363;
+        border:#ffff;
+    }
+
+</style>
+
+
+<body>
+    <!--NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_77">
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
+        <a href="{% url 'registrar_dashboard_request_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+
+        
+
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+
+        <!--SEARCH BUTTON
+        <a><button onClick="return search()" type = "button" id="search_btn_77">Search</button></a>-->
+
+        <a class="btn btn-secondary dropdown-toggle" id= "drpdwn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="">All</a>
+                    <a class="dropdown-item" href="">LATEST</a>
+                    <a class="dropdown-item" href="">OLD</a>
+                </div>
+    </div>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_77"></a>
+
+
+    <!-- MAIN-->
+    <h3 style="text-align:center;">Request List</h3>
+
+    <!--TAB BAR-->
+    <div data-tabs="1" id="tabz_77">
+        <!-- <div id = "determine_file_upload">
+            <button class="btn btn-secondary" type="button" id="enrolled_button" name="enrolled" onclick="upload_determiner()" >Upload Enrolled Student List File</button>
+            <button class="btn btn-secondary" type="button" id="alumni_button" name="alumni" onclick="upload_determiner()" >Upload Alnumnus List File</button>
+            <input class= "form-control" name= "status_file_determiner" id= "input_status">
+        </div> -->
+
+        <div id="tab1_77" class="tab-content" style="background-color:#fff">
+            <div class="wrapper_all">
+                <table class="table results table-hover table-sortable" id="list_tbl_77">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student's Name</th>
+                            <th>Request</th>
+                            <th>Form 137-A</th>
+                            <th>TOR</th>
+                            <th>Official Receipt</th>
+                            <th>Clearance</th>
+                            <th>Claim</th>
+                            <th>Date of Appointment</th>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                    </thead>
+                    
+                    {% for instance in data %}
+                    <tbody>
+                        <tr>
+                            <td>{{instance.id}}</td>
+                            <td>{{instance.name}}</td>
+                            <td>{{instance.request}}</td>
+                            <td>{{instance.form_137}}</td>
+                            <td>{{instance.TOR}}</td>
+                            <td>{{instance.official_receipt}}</td>
+                            <td>{{instance.clearance}}</td>
+                            <td>{{instance.claim}}</td>
+                            <td>{{instance.appontment}}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <p class="text-center text-bold" id="p6_77"></p>
+    </div>
+    </hr>
+
+    <p class="text-center text-bold" id="p6_77"></p>
+</body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
+
+</html>
+
+
+<script>
+
+    function openrdb() {
+        window.location.replace("{% url 'registrar_dashboard' %}");
+    }
+
+   
+    // TAB JS
+    var items = document.querySelectorAll('#tabz_77');
+    for (var i = 0, len = items.length; i < len; i++) {
+        (function() {
+                var t, e = this,
+                    a = "[data-tab]",
+                    n = document.body,
+                    r = n.matchesSelector || n.webkitMatchesSelector || n.mozMatchesSelector || n.msMatchesSelector,
+                    o = function() {
+                        var a = e.querySelectorAll("[data-tab-content]") || [];
+                        for (t = 0; t < a.length; t++) a[t].style.display = "none"
+                    },
+                    i = function(n) {
+                        var r = e.querySelectorAll(a) || [];
+                        for (t = 0; t < r.length; t++) {
+                            var i = r[t],
+                                s = i.className.replace("tab-active", "").trim();
+                            i.className = s
+                        }
+                        o(), n.className += " tab-active";
+                        var l = n.getAttribute("href"),
+                            c = e.querySelector(l);
+                        c && (c.style.display = "")
+                    },
+                    s = e.querySelector(".tab-active" + a);
+                s = s || e.querySelector(a), s && i(s), e.addEventListener("click", function(t) {
+                    var e = t.target;
+                    r.call(e, a) && i(e)
+                })
+            }
+            .bind(items[i]))();
+    }
+
+    // TO APPROVE STUDENT
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_77").deleteRow(i);
+        swal({
+            title: "Done",
+            text: "Application Approved!",
+            icon: "success",
+            button: "Ok",
+        })
+    }
+
+
+
+    //MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#search_box_77");
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+    });
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#search_box_77', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    // SEARCH1
+    function searching1() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SEARCH2
+    function searching2() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_77");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // SORTING 
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
+    
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; 
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // PREVENT SCROLLING WHILE SWITCHING TABS
+    $('#tabz_77 a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+
+        var checked = $(this).find('input').prop('checked');
+        $(this).find('input').prop('checked', !checked);
+    });
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_77").value = "";
+    });
+
+    
+</script>
+
