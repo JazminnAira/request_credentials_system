@@ -1360,7 +1360,8 @@ def faculty_dashboard_clearance_list(request):
             st1 = clearance_form_table.objects.filter(
                 academic_affairs_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
-   
+        
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")

@@ -55,7 +55,7 @@ class user_table(AbstractUser):
         ('DIE', 'Industrial Engineering Department (DIE)'),
         ('DLA', 'Liberal Arts Department (DLA)'),
         ('DOE', 'Department of Engineering (DOE)'),
-        # KULANG SHOP ADVISER SA CLEARANCE
+        
     ]
 
     gender = [
@@ -147,8 +147,6 @@ class clearance_form_table(models.Model):
         verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
     ieng_dept_signature = models.CharField(max_length=15,
         verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
-    course_adviser = models.CharField(max_length=15,
-        verbose_name="Course/Shop Adviser", default="UNAPPROVED")
     library_signature = models.CharField(max_length=15,
         verbose_name="Library Signature", default="UNAPPROVED")
     guidance_office_signature = models.CharField(max_length=15,
@@ -157,6 +155,8 @@ class clearance_form_table(models.Model):
         verbose_name="OSA Signature", default="UNAPPROVED")
     academic_affairs_signature = models.CharField(max_length=15,
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
+    course_adviser_signature = models.CharField(max_length=15,
+        verbose_name="Course Adviser Signature", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
 
