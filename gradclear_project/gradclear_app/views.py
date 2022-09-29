@@ -1282,117 +1282,91 @@ def faculty_dashboard(request):
 
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
-    val = request.POST.get('valdeterminer')
-    userdeterminer = request.POST.get('userdeterminer')
-    print(val, userdeterminer)
-    st = clearance_form_table.objects.all()
+    # val = request.POST.get('valdeterminer')
+    # userdeterminer = request.POST.get('userdeterminer')
+    # print(val, userdeterminer)
+    userdeterminer = request.user.department
+
+    st = ""
 
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         if userdeterminer == "OCS":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    accountant_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    accountant_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                accountant_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                accountant_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "DMS":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    mathsci_dept_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    mathsci_dept_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                mathsci_dept_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                mathsci_dept_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "DPECS":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    pe_dept_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    pe_dept_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                pe_dept_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                pe_dept_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "DED":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    ieduc_dept_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    ieduc_dept_signature=val).values()
-
+            st = clearance_form_table.objects.filter(
+                ieduc_dept_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                ieduc_dept_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            
         elif userdeterminer == "DIT":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    it_dept_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    it_dept_signature=val).values()
-
+            st = clearance_form_table.objects.filter(
+                it_dept_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                it_dept_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            
         elif userdeterminer == "DIE":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    ieng_dept_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    ieng_dept_signature=val).values()
-
+            st = clearance_form_table.objects.filter(
+                ieng_dept_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                ieng_dept_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            
         elif userdeterminer == "OCL":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    library_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    library_signature=val).values()
+            
+            st = clearance_form_table.objects.filter(
+                library_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                library_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "OGS":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    guidance_office_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    guidance_office_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                guidance_office_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                guidance_office_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "OSA":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    osa_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    osa_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                osa_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                osa_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
         elif userdeterminer == "ADAA":
-            if val == "UNAPPROVED":
-                st = clearance_form_table.objects.filter(
-                    academic_affairs_signature=val).values()
-                return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
-
-            elif val == "APPROVED":
-                st = clearance_form_table.objects.filter(
-                    academic_affairs_signature=val).values()
+            st = clearance_form_table.objects.filter(
+                academic_affairs_signature="UNAPPROVED").values()
+            st1 = clearance_form_table.objects.filter(
+                academic_affairs_signature="APPROVED").values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+   
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'val': val})
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st})
 
 
 @login_required(login_url='/')
