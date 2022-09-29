@@ -1165,7 +1165,7 @@ class request_form_table(models.Model):
     form_137 = models.CharField(max_length=50, default="❌")
     clearance = models.CharField(max_length=50, default="❌")
     official_receipt = models.CharField(max_length=50, default="❌")
-    claim = models.CharField(max_length=50, default="Unclaimed", null=True)
+    claim = models.CharField(max_length=50, default="UNCLAIMED", null=True)
 
     approval_status = models.CharField(max_length=15,
         verbose_name="Approval Status", default="UNAPPROVED")

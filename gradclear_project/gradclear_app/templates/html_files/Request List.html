@@ -429,9 +429,27 @@
                             <td>{{instance.request}}</td>
                             <td>{{instance.form_137}}</td>
                             <td>{{instance.TOR}}</td>
-                            <td>{{instance.official_receipt}}</td>
+                            <td>
+                                <form name="change_position" id="change" action="student_TOR_update/{{ instance.id }}" method=POST>
+                                    {% csrf_token %}
+                                        <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
+                                            <option value="">{{instance.official_receipt}}
+                                            <option value="✔">✔
+                                            <option value="❌">❌
+                                        </select>
+                                    </form> 
+                                {{instance.official_receipt}}</td>
                             <td>{{instance.clearance}}</td>
-                            <td>{{instance.claim}}</td>
+                            <td>
+                                <form name="change_position" id="change" action="student_TOR_update/{{ instance.id }}" method=POST>
+                                    {% csrf_token %}
+                                        <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
+                                            <option value="">{{instance.claim}}
+                                            <option value="CLAIM">CLAIMED
+                                            <option value="UNCLAIMED">UNCLAIMED
+                                        </select>
+                                    </form> 
+                                {{instance.claim}}</td>
                             <td>{{instance.appontment}}</td>
                         </tr>
                     </tbody>
