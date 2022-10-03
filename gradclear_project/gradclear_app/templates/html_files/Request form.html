@@ -483,6 +483,7 @@
 
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
+        <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
         <form method="POST" action="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
@@ -770,6 +771,14 @@
     function get_certificate(){
         cert = document.getElementById("certification_box").value;
         document.getElementById("Certification_check_pre").value = "Certification:" + cert;
+    }
+
+    if (document.getElementById("user_stat").value == "STUDENT"){
+        document.getElementById("year_graduated_check_pre").disabled = true;
+        document.getElementById("year_graduated_pre").disabled = true;
+    }else{
+        document.getElementById("old_student_pre").disabled = true;
+        document.getElementById("currently_enrolled_pre").disabled = true;
     }
 
 </script>

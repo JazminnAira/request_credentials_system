@@ -912,6 +912,7 @@ def student_dashboard(request):
         check_form137_enrolled = Enrolled_table.objects.filter(Name=name or name2).values_list('form_137',flat=True).distinct()
         check_form137_alumnus = Alumnus_table.objects.filter(Name=name or name2).values_list('form_137',flat=True).distinct()
         check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
+        check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
         
         if request.user.user_type == "STUDENT":
             if check_form137_enrolled[0] == '❌':
@@ -935,11 +936,20 @@ def student_dashboard(request):
                 display2 = "* Clearance (ON PROGRESS)"
             else:
                 display2 = ""
+                
+        if not check_graduation:
+            display3 = ""
+        else:
+            if check_graduation[0] == 'UNAPPROVED':
+                print('Clearance Pending')
+                display3 = "* Graduation Form (ON PROGRESS)"
+            else:
+                display3 = ""
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1, 'st0': st0,'display':display,'display2':display2})
+    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1, 'st0': st0,'display':display,'display2':display2 ,'display3':display3})
 
 
 
@@ -2239,7 +2249,7 @@ def student_form137_update(request, id):
     form_change = request.POST.get('form137_select')
     # name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
     Enrolled_table.objects.filter(id=id).update(form_137=form_change)
-    # request_form_table.objects.filter(name2=name).update(form_137=form_change)
+    # request_form_table.objects.filter(id=id).update(form_137=form_change)
     
     return redirect(registrar_dashboard_student_list)
 
@@ -2318,7 +2328,7 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
         user = request.user.user_type
-        print(user)
+        print(user)            
         if request.method == "POST":
             form = request_form
             student_id = request.POST.get('stud_id_pre')
