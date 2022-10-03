@@ -380,10 +380,10 @@
             Select
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="">All</a>
-                    <a class="dropdown-item" href="">LATEST</a>
-                    <a class="dropdown-item" href="">OLD</a>
-                </div>
+            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">All</a>
+            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">LATEST</a>
+            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">OLD</a>
+        </div>
     </div>
 
     <!--BACK TO TOP BUTTON-->
@@ -409,6 +409,7 @@
                             <th>#</th>
                             <th>Student's Name</th>
                             <th>Request</th>
+                            <th> Date & Time Requested</th>
                             <th>Form 137-A</th>
                             <th>TOR</th>
                             <th>Official Receipt</th>
@@ -417,42 +418,43 @@
                             <th>Date of Appointment</th>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
                     {% for instance in data %}
-                    <tbody>
-                        <tr>
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.name}}</td>
-                            <td>{{instance.request}}</td>
-                            <td>{{instance.form_137}}</td>
-                            <td>{{instance.TOR}}</td>
-                            <td>
-                                <form name="change_position" id="change" action="student_TOR_update/{{ instance.id }}" method=POST>
-                                    {% csrf_token %}
-                                        <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
-                                            <option value="">{{instance.official_receipt}}
-                                            <option value="✔">✔
-                                            <option value="❌">❌
-                                        </select>
-                                    </form> 
-                                {{instance.official_receipt}}</td>
-                            <td>{{instance.clearance}}</td>
-                            <td>
-                                <form name="change_position" id="change" action="student_TOR_update/{{ instance.id }}" method=POST>
-                                    {% csrf_token %}
-                                        <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
-                                            <option value="">{{instance.claim}}
-                                            <option value="CLAIM">CLAIMED
-                                            <option value="UNCLAIMED">UNCLAIMED
-                                        </select>
-                                    </form> 
-                                {{instance.claim}}</td>
-                            <td>{{instance.appontment}}</td>
-                        </tr>
-                    </tbody>
+                        <tbody>
+                            <tr>
+                                <td>{{instance.id}}</td>
+                                <td>{{instance.name}}</td>
+                                <td>{{instance.request}}</td>
+                                <td>{{instance.time_requested}}</td>
+                                <td>{{instance.form_137}}</td>
+                                <td>{{instance.TOR}}</td>
+                                <td>
+                                    <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
+                                        {% csrf_token %}
+                                            <select onchange="this.form.submit()" name="or_select" id="changer"> 
+                                                <option value="">{{instance.official_receipt}}
+                                                <option value="✔">✔
+                                                <option value="❌">❌
+                                            </select>
+                                        </form> 
+                                </td>
+                                <td>{{instance.clearance}}</td>
+                                <td>
+                                    <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
+                                        {% csrf_token %}
+                                            <select onchange="this.form.submit()" name="claim_select" id="changer"> 
+                                                <option value="">{{instance.claim}}
+                                                <option value="CLAIMED">CLAIMED
+                                                <option value="UNCLAIMED">UNCLAIMED
+                                            </select>
+                                        </form> 
+                                </td>
+                                <td>{{instance.appontment}}</td>
+                            </tr>
+                        </tbody>
                     {% endfor %}
                 </table>
             </div>

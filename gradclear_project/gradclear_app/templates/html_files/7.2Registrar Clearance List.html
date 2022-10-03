@@ -529,6 +529,7 @@
                             <th>Course</th>
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
+                            <td>Date & Time Requested</td>
                             <th>Appointment</th>
                             <th id="Viewform"> View Form</th>  
                             <th id="Messagebutton"> Message</th>
@@ -551,6 +552,7 @@
                             <td>{{instance.course}}</td>
                             <td>{{instance.student_id}}</td>
                             <td>{{instance.purpose_of_request}}</td>
+                            <td>{{instance.time_requested}}</td>
                             <td>{{instance.appointment}}</td>
                             <td><a href="display_clearform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
                             <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   

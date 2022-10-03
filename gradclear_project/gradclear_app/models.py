@@ -159,6 +159,10 @@ class clearance_form_table(models.Model):
         verbose_name="Course Adviser Signature", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
+    
+    time_requested = models.DateTimeField(auto_now_add=True)
+
+
 
     def __str__(self):
         return self.student_id
@@ -1120,11 +1124,13 @@ class graduation_form_table(models.Model):
     addsignature8 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature9 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature10 = models.CharField(max_length=100, default="UNAPPROVED")
+    
+    time_requested = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.student_id
     
-class Enrolled(models.Model):
+class Enrolled_table(models.Model):
     id = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=150)
     TOR = models.CharField(max_length=50)
@@ -1136,7 +1142,7 @@ class Enrolled(models.Model):
     def __str__(self):
         return self.Name
     
-class Alumnus(models.Model):
+class Alumnus_table(models.Model):
     id = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=150)
     TOR = models.CharField(max_length=50)
@@ -1171,6 +1177,8 @@ class request_form_table(models.Model):
         verbose_name="Approval Status", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
+    
+    time_requested = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.student_id

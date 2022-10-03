@@ -1114,10 +1114,16 @@
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
                 <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
             </div>
+           
         </div>
     </div>
     <hr style="border: 1px solid #424242;">
-
+    <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
+        <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
+        <p class="text-danger pl-3 pr-2" id="document1">{{display}}</p>
+        <p class="text-danger pl-3 pr-2" id="document2">{{display2}}</p>
+        <p class="text-danger pl-3 pr-2" id="document3">{{display3}}</p>
+    </div>
     <!--ACCESS BAR-->
     <!--SEARCH BAR-->
     <div class="container-fluid" id="main2_41">
@@ -1142,6 +1148,7 @@
                             <th>#</th>
                             <th>Purpose of Request</th>
                             <th>Approval Status </th>
+                            <th> Date & Time Requested</th>
                             <th>View Form </th>
                             <!-- <th>Signatures</th> -->
                         </tr>
@@ -1150,11 +1157,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for instance in st0 %}
+                        <tr>
+                            <td>{{instance.id}}</td>
+                            <td>{{instance.request}}</td>
+                            <td>{{instance.approval_status}}</td>
+                            <td>{{instance.time_requested}}</td>
+                            <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
+                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
+                            <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
+                                data-toggle="modal" data-target="#exampleModal_41">View</button></td> -->
+                        </tr>
+                        {% endfor %}
                         {% for instance in st %}
                         <tr>
                             <td>{{instance.id}}</td>
                             <td>{{instance.purpose_of_request}}</td>
                             <td>{{instance.approval_status}}</td>
+                            <td>{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
@@ -1167,6 +1187,7 @@
                             <td>{{instance.id}}</td>
                             <td>{{instance.purpose_of_request}}</td>
                             <td>{{instance.approval_status}}</td>
+                            <td>{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
@@ -1195,6 +1216,14 @@
 </html>
 
 <script>
+    //determine missing document(not yet working)
+    docu1= document.getElementById('document1').length;
+    docu2= document.getElementById('document2').length;
+    docu3= document.getElementById('document3').length;
+    
+    if(docu1 == 0 && docu2 ==0 && docu3 ==0){
+        document.getElementById('missing_document').style.visibility=hidden;
+    }
     //SETTING MODAL CLOSE
 
     function reset_close() {
