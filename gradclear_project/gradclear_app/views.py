@@ -2247,15 +2247,21 @@ def registrar_dashboard_student_list(request):
 
 def student_form137_update(request, id):
     form_change = request.POST.get('form137_select')
-    # name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
+    name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
     Enrolled_table.objects.filter(id=id).update(form_137=form_change)
-    # request_form_table.objects.filter(id=id).update(form_137=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(form_137=form_change)
     
     return redirect(registrar_dashboard_student_list)
 
 def student_TOR_update(request, id):
     form_change = request.POST.get('TOR_select')
+    name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
     Enrolled_table.objects.filter(id=id).update(TOR=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(TOR=form_change)
     return redirect(registrar_dashboard_student_list)
 
 
@@ -2298,13 +2304,6 @@ def registrar_dashboard_alumni_list(request):
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         requests = request_form_table.objects.all().order_by('-id').values()
-    
-        # if arrange == ' ':
-        #     requests = request_form_table.objects.all().order_by('-id').values()
-        # elif arrange == 'OLD':
-        #     requests = request_form_table.objects.all().order_by('id').values()
-        # else:
-        #     requests = request_form_table.objects.all().order_by('id').values()
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
