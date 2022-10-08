@@ -784,18 +784,20 @@ def student_registration(request):
             id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
+            middle = form.cleaned_data.get("middle_name")
             email = form.cleaned_data.get("email")
             # middle = form.cleaned_data.get("middle_name")
             form.instance.username = "TUPC-" + id_num
             username = "TUPC-" + id_num
-            form.instance.user_type = "STUDENT"
+            
             form.instance.full_name = last + ", " + first
 
-            SearchUser = first + " " + last
+            SearchUser = last + ", " + first +" "+ middle
             e = Enrolled_table.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
             if e:
                 va= e[0]
                 if va == SearchUser:
+                    form.instance.user_type = "STUDENT"
                     form.save()
                     # subject = 'SIGNUP SUCCESS'
                     # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
@@ -807,7 +809,11 @@ def student_registration(request):
                 else:
                     messages.error(request, "Unenrolled Student")
             else:
-                    messages.error(request, "Unenrolled Student")
+                    form.instance.user_type = "OLD STUDENT"
+                    form.save()
+                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+                    return redirect('/')
+                    # messages.error(request, "Unenrolled Student")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
@@ -2298,6 +2304,24 @@ def registrar_dashboard_alumni_list(request):
     context = {'data':alumnus_data}
     return render(request, template, context)
 
+def alumni_form137_update(request, id):
+    form_change = request.POST.get('form137_select')
+    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
+    Alumnus_table.objects.filter(id=id).update(form_137=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(form_137=form_change)
+    
+    return redirect(registrar_dashboard_alumni_list)
+
+def alumni_TOR_update(request, id):
+    form_change = request.POST.get('TOR_select')
+    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
+    Alumnus_table.objects.filter(id=id).update(TOR=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(TOR=form_change)
+    return redirect(registrar_dashboard_alumni_list)
 
 #REQUEST LIST
 @login_required(login_url='/')
