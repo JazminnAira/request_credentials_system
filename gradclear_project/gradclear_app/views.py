@@ -740,6 +740,34 @@ def appointmentgrad(request, id):
     messages.success(request, "Email Sent.")
     return redirect('faculty_dashboard_graduation_list')
 
+def reg_appointmentgrad(request, id):
+    print('a')
+
+    email_temp = graduation_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+    email = user_table.objects.filter(
+        username=email_temp[0]).values_list('email', flat=True).distinct()
+
+    rec_email = email[0]
+
+    subject = 'HELLO'
+
+    message1 = 'sdfjhsdkfhskdfhjds,<br><br>'
+    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
+        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
+        request.user.email + '".<br>'
+    message3 = '<br> <br>Note: This is an automated message, do not reply.'
+
+    message = message1 + message2 + message3
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [rec_email, ]
+    msg = EmailMessage(subject, message, email_from, recipient_list,)
+    msg.content_subtype = "html"
+    msg.send()
+
+    messages.success(request, "Email Sent.")
+    return redirect('registrar_dashboard')
+
 
 def login_user(request):
     if request.method == "POST":

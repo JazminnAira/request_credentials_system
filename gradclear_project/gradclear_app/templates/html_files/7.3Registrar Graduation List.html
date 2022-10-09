@@ -498,13 +498,13 @@
 
     <!-- MAIN-->
     <h3 style="text-align:center;">Graduation Form</h3>
-
+    {% include 'html_files/message.html'%}
     <!--TAB BAR-->
-    <div data-tabs="1" id="tabz_72">
+    <!-- <div data-tabs="1" id="tabz_72">
         <nav data-tab-container="1" class="tab-container ">
             <a data-toggle="tab" data-tab="1" class="tab" id="unapproveds_72" value="1" >Unapproved Students</a>
             <a data-toggle="tab" data-tab="1" class="tab" id="approveds_72" value="2" >Approved Students</a>
-        </nav>
+        </nav> -->
 
         <!--UNAPPROVED TAB-->
         <form method="POST" id="valdet">
@@ -554,8 +554,8 @@
                             <td>{{instance.purpose_of_request}}</td>
                             <td>{{instance.time_requested}}</td>
                             <td>{{instance.appointment}}</td>
-                            <td><a href="display_gradform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
-                            <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                            <td><a href="{% url 'display_gradform' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
+                            <td><a href="{% url 'reg_appointmentgrad' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
                     
                             {% if val == 'UNAPPROVED' %}
                             <script>h3_title.innerText = "Unapproved Students";</script>
