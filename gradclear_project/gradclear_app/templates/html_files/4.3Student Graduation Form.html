@@ -1060,7 +1060,12 @@
             <!--SIT INSTRUCTOR BOX-->
             <div class="form-inline">
                 <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:</label>
-                <input type="text" oninput="this.value = this.value.toUpperCase()" id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+                <select id="noIns_box_43" name="instructor_name" class="form-control" >
+                    <option value="1" select>--SELECT--</option>
+                    {% for i in a %}
+                    <option value="{{i}}">{{i}}</option>
+                    {% endfor %}</select>
+                <!-- <input type="text" oninput="this.value = this.value.toUpperCase()" id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"> -->
             </div>
 
 

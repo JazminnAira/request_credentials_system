@@ -511,15 +511,15 @@
                     <th>Appointment</th>
                     <th id="Viewform"> View Form</th>  
                     <th id="Messagebutton"> Message</th>
-                    <th id="Approvalbutton">Approval Status</th>
+                    <th id="Approvalbutton" class="Approvalbutton">Approval Status</th>
                 </tr>
-                {% if st == ""%}
+                <!-- {% if st == "" %}
                 <tr>
-                    <td colspan="9"><i class="fa fa-warning"></i> No Data Available</td>
+                    <td colspan="10"><i class="fa fa-warning"></i> No Data Available</td>
                 </tr>
-                {% endif %}
+                {% endif %} -->
                 <tr class="warning no-result">
-                    <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                    <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                 </tr>
             </thead>
             {% for instance in st %}
@@ -884,4 +884,9 @@
     });
     $(this).closest("tr").addClass("highlight");
 });
+
+
+
+
+
 </script>

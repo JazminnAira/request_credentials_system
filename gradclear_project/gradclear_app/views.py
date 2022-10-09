@@ -1184,6 +1184,7 @@ def graduation_form(request):
             w3 = request.POST.get('add_starttime3')
             x3 = request.POST.get('add_endtime3')
 
+
             form = graduation_form_table.objects.create(name=name, student_id=student_id, course=course, shift=d,
                                                         study_load=e, status=f, enrolled_term=h, unenrolled_application_deadline=i,
                                                         trainP_startdate=j, trainP_enddate=k, instructor_name=l, day2=q2, day3=q3,
@@ -1210,12 +1211,14 @@ def graduation_form(request):
                                                         addsubject7=o7, addroom7=p7, addfaculty7=t7, add_starttime1_7=w1_7, add_endtime1_7=x1_7, addday1_7=r1_7,
                                                         addsubject8=o8, addroom8=p8, addfaculty8=t8, add_starttime1_8=w1_8, add_endtime1_8=x1_8, addday1_8=r1_8,
                                                         addsubject9=o9, addroom9=p9, addfaculty9=t9, add_starttime1_9=w1_9, add_endtime1_9=x1_9, addday1_9=r1_9,
-                                                        addsubject10=o10, addroom10=p10, addfaculty10=t10, add_starttime1_10=w1_10, add_endtime1_10=x1_10, addday1_10=r1_10,
-
+                                                        addsubject10=o10, addroom10=p10, addfaculty10=t10, add_starttime1_10=w1_10, add_endtime1_10=x1_10,
+                                                        addday1_10=r1_10,
+                                                        
                                                         signature1=s1 + "_UNAPPROVED", signature2=s2 + "_UNAPPROVED", signature3=s3 + "_UNAPPROVED", signature4=s4 + "_UNAPPROVED", signature5=s5 + "_UNAPPROVED",
                                                         signature6=s6 + "_UNAPPROVED", signature7=s7 + "_UNAPPROVED", signature8=s8 + "_UNAPPROVED", signature9=s9 + "_UNAPPROVED", signature10=s10 + "_UNAPPROVED",
                                                         addsignature1=t1 + "_UNAPPROVED", addsignature2=t2 + "_UNAPPROVED", addsignature3=t3 + "_UNAPPROVED", addsignature4=t4 + "_UNAPPROVED", addsignature5=t5 + "_UNAPPROVED",
-                                                        addsignature6=t6 + "_UNAPPROVED", addsignature7=t7 + "_UNAPPROVED", addsignature8=t8 + "_UNAPPROVED", addsignature9=t9 + "_UNAPPROVED", addsignature10=t10 + "_UNAPPROVED")
+                                                        addsignature6=t6 + "_UNAPPROVED", addsignature7=t7 + "_UNAPPROVED", addsignature8=t8 + "_UNAPPROVED", addsignature9=t9 + "_UNAPPROVED", addsignature10=t10 + "_UNAPPROVED",
+                                                        sitsignature=l + "_UNAPPROVED")
             form.save()
             print('8')
                 
@@ -1492,7 +1495,7 @@ def faculty_dashboard_graduation_list(request):
         print('trial')
         print(f_n)
         val = request.POST.get('valdeterminer')
-
+        
         # USE REQUEST.USER TO AUTO SHOW DATA
         full_name = request.user.full_name +"_UNAPPROVED"
         # st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) | Q(faculty3=full_name) |
@@ -1522,7 +1525,8 @@ def faculty_dashboard_graduation_list(request):
             Q(addsignature7__contains=full_name) |
             Q(addsignature8__contains=full_name) |
             Q(addsignature9__contains=full_name) |
-            Q(addsignature10__contains=full_name) 
+            Q(addsignature10__contains=full_name) |
+            Q(instructor_name__contains=full_name) 
         )
         if res:
 
@@ -1534,7 +1538,8 @@ def faculty_dashboard_graduation_list(request):
                                                       Q(signature7=full_name) | Q(signature8=full_name) | Q(signature9=full_name) | Q(signature10=full_name) |
                                                       Q(addsignature1=full_name) | Q(addsignature2=full_name) | Q(addsignature3=full_name) |
                                                       Q(addsignature4=full_name) | Q(addsignature5=full_name) | Q(addsignature6=full_name) |
-                                                      Q(addsignature7=full_name) | Q(addsignature8=full_name) | Q(addsignature9=full_name) | Q(addsignature10=full_name))
+                                                      Q(addsignature7=full_name) | Q(addsignature8=full_name) | Q(addsignature9=full_name) |
+                                                      Q(addsignature10=full_name) | Q(sitsignature=full_name))
         # elif val == "APPROVED":
         approval = request.user.full_name + "_APPROVED"
         st1 = graduation_form_table.objects.filter(Q(signature1=approval) | Q(signature2=approval) | Q(signature3=approval) |
@@ -1542,7 +1547,8 @@ def faculty_dashboard_graduation_list(request):
                                                     Q(signature7=approval) | Q(signature8=approval) | Q(signature9=approval) | Q(signature10=approval) |
                                                     Q(addsignature1=approval) | Q(addsignature2=approval) | Q(addsignature3=approval) |
                                                     Q(addsignature4=approval) | Q(addsignature5=approval) | Q(addsignature6=approval) |
-                                                    Q(addsignature7=approval) | Q(addsignature8=approval) | Q(addsignature9=approval) | Q(addsignature10=approval))
+                                                    Q(addsignature7=approval) | Q(addsignature8=approval) | Q(addsignature9=approval) |
+                                                    Q(addsignature10=approval) | Q(sitsignature=approval))
     
     else:
         messages.error(
@@ -1604,7 +1610,9 @@ def updategrad(request, id):
             addsignature9__contains=f_n1, id=id)
         t = graduation_form_table.objects.filter(
             addsignature10__contains=f_n1, id=id)
-            
+        u = graduation_form_table.objects.filter(
+            sitsignature__contains=f_n1, id=id)
+             
         approval =request.user.full_name + "_APPROVED"
         if a.exists():
             graduation_form_table.objects.filter(
@@ -1685,6 +1693,10 @@ def updategrad(request, id):
         if t.exists():
             graduation_form_table.objects.filter(
                 id=id).update(addsignature10=approval)
+
+        if u.exists():
+                 graduation_form_table.objects.filter(
+                id=id).update(sitsignature=approval)
             
         messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'

@@ -1124,6 +1124,8 @@ class graduation_form_table(models.Model):
     addsignature8 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature9 = models.CharField(max_length=100, default="UNAPPROVED")
     addsignature10 = models.CharField(max_length=100, default="UNAPPROVED")
+
+    sitsignature = models.CharField(max_length=100, default="UNAPPROVED")
     
     time_requested = models.DateTimeField(auto_now_add=True)
 
