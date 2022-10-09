@@ -155,7 +155,9 @@ class clearance_form_table(models.Model):
         verbose_name="OSA Signature", default="UNAPPROVED")
     academic_affairs_signature = models.CharField(max_length=15,
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
-    course_adviser_signature = models.CharField(max_length=15,
+    course_adviser = models.CharField(max_length=45,
+        verbose_name="Course Adviser", default="NONE")
+    course_adviser_signature = models.CharField(max_length=45,
         verbose_name="Course Adviser Signature", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)

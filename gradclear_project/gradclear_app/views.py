@@ -965,7 +965,7 @@ def student_dashboard(request):
 
 @login_required(login_url='/')
 def clearance_form(request):
-    context = {}
+    a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
         user = request.user.user_type
         print(user)
@@ -992,6 +992,8 @@ def clearance_form(request):
             last_request = request.POST.get('requested_option_420')
             last_request_date = request.POST.get('dbrtime_box_420')
             last_term = request.POST.get('lasterm_box_420')
+            course_adviser = request.POST.get('course_adviser_420')
+            course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
@@ -999,6 +1001,7 @@ def clearance_form(request):
                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
+                                                       course_adviser=course_adviser, course_adviser_signature=course_adviser_signature, 
                                                        purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
             form.save()
             
@@ -1008,7 +1011,7 @@ def clearance_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', context)
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a})
 
 
 @login_required(login_url='/')
@@ -1316,7 +1319,7 @@ def faculty_dashboard(request):
                                                   Q(addsignature10=unapproved)).order_by('-id')
         print(unapproved)
 
-        if request.user.department == "OCS" or request.user.department == "DLA" or request.user.department == "DMS" or request.user.department == "DPECS" or request.user.department == "DIT" or request.user.department == "DIE" or request.user.department == "OCL" or request.user.department == "OGS" or request.user.department == "OSA" or request.user.department == "ADAA":
+        if request.user.department == "HOCS" or request.user.department == "HDLA" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDIT" or request.user.department == "HDIE" or request.user.department == "HOCL" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA":
             st1 = clearance_form_table.objects.filter(Q(accountant_signature="UNAPPROVED") | Q(mathsci_dept_signature="UNAPPROVED") |
                                                       Q(pe_dept_signature="UNAPPROVED") | Q(ieduc_dept_signature="UNAPPROVED") | Q(it_dept_signature="UNAPPROVED") |
                                                       Q(ieng_dept_signature="UNAPPROVED") | Q(library_signature="UNAPPROVED") |
@@ -1324,12 +1327,13 @@ def faculty_dashboard(request):
                                                       Q(academic_affairs_signature="UNAPPROVED")).order_by('-id')
             return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1': st1, })
 
+        with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name) 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, })
+    return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'with_clearance':with_clearance })
 
 
 @login_required(login_url='/')
@@ -1338,53 +1342,55 @@ def faculty_dashboard_clearance_list(request):
     # userdeterminer = request.POST.get('userdeterminer')
     # print(val, userdeterminer)
     userdeterminer = request.user.department
-
+    f_n = request.user.full_name
+    f_n_unapproved = request.user.full_name + "_UNAPPROVED"
+    f_n_approved = request.user.full_name + "_APPROVED"
     st = ""
 
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        if userdeterminer == "OCS":
+        if userdeterminer == "HOCS":
             st = clearance_form_table.objects.filter(
                 accountant_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 accountant_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "DMS":
+        elif userdeterminer == "HDMS":
             st = clearance_form_table.objects.filter(
                 mathsci_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 mathsci_dept_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "DPECS":
+        elif userdeterminer == "HDPECS":
             st = clearance_form_table.objects.filter(
                 pe_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 pe_dept_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "DED":
+        elif userdeterminer == "HDED":
             st = clearance_form_table.objects.filter(
                 ieduc_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 ieduc_dept_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
             
-        elif userdeterminer == "DIT":
+        elif userdeterminer == "HDIT":
             st = clearance_form_table.objects.filter(
                 it_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 it_dept_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
             
-        elif userdeterminer == "DIE":
+        elif userdeterminer == "HDIE":
             st = clearance_form_table.objects.filter(
                 ieng_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 ieng_dept_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
             
-        elif userdeterminer == "OCL":
+        elif userdeterminer == "HOCL":
             
             st = clearance_form_table.objects.filter(
                 library_signature="UNAPPROVED").values()
@@ -1392,28 +1398,36 @@ def faculty_dashboard_clearance_list(request):
                 library_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "OGS":
+        elif userdeterminer == "HOGS":
             st = clearance_form_table.objects.filter(
                 guidance_office_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 guidance_office_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "OSA":
+        elif userdeterminer == "HOSA":
             st = clearance_form_table.objects.filter(
                 osa_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 osa_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
 
-        elif userdeterminer == "ADAA":
+        elif userdeterminer == "HADAA":
             st = clearance_form_table.objects.filter(
                 academic_affairs_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 academic_affairs_signature="APPROVED").values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
         
-
+        if clearance_form_table.objects.filter(
+                course_adviser=f_n):
+            st = clearance_form_table.objects.filter(
+                course_adviser_signature=f_n_unapproved).values()
+            st1 = clearance_form_table.objects.filter(
+                course_adviser_signature= f_n_approved).values()
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+        
+ 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -1432,48 +1446,54 @@ def update(request, id):
             id=id).values_list('student_id', flat=True).distinct()
         email = user_table.objects.filter(
             username=email_temp[0]).values_list('email', flat=True).distinct()
-
         rec_email = email[0]
+        f_n = request.user.full_name
+        f_n_approved = request.user.full_name + "_APPROVED"
         print(rec_email)
-        if request.user.department == "OCS":
+        if clearance_form_table.objects.filter(course_adviser=f_n, id=id):
+            clearance_form_table.objects.filter(id=id).update(
+                course_adviser_signature=f_n_approved)
+            
+        if request.user.department == "HOCS":
             clearance_form_table.objects.filter(
                 id=id).update(accountant_signature="APPROVED")
 
-        elif request.user.department == "DMS":
+        if request.user.department == "HDMS":
             clearance_form_table.objects.filter(id=id).update(
                 mathsci_dept_signature="APPROVED")
 
-        elif request.user.department == "DPECS":
+        if request.user.department == "HDPECS":
             clearance_form_table.objects.filter(
                 id=id).update(pe_dept_signature="APPROVED")
 
-        elif request.user.department == "DED":
+        if request.user.department == "HDED":
             clearance_form_table.objects.filter(
                 id=id).update(ieduc_dept_signature="APPROVED")
 
-        elif request.user.department == "DIT":
+        if request.user.department == "HDIT":
             clearance_form_table.objects.filter(
                 id=id).update(it_dept_signature="APPROVED")
 
-        elif request.user.department == "DIE":
+        if request.user.department == "HDIE":
             clearance_form_table.objects.filter(
                 id=id).update(ieng_dept_signature="APPROVED")
 
-        elif request.user.department == "OCL":
+        if request.user.department == "HOCL":
             clearance_form_table.objects.filter(
                 id=id).update(library_signature="APPROVED")
 
-        elif request.user.department == "OGS":
+        if request.user.department == "HOGS":
             clearance_form_table.objects.filter(id=id).update(
                 guidance_office_signature="APPROVED")
 
-        elif request.user.department == "OSA":
+        if request.user.department == "HOSA":
             clearance_form_table.objects.filter(
                 id=id).update(osa_signature="APPROVED")
 
-        elif request.user.department == "ADAA":
+        if request.user.department == "HADAA":
             clearance_form_table.objects.filter(id=id).update(
                 academic_affairs_signature="APPROVED")
+        
 
         subject = 'Clearance Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'

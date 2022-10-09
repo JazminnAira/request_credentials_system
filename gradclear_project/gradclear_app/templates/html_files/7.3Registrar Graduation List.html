@@ -854,4 +854,25 @@
 
         document.getElementById("search_box_72").value = "";
     });
+
+    // ALLOW TO VIEW FORM ON TABLE ROW CLICK
+    function addRowHandlers() {
+        var table = document.getElementById("list_tbl_53");
+        var rows = table.getElementsByTagName("tr");
+        for (i = 0; i < rows.length; i++) {
+            var currentRow = table.rows[i];
+            var createClickHandler = 
+                function(row) 
+                {
+                    return function() { 
+                                            var cell = row.getElementsByTagName("td")[0];
+                                            var id = cell.innerHTML;
+                                            location.href = "display_gradform/" + id 
+                                    };
+                };
+
+            currentRow.onclick = createClickHandler(currentRow);
+        }
+    }
+    window.onload = addRowHandlers();
 </script>

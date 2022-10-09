@@ -454,6 +454,8 @@
         font-size: 30px;
         padding-top: 15px;
     }
+
+   
 </style>
 
 
@@ -637,6 +639,21 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label for="course_adviser_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_adviser_lbl_42">Course/ Shop Adviser:</label>
+                <div class="col-sm-9">
+                    <form method="POST" action="clearance_form">
+                    {% csrf_token %}
+                    <select id="course_adviser_42" name="course_adviser_420" class="form-control" required >
+                        <option value="1" select>--SELECT--</option>
+                        
+                        {% for i in a %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endfor %}</select>
+                    
+                </div>
+            </div>
+
             <!--PURPOSE OF REQUEST BOX-->
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
@@ -694,11 +711,12 @@
             </div>
 
             <br>
-
+ 
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
                 <button class="btn btn-secondary" type="submit" id="submit_btn_42" name="submit_btn_420" onclick="get_other_purpose()" disabled>Submit</button>
             </p>
+            </form>
 
 
 
@@ -1734,5 +1752,7 @@ function get_other_purpose(){
     others= document.getElementById("others_box_42").value;
     document.getElementById("Others_check_42").value = "Others:" + others;
 }
+
+​
 
 </script>
