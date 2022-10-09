@@ -414,6 +414,7 @@
                             <th>TOR</th>
                             <th>Official Receipt</th>
                             <th>Clearance</th>
+                            <th>Status</th>
                             <th>Claim</th>
                             <th>Date of Appointment</th>
                         </tr>
@@ -442,6 +443,7 @@
                                         </form> 
                                 </td>
                                 <td>{{instance.clearance}}</td>
+                                <td>{{instance.current_status}}</td>
                                 <td>
                                     <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -451,8 +453,8 @@
                                                 <option value="UNCLAIMED">UNCLAIMED
                                             </select>
                                         </form> 
-                                </td>
-                                <td>{{instance.appontment}}</td>
+                                </td>  
+                                <td>{{instance.appointment}}</td>
                             </tr>
                         </tbody>
                     {% endfor %}

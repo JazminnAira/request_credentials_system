@@ -348,6 +348,16 @@
         font-family: Arial, Helvetica, sans-serif;
         font-style: normal;
     }
+
+    #changer  {
+        background-color: #f5f0f6;
+        border:none;
+    }
+
+    #changer:hover {
+        background-color:#636363;
+        border:#ffff;
+    }
 </style>
 
 
@@ -422,8 +432,26 @@
                         <tr>
                             <td>{{instance.id}}</td>
                             <td>{{instance.Name}}</td>
-                            <td>{{instance.form_137}}</td>
-                            <td>{{instance.TOR}}</td>
+                            <td>
+                                <form name="change_position" id="change" action="alumni_form137_update/{{ instance.id }}" method=POST>
+                                    {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="form137_select" id="changer"> 
+                                        <option value="">{{instance.form_137}}
+                                        <option value="✔">✔
+                                        <option value="❌">❌
+                                    </select>
+                                </form> 
+                            </td>
+                            <td>
+                                <form name="change_position" id="change" action="alumni_TOR_update/{{ instance.id }}" method=POST>
+                                    {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
+                                        <option value="">{{instance.TOR}}
+                                        <option value="✔">✔
+                                        <option value="❌">❌
+                                    </select>
+                                </form> 
+                            </td>
                             <td>{{instance.Status}}</td>
                         </tr>
                     </tbody>

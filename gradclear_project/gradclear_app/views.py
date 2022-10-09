@@ -784,18 +784,20 @@ def student_registration(request):
             id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
+            middle = form.cleaned_data.get("middle_name")
             email = form.cleaned_data.get("email")
             # middle = form.cleaned_data.get("middle_name")
             form.instance.username = "TUPC-" + id_num
             username = "TUPC-" + id_num
-            form.instance.user_type = "STUDENT"
-            form.instance.full_name = last + ", " + first
+            
+            form.instance.full_name = last + ", " + first + " "+ middle
 
-            SearchUser = first + " " + last
+            SearchUser = last + ", " + first +" "+ middle
             e = Enrolled_table.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
             if e:
                 va= e[0]
                 if va == SearchUser:
+                    form.instance.user_type = "STUDENT"
                     form.save()
                     # subject = 'SIGNUP SUCCESS'
                     # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
@@ -807,7 +809,11 @@ def student_registration(request):
                 else:
                     messages.error(request, "Unenrolled Student")
             else:
-                    messages.error(request, "Unenrolled Student")
+                    form.instance.user_type = "OLD STUDENT"
+                    form.save()
+                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+                    return redirect('/')
+                    # messages.error(request, "Unenrolled Student")
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
@@ -860,8 +866,10 @@ def alumnus_registration(request):
             username = "TUPC-" + id_num
             form.instance.user_type = "ALUMNUS"
             form.instance.full_name = last + ", " + first + " " + middle
-
-            SearchUser2 = first + " " + last
+            mid = middle[0] + "."
+            print(mid)
+            
+            SearchUser2 = last + ", " + first +" "+ mid
             a = Alumnus_table.objects.filter(Name=SearchUser2).values_list('Name', flat=True).distinct()
             if a:
                 va= a[0]
@@ -899,18 +907,20 @@ def student_dashboard(request):
         last = request.user.last_name
         middle = request.user.middle_name
         
-        name = first +" "+last
-        name2 = last +", "+ first +" "+ middle
+        
+        name = last +", "+ first +" "+ middle
+        mid = middle[0] + "."
+        name2 = last + ", " + first + " " + mid
 
         print(username)
 
-        st0 = request_form_table.objects.filter(name2 = name or name2)
+        st0 = request_form_table.objects.filter(name= name)
         st = graduation_form_table.objects.filter(student_id=username)
         st1 = clearance_form_table.objects.filter(student_id=username)
         
         
-        check_form137_enrolled = Enrolled_table.objects.filter(Name=name or name2).values_list('form_137',flat=True).distinct()
-        check_form137_alumnus = Alumnus_table.objects.filter(Name=name or name2).values_list('form_137',flat=True).distinct()
+        check_form137_enrolled = Enrolled_table.objects.filter(Name=name).values_list('form_137',flat=True).distinct()
+        check_form137_alumnus = Alumnus_table.objects.filter(Name=name2).values_list('form_137',flat=True).distinct()
         check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
         check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
         
@@ -1565,7 +1575,7 @@ def updategrad(request, id):
             id=id).values_list('student_id', flat=True).distinct()
         email = user_table.objects.filter(
             username=email_temp[0]).values_list('email', flat=True).distinct()
-
+ 
         rec_email = email[0]
         print(rec_email) 
         f_n1 = request.user.full_name + '_UNAPPROVED'
@@ -2240,10 +2250,9 @@ def registrar_dashboard_student_list(request):
         messages.error(request, 'THIS IS NOT A CSV FILE')
     data_set = csv_file.read().decode('UTF-8')
     # setup a stream which is when we loop through each line we are able to handle a data in a stream
-    
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
+    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
         _, created = Enrolled_table.objects.update_or_create(
             Name = column[0],
             form_137 = column[1],
@@ -2263,7 +2272,7 @@ def student_form137_update(request, id):
     Enrolled_table.objects.filter(id=id).update(form_137=form_change)
     name_search = name[0]
 
-    request_form_table.objects.filter(name2=name_search).update(form_137=form_change)
+    request_form_table.objects.filter(name=name_search).update(form_137=form_change)
     
     return redirect(registrar_dashboard_student_list)
 
@@ -2273,7 +2282,7 @@ def student_TOR_update(request, id):
     Enrolled_table.objects.filter(id=id).update(TOR=form_change)
     name_search = name[0]
 
-    request_form_table.objects.filter(name2=name_search).update(TOR=form_change)
+    request_form_table.objects.filter(name=name_search).update(TOR=form_change)
     return redirect(registrar_dashboard_student_list)
 
 
@@ -2300,16 +2309,34 @@ def registrar_dashboard_alumni_list(request):
     
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar="|"):
+    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
         _, created = Alumnus_table.objects.update_or_create(
             Name = column[0],
-            TOR = column[1],
-            form_137 = column[2],
+            form_137 = column[1],
+            TOR = column[2],
         )
     
     context = {'data':alumnus_data}
     return render(request, template, context)
 
+def alumni_form137_update(request, id):
+    form_change = request.POST.get('form137_select')
+    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
+    Alumnus_table.objects.filter(id=id).update(form_137=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(form_137=form_change)
+    
+    return redirect(registrar_dashboard_alumni_list)
+
+def alumni_TOR_update(request, id):
+    form_change = request.POST.get('TOR_select')
+    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
+    Alumnus_table.objects.filter(id=id).update(TOR=form_change)
+    name_search = name[0]
+
+    request_form_table.objects.filter(name2=name_search).update(TOR=form_change)
+    return redirect(registrar_dashboard_alumni_list)
 
 #REQUEST LIST
 @login_required(login_url='/')
@@ -2356,30 +2383,34 @@ def request_form(request):
             request = request.POST.get('purpose_request_pre')
             
             name = last_name + ", " + first_name + " " + middle_name
-            name2 = first_name + " " + last_name
+            mid = middle_name[0] + "."
+            name2 = last_name + ", " + first_name + " " + mid
             
-            if current_stat == "Enrolled" or "Old Student":
-                check_form137 = Enrolled_table.objects.filter(Name = name2 or name).values('form_137').distinct()
-                check_TOR = Enrolled_table.objects.filter(Name = name2 or name).values('TOR').distinct()
-                check_clearance = Enrolled_table.objects.filter(Name = name2 or name).values('clearance').distinct()
+            print(name2)
+            
+            if user== "STUDENT":
+                check_form137 = Enrolled_table.objects.filter(Name = name).values('form_137').distinct()
+                check_TOR = Enrolled_table.objects.filter(Name = name).values('TOR').distinct()
+                check_clearance = Enrolled_table.objects.filter(Name = name).values('clearance').distinct()
                   
-                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
+                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2,
                                                      address=address, course=course,date=date, control_number=control_num,
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request, form_137=check_form137, TOR=check_TOR, clearance=check_clearance)
                 form.save()
                 return redirect('student_dashboard')
             
-            else: 
-                check_form137 = Alumnus_table.objects.filter(Name = name2 or name).values('form_137').distinct()
-                check_TOR = Alumnus_table.objects.filter(Name = name2 or name).values('TOR').distinct()
-
+            else:
+                check_form137 = Alumnus_table.objects.filter(Name = name2).values('form_137').distinct()
+                check_TOR = Alumnus_table.objects.filter(Name = name2).values('TOR').distinct()
+                check_clearance = "✔" #default muna
+                
                 form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
                                                      address=address, course=course,date=date, control_number=control_num,
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
-                                                     request=request, form_137=check_form137, TOR=check_TOR)
+                                                     request=request, form_137=check_form137, TOR=check_TOR,clearance=check_clearance)
                 form.save()
-                return redirect('student_dashboard')         
+                return redirect('student_dashboard')               
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
