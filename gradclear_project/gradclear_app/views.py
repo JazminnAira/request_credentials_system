@@ -2363,6 +2363,11 @@ def registrar_dashboard_alumni_list(request):
             form_137 = column[1],
             TOR = column[2],
         )
+        
+    for row in Alumnus_table.objects.all().reverse():
+        if Alumnus_table.objects.filter(Name=row.Name).count() > 1:
+            row.delete()
+        
     
     context = {'data':alumnus_data}
     return render(request, template, context)
