@@ -1910,29 +1910,6 @@ def updategrad(request, id):
 
         approved_text = "_APPROVED"
 
-        sample=graduation_form_table.objects.exclude(
-            Q(signature1="NO SIGNATURE") |
-            Q(signature2="NO SIGNATURE") |
-            Q(signature3="NO SIGNATURE") |
-            Q(signature4="NO SIGNATURE") |
-            Q(signature5="NO SIGNATURE") |
-            Q(signature6="NO SIGNATURE") |
-            Q(signature7="NO SIGNATURE") |
-            Q(signature8="NO SIGNATURE") |
-            Q(signature9="NO SIGNATURE") |
-            Q(signature10="NO SIGNATURE") |
-            Q(addsignature1="NO SIGNATURE") |
-            Q(addsignature2="NO SIGNATURE") |
-            Q(addsignature3="NO SIGNATURE") |
-            Q(addsignature4="NO SIGNATURE") |
-            Q(addsignature5="NO SIGNATURE") |
-            Q(addsignature6="NO SIGNATURE") |
-            Q(addsignature7="NO SIGNATURE") |
-            Q(addsignature8="NO SIGNATURE") |
-            Q(addsignature9="NO SIGNATURE") |
-            Q(addsignature10="NO SIGNATURE") |
-            Q(sitsignature="NO SIGNATURE"), id=id)
-
         approval_status_checker_2=graduation_form_table.objects.exclude(
             Q(signature1="NO SIGNATURE") ,
             Q(signature2="NO SIGNATURE") ,
@@ -1982,9 +1959,7 @@ def updategrad(request, id):
             print(approval_status_checker_2)
             graduation_form_table.objects.filter(
                 id=id).update(approval_status="APPROVED")
-        # elif approval_status_checker_2:
-        #     graduation_form_table.objects.filter(
-        #         id=id).update(approval_status="APPROVED")
+       
             
         messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'
