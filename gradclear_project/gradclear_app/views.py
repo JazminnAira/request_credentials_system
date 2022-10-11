@@ -863,6 +863,7 @@ def faculty_registration(request):
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
             form.instance.username = "TUPC-" + id_num
+            form.instance.position = "STAFF"
             username = "TUPC-" + id_num
             form.instance.user_type = "FACULTY"
             form.instance.full_name = last + ", " + first + " " + middle
@@ -970,7 +971,7 @@ def student_dashboard(request):
         if not check_clearance:
             display2 = "* Clearance"
         else:
-            if check_clearance[0] == 'UNAPPROVED':
+            if check_clearance[0] == 'ON PROGRESS':
                 print('Clearance Pending')
                 display2 = "* Clearance (ON PROGRESS)"
             else:
@@ -979,7 +980,7 @@ def student_dashboard(request):
         if not check_graduation:
             display3 = ""
         else:
-            if check_graduation[0] == 'UNAPPROVED':
+            if check_graduation[0] == 'ON PROGRESS':
                 print('Clearance Pending')
                 display3 = "* Graduation Form (ON PROGRESS)"
             else:
@@ -1674,6 +1675,9 @@ def update(request, id):
         if approval_status_checker:
             clearance_form_table.objects.filter(
                         id=id).update(approval_status="APPROVED")
+            
+            request_form_table.objects.filter(
+                        name=name_temp).update(clearance="✔")
     
         subject = 'Clearance Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
