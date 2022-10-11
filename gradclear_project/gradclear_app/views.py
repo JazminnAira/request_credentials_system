@@ -1226,7 +1226,138 @@ def graduation_form(request):
             w3 = request.POST.get('add_starttime3')
             x3 = request.POST.get('add_endtime3')
 
+            sig_s1  = ""
+            sig_s2  = ""
+            sig_s3  = ""
+            sig_s4  = ""
+            sig_s5  = ""
+            sig_s6  = ""
+            sig_s7  = ""
+            sig_s8  = ""
+            sig_s9  = ""
+            sig_s10  = ""
 
+            sig_t1  = ""
+            sig_t2  = ""
+            sig_t3  = ""
+            sig_t4  = ""
+            sig_t5  = ""
+            sig_t6  = ""
+            sig_t7  = ""
+            sig_t8  = ""
+            sig_t9  = ""
+            sig_t10  = ""       
+
+            if s1 == "1":
+                s1 = "NO FACULTY"
+                sig_s1 = "NO SIGNATURE"
+            else:
+                sig_s1 = s1 + "_UNAPPROVED"
+                
+            if s2 == "1":
+                s2 = "NO FACULTY"
+                sig_s2 = "NO SIGNATURE"
+            else:
+                sig_s2 = s2 + "_UNAPPROVED"
+            if s3 == "1":
+                s3 = "NO FACULTY"
+                sig_s3 = "NO SIGNATURE"
+            else:
+                sig_s3 = s3 + "_UNAPPROVED"
+            if s4 == "1":
+                s4 = "NO FACULTY"
+                sig_s4 = "NO SIGNATURE"
+            else:
+                sig_s4 = s4 + "_UNAPPROVED"
+            if s5 == "1":
+                s5 = "NO FACULTY"
+                sig_s5 = "NO SIGNATURE"
+            else:
+                sig_s5 = s5 + "_UNAPPROVED"
+            if s6 == "1":
+                s6 = "NO FACULTY"
+                sig_s6 = "NO SIGNATURE"
+            else:
+                sig_s6 = s6 + "_UNAPPROVED"
+            if s7 == "1":
+                s7 = "NO FACULTY"
+                sig_s7 = "NO SIGNATURE"
+            else:
+                sig_s7 = s7 + "_UNAPPROVED"
+            if s8 == "1":
+                s8 = "NO FACULTY"
+                sig_s8 = "NO SIGNATURE"
+            else:
+                sig_s8 = s8 + "_UNAPPROVED"
+            if s9 == "1":
+                s9 = "NO FACULTY"
+                sig_s9 = "NO SIGNATURE"
+            else:
+                sig_s9 = s9 + "_UNAPPROVED"
+            if s10 == "1":
+                s10 = "NO FACULTY"
+                sig_s10 = "NO SIGNATURE"
+            else:
+                sig_s10 = s10 + "_UNAPPROVED"
+
+            if t1 == "1":
+                t1 = "NO FACULTY"
+                sig_t1 = "NO SIGNATURE"
+            else:
+                sig_t1 = t1 + "_UNAPPROVED"
+            if t2 == "1":
+                t2 = "NO FACULTY"
+                sig_t2 = "NO SIGNATURE"
+            else:
+                sig_t2 = t2 + "_UNAPPROVED"
+            if t3 == "1":
+                t3 = "NO FACULTY"
+                sig_t3 = "NO SIGNATURE"
+            else:
+                sig_t3 = t3 + "_UNAPPROVED"
+            if t4 == "1":
+                t4 = "NO FACULTY"
+                sig_t4 = "NO SIGNATURE"
+            else:
+                sig_t4 = t4 + "_UNAPPROVED"
+            if t5 == "1":
+                t5 = "NO FACULTY"
+                sig_t5 = "NO SIGNATURE"
+            else:
+                sig_t5 = t5 + "_UNAPPROVED"
+            if t6 == "1":
+                t6 = "NO FACULTY"
+                sig_t6 = "NO SIGNATURE"
+            else:
+                sig_t6 = t6 + "_UNAPPROVED"
+            if t7 == "1":
+                t7 = "NO FACULTY"
+                sig_t7 = "NO SIGNATURE"
+            else:
+                sig_t7 = t7 + "_UNAPPROVED"
+            if t8 == "1":
+                t8 = "NO FACULTY"
+                sig_t8 = "NO SIGNATURE"
+            else:
+                sig_t8 = t8 + "_UNAPPROVED"
+            if t9 == "1":
+                t9 = "NO FACULTY"
+                sig_t9 = "NO SIGNATURE"
+            else:
+                sig_t9 = t9 + "_UNAPPROVED"
+            if t10 == "1":
+                t10 = "NO FACULTY"
+                sig_t10 = "NO SIGNATURE"    
+            else:
+                sig_t10 = t10 + "_UNAPPROVED"
+
+            if l == "1":
+                l = "NO FACULTY"
+                sig_l = "NO SIGNATURE"
+            else:
+                sig_l = l + "_UNAPPROVED"
+
+            
             form = graduation_form_table.objects.create(name=name, student_id=student_id, course=course, shift=d,
                                                         study_load=e, status=f, enrolled_term=h, unenrolled_application_deadline=i,
                                                         trainP_startdate=j, trainP_enddate=k, instructor_name=l, day2=q2, day3=q3,
@@ -1256,11 +1387,11 @@ def graduation_form(request):
                                                         addsubject10=o10, addroom10=p10, addfaculty10=t10, add_starttime1_10=w1_10, add_endtime1_10=x1_10,
                                                         addday1_10=r1_10,
                                                         
-                                                        signature1=s1 + "_UNAPPROVED", signature2=s2 + "_UNAPPROVED", signature3=s3 + "_UNAPPROVED", signature4=s4 + "_UNAPPROVED", signature5=s5 + "_UNAPPROVED",
-                                                        signature6=s6 + "_UNAPPROVED", signature7=s7 + "_UNAPPROVED", signature8=s8 + "_UNAPPROVED", signature9=s9 + "_UNAPPROVED", signature10=s10 + "_UNAPPROVED",
-                                                        addsignature1=t1 + "_UNAPPROVED", addsignature2=t2 + "_UNAPPROVED", addsignature3=t3 + "_UNAPPROVED", addsignature4=t4 + "_UNAPPROVED", addsignature5=t5 + "_UNAPPROVED",
-                                                        addsignature6=t6 + "_UNAPPROVED", addsignature7=t7 + "_UNAPPROVED", addsignature8=t8 + "_UNAPPROVED", addsignature9=t9 + "_UNAPPROVED", addsignature10=t10 + "_UNAPPROVED",
-                                                        sitsignature=l + "_UNAPPROVED")
+                                                        signature1=sig_s1 , signature2=sig_s2 , signature3=sig_s3 , signature4=sig_s4 , signature5=sig_s5 ,
+                                                        signature6=sig_s6 , signature7=sig_s7 , signature8=sig_s8 , signature9=sig_s9 , signature10=sig_s10 ,
+                                                        addsignature1=sig_t1 , addsignature2=sig_t2 , addsignature3=sig_t3 , addsignature4=sig_t4 , addsignature5=sig_t5 ,
+                                                        addsignature6=sig_t6 , addsignature7=sig_t7 , addsignature8=sig_t8 , addsignature9=sig_t9 , addsignature10=sig_t10 ,
+                                                        sitsignature=sig_l )
             form.save()
             print('8')
                 
@@ -1605,8 +1736,8 @@ def faculty_dashboard_graduation_list(request):
             Q(addsignature8__contains=full_name) |
             Q(addsignature9__contains=full_name) |
             Q(addsignature10__contains=full_name) |
-            Q(instructor_name__contains=full_name) 
-        )
+            Q(sitsignature__contains=full_name) 
+        ) 
         if res:
 
         # if val == "UNAPPROVED":
@@ -1774,8 +1905,86 @@ def updategrad(request, id):
                 id=id).update(addsignature10=approval)
 
         if u.exists():
-                 graduation_form_table.objects.filter(
+            graduation_form_table.objects.filter(
                 id=id).update(sitsignature=approval)
+
+        approved_text = "_APPROVED"
+
+        sample=graduation_form_table.objects.exclude(
+            Q(signature1="NO SIGNATURE") |
+            Q(signature2="NO SIGNATURE") |
+            Q(signature3="NO SIGNATURE") |
+            Q(signature4="NO SIGNATURE") |
+            Q(signature5="NO SIGNATURE") |
+            Q(signature6="NO SIGNATURE") |
+            Q(signature7="NO SIGNATURE") |
+            Q(signature8="NO SIGNATURE") |
+            Q(signature9="NO SIGNATURE") |
+            Q(signature10="NO SIGNATURE") |
+            Q(addsignature1="NO SIGNATURE") |
+            Q(addsignature2="NO SIGNATURE") |
+            Q(addsignature3="NO SIGNATURE") |
+            Q(addsignature4="NO SIGNATURE") |
+            Q(addsignature5="NO SIGNATURE") |
+            Q(addsignature6="NO SIGNATURE") |
+            Q(addsignature7="NO SIGNATURE") |
+            Q(addsignature8="NO SIGNATURE") |
+            Q(addsignature9="NO SIGNATURE") |
+            Q(addsignature10="NO SIGNATURE") |
+            Q(sitsignature="NO SIGNATURE"), id=id)
+
+        approval_status_checker_2=graduation_form_table.objects.exclude(
+            Q(signature1="NO SIGNATURE") ,
+            Q(signature2="NO SIGNATURE") ,
+            Q(signature3="NO SIGNATURE") ,
+            Q(signature4="NO SIGNATURE") ,
+            Q(signature5="NO SIGNATURE") ,
+            Q(signature6="NO SIGNATURE") ,
+            Q(signature7="NO SIGNATURE") ,
+            Q(signature8="NO SIGNATURE") ,
+            Q(signature9="NO SIGNATURE") ,
+            Q(signature10="NO SIGNATURE") ,
+            Q(addsignature1="NO SIGNATURE") ,
+            Q(addsignature2="NO SIGNATURE") ,
+            Q(addsignature3="NO SIGNATURE") ,
+            Q(addsignature4="NO SIGNATURE") ,
+            Q(addsignature5="NO SIGNATURE") ,
+            Q(addsignature6="NO SIGNATURE") ,
+            Q(addsignature7="NO SIGNATURE") ,
+            Q(addsignature8="NO SIGNATURE") ,
+            Q(addsignature9="NO SIGNATURE") ,
+            Q(addsignature10="NO SIGNATURE") ,
+            Q(sitsignature="NO SIGNATURE"), id=id).filter(
+            Q(signature1__endswith=approved_text) |
+            Q(signature2__endswith=approved_text) |
+            Q(signature3__endswith=approved_text) |
+            Q(signature4__endswith=approved_text) |
+            Q(signature5__endswith=approved_text) |
+            Q(signature6__endswith=approved_text) |
+            Q(signature7__endswith=approved_text) |
+            Q(signature8__endswith=approved_text) |
+            Q(signature9__endswith=approved_text) |
+            Q(signature10__endswith=approved_text) |
+            Q(addsignature1__endswith=approved_text) |
+            Q(addsignature2__endswith=approved_text) |
+            Q(addsignature3__endswith=approved_text) |
+            Q(addsignature4__endswith=approved_text) |
+            Q(addsignature5__endswith=approved_text) |
+            Q(addsignature6__endswith=approved_text) |
+            Q(addsignature7__endswith=approved_text) |
+            Q(addsignature8__endswith=approved_text) |
+            Q(addsignature9__endswith=approved_text) |
+            Q(addsignature10__endswith=approved_text) |
+            Q(sitsignature__endswith=approved_text), id=id)
+
+        print("this is", approval_status_checker_2)
+        if approval_status_checker_2:
+            print(approval_status_checker_2)
+            graduation_form_table.objects.filter(
+                id=id).update(approval_status="APPROVED")
+        # elif approval_status_checker_2:
+        #     graduation_form_table.objects.filter(
+        #         id=id).update(approval_status="APPROVED")
             
         messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'
