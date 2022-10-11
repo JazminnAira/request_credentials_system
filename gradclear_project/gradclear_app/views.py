@@ -21,6 +21,7 @@ from django.http import FileResponse
 import my_csv, io
 from textwrap import wrap
 
+
 def graduation_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
@@ -1454,8 +1455,7 @@ def faculty_dashboard_clearance_list(request):
             st1 = clearance_form_table.objects.filter(
                 course_adviser_signature= f_n_approved).values()
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
-        
- 
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -1467,7 +1467,7 @@ def faculty_dashboard_clearance_list(request):
 @login_required(login_url='/')
 def update(request, id):
     print('here')
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":     
         name_temp = clearance_form_table.objects.filter(
             id=id).values_list('name', flat=True).distinct()
         email_temp = clearance_form_table.objects.filter(
@@ -1510,6 +1510,9 @@ def update(request, id):
             clearance_form_table.objects.filter(
                 id=id).update(library_signature="APPROVED")
 
+            
+
+
         if request.user.department == "HOGS":
             clearance_form_table.objects.filter(id=id).update(
                 guidance_office_signature="APPROVED")
@@ -1522,7 +1525,25 @@ def update(request, id):
             clearance_form_table.objects.filter(id=id).update(
                 academic_affairs_signature="APPROVED")
         
-
+        approved_text = "APPROVED"
+        approved_courseadv = "_APPROVED"
+        approval_status_checker=clearance_form_table.objects.filter(
+            Q(liberal_arts_signature__exact=approved_text) &
+            Q(accountant_signature__exact=approved_text) &
+            Q(mathsci_dept_signature__exact=approved_text) &
+            Q(pe_dept_signature__exact=approved_text) &
+            Q(ieduc_dept_signature__exact=approved_text) &
+            Q(it_dept_signature__exact=approved_text) &
+            Q(ieng_dept_signature__exact=approved_text) &
+            Q(library_signature__exact=approved_text) &
+            Q(guidance_office_signature__exact=approved_text) &
+            Q(osa_signature__exact=approved_text) &
+            Q(academic_affairs_signature__exact=approved_text) &
+            Q(course_adviser_signature__endswith=approved_courseadv), id=id)
+        if approval_status_checker:
+            clearance_form_table.objects.filter(
+                        id=id).update(approval_status="APPROVED")
+    
         subject = 'Clearance Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
         email_from = settings.EMAIL_HOST_USER
@@ -2184,6 +2205,7 @@ def display_gradform(request, id):
 @login_required(login_url='/')
 def registrar_dashboard_clearance_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        
         if id == " ":
             all = clearance_form_table.objects.all()
             return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})

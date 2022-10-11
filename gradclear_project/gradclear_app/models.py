@@ -132,7 +132,7 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
 
     approval_status = models.CharField(max_length=15,
-        verbose_name="Approval Status", default="UNAPPROVED")
+        verbose_name="Approval Status", default="ON PROGRESS")
     liberal_arts_signature = models.CharField(max_length=15,
         verbose_name="Liberal Art Signature", default="UNAPPROVED")
     accountant_signature = models.CharField(max_length=15,
