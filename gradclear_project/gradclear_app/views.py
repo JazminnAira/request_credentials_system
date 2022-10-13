@@ -1676,8 +1676,13 @@ def update(request, id):
             clearance_form_table.objects.filter(
                         id=id).update(approval_status="APPROVED")
             
+            name = name_temp[0]
+            Enrolled_table.objects.filter(
+                        Name=name).update(clearance="✔")
+            # Alumnus_table.objects.filter(
+            #             Name=name).update(clearance="✔") this section is on hold
             request_form_table.objects.filter(
-                        name=name_temp).update(clearance="✔")
+                        name=name).update(clearance="✔")
     
         subject = 'Clearance Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
@@ -1775,6 +1780,8 @@ def faculty_dashboard_graduation_list(request):
 @login_required(login_url='/')
 def updategrad(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        name_temp = graduation_form_table.objects.filter(
+            id=id).values_list('name', flat=True).distinct()
         email_temp = graduation_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
         email = user_table.objects.filter(
@@ -1963,6 +1970,10 @@ def updategrad(request, id):
             print(approval_status_checker_2)
             graduation_form_table.objects.filter(
                 id=id).update(approval_status="APPROVED")
+            
+            name = name_temp[0]
+            Enrolled_table.objects.filter(
+                        Name=name).update(graduation="✔")
        
             
         messages.success(request, "Form Approved.")
