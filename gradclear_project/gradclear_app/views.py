@@ -559,7 +559,7 @@ def graduation_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
+        response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
 
@@ -684,7 +684,7 @@ def clearance_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 
