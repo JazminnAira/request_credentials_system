@@ -1046,9 +1046,7 @@ def clearance_form(request):
 
 @login_required(login_url='/')
 def graduation_form(request):
-    a = user_table.objects.filter(Q(department="DLA") | Q(department="DMS") | Q(department="DPECS") |
-                                  Q(department="DIT") | Q(department="DIE") | Q(department="DED") | Q(department="DOE"), user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    print(a)
+    a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT":
         form = graduation_form_table(request.POST or None)
