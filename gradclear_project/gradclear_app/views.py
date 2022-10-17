@@ -785,6 +785,8 @@ def login_user(request):
                 return redirect('student_dashboard')
             elif va == "ALUMNUS":
                 return redirect('student_dashboard')
+            elif va == "OLD STUDENT":
+                return redirect('student_dashboard')
             elif va == "FACULTY":
                 return redirect('faculty_dashboard')
             elif va == "REGISTRAR":
@@ -820,34 +822,56 @@ def student_registration(request):
             username = "TUPC-" + id_num
             
             form.instance.full_name = last + ", " + first + " "+ middle
-
-            SearchUser = last + ", " + first +" "+ middle
-            e = Enrolled_table.objects.filter(Name=SearchUser).values_list('Name', flat=True).distinct()
-            if e:
-                va= e[0]
-                if va == SearchUser:
-                    form.instance.user_type = "STUDENT"
-                    form.save()
-                    # subject = 'SIGNUP SUCCESS'
-                    # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
-                    # email_from = settings.EMAIL_HOST_USER
-                    # recipient_list = [email, ]
-                    # send_mail( subject, message, email_from, recipient_list )
-                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
-                    return redirect('/')
-                else:
-                    messages.error(request, "Unenrolled Student")
-            else:
-                    form.instance.user_type = "OLD STUDENT"
-                    form.save()
-                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
-                    return redirect('/')
-                    # messages.error(request, "Unenrolled Student")
+           
+            form.instance.user_type = "STUDENT"
+            form.save()
+            # subject = 'SIGNUP SUCCESS'
+            # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [email, ]
+            # send_mail( subject, message, email_from, recipient_list )
+            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+            return redirect('/')
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "STUDENT"
+    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    return render(request, 'html_files/1Sign_Up.html', context)
+
+def oldstudent_registration(request):
+    form = signup_form()
+    print(form.errors)
+    if request.method == "POST":
+        form = signup_form(request.POST, request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            id_num = form.cleaned_data.get("id_number")
+            last = form.cleaned_data.get("last_name")
+            first = form.cleaned_data.get("first_name")
+            middle = form.cleaned_data.get("middle_name")
+            email = form.cleaned_data.get("email")
+            # middle = form.cleaned_data.get("middle_name")
+            form.instance.username = "TUPC-" + id_num
+            username = "TUPC-" + id_num
+            
+            form.instance.full_name = last + ", " + first + " "+ middle
+           
+            form.instance.user_type = "OLD STUDENT"
+            form.save()
+            # subject = 'SIGNUP SUCCESS'
+            # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [email, ]
+            # send_mail( subject, message, email_from, recipient_list )
+            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+            return redirect('/')
+        else:
+            messages.error(
+                request, "There is an error with your form. Try again.")
+    img_object = form.instance
+    user_identifier = "OLD STUDENT"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
@@ -863,7 +887,7 @@ def faculty_registration(request):
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
             form.instance.username = "TUPC-" + id_num
-            form.instance.position = "STAFF"
+            form.instance.position = "FACULTY"
             username = "TUPC-" + id_num
             form.instance.user_type = "FACULTY"
             form.instance.full_name = last + ", " + first + " " + middle
@@ -896,26 +920,17 @@ def alumnus_registration(request):
             username = "TUPC-" + id_num
             form.instance.user_type = "ALUMNUS"
             form.instance.full_name = last + ", " + first + " " + middle
-            mid = middle[0] + "."
-            print(mid)
-            
-            SearchUser2 = last + ", " + first +" "+ mid
-            a = Alumnus_table.objects.filter(Name=SearchUser2).values_list('Name', flat=True).distinct()
-            if a:
-                va= a[0]
-                if va == SearchUser2:
-                    form.save()
-                    # subject = 'SIGNUP SUCCESS'
-                    # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
-                    # email_from = settings.EMAIL_HOST_USER
-                    # recipient_list = [email, ]
-                    # send_mail( subject, message, email_from, recipient_list )
-                    messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
-                    return redirect('/')
-                else:
-                    messages.error(request, "Unregistered Alumni")
-            else:
-                    messages.error(request, "Unregistered Alumni")
+         
+        
+            form.save()
+            # subject = 'SIGNUP SUCCESS'
+            # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [email, ]
+            # send_mail( subject, message, email_from, recipient_list )
+            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+            return redirect('/')
+           
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
@@ -931,7 +946,7 @@ def cover(request):
 
 @login_required(login_url='/')
 def student_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         username = request.user.username
         first = request.user.first_name
         last = request.user.last_name
@@ -948,55 +963,18 @@ def student_dashboard(request):
         st = graduation_form_table.objects.filter(student_id=username)
         st1 = clearance_form_table.objects.filter(student_id=username)
         
-        
-        check_form137_enrolled = Enrolled_table.objects.filter(Name=name).values_list('form_137',flat=True).distinct()
-        check_form137_alumnus = Alumnus_table.objects.filter(Name=name2).values_list('form_137',flat=True).distinct()
-        check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
-        check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
-        
-        if request.user.user_type == "STUDENT":
-            if check_form137_enrolled[0] == '❌':
-                print('Missing FORM 137-A')
-                display = "* Form 137-A"
-            else:
-                display = ""
-        else:
-            
-            if check_form137_alumnus[0] == '❌':
-                print('Missing FORM 137-A')
-                display = "* Form 137-A"
-            else:
-                display = ""
-        
-        if not check_clearance:
-            display2 = "* Clearance"
-        else:
-            if check_clearance[0] == 'ON PROGRESS':
-                print('Clearance Pending')
-                display2 = "* Clearance (ON PROGRESS)"
-            else:
-                display2 = ""
-                
-        if not check_graduation:
-            display3 = ""
-        else:
-            if check_graduation[0] == 'ON PROGRESS':
-                print('Clearance Pending')
-                display3 = "* Graduation Form (ON PROGRESS)"
-            else:
-                display3 = ""
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1, 'st0': st0,'display':display,'display2':display2 ,'display3':display3})
+    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1, 'st0': st0})
 
 
 
 @login_required(login_url='/')
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
         user = request.user.user_type
         print(user)
         if request.method == "POST":
@@ -1675,8 +1653,6 @@ def update(request, id):
                         id=id).update(approval_status="APPROVED")
             
             name = name_temp[0]
-            Enrolled_table.objects.filter(
-                        Name=name).update(clearance="✔")
             # Alumnus_table.objects.filter(
             #             Name=name).update(clearance="✔") this section is on hold
             request_form_table.objects.filter(
@@ -1970,9 +1946,6 @@ def updategrad(request, id):
                 id=id).update(approval_status="APPROVED")
             
             name = name_temp[0]
-            Enrolled_table.objects.filter(
-                        Name=name).update(graduation="✔")
-       
             
         messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'
@@ -2117,7 +2090,7 @@ def updateAddress(request):
 
 @login_required(login_url='/')
 def updateEmail(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         if request.method == "POST":
             semail = request.POST.get('ea_box_041')
             a = request.POST.get('validator')
@@ -2501,126 +2474,33 @@ def faculty_list_update(request, id):
 def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
-    enrolled_data = Enrolled_table.objects.all()
-    
-# prompt is a context variable that can have different values      depending on their context
-    prompt = {
-        'data': enrolled_data
-              }
-    # GET request returns the value of the data with the specified key.
-    if request.method == "GET":
-        return render(request, template, prompt)
-    
-    csv_file = request.FILES['file']
-    # let's check if it is a csv file
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
-    data_set = csv_file.read().decode('UTF-8')
-    # setup a stream which is when we loop through each line we are able to handle a data in a stream
-    io_string = io.StringIO(data_set)
-    next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
-        _, created = Enrolled_table.objects.update_or_create(
-            Name = column[0],
-            form_137 = column[1],
-            TOR = column[2],
-        )
+    student_data = user_table.objects.filter(Q(user_type='STUDENT') |Q(user_type='OLD STUDENT'))
         
-    for row in Enrolled_table.objects.all().reverse():
-        if Enrolled_table.objects.filter(Name=row.Name).count() > 1:
-            row.delete()
-        
-    context = {'data':enrolled_data}
+    context = {'data':student_data}
     return render(request, template, context)
-
-def student_form137_update(request, id):
-    form_change = request.POST.get('form137_select')
-    name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
-    Enrolled_table.objects.filter(id=id).update(form_137=form_change)
-    name_search = name[0]
-
-    request_form_table.objects.filter(name=name_search).update(form_137=form_change)
-    
-    return redirect(registrar_dashboard_student_list)
-
-def student_TOR_update(request, id):
-    form_change = request.POST.get('TOR_select')
-    name = Enrolled_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
-    Enrolled_table.objects.filter(id=id).update(TOR=form_change)
-    name_search = name[0]
-
-    request_form_table.objects.filter(name=name_search).update(TOR=form_change)
-    return redirect(registrar_dashboard_student_list)
-
 
 #ALUMNI LIST
 @login_required(login_url='/')
 def registrar_dashboard_alumni_list(request):
     # declaring template
     template = "html_files/Alumni List.html"
-    alumnus_data = Alumnus_table.objects.all()
-# prompt is a context variable that can have different values      depending on their context
-    prompt = {
-        'data': alumnus_data
-              }
-    # GET request returns the value of the data with the specified key.
-    if request.method == "GET":
-        return render(request, template, prompt)
-    
-    csv_file = request.FILES['file1']
-    # let's check if it is a csv file
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
-    data_set = csv_file.read().decode('UTF-8')
-    # setup a stream which is when we loop through each line we are able to handle a data in a stream
-    
-    io_string = io.StringIO(data_set)
-    next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
-        _, created = Alumnus_table.objects.update_or_create(
-            Name = column[0],
-            form_137 = column[1],
-            TOR = column[2],
-        )
-        
-    for row in Alumnus_table.objects.all().reverse():
-        if Alumnus_table.objects.filter(Name=row.Name).count() > 1:
-            row.delete()
-        
+    alumnus_data = user_table.objects.filter(user_type="ALUMNUS")
     
     context = {'data':alumnus_data}
     return render(request, template, context)
 
-def alumni_form137_update(request, id):
-    form_change = request.POST.get('form137_select')
-    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
-    Alumnus_table.objects.filter(id=id).update(form_137=form_change)
-    name_search = name[0]
-
-    request_form_table.objects.filter(name2=name_search).update(form_137=form_change)
-    
-    return redirect(registrar_dashboard_alumni_list)
-
-def alumni_TOR_update(request, id):
-    form_change = request.POST.get('TOR_select')
-    name = Alumnus_table.objects.filter(id=id).values_list('Name', flat=True).distinct()
-    Alumnus_table.objects.filter(id=id).update(TOR=form_change)
-    name_search = name[0]
-
-    request_form_table.objects.filter(name2=name_search).update(TOR=form_change)
-    return redirect(registrar_dashboard_alumni_list)
-
-#REQUEST LIST
+#REQUEST LIST AND DOCUMENT CHECKER LIST
 @login_required(login_url='/')
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         requests = request_form_table.objects.all().order_by('-id').values()
+        doc = Document_checker_table.objects.all().values()
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests})
+    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
 
 def request_official_update(request, id):
     form_change = request.POST.get('or_select')
@@ -2636,7 +2516,7 @@ def request_claim_update(request, id):
 @login_required(login_url='/')
 def request_form(request):
     context = {}
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS':
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
         print(user)            
         if request.method == "POST":
@@ -2659,33 +2539,54 @@ def request_form(request):
             name2 = last_name + ", " + first_name + " " + mid
             
             print(name2)
-            
-            if user== "STUDENT":
-                check_form137 = Enrolled_table.objects.filter(Name = name).values('form_137').distinct()
-                check_TOR = Enrolled_table.objects.filter(Name = name).values('TOR').distinct()
-                check_clearance = Enrolled_table.objects.filter(Name = name).values('clearance').distinct()
-                  
-                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2,
+    
+            form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2,
                                                      address=address, course=course,date=date, control_number=control_num,
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
-                                                     request=request, form_137=check_form137, TOR=check_TOR, clearance=check_clearance)
-                form.save()
-                return redirect('student_dashboard')
+                                                     request=request)
+            form.save()
+            return redirect('student_dashboard')
             
-            else:
-                check_form137 = Alumnus_table.objects.filter(Name = name2).values('form_137').distinct()
-                check_TOR = Alumnus_table.objects.filter(Name = name2).values('TOR').distinct()
-                check_clearance = "✔" #default muna
-                
-                form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2 ,
-                                                     address=address, course=course,date=date, control_number=control_num,
-                                                     contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
-                                                     request=request, form_137=check_form137, TOR=check_TOR,clearance=check_clearance)
-                form.save()
-                return redirect('student_dashboard')               
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
     return render(request,'html_files/Request form.html', context)
+
+#UPLOAD DOCUMENT CHECKER LIST
+def upload_document_checker(request):
+      # declaring template
+    template = "html_files/Request List.html"
+    data = Document_checker_table.objects.all()
+# prompt is a context variable that can have different values      depending on their context
+    prompt = {
+        'data': data
+              }
+    # GET request returns the value of the data with the specified key.
+    if request.method == "GET":
+        return render(request, template, prompt)
+    
+    csv_file = request.FILES['file']
+    # let's check if it is a csv file
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'THIS IS NOT A CSV FILE')
+    data_set = csv_file.read().decode('UTF-8')
+    # setup a stream which is when we loop through each line we are able to handle a data in a stream
+    
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
+        _, created = Document_checker_table.objects.update_or_create(
+            name = column[0],
+            form_137 = column[1],
+            TOR = column[2],
+        )
+        
+    for row in Document_checker_table.objects.all().reverse():
+        if Document_checker_table.objects.filter(name=row.name).count() > 1:
+            row.delete()
+    requests = request_form_table.objects.all().order_by('-id').values()
+    
+    context = {'data':requests,'data2':data}
+    return render(request, template, context)

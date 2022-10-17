@@ -391,7 +391,7 @@
 
 
     <!-- MAIN-->
-    <h3 style="text-align:center;">Request List</h3>
+    
 
     <!--TAB BAR-->
     <div data-tabs="1" id="tabz_77">
@@ -400,65 +400,121 @@
             <button class="btn btn-secondary" type="button" id="alumni_button" name="alumni" onclick="upload_determiner()" >Upload Alnumnus List File</button>
             <input class= "form-control" name= "status_file_determiner" id= "input_status">
         </div> -->
-
-        <div id="tab1_77" class="tab-content" style="background-color:#fff">
-            <div class="wrapper_all">
-                <table class="table results table-hover table-sortable" id="list_tbl_77">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Student's Name</th>
-                            <th>Request</th>
-                            <th> Date & Time Requested</th>
-                            <th>Form 137-A</th>
-                            <th>TOR</th>
-                            <th>Official Receipt</th>
-                            <th>Clearance</th>
-                            <th>Status</th>
-                            <th>Claim</th>
-                            <th>Date of Appointment</th>
-                        </tr>
-                        <tr class="warning no-result">
-                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
-                        </tr>
-                    </thead>
-                    
-                    {% for instance in data %}
-                        <tbody>
+        <div class = "float-left col-9"  >
+            <h3 style="text-align:center;">Request List</h3>
+            <div id ="button_claim_and_unclaim" class ="p-3">
+                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">All</a></button>
+                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">Claimed</a></button>
+                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">Unclaimed</a></button>
+            </div>
+            <div id="request_table" class="tab-content" style="background-color:#fff" >
+                <div class="wrapper_all">
+                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
+                        <thead>
                             <tr>
-                                <td>{{instance.id}}</td>
-                                <td>{{instance.name}}</td>
-                                <td>{{instance.request}}</td>
-                                <td>{{instance.time_requested}}</td>
-                                <td>{{instance.form_137}}</td>
-                                <td>{{instance.TOR}}</td>
-                                <td>
-                                    <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
-                                        {% csrf_token %}
-                                            <select onchange="this.form.submit()" name="or_select" id="changer"> 
-                                                <option value="">{{instance.official_receipt}}
-                                                <option value="✔">✔
-                                                <option value="❌">❌
-                                            </select>
-                                        </form> 
-                                </td>
-                                <td>{{instance.clearance}}</td>
-                                <td>{{instance.current_status}}</td>
-                                <td>
-                                    <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
-                                        {% csrf_token %}
-                                            <select onchange="this.form.submit()" name="claim_select" id="changer"> 
-                                                <option value="">{{instance.claim}}
-                                                <option value="CLAIMED">CLAIMED
-                                                <option value="UNCLAIMED">UNCLAIMED
-                                            </select>
-                                        </form> 
-                                </td>  
-                                <td>{{instance.appointment}}</td>
+                                <th>#</th>
+                                <th>Student's Name</th>
+                                <th>Request</th>
+                                <th> Date & Time Requested</th>
+                                <th>Form 137-A</th>
+                                <th>TOR</th>
+                                <th>Clearance</th>
+                                <th>Official Receipt</th>
+                                <th>Status</th>
+                                <th>Claim</th>
+                                <th>Date of Appointment</th>
                             </tr>
-                        </tbody>
+                            <tr class="warning no-result">
+                                <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+                            </tr>
+                        </thead>
+                        
+                        {% for instance in data %}
+                            <tbody>
+                                <tr>
+                                    <td>{{instance.id}}</td>
+                                    <td>{{instance.name}}</td>
+                                    <td>{{instance.request}}</td>
+                                    <td>{{instance.time_requested}}</td>
+                                    <td>{{instance.form_137}}</td>
+                                    <td>{{instance.TOR}}</td>
+                                    <td>
+                                        <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                                <select onchange="this.form.submit()" name="or_select" id="changer"> 
+                                                    <option value="">{{instance.official_receipt}}
+                                                    <option value="✔">✔
+                                                    <option value="❌">❌
+                                                </select>
+                                            </form> 
+                                    </td>
+                                    <td>{{instance.clearance}}</td>
+                                    <td>{{instance.current_status}}</td>
+                                    <td>
+                                        <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                                <select onchange="this.form.submit()" name="claim_select" id="changer"> 
+                                                    <option value="">{{instance.claim}}
+                                                    <option value="CLAIMED">CLAIMED
+                                                    <option value="UNCLAIMED">UNCLAIMED
+                                                </select>
+                                            </form> 
+                                    </td>  
+                                    <td>{{instance.appointment}}</td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class ="col-3 table-responsive float-right">
+            <h3 style="text-align:center;">Document Checker</h3>
+            <div id ="upload_file_section">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div>
+                            <!-- | means OR operator-->
+                            <strong>{{message|safe}}</strong>
+                        </div>
                     {% endfor %}
-                </table>
+                {% else %}
+                    {{order}}
+                    <!--Upload students file-->
+                    <form class = "pl-4" action="upload_document_checker" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="file1" id ="label_file"> Upload Document Checker List:</label>
+                        <input type="file" id="file1" name="file">
+                        <button type="submit">Upload</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div id="document_table" class="tab-content" style="background-color:#fff">
+                <div class="wrapper_all">
+                    <table class="table results table-hover table-sortable" id="list_tbl_77">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Form 137-A</th>
+                                <th>TOR</th>
+                            </tr>
+                            <tr class="warning no-result">
+                                <td colspan="3"><i class="fa fa-warning"></i> No result</td>
+                            </tr>
+                        </thead>
+                        
+                        {% for instance in data2 %}
+                            <tbody>
+                                <tr>
+                                    <td>{{instance.name}}</td>
+                                    <td>{{instance.form_137}}</td>
+                                    <td>{{instance.TOR}}</td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
 

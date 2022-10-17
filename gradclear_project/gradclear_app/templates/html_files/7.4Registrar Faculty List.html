@@ -434,9 +434,8 @@
                             <th>ID Number</th>
                             <th>Email</th>
                             <th>Gender</th>
-                            <th>Activation</th>
                             <th>Position</th>     
-                            <th></th>
+                            <th>Designation</th>
                             <th></th>
                             <!--{% if val == 'APPROVED' %}
                             <th>Approval Status</th>
@@ -458,21 +457,28 @@
                             <td>{{instance.id_number}}</td>
                             <td>{{instance.email}}</td>
                             <td>{{instance.gender}}</td>
-                            <td>Activate</td>
+                            <td>{{instance.position}}</td>
                             <td>   
-                
-                                <form name="change_position" id="change" action="faculty_list_update/{{ instance.id }}" method=POST>
+                                <form name="change_position" id="change" action="/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
-                                    <select onchange="this.form.submit()" name="positionSelect" id="changer"> 
-                                        <option value="">{{instance.position }}
-                                        <option value="STAFF">STAFF
-                                        <option value="HEAD">HEAD
-                                        <option value="PART TIMER">PART TIMER
+                                    <select onchange="this.form.submit()" name="designationSelect" id="changer"> 
+                                        <option value="">{{instance.designation}}
+                                        <option value="">---
+                                        <option value="ACCOUNTANT">ACCOUNTANT
+                                        <option value="HEAD OF LIBERAL ARTS">HEAD OF LIBERAL ARTS
+                                        <option value="HEAD OF MATH AND SCIENECES">HEAD OF MATH AND SCIENECES
+                                        <option value="HEAD OF DPECS">HEAD OF DPECS
+                                        <option value="HEAD OF INDUSTRIAL TECHNOLOGY">HEAD OF INDUSTRIAL TECHNOLOGY
+                                        <option value="HEAD OF INDUTRIAL EDUCATION ">HEAD OF INDUTRIAL EDUCATION 
+                                        <option value="HEAD OF ENGINEERING ">HEAD OF ENGINEERING 
+                                        <option value="CAMPUS LIBRARIAN">CAMPUS LIBRARIAN
+                                        <option value="GUIDANCE COUNCELOR">GUIDANCE COUNCELOR
+                                        <option value="HEAD OF STUDENT AFFAIRS">HEAD OF STUDENT AFFAIRS
+                                        <option value="ASST. DIR FOR ACADEMIC AFFAIRS">ASST. DIR FOR ACADEMIC AFFAIRS
                                     </select>
                                 </form> 
                             </td>
-                            <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-
+                            <td hidden><input type="text" name="id_from_table" hidden value={{instance.id}}>
                             </td>
                             <td>
                                 <button class="button"><a style="color: #fff;" href="" onclick="fun()">Delete</a></button></td>

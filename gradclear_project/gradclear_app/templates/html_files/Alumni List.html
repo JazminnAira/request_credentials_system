@@ -358,6 +358,18 @@
         background-color:#636363;
         border:#ffff;
     }
+
+    .profile-pic {
+        color: transparent;
+        transition: all .3s ease;
+        transition: all .3s ease;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: -70px;
+        border-radius: 30%;
+        z-index: 9;
+        padding: 10px;}
 </style>
 
 
@@ -391,36 +403,20 @@
             <button class="btn btn-secondary" type="button" id="alumni_button" name="alumni" onclick="upload_determiner()" >Upload Alnumnus List File</button>
             <input class= "form-control" name= "status_file_determiner" id= "input_status">
         </div> -->
-        <div id ="upload_file_section">
-            {% if messages %}
-                {% for message in messages %}
-                    <div>
-                        <!-- | means OR operator-->
-                        <strong>{{message|safe}}</strong>
-                    </div>
-                {% endfor %}
-            {% else %}
-                {{order}}
-                <!--Upload students file-->
-                <form class = "pl-4" action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <label for="file2" id ="label_file"> Upload Alumnus List:</label>
-                    <input type="file" id="file2" name="file1">
-                    <button type="submit">Upload</button>
-                </form>
-            {% endif %}
-        </div>
 
         <div id="tab1_76" class="tab-content" style="background-color:#fff">
             <div class="wrapper_all">
                 <table class="table results table-hover table-sortable" id="list_tbl_76">
                     <thead>
                         <tr>
-                            <th> # </th>
-                            <th>Graduate's Name</th>
-                            <th>Form 137-A</th>
-                            <th>TOR</th>
+                            <th>#</th>
+                            <th>Graduate's Profile</th>
+                            <th>Alumni's Name</th>
+                            <th>Alumni's ID</th>
+                            <th>Course Graduated</th>
+                            <th>Year Graduated</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                         <tr class="warning no-result">
                             <td colspan="5"><i class="fa fa-warning"></i> No result</td>
@@ -431,28 +427,13 @@
                     <tbody>
                         <tr>
                             <td>{{instance.id}}</td>
-                            <td>{{instance.Name}}</td>
-                            <td>
-                                <form name="change_position" id="change" action="alumni_form137_update/{{ instance.id }}" method=POST>
-                                    {% csrf_token %}
-                                    <select onchange="this.form.submit()" name="form137_select" id="changer"> 
-                                        <option value="">{{instance.form_137}}
-                                        <option value="✔">✔
-                                        <option value="❌">❌
-                                    </select>
-                                </form> 
-                            </td>
-                            <td>
-                                <form name="change_position" id="change" action="alumni_TOR_update/{{ instance.id }}" method=POST>
-                                    {% csrf_token %}
-                                    <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
-                                        <option value="">{{instance.TOR}}
-                                        <option value="✔">✔
-                                        <option value="❌">❌
-                                    </select>
-                                </form> 
-                            </td>
-                            <td>{{instance.Status}}</td>
+                            <td><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
+                            <td>{{instance.full_name}}</td>
+                            <td>{{instance.username}}</td>
+                            <td>{{instance.course_graduated}}</td>
+                            <td>{{instance.year_graduated}}</td>
+                            <td>{{instance.user_type}}</td>
+                            <td><button class="button"><a style="color: #fff;" href="" onclick="fun()">Delete</a></button></td>
                         </tr>
                     </tbody>
                     {% endfor %}

@@ -392,6 +392,8 @@ Adviser:
                         <form id="stud_form_01" method="POST" action="student_signup" style="height:100%;" enctype="multipart/form-data">
                     {% elif user == "ALUMNUS" %}
                         <form id="stud_form_01" method="POST" action="alumnus_signup" style="height:100%;" enctype="multipart/form-data">
+                    {% elif user == "OLD STUDENT" %}
+                        <form id="stud_form_01" method="POST" action="oldstudent_signup" style="height:100%;" enctype="multipart/form-data">
                     {% else %}
                         <form id="stud_form_01" method="POST" action="faculty_signup" style="height:100%;" enctype="multipart/form-data">
                     {% endif %}
@@ -455,7 +457,6 @@ Adviser:
                                     </div>
 
                                 {% elif user == "ALUMNUS" %}
-                                
                                     <!--COURSE GRADUATED DROPDOWN BOX-->
                                     <div class="form-group" id="course_graduated_input">
                                         <label for="course_graduated">Course Graduated:</label><label id="Scourse_graduated_aste01" style="color:red;">*</label>
@@ -470,7 +471,7 @@ Adviser:
                                         <p id="sys_error_01"></p>
                                     </div>
 
-                                {% else %}
+                                {% elif user == "FACULTY" %}
                                     <!--DEPARTMENT DROPDOWN BOX-->
                                     <div class="form-group" id="department_input" >
                                         <label for="Sdepartment01">Department:</label><label id="Sdepartment01" style="color:red;">*</label>
@@ -530,8 +531,6 @@ Adviser:
                                 </div>
                             </div>
 
-                                
-                
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
                 

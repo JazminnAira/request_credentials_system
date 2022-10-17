@@ -1133,29 +1133,7 @@ class graduation_form_table(models.Model):
 
     def __str__(self):
         return self.student_id
-    
-class Enrolled_table(models.Model):
-    id = models.AutoField(primary_key=True)
-    Name = models.CharField(max_length=150)
-    TOR = models.CharField(max_length=50)
-    form_137 = models.CharField(max_length=50)
-    clearance = models.CharField(max_length=50, default="❌")
-    graduation = models.CharField(max_length=50, default="❌")
-    Status = models.CharField(max_length=50, default="ENROLLED")
-   
-    def __str__(self):
-        return self.Name
-    
-class Alumnus_table(models.Model):
-    id = models.AutoField(primary_key=True)
-    Name = models.CharField(max_length=150)
-    TOR = models.CharField(max_length=50)
-    form_137 = models.CharField(max_length=50)
-    Status = models.CharField(max_length=50, default="ALUMNI")
-   
-    def __str__(self):
-        return self.Name
-    
+
 class request_form_table(models.Model):
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
@@ -1185,4 +1163,12 @@ class request_form_table(models.Model):
     time_requested = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.student_id
+        return self.student_id    
+class Document_checker_table(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=150)
+    TOR = models.CharField(max_length=50)
+    form_137 = models.CharField(max_length=50)
+   
+    def __str__(self):
+        return self.name
