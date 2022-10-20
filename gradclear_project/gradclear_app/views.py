@@ -1522,6 +1522,7 @@ def faculty_dashboard_clearance_list(request):
     f_n_unapproved = request.user.full_name + "_UNAPPROVED"
     f_n_approved = request.user.full_name + "_APPROVED"
     st = ""
+    signal ="CLOSE"
 
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         if userdeterminer == "HOCS":
@@ -1529,42 +1530,48 @@ def faculty_dashboard_clearance_list(request):
                 accountant_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 accountant_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
         elif userdeterminer == "HDMS":
             st = clearance_form_table.objects.filter(
                 mathsci_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 mathsci_dept_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
         elif userdeterminer == "HDPECS":
             st = clearance_form_table.objects.filter(
                 pe_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 pe_dept_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
         elif userdeterminer == "HDED":
             st = clearance_form_table.objects.filter(
                 ieduc_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 ieduc_dept_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
             
         elif userdeterminer == "HDIT":
             st = clearance_form_table.objects.filter(
                 it_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 it_dept_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
             
         elif userdeterminer == "HDIE":
             st = clearance_form_table.objects.filter(
                 ieng_dept_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 ieng_dept_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
             
         elif userdeterminer == "HOCL":
             
@@ -1572,28 +1579,32 @@ def faculty_dashboard_clearance_list(request):
                 library_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 library_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
         elif userdeterminer == "HOGS":
             st = clearance_form_table.objects.filter(
                 guidance_office_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 guidance_office_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
         elif userdeterminer == "HOSA":
             st = clearance_form_table.objects.filter(
                 osa_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 osa_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1,'signal':signal})
 
         elif userdeterminer == "HADAA":
             st = clearance_form_table.objects.filter(
                 academic_affairs_signature="UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
                 academic_affairs_signature="APPROVED").values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1,'signal':signal})
         
         if clearance_form_table.objects.filter(
                 course_adviser=f_n):
@@ -1601,14 +1612,15 @@ def faculty_dashboard_clearance_list(request):
                 course_adviser_signature=f_n_unapproved).values()
             st1 = clearance_form_table.objects.filter(
                 course_adviser_signature= f_n_approved).values()
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1})
+            signal ="CLOSE"
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st})
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'signal':signal})
 
 
 @login_required(login_url='/')
@@ -2633,3 +2645,9 @@ def upload_document_checker(request):
     
     context = {'data':requests,'data2':data}
     return render(request, template, context)
+
+#OPEN SIGNATURE PLATFORM
+def signature_open_clearance(request, id):
+    to_be_signed = clearance_form_table.objects.filter(id=id)
+    signal = "OPEN"
+    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})

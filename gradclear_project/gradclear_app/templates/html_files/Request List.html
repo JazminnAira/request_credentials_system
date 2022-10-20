@@ -414,9 +414,9 @@
                 <button class="button pl-2 pr-2 " id ="button_sorter"><a style="color: #fff;" href="">All</a></button>
                 <button class="button pl-2 pr-2 " id ="button_sorter2"><a style="color: #fff;" href="">Claimed</a></button>
                 <button class="button pl-2 pr-2 " id ="button_sorter3"><a style="color: #fff;" href="">Unclaimed</a></button>
-                <input id="sorter" name="request_table_organizer" value ="ALL">
+                {% comment %} <input id="sorter" name="request_table_organizer" value ="ALL"> {% endcomment %}
             </div>
-            <div id="request_table" class="tab-content" style="background-color:#fff" >
+            <div id="request_table"  class="tab-content" style="background-color:#fff" >
                 <div class="wrapper_all">
                     <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
                         <thead>
@@ -447,15 +447,14 @@
                                     <td>{{instance.time_requested}}</td>
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
-                                            {% csrf_token %}
-                                                <select onchange="this.form.submit()" name="form137_select" id="changer"> 
+                                        {% csrf_token %}
+                                            <select onchange="this.form.submit()" name="form137_select" id="changer"> 
                                                     <option value="">{{instance.form_137}}
                                                     <option value="✔">✔
                                                     <option value="❌">❌
                                                 </select>
                                         </form> 
                                     </td>
-                                    
                                     <td>
                                         <form name="change_TOR" id="change" action="request_TOR_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -775,11 +774,6 @@
 
         document.getElementById("search_box_77").value = "";
     });
-
-    function table_organizer(){
-        if 
-    }
-
     
 </script>
 
