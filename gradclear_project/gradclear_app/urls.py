@@ -22,6 +22,7 @@ urlpatterns = [
      path('faculty_dashboard_clearance_list', views.faculty_dashboard_clearance_list,
           name='faculty_dashboard_clearance_list'),
      path('signature_open_clearance/<int:id>', signature_open_clearance, name='signature_open_clearance'),
+     path('signature_open_graduation/<int:id>', signature_open_graduation, name='signature_open_graduation'),
      path('faculty_dashboard_graduation_list', views.faculty_dashboard_graduation_list,
           name='faculty_dashboard_graduation_list'),
      path('registrar_dashboard', views.registrar_dashboard,

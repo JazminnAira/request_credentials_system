@@ -1740,6 +1740,8 @@ def faculty_dashboard_graduation_list(request):
         print(f_n)
         val = request.POST.get('valdeterminer')
         
+        signal = "CLOSE"
+        
         # USE REQUEST.USER TO AUTO SHOW DATA
         full_name = request.user.full_name +"_UNAPPROVED"
         # st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) | Q(faculty3=full_name) |
@@ -1799,7 +1801,7 @@ def faculty_dashboard_graduation_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'val': val, 'st1': st1})
+    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'val': val, 'st1': st1, 'signal': signal})
 
 
 @login_required(login_url='/')
@@ -2647,7 +2649,14 @@ def upload_document_checker(request):
     return render(request, template, context)
 
 #OPEN SIGNATURE PLATFORM
+#CLEARANCE
 def signature_open_clearance(request, id):
     to_be_signed = clearance_form_table.objects.filter(id=id)
+    signal = "OPEN"
+    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
+
+#GRADUATION
+def signature_open_graduation(request, id):
+    to_be_signed = graduation_form_table.objects.filter(id=id)
     signal = "OPEN"
     return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
