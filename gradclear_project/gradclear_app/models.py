@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
 import datetime
+from jsignature.fields import JSignatureField
 
 
 class user_table(AbstractUser):
@@ -80,6 +81,8 @@ class user_table(AbstractUser):
         max_length=100, choices=department, verbose_name="Department", null=True, blank=True)
     position = models.CharField(
         max_length=100, verbose_name="Position ", null=True, blank=True)
+    designation = models.CharField(
+        max_length=100, verbose_name="Designation ", null=True, blank=True)
     course_graduated = models.CharField(
         max_length=100, choices=courses, null=True, blank=True)
     year_graduated = models.CharField(
@@ -1149,10 +1152,10 @@ class request_form_table(models.Model):
     purpose_of_request_reason = models.CharField(
         max_length=100, verbose_name="Purpose of Request",null=True)
     
-    TOR = models.CharField(max_length=50,default="❌")
-    form_137 = models.CharField(max_length=50, default="❌")
-    clearance = models.CharField(max_length=50, default="❌")
-    official_receipt = models.CharField(max_length=50, default="❌")
+    TOR = models.CharField(max_length=50,default="❌",null=True)
+    form_137 = models.CharField(max_length=50, default="❌",null=True)
+    clearance = models.CharField(max_length=50, default="❌",null=True)
+    official_receipt = models.CharField(max_length=50, default="❌",null=True)
     claim = models.CharField(max_length=50, default="UNCLAIMED", null=True)
 
     approval_status = models.CharField(max_length=15,

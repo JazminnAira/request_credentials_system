@@ -425,7 +425,7 @@
 
         <div id="tab1_74" class="tab-content" style="background-color:#fff">
             <div class="wrapper_all">
-                <table class="table results table-hover table-sortable" id="list_tbl_74">
+                <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_74">
                     <thead>
                         <tr>
                             <th> # </th>
@@ -459,9 +459,9 @@
                             <td>{{instance.gender}}</td>
                             <td>{{instance.position}}</td>
                             <td>   
-                                <form name="change_position" id="change" action="/{{ instance.id }}" method=POST>
+                                <form name="change_position" id="change" action="faculty_designation_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
-                                    <select onchange="this.form.submit()" name="designationSelect" id="changer"> 
+                                    <select onchange="this.form.submit()" name="designationSelect" id="changer" class="col-12"> 
                                         <option value="">{{instance.designation}}
                                         <option value="">---
                                         <option value="ACCOUNTANT">ACCOUNTANT

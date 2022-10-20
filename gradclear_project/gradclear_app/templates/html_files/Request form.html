@@ -545,24 +545,24 @@
             <div class="form-group row">
                 <label for="contactnum_pre" class="col-sm-2 col-form-label col-form-label-sm" id="contact_pre">Contact Number:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}">
+                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}" readonly>
                 </div>
             </div>
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
             <div class="form-group row pl-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="Enrolled Student" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="Old Student" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="Graduated" onchange= "choose_enrolled()" oninput="get_year_graduated()">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" oninput="get_year_graduated()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
-                    <input class="form-control chk" type="text" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_year_graduated()">
                 </div>
             </div>
@@ -776,9 +776,17 @@
     if (document.getElementById("user_stat").value == "STUDENT"){
         document.getElementById("year_graduated_check_pre").disabled = true;
         document.getElementById("year_graduated_pre").disabled = true;
+        document.getElementById("old_student_pre").disabled = true;
+        document.getElementById("currently_enrolled_pre").checked = true;
+    }else if(document.getElementById("user_stat").value == "OLD STUDENT"){
+        document.getElementById("currently_enrolled_pre").disabled = true;
+        document.getElementById("year_graduated_check_pre").disabled = true;
+        document.getElementById("year_graduated_pre").disabled = true;
+        document.getElementById("old_student_pre").checked = true;
     }else{
         document.getElementById("old_student_pre").disabled = true;
         document.getElementById("currently_enrolled_pre").disabled = true;
+        document.getElementById("year_graduated_check_pre").checked = true;
     }
 
 </script>

@@ -1118,12 +1118,16 @@
         </div>
     </div>
     <hr style="border: 1px solid #424242;">
-    <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
-        <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
-        <p class="text-danger pl-3 pr-2" id="document1">{{display}}</p>
-        <p class="text-danger pl-3 pr-2" id="document2">{{display2}}</p>
-        <p class="text-danger pl-3 pr-2" id="document3">{{display3}}</p>
-    </div>
+
+    {% if display %}
+        <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
+            <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
+            {% for requirements in display %}
+                <p class="text-danger pl-3 pr-2" id="document1">{{requirements}}</p> 
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!--ACCESS BAR-->
     <!--SEARCH BAR-->
     <div class="container-fluid" id="main2_41">

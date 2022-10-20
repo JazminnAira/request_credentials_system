@@ -881,7 +881,7 @@ def faculty_registration(request):
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
-            user_type = form.cleaned_data.get("username")
+            form.cleaned_data.get("username")
             id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
@@ -890,6 +890,7 @@ def faculty_registration(request):
             form.instance.position = "FACULTY"
             username = "TUPC-" + id_num
             form.instance.user_type = "FACULTY"
+            form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
 
             form.save()
@@ -948,26 +949,64 @@ def cover(request):
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         username = request.user.username
+        full_name = request.user.full_name
         first = request.user.first_name
         last = request.user.last_name
         middle = request.user.middle_name
         
-        
-        name = last +", "+ first +" "+ middle
         mid = middle[0] + "."
         name2 = last + ", " + first + " " + mid
 
         print(username)
 
-        st0 = request_form_table.objects.filter(name= name)
+        st0 = request_form_table.objects.filter(name= full_name)
         st = graduation_form_table.objects.filter(student_id=username)
         st1 = clearance_form_table.objects.filter(student_id=username)
         
+        check_form137 = Document_checker_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
+        check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
+        check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
+        check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
+        
+        # document checker
+        display =[]
+        # Form137-A
+        if check_form137.exists():
+            if check_form137[0] == '❌':
+                print('Missing FORM 137-A')
+                display.append("*Form 137-A")
+                
+        elif check_form137_inrequest.exists():
+            for i in check_form137_inrequest:
+                if i == '❌':
+                    print(check_form137_inrequest)
+                    print('Missing FORM 137-A')
+                    display.append("*Form 137-A")  
+                else:
+                    pass
+        else:
+            pass
+                  
+        if not check_clearance:
+            display.append("*Clearance")
+        else:
+            if check_clearance[0] == 'ON PROGRESS':
+                print('Clearance Pending')
+                display.append("*Clearance (ON PROGRESS)")
+                
+        if not check_graduation:
+            pass
+        else:
+            if check_graduation[0] == 'ON PROGRESS':
+                print('Clearance Pending')
+                display.append("* Graduation Form (ON PROGRESS)")
+  
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1, 'st0': st0})
+    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display}
+    return render(request, 'html_files/4.1Student Dashboard.html', context)
 
 
 
@@ -1945,8 +1984,6 @@ def updategrad(request, id):
             graduation_form_table.objects.filter(
                 id=id).update(approval_status="APPROVED")
             
-            name = name_temp[0]
-            
         messages.success(request, "Form Approved.")
         subject = 'Graduation Form Approved'
         message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
@@ -2460,13 +2497,9 @@ def registrar_dashboard_faculty_list(request):
         return redirect('/')
     # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
 
-def faculty_list_update(request, id):
-    pos_change = request.POST.get('positionSelect')
-    print(pos_change)
-    
-    user_table.objects.filter(id=id).update(position=pos_change)
-    print('done')
-    
+def faculty_designation_update(request, id):
+    form_change = request.POST.get('designationSelect')
+    user_table.objects.filter(id=id).update(designation=form_change)
     return redirect(registrar_dashboard_faculty_list)
 
 #STUDENT LIST
@@ -2507,6 +2540,16 @@ def request_official_update(request, id):
     request_form_table.objects.filter(id=id).update(official_receipt=form_change)
     return redirect(registrar_dashboard_request_list)
 
+def request_form137_update(request, id):
+    form_change = request.POST.get('form137_select')
+    request_form_table.objects.filter(id=id).update(form_137=form_change)
+    return redirect(registrar_dashboard_request_list)
+
+def request_TOR_update(request, id):
+    form_change = request.POST.get('TOR_select')
+    request_form_table.objects.filter(id=id).update(TOR=form_change)
+    return redirect(registrar_dashboard_request_list)
+
 def request_claim_update(request, id):
     form_change = request.POST.get('claim_select')
     request_form_table.objects.filter(id=id).update(claim=form_change)
@@ -2534,13 +2577,13 @@ def request_form(request):
             purpose = request.POST.get('purpose')
             request = request.POST.get('purpose_request_pre')
             
-            name = last_name + ", " + first_name + " " + middle_name
+            full_name = last_name + ", " + first_name + " " + middle_name
             mid = middle_name[0] + "."
             name2 = last_name + ", " + first_name + " " + mid
             
             print(name2)
     
-            form = request_form_table.objects.create(student_id=student_id, name=name, name2=name2,
+            form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
                                                      address=address, course=course,date=date, control_number=control_num,
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)

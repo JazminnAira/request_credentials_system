@@ -359,6 +359,14 @@
         border:#ffff;
     }
 
+    #button_sorter,#button_sorter3,#button_sorter2   {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
+    }
+
 </style>
 
 
@@ -402,10 +410,11 @@
         </div> -->
         <div class = "float-left col-9"  >
             <h3 style="text-align:center;">Request List</h3>
-            <div id ="button_claim_and_unclaim" class ="p-3">
-                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">All</a></button>
-                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">Claimed</a></button>
-                <button class="button pl-2 pr-2"><a style="color: #fff;" href="">Unclaimed</a></button>
+            <div id ="button_claim_and_unclaim" class="mt-3">
+                <button class="button pl-2 pr-2 " id ="button_sorter"><a style="color: #fff;" href="">All</a></button>
+                <button class="button pl-2 pr-2 " id ="button_sorter2"><a style="color: #fff;" href="">Claimed</a></button>
+                <button class="button pl-2 pr-2 " id ="button_sorter3"><a style="color: #fff;" href="">Unclaimed</a></button>
+                <input id="sorter" name="request_table_organizer" value ="ALL">
             </div>
             <div id="request_table" class="tab-content" style="background-color:#fff" >
                 <div class="wrapper_all">
@@ -436,8 +445,27 @@
                                     <td>{{instance.name}}</td>
                                     <td>{{instance.request}}</td>
                                     <td>{{instance.time_requested}}</td>
-                                    <td>{{instance.form_137}}</td>
-                                    <td>{{instance.TOR}}</td>
+                                    <td>
+                                        <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                                <select onchange="this.form.submit()" name="form137_select" id="changer"> 
+                                                    <option value="">{{instance.form_137}}
+                                                    <option value="✔">✔
+                                                    <option value="❌">❌
+                                                </select>
+                                        </form> 
+                                    </td>
+                                    
+                                    <td>
+                                        <form name="change_TOR" id="change" action="request_TOR_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                                <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
+                                                    <option value="">{{instance.TOR}}
+                                                    <option value="✔">✔
+                                                    <option value="❌">❌
+                                                </select>
+                                        </form> 
+                                    </td>
                                     <td>
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -446,7 +474,7 @@
                                                     <option value="✔">✔
                                                     <option value="❌">❌
                                                 </select>
-                                            </form> 
+                                        </form> 
                                     </td>
                                     <td>{{instance.clearance}}</td>
                                     <td>{{instance.current_status}}</td>
@@ -492,7 +520,7 @@
             </div>
             <div id="document_table" class="tab-content" style="background-color:#fff">
                 <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable" id="list_tbl_77">
+                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -747,6 +775,10 @@
 
         document.getElementById("search_box_77").value = "";
     });
+
+    function table_organizer(){
+        if 
+    }
 
     
 </script>
