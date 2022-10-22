@@ -658,7 +658,6 @@
         </i> </a>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
         </i></a> -->
-        <a data-toggle="modal" data-placement="right" data-target="#Print_modal_01" title="Settings" class="link" class="trigger-btn"><i class="fa fa-print"></i></a>
     <a data-toggle="modal" data-placement="right" data-target="#settings_modal_41" title="Settings" class="link" class="trigger-btn"><i class="fa fa-cogs">
         </i></a>
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="logo_41" style="position: absolute;bottom: 10px;">
@@ -759,51 +758,6 @@
             </div>
         </form>
     </div>
-
-    <!--PRINT MODAL-->
-     <div class="modal fade" id="Print_modal_01" tabindex="-1" >
-         <div class="modal-dialog modal-dialog-centered">
-             <div class="modal-content" style="width: 100%;">
- 
-                 <!--PRE SIGNUP MODAL HEADER-->
-                 <div class="modal-header">
-                     <h3 class="modal-title">Choose to print..</h3>
- 
-                     <!--PRE SIGNUP MODAL CLOSE BUTTON-->
-                     <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
-                      data-placement="right" title="Close">x</button>
-                 </div>
-                 
-                 <!--PRE SIGNUP MODAL BODY-->
-                 <div class="modal-body w-100 text-center">
-                     <form action = "1Sign_Up.html" method="get">
- 
-                         <!--PRE SIGNUP MODAL STUDENT SIGN UP BUTTON-->
-                         <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark " 
-                          id="rform" value = "REQUEST"
-                          onclick= "user_identifier()">Request Form
-                         </a>
- 
-                         <a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border " 
-                          id="cform"  value = "CLEARANCE"
-                          onclick= "user_identifier()">Clearance Form
-                         </a>
- 
-                         <a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark mt-3  "
-                          id="gform" value = "GRADUATION" 
-                          onclick= "user_identifier()" >Graduation Form
-                         </a>
-
-                     </form>
- 
-                 </div>
-                 
-                 <!--PRE SIGNUP MODAL FOOTER-->
-                 <div class="modal-footer">
-                 </div>
-             </div>
-         </div>
-     </div>
 
 
     <!-- STATUS MODAL-->
@@ -1106,23 +1060,23 @@
 
     <div class="container-fluid" id="main_41">
         <div class="row">
-            <div class="col-12" style="height: 70px; margin-top: 100px;">
+            <div class="col-8" style="height: 70px; margin-top: 100px;">
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
                 <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
             </div>
-           
+            {% if display %}
+            <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
+                <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
+                {% for requirements in display %}
+                    <p class="text-danger pl-3 pr-2" id="document1">{{requirements}}</p> 
+                {% endfor %}
+            </div>
+        {% endif %}
         </div>
     </div>
     <hr style="border: 1px solid #424242;">
 
-    {% if display %}
-        <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
-            <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
-            {% for requirements in display %}
-                <p class="text-danger pl-3 pr-2" id="document1">{{requirements}}</p> 
-            {% endfor %}
-        </div>
-    {% endif %}
+    
 
     <!--ACCESS BAR-->
     <!--SEARCH BAR-->
