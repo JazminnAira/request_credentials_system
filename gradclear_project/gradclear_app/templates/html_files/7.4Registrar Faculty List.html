@@ -463,7 +463,7 @@
                                     {% csrf_token %}
                                     <select onchange="this.form.submit()" name="designationSelect" id="changer" class="col-12"> 
                                         <option value="">{{instance.designation}}
-                                        <option value="">---
+                                        <option value="---">---
                                         <option value="ACCOUNTANT">ACCOUNTANT
                                         <option value="HEAD OF LIBERAL ARTS">HEAD OF LIBERAL ARTS
                                         <option value="HEAD OF MATH AND SCIENECES">HEAD OF MATH AND SCIENECES
@@ -481,7 +481,7 @@
                             <td hidden><input type="text" name="id_from_table" hidden value={{instance.id}}>
                             </td>
                             <td>
-                                <button class="button"><a style="color: #fff;" href="" onclick="fun()">Delete</a></button></td>
+                                <button class="button"><a style="color: #fff;" href="" onclick="fun()">Remove</a></button></td>
                             </td>
                         </tr>
                     </tbody>

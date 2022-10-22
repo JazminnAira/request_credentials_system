@@ -520,7 +520,7 @@
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="date" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" required>
+                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" readonly>
                 </div>
             </div>
 
@@ -528,8 +528,7 @@
             <div class="form-group row">
                 <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="control_pre" name="control_pre" class="form-control">
-                    
+                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="000{{request.user.id}}" readonly>
                 </div>
             </div>
 
@@ -537,7 +536,7 @@
             <div class="form-group row">
                 <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()"required>
+                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{request.user.address}}" readonly required>
                 </div>
             </div>
 
@@ -667,7 +666,7 @@
 
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_button" name="submit_btn_pre">Submit</button>
+                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
             </p>
 
             <!--FORM FOOTER-->
@@ -680,6 +679,13 @@
 </html>
 
 <script>
+   
+    var today = new Date();
+    
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+    document.getElementById("date_pre").value = date;
+
     function submitForm(form) {
 
         swal({
@@ -703,7 +709,7 @@
                 document.getElementById("course_pre").disabled = true;
                 document.getElementById("control_pre").disabled = true;
                 document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose_of_request").disabled = true;
+                document.getElementById("purpose").disabled = true;
                 document.getElementById("certification_box").disabled = true;
                 document.getElementById("others_box_pre").disabled = true;
                 document.getElementById("year_graduated_pre").disabled = true;
@@ -713,12 +719,11 @@
     }
 
     function isEmpty() {
-        let date_box = document.getElementById("date_pre").value;
-        let address_box = document.getElementById("add_box_pre").value;
+     
         let purpose_req = document.getElementById("purpose").value;
     
-        if (date_box != "" && address_box != "" && purpose_req != "") {
-            document.getElementById("submit_button").removeAttribute("disabled");
+        if (purpose_req != "") {
+            document.getElementById("submit_btn_pre").removeAttribute("disabled");
         }
     }
     

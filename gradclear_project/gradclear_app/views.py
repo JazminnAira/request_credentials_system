@@ -18,7 +18,7 @@ from reportlab.lib.colors import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-import my_csv, io
+import my_csv, csv,  io
 from textwrap import wrap
 
 
@@ -2514,6 +2514,11 @@ def registrar_dashboard_faculty_list(request):
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
     user_table.objects.filter(id=id).update(designation=form_change)
+    
+    if form_change == "---":
+        user_table.objects.filter(id=id).update(position="FACULTY")
+    else:
+        user_table.objects.filter(id=id).update(position="HEAD")
     return redirect(registrar_dashboard_faculty_list)
 
 #STUDENT LIST
@@ -2575,6 +2580,7 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
+
         print(user)            
         if request.method == "POST":
             form = request_form
@@ -2633,7 +2639,7 @@ def upload_document_checker(request):
     
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
+    for column in csv.reader(io_string, delimiter=',', quotechar='"') or my_csv.reader(io_string, delimiter=',', quotechar='"'):
         _, created = Document_checker_table.objects.update_or_create(
             name = column[0],
             form_137 = column[1],
