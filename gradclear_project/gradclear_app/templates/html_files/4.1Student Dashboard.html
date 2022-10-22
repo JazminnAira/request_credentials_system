@@ -654,12 +654,11 @@
         </i> </a>
     <a href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" title="Clearance Form" class="link" class="trigger-btn"><i class="fa fa-file-text-o">
         </i> </a>
-    <a href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" title="Request Form" class="link" class="trigger-btn"><i class="fa fa-file-text-o">
+    <a href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" title="Request Form" class="link" class="trigger-btn"><i class="fa fa-files-o">
         </i> </a>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
         </i></a> -->
-    <a data-toggle="modal" data-placement="right" data-target="#AboutUs_modal_41" title="About" class="link" class="trigger-btn"><i class="fa fa-info">
-        </i></a>
+        <a data-toggle="modal" data-placement="right" data-target="#Print_modal_01" title="Settings" class="link" class="trigger-btn"><i class="fa fa-print"></i></a>
     <a data-toggle="modal" data-placement="right" data-target="#settings_modal_41" title="Settings" class="link" class="trigger-btn"><i class="fa fa-cogs">
         </i></a>
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="logo_41" style="position: absolute;bottom: 10px;">
@@ -761,53 +760,50 @@
         </form>
     </div>
 
-    <!-- ABOUT US MODAL -->
-    <div id="AboutUs_modal_41" class="modal fade">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
+    <!--PRINT MODAL-->
+     <div class="modal fade" id="Print_modal_01" tabindex="-1" >
+         <div class="modal-dialog modal-dialog-centered">
+             <div class="modal-content" style="width: 100%;">
+ 
+                 <!--PRE SIGNUP MODAL HEADER-->
+                 <div class="modal-header">
+                     <h3 class="modal-title">Choose to print..</h3>
+ 
+                     <!--PRE SIGNUP MODAL CLOSE BUTTON-->
+                     <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
+                      data-placement="right" title="Close">x</button>
+                 </div>
+                 
+                 <!--PRE SIGNUP MODAL BODY-->
+                 <div class="modal-body w-100 text-center">
+                     <form action = "1Sign_Up.html" method="get">
+ 
+                         <!--PRE SIGNUP MODAL STUDENT SIGN UP BUTTON-->
+                         <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark " 
+                          id="rform" value = "REQUEST"
+                          onclick= "user_identifier()">Request Form
+                         </a>
+ 
+                         <a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border " 
+                          id="cform"  value = "CLEARANCE"
+                          onclick= "user_identifier()">Clearance Form
+                         </a>
+ 
+                         <a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark mt-3  "
+                          id="gform" value = "GRADUATION" 
+                          onclick= "user_identifier()" >Graduation Form
+                         </a>
 
-                <!--MODAL HEADER-->
-                <div class="modal-header">
-                    <h3><b>About Us</b>
-                        <i aria-hidden="true" class="fa fa-info-circle">
-                        </i>
-                    </h3>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
-                </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body" id="maincontent_41">
-
-                    <!--DESCRIPTION LABEL-->
-                    <div id="des_41" class="container">
-                        Services at the Registrar's Office such as requests for Transcript of Records, Diploma, Certifications, Subject Descriptions, Evaluation of Grades, Authentication of Documents are exclusively offered to TUP-CAVITE students
-                    </div>
-
-                    <!--OFFICER IN CHARGE LABEL-->
-                    <div id="person_41" class="container">
-                        <p1 id="nametitle_41">Officer-in-Charge:</p1>
-
-                        <!--OIC VARIABLE-->
-                        <p2 id="officername_41"><b>Ms Sarrah Jane Velos</b></p2>
-                    </div>
-
-                    <!--FORM LINK LABEL-->
-                    <div id="form_41" class="container-fluid">
-                        <div class="container-fluid">To request Forms this is the link:</div>
-                        <div id="docslink">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" id="displink">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!--MODAL FOOTER-->
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
+                     </form>
+ 
+                 </div>
+                 
+                 <!--PRE SIGNUP MODAL FOOTER-->
+                 <div class="modal-footer">
+                 </div>
+             </div>
+         </div>
+     </div>
 
 
     <!-- STATUS MODAL-->

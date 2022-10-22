@@ -387,7 +387,7 @@
         margin-top: 18px;
     }
     
-    a#menu-share+ul {
+    /* a#menu-share+ul {
         visibility: hidden;
     }
     
@@ -402,7 +402,7 @@
     
     a#menu-share:hover>i {
         animation: rotate-out 0.5s;
-    }
+    } */
     
     @keyframes bot-to-top {
         0% {
@@ -456,9 +456,9 @@
     
     {% for i in clearance %}
     <!--PRINT AND HOME BUTTON-->
-    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
         <i class="fa fa-ellipsis-v"></i>
-    </a>
+    </a> -->
     <ul>
         <li>
             <a href="{% url 'clearance_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print">
@@ -467,15 +467,15 @@
         </li>
         <li>
             {% if request.user.user_type == "STUDENT" %}
-            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "FACULTY" %}
-            <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "REGISTRAR" %}
-            <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% endif %}

@@ -485,7 +485,7 @@
         margin-top: 18px;
     }
     
-    a#menu-share+ul {
+    /* a#menu-share+ul {
         visibility: hidden;
     }
     
@@ -500,7 +500,7 @@
     
     a#menu-share:hover>i {
         animation: rotate-out 0.5s;
-    }
+    } */
     
     @keyframes bot-to-top {
         0% {
@@ -553,17 +553,17 @@
 <body>
 
     <!--PRINT AND HOME BUTTON-->
-    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
         <i class="fa fa-ellipsis-v"></i>
-    </a>
+    </a> -->
     <ul>
-        <li>
+        <!-- <li>
             <a href="#" onclick="to_beprinted('print_graduate')" data-toggle="tooltip" data-placement="right" title="Print">
                 <i class="fa fa-print"></i>
             </a>
-        </li>
+        </li> -->
         <li>
-            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
                 <i class="fa fa-home"></i>
             </a>
         </li>
