@@ -388,9 +388,9 @@
             Select
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">All</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">LATEST</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_request_list' %}">OLD</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/ALL">All</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/LATEST">LATEST</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/OLDEST">OLD</a>
         </div>
     </div>
 
@@ -411,10 +411,9 @@
         <div class = "float-left col-9"  >
             <h3 style="text-align:center;">Request List</h3>
             <div id ="button_claim_and_unclaim" class="mt-3">
-                <button class="button pl-2 pr-2 " id ="button_sorter"><a style="color: #fff;" href="">All</a></button>
-                <button class="button pl-2 pr-2 " id ="button_sorter2"><a style="color: #fff;" href="">Claimed</a></button>
-                <button class="button pl-2 pr-2 " id ="button_sorter3"><a style="color: #fff;" href="">Unclaimed</a></button>
-                {% comment %} <input id="sorter" name="request_table_organizer" value ="ALL"> {% endcomment %}
+                <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
+                <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
             </div>
             <div id="request_table"  class="tab-content" style="background-color:#fff" >
                 <div class="wrapper_all">
@@ -564,6 +563,18 @@
 
 
 <script>
+
+    document.getElementById('button_sorter').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/ALL"
+    };
+
+    document.getElementById('button_sorter2').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/CLAIMED"
+    };
+
+    document.getElementById('button_sorter3').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/UNCLAIMED"
+    };
 
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");

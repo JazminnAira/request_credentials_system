@@ -638,18 +638,27 @@
             {% endfor %}
         </table>
         </form>
+        <img src ="" id ="imgConverted" name = "signature_img" class="float-right">
+        </form>
         {% if signal == "OPEN" %}
             <div class="flex-row col-md-4 mx-auto border border-dark p-2 mb-3">
-                <a href = {% url 'faculty_dashboard_clearance_list' %}><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
-                <h5>Put your Signature Here</h5>
-                <div class="wrapper border border-secondary m-2 p-2">
-                    <canvas id="signature_pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
-                </div>
-                <div class="p-1">
-                    <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
-                    <a><button id="save_signature" class = "col-2 p-2"><span> Approved </span></button></a>
+                <form i method="POST" action="update/{{id_num}}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name ="id_num" value ="{{id_num}}">
+                    <a href = {% url 'faculty_dashboard_clearance_list' %}><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
+                    <h5>Put your Signature Here</h5>
+                    <div class="wrapper border border-secondary m-2 p-2">
+                        <canvas name="signature" id="signature_pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
+                        <textarea id ="image_encoded" name="image_encoded"></textarea>
+                        <input type ='file' name = "uploaded_signature" id = "uploaded_signature">
+                        <!--{{form.profile_picture}}-->
+                    </div>
+                    <div class="p-1">
+                        <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
+                        <button type="submit" id="save_signature" class = "col-2 p-2" >Approve</button>
+                    </div>
                     
-                </div>
+                </form>
             </div>
         {% endif %}
     
@@ -711,6 +720,27 @@
 
 
 <script>
+    const save_signature = document.querySelector('#save_signature');
+    const signature_pad = document.querySelector('#signature_pad');
+    const imgConverted = document.querySelector('#imgConverted');
+
+    const ctx = signature_pad.getContext("2d");
+
+    signature_pad.addEventListener("click", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        
+        console.log(dataURI);
+        imgConverted.src = dataURI;
+        document.getElementById('image_encoded').value = dataURI;
+        document.getElementById('img_str').value = dataURI;
+
+    });
+
+    //var loadFile = function(event) {
+      //  var image = document.getElementById('imgConverted');
+      //  image.src=URL.createObjectURL(event.target.files[0]);
+    //};
+
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }

@@ -20,6 +20,10 @@ from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
 import my_csv, csv,  io
 from textwrap import wrap
+import base64
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 
 def graduation_print(request, id):
@@ -1636,10 +1640,38 @@ def update(request, id):
         rec_email = email[0]
         f_n = request.user.full_name
         f_n_approved = request.user.full_name + "_APPROVED"
+        
+        print(f_n) 
+        esign_signature = request.POST.get('image_encoded')
+        imagen_decodificada = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
+  
+        # print(imagen_decodificada)
+        # # print(signature_from_html)
+
+        # Create image file from base64
+        # with open(f_n + '_' + 'esign.png', 'wb') as img_file:
+        #     img_file.write(imagen_decodificada)
+            
+        #     signature = img_file
+        #     print(signature)
+        
+        buf = io.BytesIO(imagen_decodificada)
+        img = Image.open(buf)
+        
+        img_io = io.BytesIO()
+        img.save(img_io, format='PNG')
+        esign = InMemoryUploadedFile(img_io, field_name= None, name= f_n +"_" + ".png", content_type='image/png', size=img_io.tell, charset=None)
+        
+        #Working upload Picture
+        uploaded_signature = request.FILES.get('uploaded_signature')
+        
+        print(uploaded_signature)
+        print(img)
+
         print(rec_email)
         if clearance_form_table.objects.filter(course_adviser=f_n, id=id):
             clearance_form_table.objects.filter(id=id).update(
-                course_adviser_signature=f_n_approved)
+                course_adviser_signature=esign)
             
         if request.user.department == "HOCS":
             clearance_form_table.objects.filter(
@@ -1668,10 +1700,7 @@ def update(request, id):
         if request.user.department == "HOCL":
             clearance_form_table.objects.filter(
                 id=id).update(library_signature="APPROVED")
-
             
-
-
         if request.user.department == "HOGS":
             clearance_form_table.objects.filter(id=id).update(
                 guidance_office_signature="APPROVED")
@@ -2541,11 +2570,37 @@ def registrar_dashboard_alumni_list(request):
     context = {'data':alumnus_data}
     return render(request, template, context)
 
-#REQUEST LIST AND DOCUMENT CHECKER LIST
+#REQUEST LIST AND DOCUMENT CHECKER LIST 
+#REQUEST LIST WITH ORGANIZER
 @login_required(login_url='/')
+def registrar_dashboard_organize_request_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        
+        sorter = request.POST.get('request_table_organizer')
+        
+        if id == "CLAIMED":
+            requests = request_form_table.objects.filter(claim = "CLAIMED").order_by('-time_requested').values()
+        elif id =="UNCLAIMED":
+            requests = request_form_table.objects.filter(claim = "UNCLAIMED").order_by('-time_requested').values()
+        elif id =="OLDEST":
+            requests = request_form_table.objects.all().order_by('time_requested').values()
+        elif id =="LATEST":
+            requests = request_form_table.objects.all().order_by('-time_requested').values()
+        else:
+            requests = request_form_table.objects.all().order_by('-time_requested').values()
+            
+        doc = Document_checker_table.objects.all().values()
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    
+    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+
+#DEFAULT PAGE
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
-        requests = request_form_table.objects.all().order_by('-id').values()
+        requests = request_form_table.objects.all().order_by('-time_requested').values()
         doc = Document_checker_table.objects.all().values()
     else:
         messages.error(
@@ -2657,12 +2712,18 @@ def upload_document_checker(request):
 #OPEN SIGNATURE PLATFORM
 #CLEARANCE
 def signature_open_clearance(request, id):
+   
     to_be_signed = clearance_form_table.objects.filter(id=id)
     signal = "OPEN"
-    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
+    id_num = id
+    print(id_num) 
+    return render(request,'html_files/5.2Faculty Clearance List.html', {'st': to_be_signed, 'signal': signal, 'id_num' : id_num})
 
 #GRADUATION
 def signature_open_graduation(request, id):
+    
     to_be_signed = graduation_form_table.objects.filter(id=id)
     signal = "OPEN"
-    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
+    id_num = id
+    print(id_num)
+    return render(request,'html_files/5.2Faculty Clearance List.html', {'st': to_be_signed, 'signal': signal, 'id_num' : id_num })

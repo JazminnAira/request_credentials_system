@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
 import datetime
+from PIL import Image
+from distutils.command.upload import upload
 
 class user_table(AbstractUser):
 
@@ -158,8 +160,7 @@ class clearance_form_table(models.Model):
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
     course_adviser = models.CharField(max_length=45,
         verbose_name="Course Adviser", default="NONE")
-    course_adviser_signature = models.CharField(max_length=45,
-        verbose_name="Course Adviser Signature", default="UNAPPROVED")
+    course_adviser_signature = models.ImageField(upload_to='signature/')
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     
