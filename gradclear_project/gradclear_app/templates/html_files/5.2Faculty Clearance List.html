@@ -600,8 +600,16 @@
                     <td>{{instance.appointment}}</td>
                     <td><a href="display_clearform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
                     <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                        <button class="button" id="appr_btn"><a style="color: #fff;" href="signature_open_clearance/{{ instance.id }}" onclick="fun()">Approve</a></button></td>
+                    <td>
+                        <input type="text" name="id_from_table" hidden value={{instance.id}}>
+                        {% if method == "APPROVED" %}
+                            <button class="button" id="appr_btn"><a style="color: #fff;" href="update/{{ instance.id }}" onclick="fun()">Approve</a></button>
+                        {% elif method == "ESIGN" %}
+                            <button class="button" id="appr_btn"><a style="color: #fff;" href="signature_open_clearance/{{ instance.id }}" onclick="fun()">Approve</a></button>
+                        {% else %}
+                            <button class="button" id="appr_btn"><a style="color: #fff;" href="update/{{ instance.id }}" onclick="fun()">Approve</a></button>
+                        {% endif %}
+                    </td>
                         
                     <!-- <td><a data-toggle="modal" data-target="#appointmentmodal"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
                     -->
@@ -642,23 +650,21 @@
         </form>
         {% if signal == "OPEN" %}
             <div class="flex-row col-md-4 mx-auto border border-dark p-2 mb-3">
-                <form i method="POST" action="update/{{id_num}}" enctype="multipart/form-data">
+                <a href = '/faculty_dashboard_clearance_list'><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
+                
+                <form method="POST" action="update/{{id_num}}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="text" name ="id_num" value ="{{id_num}}">
-                    <a href = {% url 'faculty_dashboard_clearance_list' %}><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
                     <h5>Put your Signature Here</h5>
                     <div class="wrapper border border-secondary m-2 p-2">
                         <canvas name="signature" id="signature_pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
-                        <textarea id ="image_encoded" name="image_encoded"></textarea>
-                        <input type ='file' name = "uploaded_signature" id = "uploaded_signature">
-                        <!--{{form.profile_picture}}-->
+                        <textarea id ="image_encoded" name="image_encoded" hidden></textarea>    
                     </div>
                     <div class="p-1">
-                        <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
                         <button type="submit" id="save_signature" class = "col-2 p-2" >Approve</button>
+                    </form>
+                    <button id="clear" class = "col-2 p-2 float-right"><span> Clear </span></button>
                     </div>
-                    
-                </form>
             </div>
         {% endif %}
     

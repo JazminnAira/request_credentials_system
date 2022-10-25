@@ -95,7 +95,8 @@ class user_table(AbstractUser):
         max_length=100, verbose_name="Email Address")
     user_type = models.CharField(max_length=100, verbose_name="User Type")
     username = models.CharField(max_length=100, unique=True)
-    profile_picture = models.ImageField(upload_to='uploads/') # PIP INSTALL PILLOW
+    profile_picture = models.ImageField(upload_to='uploads/')
+    uploaded_signature = models.ImageField(upload_to='signatures/', null = True, blank = True)# PIP INSTALL PILLOW
     REQUIRED_FIELDS = ('email',)
     
     # WHAT SHOWS IN ADMIN PAGE
@@ -165,8 +166,6 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     
     time_requested = models.DateTimeField(auto_now_add=True)
-
-
 
     def __str__(self):
         return self.student_id

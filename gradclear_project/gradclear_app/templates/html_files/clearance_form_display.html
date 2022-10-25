@@ -709,18 +709,25 @@
             </div>
 
             <br>
-
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
             
-
-
-
 
             <!--FORM FOOTER-->
             <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)
             </p>
         </form>
     {% endfor %}
+        <div id ="approval_signature_section" class = "border border-dark p-3 m-1">
+            <div id ="course_adviser" class="row">
+                <label class = "pl-2">Course Adviser: </label>
+                {% if course_adviser == "APPROVED" %}
+                    <label>APPROVED</label>
+                {% elif course_adviser == "UNAPPROVED" %}
+                    <label>UNAPPROVED</label>
+                {% else %}
+                    <img src ="/Media/{{course_adviser}}" style ="height:100px; width:200px;" alt="APPROVED">
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <!--HOME BUTTON

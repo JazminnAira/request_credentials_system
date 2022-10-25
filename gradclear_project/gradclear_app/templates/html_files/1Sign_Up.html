@@ -529,6 +529,39 @@ Adviser:
                                     {{form.profile_picture}}
                                     <p id="se_error_01"></p>
                                 </div>
+
+                                <div id = "approval_section" class = "p-2 border border-dark">
+                                    <h5>Choose a way of Approving the forms of the Students</h5>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input checkbox " type="checkbox" id="approve_button" name="approval" value="APPROVE_BUTTON">
+                                        <label class="form-check-label" for="inlineCheckbox1_pre">USING APPROVE BUTTON</label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input chk " type="checkbox" id="uploaded_signature" name="approval" value="UPLOADED_SIGNATURE">
+                                        <label class="form-check-label" for="inlineCheckbox1_pre">UPLOAD PHOTO OF SIGNATURE</label>
+                                    </div>
+
+                                    <div id ="upload_sec" class = "border p-2" hidden>
+                                        <label class = "text-dark">AGREEMENT:</label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input chk " type="checkbox" id="agree" name="agreed" value="UPLOADED_SIGNATURE">
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">Check this field if you are agreed to save you image of signature in the system.</label>
+                                        </div>
+                                        <p class = "text-dark">Your uploaded signature will be saved in the database and serve as your signature.</p>
+
+                                        {% if user == "FACULTY" %}
+                                        <label for="prof_pic">Signature Photo:</label>
+                                            {{form.uploaded_signature}}
+                                        {% endif %}
+                                    </div>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input chk" type="checkbox" id="esign" name="approval" value="ESIGN">
+                                        <label class="form-check-label" for="inlineCheckbox1_pre">LIVE E-SIGNATURE</label>
+                                    </div>
+                                </div>
                             </div>
 
                             <!--MODAL FOOTER-->
@@ -539,7 +572,6 @@ Adviser:
                                     id="Ssubmit_btn_01" >Sign Up</button></a>
                             </div>
                         </form>
-                </div>
         </div>
     </section>
    
@@ -547,6 +579,15 @@ Adviser:
 
 
 <script>
+    document.getElementById("uploaded_signature").oninput = function(){
+        document.getElementById("upload_sec").removeAttribute("hidden");
+    };
+
+    document.getElementById("approve_button").oninput = function(){
+        document.getElementById("upload_sec").setAttribute("hidden");
+    };
+
+
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
   $(this)
     .find("input,textarea,select")

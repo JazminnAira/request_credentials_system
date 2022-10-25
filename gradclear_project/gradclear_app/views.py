@@ -1,5 +1,7 @@
 import email
 from genericpath import exists
+import imghdr
+from queue import Empty
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render
@@ -23,6 +25,7 @@ from textwrap import wrap
 import base64
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.storage import default_storage
 
 
 
@@ -896,6 +899,15 @@ def faculty_registration(request):
             form.instance.user_type = "FACULTY"
             form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
+            
+            chosen_approval = request.POST.get('approval')
+            
+            if chosen_approval == "APPROVE_BUTTON":
+                form.instance.uploaded_signature = "APPROVED"
+            elif chosen_approval == "ESIGN":
+                form.instance.uploaded_signature = "ESIGN"
+            else:
+                pass
 
             form.save()
             messages.success(
@@ -907,7 +919,7 @@ def faculty_registration(request):
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "FACULTY"
-    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    context = {'form': form,'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
 
@@ -1525,6 +1537,8 @@ def faculty_dashboard_clearance_list(request):
     f_n = request.user.full_name
     f_n_unapproved = request.user.full_name + "_UNAPPROVED"
     f_n_approved = request.user.full_name + "_APPROVED"
+    method_of_approval = request.user.uploaded_signature
+    print(method_of_approval)
     st = ""
     signal ="CLOSE"
 
@@ -1617,14 +1631,14 @@ def faculty_dashboard_clearance_list(request):
             st1 = clearance_form_table.objects.filter(
                 course_adviser_signature= f_n_approved).values()
             signal ="CLOSE"
-            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal})
+            return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal, 'method' : method_of_approval})
 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'signal':signal})
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'signal':signal, 'method' : method_of_approval})
 
 
 @login_required(login_url='/')
@@ -1640,78 +1654,78 @@ def update(request, id):
         rec_email = email[0]
         f_n = request.user.full_name
         f_n_approved = request.user.full_name + "_APPROVED"
+        method_of_approval = request.user.uploaded_signature
         
         print(f_n) 
-        esign_signature = request.POST.get('image_encoded')
-        imagen_decodificada = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
-  
-        # print(imagen_decodificada)
-        # # print(signature_from_html)
-
-        # Create image file from base64
-        # with open(f_n + '_' + 'esign.png', 'wb') as img_file:
-        #     img_file.write(imagen_decodificada)
+        
+        #Saving Signatures
+        if method_of_approval == "ESIGN":
+            esign_signature = request.POST.get('image_encoded')
             
-        #     signature = img_file
-        #     print(signature)
+            if esign_signature == "":
+                pass
+            else:
+                image_decode = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
+
+                file_name = 'Media/signatures/' + f_n + '_APPROVED.png'
+
+                # Create image file from base64
+                with open(file_name, 'wb') as img_file:
+                    img_file.write(image_decode)
+                    
+                    signature = 'signatures/' + f_n + '_APPROVED.png'
+                    
+            
+        elif method_of_approval =="APPROVED":
+            signature = f_n +"_APPROVED"
         
-        buf = io.BytesIO(imagen_decodificada)
-        img = Image.open(buf)
-        
-        img_io = io.BytesIO()
-        img.save(img_io, format='PNG')
-        esign = InMemoryUploadedFile(img_io, field_name= None, name= f_n +"_" + ".png", content_type='image/png', size=img_io.tell, charset=None)
-        
-        #Working upload Picture
-        uploaded_signature = request.FILES.get('uploaded_signature')
-        
-        print(uploaded_signature)
-        print(img)
+        else:
+            signature = f_n +"_APPROVED"
 
         print(rec_email)
         if clearance_form_table.objects.filter(course_adviser=f_n, id=id):
             clearance_form_table.objects.filter(id=id).update(
-                course_adviser_signature=esign)
+                course_adviser_signature=signature)
             
         if request.user.department == "HOCS":
             clearance_form_table.objects.filter(
-                id=id).update(accountant_signature="APPROVED")
+                id=id).update(accountant_signature=signature)
 
         if request.user.department == "HDMS":
             clearance_form_table.objects.filter(id=id).update(
-                mathsci_dept_signature="APPROVED")
+                mathsci_dept_signature=signature)
 
         if request.user.department == "HDPECS":
             clearance_form_table.objects.filter(
-                id=id).update(pe_dept_signature="APPROVED")
+                id=id).update(pe_dept_signature=signature)
 
         if request.user.department == "HDED":
             clearance_form_table.objects.filter(
-                id=id).update(ieduc_dept_signature="APPROVED")
+                id=id).update(ieduc_dept_signature=signature)
 
         if request.user.department == "HDIT":
             clearance_form_table.objects.filter(
-                id=id).update(it_dept_signature="APPROVED")
+                id=id).update(it_dept_signature=signature)
 
         if request.user.department == "HDIE":
             clearance_form_table.objects.filter(
-                id=id).update(ieng_dept_signature="APPROVED")
+                id=id).update(ieng_dept_signature=signature)
 
         if request.user.department == "HOCL":
             clearance_form_table.objects.filter(
-                id=id).update(library_signature="APPROVED")
+                id=id).update(library_signature=signature)
             
         if request.user.department == "HOGS":
             clearance_form_table.objects.filter(id=id).update(
-                guidance_office_signature="APPROVED")
+                guidance_office_signature=signature)
 
         if request.user.department == "HOSA":
             clearance_form_table.objects.filter(
-                id=id).update(osa_signature="APPROVED")
+                id=id).update(osa_signature=signature)
 
         if request.user.department == "HADAA":
             clearance_form_table.objects.filter(id=id).update(
-                academic_affairs_signature="APPROVED")
+                academic_affairs_signature=signature)
         
         approved_text = "APPROVED"
         approved_courseadv = "_APPROVED"
@@ -2428,15 +2442,208 @@ def reg_updateContact(request):
 
 @login_required(login_url='/')
 def display_clearform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "FACULTY" or "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "FACULTY" or "REGISTRAR":
         clearance = clearance_form_table.objects.filter(id=id).values()
+        
+        #Accountant
+        check_type_approval = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = '.png')
+        
+        if check_type_approval:
+            accountant_sig = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
+            accountant = accountant_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                accountant = "UNAPPROVED"
+            else:
+                accountant_sig = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
+                accountant_sig = str(accountant_sig[0])
+                fac_name_get = accountant_sig.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                accountant_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                accountant= accountant_signature[0]
+        
+        #Liberal Arts
+        check_type_approval = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = '.png')
+        
+        if check_type_approval:
+            liberal_arts_sig = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
+            liberal_arts = liberal_arts_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                liberal_arts = "UNAPPROVED"
+            else:
+                liberal_arts_sig = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
+                liberal_sig = str(liberal_arts_sig[0])
+                fac_name_get = liberal_sig.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                liberal_arts_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                liberal_arts= liberal_arts_signature[0]
+      
+        #Math and Science
+        check_type_approval = clearance_form_table.objects.filter(id=id, mathsci_dept_signature__icontains = '.png')
+        
+        if check_type_approval:
+            math_and_science_sig = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
+            math_and_science = math_and_science_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                math_and_science = "UNAPPROVED"
+            else:
+                math_and_science_sig = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
+                math_and_science_str = str(math_and_science_sig[0])
+                fac_name_get = math_and_science_str.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                math_and_science_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                math_and_science= math_and_science_signature[0]
+        
+        #DPECS
+        check_type_approval = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = '.png')
+        
+        if check_type_approval:
+            dpecs_sig = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
+            dpecs = dpecs_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                dpecs = "UNAPPROVED"
+            else:
+                dpecs_sig = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
+                dpecs_str = str(dpecs_sig[0])
+                fac_name_get = dpecs_str.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                dpecs_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                dpecs= dpecs_signature[0]
+        
+        #INDUSTRIAL TECHNOLOGY
+        check_type_approval = clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = '.png')
+        
+        if check_type_approval:
+            it_dept_sig = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+            it_dept = it_dept_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                it_dept = "UNAPPROVED"
+            else:
+                it_dept_sig = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                it_dept_str = str(it_dept_sig[0])
+                fac_name_get = it_dept_str.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                it_dept_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                it_dept= it_dept_signature[0]
+        
+        # #INDUSTRIAL EDUCATION
+        check_type_approval = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = '.png')
+        
+        if check_type_approval:
+            ieduc_dept_sig = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+            ieduc_dept = ieduc_dept_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                ieduc_dept = "UNAPPROVED"
+            else:
+                ieduc_dept_sig = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                ieduc_dept_str = str(ieduc_dept_sig[0])
+                fac_name_get = ieduc_dept_str.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                ieduc_dept_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                ieduc_dept= ieduc_dept_signature[0]
+
+        #ENGINEERING
+        check_type_approval = clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = '.png')
+        
+        if check_type_approval:
+            ieng_dept_sig = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+            ieng_dept = ieng_dept_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED')
+            if check_status:
+                ieng_dept = "UNAPPROVED"
+            else:
+                ieng_dept_sig = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                ieng_dept_str = str(ieng_dept_sig[0])
+                fac_name_get = ieng_dept_str.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                ieng_dept_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                ieng_dept= ieng_dept_signature[0]
+        
+        #COURSE ADVISER
+        check_type_approval = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = '.png')
+        
+        if check_type_approval:
+            course_adviser_sig = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
+            course_adviser = course_adviser_sig[0]
+        else:
+            check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
+            if check_status:
+
+                course_adviser = "UNAPPROVED"
+            else:
+                course_adviser_sig = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
+                adviser_sig = str(course_adviser_sig[0])
+                fac_name_get = adviser_sig.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                a = str_fac_name.replace("['", "")
+                fac_name =str(a)
+                    
+                ca_signature = user_table.objects.filter(full_name=fac_name).values_list('uploaded_signature', flat=True).distinct()
+                course_adviser= ca_signature[0]
+        
+        # #CAMPUS LIBRARIAN
+      
+        
+        # #GUIDANCE COUNCELOR
+
+        
+        # #OSA
+
+        
+        # #ADAA
+      
+ 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
+    context = {
+        'clearance': clearance, 
+        'accountant': accountant,
+        'liberal_arts': liberal_arts,
+        'math_and_science': math_and_science,
+        'dpecs' : dpecs,
+        'it_dept': it_dept,
+        'ieduc_dept' : ieduc_dept,
+        'ieng_dept': ieng_dept,
+        'course_adviser' : course_adviser,
+    }
 
     print('running')
-    return render(request, 'html_files/clearance_form_display.html', {'clearance': clearance})
+    return render(request, 'html_files/clearance_form_display.html', context)
 
 
 @login_required(login_url='/')
@@ -2712,7 +2919,6 @@ def upload_document_checker(request):
 #OPEN SIGNATURE PLATFORM
 #CLEARANCE
 def signature_open_clearance(request, id):
-   
     to_be_signed = clearance_form_table.objects.filter(id=id)
     signal = "OPEN"
     id_num = id
