@@ -1627,9 +1627,9 @@ def faculty_dashboard_clearance_list(request):
         if clearance_form_table.objects.filter(
                 course_adviser=f_n):
             st = clearance_form_table.objects.filter(
-                course_adviser_signature=f_n_unapproved).values()
+                course_adviser_signature__icontains="_UNAPPROVED").values()
             st1 = clearance_form_table.objects.filter(
-                course_adviser_signature= f_n_approved).values()
+                course_adviser_signature__icontains="_APPROVED").values()
             signal ="CLOSE"
             return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'st1': st1, 'signal':signal, 'method' : method_of_approval})
 
