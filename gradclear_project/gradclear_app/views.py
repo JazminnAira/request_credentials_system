@@ -1675,7 +1675,6 @@ def update(request, id):
                     
                     signature = 'signatures/' + f_n + '_APPROVED.png'
                     
-            
         elif method_of_approval =="APPROVED":
             signature = f_n +"_APPROVED"
         

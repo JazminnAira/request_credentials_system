@@ -654,7 +654,7 @@
                 
                 <form method="POST" action="update/{{id_num}}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input type="text" name ="id_num" value ="{{id_num}}">
+                    <input type="text" name ="id_num" value ="{{id_num}}" hidden>
                     <h5>Put your Signature Here</h5>
                     <div class="wrapper border border-secondary m-2 p-2">
                         <canvas name="signature" id="signature_pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
@@ -736,10 +736,8 @@
         const dataURI = signature_pad.toDataURL("image/png");
         
         console.log(dataURI);
-        imgConverted.src = dataURI;
         document.getElementById('image_encoded').value = dataURI;
-        document.getElementById('img_str').value = dataURI;
-
+        //imgConverted.src = dataURI;
     });
 
     //var loadFile = function(event) {
