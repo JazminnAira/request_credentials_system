@@ -26,6 +26,7 @@ Adviser:
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.3.5/signature_pad.min.js" integrity="sha512-kw/nRM/BMR2XGArXnOoxKOO5VBHLdITAW00aG8qK4zBzcLVZ4nzg7/oYCaoiwc8U9zrnsO9UHqpyljJ8+iqYiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <title> TUPC Registrar </title>
 </head>              
@@ -528,41 +529,48 @@ Adviser:
                                     <label for="prof_pic">Profile Picture:</label>
                                     {{form.profile_picture}}
                                     <p id="se_error_01"></p>
-                                </div>
+                                </div> 
 
-                                <div id = "approval_section" class = "p-2 border border-dark">
-                                    <h5>Choose a way of Approving the forms of the Students</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input checkbox " type="checkbox" id="approve_button" name="approval" value="APPROVE_BUTTON">
-                                        <label class="form-check-label" for="inlineCheckbox1_pre">USING APPROVE BUTTON</label>
-                                    </div>
-                                    <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input chk " type="checkbox" id="uploaded_signature" name="approval" value="UPLOADED_SIGNATURE">
-                                        <label class="form-check-label" for="inlineCheckbox1_pre">UPLOAD PHOTO OF SIGNATURE</label>
-                                    </div>
+                                {% if user == "FACULTY" %}
+                                    <div id = "approval_section" class = "p-2 border border-dark">
+                                        <div class ="bg-danger text-light p-2"><h5>AGGREEMENT:</h5></div>
 
-                                    <div id ="upload_sec" class = "border p-2" hidden>
-                                        <label class = "text-dark">AGREEMENT:</label>
-                                        <br>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input chk " type="checkbox" id="agree" name="agreed" value="UPLOADED_SIGNATURE">
-                                            <label class="form-check-label" for="inlineCheckbox1_pre">Check this field if you are agreed to save you image of signature in the system.</label>
+                                        <div class="form-check form-check-inline p-2">
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">
+                                                <input class="form-check-input checkbox " type="checkbox" id="agreed_signature" name="agreement" value="AGREED">
+                                                I AGREE to attach my signature in the system to be used when I approving the request forms of the Students, Old Student and Alumni's.And agreed to use my signature to be attached and displayed in the forms.
+                                            </label>
                                         </div>
-                                        <p class = "text-dark">Your uploaded signature will be saved in the database and serve as your signature.</p>
-
-                                        {% if user == "FACULTY" %}
-                                        <label for="prof_pic">Signature Photo:</label>
-                                            {{form.uploaded_signature}}
-                                        {% endif %}
+                                        <br>
+                                        
+        
+                                        <div class="form-check form-check-inline p-2">
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">
+                                                <input class="form-check-input chk " type="checkbox" id="decline_signature" name="agreement" value="DECLINE">
+                                                I DISAGREE to attach my signature to approve the request forms the Students, Old students and Alumni's.I will personally or manually process the signing of forms.</label>
+                                        </div>
+                                        
+                                        <div id = "signature_area" class="border pt-1 p-2 m-2" style ="visibility:hidden;">
+                                            <labe>Choose option of saving your Signature</label><br>
+                                            <label class="m-3"><input class="form-check-input checkbox " type="checkbox" name="signature_type" value="ESIGN" id="esignature">Option 1: Create E-signature</label>
+                                            <div class="wrapper border border-secondary rounded mr-3 ml-3 p-2" id="esign_area" style ="visibility:hidden;">
+                                                <canvas name="signature" id="signature_pad" width="150" height="300" class="col-md-12 mx-auto m-2 border border-bottom-0"></canvas>
+                                                <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
+                                                <textarea id ="image_encoded" name="image_encoded" hidden></textarea>   
+                                                <button type = "button" id="clear" class = "col-2 p-1 m-1"><span> Clear </span></button> 
+                                            </div>
+                                            <p></p>
+                                            
+                                            <label for="prof_pic" class="m-3"><input class="form-check-input checkbox " type="checkbox" id="upload" name="signature_type" value="UPLOAD">Option 2: Upload Signature</label><br>
+                                            <div id = "upload_area" hidden>
+                                                <label>Please make sure your photo in PNG format file.</label><br>
+                                                <a id="clicker_detector">{{form.uploaded_signature}}</a>
+                                            </div>
+                                            <p></p>
+                                        </div>
                                     </div>
-                                    <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input chk" type="checkbox" id="esign" name="approval" value="ESIGN">
-                                        <label class="form-check-label" for="inlineCheckbox1_pre">LIVE E-SIGNATURE</label>
-                                    </div>
-                                </div>
-                            </div>
+                                    
+                                {% endif %}
 
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
@@ -579,14 +587,84 @@ Adviser:
 
 
 <script>
-    document.getElementById("uploaded_signature").oninput = function(){
-        document.getElementById("upload_sec").removeAttribute("hidden");
+    //saving signature 
+    const signature_pad = document.querySelector('#signature_pad');
+    const imgConverted = document.querySelector('#imgConverted');
+
+    const ctx = signature_pad.getContext("2d");
+
+    signature_pad.addEventListener("click", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        
+        console.log(dataURI);
+        document.getElementById('image_encoded').value = dataURI;
+        document.getElementById("upload_area").hidden =true;
+        document.getElementById("upload").checked = false;
+        document.getElementById("agreed_signature").checked = true;
+        document.getElementById("esignature").checked = true;
+    });
+
+    //signature function
+    var canvas = document.getElementById("signature_pad");
+    function resizeCanvas() {
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+
+    var signaturePad = new SignaturePad(canvas, {
+     backgroundColor: 'rgb(250,250,250)'
+    });
+
+    //saving upload
+    clicker_detector.addEventListener("click", function() {
+        signaturePad.clear();
+        document.getElementById('image_encoded').value = "";
+        document.getElementById("esign_area").hidden =true;
+        document.getElementById("esignature").checked = false;
+        document.getElementById("agreed_signature").checked = true;
+        document.getElementById("upload").checked = true;
+    });
+    
+    //clear function
+    document.getElementById("clear").addEventListener('click', function(){
+     signaturePad.clear();
+     document.getElementById('image_encoded').value = "";
+    })
+
+    //check box filters
+    document.getElementById("agreed_signature").oninput = function(){
+        document.getElementById("signature_area").hidden =false;
+        document.getElementById("signature_area").style.visibility = "visible";
+        document.getElementById("decline_signature").checked = false;
+        document.getElementById("upload_area").hidden =true;
+        document.getElementById("esign_area").hidden = true;
     };
 
-    document.getElementById("approve_button").oninput = function(){
-        document.getElementById("upload_sec").setAttribute("hidden");
+    document.getElementById("decline_signature").oninput = function(){
+        signaturePad.clear();
+        document.getElementById('image_encoded').value = "";
+        document.getElementById("signature_area").hidden = true;
+        document.getElementById("agreed_signature").checked = false;
+        document.getElementById("upload").checked = false;
+        document.getElementById("esignature").checked = false;
     };
 
+    document.getElementById("esignature").oninput = function(){
+        document.getElementById("upload_area").hidden =true;
+        document.getElementById("esign_area").style.visibility = "visible";
+        document.getElementById("esign_area").hidden = false;
+        document.getElementById("upload").checked = false;
+    };
+
+    document.getElementById("upload").oninput = function(){
+        document.getElementById("esign_area").hidden = true;
+        document.getElementById("upload_area").hidden =false;
+        document.getElementById("esignature").checked = false;
+    };
 
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
   $(this)

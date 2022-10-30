@@ -499,112 +499,148 @@
 
         
     </script> -->
-    <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
-        {% csrf_token %}
-        <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_53">
-            <thead style="height: 70px;">
-                <tr>
-                    <th> # </th>
-                    <th>Student's Name</th>
-                    <th>Course</th>
-                    <th>ID Number</th>
-                    <th>Purpose of Request</th>
-                    <th>Date & Time Requested</th>
-                    <th>Appointment</th>
-                    <th id="Viewform"> View Form</th>  
-                    <th id="Messagebutton"> Message</th>
-                    <th id="Approvalbutton" class="Approvalbutton">Approval Status</th>
-                </tr>
-                <!-- {% if st == "" %}
-                <tr>
-                    <td colspan="10"><i class="fa fa-warning"></i> No Data Available</td>
-                </tr>
-                {% endif %} -->
-                <tr class="warning no-result">
-                    <td colspan="10"><i class="fa fa-warning"></i> No result</td>
-                </tr>
-            </thead>
-            {% for instance in st %}
-            <tbody> 
-                <tr id="Add">        
-                    <td>{{instance.id}}</td>
-                    <td>{{instance.name}}</td>
-                    <td>{{instance.course}}</td>
-                    <td>{{instance.student_id}}</td>
-                    <td>{{instance.purpose_of_request}}</td>
-                    <td>{{instance.time_requested}}</td>
-                    <td>{{instance.appointment}}</td>
-                    <td><a href="display_gradform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
-                    <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                        <button class="button" id="appr_btn"><a style="color: #fff;" href="signature_open_graduation/{{ instance.id }}" onclick="fun()">Approve</a></button></td>                        
-                    
-                    <!-- {% if val == 'UNAPPROVED' %}
-                    <script>h3_title.innerText = "Unapproved Students";</script>
-                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                    <button class="button" id="appr_btn" ><a style="color: #fff;" href="updategrad/{{instance.id}}">Approve</a></button></td>
-                    
-                    {% elif val == 'APPROVED' %}
-                    <script>h3_title.innerText = "Approved Students";</script>
-                    <td>APPROVED</td>
-
-                    {% elif val == '2' %}
-                    <script>h3_title.innerText = "All Graduation Forms";</script>
-                    {% endif %} -->
-                </tr>
-            </tbody>
-            
-            {% endfor %}
-
-            {% for instance in st1 %}
-            <tbody> 
-                <tr id="Add">        
-                    <td>{{instance.id}}</td>
-                    <td>{{instance.name}}</td>
-                    <td>{{instance.course}}</td>
-                    <td>{{instance.student_id}}</td>
-                    <td>{{instance.purpose_of_request}}</td>
-                    <td>{{instance.time_requested}}</td>
-                    <td>{{instance.appointment}}</td>
-                    <td><a href="display_gradform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
-                    <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    <td>APPROVED</td>
-                    
-                    <!-- {% if val == 'UNAPPROVED' %}
-                    <script>h3_title.innerText = "Unapproved Students";</script>
-                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                    <button class="button" id="appr_btn" ><a style="color: #fff;" href="updategrad/{{instance.id}}">Approve</a></button></td>
-                    
-                    {% elif val == 'APPROVED' %}
-                    <script>h3_title.innerText = "Approved Students";</script>
-                    <td>APPROVED</td>
-
-                    {% elif val == '2' %}
-                    <script>h3_title.innerText = "All Graduation Forms";</script>
-                    {% endif %} -->
-                </tr>
-            </tbody>
-            
-            {% endfor %}
-            <!-- {% if not st %} 
-                <td colspan="10">No results found</td>
-            {% endif %} -->
-        </table>
-    </form>
-    {% if signal == "OPEN" %}
-        <div class="flex-row col-md-4 mx-auto border border-dark p-2 mb-3">
-            <a href = {% url 'faculty_dashboard_graduation_list' %}><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
-            <h5>Put your Signature Here</h5>
-            <div class="wrapper border border-secondary m-2 p-2">
-                <canvas id="signature-pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
+    <div class="col col-3 float-right p-2 border mr-2">
+        {% if saved_signature == 'DECLINE' %}
+            <div id = "signature_display" class = "p-2 mt-2">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
+                <h3 class="lead p-4 border border-dark m-3" align="center"><b>NO SIGNATURE SAVED</b></h3>
+                <p>I decline to attach my signature in the system.</p>
+                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
             </div>
-            <div class="p-1">
-                <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
-                <a><button id="save_signature" class = "col-2 p-2"><span> Approved </span></button></a>
+        {% else %}
+            <div id = "signature_display" class = "p-2 mt-2">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
+                <img src ="Media/{{saved_signature}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
+            </div>
+        {% endif %}
+        <div class= "mx-auto mb-4" align="center" id="button_area">
+            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger text-white border border-dark">CREATE NEW SIGNATURE</button><br>
+            <label class="lead">--OR---</label><br>
+            <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
+        </div>
+
+        <div id="create_signature_area" style ="visibility:hidden;">
+            <div class = "bg-dark p-2"><h4 class = "text-white">PUT YOUR SIGNATURE HERE</h4></div>
+            <div class="wrapper border rounded m-2 mt-3 p-1">
+                <canvas name="signature" id="signature_pad" width="150" height="250" class="col-md-12 mx-auto m-1 img-responsive"></canvas>
+                <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
+                <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1"><span> Clear </span></button> 
+                <button type="button" id="cancel_create" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
             </div>
         </div>
-    {% endif %}
+        
+        <form method="POST" action ="update_grad_signature/{{id}}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
+            <input type="text" name ="id_num" value ="{{id}}" hidden>
+            <div id ="new_upload_signature_area" hidden>
+                <div class = "bg-dark p-2 mb-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
+                <img id="preview" class="p-1 w-100 border">
+                <input id="uploaded_signature_new" type="file" accept=".png" name= "new_upload_signature" onchange="loadFile(event)">
+                <p>*NOTE: Upload only png format image file</p>
+                <button type="button" id="cancel_upload" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
+            </div>
+            <div id="submit_signature" class="m-3" align="center" hidden>
+                <button type="submit" class="btn btn-dark text-white btn-lg border border-dark">Save Signature</button>
+            </div>
+        </form>
+    </div>
 
+    <div class =" col col-9 h-90">
+        <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
+            {% csrf_token %}
+            <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_53">
+                <thead style="height: 70px;">
+                    <tr>
+                        <th> # </th>
+                        <th>Student's Name</th>
+                        <th>Course</th>
+                        <th>ID Number</th>
+                        <th>Purpose of Request</th>
+                        <th>Date & Time Requested</th>
+                        <th>Appointment</th>
+                        <th id="Viewform"> View Form</th>  
+                        <th id="Messagebutton"> Message</th>
+                        <th id="Approvalbutton" class="Approvalbutton">Approval Status</th>
+                    </tr>
+                    <!-- {% if st == "" %}
+                    <tr>
+                        <td colspan="10"><i class="fa fa-warning"></i> No Data Available</td>
+                    </tr>
+                    {% endif %} -->
+                    <tr class="warning no-result">
+                        <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                    </tr>
+                </thead>
+                {% for instance in st %}
+                <tbody> 
+                    <tr id="Add">        
+                        <td>{{instance.id}}</td>
+                        <td>{{instance.name}}</td>
+                        <td>{{instance.course}}</td>
+                        <td>{{instance.student_id}}</td>
+                        <td>{{instance.purpose_of_request}}</td>
+                        <td>{{instance.time_requested}}</td>
+                        <td>{{instance.appointment}}</td>
+                        <td><a href="display_gradform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
+                        <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                        <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                            <button class="button" id="appr_btn"><a style="color: #fff;" href="signature_open_graduation/{{ instance.id }}" onclick="fun()">Approve</a></button></td>                        
+                        
+                        <!-- {% if val == 'UNAPPROVED' %}
+                        <script>h3_title.innerText = "Unapproved Students";</script>
+                        <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                        <button class="button" id="appr_btn" ><a style="color: #fff;" href="updategrad/{{instance.id}}">Approve</a></button></td>
+                        
+                        {% elif val == 'APPROVED' %}
+                        <script>h3_title.innerText = "Approved Students";</script>
+                        <td>APPROVED</td>
+
+                        {% elif val == '2' %}
+                        <script>h3_title.innerText = "All Graduation Forms";</script>
+                        {% endif %} -->
+                    </tr>
+                </tbody>
+                
+                {% endfor %}
+
+                {% for instance in st1 %}
+                <tbody> 
+                    <tr id="Add">        
+                        <td>{{instance.id}}</td>
+                        <td>{{instance.name}}</td>
+                        <td>{{instance.course}}</td>
+                        <td>{{instance.student_id}}</td>
+                        <td>{{instance.purpose_of_request}}</td>
+                        <td>{{instance.time_requested}}</td>
+                        <td>{{instance.appointment}}</td>
+                        <td><a href="display_gradform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
+                        <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                        <td>APPROVED</td>
+                        
+                        <!-- {% if val == 'UNAPPROVED' %}
+                        <script>h3_title.innerText = "Unapproved Students";</script>
+                        <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                        <button class="button" id="appr_btn" ><a style="color: #fff;" href="updategrad/{{instance.id}}">Approve</a></button></td>
+                        
+                        {% elif val == 'APPROVED' %}
+                        <script>h3_title.innerText = "Approved Students";</script>
+                        <td>APPROVED</td>
+
+                        {% elif val == '2' %}
+                        <script>h3_title.innerText = "All Graduation Forms";</script>
+                        {% endif %} -->
+                    </tr>
+                </tbody>
+                
+                {% endfor %}
+                <!-- {% if not st %} 
+                    <td colspan="10">No results found</td>
+                {% endif %} -->
+            </table>
+        </form>
+    </div>
         <p class="text-center text-bold" id="p6_53"></p>
 
         <!--APPROVED TAB-->
@@ -670,6 +706,80 @@
 
 
 <script>
+    const save_signature = document.querySelector('#save_signature');
+    const signature_pad = document.querySelector('#signature_pad');
+    const imgConverted = document.querySelector('#imgConverted');
+
+    const ctx = signature_pad.getContext("2d");
+
+    signature_pad.addEventListener("click", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        
+        console.log(dataURI);
+        document.getElementById('image_encoded').value = dataURI;
+        //imgConverted.src = dataURI;
+    });
+
+    //show create signature are
+    create_sig_btn.addEventListener("click", function() {
+        document.getElementById("create_signature_area").style.visibility ="visible";
+        document.getElementById("create_signature_area").hidden = false;
+        document.getElementById("submit_signature").hidden = false;
+        document.getElementById("signature_display").hidden = true;
+        document.getElementById("button_area").hidden = true;
+    });
+
+    upload_sig_btn.addEventListener("click", function() {
+        document.getElementById("create_signature_area").hidden = true;
+        document.getElementById("new_upload_signature_area").hidden = false;
+        document.getElementById("submit_signature").hidden = false;
+        document.getElementById("signature_display").hidden = true;
+        document.getElementById("button_area").hidden = true;
+    });
+
+    cancel_create.addEventListener("click", function() {
+        document.getElementById("create_signature_area").hidden =true;
+        document.getElementById("submit_signature").hidden = true;
+        document.getElementById("signature_display").hidden = false;
+        document.getElementById("button_area").hidden = false;
+        signaturePad.clear();
+        document.getElementById('image_encoded').value = "";
+    });
+
+    cancel_upload.addEventListener("click", function() {
+        document.getElementById("new_upload_signature_area").hidden = true;
+        document.getElementById("submit_signature").hidden = true;
+        document.getElementById("signature_display").hidden = false;
+        document.getElementById("button_area").hidden = false;
+        document.getElementById('uploaded_signature_new').value =null;
+        document.getElementById('preview').src ="";
+    });
+    
+
+    var loadFile = function(event) {
+        var image = document.getElementById('preview');
+        image.src=URL.createObjectURL(event.target.files[0]);
+    };
+
+    //signature
+    var canvas = document.getElementById("signature_pad");
+    function resizeCanvas() {
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+
+    var signaturePad = new SignaturePad(canvas, {
+     backgroundColor: 'rgb(250,250,250)'
+    });
+    
+    document.getElementById("clear").addEventListener('click', function(){
+     signaturePad.clear();
+    });
+
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }
