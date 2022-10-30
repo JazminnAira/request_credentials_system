@@ -583,14 +583,16 @@
         {% else %}
             <div id = "signature_display" class = "p-2 mt-2">
                 <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
-                <img src ="Media/{{saved_signature}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+                <img src ="{{saved_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
             </div>
         {% endif %}
         <div class= "mx-auto mb-4" align="center" id="button_area">
-            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger text-white border border-dark">CREATE NEW SIGNATURE</button><br>
-            <label class="lead">--OR---</label><br>
-            <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
+            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
+            <!--<label class="lead">--OR---</label><br>--><br>
+            <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
+            <br>
+            <a href ="delete_clearance_signature/{{id}}" ><button type = "button" id = "delete_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">DELETE SIGNATURE</button></a><br>
         </div>
    
 
@@ -616,7 +618,7 @@
                 <button type="button" id="cancel_upload" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
             </div>
             <div id="submit_signature" class="m-3" align="center" hidden>
-                <button type="submit" class="btn btn-dark text-white btn-lg border border-dark">Save Signature</button>
+                <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
             </div>
         </form>
     </div>

@@ -23,6 +23,8 @@ urlpatterns = [
           name='faculty_dashboard_clearance_list'),
      path('update_clearance_signature/<int:id>', update_clearance_signature ,name='update_clearance_signature'),
      path('update_grad_signature/<int:id>', update_grad_signature ,name='update_grad_signature'),
+     path('delete_clearance_signature/<int:id>', delete_clearance_signature ,name='delete_clearance_signature'),
+     path('delete_graduation_signature/<int:id>', delete_graduation_signature ,name='delete_graduation_signature'),
      path('faculty_dashboard_graduation_list', views.faculty_dashboard_graduation_list,
           name='faculty_dashboard_graduation_list'),
      path('registrar_dashboard', views.registrar_dashboard,

@@ -2998,3 +2998,32 @@ def update_grad_signature(request, id):
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
             
     return redirect(faculty_dashboard_graduation_list)
+
+#DELETE SIGNATURE
+def delete_clearance_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        recent_sig = request.user.uploaded_signature
+        signature_timesaved = datetime.now()
+        signature_saved = "DECLINE"
+        print(str(recent_sig))
+        if os.path.exists("Media/" + str(recent_sig)):
+            os.remove("Media/" + str(recent_sig))
+
+        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
+        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        
+    return redirect(faculty_dashboard_clearance_list)
+
+def delete_graduation_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        recent_sig = request.user.uploaded_signature
+        signature_timesaved = datetime.now()
+        signature_saved = "DECLINE"
+        print(str(recent_sig))
+        if os.path.exists("Media/" + str(recent_sig)):
+            os.remove("Media/" + str(recent_sig))
+
+        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
+        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        
+    return redirect(faculty_dashboard_graduation_list)
