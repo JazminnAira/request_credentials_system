@@ -26,6 +26,9 @@ import base64
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import default_storage
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import render
 
 
 
@@ -758,9 +761,9 @@ def reg_appointmentgrad(request, id):
 
     rec_email = email[0]
 
-    subject = 'HELLO'
+    subject = 'Appointment Request for Graduation Form'
 
-    message1 = 'sdfjhsdkfhskdfhjds,<br><br>'
+    message1 = 'Greetings,<br><br>'
     message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
         ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
         request.user.email + '".<br>'
@@ -775,6 +778,134 @@ def reg_appointmentgrad(request, id):
 
     messages.success(request, "Email Sent.")
     return redirect('registrar_dashboard')
+
+def reggrad_appointment(request,id):
+    if request.method == 'POST':
+        email_temp = graduation_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+        rec_email = email[0]
+        recipient_list = [rec_email, ]
+
+        purpose = graduation_form_table.objects.filter(
+        id=id).values_list('purpose_of_request', flat=True).distinct()
+        purpose_of = graduation_form_table.objects.filter(
+            purpose_of_request=purpose[0]).values_list('purpose_of_request', flat=True).distinct()
+        purpose_of_req =  purpose_of[0]
+        purpose_of_request = [purpose_of_req, ]
+
+        name = graduation_form_table.objects.filter(
+        id=id).values_list('name', flat=True).distinct()
+        s_name = graduation_form_table.objects.filter(
+            name=name[0]).values_list('name', flat=True).distinct()
+        st_name =  s_name[0]
+        student_name = [st_name, ]
+
+        subject = 'Appointment Request for Graduation Form'
+        message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong><br><br>"
+        message2 = 'Your request for'+\
+            ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! "<br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
+        message4 = 'Note: This is an automated message, do not reply.<br>'
+
+        message = message1 + message2 + message3 + message4
+
+        
+        date_appointment = request.POST.get('date_appointment')
+        time_appointment = request.POST.get('time_appointment')
+        additionalmessage = request.POST.get('additionalmessage')
+        email = request.POST.get('email')
+        purpose_req = request.POST.get('purpose_of_request')
+        
+        
+        data = {
+                'date_appointment': date_appointment, 
+                'time_appointment': time_appointment, 
+                'subject': subject, 
+                'message': message,
+                'additionalmessage': additionalmessage,
+                'purpose_of_request': purpose_of_request,
+                'student_name': student_name,
+               
+        }
+        message='''{}
+        Date:\n\t\t{}\n<br>
+        Time:\n\t\t{}\n<br>
+        Additonal Message:\n\t\t{}\n<br>
+        Purpose:\n\t\t{}\n<br>
+        Name:\n\t\t{}\n<br>
+        
+        '''''.format(data['message'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['purpose_of_request'], data ['student_name'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html"
+        msg.send()
+        
+    return render(request, 'html_files/appointment.html', {})
+
+def regclear_appointment(request,id):
+    if request.method == 'POST':
+        email_temp = clearance_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+        rec_email = email[0]
+        recipient_list = [rec_email, ]
+
+        purpose = clearance_form_table.objects.filter(
+        id=id).values_list('purpose_of_request', flat=True).distinct()
+        purpose_of = clearance_form_table.objects.filter(
+            purpose_of_request=purpose[0]).values_list('purpose_of_request', flat=True).distinct()
+        purpose_of_req =  purpose_of[0]
+        purpose_of_request = [purpose_of_req, ]
+
+        name = clearance_form_table.objects.filter(
+        id=id).values_list('name', flat=True).distinct()
+        s_name = clearance_form_table.objects.filter(
+            name=name[0]).values_list('name', flat=True).distinct()
+        st_name =  s_name[0]
+        student_name = [st_name, ]
+
+        subject = 'Appointment Request for Clearance Form'
+        message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong><br><br>"
+        message2 = 'Your request for'+\
+            ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! "<br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
+        message4 = 'Note: This is an automated message, do not reply.<br>'
+
+        message = message1 + message2 + message3 + message4
+
+        
+        date_appointment = request.POST.get('date_appointment')
+        time_appointment = request.POST.get('time_appointment')
+        additionalmessage = request.POST.get('additionalmessage')
+        email = request.POST.get('email')
+        purpose_req = request.POST.get('purpose_of_request')
+        
+        
+        data = {
+                'date_appointment': date_appointment, 
+                'time_appointment': time_appointment, 
+                'subject': subject, 
+                'message': message,
+                'additionalmessage': additionalmessage,
+                'purpose_of_request': purpose_of_request,
+                'student_name': student_name,
+               
+        }
+        message='''{}
+        Date:\n\t\t{}\n<br>
+        Time:\n\t\t{}\n<br>
+        Additonal Message:\n\t\t{}\n<br>
+        Purpose:\n\t\t{}\n<br>
+        Name:\n\t\t{}\n<br>
+        
+        '''''.format(data['message'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['purpose_of_request'], data ['student_name'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html"
+        msg.send()
+        
+    return render(request, 'html_files/appointment.html', {})
 
 
 def login_user(request):

@@ -40,7 +40,7 @@ Adviser:
     }
     
     body {
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/tup_bg.png' %}");
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/graduation_list.png' %}");
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
@@ -359,59 +359,72 @@ Adviser:
     {% include 'html_files/message.html'%}
 
     <!--MAIN-->
+
     <section>
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
-         border-radius: 10px; width: 800px; height: max-content;"" >
+         border-radius: 10px; width: 800px; height: max-content;" >
                     <div class="modal-header modal-1"  style="width: 100%;">
-                         <h3 class="modal-title w-100 text-center">Set an Appointment
-                         </h3>
-             
+                        <h3 class="modal-title w-100 text-center">Appointment</h3>
+
                          <!--MODAL CLOSE BUTTON-->
-                         <button type="button" class="close_btn" data-placement="right" title="Close"
-                          onclick="window.location.assign('faculty_dashboard_clearance_list')">x
-                             </button>
-                     </div>
-                    <form method="POST" action="appointment" style="height:100%;" >
-                         {% csrf_token %}
-                         <input type="text" hidden value="{id}"> 
-                         <div class="modal-body ">
-                             <input type="hidden" name="usertype_001" id="usertype" value="">
-                             
-                             <!--DATE OF APPOINTMENT-->
-                             <div class="form-group">
-                                 <label for="idnum">ID Number:</label>
-                                 <input type="text" id="date" name="date_appointment" class="form-control input-field" 
-                                 style="height: 50px; margin-bottom: 20px;" >
-                                 <p id="sid_error_01"></p>
-                             </div>
-             
-                             <!--TIME OF APPOINTMENT-->
-                             <div class="form-group" id="course_input">
-                                 <label for="course">Course:</label>
-                                 <input type="text" id="time" name="time_appointment" class="form-control input-field" 
-                                 style="height: 50px; margin-bottom: 20px;" >
-                                 <p id="sc_error_01"></p>
-                             </div>
-                             
-                             <!--ADDITIONAL MESSAGE-->
-                             <div class="form-group">
-                                 <label for="cnum">Additional Message: (Optional)</label>
-                                 <input type="text" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
-                                 style="height: 50px; margin-bottom: 20px;" >
-                                 <p id="scn_error_01"></p>
-                             </div>
-             
-                         <!--MODAL FOOTER-->
-                         <div class="modal-footer">
-             
-                             <!--SIGNUP BUTTON-->
-                             <button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
-                                id="Ssubmit_btn_01" >Send</button>
-                         </div>
-                     </form>
+                        <button type="button" class="close_btn" data-placement="right" title="Close" 
+                        onclick="window.location.assign('/')">x</button>
+                    </div>
+
+                            {% csrf_token %}
+                            <div class="modal-body ">
+                                <input type="hidden" name="usertype_001" id="usertype" value="">
+        
+                                <form method="POST" action="" style="height:100%;" >
+                                    {% csrf_token %}
+
+                                        <!--SUBJECT-->
+                                        <div class="form-group">
+                                            <label for="cnum">Subject:</label>
+                                            <input type="text" id="subject" name="subject" value="Appointment Request for Graduation Form"class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" >
+                                            <p id="scn_error_01"></p>
+                                        </div>
+                                         
+                                  
+                                        <!--DATE OF APPOINTMENT-->
+                                        <div class="form-group">
+                                            <label for="idnum">Date Appointment:</label>
+                                            <input type="date" id="date" name="date_appointment" class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" >
+                                            <p id="sid_error_01"></p>
+                                        </div>
+                        
+                                        <!--TIME OF APPOINTMENT-->
+                                        <div class="form-group" id="course_input">
+                                            <label for="course">Time Appointment</label>
+                                            <input type="time" id="time" name="time_appointment" class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" >
+                                            <p id="sc_error_01"></p>
+                                        </div>
+           
+                                        <!--ADDITIONAL MESSAGE-->
+                                        <div class="form-group">
+                                            <label for="cnum">Additional Message: (Optional)</label>
+                                            <input type="text" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" >
+                                            <p id="scn_error_01"></p>
+                                        </div>
+        
+                              
+                            <!--MODAL FOOTER-->
+                            <div class="modal-footer">
+                
+                                <!--SIGNUP BUTTON-->
+                                <a> <button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
+                                    id="Ssubmit_btn_01" >Send</button></a>
+                            </div>
+                        </form>
                 </div>
         </div>
     </section>
+
+   
 </html>
 
 

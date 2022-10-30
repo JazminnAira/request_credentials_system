@@ -531,7 +531,6 @@
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>
-                            <th>Appointment</th>
                             <th id="Viewform"> View Form</th>  
                             <th id="Messagebutton"> Message</th>
                             {% if val == 'APPROVED' %}
@@ -554,10 +553,14 @@
                             <td>{{instance.student_id}}</td>
                             <td>{{instance.purpose_of_request}}</td>
                             <td>{{instance.time_requested}}</td>
-                            <td>{{instance.appointment}}</td>
                             <td><a href="{% url 'display_gradform' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
-                            <td><a href="{% url 'reg_appointmentgrad' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    
+                            <td> 
+                                {% if instance.approval_status ==  'APPROVED' %}
+                                    <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
+                                {% else %}
+                                    <p>ON PROGRESS</p>
+                                {% endif %}
+                            </td>
                             {% if val == 'UNAPPROVED' %}
                             <script>h3_title.innerText = "Unapproved Students";</script>
                             <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
