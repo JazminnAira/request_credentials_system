@@ -667,14 +667,14 @@ Adviser:
     };
 
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
-  $(this)
+    $(this)
     .find("input,textarea,select")
        .val('')
        .end()
     .find("input[type=checkbox], input[type=radio]")
        .prop("checked", "")
        .end();
-})
+    });
 
 
     //Auto Capitalize
@@ -728,7 +728,7 @@ Adviser:
                 }
             }
             return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
-            
+        
         })
     });
     
