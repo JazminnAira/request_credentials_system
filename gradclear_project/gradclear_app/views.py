@@ -805,44 +805,44 @@ def reggrad_appointment(request,id):
         student_name = [st_name, ]
 
         subject = 'Appointment Request for Graduation Form'
-        message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong><br><br>"
+        # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
+        message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
         message2 = 'Your request for'+\
             ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! "<br><br>'
         message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
-        message4 = 'Note: This is an automated message, do not reply.<br>'
+        message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
 
         message = message1 + message2 + message3 + message4
 
-        
+        purpose_req = request.POST.get('purpose_of_request')
         date_appointment = request.POST.get('date_appointment')
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
         email = request.POST.get('email')
-        purpose_req = request.POST.get('purpose_of_request')
+       
         
         
         data = {
+                'purpose_of_request': purpose_of_request,
+                'student_name': student_name,
                 'date_appointment': date_appointment, 
                 'time_appointment': time_appointment, 
                 'subject': subject, 
                 'message': message,
                 'additionalmessage': additionalmessage,
-                'purpose_of_request': purpose_of_request,
-                'student_name': student_name,
-               
         }
         message='''{}
+        Purpose:\n\t\t{}\n<br>
+        Name:\n\t\t{}\n<br>
         Date:\n\t\t{}\n<br>
         Time:\n\t\t{}\n<br>
         Additonal Message:\n\t\t{}\n<br>
-        Purpose:\n\t\t{}\n<br>
-        Name:\n\t\t{}\n<br>
         
-        '''''.format(data['message'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['purpose_of_request'], data ['student_name'])
+        '''''.format(data['message'], data ['purpose_of_request'], data ['student_name'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
         msg.send()
-        
+        messages.success(request, "Appointment Schedule Sent.")
     return render(request, 'html_files/appointment.html', {})
 
 def regclear_appointment(request,id):
@@ -869,44 +869,46 @@ def regclear_appointment(request,id):
         student_name = [st_name, ]
 
         subject = 'Appointment Request for Clearance Form'
-        message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong><br><br>"
+        # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong><br><br>"
+        message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
         message2 = 'Your request for'+\
             ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! "<br><br>'
         message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
-        message4 = 'Note: This is an automated message, do not reply.<br>'
+        message4 = "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
 
         message = message1 + message2 + message3 + message4
 
-        
+        purpose_req = request.POST.get('purpose_of_request')
         date_appointment = request.POST.get('date_appointment')
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
         email = request.POST.get('email')
-        purpose_req = request.POST.get('purpose_of_request')
+        
         
         
         data = {
+                'purpose_of_request': purpose_of_request,
+                'student_name': student_name,
                 'date_appointment': date_appointment, 
                 'time_appointment': time_appointment, 
                 'subject': subject, 
                 'message': message,
                 'additionalmessage': additionalmessage,
-                'purpose_of_request': purpose_of_request,
-                'student_name': student_name,
+                
                
         }
         message='''{}
+        Purpose:\n\t\t{}\n<br>
+        Name:\n\t\t{}\n<br>
         Date:\n\t\t{}\n<br>
         Time:\n\t\t{}\n<br>
         Additonal Message:\n\t\t{}\n<br>
-        Purpose:\n\t\t{}\n<br>
-        Name:\n\t\t{}\n<br>
         
-        '''''.format(data['message'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['purpose_of_request'], data ['student_name'])
+        '''''.format(data['message'], data ['purpose_of_request'], data ['student_name'] , data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
         msg.send()
-        
+        messages.success(request, "Appointment Schedule Sent.")
     return render(request, 'html_files/appointment.html', {})
 
 
