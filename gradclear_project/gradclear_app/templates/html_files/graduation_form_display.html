@@ -714,6 +714,7 @@
                          <th class="sched">Schedule</th>
                          <th class="rm">Room</th>
                          <th class="ins">Instructor</th>
+                         <th class="ins">Signature</th>
                     </tr>
                </thead>
                     <tbody id="Add">
@@ -723,6 +724,16 @@
                          <td>{{i.starttime1_1}} - {{i.endtime1_1}} {{i.day1_1}}</td>
                          <td>{{i.room1}}</td>
                          <td>{{i.faculty1}}</td>
+                         <td class ="text-center">
+                            {% if subject_1 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_1 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_1}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
+                            
                     </tr>
                     {% endif %}
 
@@ -732,6 +743,15 @@
                          <td>{{i.starttime1_2}} - {{i.endtime1_2}} {{i.day1_2}}</td>
                          <td>{{i.room2}}</td>
                          <td>{{i.faculty2}}</td>
+                         <td class ="text-center">
+                            {% if subject_2 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_2 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -741,6 +761,15 @@
                          <td>{{i.starttime1_3}} - {{i.endtime1_3}} {{i.day1_3}}</td>
                          <td>{{i.room3}}</td>
                          <td>{{i.faculty3}}</td>
+                         <td class ="text-center">
+                            {% if subject_3 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_3 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_3}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -750,6 +779,15 @@
                          <td>{{i.starttime1_4}} - {{i.endtime1_4}} {{i.day1_4}}</td>
                          <td>{{i.room4}}</td>
                          <td>{{i.faculty4}}</td>
+                         <td class ="text-center">
+                            {% if subject_4 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_4 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -759,6 +797,15 @@
                          <td>{{i.starttime1_5}} - {{i.endtime1_5}} {{i.day1_5}}</td>
                          <td>{{i.room5}}</td>
                          <td>{{i.faculty5}}</td>
+                         <td class ="text-center">
+                            {% if subject_5 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_5 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_5}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -768,6 +815,15 @@
                          <td>{{i.starttime1_6}} - {{i.endtime1_6}} {{i.day1_6}}</td>
                          <td>{{i.room6}}</td>
                          <td>{{i.faculty6}}</td>
+                         <td class ="text-center">
+                            {% if subject_6 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_6 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -777,6 +833,15 @@
                          <td>{{i.starttime1_7}} - {{i.endtime1_7}} {{i.day1_7}}</td>
                          <td>{{i.room7}}</td>
                          <td>{{i.faculty7}}</td>
+                         <td class ="text-center">
+                            {% if subject_7 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_7 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -786,6 +851,15 @@
                          <td>{{i.starttime1_8}} - {{i.endtime1_8}} {{i.day1_8}}</td>
                          <td>{{i.room8}}</td>
                          <td>{{i.faculty8}}</td>
+                         <td class ="text-center">
+                            {% if subject_8 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_8 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -795,6 +869,15 @@
                          <td>{{i.starttime1_9}} - {{i.endtime1_9}} {{i.day1_9}}</td>
                          <td>{{i.room9}}</td>
                          <td>{{i.faculty9}}</td>
+                         <td class ="text-center">
+                            {% if subject_9 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_9 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -804,6 +887,15 @@
                          <td>{{i.starttime1_10}} - {{i.endtime1_10}} {{i.day1_10}}</td>
                          <td>{{i.room10}}</td>
                          <td>{{i.faculty10}}</td>
+                         <td class ="text-center">
+                            {% if subject_10 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif subject_10 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{subject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td>
                     {% endif %}
                     </tr>
                
@@ -820,6 +912,7 @@
                          <th class="sched1">Schedule</th>
                          <th class="rm1">Room</th>
                          <th class="ins1">Instructor</th>
+                         <th class="ins1">Signature</th>
                     </tr>
                </thead>
                <tbody>
@@ -829,6 +922,15 @@
                          <td>{{i.add_starttime1_1}} - {{i.add_endtime1_1}} {{i.addday1_1}}</td>
                          <td>{{i.addroom1}}</td>
                          <td>{{i.addfaculty1}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_1 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_1 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_1}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject2 != "" %}
@@ -837,6 +939,15 @@
                          <td>{{i.add_starttime1_2}} - {{i.add_endtime1_2}} {{i.addday1_2}}</td>
                          <td>{{i.addroom2}}</td>
                          <td>{{i.addfaculty2}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_2 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_2 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject3 != "" %}
@@ -845,6 +956,15 @@
                          <td>{{i.add_starttime1_3}} - {{i.add_endtime1_3}} {{i.addday1_3}}</td>
                          <td>{{i.addroom3}}</td>
                          <td>{{i.addfaculty3}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_3 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_3 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_3}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject4 != "" %}
@@ -853,6 +973,15 @@
                          <td>{{i.add_starttime1_4}} - {{i.add_endtime1_4}} {{i.addday1_4}}</td>
                          <td>{{i.addroom4}}</td>
                          <td>{{i.addfaculty4}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_4 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_4 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject5 != "" %}
@@ -861,6 +990,15 @@
                          <td>{{i.add_starttime1_5}} - {{i.add_endtime1_5}} {{i.addday1_5}}</td>
                          <td>{{i.addroom5}}</td>
                          <td>{{i.addfaculty5}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_5 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_5 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_5}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject6 != "" %}
@@ -869,6 +1007,15 @@
                          <td>{{i.add_starttime1_6}} - {{i.add_endtime1_6}} {{i.addday1_6}}</td>
                          <td>{{i.addroom6}}</td>
                          <td>{{i.addfaculty6}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_6 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_6 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject7 != "" %}
@@ -877,6 +1024,15 @@
                          <td>{{i.add_starttime1_7}} - {{i.add_endtime1_7}} {{i.addday1_7}}</td>
                          <td>{{i.addroom7}}</td>
                          <td>{{i.addfaculty7}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_7 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_7 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject8 != "" %}
@@ -885,6 +1041,15 @@
                          <td>{{i.add_starttime1_8}} - {{i.add_endtime1_8}} {{i.addday1_8}}</td>
                          <td>{{i.addroom8}}</td>
                          <td>{{i.addfaculty8}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_8 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_8 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject9 != "" %}
@@ -893,6 +1058,15 @@
                          <td>{{i.add_starttime1_9}} - {{i.add_endtime1_9}} {{i.addday1_9}}</td>
                          <td>{{i.addroom9}}</td>
                          <td>{{i.addfaculty9}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_9 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_9 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                     {% if i.addsubject10 != "" %}
@@ -901,6 +1075,15 @@
                          <td>{{i.add_starttime1_10}} - {{i.add_endtime1_10}} {{i.addday1_10}}</td>
                          <td>{{i.addroom10}}</td>
                          <td>{{i.addfaculty10}}</td>
+                         <td class ="text-center">
+                            {% if addsubject_10 == "DECLINE" %}
+                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% elif addsubject_10 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <img src="/Media/{{addsubject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                        </td
                     </tr>
                     {% endif %}
                </tbody>
