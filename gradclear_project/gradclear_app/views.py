@@ -1105,32 +1105,31 @@ def student_dashboard(request):
         if check_form137.exists():
             if check_form137[0] == '❌':
                 print('Missing FORM 137-A')
-                display.append("*Form 137-A")
+                display.append("FORM 137-A")
                 
         elif check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
                     print(check_form137_inrequest)
                     print('Missing FORM 137-A')
-                    display.append("*Form 137-A")  
+                    display.append("FORM 137-A")  
                 else:
                     pass
         else:
             pass
                   
         if not check_clearance:
-            display.append("*Clearance")
+            display.append("CLEARANCE")
         else:
             if check_clearance[0] == 'ON PROGRESS':
-                print('Clearance Pending')
-                display.append("*Clearance (ON PROGRESS)")
+                display.append("CLEARANCE (ON PROGRESS)")
                 
         if not check_graduation:
             pass
         else:
             if check_graduation[0] == 'ON PROGRESS':
                 print('Clearance Pending')
-                display.append("* Graduation Form (ON PROGRESS)")
+                display.append("GRADUATION (ON PROGRESS)")
   
     else:
         messages.error(

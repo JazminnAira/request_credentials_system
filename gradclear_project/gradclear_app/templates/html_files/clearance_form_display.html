@@ -459,6 +459,13 @@
         font-size: 30px;
         padding-top: 15px;
     }
+
+    .responsive {
+        min-width: 100px;
+        max-width: 147px;
+        height: auto;
+      }
+
 </style>
 
 
@@ -733,116 +740,116 @@
             </p>
         </form>
     {% endfor %}
-        <div id ="approval_signature_section" class = "border border-dark p-3 m-1">
+        <div id ="approval_signature_section" class = "border bg-white border-dark p-3 m-1">
             
-            <div class="row col-12 justify-content-center">
+            <div class="row col-12 justify-content-between">
                 <!--ACCOUNTANT-->
                 <div id ="accountant" class=" row col col-6">
-                    <label class = "pl-2 col"><b>Accountant:</b> 
+                    <label class = "col"><b>Accountant:</b> 
                     {% if accountant == "DECLINE" %}
-                        <label class = "pl-2 col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif accountant == "UNAPPROVED" %}
-                        <label class = "col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{accountant}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{accountant}}"  class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
                 <!--Course Adviser-->
                 <div id ="course_adviser" class="row col col-6">
-                    <label class = "pl-2 col"><b>Course/Shop Adviser:</b> 
+                    <label class = "col"><b>Course/Shop Adviser:</b> 
                     {% if course_adviser == "DECLINE" %}
-                        <label class = "col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif course_adviser == "UNAPPROVED" %}
-                        <label class = "col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{course_adviser}}" class = "col" style ="height:70px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{course_adviser}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
             </div>
-            <div class="row col-12 justify-content-center">
+            <div class="row col-12 justify-content-between">
                 <!--LIBERAL ARTS-->
                 <div id ="liberal_arts" class=" row col col-6">
-                    <label class = "pl-2 col"><b>Head of Liberal Arts:</b> 
+                    <label class = "col"><b>Head of Liberal Arts:</b> 
                     {% if liberal_arts == "DECLINE" %}
-                        <label class = "pl-2 col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif liberal_arts == "UNAPPROVED" %}
-                        <label class = "pl-2 col-4">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{liberal_arts}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{liberal_arts}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
                 <!--CAMPUS LIBRARIAN-->
                 <div id ="campus_library" class="col col-6">
-                    <label class = "pl-2 col"><b>Campus Librarian:</b> 
+                    <label class = "col"><b>Campus Librarian:</b> 
                     {% if campus_library == "DECLINE" %}
-                        <label class = "pl-2 col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif campus_library == "UNAPPROVED" %}
-                        <label class = "pl-2 col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{campus_library}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{campus_library}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
             </div>
-            <div class="row col-12 justify-content-center">
+            <div class="row col-12 justify-content-between">
                 <!--MATH & SCIENCE-->
                 <div id ="math_and_science" class=" row col col-6">
-                    <label class = "pl-2 col"><b>Head of Math & Sciences:</b> 
+                    <label class = "col"><b>Head of Math & Sciences:</b> 
                     {% if math_and_science == "DECLINE" %}
-                        <label class = "pl-2 col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif math_and_science == "UNAPPROVED" %}
-                        <label class = "pl-2 col-5">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{math_and_science}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{math_and_science}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
                 <!--GUIDANCE COUNSELOR-->
                 <div id ="guidance_office" class="col col-6">
-                    <label class = "pl-2 col"><b>Guidance Counselor:</b> 
+                    <label class = "col"><b>Guidance Counselor:</b> 
                     {% if guidance == "DECLINE" %}
-                        <label class = "pl-2 col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif guidance == "UNAPPROVED" %}
-                        <label class = "pl-2 col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{guidance}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{guidance}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
             </div>
-            <div class="row col-12 justify-content-center">
+            <div class="row col-12 justify-content-between">
                 <!--DPECS-->
                 <div id ="dpecs" class=" row col col-6">
-                    <label class = "pl-2 col"><b>Head of DPECS:</b> 
+                    <label class = "col"><b>Head of DPECS:</b> 
                     {% if dpecs == "DECLINE" %}
-                        <label class = "pl-2 col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif dpecs == "UNAPPROVED" %}
-                        <label class = "pl-2 col-5">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{dpecs}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{dpecs}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
                 <!--HEAD OF STUDENT AFFAIRS-->
                 <div id ="osa" class="col col-6">
-                    <label class = "pl-2 col"><b>Head of Student Affairs:</b> 
+                    <label class = "col"><b>Head of Student Affairs:</b> 
                     {% if osa == "DECLINE" %}
-                        <label class = "pl-2 col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif osa == "UNAPPROVED" %}
-                        <label class = "pl-2 col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{osa}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{osa}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
             </div>
-            <div class="row col-12 justify-content-center">
+            <div class="row col-12 justify-content-between">
                 <!--IDUSTRIAL TECH, EDUC, ENGINEER-->
                 <div id ="industrial" class=" row col col-6">
-                    <label class = "pl-2 col"><b>
+                    <label class = "col"><b>
                         {% if it_department == 'EDUCATOR' %}
                             Head of Industrial Education Department:</b> 
                         {% elif it_department == 'TECHNOLOGIES' %}
@@ -853,23 +860,23 @@
                             Head of Industrial Tecgnology/Industrial Education/Engineering:</b> 
                         {% endif %}
                     {% if industrial == "DECLINE" %}
-                        <label class = "pl-2 col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif industrial == "UNAPPROVED" %}
-                        <label class = "pl-2 col-5">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{industrial}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{industrial}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
                 <!--ASST. DIR. FOR ACADEMIC AFFAIRS-->
                 <div id ="adaa" class="col col-6">
-                    <label class = "pl-2 col"><b>Asst. DIR. for Academic Affairs:</b> 
+                    <label class = "col"><b>Asst. DIR. for Academic Affairs:</b> 
                     {% if adaa == "DECLINE" %}
-                        <label class = "pl-2 col">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
                     {% elif adaa == "UNAPPROVED" %}
-                        <label class = "pl-2 col">UNAPPROVED</label>
+                        <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{adaa}}" class = "col" style ="height:80px; width:200px;" alt="APPROVED">
+                        <img src ="/Media/{{adaa}}" class = "col col-5 responsive" alt="APPROVED">
                     {% endif %}
                     </label>
                 </div>
