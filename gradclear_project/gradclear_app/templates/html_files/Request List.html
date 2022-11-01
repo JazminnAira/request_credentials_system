@@ -402,12 +402,13 @@
     
 
     <!--TAB BAR-->
-    <div data-tabs="1" id="tabz_77">
+    <!-- <div data-tabs="1" id="tabz_77"> -->
         <!-- <div id = "determine_file_upload">
             <button class="btn btn-secondary" type="button" id="enrolled_button" name="enrolled" onclick="upload_determiner()" >Upload Enrolled Student List File</button>
             <button class="btn btn-secondary" type="button" id="alumni_button" name="alumni" onclick="upload_determiner()" >Upload Alnumnus List File</button>
             <input class= "form-control" name= "status_file_determiner" id= "input_status">
         </div> -->
+        {% include 'html_files/message.html'%}
         <div class = "float-left col-9"  >
             <h3 style="text-align:center;">Request List</h3>
             <div id ="button_claim_and_unclaim" class="mt-3">
@@ -430,7 +431,7 @@
                                 <th>Official Receipt</th>
                                 <th></th>
                                 <th>Status</th>
-                                <th>Date of Appointment</th>
+                                <th>Message</th>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="11"><i class="fa fa-warning"></i> No result</td>
@@ -486,7 +487,13 @@
                                                 </select>
                                             </form> 
                                     </td>  
-                                    <td>{{instance.appointment}}</td>
+                                    <td>
+                                        {% if instance.approval_status ==  'APPROVED' %}
+                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
+                                        {% else %}
+                                            <p>MESSAGE NOT AVAILABLE</p>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             </tbody>
                         {% endfor %}
