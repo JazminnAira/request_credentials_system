@@ -1,11 +1,8 @@
 import email
 from genericpath import exists
 import profile
-<<<<<<< HEAD
-=======
 import imghdr
 from queue import Empty
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render
@@ -27,8 +24,6 @@ from django.http import FileResponse
 import my_csv, csv,  io
 from textwrap import wrap
 from django.db import connection
-<<<<<<< HEAD
-=======
 import base64
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -39,7 +34,6 @@ from django.shortcuts import render
 import datetime
 from datetime import datetime
 import os
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
 
 
 def graduation_print(request, id):
@@ -1668,17 +1662,12 @@ def faculty_dashboard(request):
 
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
-    
-    f_n_unapproved = request.user.full_name + "_UNAPPROVED"
-    f_n_approved = request.user.full_name + "_APPROVED"
-<<<<<<< HEAD
-=======
     signature = request.user.uploaded_signature
     signature_datetime = request.user.signature_timesaved
     id_Facultynumber = request.user.id
     print(signature)
-        
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
+    f_n_unapproved = request.user.full_name + "_UNAPPROVED"
+    f_n_approved = request.user.full_name + "_APPROVED"
     st = ""
     dep= request.user.department 
     course_adv= clearance_form_table.objects.filter(course_adviser=request.user.full_name )
@@ -1689,11 +1678,7 @@ def faculty_dashboard_clearance_list(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/') 
-<<<<<<< HEAD
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv})
-=======
     return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
 
 @login_required(login_url='/')
 def update_clearance(request, id, dep):
@@ -1834,11 +1819,6 @@ def update_clearance(request, id, dep):
 @login_required(login_url='/')
 def faculty_dashboard_graduation_list(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-<<<<<<< HEAD
-        f_n_unapproved= request.user.full_name + "_UNAPPROVED"
-        f_n_approved= request.user.full_name + "_APPROVED"
-
-=======
         #signature
         signature = request.user.uploaded_signature
         signature_datetime = request.user.signature_timesaved
@@ -1848,7 +1828,6 @@ def faculty_dashboard_graduation_list(request):
         f_n_unapproved= request.user.full_name + "_UNAPPROVED"
         f_n_approved= request.user.full_name + "_APPROVED"
 
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
         st= graduation_form_table.objects.all()
         
     else:
@@ -1856,11 +1835,7 @@ def faculty_dashboard_graduation_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-<<<<<<< HEAD
-    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved})
-=======
     return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
->>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
 
 @login_required(login_url='/')
 def update_graduation(request, id, sig):
