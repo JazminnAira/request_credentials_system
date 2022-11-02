@@ -1005,6 +1005,8 @@ def faculty_registration(request):
             
                     if esign_signature == "":
                         messages.error(request, "Signature Pad is BLANK. Please create your Signature.")
+                        
+                        return redirect(faculty_registration)
                     else:
                         image_decode = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
 
@@ -1016,13 +1018,24 @@ def faculty_registration(request):
                             #file name saved in the database
                             form.instance.uploaded_signature = 'signatures/' + last + ", " + first + " " + middle + '_APPROVED.png'
                             form.instance.time_savedsignature = datetime.now()
+                            
+                elif chosen_SignatureType =="UPLOAD":
+                    if bool(form.cleaned_data.get('uploaded_signature')) == False:
+                        messages.error(request, "No New Signature Saved. Please Try Again.")
+                        return redirect(faculty_registration)  
+                    else:
+                        print('Signature Uploaded Saved')
+                        
                 else:
-                    pass
+                    messages.error(request, "Type of Signature is Missing")
+                    return redirect(faculty_registration)
+                
             elif agreement == "DECLINE":
                 form.instance.uploaded_signature = "DECLINE"
                 form.instance.time_savedsignature = datetime.now()
             else:
                 messages.error(request, "Approval Type is not determine")
+                return redirect(faculty_registration)
 
             form.save()
             messages.success(
@@ -3381,22 +3394,22 @@ def update_clearance_signature(request, id):
         full_name = request.user.full_name
         
         if create_signature =="":
-            if uploaded_signature is None:
-                print("NO SIGNATURE SAVED")
+            if bool(uploaded_signature) == False:
+                messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
                 print(str(recent_sig))
                 if os.path.exists("Media/" + str(recent_sig)):
                     os.remove("Media/" + str(recent_sig))
-                
+                        
                 file_name ="signatures/"+ str(uploaded_signature)
-                
+                        
                 fs = FileSystemStorage()
-        
+                        
                 filename = fs.save(file_name, uploaded_signature)
                 uploaded_file_url = fs.url(filename)
                 print(uploaded_file_url)
-                
+                        
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
         else:
@@ -3430,22 +3443,22 @@ def update_grad_signature(request, id):
         full_name = request.user.full_name
         
         if create_signature =="":
-            if uploaded_signature is None:
-                print("NO SIGNATURE SAVED")
+            if bool(uploaded_signature) == False:
+                messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
                 print(str(recent_sig))
                 if os.path.exists("Media/" + str(recent_sig)):
                     os.remove("Media/" + str(recent_sig))
-                
+                        
                 file_name ="signatures/"+ str(uploaded_signature)
-                
+                        
                 fs = FileSystemStorage()
-        
+                        
                 filename = fs.save(file_name, uploaded_signature)
                 uploaded_file_url = fs.url(filename)
                 print(uploaded_file_url)
-                
+                        
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
         else:

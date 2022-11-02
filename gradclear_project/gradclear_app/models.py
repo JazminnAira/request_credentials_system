@@ -96,7 +96,7 @@ class user_table(AbstractUser):
     user_type = models.CharField(max_length=100, verbose_name="User Type")
     username = models.CharField(max_length=100, unique=True)
     profile_picture = models.ImageField(upload_to='uploads/')
-    uploaded_signature = models.ImageField(upload_to='signatures/', null = True, blank = True)# PIP INSTALL PILLOW
+    uploaded_signature = models.ImageField(upload_to='signatures/',blank=True)# PIP INSTALL PILLOW
     signature_timesaved = models.DateTimeField(auto_now_add=True)
     REQUIRED_FIELDS = ('email',)
     
