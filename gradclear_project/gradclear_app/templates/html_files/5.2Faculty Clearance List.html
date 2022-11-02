@@ -569,6 +569,160 @@
         $('input[name=valdeterminer]').val(target);
         $('#valdet').submit()});
     </script> -->
+<<<<<<< HEAD
+    <form method="POST" action="faculty_dashboard_clearance_list" id="table_main">
+        {% csrf_token %}
+        <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
+            <thead style="height: 70px;">
+                <tr>
+                    <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+                    <th> # </th>
+                    <th>Student's Name</th>
+                    <th>Course</th>
+                    <th>ID Number</th>
+                    <th>Purpose of Request</th>
+                    <th>Date & Time Requested</th>
+                    <th>Appointment</th>
+                    <th id="Messagebutton"> Message</th>
+                    <th></th>
+                    <th></th>
+                    
+                </tr>
+                <!-- {% if st == ""%}
+                <tr>
+                    <td colspan="10"><i class="fa fa-warning"></i> No Data Available</td>
+                </tr>
+                {% endif %} -->
+                <tr class="warning no-result">
+                    <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+                </tr>
+            </thead>
+            
+            {% for instance in st %}
+            <tbody>
+                <tr id="Add">    
+                    <td><input type="checkbox" class="check" value={{instance.id}}></td>    
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.appointment}}</td>
+                    <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                    {% if dep == "HOCS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OCS";</script>
+                        {% if instance.accountant_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/accountant_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDMS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DMS";</script>
+                        {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/mathsci_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDPECS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DPECS";</script>
+                        {% if instance.pe_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/pe_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDED" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DED";</script>
+                        {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieduc_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDIT" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DIT";</script>
+                        {% if instance.it_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/it_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDIE" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DIE";</script>
+                        {% if instance.ieng_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieng_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOCL" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OCL";</script>
+                        {% if instance.library_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/library_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOGS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OGS";</script>
+                        {% if instance.guidance_office_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/guidance_office_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOSA" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OSA";</script>
+                        {% if instance.osa_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/osa_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HADAA" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "ADAA";</script>
+                        {% if instance.academic_affairs_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/academic_affairs_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% else %}
+                        <td></td>   
+                    {% endif %}
+                    {% if course_adv %} 
+                        <script>document.querySelectorAll('th')[11].innerText = "Course/Shop Adviser";</script>
+                        {% if instance.course_adviser_signature == f_n_unapproved %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/course_adviser_signature" >Approve</a>
+                        </button></td>
+                        {% elif instance.course_adviser_signature != f_n_unapproved and instance.course_adviser != request.user.full_name %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% endif %}
+                      
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        </form>
+        {% if signal == "OPEN" %}
+            <div class="flex-row col-md-4 mx-auto border border-dark p-2 mb-3">
+                <a href = {% url 'faculty_dashboard_clearance_list' %}><button id="close" style = "background: 0; border:0; color:black; " class = "col-2 float-right"><u> Close </u></button></a>
+                <h5>Put your Signature Here</h5>
+                <div class="wrapper border border-secondary m-2 p-2">
+                    <canvas id="signature_pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
+                </div>
+                <div class="p-1">
+                    <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
+                    <a><button id="save_signature" class = "col-2 p-2"><span> Approved </span></button></a>
+                    
+                </div>
+=======
 
     
     <div class="col col-3 float-right p-2 border mr-2">
@@ -584,6 +738,7 @@
                 <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
                 <img src ="{{saved_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
+>>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
             </div>
         {% endif %}
         <div class= "mx-auto mb-4" align="center" id="button_area">
