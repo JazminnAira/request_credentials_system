@@ -21,8 +21,10 @@ urlpatterns = [
      path('faculty_dashboard', views.faculty_dashboard, name='faculty_dashboard'),
      path('faculty_dashboard_clearance_list', views.faculty_dashboard_clearance_list,
           name='faculty_dashboard_clearance_list'),
-     path('signature_open_clearance/<int:id>', signature_open_clearance, name='signature_open_clearance'),
-     path('signature_open_graduation/<int:id>', signature_open_graduation, name='signature_open_graduation'),
+     path('update_clearance_signature/<int:id>', update_clearance_signature ,name='update_clearance_signature'),
+     path('update_grad_signature/<int:id>', update_grad_signature ,name='update_grad_signature'),
+     path('delete_clearance_signature/<int:id>', delete_clearance_signature ,name='delete_clearance_signature'),
+     path('delete_graduation_signature/<int:id>', delete_graduation_signature ,name='delete_graduation_signature'),
      path('faculty_dashboard_graduation_list', views.faculty_dashboard_graduation_list,
           name='faculty_dashboard_graduation_list'),
      path('registrar_dashboard', views.registrar_dashboard,
@@ -36,6 +38,7 @@ urlpatterns = [
      path('registrar_dashboard_student_list', registrar_dashboard_student_list, name="registrar_dashboard_student_list"),
      path('registrar_dashboard_alumni_list', registrar_dashboard_alumni_list, name="registrar_dashboard_alumni_list"),
      path('registrar_dashboard_request_list', registrar_dashboard_request_list, name="registrar_dashboard_request_list"),
+     path('registrar_dashboard_organize_request_list/<str:id>', registrar_dashboard_organize_request_list, name="registrar_dashboard_organize_request_list"),
      # path('registrar_dashboard_document_checker', registrar_dashboard_document_checker, name="registrar_dashboard_document_checker"),
      path('upload_document_checker', upload_document_checker, name="upload_document_checker"),
      path('request_official_update/<int:id>', views.request_official_update, name='request_official_update'),
@@ -66,9 +69,12 @@ urlpatterns = [
      path('set_appointment/<int:id>', set_appointment, name='set_appointment'),
      path('appointment/<int:id>', views.appointment, name='appointment'),
      path('appointmentgrad/<int:id>', views.appointmentgrad, name='appointmentgrad'),
-      path('reg_appointmentgrad/<int:id>', views.reg_appointmentgrad, name='reg_appointmentgrad'),
      path('clearance_print/<str:id>', clearance_print, name='clearance_print'),
      path('graduation_print/<str:id>', graduation_print, name='graduation_print'),
+     path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
+     path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
+     path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
+    
     ] 
 
 if settings.DEBUG:

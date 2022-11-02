@@ -654,12 +654,10 @@
         </i> </a>
     <a href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" title="Clearance Form" class="link" class="trigger-btn"><i class="fa fa-file-text-o">
         </i> </a>
-    <a href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" title="Request Form" class="link" class="trigger-btn"><i class="fa fa-file-text-o">
+    <a href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" title="Request Form" class="link" class="trigger-btn"><i class="fa fa-files-o">
         </i> </a>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
         </i></a> -->
-    <a data-toggle="modal" data-placement="right" data-target="#AboutUs_modal_41" title="About" class="link" class="trigger-btn"><i class="fa fa-info">
-        </i></a>
     <a data-toggle="modal" data-placement="right" data-target="#settings_modal_41" title="Settings" class="link" class="trigger-btn"><i class="fa fa-cogs">
         </i></a>
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="logo_41" style="position: absolute;bottom: 10px;">
@@ -733,12 +731,12 @@
                             </tr>
 
                             <tr>
-                                <td><b>ID Number:</b></td>
+                                <td><b>ID No.:</b></td>
                                 <td>{{request.user.id_number}}</td>
                             </tr>
 
                             <tr>
-                                <td><b>Contact Number:</b></td>
+                                <td><b>Contact No.:</b></td>
                                 <td>{{request.user.contact_number}}</td>
                             </tr>
                             <tr>
@@ -750,63 +748,13 @@
 
                     <!--MODAL FOOTER-->
                     <div class="modal-footer" id="account_footer_41">
-                        <label class="-label" for="file" id="label_for_file">
-                            <button class="btn btn-secondary -label" id="profile_pic" style="border-radius: 10px;">Change Image</button> 
-                        </label>
+                        
                         <!--LOGOUT BUTTON-->
                         <a href="{% url 'logout' %}" type="submit" class="btn btn-secondary" role="button" style="border-radius: 10px;" aria-pressed="true">Log Out</a>
                     </div>
             </div>
             </div>
         </form>
-    </div>
-
-    <!-- ABOUT US MODAL -->
-    <div id="AboutUs_modal_41" class="modal fade">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-
-                <!--MODAL HEADER-->
-                <div class="modal-header">
-                    <h3><b>About Us</b>
-                        <i aria-hidden="true" class="fa fa-info-circle">
-                        </i>
-                    </h3>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
-                </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body" id="maincontent_41">
-
-                    <!--DESCRIPTION LABEL-->
-                    <div id="des_41" class="container">
-                        Services at the Registrar's Office such as requests for Transcript of Records, Diploma, Certifications, Subject Descriptions, Evaluation of Grades, Authentication of Documents are exclusively offered to TUP-CAVITE students
-                    </div>
-
-                    <!--OFFICER IN CHARGE LABEL-->
-                    <div id="person_41" class="container">
-                        <p1 id="nametitle_41">Officer-in-Charge:</p1>
-
-                        <!--OIC VARIABLE-->
-                        <p2 id="officername_41"><b>Ms Sarrah Jane Velos</b></p2>
-                    </div>
-
-                    <!--FORM LINK LABEL-->
-                    <div id="form_41" class="container-fluid">
-                        <div class="container-fluid">To request Forms this is the link:</div>
-                        <div id="docslink">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" id="displink">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!--MODAL FOOTER-->
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
     </div>
 
 
@@ -1110,23 +1058,23 @@
 
     <div class="container-fluid" id="main_41">
         <div class="row">
-            <div class="col-12" style="height: 70px; margin-top: 100px;">
+            <div class="col-8" style="height: 70px; margin-top: 100px;">
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
                 <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
             </div>
-           
+            {% if display %}
+            <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
+                <h4 class ="pl-2 ml-2 p-2 pr-2" id ="missing">Missing Documents:</h4>
+                {% for requirements in display %}
+                    <i class="fa fa-exclamation-circle pl-4" style ="color :red; font-size: 18px;" id ="req_miss"><label class="text-dark text-lg pl-3 pr-2" id="document1">{{requirements}}</label></i><br>
+                {% endfor %}
+            </div>
+        {% endif %}
         </div>
     </div>
     <hr style="border: 1px solid #424242;">
 
-    {% if display %}
-        <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
-            <h5 class ="pl-2 ml-2 p-2 pr-2">Missing Documents:</h5>
-            {% for requirements in display %}
-                <p class="text-danger pl-3 pr-2" id="document1">{{requirements}}</p> 
-            {% endfor %}
-        </div>
-    {% endif %}
+    
 
     <!--ACCESS BAR-->
     <!--SEARCH BAR-->

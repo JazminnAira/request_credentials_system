@@ -530,14 +530,22 @@
                             <th>Course</th>
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
+<<<<<<< HEAD
                             <th>Date & Time Requested</th>
                             <th>Appointment</th>  
+=======
+                            <th>Date & Time Requested</th>  
+>>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
                             <th id="Messagebutton"> Message</th>
                             <th>Approval Status</th>
                             <th id="Approvalbutton"></th>
                         </tr>
                         <tr class="warning no-result">
+<<<<<<< HEAD
                             <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+=======
+                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+>>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
                         </tr>
                     </thead>
                     
@@ -551,16 +559,29 @@
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
+<<<<<<< HEAD
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.appointment}}</td>
                             <td><a href="{% url 'reg_appointmentgrad' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+=======
+                            <td><a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+>>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
                             {% if instance.approval_status == "APPROVED"%}
                             <td>{{instance.approval_status}}</td>
                             {% else %}
                             <td><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
+<<<<<<< HEAD
                             <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
                             !!!EDIT THIS<button class="button"><a style="color: #fff;" href="updategrad/{{ instance.id }}">Notify</a>
                             </button>
+=======
+                            <td>
+                            {% if instance.approval_status ==  'APPROVED' %}
+                                <a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
+                            {% else %}
+                                <p>❌</p>
+                            {% endif %}
+>>>>>>> 71bfef5d740f52a741f75c6d6226a91de0278296
                             </td>
                             
                             
