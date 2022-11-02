@@ -703,57 +703,151 @@ def clearance_print(request, id):
 
 
 def appointment(request, id):
-    email_temp = clearance_form_table.objects.filter(
+    if request.method == 'POST':
+        email_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
-    email = user_table.objects.filter(
-        username=email_temp[0]).values_list('email', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+        rec_email = email[0]
+        recipient_list = [rec_email, ]
 
-    rec_email = email[0]
+        purpose = request_form_table.objects.filter(
+        id=id).values_list('request', flat=True).distinct()
+        purpose_of = request_form_table.objects.filter(
+            request=purpose[0]).values_list('request', flat=True).distinct()
+        purpose_of_req =  purpose_of[0]
+        purpose_of_request = purpose_of_req, 
 
-    subject = 'Appointment Request for Clearance Form'
+        name = request_form_table.objects.filter(
+        id=id).values_list('name', flat=True).distinct()
+        s_name = request_form_table.objects.filter(
+            name=name[0]).values_list('name', flat=True).distinct()
+        student_name =  s_name[0]
+        
 
-    message1 = 'Greetings,<br><br>'
-    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
-        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
-        request.user.email + '".<br>'
-    message3 = '<br> <br>Note: This is an automated message, do not reply.'
+        subject = 'Application for Clearance Form '
+        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+        # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+        message2 = 'Your Application for Clearance Form has pending concerns with Mr/.Ms.  '+ "<strong>"+ request.user.last_name +"</strong><br><br>"
+        message3 = 'Mr/Ms.  '+ "<strong>"+ request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
+        message4 =  "<strong>"+'Note:'+"</strong>"+' Failure to comply may result to declined application.'
+        message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
+        message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br>'
+        message7 =  "<i>"+'This is an automated message, do not reply.'+"</i>"
 
-    message = message1 + message2 + message3
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = [rec_email, ]
-    msg = EmailMessage(subject, message, email_from, recipient_list,)
-    msg.content_subtype = "html"
-    msg.send()
 
-    messages.success(request, "Email Sent.")
-    return redirect('faculty_dashboard_clearance_list')
+        message = message1 + message2 + message3 
+
+        purpose_req = request.POST.get('purpose_of_request')
+        date_appointment = request.POST.get('date_appointment')
+        time_appointment = request.POST.get('time_appointment')
+        additionalmessage = request.POST.get('additionalmessage')  
+        email = request.POST.get('email')
+       
+        
+        
+        data = {
+                'date_appointment': date_appointment, 
+                'time_appointment': time_appointment, 
+                'subject': subject, 
+                'message': message,
+                'message4': message4,
+                'message5': message5,
+                'message6': message6,
+                'message7': message7,
+                'additionalmessage': additionalmessage,
+        }
+        message=''''{}
+        <strong>Date:</strong>\n\t\t{}\n<br>
+        <strong>Time:</strong>\n\t\t{}\n<br><br>
+        <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br>
+        \n\t\t{}\n<br><br><br><br>
+        \n\t\t{}\n<br><br><br>
+        \n\t\t{}\n<br>
+        \n\t\t{}\n<br>
+        
+        '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html"
+        msg.send()
+        messages.success(request, "Appointment Schedule Sent.")
+        return redirect('faculty_dashboard_clearance_list')
+    else:
+        return render(request, 'html_files/appointment.html', {})
 
 
 def appointmentgrad(request, id):
-    email_temp = graduation_form_table.objects.filter(
+    if request.method == 'POST':
+        email_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
-    email = user_table.objects.filter(
-        username=email_temp[0]).values_list('email', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+        rec_email = email[0]
+        recipient_list = [rec_email, ]
 
-    rec_email = email[0]
+        purpose = request_form_table.objects.filter(
+        id=id).values_list('request', flat=True).distinct()
+        purpose_of = request_form_table.objects.filter(
+            request=purpose[0]).values_list('request', flat=True).distinct()
+        purpose_of_req =  purpose_of[0]
+        purpose_of_request = purpose_of_req, 
 
-    subject = 'Appointment Request for Graduation Form'
+        name = request_form_table.objects.filter(
+        id=id).values_list('name', flat=True).distinct()
+        s_name = request_form_table.objects.filter(
+            name=name[0]).values_list('name', flat=True).distinct()
+        student_name =  s_name[0]
+        
 
-    message1 = 'Greetings,<br><br>'
-    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
-        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
-        request.user.email + '".<br>'
-    message3 = '<br> <br>Note: This is an automated message, do not reply.'
+        subject = 'Application for Graduation Form '
+        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+        # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+        message2 = 'Your Application for Clearance Form has pending concerns with Mr/.Ms.  '+ "<strong>"+ request.user.last_name +"</strong><br><br>"
+        message3 = 'Mr/Ms.  '+ "<strong>"+ request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
+        message4 =  "<strong>"+'Note:'+"</strong>"+' Failure to comply may result to declined application.'
+        message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
+        message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br>'
+        message7 =  "<i>"+'This is an automated message, do not reply.'+"</i>"
 
-    message = message1 + message2 + message3
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = [rec_email, ]
-    msg = EmailMessage(subject, message, email_from, recipient_list,)
-    msg.content_subtype = "html"
-    msg.send()
 
-    messages.success(request, "Email Sent.")
-    return redirect('faculty_dashboard_graduation_list')
+        message = message1 + message2 + message3 
+
+        purpose_req = request.POST.get('purpose_of_request')
+        date_appointment = request.POST.get('date_appointment')
+        time_appointment = request.POST.get('time_appointment')
+        additionalmessage = request.POST.get('additionalmessage')  
+        email = request.POST.get('email')
+       
+        
+        
+        data = {
+                'date_appointment': date_appointment, 
+                'time_appointment': time_appointment, 
+                'subject': subject, 
+                'message': message,
+                'message4': message4,
+                'message5': message5,
+                'message6': message6,
+                'message7': message7,
+                'additionalmessage': additionalmessage,
+        }
+        message=''''{}
+        <strong>Date:</strong>\n\t\t{}\n<br>
+        <strong>Time:</strong>\n\t\t{}\n<br><br>
+        <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br>
+        \n\t\t{}\n<br><br><br><br>
+        \n\t\t{}\n<br><br><br>
+        \n\t\t{}\n<br>
+        \n\t\t{}\n<br>
+        
+        '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html"
+        msg.send()
+        messages.success(request, "Appointment Schedule Sent.")
+        return redirect('faculty_dashboard_graduation_list')
+    else:
+        return render(request, 'html_files/appointment.html', {})
 
 def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
