@@ -390,7 +390,7 @@
         margin-top: 18px;
     }
     
-    a#menu-share+ul {
+    /* a#menu-share+ul {
         visibility: hidden;
     }
     
@@ -405,7 +405,7 @@
     
     a#menu-share:hover>i {
         animation: rotate-out 0.5s;
-    }
+    } */
     
     @keyframes bot-to-top {
         0% {
@@ -460,17 +460,17 @@
     {% load static %}
 
     <!--PRINT AND HOME BUTTON-->
-    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
         <i class="fa fa-ellipsis-v"></i>
-    </a>
+    </a> -->
     <ul>
-        <li>
+        <!-- <li>
             <a href="#" onclick="to_beprinted('print_request')" data-toggle="tooltip" data-placement="right" title="Print">
                 <i class="fa fa-print"></i>
             </a>
-        </li>
+        </li> -->
         <li>
-            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
         </li>
@@ -520,7 +520,7 @@
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="date" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" required>
+                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" readonly>
                 </div>
             </div>
 
@@ -528,8 +528,7 @@
             <div class="form-group row">
                 <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="control_pre" name="control_pre" class="form-control">
-                    
+                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="000{{request.user.id}}" readonly>
                 </div>
             </div>
 
@@ -537,7 +536,7 @@
             <div class="form-group row">
                 <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()"required>
+                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{request.user.address}}" readonly required>
                 </div>
             </div>
 
@@ -560,10 +559,10 @@
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" oninput="get_year_graduated()">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
                     <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_year_graduated()">
+                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
                 </div>
             </div>
 
@@ -595,19 +594,19 @@
                     <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="Certification" oninput="get_certificate()">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="">
                     <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
                     <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_certificate()"><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" hidden><br><br>
 
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" oninput="get_other_purpose()">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre">
                     <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
                     <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32), get_other_purpose()"><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" hidden><br><br>
                 </div>
                 <br>
                 <br>
@@ -667,7 +666,7 @@
 
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_button" name="submit_btn_pre">Submit</button>
+                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
             </p>
 
             <!--FORM FOOTER-->
@@ -680,6 +679,13 @@
 </html>
 
 <script>
+   
+    var today = new Date();
+    
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+    document.getElementById("date_pre").value = date;
+
     function submitForm(form) {
 
         swal({
@@ -703,7 +709,7 @@
                 document.getElementById("course_pre").disabled = true;
                 document.getElementById("control_pre").disabled = true;
                 document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose_of_request").disabled = true;
+                document.getElementById("purpose").disabled = true;
                 document.getElementById("certification_box").disabled = true;
                 document.getElementById("others_box_pre").disabled = true;
                 document.getElementById("year_graduated_pre").disabled = true;
@@ -713,12 +719,11 @@
     }
 
     function isEmpty() {
-        let date_box = document.getElementById("date_pre").value;
-        let address_box = document.getElementById("add_box_pre").value;
+     
         let purpose_req = document.getElementById("purpose").value;
     
-        if (date_box != "" && address_box != "" && purpose_req != "") {
-            document.getElementById("submit_button").removeAttribute("disabled");
+        if (purpose_req != "") {
+            document.getElementById("submit_btn_pre").removeAttribute("disabled");
         }
     }
     
@@ -739,39 +744,6 @@
             scrollTop: 0
         }, "50");
     });
-    
-    //check only one in enrolled status
-    function choose_enrolled() {
-        var current_student = document.getElementById("currently_enrolled_pre");
-        var oldstudent = document.getElementById("old_student_pre");
-        var graduate_student = document.getElementById("year_graduated_check_pre");
-    
-        if (current_student.checked) {
-            document.getElementById("old_student_pre").checked = false;
-            document.getElementById("year_graduated_check_pre").checked = false;
-        } else if (oldstudent.checked) {
-            document.getElementById("year_graduated_check_pre").checked = false;
-            document.getElementById("currently_enrolled_pre").checked = false;
-        } else {
-            document.getElementById("old_student_pre").checked = false;
-            document.getElementById("currently_enrolled_pre").checked = false;
-        }
-    }
-
-    function get_other_purpose(){
-        others= document.getElementById("others_box_pre").value;
-        document.getElementById("Others_check_pre").value = "Others:" + others;
-    }
-
-    function get_year_graduated(){
-        year = document.getElementById("year_graduated_pre").value;
-        document.getElementById("year_graduated_check_pre").value = "Graduated:" + year;
-    }
-
-    function get_certificate(){
-        cert = document.getElementById("certification_box").value;
-        document.getElementById("Certification_check_pre").value = "Certification:" + cert;
-    }
 
     if (document.getElementById("user_stat").value == "STUDENT"){
         document.getElementById("year_graduated_check_pre").disabled = true;
@@ -788,6 +760,131 @@
         document.getElementById("currently_enrolled_pre").disabled = true;
         document.getElementById("year_graduated_check_pre").checked = true;
     }
+
+    year = document.getElementById("year_graduated_pre").value;
+    document.getElementById("year_graduated_check_pre").value = "ALUMNI: " + year;
+
+    certification_box.addEventListener("keyup", function() {
+        kind_of_cert = document.getElementById('certification_box').value;
+        document.getElementById('Certification_check_pre').value = 'Certification: ' + kind_of_cert;
+        document.getElementById('Certification_check_pre').checked = true;
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+    });
+    
+    others_box_pre.addEventListener("keyup", function(){
+        others= document.getElementById("others_box_pre").value;
+        document.getElementById("Others_check_pre").value = "Others:" + others;
+        document.getElementById('Others_check_pre').checked = true;
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+    });
+
+    HonorableDismissal_check_pre.addEventListener("click", function(){
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    authentication_verification.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    TranscriptofRecords_check_pre.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    subject_description.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    Diploma_check_pre.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    cav.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =true;
+        document.getElementById('certification_box').hidden =true;
+    });
+
+    Certification_check_pre.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Others_check_pre').checked = false;
+        document.getElementById('certification_box').hidden =false;
+        document.getElementById("others_box_pre").hidden =true;
+    });
+
+    Others_check_pre.addEventListener("click", function(){
+        document.getElementById('HonorableDismissal_check_pre').checked = false;
+        document.getElementById('authentication_verification').checked = false;
+        document.getElementById('TranscriptofRecords_check_pre').checked = false;
+        document.getElementById('subject_description').checked = false;
+        document.getElementById('Diploma_check_pre').checked = false;
+        document.getElementById('cav').checked = false;
+        document.getElementById('Certification_check_pre').checked = false;
+        document.getElementById("others_box_pre").hidden =false;
+        document.getElementById('certification_box').hidden =true;
+    });
 
 </script>
 

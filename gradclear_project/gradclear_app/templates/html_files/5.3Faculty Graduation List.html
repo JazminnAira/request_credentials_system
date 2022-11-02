@@ -502,6 +502,7 @@
 
         
     </script> -->
+<<<<<<< HEAD
     <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
         {% csrf_token %}
         <div style="overflow-x:auto;">
@@ -863,14 +864,416 @@
             <h5>Put your Signature Here</h5>
             <div class="wrapper border border-secondary m-2 p-2">
                 <canvas id="signature-pad" width="400" height="300" class="col-md-12 mx-auto  m-2"></canvas>
+=======
+
+    <div class="col col-3 float-right p-2 border mr-2">
+        {% if saved_signature == 'DECLINE' %}
+            <div id = "signature_display" class = "p-2 mt-2">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
+                <h3 class="lead p-4 border border-dark m-3" align="center"><b>NO SIGNATURE SAVED</b></h3>
+                <p>I decline to attach my signature in the system.</p>
+                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
             </div>
-            <div class="p-1">
-                <button id="clear" class = "col-2 p-2"><span> Clear </span></button>
-                <a><button id="save_signature" class = "col-2 p-2"><span> Approved </span></button></a>
+        {% else %}
+            <div id = "signature_display" class = "p-2 mt-2">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
+                <img src ="{{saved_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
+            </div>
+        {% endif %}
+        <div class= "mx-auto mb-4" align="center" id="button_area">
+            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
+            <!--<label class="lead">--OR---</label><br>--><br>
+            <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
+            <br>
+            <a href ="delete_graduation_signature/{{id}}" ><button type = "button" id = "delete_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">DELETE SIGNATURE</button></a><br>
+        </div>
+
+        <div id="create_signature_area" style ="visibility:hidden;">
+            <div class = "bg-dark p-2"><h4 class = "text-white">PUT YOUR SIGNATURE HERE</h4></div>
+            <div class="wrapper border rounded m-2 mt-3 p-1">
+                <canvas name="signature" id="signature_pad" width="150" height="250" class="col-md-12 mx-auto m-1 img-responsive"></canvas>
+                <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
+                <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1"><span> Clear </span></button> 
+                <button type="button" id="cancel_create" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
             </div>
         </div>
-    {% endif %}
+        
+        <form method="POST" action ="update_grad_signature/{{id}}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
+            <input type="text" name ="id_num" value ="{{id}}" hidden>
+            <div id ="new_upload_signature_area" hidden>
+                <div class = "bg-dark p-2 mb-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
+                <img id="preview" class="p-1 w-100 border">
+                <input id="uploaded_signature_new" type="file" accept=".png" name= "new_upload_signature" onchange="loadFile(event)">
+                <p>*NOTE: Upload only png format image file</p>
+                <button type="button" id="cancel_upload" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
+            </div>
+            <div id="submit_signature" class="m-3" align="center" hidden>
+                <button type="submit" class="btn btn-dark text-white btn-lg border border-dark">Save Signature</button>
+            </div>
+        </form>
+    </div>
 
+    <div class =" col col-9 h-90">
+        <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
+            {% csrf_token %}
+            <div style="overflow-x:auto;">
+                <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_53">
+                    <thead style="height: 70px;">
+                        <tr>
+                            <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+                            <th> # </th>
+                            <th>Student's Name</th>
+                            <th>Course</th>
+                            <th>ID Number</th>
+                            <th>Purpose of Request</th>
+                            <th>Date & Time Requested</th>
+                            <th>Appointment</th> 
+                            <th id="Messagebutton"> Message</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="30"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                    </thead>
+                    {% for instance in st %}
+                    <tbody> 
+                        <tr id="Add"> 
+                            <td><input type="checkbox" class="check" value={{instance.id}}></td>       
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.appointment}}</td>
+                            <td><a href="appointmentgrad/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                            {% if instance.faculty1 == request.user.full_name %}
+                                
+                                {% if instance.signature1 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature1" >Approve {{instance.subject1}}</a>
+                                </button></td>
+                                {% elif instance.signature1 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject1}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty2 == request.user.full_name %}
+                                
+                                {% if instance.signature2 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature2" >Approve {{instance.subject2}}</a>
+                                </button></td>
+                                {% elif instance.signature2 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject2}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+    
+                            {% if instance.faculty3 == request.user.full_name %}
+                                
+                                {% if instance.signature3 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature3" >Approve {{instance.subject3}}</a>
+                                </button></td>
+                                {% elif instance.signature3 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject3}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+    
+                            {% if instance.faculty4 == request.user.full_name %}
+                                
+                                {% if instance.signature4 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature4" >Approve {{instance.subject4}}</a>
+                                </button></td>
+                                {% elif instance.signature4 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject4}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+    
+                            {% if instance.faculty5 == request.user.full_name %}
+                                
+                                {% if instance.signature5 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature5" >Approve {{instance.subject5}}</a>
+                                </button></td>
+                                {% elif instance.signature5 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject5}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty6 == request.user.full_name %}
+                                
+                                {% if instance.signature6 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature6" >Approve {{instance.subject6}}</a>
+                                </button></td>
+                                {% elif instance.signature6 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject6}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty7 == request.user.full_name %}
+                                
+                                {% if instance.signature7 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature7" >Approve {{instance.subject7}}</a>
+                                </button></td>
+                                {% elif instance.signature7 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject7}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty8 == request.user.full_name %}
+                                
+                                {% if instance.signature8 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature8" >Approve {{instance.subject8}}</a>
+                                </button></td>
+                                {% elif instance.signature8 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject8}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty9 == request.user.full_name %}
+                                
+                                {% if instance.signature9 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature9" >Approve {{instance.subject9}}</a>
+                                </button></td>
+                                {% elif instance.signature9 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject9}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.faculty10 == request.user.full_name %}
+                                
+                                {% if instance.signature10 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature10" >Approve {{instance.subject10}}</a>
+                                </button></td>
+                                {% elif instance.signature10 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject10}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty1 == request.user.full_name %}
+                                
+                                {% if instance.addsignature1 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature1" >Approve {{instance.addsubject1}}</a>
+                                </button></td>
+                                {% elif instance.addsignature1 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject1}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty2 == request.user.full_name %}
+                                
+                                {% if instance.addsignature2 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature2" >Approve {{instance.addsubject2}}</a>
+                                </button></td>
+                                {% elif instance.addsignature2 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject2}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty3 == request.user.full_name %}
+                                
+                                {% if instance.addsignature3 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature3" >Approve {{instance.addsubject3}}</a>
+                                </button></td>
+                                {% elif instance.addsignature3 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject3}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty4 == request.user.full_name %}
+                                
+                                {% if instance.addsignature4 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature4" >Approve {{instance.addsubject4}}</a>
+                                </button></td>
+                                {% elif instance.addsignature4 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject4}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty5 == request.user.full_name %}
+                                
+                                {% if instance.addsignature5 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature5" >Approve {{instance.addsubject5}}</a>
+                                </button></td>
+                                {% elif instance.addsignature5 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject5}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty6 == request.user.full_name %}
+                                
+                                {% if instance.addsignature6 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature6" >Approve {{instance.addsubject6}}</a>
+                                </button></td>
+                                {% elif instance.addsignature6 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject6}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty7 == request.user.full_name %}
+                                
+                                {% if instance.addsignature7 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature7" >Approve {{instance.addsubject7}}</a>
+                                </button></td>
+                                {% elif instance.addsignature7 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject7}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty8 == request.user.full_name %}
+                                
+                                {% if instance.addsignature8 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature8" >Approve {{instance.addsubject8}}</a>
+                                </button></td>
+                                {% elif instance.addsignature8 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject8}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty9 == request.user.full_name %}
+                                
+                                {% if instance.addsignature9 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature9" >Approve {{instance.addsubject9}}</a>
+                                </button></td>
+                                {% elif instance.addsignature9 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject9}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                            {% if instance.addfaculty10 == request.user.full_name %}
+                                
+                                {% if instance.addsignature10 == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature10" >Approve {{instance.addsubject10}}</a>
+                                </button></td>
+                                {% elif instance.addsignature10 == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject10}}✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                            
+                            {% if instance.instructor_name == request.user.full_name %}
+                                
+                                {% if instance.sitsignature == f_n_unapproved %}
+                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/sitsignature" >Approve SIT Subject</a>
+                                </button></td>
+                                {% elif instance.sitsignature == f_n_approved %} 
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">SIT Subject✔️</td>
+                                {% else %}
+                                <td>—</td>
+                                {% endif %}
+                                {% else %}
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
+                                {% endif %}
+                                
+                                    
+                                        
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
         <p class="text-center text-bold" id="p6_53"></p>
 
         <!--APPROVED TAB-->
@@ -936,6 +1339,80 @@
 
 
 <script>
+    const save_signature = document.querySelector('#save_signature');
+    const signature_pad = document.querySelector('#signature_pad');
+    const imgConverted = document.querySelector('#imgConverted');
+
+    const ctx = signature_pad.getContext("2d");
+
+    signature_pad.addEventListener("click", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        
+        console.log(dataURI);
+        document.getElementById('image_encoded').value = dataURI;
+        //imgConverted.src = dataURI;
+    });
+
+    //show create signature are
+    create_sig_btn.addEventListener("click", function() {
+        document.getElementById("create_signature_area").style.visibility ="visible";
+        document.getElementById("create_signature_area").hidden = false;
+        document.getElementById("submit_signature").hidden = false;
+        document.getElementById("signature_display").hidden = true;
+        document.getElementById("button_area").hidden = true;
+    });
+
+    upload_sig_btn.addEventListener("click", function() {
+        document.getElementById("create_signature_area").hidden = true;
+        document.getElementById("new_upload_signature_area").hidden = false;
+        document.getElementById("submit_signature").hidden = false;
+        document.getElementById("signature_display").hidden = true;
+        document.getElementById("button_area").hidden = true;
+    });
+
+    cancel_create.addEventListener("click", function() {
+        document.getElementById("create_signature_area").hidden =true;
+        document.getElementById("submit_signature").hidden = true;
+        document.getElementById("signature_display").hidden = false;
+        document.getElementById("button_area").hidden = false;
+        signaturePad.clear();
+        document.getElementById('image_encoded').value = "";
+    });
+
+    cancel_upload.addEventListener("click", function() {
+        document.getElementById("new_upload_signature_area").hidden = true;
+        document.getElementById("submit_signature").hidden = true;
+        document.getElementById("signature_display").hidden = false;
+        document.getElementById("button_area").hidden = false;
+        document.getElementById('uploaded_signature_new').value =null;
+        document.getElementById('preview').src ="";
+    });
+    
+
+    var loadFile = function(event) {
+        var image = document.getElementById('preview');
+        image.src=URL.createObjectURL(event.target.files[0]);
+    };
+
+    //signature
+    var canvas = document.getElementById("signature_pad");
+    function resizeCanvas() {
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+
+    var signaturePad = new SignaturePad(canvas, {
+     backgroundColor: 'rgb(250,250,250)'
+    });
+    
+    document.getElementById("clear").addEventListener('click', function(){
+     signaturePad.clear();
+    });
+
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }

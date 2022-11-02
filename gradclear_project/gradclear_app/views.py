@@ -1,6 +1,11 @@
 import email
 from genericpath import exists
 import profile
+<<<<<<< HEAD
+=======
+import imghdr
+from queue import Empty
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, render
@@ -19,9 +24,22 @@ from reportlab.lib.colors import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-import my_csv, io
+import my_csv, csv,  io
 from textwrap import wrap
 from django.db import connection
+<<<<<<< HEAD
+=======
+import base64
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.storage import default_storage
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import render
+import datetime
+from datetime import datetime
+import os
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
 
 
 def graduation_print(request, id):
@@ -743,9 +761,7 @@ def appointmentgrad(request, id):
     messages.success(request, "Email Sent.")
     return redirect('faculty_dashboard_graduation_list')
 
-def reg_appointmentgrad(request, id):
-    print('a')
-
+def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
     email = user_table.objects.filter(
@@ -753,15 +769,16 @@ def reg_appointmentgrad(request, id):
 
     rec_email = email[0]
 
-    subject = 'HELLO'
+    subject = 'Request for Graduation Form'
+    # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
+    message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+    message2 = 'Your request for Graduation Form'+\
+        ' has been approved and now availbale for printing. Follow the guidelines below for the printing of your Graduation Form. Thank you! <br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
+    message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
 
-    message1 = 'sdfjhsdkfhskdfhjds,<br><br>'
-    message2 = 'Mr./Ms. ' + "<strong>" + request.user.last_name + "</strong>" + \
-        ' would like to speak with you regarding with the application form you requested. Contact him/her through this email "' + \
-        request.user.email + '".<br>'
-    message3 = '<br> <br>Note: This is an automated message, do not reply.'
+    message = message1 + message2 + message3 + message4
 
-    message = message1 + message2 + message3
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
@@ -769,8 +786,100 @@ def reg_appointmentgrad(request, id):
     msg.send()
 
     messages.success(request, "Email Sent.")
-    return redirect('registrar_dashboard')
+    return redirect('/registrar_dashboard_graduation_list/%20')
 
+def regclear_appointment(request,id):
+    email_temp = clearance_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+    email = user_table.objects.filter(
+        username=email_temp[0]).values_list('email', flat=True).distinct()
+
+    rec_email = email[0]
+
+    subject = 'Request for Clearance Form'
+    # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
+    message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+    message2 = 'Your request for Clearance Form'+\
+        ' has been approved and now availbale for printing. Follow the guidelines below for the printing of your Clearance Form. Thank you! <br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
+    message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
+
+    message = message1 + message2 + message3 + message4
+
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [rec_email, ]
+    msg = EmailMessage(subject, message, email_from, recipient_list,)
+    msg.content_subtype = "html"
+    msg.send()
+
+    messages.success(request, "Email Sent.")
+    return redirect('/registrar_dashboard_clearance_list/%20')
+
+def request_appointment(request,id):
+    if request.method == 'POST':
+        email_temp = request_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
+        email = user_table.objects.filter(
+            username=email_temp[0]).values_list('email', flat=True).distinct()
+        rec_email = email[0]
+        recipient_list = [rec_email, ]
+
+        purpose = request_form_table.objects.filter(
+        id=id).values_list('request', flat=True).distinct()
+        purpose_of = request_form_table.objects.filter(
+            request=purpose[0]).values_list('request', flat=True).distinct()
+        purpose_of_req =  purpose_of[0]
+        purpose_of_request = purpose_of_req, 
+
+        name = request_form_table.objects.filter(
+        id=id).values_list('name', flat=True).distinct()
+        s_name = request_form_table.objects.filter(
+            name=name[0]).values_list('name', flat=True).distinct()
+        student_name =  s_name[0]
+        
+
+        subject = 'Appointment for Request Credential Form'
+        # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
+        message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+        message2 = 'Your request '+\
+            ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
+        message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
+
+        message = message1 + message2 + message3 + message4
+
+        purpose_req = request.POST.get('purpose_of_request')
+        date_appointment = request.POST.get('date_appointment')
+        time_appointment = request.POST.get('time_appointment')
+        additionalmessage = request.POST.get('additionalmessage')
+        email = request.POST.get('email')
+       
+        
+        
+        data = {
+                'purpose_of_request': purpose_of_req,
+                'student_name': student_name,
+                'date_appointment': date_appointment, 
+                'time_appointment': time_appointment, 
+                'subject': subject, 
+                'message': message,
+                'additionalmessage': additionalmessage,
+        }
+        message='''{}
+        <strong>Purpose of Request:</strong>\n\t\t{}\n<br>
+        <strong>Name:</strong>\n\t\t{}\n<br>
+        <strong>Date:</strong>\n\t\t{}\n<br>
+        <strong>Time:</strong>\n\t\t{}\n<br>
+        <strong>Additonal Message:</strong>\n\t\t{}\n<br>
+        
+        '''''.format(data['message'], data ['purpose_of_request'], data ['student_name'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html"
+        msg.send()
+        messages.success(request, "Appointment Schedule Sent.")
+        return redirect('registrar_dashboard_request_list')
+    else:
+        return render(request, 'html_files/appointment.html', {})
 
 def login_user(request):
     if request.method == "POST":
@@ -897,6 +1006,47 @@ def faculty_registration(request):
             form.instance.user_type = "FACULTY"
             form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
+            
+            agreement = request.POST.get('agreement')
+            chosen_SignatureType = request.POST.get('signature_type')
+            
+            if agreement == "AGREED":
+                if chosen_SignatureType =="ESIGN":
+                    esign_signature = request.POST.get('image_encoded')
+            
+                    if esign_signature == "":
+                        messages.error(request, "Signature Pad is BLANK. Please create your Signature.")
+                        
+                        return redirect(faculty_registration)
+                    else:
+                        image_decode = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
+
+                        file_name = 'Media/signatures/' + last + ", " + first + " " + middle + '_APPROVED.png'
+
+                        # Create image file from base64 and saved in MEDIA file
+                        with open(file_name, 'wb') as img_file:
+                            img_file.write(image_decode)
+                            #file name saved in the database
+                            form.instance.uploaded_signature = 'signatures/' + last + ", " + first + " " + middle + '_APPROVED.png'
+                            form.instance.time_savedsignature = datetime.now()
+                            
+                elif chosen_SignatureType =="UPLOAD":
+                    if bool(form.cleaned_data.get('uploaded_signature')) == False:
+                        messages.error(request, "No New Signature Saved. Please Try Again.")
+                        return redirect(faculty_registration)  
+                    else:
+                        print('Signature Uploaded Saved')
+                        
+                else:
+                    messages.error(request, "Type of Signature is Missing")
+                    return redirect(faculty_registration)
+                
+            elif agreement == "DECLINE":
+                form.instance.uploaded_signature = "DECLINE"
+                form.instance.time_savedsignature = datetime.now()
+            else:
+                messages.error(request, "Approval Type is not determine")
+                return redirect(faculty_registration)
 
             form.save()
             messages.success(
@@ -908,7 +1058,7 @@ def faculty_registration(request):
                 request, "There is an error with your form. Try again.")
     img_object = form.instance
     user_identifier = "FACULTY"
-    context = {'form': form, 'img_object': img_object, 'user': user_identifier}
+    context = {'form': form,'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
 
@@ -979,32 +1129,31 @@ def student_dashboard(request):
         if check_form137.exists():
             if check_form137[0] == '❌':
                 print('Missing FORM 137-A')
-                display.append("*Form 137-A")
+                display.append("FORM 137-A")
                 
         elif check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
                     print(check_form137_inrequest)
                     print('Missing FORM 137-A')
-                    display.append("*Form 137-A")  
+                    display.append("FORM 137-A")  
                 else:
                     pass
         else:
             pass
                   
         if not check_clearance:
-            display.append("*Clearance")
+            display.append("CLEARANCE")
         else:
-            if check_clearance[0] == 'ON PROGRESS':
-                print('Clearance Pending')
-                display.append("*Clearance (ON PROGRESS)")
+            if check_clearance[0] != 'APPROVED':
+                display.append("CLEARANCE (ON PROGRESS)")
                 
         if not check_graduation:
             pass
         else:
-            if check_graduation[0] == 'ON PROGRESS':
+            if check_graduation[0] != 'APPROVED':
                 print('Clearance Pending')
-                display.append("* Graduation Form (ON PROGRESS)")
+                display.append("GRADUATION (ON PROGRESS)")
   
     else:
         messages.error(
@@ -1519,7 +1668,14 @@ def faculty_dashboard(request):
 
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
+<<<<<<< HEAD
     
+=======
+    signature = request.user.uploaded_signature
+    signature_datetime = request.user.signature_timesaved
+    id_Facultynumber = request.user.id
+    print(signature)
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
     f_n_unapproved = request.user.full_name + "_UNAPPROVED"
     f_n_approved = request.user.full_name + "_APPROVED"
     st = ""
@@ -1532,7 +1688,11 @@ def faculty_dashboard_clearance_list(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/') 
+<<<<<<< HEAD
     return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv})
+=======
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
 
 @login_required(login_url='/')
 def update_clearance(request, id, dep):
@@ -1673,9 +1833,21 @@ def update_clearance(request, id, dep):
 @login_required(login_url='/')
 def faculty_dashboard_graduation_list(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
+<<<<<<< HEAD
         f_n_unapproved= request.user.full_name + "_UNAPPROVED"
         f_n_approved= request.user.full_name + "_APPROVED"
 
+=======
+        #signature
+        signature = request.user.uploaded_signature
+        signature_datetime = request.user.signature_timesaved
+        id_Facultynumber = request.user.id
+        print(signature)
+
+        f_n_unapproved= request.user.full_name + "_UNAPPROVED"
+        f_n_approved= request.user.full_name + "_APPROVED"
+
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
         st= graduation_form_table.objects.all()
         
     else:
@@ -1683,7 +1855,11 @@ def faculty_dashboard_graduation_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
+<<<<<<< HEAD
     return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved})
+=======
+    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
+>>>>>>> 267cf20f1dbed18efdbf706d0e104b5210d37d18
 
 @login_required(login_url='/')
 def update_graduation(request, id, sig):
@@ -2289,28 +2465,579 @@ def reg_updateContact(request):
 
 @login_required(login_url='/')
 def display_clearform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "FACULTY" or "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "FACULTY" or "REGISTRAR":
         clearance = clearance_form_table.objects.filter(id=id).values()
+        
+        #Signature Display
+        #ACCOUNTANT
+        check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            accountant = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
+            acc_sig = str(faculty_approved[0])
+            fac_name_get = acc_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            account_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            accountant = account_sig[0]
+            
+        #COURSE ADVISER
+        check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            course_adviser = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
+            adviser_sig = str(faculty_approved[0])
+            fac_name_get = adviser_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            course_adviser = ca_sig[0]
+        
+        #LIBERAL ARTS
+        check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            liberal_arts = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
+            lib_sig = str(faculty_approved[0])
+            fac_name_get = lib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            liberal_arts = libart_sig[0]
+        
+        #CAMPUS LIBRARIAN
+        check_status = clearance_form_table.objects.filter(id=id,library_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            campus_library = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
+            camlib_sig = str(faculty_approved[0])
+            fac_name_get = camlib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            campus_library = cam_lib_sig[0]
+        
+        #MATH & SCIENCES
+        check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            math_and_science = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
+            mas_sig = str(faculty_approved[0])
+            fac_name_get = mas_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            math_and_science = mathsci_sig[0]
+            
+        #GUIDANCE COUNCELOR
+        check_status = clearance_form_table.objects.filter(id=id,guidance_office_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            guidance = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('guidance_office_signature', flat=True).distinct()
+            guid_sig = str(faculty_approved[0])
+            fac_name_get = guid_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            guidance = gui_sig[0]
+        
+        #DPECS
+        check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            dpecs = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
+            pe_sig = str(faculty_approved[0])
+            fac_name_get = pe_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            dpecs = pe_dept_sig[0]
+        
+        #OSA
+        check_status = clearance_form_table.objects.filter(id=id,osa_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            osa = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('osa_signature', flat=True).distinct()
+            student_osa_sig = str(faculty_approved[0])
+            fac_name_get = student_osa_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            student_affairs_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            osa = student_affairs_sig[0]
+        
+        #ADAA
+        check_status = clearance_form_table.objects.filter(id=id,academic_affairs_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            adaa = "UNAPPROVED"
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('academic_affairs_signature', flat=True).distinct()
+            asst_dir_acad_sig = str(faculty_approved[0])
+            fac_name_get = asst_dir_acad_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            adaa = adaa_sig[0]
+        
+        #INDUSTRIAL
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            industrial = "UNAPPROVED"
+            it_department = "NONE"
+        else:
+            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                ieduc = str(faculty_approved[0])
+                fac_name_get = ieduc.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = ieduc_sig[0]
+                it_department = "EDUCATOR"
+            
+            if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                it = str(faculty_approved[0])
+                fac_name_get = it.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = it_dept_sig[0]
+                it_department = "TECHNOLOGIES"
+                
+            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                eng = str(faculty_approved[0])
+                fac_name_get = eng.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = eng_dept_sig[0]
+                it_department = "ENGINEERS"
+ 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
+    context = {
+        'clearance': clearance, 
+        'accountant': accountant,
+        'liberal_arts': liberal_arts,
+        'math_and_science': math_and_science,
+        'dpecs' : dpecs,
+        'industrial': industrial,
+        'it_department' : it_department,
+        'course_adviser' : course_adviser,
+        'campus_library' : campus_library,
+        'guidance' : guidance,
+        'osa' : osa,
+        'adaa' : adaa 
+    }
 
     print('running')
-    return render(request, 'html_files/clearance_form_display.html', {'clearance': clearance})
+    return render(request, 'html_files/clearance_form_display.html', context)
 
 
 @login_required(login_url='/')
 def display_gradform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "FACULTY" or "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "OLD STUDENT" or "ALUMNUS" or "FACULTY" or "REGISTRAR":
         graduation = graduation_form_table.objects.filter(id=id).values()
+        
+        #SUBJECT #1
+        check_status = graduation_form_table.objects.filter(id=id,signature1__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature1 = 'NO_APPROVED')
+        if check_status:
+            subject_1 = "UNAPPROVED"
+        elif check_signature:
+            subject_1 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature1', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_1 = faculty1_sig[0]
+            
+        #SUBJECT #2
+        check_status = graduation_form_table.objects.filter(id=id,signature2__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature2 = 'NO_APPROVED')
+        if check_status:
+            subject_2 = "UNAPPROVED"
+        elif check_signature:
+            subject_2 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature2', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty2_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_2 = faculty2_sig[0]
+        
+        #SUBJECT #3
+        check_status = graduation_form_table.objects.filter(id=id,signature3__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature3 = 'NO_APPROVED')
+        if check_status:
+            subject_3 = "UNAPPROVED"
+        elif check_signature:
+            subject_3 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature3', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty3_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_3 = faculty3_sig[0]
+        
+        #SUBJECT #4
+        check_status = graduation_form_table.objects.filter(id=id,signature4__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature4 = 'NO_APPROVED')
+        if check_status:
+            subject_4 = "UNAPPROVED"
+        elif check_signature:
+            subject_4 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature4', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty4_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_4 = faculty4_sig[0]
+            
+        #SUBJECT #5
+        check_status = graduation_form_table.objects.filter(id=id,signature5__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature5 = 'NO_APPROVED')
+        if check_status:
+            subject_5 = "UNAPPROVED"
+        elif check_signature:
+            subject_5 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature5', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty5_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_5 = faculty5_sig[0]
+        
+        #SUBJECT #6
+        check_status = graduation_form_table.objects.filter(id=id,signature6__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature6 = 'NO_APPROVED')
+        if check_status:
+            subject_6 = "UNAPPROVED"
+        elif check_signature:
+            subject_6 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature6', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty6_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_6 = faculty6_sig[0]
+            
+        #SUBJECT #7
+        check_status = graduation_form_table.objects.filter(id=id,signature7__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature7 = 'NO_APPROVED')
+        if check_status:
+            subject_7 = "UNAPPROVED"
+        elif check_signature:
+            subject_7 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature7', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty7_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_7 = faculty7_sig[0]
+            
+        #SUBJECT #8
+        check_status = graduation_form_table.objects.filter(id=id,signature8__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature8 = 'NO_APPROVED')
+        if check_status:
+            subject_8 = "UNAPPROVED"
+        elif check_signature:
+            subject_8 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature8', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty8_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_8 = faculty8_sig[0]
+        
+        #SUBJECT #9
+        check_status = graduation_form_table.objects.filter(id=id,signature9__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature9 = 'NO_APPROVED')
+        if check_status:
+            subject_9 = "UNAPPROVED"
+        elif check_signature:
+            subject_9 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature9', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty9_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_9 = faculty9_sig[0]
+            
+        #SUBJECT #10
+        check_status = graduation_form_table.objects.filter(id=id,signature10__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,signature10 = 'NO_APPROVED')
+        if check_status:
+            subject_10 = "UNAPPROVED"
+        elif check_signature:
+            subject_10 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('signature10', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            faculty10_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            subject_10 = faculty10_sig[0]
+            
+        #ADD SUBJECT #1
+        check_status = graduation_form_table.objects.filter(id=id,addsignature1__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature1 = 'NO_APPROVED')
+        if check_status:
+            addsubject_1 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_1 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature1', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_1 = addfaculty1_sig[0]
+            
+        #ADD SUBJECT #2
+        check_status = graduation_form_table.objects.filter(id=id,addsignature2__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature2 = 'NO_APPROVED')
+        if check_status:
+            addsubject_2 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_2 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature2', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty2_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_2 = addfaculty2_sig[0]
+        
+        #ADD SUBJECT #3
+        check_status = graduation_form_table.objects.filter(id=id,addsignature3__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature3 = 'NO_APPROVED')
+        if check_status:
+            addsubject_3 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_3 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature3', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty3_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_3 = addfaculty3_sig[0]
+        
+        #ADD SUBJECT #4
+        check_status = graduation_form_table.objects.filter(id=id,addsignature4__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature4 = 'NO_APPROVED')
+        if check_status:
+            addsubject_4 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_4 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature4', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty4_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_4 = addfaculty4_sig[0]
+            
+        #ADD SUBJECT #5
+        check_status = graduation_form_table.objects.filter(id=id,addsignature5__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature5 = 'NO_APPROVED')
+        if check_status:
+            addsubject_5 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_5 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature5', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty5_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_5 = addfaculty5_sig[0]
+        
+        #ADD SUBJECT #6
+        check_status = graduation_form_table.objects.filter(id=id,addsignature6__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature6 = 'NO_APPROVED')
+        if check_status:
+            addsubject_6 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_6 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature6', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty6_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_6 = addfaculty6_sig[0]
+            
+        #ADD SUBJECT #7
+        check_status = graduation_form_table.objects.filter(id=id,addsignature7__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature7 = 'NO_APPROVED')
+        if check_status:
+            addsubject_7 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_7 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature7', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty7_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_7 = addfaculty7_sig[0]
+            
+        #ADD SUBJECT #8
+        check_status = graduation_form_table.objects.filter(id=id,addsignature8__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature8 = 'NO_APPROVED')
+        if check_status:
+            addsubject_8 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_8 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature8', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty8_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_8 = addfaculty8_sig[0]
+        
+        #ADD SUBJECT #9
+        check_status = graduation_form_table.objects.filter(id=id,addsignature9__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature9 = 'NO_APPROVED')
+        if check_status:
+            addsubject_9 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_9 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature9', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty9_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_9 = addfaculty9_sig[0]
+            
+        #ADD SUBJECT #10
+        check_status = graduation_form_table.objects.filter(id=id,addsignature10__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature10 = 'NO_APPROVED')
+        if check_status:
+            addsubject_10 = "UNAPPROVED"
+        elif check_signature:
+            addsubject_10 = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('addsignature10', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            addfaculty10_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            addsubject_10 = addfaculty10_sig[0]
+        
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
+    context = {
+        'graduation': graduation,
+        'subject_1' : subject_1,
+        'subject_2' : subject_2,
+        'subject_3' : subject_3,
+        'subject_4' : subject_4,
+        'subject_5' : subject_5,
+        'subject_6' : subject_6,
+        'subject_7' : subject_7,
+        'subject_8' : subject_8,
+        'subject_9' : subject_9,
+        'subject_10' : subject_10,
+        'addsubject_1' : addsubject_1,
+        'addsubject_2' : addsubject_2,
+        'addsubject_3' : addsubject_3,
+        'addsubject_4' : addsubject_4,
+        'addsubject_5' : addsubject_5,
+        'addsubject_6' : addsubject_6,
+        'addsubject_7' : addsubject_7,
+        'addsubject_8' : addsubject_8,
+        'addsubject_9' : addsubject_9,
+        'addsubject_10' : addsubject_10
+    }
     print('running')
-    return render(request, 'html_files/graduation_form_display.html', {'graduation': graduation})
+    return render(request, 'html_files/graduation_form_display.html', context)
 
 
 @login_required(login_url='/')
@@ -2405,6 +3132,11 @@ def registrar_dashboard_faculty_list(request):
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
     user_table.objects.filter(id=id).update(designation=form_change)
+    
+    if form_change == "---":
+        user_table.objects.filter(id=id).update(position="FACULTY")
+    else:
+        user_table.objects.filter(id=id).update(position="HEAD")
     return redirect(registrar_dashboard_faculty_list)
 
 #STUDENT LIST
@@ -2427,11 +3159,37 @@ def registrar_dashboard_alumni_list(request):
     context = {'data':alumnus_data}
     return render(request, template, context)
 
-#REQUEST LIST AND DOCUMENT CHECKER LIST
+#REQUEST LIST AND DOCUMENT CHECKER LIST 
+#REQUEST LIST WITH ORGANIZER
 @login_required(login_url='/')
+def registrar_dashboard_organize_request_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        
+        sorter = request.POST.get('request_table_organizer')
+        
+        if id == "CLAIMED":
+            requests = request_form_table.objects.filter(claim = "CLAIMED").order_by('-time_requested').values()
+        elif id =="UNCLAIMED":
+            requests = request_form_table.objects.filter(claim = "UNCLAIMED").order_by('-time_requested').values()
+        elif id =="OLDEST":
+            requests = request_form_table.objects.all().order_by('time_requested').values()
+        elif id =="LATEST":
+            requests = request_form_table.objects.all().order_by('-time_requested').values()
+        else:
+            requests = request_form_table.objects.all().order_by('-time_requested').values()
+            
+        doc = Document_checker_table.objects.all().values()
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    
+    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+
+#DEFAULT PAGE
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
-        requests = request_form_table.objects.all().order_by('-id').values()
+        requests = request_form_table.objects.all().order_by('-time_requested').values()
         doc = Document_checker_table.objects.all().values()
     else:
         messages.error(
@@ -2466,6 +3224,7 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
+
         print(user)            
         if request.method == "POST":
             form = request_form
@@ -2503,6 +3262,7 @@ def request_form(request):
     return render(request,'html_files/Request form.html', context)
 
 #UPLOAD DOCUMENT CHECKER LIST
+@login_required(login_url='/')
 def upload_document_checker(request):
       # declaring template
     template = "html_files/Request List.html"
@@ -2524,7 +3284,7 @@ def upload_document_checker(request):
     
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in my_csv.reader(io_string, delimiter=',', quotechar='"'):
+    for column in csv.reader(io_string, delimiter=',', quotechar='"') or my_csv.reader(io_string, delimiter=',', quotechar='"'):
         _, created = Document_checker_table.objects.update_or_create(
             name = column[0],
             form_137 = column[1],
@@ -2539,15 +3299,131 @@ def upload_document_checker(request):
     context = {'data':requests,'data2':data}
     return render(request, template, context)
 
-#OPEN SIGNATURE PLATFORM
-#CLEARANCE
-def signature_open_clearance(request, id):
-    to_be_signed = clearance_form_table.objects.filter(id=id)
-    signal = "OPEN"
-    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
+#UPDATE SIGNATURE
+@login_required(login_url='/')
+def update_clearance_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        create_signature = request.POST.get('image_encoded')
+        uploaded_signature = request.FILES.get('new_upload_signature', False)
+        signature_timesaved = datetime.now()
+        full_name = request.user.full_name
+        
+        if create_signature =="":
+            if bool(uploaded_signature) == False:
+                messages.error(request, "No New Signature Saved. Please Try Again.")
+            else:
+                recent_sig = request.user.uploaded_signature
+                print(str(recent_sig))
+                if os.path.exists("Media/" + str(recent_sig)):
+                    os.remove("Media/" + str(recent_sig))
+                        
+                file_name ="signatures/"+ str(uploaded_signature)
+                        
+                fs = FileSystemStorage()
+                        
+                filename = fs.save(file_name, uploaded_signature)
+                uploaded_file_url = fs.url(filename)
+                print(uploaded_file_url)
+                        
+                user_table.objects.filter(id=id).update(uploaded_signature=file_name)
+                user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        else:
+            #remove recent signature
+            recent_sig = request.user.uploaded_signature
+            if os.path.exists("Media/" + str(recent_sig)):
+                os.remove("Media/" + str(recent_sig))
+                    
+            #save signature in the storage       
+            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
+            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
+            # Create image file from base64
+            with open(file_name, 'wb') as img_file:
+                img_file.write(image_decode)
+                print("saved")
+                    
+                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            
+            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            
+    return redirect(faculty_dashboard_clearance_list)
 
-#GRADUATION
-def signature_open_graduation(request, id):
-    to_be_signed = graduation_form_table.objects.filter(id=id)
-    signal = "OPEN"
-    return render(request,'html_files/5.2Faculty Clearance List.html', {'st':to_be_signed, 'signal':signal})
+#UPDATE SIGNATURE IN GRADUATION
+@login_required(login_url='/')
+def update_grad_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        create_signature = request.POST.get('image_encoded')
+        uploaded_signature = request.FILES.get('new_upload_signature', False)
+        signature_timesaved = datetime.now()
+        full_name = request.user.full_name
+        
+        if create_signature =="":
+            if bool(uploaded_signature) == False:
+                messages.error(request, "No New Signature Saved. Please Try Again.")
+            else:
+                recent_sig = request.user.uploaded_signature
+                print(str(recent_sig))
+                if os.path.exists("Media/" + str(recent_sig)):
+                    os.remove("Media/" + str(recent_sig))
+                        
+                file_name ="signatures/"+ str(uploaded_signature)
+                        
+                fs = FileSystemStorage()
+                        
+                filename = fs.save(file_name, uploaded_signature)
+                uploaded_file_url = fs.url(filename)
+                print(uploaded_file_url)
+                        
+                user_table.objects.filter(id=id).update(uploaded_signature=file_name)
+                user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        else:
+            #remove recent signature
+            recent_sig = request.user.uploaded_signature
+            if os.path.exists("Media/" + str(recent_sig)):
+                os.remove("Media/" + str(recent_sig))
+                    
+            #save signature in the storage       
+            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
+            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
+            # Create image file from base64
+            with open(file_name, 'wb') as img_file:
+                img_file.write(image_decode)
+                print("saved")
+                    
+                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            
+            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            
+    return redirect(faculty_dashboard_graduation_list)
+
+#DELETE SIGNATURE
+@login_required(login_url='/')
+def delete_clearance_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        recent_sig = request.user.uploaded_signature
+        signature_timesaved = datetime.now()
+        signature_saved = "DECLINE"
+        print(str(recent_sig))
+        if os.path.exists("Media/" + str(recent_sig)):
+            os.remove("Media/" + str(recent_sig))
+
+        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
+        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        
+    return redirect(faculty_dashboard_clearance_list)
+
+@login_required(login_url='/')
+def delete_graduation_signature(request, id):
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        recent_sig = request.user.uploaded_signature
+        signature_timesaved = datetime.now()
+        signature_saved = "DECLINE"
+        print(str(recent_sig))
+        if os.path.exists("Media/" + str(recent_sig)):
+            os.remove("Media/" + str(recent_sig))
+
+        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
+        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+        
+    return redirect(faculty_dashboard_graduation_list)

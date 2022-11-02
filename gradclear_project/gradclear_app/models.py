@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
 import datetime
+from PIL import Image
+from distutils.command.upload import upload
 
 class user_table(AbstractUser):
 
@@ -93,7 +95,9 @@ class user_table(AbstractUser):
         max_length=100, verbose_name="Email Address")
     user_type = models.CharField(max_length=100, verbose_name="User Type")
     username = models.CharField(max_length=100, unique=True)
-    profile_picture = models.ImageField(upload_to='uploads/') # PIP INSTALL PILLOW
+    profile_picture = models.ImageField(upload_to='uploads/')
+    uploaded_signature = models.ImageField(upload_to='signatures/',blank=True)# PIP INSTALL PILLOW
+    signature_timesaved = models.DateTimeField(auto_now_add=True)
     REQUIRED_FIELDS = ('email',)
     
     # WHAT SHOWS IN ADMIN PAGE
@@ -158,14 +162,11 @@ class clearance_form_table(models.Model):
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
     course_adviser = models.CharField(max_length=100,
         verbose_name="Course Adviser", default="NONE")
-    course_adviser_signature = models.CharField(max_length=45,
-        verbose_name="Course Adviser Signature", default="UNAPPROVED")
+    course_adviser_signature = models.ImageField(upload_to='signature/')
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     
     time_requested = models.DateTimeField(auto_now_add=True)
-
-
 
     def __str__(self):
         return self.student_id
