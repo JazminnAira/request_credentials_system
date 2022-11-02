@@ -133,30 +133,30 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
 
     approval_status = models.CharField(max_length=15,
-        verbose_name="Approval Status", default="ON PROGRESS")
-    liberal_arts_signature = models.CharField(max_length=15,
+        verbose_name="Approval Status", default="0")
+    liberal_arts_signature = models.CharField(max_length=100,
         verbose_name="Liberal Art Signature", default="UNAPPROVED")
-    accountant_signature = models.CharField(max_length=15,
+    accountant_signature = models.CharField(max_length=100,
         verbose_name="Accountant Signature", default="UNAPPROVED")
-    mathsci_dept_signature = models.CharField(max_length=15,
+    mathsci_dept_signature = models.CharField(max_length=100,
         verbose_name="Math and Science Signature", default="UNAPPROVED")
-    pe_dept_signature = models.CharField(max_length=15,
+    pe_dept_signature = models.CharField(max_length=100,
         verbose_name="P.E. Signature", default="UNAPPROVED")
-    ieduc_dept_signature = models.CharField(max_length=15,
+    ieduc_dept_signature = models.CharField(max_length=100,
         verbose_name="Industrial Educ. Signature", default="UNAPPROVED")
-    it_dept_signature = models.CharField(max_length=15,
+    it_dept_signature = models.CharField(max_length=100,
         verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
-    ieng_dept_signature = models.CharField(max_length=15,
+    ieng_dept_signature = models.CharField(max_length=100,
         verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
-    library_signature = models.CharField(max_length=15,
+    library_signature = models.CharField(max_length=100,
         verbose_name="Library Signature", default="UNAPPROVED")
-    guidance_office_signature = models.CharField(max_length=15,
+    guidance_office_signature = models.CharField(max_length=100,
         verbose_name="Guidance Signature", default="UNAPPROVED")
-    osa_signature = models.CharField(max_length=15,
+    osa_signature = models.CharField(max_length=100,
         verbose_name="OSA Signature", default="UNAPPROVED")
-    academic_affairs_signature = models.CharField(max_length=15,
+    academic_affairs_signature = models.CharField(max_length=100,
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
-    course_adviser = models.CharField(max_length=45,
+    course_adviser = models.CharField(max_length=100,
         verbose_name="Course Adviser", default="NONE")
     course_adviser_signature = models.CharField(max_length=45,
         verbose_name="Course Adviser Signature", default="UNAPPROVED")
@@ -938,7 +938,7 @@ class graduation_form_table(models.Model):
     purpose_of_request = models.CharField(max_length=100, verbose_name="Purpose of Request",
                                         default="Graduation Form", null=True)
     approval_status = models.CharField(max_length=15,
-        verbose_name="Approval Status", default="ON PROGRESS")
+        verbose_name="Approval Status", default="0")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
 
