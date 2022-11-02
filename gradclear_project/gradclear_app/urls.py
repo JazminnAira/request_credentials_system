@@ -68,11 +68,11 @@ urlpatterns = [
      path('set_appointment/<int:id>', set_appointment, name='set_appointment'),
      path('appointment/<int:id>', views.appointment, name='appointment'),
      path('appointmentgrad/<int:id>', views.appointmentgrad, name='appointmentgrad'),
-      path('reg_appointmentgrad/<int:id>', views.reg_appointmentgrad, name='reg_appointmentgrad'),
      path('clearance_print/<str:id>', clearance_print, name='clearance_print'),
      path('graduation_print/<str:id>', graduation_print, name='graduation_print'),
      path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
-     path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment')
+     path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
+     path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
     
     ] 
 

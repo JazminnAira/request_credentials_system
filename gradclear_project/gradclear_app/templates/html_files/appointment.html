@@ -405,7 +405,7 @@ Adviser:
                         <h3 class="modal-title w-100 text-center">Appointment</h3>
 
                          <!--MODAL CLOSE BUTTON-->
-                         <a href="{% url 'registrar_dashboard' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                         <a href="{% url 'registrar_dashboard_request_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
                        
                     </div>
 
@@ -419,7 +419,7 @@ Adviser:
                                         <!--SUBJECT-->
                                         <div class="form-group">
                                             <label for="cnum">Subject:</label>
-                                            <input type="text" id="subject" name="subject" value="Appointment Request for Graduation Form"class="form-control input-field" 
+                                            <input type="text" id="subject" name="subject" value="Appointment for Request Credential Form"class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
                                             <p id="scn_error_01"></p>
                                         </div>
@@ -464,7 +464,7 @@ Adviser:
     </section>
     <ul>
         <li>
-            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
                 <i class="fa fa-home"></i>
             </a>
         </li>
