@@ -1,3 +1,14 @@
+<!--
+BET-COET-3A 2021-2023
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -451,9 +462,9 @@
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
                                             <select onchange="this.form.submit()" name="form137_select" id="changer"> 
-                                                    <option value="">{{instance.form_137}}
-                                                    <option value="✔">✔
-                                                    <option value="❌">❌
+                                                    <option value="">{{instance.form_137}}</option>
+                                                    <option value="✔">✔</option>
+                                                    <option value="❌">❌</option>
                                                 </select>
                                         </form> 
                                     </td>
@@ -461,9 +472,9 @@
                                         <form name="change_TOR" id="change" action="request_TOR_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
                                                 <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
-                                                    <option value="">{{instance.TOR}}
-                                                    <option value="✔">✔
-                                                    <option value="❌">❌
+                                                    <option value="">{{instance.TOR}}</option>
+                                                    <option value="✔">✔</option>
+                                                    <option value="❌">❌</option>
                                                 </select>
                                         </form> 
                                     </td>
@@ -471,9 +482,9 @@
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
                                                 <select onchange="this.form.submit()" name="or_select" id="changer"> 
-                                                    <option value="">{{instance.official_receipt}}
-                                                    <option value="✔">✔
-                                                    <option value="❌">❌
+                                                    <option value="">{{instance.official_receipt}}</option>
+                                                    <option value="✔">✔</option>
+                                                    <option value="❌">❌</option>
                                                 </select>
                                         </form> 
                                     </td>
@@ -483,9 +494,9 @@
                                         <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
                                                 <select onchange="this.form.submit()" name="claim_select" id="changer"> 
-                                                    <option value="">{{instance.claim}}
-                                                    <option value="CLAIMED">CLAIMED
-                                                    <option value="UNCLAIMED">UNCLAIMED
+                                                    <option value="">{{instance.claim}}</option>
+                                                    <option value="CLAIMED">CLAIMED</option>
+                                                    <option value="UNCLAIMED">UNCLAIMED</option>
                                                 </select>
                                             </form> 
                                     </td>  

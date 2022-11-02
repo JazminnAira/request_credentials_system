@@ -1,3 +1,14 @@
+<!--
+BET-COET-3A 2021-2023
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -689,7 +700,7 @@
                     <th class="ins">Instructor's Name and Signature</th>
                 </tr>
             </thead>
-                <tbody id="Add">
+            <tbody id="Add">
                 <tr>
                     <td>{{form.subject1}}</td>
                     <td>
@@ -853,6 +864,7 @@
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
+            </tbody>
             </table><br><br>
 
     
@@ -1987,7 +1999,7 @@ submit_btn_43
         $table.find('tr:gt(' + (numShown - 1) + ')').hide().end()
             .after('<tbody id="more"><tr><td colspan="' +
                 $table.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
-                numMore + '</span> Subject</div</tbody></td></tr>');
+                numMore + '</span> Subject</div></tbody></td></tr>');
 
         $('#more').click(function() {
             numShown = numShown + numMore;
@@ -2017,7 +2029,7 @@ submit_btn_43
         $table1.find('tr:gt(' + (numShown1 - 1) + ')').hide().end()
             .after('<tbody id="more1"><tr><td colspan="' +
                 $table1.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
-                numMore1 + '</span> Subject</div</tbody></td></tr>');
+                numMore1 + '</span> Subject</div></tbody></td></tr>');
 
         $('#more1').click(function() {
             numShown1 = numShown1 + numMore1;

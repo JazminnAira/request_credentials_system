@@ -1,3 +1,14 @@
+<!--
+BET-COET-3A 2021-2023
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -1215,7 +1226,7 @@
         var th = table.tHead, i;
         th && (th = th.rows[0]) && (th = th.cells);
         if (th) i = th.length;
-        else return; // if no `<thead>` then do nothing
+        else return; // if no thead then do nothing
         while (--i >= 0) (function (i) {
             var dir = 1;
             th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});

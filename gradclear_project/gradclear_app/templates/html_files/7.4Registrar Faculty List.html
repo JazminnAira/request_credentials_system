@@ -1,3 +1,14 @@
+<!--
+BET-COET-3A 2021-2023
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -462,19 +473,19 @@
                                 <form name="change_position" id="change" action="faculty_designation_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
                                     <select onchange="this.form.submit()" name="designationSelect" id="changer" class="col-12"> 
-                                        <option value="">{{instance.designation}}
-                                        <option value="---">---
-                                        <option value="ACCOUNTANT">ACCOUNTANT
-                                        <option value="HEAD OF LIBERAL ARTS">HEAD OF LIBERAL ARTS
-                                        <option value="HEAD OF MATH AND SCIENECES">HEAD OF MATH AND SCIENECES
-                                        <option value="HEAD OF DPECS">HEAD OF DPECS
-                                        <option value="HEAD OF INDUSTRIAL TECHNOLOGY">HEAD OF INDUSTRIAL TECHNOLOGY
-                                        <option value="HEAD OF INDUTRIAL EDUCATION ">HEAD OF INDUTRIAL EDUCATION 
-                                        <option value="HEAD OF ENGINEERING ">HEAD OF ENGINEERING 
-                                        <option value="CAMPUS LIBRARIAN">CAMPUS LIBRARIAN
-                                        <option value="GUIDANCE COUNCELOR">GUIDANCE COUNCELOR
-                                        <option value="HEAD OF STUDENT AFFAIRS">HEAD OF STUDENT AFFAIRS
-                                        <option value="ASST. DIR FOR ACADEMIC AFFAIRS">ASST. DIR FOR ACADEMIC AFFAIRS
+                                        <option value="">{{instance.designation}}</option>
+                                        <option value="---">---</option>
+                                        <option value="ACCOUNTANT">ACCOUNTANT</option>
+                                        <option value="HEAD OF LIBERAL ARTS">HEAD OF LIBERAL ARTS</option>
+                                        <option value="HEAD OF MATH AND SCIENECES">HEAD OF MATH AND SCIENECES</option>
+                                        <option value="HEAD OF DPECS">HEAD OF DPECS</option>
+                                        <option value="HEAD OF INDUSTRIAL TECHNOLOGY">HEAD OF INDUSTRIAL TECHNOLOGY</option>
+                                        <option value="HEAD OF INDUTRIAL EDUCATION ">HEAD OF INDUTRIAL EDUCATION</option> 
+                                        <option value="HEAD OF ENGINEERING ">HEAD OF ENGINEERING</option> 
+                                        <option value="CAMPUS LIBRARIAN">CAMPUS LIBRARIAN</option>
+                                        <option value="GUIDANCE COUNCELOR">GUIDANCE COUNCELOR</option>
+                                        <option value="HEAD OF STUDENT AFFAIRS">HEAD OF STUDENT AFFAIRS</option>
+                                        <option value="ASST. DIR FOR ACADEMIC AFFAIRS">ASST. DIR FOR ACADEMIC AFFAIRS</option>
                                     </select>
                                 </form> 
                             </td>
@@ -486,7 +497,7 @@
                         </tr>
                     </tbody>
                     {% endfor %} 
-                </table
+                </table>
             </div>
         </div>
 
@@ -721,5 +732,5 @@
 
         document.getElementById("search_box_74").value = "";
     });
-
+</script>
     
