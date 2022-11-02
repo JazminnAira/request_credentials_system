@@ -183,10 +183,10 @@
     }
     
     #list_tbl_52 td {
-        border-width: 2px 0;
+        border-width: 1px 0;
         border-color: black;
         border-style: solid;
-        padding: 5px 15px;
+        padding: 2px 10px;
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
@@ -378,7 +378,7 @@
         <a><button onClick="return search()" type = "button" id="search_btn">Search</button></a>-->
 
     </div>
-    {% include 'html_files/message.html'%}
+    <div class="div">{% include 'html_files/message.html'%}</div>
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_52"></a>
 
@@ -566,6 +566,7 @@
         <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
             <thead style="height: 70px;">
                 <tr>
+                    <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
                     <th> # </th>
                     <th>Student's Name</th>
                     <th>Course</th>
@@ -573,9 +574,9 @@
                     <th>Purpose of Request</th>
                     <th>Date & Time Requested</th>
                     <th>Appointment</th>
-                    <th id="Viewform"> View Form</th>  
                     <th id="Messagebutton"> Message</th>
-                    <th id="Approvalbutton">Approval Status</th>
+                    <th></th>
+                    <th></th>
                     
                 </tr>
                 <!-- {% if st == ""%}
@@ -584,55 +585,117 @@
                 </tr>
                 {% endif %} -->
                 <tr class="warning no-result">
-                    <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                    <td colspan="11"><i class="fa fa-warning"></i> No result</td>
                 </tr>
             </thead>
             
             {% for instance in st %}
             <tbody>
-                <tr id="Add">        
-                    <td>{{instance.id}}</td>
-                    <td>{{instance.name}}</td> 
-                    <td>{{instance.course}}</td>
-                    <td>{{instance.student_id}}</td>
-                    <td>{{instance.purpose_of_request}}</td>
-                    <td>{{instance.time_requested}}</td>
-                    <td>{{instance.appointment}}</td>
-                    <td><a href="display_clearform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
+                <tr id="Add">    
+                    <td><input type="checkbox" class="check" value={{instance.id}}></td>    
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                    <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.appointment}}</td>
                     <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                        <button class="button" id="appr_btn"><a style="color: #fff;" href="signature_open_clearance/{{ instance.id }}" onclick="fun()">Approve</a></button></td>
-                        
-                    <!-- <td><a data-toggle="modal" data-target="#appointmentmodal"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    -->
-                    <!-- {% if val == 'UNAPPROVED' %}
-                    <script>h3_title.innerText = "Unapproved Students";</script>
-                    
-                    {% elif val == 'APPROVED' %}
-                    <script>h3_title.innerText = "Approved Students";</script>
-                    <td>APPROVED</td>
-
-                    {% elif val == '2' %}
-                    <script>h3_title.innerText = "All Clearance Forms";</script>
-                    {% endif %} -->
-                </tr>
-            </tbody>
-            {% endfor %}
-
-            
-            {% for instance in st1 %}
-            <tbody>
-                <tr id="Add">        
-                    <td>{{instance.id}}</td>
-                    <td>{{instance.name}}</td> 
-                    <td>{{instance.course}}</td>
-                    <td>{{instance.student_id}}</td>
-                    <td>{{instance.purpose_of_request}}</td>
-                    <td>{{instance.time_requested}}</td>
-                    <td>{{instance.appointment}}</td>
-                    <td><a href="display_clearform/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></a></td>
-                    <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
-                    <td>APPROVED</td>
+                    {% if dep == "HOCS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OCS";</script>
+                        {% if instance.accountant_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/accountant_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDMS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DMS";</script>
+                        {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/mathsci_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDPECS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DPECS";</script>
+                        {% if instance.pe_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/pe_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDED" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DED";</script>
+                        {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieduc_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDIT" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DIT";</script>
+                        {% if instance.it_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/it_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HDIE" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "DIE";</script>
+                        {% if instance.ieng_dept_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieng_dept_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOCL" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OCL";</script>
+                        {% if instance.library_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/library_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOGS" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OGS";</script>
+                        {% if instance.guidance_office_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/guidance_office_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HOSA" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "OSA";</script>
+                        {% if instance.osa_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/osa_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% elif dep == "HADAA" %}
+                        <script>document.querySelectorAll('th')[10].innerText = "ADAA";</script>
+                        {% if instance.academic_affairs_signature == "UNAPPROVED" %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/academic_affairs_signature" >Approve</a>
+                        </button></td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% else %}
+                        <td></td>   
+                    {% endif %}
+                    {% if course_adv %} 
+                        <script>document.querySelectorAll('th')[11].innerText = "Course/Shop Adviser";</script>
+                        {% if instance.course_adviser_signature == f_n_unapproved %}
+                        <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/course_adviser_signature" >Approve</a>
+                        </button></td>
+                        {% elif instance.course_adviser_signature != f_n_unapproved and instance.course_adviser != request.user.full_name %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                        {% else %}
+                        <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                        {% endif %}
+                    {% endif %}
+                      
                 </tr>
             </tbody>
             {% endfor %}
@@ -656,44 +719,7 @@
 
         <p class="text-center text-bold" id="p6_52"></p>
 
-            <!-- APPROVED TAB
-            <div id="tab2_52" data-tab-content="1" class="tab-content">
-                <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable" id="list_tbl2_52">
-                        <thead>
-                            <tr>
-                                <th> # (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Student's Name (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Course(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>ID Number(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Purpose of Request (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Appointment (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th id="Viewform"></th>
-                                <th id="Approvalbutton"></th>  
-                                <th id="Messagebutton"></th>
-                            </tr>
-                            <tr class="warning no-result">
-                                <td colspan="9"><i class="fa fa-warning"></i> No result</td>
-                            </tr>
-                        </thead>
-                        {% for instance in st %}
-                        <tbody>
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>{{instance.date_filed}}</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td><button type="button">View Form</button></td>
-                                <td><button type="button">Approve</button></td>
-                                <td><button type="button">Message</button></td>
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div> -->
+           
     </div>
     </hr>
     <p class="text-center text-bold" id="p6_52"></p>
@@ -964,25 +990,25 @@
 }); 
 
     // ALLOW TO VIEW FORM ON TABLE ROW CLICK
-    function addRowHandlers() {
-        var table = document.getElementById("list_tbl_52");
-        var rows = table.getElementsByTagName("tr");
-        for (i = 0; i < rows.length; i++) {
-            var currentRow = table.rows[i];
-            var createClickHandler = 
-                function(row) 
-                {
-                    return function() { 
-                                            var cell = row.getElementsByTagName("td")[0];
-                                            var id = cell.innerHTML;
-                                            location.href = "display_clearform/" + id 
-                                    };
-                };
+    // function addRowHandlers() {
+    //     var table = document.getElementById("list_tbl_52");
+    //     var rows = table.getElementsByTagName("tr");
+    //     for (i = 0; i < rows.length; i++) {
+    //         var currentRow = table.rows[i];
+    //         var createClickHandler = 
+    //             function(row) 
+    //             {
+    //                 return function() { 
+    //                                         var cell = row.getElementsByTagName("td")[0];
+    //                                         var id = cell.innerHTML;
+    //                                         location.href = "display_clearform/" + id 
+    //                                 };
+    //             };
 
-            currentRow.onclick = createClickHandler(currentRow);
-        }
-    }
-    window.onload = addRowHandlers();
+    //         currentRow.onclick = createClickHandler(currentRow);
+    //     }
+    // }
+    // window.onload = addRowHandlers();
 
 //signature
     var canvas = document.getElementById("signature_pad");
@@ -1003,4 +1029,24 @@
      signaturePad.clear();
     })
     
+    // CHECKBOXES IN TABLE
+    function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+
+
 </script>
