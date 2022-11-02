@@ -15,7 +15,7 @@ class signup_form(UserCreationForm):
     class Meta(UserCreationForm):
         model = user_table
         fields = ['email', 'first_name', 'last_name', 'middle_name','address', 'gender', 'course', 'password1',
-                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture','course_graduated','year_graduated']
+                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture','course_graduated','year_graduated', 'uploaded_signature']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
@@ -33,6 +33,11 @@ class signup_form(UserCreationForm):
             'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2000-2001'})
         }
 
+class Clearance_form_table(ModelForm):
+    class Meta(ModelForm):
+        model = clearance_form_table
+        fields = ['course_adviser_signature']
+    
 class TimePickerInput(forms.TimeInput):
         input_type = 'time'
 

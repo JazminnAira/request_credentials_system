@@ -35,6 +35,16 @@
         padding: 30px;
         /* -webkit-print-color-adjust: exact; */
     }
+
+    .myPrint {
+        max-width: 1000px;
+        width: 100%;
+        background: whitesmoke;
+        border: 1px solid #000000;
+        margin: 10px auto;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 10px;
+    }
     
     #footer {
         background: #424242;
@@ -387,7 +397,7 @@
         margin-top: 18px;
     }
     
-    a#menu-share+ul {
+    /* a#menu-share+ul {
         visibility: hidden;
     }
     
@@ -402,7 +412,7 @@
     
     a#menu-share:hover>i {
         animation: rotate-out 0.5s;
-    }
+    } */
     
     @keyframes bot-to-top {
         0% {
@@ -449,6 +459,13 @@
         font-size: 30px;
         padding-top: 15px;
     }
+
+    .responsive {
+        min-width: 100px;
+        max-width: 147px;
+        height: auto;
+      }
+
 </style>
 
 
@@ -456,26 +473,33 @@
     
     {% for i in clearance %}
     <!--PRINT AND HOME BUTTON-->
-    <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
+    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
         <i class="fa fa-ellipsis-v"></i>
-    </a>
+    </a> -->
     <ul>
         <li>
+        {% if i.approval_status ==  'APPROVED' %}
             <a href="{% url 'clearance_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print">
                 <i class="fa fa-print"></i>
             </a>
+            {% else %}
+                <div class="myPrint" style="color:red;">
+                    <p>APPROVAL ON PROGRESS</p>
+                    <p>PRINTING NOT AVAILABLE</p> 
+            </div>
+        {% endif %}  
         </li>
         <li>
             {% if request.user.user_type == "STUDENT" %}
-            <a href="{% url 'student_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "FACULTY" %}
-            <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "REGISTRAR" %}
-            <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
             {% endif %}
@@ -709,18 +733,155 @@
             </div>
 
             <br>
-
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
             
-
-
-
 
             <!--FORM FOOTER-->
             <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)
             </p>
         </form>
     {% endfor %}
+        <div id ="approval_signature_section" class = "border bg-white border-dark p-3 m-1">
+            
+            <div class="row col-12 justify-content-between">
+                <!--ACCOUNTANT-->
+                <div id ="accountant" class=" row col col-6">
+                    <label class = "col"><b>Accountant:</b> 
+                    {% if accountant == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif accountant == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{accountant}}"  class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+                <!--Course Adviser-->
+                <div id ="course_adviser" class="row col col-6">
+                    <label class = "col"><b>Course/Shop Adviser:</b> 
+                    {% if course_adviser == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif course_adviser == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{course_adviser}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+            </div>
+            <div class="row col-12 justify-content-between">
+                <!--LIBERAL ARTS-->
+                <div id ="liberal_arts" class=" row col col-6">
+                    <label class = "col"><b>Head of Liberal Arts:</b> 
+                    {% if liberal_arts == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif liberal_arts == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{liberal_arts}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+                <!--CAMPUS LIBRARIAN-->
+                <div id ="campus_library" class="col col-6">
+                    <label class = "col"><b>Campus Librarian:</b> 
+                    {% if campus_library == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif campus_library == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{campus_library}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+            </div>
+            <div class="row col-12 justify-content-between">
+                <!--MATH & SCIENCE-->
+                <div id ="math_and_science" class=" row col col-6">
+                    <label class = "col"><b>Head of Math & Sciences:</b> 
+                    {% if math_and_science == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif math_and_science == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{math_and_science}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+                <!--GUIDANCE COUNSELOR-->
+                <div id ="guidance_office" class="col col-6">
+                    <label class = "col"><b>Guidance Counselor:</b> 
+                    {% if guidance == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif guidance == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{guidance}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+            </div>
+            <div class="row col-12 justify-content-between">
+                <!--DPECS-->
+                <div id ="dpecs" class=" row col col-6">
+                    <label class = "col"><b>Head of DPECS:</b> 
+                    {% if dpecs == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif dpecs == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{dpecs}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+                <!--HEAD OF STUDENT AFFAIRS-->
+                <div id ="osa" class="col col-6">
+                    <label class = "col"><b>Head of Student Affairs:</b> 
+                    {% if osa == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif osa == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{osa}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+            </div>
+            <div class="row col-12 justify-content-between">
+                <!--IDUSTRIAL TECH, EDUC, ENGINEER-->
+                <div id ="industrial" class=" row col col-6">
+                    <label class = "col"><b>
+                        {% if it_department == 'EDUCATOR' %}
+                            Head of Industrial Education Department:</b> 
+                        {% elif it_department == 'TECHNOLOGIES' %}
+                            Head of Industrial Technology Department:</b> 
+                        {% elif it_department == 'ENGINEERS' %}
+                            Head of Engineering Department:</b> 
+                        {% else %}
+                            Head of Industrial Tecgnology/Industrial Education/Engineering:</b> 
+                        {% endif %}
+                    {% if industrial == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif industrial == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{industrial}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+                <!--ASST. DIR. FOR ACADEMIC AFFAIRS-->
+                <div id ="adaa" class="col col-6">
+                    <label class = "col"><b>Asst. DIR. for Academic Affairs:</b> 
+                    {% if adaa == "DECLINE" %}
+                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                    {% elif adaa == "UNAPPROVED" %}
+                        <label class = "col-5">UNAPPROVED</label>
+                    {% else %}
+                        <img src ="/Media/{{adaa}}" class = "col col-5 responsive" alt="APPROVED">
+                    {% endif %}
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--HOME BUTTON

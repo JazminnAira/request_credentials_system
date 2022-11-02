@@ -531,7 +531,11 @@
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>
+<<<<<<< HEAD
                             <th>Appointment</th>  
+=======
+                            <th id="Viewform"> View Form</th>  
+>>>>>>> a19e47f55ec91dcafbfc8ce9459822e64b5d148b
                             <th id="Messagebutton"> Message</th>
                             <th>Approval Status</th>
                             <th id="Approvalbutton"></th>
@@ -544,6 +548,7 @@
                     {% for instance in all %}
                     <tbody>
                         <tr>
+<<<<<<< HEAD
                             <td><input type="checkbox" class="check" value={{instance.id}}></td> 
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
@@ -557,6 +562,33 @@
                             <td>{{instance.approval_status}}</td>
                             {% else %}
                             <td><strong>{{instance.approval_status}}</strong> Signatures</td>
+=======
+                            <td>{{instance.id}}</td>
+                            <td>{{instance.name}}</td>
+                            <td>{{instance.course}}</td>
+                            <td>{{instance.student_id}}</td>
+                            <td>{{instance.purpose_of_request}}</td>
+                            <td>{{instance.time_requested}}</td>
+                            <td><a href="{% url 'display_gradform' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td></td>
+                            <td> 
+                                {% if instance.approval_status ==  'APPROVED' %}
+                                    <a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
+                                {% else %}
+                                    <p>MESSAGE NOT AVAILABLE</p>
+                                {% endif %}
+                            </td>
+                            {% if val == 'UNAPPROVED' %}
+                            <script>h3_title.innerText = "Unapproved Students";</script>
+                            <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
+                            <button class="button"><a style="color: #fff;" href="updategrad/{{ instance.id }}">Approve</a></button></td>
+                            
+                            {% elif val == 'APPROVED' %}
+                            <script>h3_title.innerText = "Approved Students";</script>
+                            <td>APPROVED</td>
+
+                            {% elif val == '2' %}
+                            <script>h3_title.innerText = "All Clearance Forms";</script>
+>>>>>>> a19e47f55ec91dcafbfc8ce9459822e64b5d148b
                             {% endif %}
                             <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
                             !!!EDIT THIS<button class="button"><a style="color: #fff;" href="updategrad/{{ instance.id }}">Notify</a>
