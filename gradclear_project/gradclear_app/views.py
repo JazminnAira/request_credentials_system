@@ -3039,10 +3039,12 @@ def registrar_dashboard_graduation_list(request, id):
         
         if id == " ":
             all = graduation_form_table.objects.all()
-            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
+            all_list = graduation_form_table.objects.filter(approval_status="APPROVED")
+            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
         else:
             all =graduation_form_table.objects.filter(course=id)
-            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
+            all_list = graduation_form_table.objects.filter(course=id, approval_status="APPROVED")
+            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
             
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
        
