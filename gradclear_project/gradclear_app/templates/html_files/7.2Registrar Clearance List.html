@@ -543,13 +543,13 @@ Adviser:
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>
-                            <th id="Messagebutton"> Message</th>
                             <th>Approval Status</th>
-                            <th id="Approvalbutton"></th>
+                            <!-- <th id="Approvalbutton"></th> -->
+                            <th> Notify</th>
 
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
@@ -563,7 +563,6 @@ Adviser:
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'"><a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
                             {% if instance.approval_status == "APPROVED"%}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.approval_status}}</td>
                             {% else %}

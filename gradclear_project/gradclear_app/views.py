@@ -763,15 +763,22 @@ def reggrad_appointment(request, id):
 
     rec_email = email[0]
 
-    subject = 'Request for Graduation Form'
-    # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
-    message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
-    message2 = 'Your request for Graduation Form'+\
-        ' has been approved and now availbale for printing. Follow the guidelines below for the printing of your Graduation Form. Thank you! <br><br>'
-    message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
-    message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
+    name = graduation_form_table.objects.filter(
+    id=id).values_list('name', flat=True).distinct()
+    s_name = graduation_form_table.objects.filter(
+        name=name[0]).values_list('name', flat=True).distinct()
+    student_name =  s_name[0]
 
-    message = message1 + message2 + message3 + message4
+    subject = 'Application for Graduation Form'
+    message1 = 'Good day,   '+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+    # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+    message2 = 'Your Application for Graduation Form has been approved and is now available for printing. Kindly visit this (link to web) and follow the guidelines below.<br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
+    message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
+    message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
+    message6 =  "<i>"+'This is an automated message, do not reply.<br><br>'+"</i>"
+
+    message = message1 + message2 + message3 +message4 + message5 + message6 
 
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
@@ -790,15 +797,22 @@ def regclear_appointment(request,id):
 
     rec_email = email[0]
 
-    subject = 'Request for Clearance Form'
-    # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
-    message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
-    message2 = 'Your request for Clearance Form'+\
-        ' has been approved and now availbale for printing. Follow the guidelines below for the printing of your Clearance Form. Thank you! <br><br>'
-    message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
-    message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
+    name = clearance_form_table.objects.filter(
+    id=id).values_list('name', flat=True).distinct()
+    s_name = clearance_form_table.objects.filter(
+        name=name[0]).values_list('name', flat=True).distinct()
+    student_name =  s_name[0]
 
-    message = message1 + message2 + message3 + message4
+    subject = 'Application for Clearance Form'
+    message1 = 'Good day,   '+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+    # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+    message2 = 'Your Application for Clearance Form has been approved and is now available for printing. Kindly visit this (link to web) and follow the guidelines below.<br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
+    message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
+    message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
+    message6 =  "<i>"+'This is an automated message, do not reply.<br><br>'+"</i>"
+
+    message = message1 + message2 + message3 +message4 + message5 + message6 
 
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
@@ -832,15 +846,18 @@ def request_appointment(request,id):
         student_name =  s_name[0]
         
 
-        subject = 'Appointment for Request Credential Form'
-        # message1 = 'Greetings,'+ 'Mr./Ms. ' + "<strong>" + name + "</strong><br><br>"
-        message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
-        message2 = 'Your request '+\
-            ' has been approved. Follow the guidelines below for the claiming of your credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
-        message3 = "<strong>"+'GUIDELINES:'+"</strong><br><br>"
-        message4 =  "<strong>"+'Note: '+"</strong>"+'This is an automated message, do not reply.<br><br>'
+        subject = 'Claiming of '+ purpose_of_request[0] 
+        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+        # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+        message2 = 'Your request for  '+ "<strong>"+ purpose_of_request[0] +"</strong>"+  \
+            '   has been approved. Kindly visit the link _____ and follow the guidelines below for claiming your requested credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br>'
+        message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
+        message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite'
+        message6 =  "<i>"+'This is an automated message, do not reply.<br><br>'+"</i>"
 
-        message = message1 + message2 + message3 + message4
+
+        message = message1 + message2 + message3 
 
         purpose_req = request.POST.get('purpose_of_request')
         date_appointment = request.POST.get('date_appointment')
@@ -851,22 +868,24 @@ def request_appointment(request,id):
         
         
         data = {
-                'purpose_of_request': purpose_of_req,
-                'student_name': student_name,
                 'date_appointment': date_appointment, 
                 'time_appointment': time_appointment, 
                 'subject': subject, 
                 'message': message,
+                'message4': message4,
+                'message5': message5,
+                'message6': message6,
                 'additionalmessage': additionalmessage,
         }
-        message='''{}
-        <strong>Purpose of Request:</strong>\n\t\t{}\n<br>
-        <strong>Name:</strong>\n\t\t{}\n<br>
+        message=''''{}
         <strong>Date:</strong>\n\t\t{}\n<br>
-        <strong>Time:</strong>\n\t\t{}\n<br>
-        <strong>Additonal Message:</strong>\n\t\t{}\n<br>
+        <strong>Time:</strong>\n\t\t{}\n<br><br>
+        <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br><br>
+        \n\t\t{}\n<br><br><br><br>
+        \n\t\t{}\n<br><br><br>
+        \n\t\t{}\n<br>
         
-        '''''.format(data['message'], data ['purpose_of_request'], data ['student_name'], data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'])
+        '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
         msg.send()
