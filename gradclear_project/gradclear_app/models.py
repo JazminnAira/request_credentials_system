@@ -137,7 +137,6 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
 
     approval_status = models.CharField(max_length=15,
-<<<<<<< HEAD
         verbose_name="Approval Status", default="0")
     liberal_arts_signature = models.CharField(max_length=100,
         verbose_name="Liberal Art Signature", default="UNAPPROVED")
@@ -162,32 +161,6 @@ class clearance_form_table(models.Model):
     academic_affairs_signature = models.CharField(max_length=100,
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
     course_adviser = models.CharField(max_length=100,
-=======
-        verbose_name="Approval Status", default="ON PROGRESS")
-    liberal_arts_signature = models.CharField(max_length=50,
-        verbose_name="Liberal Art Signature", default="UNAPPROVED")
-    accountant_signature = models.CharField(max_length=50,
-        verbose_name="Accountant Signature", default="UNAPPROVED")
-    mathsci_dept_signature = models.CharField(max_length=50,
-        verbose_name="Math and Science Signature", default="UNAPPROVED")
-    pe_dept_signature = models.CharField(max_length=50,
-        verbose_name="P.E. Signature", default="UNAPPROVED")
-    ieduc_dept_signature = models.CharField(max_length=50,
-        verbose_name="Industrial Educ. Signature", default="UNAPPROVED")
-    it_dept_signature = models.CharField(max_length=50,
-        verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
-    ieng_dept_signature = models.CharField(max_length=50,
-        verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
-    library_signature = models.CharField(max_length=50,
-        verbose_name="Library Signature", default="UNAPPROVED")
-    guidance_office_signature = models.CharField(max_length=50,
-        verbose_name="Guidance Signature", default="UNAPPROVED")
-    osa_signature = models.CharField(max_length=50,
-        verbose_name="OSA Signature", default="UNAPPROVED")
-    academic_affairs_signature = models.CharField(max_length=50,
-        verbose_name="Academic Affairs Signature", default="UNAPPROVED")
-    course_adviser = models.CharField(max_length=50,
->>>>>>> a19e47f55ec91dcafbfc8ce9459822e64b5d148b
         verbose_name="Course Adviser", default="NONE")
     course_adviser_signature = models.ImageField(upload_to='signature/')
     appointment = models.CharField(

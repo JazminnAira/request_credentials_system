@@ -432,7 +432,7 @@
                                 <th>Official Receipt</th>
                                 <th></th>
                                 <th>Status</th>
-                                <th>Message</th>
+                                <th></th>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="12"><i class="fa fa-warning"></i> No result</td>
@@ -493,7 +493,7 @@
                                         {% if instance.approval_status ==  'APPROVED' %}
                                             <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
                                         {% else %}
-                                            <p>MESSAGE NOT AVAILABLE</p>
+                                            <p>APPOINTMENT NOT YET AVAILABLE</p>
                                         {% endif %}
                                     </td>
                                 </tr>
