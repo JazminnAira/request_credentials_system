@@ -1134,13 +1134,13 @@ def student_dashboard(request):
         if not check_clearance:
             display.append("CLEARANCE")
         else:
-            if check_clearance[0] == 'ON PROGRESS':
+            if check_clearance[0] != 'APPROVED':
                 display.append("CLEARANCE (ON PROGRESS)")
                 
         if not check_graduation:
             pass
         else:
-            if check_graduation[0] == 'ON PROGRESS':
+            if check_graduation[0] != 'APPROVED':
                 print('Clearance Pending')
                 display.append("GRADUATION (ON PROGRESS)")
   
@@ -2756,7 +2756,7 @@ def display_gradform(request, id):
         
         #SUBJECT #1
         check_status = graduation_form_table.objects.filter(id=id,signature1__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature1 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature1 = 'NO_APPROVED')
         if check_status:
             subject_1 = "UNAPPROVED"
         elif check_signature:
@@ -2773,7 +2773,7 @@ def display_gradform(request, id):
             
         #SUBJECT #2
         check_status = graduation_form_table.objects.filter(id=id,signature2__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature2 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature2 = 'NO_APPROVED')
         if check_status:
             subject_2 = "UNAPPROVED"
         elif check_signature:
@@ -2790,7 +2790,7 @@ def display_gradform(request, id):
         
         #SUBJECT #3
         check_status = graduation_form_table.objects.filter(id=id,signature3__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature3 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature3 = 'NO_APPROVED')
         if check_status:
             subject_3 = "UNAPPROVED"
         elif check_signature:
@@ -2807,7 +2807,7 @@ def display_gradform(request, id):
         
         #SUBJECT #4
         check_status = graduation_form_table.objects.filter(id=id,signature4__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature4 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature4 = 'NO_APPROVED')
         if check_status:
             subject_4 = "UNAPPROVED"
         elif check_signature:
@@ -2824,7 +2824,7 @@ def display_gradform(request, id):
             
         #SUBJECT #5
         check_status = graduation_form_table.objects.filter(id=id,signature5__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature5 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature5 = 'NO_APPROVED')
         if check_status:
             subject_5 = "UNAPPROVED"
         elif check_signature:
@@ -2841,7 +2841,7 @@ def display_gradform(request, id):
         
         #SUBJECT #6
         check_status = graduation_form_table.objects.filter(id=id,signature6__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature6 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature6 = 'NO_APPROVED')
         if check_status:
             subject_6 = "UNAPPROVED"
         elif check_signature:
@@ -2858,7 +2858,7 @@ def display_gradform(request, id):
             
         #SUBJECT #7
         check_status = graduation_form_table.objects.filter(id=id,signature7__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature7 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature7 = 'NO_APPROVED')
         if check_status:
             subject_7 = "UNAPPROVED"
         elif check_signature:
@@ -2875,7 +2875,7 @@ def display_gradform(request, id):
             
         #SUBJECT #8
         check_status = graduation_form_table.objects.filter(id=id,signature8__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature8 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature8 = 'NO_APPROVED')
         if check_status:
             subject_8 = "UNAPPROVED"
         elif check_signature:
@@ -2892,7 +2892,7 @@ def display_gradform(request, id):
         
         #SUBJECT #9
         check_status = graduation_form_table.objects.filter(id=id,signature9__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature9 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature9 = 'NO_APPROVED')
         if check_status:
             subject_9 = "UNAPPROVED"
         elif check_signature:
@@ -2909,7 +2909,7 @@ def display_gradform(request, id):
             
         #SUBJECT #10
         check_status = graduation_form_table.objects.filter(id=id,signature10__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,signature10 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,signature10 = 'NO_APPROVED')
         if check_status:
             subject_10 = "UNAPPROVED"
         elif check_signature:
@@ -2926,7 +2926,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #1
         check_status = graduation_form_table.objects.filter(id=id,addsignature1__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature1 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature1 = 'NO_APPROVED')
         if check_status:
             addsubject_1 = "UNAPPROVED"
         elif check_signature:
@@ -2943,7 +2943,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #2
         check_status = graduation_form_table.objects.filter(id=id,addsignature2__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature2 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature2 = 'NO_APPROVED')
         if check_status:
             addsubject_2 = "UNAPPROVED"
         elif check_signature:
@@ -2960,7 +2960,7 @@ def display_gradform(request, id):
         
         #ADD SUBJECT #3
         check_status = graduation_form_table.objects.filter(id=id,addsignature3__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature3 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature3 = 'NO_APPROVED')
         if check_status:
             addsubject_3 = "UNAPPROVED"
         elif check_signature:
@@ -2977,7 +2977,7 @@ def display_gradform(request, id):
         
         #ADD SUBJECT #4
         check_status = graduation_form_table.objects.filter(id=id,addsignature4__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature4 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature4 = 'NO_APPROVED')
         if check_status:
             addsubject_4 = "UNAPPROVED"
         elif check_signature:
@@ -2994,7 +2994,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #5
         check_status = graduation_form_table.objects.filter(id=id,addsignature5__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature5 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature5 = 'NO_APPROVED')
         if check_status:
             addsubject_5 = "UNAPPROVED"
         elif check_signature:
@@ -3011,7 +3011,7 @@ def display_gradform(request, id):
         
         #ADD SUBJECT #6
         check_status = graduation_form_table.objects.filter(id=id,addsignature6__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature6 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature6 = 'NO_APPROVED')
         if check_status:
             addsubject_6 = "UNAPPROVED"
         elif check_signature:
@@ -3028,7 +3028,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #7
         check_status = graduation_form_table.objects.filter(id=id,addsignature7__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature7 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature7 = 'NO_APPROVED')
         if check_status:
             addsubject_7 = "UNAPPROVED"
         elif check_signature:
@@ -3045,7 +3045,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #8
         check_status = graduation_form_table.objects.filter(id=id,addsignature8__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature8 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature8 = 'NO_APPROVED')
         if check_status:
             addsubject_8 = "UNAPPROVED"
         elif check_signature:
@@ -3062,7 +3062,7 @@ def display_gradform(request, id):
         
         #ADD SUBJECT #9
         check_status = graduation_form_table.objects.filter(id=id,addsignature9__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature9 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature9 = 'NO_APPROVED')
         if check_status:
             addsubject_9 = "UNAPPROVED"
         elif check_signature:
@@ -3079,7 +3079,7 @@ def display_gradform(request, id):
             
         #ADD SUBJECT #10
         check_status = graduation_form_table.objects.filter(id=id,addsignature10__icontains = 'UNAPPROVED')
-        check_signature = graduation_form_table.objects.filter(id=id,addsignature10 = 'NO SIGNATURE')
+        check_signature = graduation_form_table.objects.filter(id=id,addsignature10 = 'NO_APPROVED')
         if check_status:
             addsubject_10 = "UNAPPROVED"
         elif check_signature:
