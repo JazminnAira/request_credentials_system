@@ -153,10 +153,10 @@
     }
     
     #list_tbl_77 td {
-        border-width: 2px 0;
+        border-width: 1px 0;
         border-color: black;
         border-style: solid;
-        padding: 5px 15px;
+        padding: 2px 10px;
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
@@ -421,6 +421,7 @@
                     <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
                         <thead>
                             <tr>
+                                <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
                                 <th>#</th>
                                 <th>Student's Name</th>
                                 <th>Request</th>
@@ -434,13 +435,14 @@
                                 <th>Date of Appointment</th>
                             </tr>
                             <tr class="warning no-result">
-                                <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+                                <td colspan="12"><i class="fa fa-warning"></i> No result</td>
                             </tr>
                         </thead>
                         
                         {% for instance in data %}
                             <tbody>
                                 <tr>
+                                    <td><input type="checkbox" class="check" value={{instance.id}}></td>
                                     <td>{{instance.id}}</td>
                                     <td>{{instance.name}}</td>
                                     <td>{{instance.request}}</td>
@@ -775,5 +777,23 @@
         document.getElementById("search_box_77").value = "";
     });
     
+    // CHECKBOXES IN TABLE
+    function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
 </script>
 
