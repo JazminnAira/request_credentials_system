@@ -359,6 +359,24 @@ Adviser:
         font-family: Arial, Helvetica, sans-serif;
         font-style: normal;
     }
+
+    @media print {
+        @page {
+           margin-left: 0.5in;
+           margin-right: 0.5in;
+           margin-top: 0.25in;
+           margin-bottom: 0;
+         }
+   }
+
+   #print_header {
+    display: inline; 
+    color: black; 
+    background-color:white; 
+    text-align:center; 
+    padding-left:275px;
+    padding-top:50px;
+   }
 </style>
 
 
@@ -367,37 +385,17 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_72">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
         <a href="{% url 'registrar_dashboard_graduation_list' id=' '%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
-
+        <a href="#" style ="font-size: 25px" onclick="to_beprinted('grad_list_print')" data-toggle="tooltip" data-placement="right" title="Print">
+            <i class="fa fa-print"></i>
+        </a>
         
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
-        <a class="btn btn-secondary dropdown-toggle" id= "drpdwn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Select Course
-        </a>
+
         
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id=' ' %}">All</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-CoET' %}">BET-CoET</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BSCE' %}">BSCE</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BSEE' %}">BSEE</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BSIE-ICT'%}">BSIE-ICT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BSIE-HE' %}">BSIE-HE</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BTTE-HVACT' %}">BTTE-HVACT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BTTE-EI' %}">BTTE-EI</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BTTE-E' %}">BTTE-E</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BGT-AT' %}">BGT-AT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-ET' %}">BET-ET</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-ESET' %}">BET-ESET</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-MT' %}">BET-MT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-AT' %}">BET-AT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BTTE-AU' %}">BTTE-AU</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BSME' %}">BSME</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BTTE-CP' %}">BTTE-CP</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-CT' %}">BET-CT</a>
-            <a class="dropdown-item" href="{% url 'registrar_dashboard_graduation_list' id='BET-PPT' %}">BET-PPT</a>
-        </div>
+ 
 
         
         <!--SEARCH BUTTON
@@ -590,6 +588,39 @@ Adviser:
     </hr>
 
     <p class="text-center text-bold" id="p6_72"></p>
+
+    <div id = "grad_list_print" hidden>
+        <div> 
+            <table class="table" id="print_header" >
+                <td><img src="{% static 'Media/tup_logo.png' %}" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
+                <td><h1 style="text-align: center; font-size: 30px;"> Candidate For Graduation </h1></td>
+            </table>
+        </div>
+        <table class="table" id="list_tbl_41">
+            <thead style = "text-align: center; font-size: 25px;">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th> Student ID Number </th>
+
+                </tr>
+                    
+            </thead>
+            <tbody style =" text-align: center; font-size: 20px;">
+                {% for instance in all %}
+                    <tr>
+                    <td>{{instance.name}}</td>
+                    <td>{{instance.course}}</td>
+                    <td>{{instance.student_id}}</td>
+                        
+                </tr>
+                {% endfor %}
+
+                    
+            </tbody>
+        </table>
+
+    </div>    
 </body>
 
 
@@ -604,6 +635,13 @@ Adviser:
 
 
 <script>
+    function to_beprinted(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }

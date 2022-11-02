@@ -3037,10 +3037,15 @@ def registrar_dashboard_clearance_list(request, id):
 def registrar_dashboard_graduation_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         
-        all = graduation_form_table.objects.all()
-        
+        if id == " ":
+            all = graduation_form_table.objects.all()
+            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
+        else:
+            all =graduation_form_table.objects.filter(course=id)
+            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
+            
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
-        all = graduation_form_table.objects.filter(course=id).values()
+       
 
     else:
         messages.error(
