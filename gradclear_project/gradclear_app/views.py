@@ -1747,30 +1747,49 @@ def alumnus_dashboard(request):
 def faculty_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         unapproved = request.user.full_name + "_UNAPPROVED"
+        st1=""
         st = graduation_form_table.objects.filter(Q(signature1=unapproved) | Q(signature2=unapproved) | Q(signature3=unapproved) |
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
                                                   Q(addsignature1=unapproved) | Q(addsignature2=unapproved) | Q(addsignature3=unapproved) |
                                                   Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(addsignature6=unapproved) |
                                                   Q(addsignature7=unapproved) | Q(addsignature8=unapproved) | Q(addsignature9=unapproved) |
-                                                  Q(addsignature10=unapproved)).order_by('-id')
+                                                  Q(addsignature10=unapproved)).order_by('-time_requested')
         print(unapproved)
 
-        if request.user.department == "HOCS" or request.user.department == "HDLA" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDIT" or request.user.department == "HDIE" or request.user.department == "HOCL" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(Q(accountant_signature="UNAPPROVED") | Q(mathsci_dept_signature="UNAPPROVED") |
-                                                      Q(pe_dept_signature="UNAPPROVED") | Q(ieduc_dept_signature="UNAPPROVED") | Q(it_dept_signature="UNAPPROVED") |
-                                                      Q(ieng_dept_signature="UNAPPROVED") | Q(library_signature="UNAPPROVED") |
-                                                      Q(guidance_office_signature="UNAPPROVED") | Q(osa_signature="UNAPPROVED") |
-                                                      Q(academic_affairs_signature="UNAPPROVED")).order_by('-id')
-            return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1': st1, })
+        if request.user.department == "HOCS":
+            st1 = clearance_form_table.objects.filter(accountant_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HDLA":
+            st1 = clearance_form_table.objects.filter(liberal_arts_signature = "UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HDMS":
+            st1 = clearance_form_table.objects.filter(mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDPECS":
+            st1 = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDIT":
+            st1 = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDIE":
+            st1 = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HOCL":
+            st1 = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HOGS":
+            st1 = clearance_form_table.objects.filter(guidance_office_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HOSA":
+            st1 = clearance_form_table.objects.filter(osa_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HADAA":
+            st1 = clearance_form_table.objects.filter(academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
+               
+        if clearance_form_table.objects.filter(course_adviser_signature = unapproved):
+            st1= clearance_form_table.objects.filter(course_adviser_signature = unapproved).order_by('-time_requested')    
 
-        with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name) 
+        with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name)  
+        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance })
+
+
+         
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-
-    return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'with_clearance':with_clearance })
 
 
 @login_required(login_url='/')

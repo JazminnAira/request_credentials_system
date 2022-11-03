@@ -441,7 +441,7 @@ Adviser:
                                 <th>TOR</th>
                                 <th>Clearance</th>
                                 <th>Official Receipt</th>
-                                <th></th>
+                                <th>Account Type</th>
                                 <th>Status</th>
                                 <th>Appointment</th>
                             </tr>
@@ -454,10 +454,10 @@ Adviser:
                             <tbody>
                                 <tr>
                                     <td><input type="checkbox" class="check" value={{instance.id}}></td>
-                                    <td>{{instance.id}}</td>
-                                    <td>{{instance.name}}</td>
-                                    <td>{{instance.request}}</td>
-                                    <td>{{instance.time_requested}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -478,6 +478,7 @@ Adviser:
                                                 </select>
                                         </form> 
                                     </td>
+                                    <td>{{instance.clearance}}</td>
                                     <td>
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -488,8 +489,7 @@ Adviser:
                                                 </select>
                                         </form> 
                                     </td>
-                                    <td>{{instance.clearance}}</td>
-                                    <td>{{instance.current_status}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
                                     <td>
                                         <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -504,7 +504,7 @@ Adviser:
                                         {% if instance.approval_status ==  'APPROVED' %}
                                             <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
                                         {% else %}
-                                            <p>APPOINTMENT NOT YET AVAILABLE</p>
+                                            APPOINTMENT NOT YET AVAILABLE
                                         {% endif %}
                                     </td>
                                 </tr>
