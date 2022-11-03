@@ -588,8 +588,7 @@ Adviser:
     </div>
 
 
-    <!--MAIN-->
-    
+    <!--MAIN--> 
     <h3 style="text-align:center; margin-top: 10px;" id="h3_title">List of Clearance Forms</h3>
     <button type="button" class="btn btn-dark text-white btn-lg mr-5 pb-2" id="open_signature">View and Edit Signature</button>
     <div class="border pt-2 signature_section" id ="signature_section">
@@ -620,8 +619,8 @@ Adviser:
 
         <div id="create_signature_area" class="p-1" hidden>
             <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">PUT YOUR SIGNATURE HERE</h4></div>
-            <div class="wrapper border rounded m-2 mt-3 p-1">
-                <canvas name="signature" id="signature_pad" width="330" height="150" class="col-md-12 mx-auto m-1"></canvas>
+            <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
+                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1"><span> Clear </span></button> 
                 <button type="button" id="cancel_create" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
@@ -632,7 +631,7 @@ Adviser:
             {% csrf_token %}
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
             <input type="text" name ="id_num" value ="{{id}}" hidden>
-            <div id ="new_upload_signature_area" class="p-1" hidden>
+            <div id ="new_upload_signature_area" class="p-2" hidden>
                 <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept=".png" name= "new_upload_signature" onchange="loadFile(event)">
@@ -825,7 +824,7 @@ Adviser:
     resizeCanvas();
 
     var signaturePad = new SignaturePad(canvas, {
-     backgroundColor: 'rgb(250,250,250)'
+     backgroundColor: 'rgb(255,255,255,0)'
     });
     
     document.getElementById("clear").addEventListener('click', function(){
@@ -849,8 +848,8 @@ Adviser:
     //show create signature are
     create_sig_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
-        document.getElementById("signature_pad").width = 330;
-        document.getElementById("signature_pad").height = 150;
+        document.getElementById("signature_pad").width = 350;
+        document.getElementById("signature_pad").height = 200;
         document.getElementById("submit_signature").hidden = false;
         document.getElementById("signature_display").hidden = true;
         document.getElementById("button_area").hidden = true;
@@ -887,6 +886,16 @@ Adviser:
         var image = document.getElementById('preview');
         image.src=URL.createObjectURL(event.target.files[0]);
     };
+
+    open_signature.addEventListener("click", function()  {
+        document.getElementById("signature_section").style.width = "400px";
+        document.getElementById("table_list").style.marginRight = "400px";
+    });
+    
+    close_signature.addEventListener("click", function() {
+        document.getElementById("signature_section").style.width = "0";
+        document.getElementById("table_list").style.marginRight= "0";
+    });
 
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
@@ -1181,8 +1190,8 @@ Adviser:
     }
 
     open_signature.addEventListener("click", function()  {
-        document.getElementById("signature_section").style.width = "380px";
-        document.getElementById("table_list").style.marginRight = "380px";
+        document.getElementById("signature_section").style.width = "400px";
+        document.getElementById("table_list").style.marginRight = "400px";
     });
     
     close_signature.addEventListener("click", function() {
