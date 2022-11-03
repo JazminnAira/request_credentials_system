@@ -2562,6 +2562,7 @@ def display_clearform(request, id):
         check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
         if check_status:
             accountant = "UNAPPROVED"
+            accountant_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
             acc_sig = str(faculty_approved[0])
@@ -2571,11 +2572,13 @@ def display_clearform(request, id):
             
             account_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             accountant = account_sig[0]
+            accountant_name = str_fac_name
             
         #COURSE ADVISER
         check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
         if check_status:
             course_adviser = "UNAPPROVED"
+            adviser_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
             adviser_sig = str(faculty_approved[0])
@@ -2585,11 +2588,13 @@ def display_clearform(request, id):
             
             ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             course_adviser = ca_sig[0]
+            adviser_name = str_fac_name
         
         #LIBERAL ARTS
         check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
         if check_status:
             liberal_arts = "UNAPPROVED"
+            liberal_artsName = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
             lib_sig = str(faculty_approved[0])
@@ -2599,11 +2604,13 @@ def display_clearform(request, id):
             
             libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             liberal_arts = libart_sig[0]
+            liberal_artsName = str_fac_name
         
         #CAMPUS LIBRARIAN
         check_status = clearance_form_table.objects.filter(id=id,library_signature__icontains = 'UNAPPROVED')
         if check_status:
             campus_library = "UNAPPROVED"
+            librarian_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
             camlib_sig = str(faculty_approved[0])
@@ -2613,11 +2620,13 @@ def display_clearform(request, id):
             
             cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             campus_library = cam_lib_sig[0]
+            librarian_name = str_fac_name
         
         #MATH & SCIENCES
         check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             math_and_science = "UNAPPROVED"
+            math_and_science_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
             mas_sig = str(faculty_approved[0])
@@ -2627,11 +2636,13 @@ def display_clearform(request, id):
             
             mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             math_and_science = mathsci_sig[0]
+            math_and_science_name = str_fac_name
             
         #GUIDANCE COUNCELOR
         check_status = clearance_form_table.objects.filter(id=id,guidance_office_signature__icontains = 'UNAPPROVED')
         if check_status:
             guidance = "UNAPPROVED"
+            guidance_councelor = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('guidance_office_signature', flat=True).distinct()
             guid_sig = str(faculty_approved[0])
@@ -2641,11 +2652,13 @@ def display_clearform(request, id):
             
             gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             guidance = gui_sig[0]
+            guidance_councelor = str_fac_name
         
         #DPECS
         check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             dpecs = "UNAPPROVED"
+            dpecs_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
             pe_sig = str(faculty_approved[0])
@@ -2655,11 +2668,13 @@ def display_clearform(request, id):
             
             pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             dpecs = pe_dept_sig[0]
+            dpecs_name = str_fac_name
         
         #OSA
         check_status = clearance_form_table.objects.filter(id=id,osa_signature__icontains = 'UNAPPROVED')
         if check_status:
             osa = "UNAPPROVED"
+            osa_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('osa_signature', flat=True).distinct()
             student_osa_sig = str(faculty_approved[0])
@@ -2669,11 +2684,13 @@ def display_clearform(request, id):
             
             student_affairs_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             osa = student_affairs_sig[0]
+            osa_name = str_fac_name
         
         #ADAA
         check_status = clearance_form_table.objects.filter(id=id,academic_affairs_signature__icontains = 'UNAPPROVED')
         if check_status:
             adaa = "UNAPPROVED"
+            adaa_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('academic_affairs_signature', flat=True).distinct()
             asst_dir_acad_sig = str(faculty_approved[0])
@@ -2683,12 +2700,14 @@ def display_clearform(request, id):
             
             adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             adaa = adaa_sig[0]
+            adaa_name = str_fac_name
         
         #INDUSTRIAL
         check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
+            it_name = " "
         else:
             if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2702,6 +2721,7 @@ def display_clearform(request, id):
                 ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = ieduc_sig[0]
                 it_department = "EDUCATOR"
+                it_name = str_fac_name
             
             if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2715,6 +2735,7 @@ def display_clearform(request, id):
                 it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = it_dept_sig[0]
                 it_department = "TECHNOLOGIES"
+                it_name = str_fac_name
                 
             if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2728,6 +2749,7 @@ def display_clearform(request, id):
                 eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = eng_dept_sig[0]
                 it_department = "ENGINEERS"
+                it_name = str_fac_name
  
     else:
         messages.error(
@@ -2745,7 +2767,17 @@ def display_clearform(request, id):
         'campus_library' : campus_library,
         'guidance' : guidance,
         'osa' : osa,
-        'adaa' : adaa 
+        'adaa' : adaa,
+        'accountant_name' : accountant_name,
+        'adviser_name' : adviser_name,
+        'liberal_artsName' : liberal_artsName,
+        'librarian_name' : librarian_name,
+        'math_and_science_name' : math_and_science_name,
+        'guidance_councelor' : guidance_councelor,
+        'dpecs_name' : dpecs_name,
+        'osa_name' : osa_name,
+        'adaa_name' : adaa_name,
+        'it_name' : it_name,
     }
 
     print('running')
