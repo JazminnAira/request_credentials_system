@@ -757,37 +757,81 @@ Adviser:
                 <div id ="accountant" class=" row col col-6">
                     <label class = "col"><b>Accountant:</b> 
                     {% if accountant == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5 row">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class ="row">
+                                <small class= "row">{{accountant_name}}</small>
+                            </div>
+                        </div>
                     {% elif accountant == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{accountant}}"  class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{accountant}}"  class = "responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">   
+                                <small>{{accountant_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
+
                 <!--Course Adviser-->
                 <div id ="course_adviser" class="row col col-6">
                     <label class = "col"><b>Course/Shop Adviser:</b> 
                     {% if course_adviser == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class ="row">    
+                                <small>{{adviser_name}}</small>
+                            </div>
+                        </div>
                     {% elif course_adviser == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{course_adviser}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{course_adviser}}" class = "responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small class= "row">{{adviser_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
             </div>
+
             <div class="row col-12 justify-content-between">
                 <!--LIBERAL ARTS-->
                 <div id ="liberal_arts" class=" row col col-6">
                     <label class = "col"><b>Head of Liberal Arts:</b> 
                     {% if liberal_arts == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class ="row">
+                                <small>{{liberal_artsName}}</small>
+                            </div>
+                        </div>
                     {% elif liberal_arts == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{liberal_arts}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{liberal_arts}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small>{{liberal_artsName}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
@@ -795,25 +839,54 @@ Adviser:
                 <div id ="campus_library" class="col col-6">
                     <label class = "col"><b>Campus Librarian:</b> 
                     {% if campus_library == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class = "row">
+                                <small>{{librarian_name}}</small>
+                            </div>
+                        </div>
                     {% elif campus_library == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{campus_library}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{campus_library}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small>{{librarian_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
             </div>
+
             <div class="row col-12 justify-content-between">
                 <!--MATH & SCIENCE-->
                 <div id ="math_and_science" class=" row col col-6">
                     <label class = "col"><b>Head of Math & Sciences:</b> 
                     {% if math_and_science == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class = " row">
+                                <small>{{math_and_science_name}}</small>
+                            </div>
+                        </div>
                     {% elif math_and_science == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{math_and_science}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{math_and_science}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class = "row">
+                                <small>{{math_and_science_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
@@ -821,11 +894,25 @@ Adviser:
                 <div id ="guidance_office" class="col col-6">
                     <label class = "col"><b>Guidance Counselor:</b> 
                     {% if guidance == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class = "row">
+                                <small>{{guidance_councelor}}</small>
+                            </div>
+                        </div>
                     {% elif guidance == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{guidance}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{guidance}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class="row">
+                                <small>{{guidance_councelor}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
@@ -835,11 +922,25 @@ Adviser:
                 <div id ="dpecs" class=" row col col-6">
                     <label class = "col"><b>Head of DPECS:</b> 
                     {% if dpecs == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class ="row">
+                                <small>{{dpecs_name}}</small>
+                            </div>
+                        </div>
                     {% elif dpecs == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{dpecs}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{dpecs}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class =" row">
+                                <small>{{dpecs_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
@@ -847,11 +948,24 @@ Adviser:
                 <div id ="osa" class="col col-6">
                     <label class = "col"><b>Head of Student Affairs:</b> 
                     {% if osa == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div><div class="row">
+                                <small>{{osa_name}}</small>
+                            </div>
+                        </div>
                     {% elif osa == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{osa}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{osa}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small>{{osa_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
@@ -870,23 +984,52 @@ Adviser:
                             Head of Industrial Technology/Industrial Education/Engineering:</b> 
                         {% endif %}
                     {% if industrial == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class = "row">
+                                <small>{{it_name}}</small>
+                            </div>
+                        </div>
                     {% elif industrial == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{industrial}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{industrial}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small>{{it_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>
+
                 <!--ASST. DIR. FOR ACADEMIC AFFAIRS-->
                 <div id ="adaa" class="col col-6">
                     <label class = "col"><b>Asst. DIR. for Academic Affairs:</b> 
                     {% if adaa == "DECLINE" %}
-                        <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                        <div class= "col">
+                            <div class= "row">
+                                <label class = "col-5">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            </div>
+                            <div class ="row">
+                                <small>{{adaa_name}}</small>
+                            </div>
+                        </div>
                     {% elif adaa == "UNAPPROVED" %}
                         <label class = "col-5">UNAPPROVED</label>
                     {% else %}
-                        <img src ="/Media/{{adaa}}" class = "col col-5 responsive" alt="APPROVED">
+                        <div class= "col">
+                            <div class= "row">
+                                <img src ="/Media/{{adaa}}" class = "col col-5 responsive" alt="APPROVED">
+                            </div>
+                            <div class ="row">
+                                <small>{{adaa_name}}</small>
+                            </div>
+                        </div>
                     {% endif %}
                     </label>
                 </div>

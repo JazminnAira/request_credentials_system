@@ -26,14 +26,16 @@ from textwrap import wrap
 from django.db import connection
 import base64
 from PIL import Image
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render
 import datetime
 from datetime import datetime
+from datetime import date
 import os
+
 
 
 def graduation_print(request, id):
@@ -1281,6 +1283,15 @@ def cover(request):
 @login_required(login_url='/')
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
+        
+        # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
+        todays_date = date.today()
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(todays_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id 
+ 
         username = request.user.username
         full_name = request.user.full_name
         first = request.user.first_name
@@ -1337,7 +1348,7 @@ def student_dashboard(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display}
+    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'with_graduation': with_graduation}
     return render(request, 'html_files/4.1Student Dashboard.html', context)
 
 
@@ -1346,12 +1357,18 @@ def student_dashboard(request):
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
+        # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
+        todays_date = date.today() 
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(todays_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id
+        
         user = request.user.user_type
-        print(user)
         if request.method == "POST":
             form = clearance_form
 
-            # id_number = request.user.id()
             student_id = request.POST.get('stud_id_420')
             last_name = request.POST.get('ln_box_420')
             first_name = request.POST.get('fn_box_420')
@@ -1390,7 +1407,7 @@ def clearance_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation})
 
 
 @login_required(login_url='/')
@@ -1818,30 +1835,49 @@ def alumnus_dashboard(request):
 def faculty_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         unapproved = request.user.full_name + "_UNAPPROVED"
+        st1=""
         st = graduation_form_table.objects.filter(Q(signature1=unapproved) | Q(signature2=unapproved) | Q(signature3=unapproved) |
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
                                                   Q(addsignature1=unapproved) | Q(addsignature2=unapproved) | Q(addsignature3=unapproved) |
                                                   Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(addsignature6=unapproved) |
                                                   Q(addsignature7=unapproved) | Q(addsignature8=unapproved) | Q(addsignature9=unapproved) |
-                                                  Q(addsignature10=unapproved)).order_by('-id')
+                                                  Q(addsignature10=unapproved)).order_by('-time_requested')
         print(unapproved)
 
-        if request.user.department == "HOCS" or request.user.department == "HDLA" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDIT" or request.user.department == "HDIE" or request.user.department == "HOCL" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(Q(accountant_signature="UNAPPROVED") | Q(mathsci_dept_signature="UNAPPROVED") |
-                                                      Q(pe_dept_signature="UNAPPROVED") | Q(ieduc_dept_signature="UNAPPROVED") | Q(it_dept_signature="UNAPPROVED") |
-                                                      Q(ieng_dept_signature="UNAPPROVED") | Q(library_signature="UNAPPROVED") |
-                                                      Q(guidance_office_signature="UNAPPROVED") | Q(osa_signature="UNAPPROVED") |
-                                                      Q(academic_affairs_signature="UNAPPROVED")).order_by('-id')
-            return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1': st1, })
+        if request.user.department == "HOCS":
+            st1 = clearance_form_table.objects.filter(accountant_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HDLA":
+            st1 = clearance_form_table.objects.filter(liberal_arts_signature = "UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HDMS":
+            st1 = clearance_form_table.objects.filter(mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDPECS":
+            st1 = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDIT":
+            st1 = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDIE":
+            st1 = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HOCL":
+            st1 = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HOGS":
+            st1 = clearance_form_table.objects.filter(guidance_office_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HOSA":
+            st1 = clearance_form_table.objects.filter(osa_signature="UNAPPROVED").order_by('-time_requested') 
+        elif request.user.department == "HADAA":
+            st1 = clearance_form_table.objects.filter(academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
+               
+        if clearance_form_table.objects.filter(course_adviser_signature = unapproved):
+            st1= clearance_form_table.objects.filter(course_adviser_signature = unapproved).order_by('-time_requested')    
 
-        with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name) 
+        with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name)  
+        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance })
+
+
+         
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-
-    return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'with_clearance':with_clearance })
 
 
 @login_required(login_url='/')
@@ -2633,6 +2669,7 @@ def display_clearform(request, id):
         check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
         if check_status:
             accountant = "UNAPPROVED"
+            accountant_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
             acc_sig = str(faculty_approved[0])
@@ -2642,11 +2679,13 @@ def display_clearform(request, id):
             
             account_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             accountant = account_sig[0]
+            accountant_name = str_fac_name
             
         #COURSE ADVISER
         check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
         if check_status:
             course_adviser = "UNAPPROVED"
+            adviser_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
             adviser_sig = str(faculty_approved[0])
@@ -2656,11 +2695,13 @@ def display_clearform(request, id):
             
             ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             course_adviser = ca_sig[0]
+            adviser_name = str_fac_name
         
         #LIBERAL ARTS
         check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
         if check_status:
             liberal_arts = "UNAPPROVED"
+            liberal_artsName = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
             lib_sig = str(faculty_approved[0])
@@ -2670,11 +2711,13 @@ def display_clearform(request, id):
             
             libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             liberal_arts = libart_sig[0]
+            liberal_artsName = str_fac_name
         
         #CAMPUS LIBRARIAN
         check_status = clearance_form_table.objects.filter(id=id,library_signature__icontains = 'UNAPPROVED')
         if check_status:
             campus_library = "UNAPPROVED"
+            librarian_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
             camlib_sig = str(faculty_approved[0])
@@ -2684,11 +2727,13 @@ def display_clearform(request, id):
             
             cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             campus_library = cam_lib_sig[0]
+            librarian_name = str_fac_name
         
         #MATH & SCIENCES
         check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             math_and_science = "UNAPPROVED"
+            math_and_science_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
             mas_sig = str(faculty_approved[0])
@@ -2698,11 +2743,13 @@ def display_clearform(request, id):
             
             mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             math_and_science = mathsci_sig[0]
+            math_and_science_name = str_fac_name
             
         #GUIDANCE COUNCELOR
         check_status = clearance_form_table.objects.filter(id=id,guidance_office_signature__icontains = 'UNAPPROVED')
         if check_status:
             guidance = "UNAPPROVED"
+            guidance_councelor = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('guidance_office_signature', flat=True).distinct()
             guid_sig = str(faculty_approved[0])
@@ -2712,11 +2759,13 @@ def display_clearform(request, id):
             
             gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             guidance = gui_sig[0]
+            guidance_councelor = str_fac_name
         
         #DPECS
         check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             dpecs = "UNAPPROVED"
+            dpecs_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
             pe_sig = str(faculty_approved[0])
@@ -2726,11 +2775,13 @@ def display_clearform(request, id):
             
             pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             dpecs = pe_dept_sig[0]
+            dpecs_name = str_fac_name
         
         #OSA
         check_status = clearance_form_table.objects.filter(id=id,osa_signature__icontains = 'UNAPPROVED')
         if check_status:
             osa = "UNAPPROVED"
+            osa_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('osa_signature', flat=True).distinct()
             student_osa_sig = str(faculty_approved[0])
@@ -2740,11 +2791,13 @@ def display_clearform(request, id):
             
             student_affairs_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             osa = student_affairs_sig[0]
+            osa_name = str_fac_name
         
         #ADAA
         check_status = clearance_form_table.objects.filter(id=id,academic_affairs_signature__icontains = 'UNAPPROVED')
         if check_status:
             adaa = "UNAPPROVED"
+            adaa_name = " "
         else:
             faculty_approved = clearance_form_table.objects.filter(id=id).values_list('academic_affairs_signature', flat=True).distinct()
             asst_dir_acad_sig = str(faculty_approved[0])
@@ -2754,12 +2807,14 @@ def display_clearform(request, id):
             
             adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
             adaa = adaa_sig[0]
+            adaa_name = str_fac_name
         
         #INDUSTRIAL
         check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
+            it_name = " "
         else:
             if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2773,6 +2828,7 @@ def display_clearform(request, id):
                 ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = ieduc_sig[0]
                 it_department = "EDUCATOR"
+                it_name = str_fac_name
             
             if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2786,6 +2842,7 @@ def display_clearform(request, id):
                 it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = it_dept_sig[0]
                 it_department = "TECHNOLOGIES"
+                it_name = str_fac_name
                 
             if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
                 pass
@@ -2799,6 +2856,7 @@ def display_clearform(request, id):
                 eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
                 industrial = eng_dept_sig[0]
                 it_department = "ENGINEERS"
+                it_name = str_fac_name
  
     else:
         messages.error(
@@ -2816,7 +2874,17 @@ def display_clearform(request, id):
         'campus_library' : campus_library,
         'guidance' : guidance,
         'osa' : osa,
-        'adaa' : adaa 
+        'adaa' : adaa,
+        'accountant_name' : accountant_name,
+        'adviser_name' : adviser_name,
+        'liberal_artsName' : liberal_artsName,
+        'librarian_name' : librarian_name,
+        'math_and_science_name' : math_and_science_name,
+        'guidance_councelor' : guidance_councelor,
+        'dpecs_name' : dpecs_name,
+        'osa_name' : osa_name,
+        'adaa_name' : adaa_name,
+        'it_name' : it_name,
     }
 
     print('running')
@@ -3332,7 +3400,7 @@ def registrar_dashboard_alumni_list(request):
 def registrar_dashboard_organize_request_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         
-        sorter = request.POST.get('request_table_organizer')
+        sorter = id
         
         if id == "CLAIMED":
             requests = request_form_table.objects.filter(claim = "CLAIMED").order_by('-time_requested').values()
@@ -3351,7 +3419,7 @@ def registrar_dashboard_organize_request_list(request, id):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc, 'sorter_type' : sorter})
 
 #DEFAULT PAGE
 def registrar_dashboard_request_list(request):
@@ -3494,6 +3562,8 @@ def update_clearance_signature(request, id):
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                
+                messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
             recent_sig = request.user.uploaded_signature
@@ -3501,17 +3571,15 @@ def update_clearance_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
     return redirect(faculty_dashboard_clearance_list)
 
@@ -3543,6 +3611,7 @@ def update_grad_signature(request, id):
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
             recent_sig = request.user.uploaded_signature
@@ -3550,17 +3619,16 @@ def update_grad_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+            
             
     return redirect(faculty_dashboard_graduation_list)
 

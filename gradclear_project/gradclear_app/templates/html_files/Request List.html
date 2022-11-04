@@ -55,6 +55,15 @@ Adviser:
     .results tr[visible='true'] {
         display: table-row;
     }
+
+    .results2 tr[visible='false'],
+    .no-result2 {
+        display: none;
+    }
+    
+    .results2 tr[visible='true'] {
+        display: table-row;
+    }
     
     .counter {
         padding: 8px;
@@ -158,7 +167,7 @@ Adviser:
     #list_tbl_77 {
         border-collapse: separate;
         border-spacing: 0 5px;
-        table-layout: fixed;
+        table-layout: auto;
         width: 100%;
         margin-bottom: 50px;
     }
@@ -176,12 +185,12 @@ Adviser:
     #list_tbl2_77 {
         border-collapse: separate;
         border-spacing: 0 5px;
-        table-layout: fixed;
+        table-layout: auto;
         width: 99%;
     }
     
     #list_tbl2_77 td {
-        border-width: 2px 0;
+        border-width: 1px 0;
         border-color: black;
         border-style: solid;
         padding: 5px 15px;
@@ -388,9 +397,8 @@ Adviser:
         <a href="{% url 'registrar_dashboard_request_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
 
         
-
         <!--SEARCH BAR-->
-        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1()" onsearch="OnSearch (this)">
 
         <!--SEARCH BUTTON
         <a><button onClick="return search()" type = "button" id="search_btn_77">Search</button></a>-->
@@ -423,13 +431,27 @@ Adviser:
         <div class = "float-left col-9"  >
             <h3 style="text-align:center;">Request List</h3>
             <div id ="button_claim_and_unclaim" class="mt-3">
-                <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
-                <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
-                <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% if sorter_type == "ALL" %}
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% elif sorter_type == "CLAIMED" %}
+                    <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% elif sorter_type == "UNCLAIMED" %}
+                    <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter3">Unclaimed</button>
+                {% else %}
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% endif %}
             </div>
-            <div id="request_table"  class="tab-content" style="background-color:#fff" >
+            <div id="request_table"  class="tab-content" style="background-color:#fff; overflow-x:auto;" >
                 <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
+                    <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
                         <thead>
                             <tr>
                                 <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
@@ -441,7 +463,7 @@ Adviser:
                                 <th>TOR</th>
                                 <th>Clearance</th>
                                 <th>Official Receipt</th>
-                                <th></th>
+                                <th>Account Type</th>
                                 <th>Status</th>
                                 <th>Appointment</th>
                             </tr>
@@ -454,10 +476,10 @@ Adviser:
                             <tbody>
                                 <tr>
                                     <td><input type="checkbox" class="check" value={{instance.id}}></td>
-                                    <td>{{instance.id}}</td>
-                                    <td>{{instance.name}}</td>
-                                    <td>{{instance.request}}</td>
-                                    <td>{{instance.time_requested}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -478,6 +500,7 @@ Adviser:
                                                 </select>
                                         </form> 
                                     </td>
+                                    <td>{{instance.clearance}}</td>
                                     <td>
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -488,8 +511,7 @@ Adviser:
                                                 </select>
                                         </form> 
                                     </td>
-                                    <td>{{instance.clearance}}</td>
-                                    <td>{{instance.current_status}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
                                     <td>
                                         <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -504,7 +526,7 @@ Adviser:
                                         {% if instance.approval_status ==  'APPROVED' %}
                                             <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
                                         {% else %}
-                                            <p>APPOINTMENT NOT YET AVAILABLE</p>
+                                            APPOINTMENT NOT YET AVAILABLE
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -536,23 +558,24 @@ Adviser:
                     </form>
                 {% endif %}
             </div>
-            <div id="document_table" class="tab-content" style="background-color:#fff">
+            <div id="document_table" class="tab-content" style="background-color:#fff; overflow-x:auto;">
                 <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
+                    <table class="table results2 table-hover table-sortable table-responsive-sm" id="list_tbl2_77">
                         <thead>
-                            <tr>
+                            <tr><th>No.</th>
                                 <th>Name</th>
                                 <th>Form 137-A</th>
                                 <th>TOR</th>
                             </tr>
-                            <tr class="warning no-result">
-                                <td colspan="3"><i class="fa fa-warning"></i> No result</td>
+                            <tr class="warning no-result2">
+                                <td colspan="4"><i class="fa fa-warning"></i> No result</td>
                             </tr>
                         </thead>
                         
                         {% for instance in data2 %}
                             <tbody>
                                 <tr>
+                                    <td>{{instance.id}}</id>
                                     <td>{{instance.name}}</td>
                                     <td>{{instance.form_137}}</td>
                                     <td>{{instance.TOR}}</td>
@@ -666,7 +689,7 @@ Adviser:
         });
     });
 
-    // SEARCH1
+    // SEARCH REQUEST LIST
     function searching1() {
         $(document).ready(function() {
             $(".search").keyup(function() {
@@ -698,14 +721,11 @@ Adviser:
                 }
             });
         });
-    }
 
-    // SEARCH2
-    function searching2() {
         $(document).ready(function() {
             $(".search").keyup(function() {
                 var searchTerm = $(".search").val();
-                var listItem = $('.results tbody').children('tr');
+                var listItem = $('.results2 tbody').children('tr');
                 var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
 
                 $.extend($.expr[':'], {
@@ -714,25 +734,27 @@ Adviser:
                     }
                 });
 
-                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                $(".results2 tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
                     $(this).attr('visible', 'false');
                 });
 
-                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                $(".results2 tbody tr:containsi('" + searchSplit + "')").each(function(e) {
                     $(this).attr('visible', 'true');
                 });
 
-                var jobCount = $('.results tbody tr[visible="true"]').length;
-                $('.counter').text(jobCount + ' item');
+                var DocCount = $('.results2 tbody tr[visible="true"]').length;
+                $('.counter').text(DocCount + ' item');
 
-                if (jobCount == '0') {
-                    $('.no-result').show();
+                if (DocCount == '0') {
+                    $('.no-result2').show();
                 } else {
-                    $('.no-result').hide();
+                    $('.no-result2').hide();
                 }
             });
         });
     }
+
+
 
     // BACK TO TOP FUNCTION
     var btn = $("#backtotop_btn_77");

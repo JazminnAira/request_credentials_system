@@ -112,7 +112,7 @@ Adviser:
     .table-sortable .th-sort-desc {
         background: rgba(0, 0, 0, 0.1);
     }
-    
+
     #list_tbl_41 th.asc:after {
         display: inline;
         content: 'asc';
@@ -137,46 +137,74 @@ Adviser:
     }
     
     #main_41 {
-        padding-left: 100px;
+        padding-left: 10px;
     }
     
     #main2_41 {
-        padding-left: 100px;
+        padding-left: 30px;
     }
     
-    .side-bar {
-        width: 70px;
-        vertical-align: middle;
-        background-color: #424242;
-        height: 100%;
-        position: fixed;
-        z-index: 3;
-        top: 0;
-        left: 0;
-        color: white;
-        
-    }
+    .sidebar {
+    height: 100%;
+    width: 70px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #424242;
+    transition: 0.4s;
+    overflow-x: hidden;
+    white-space: nowrap;
     
-    .side-bar a {
-        display: block;
-        text-align: center;
-        padding: 5px;
-        transition: all 0.3s ease;
-        color: white;
+}
+
+    .sidebar a {
+        padding: 8px 8px 8px 15px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #fff;
+        display: block;       
+    }
+
+    main .sidebar {
+        position: absolute;
+        right: 25px;
         font-size: 36px;
-        line-height: 70px;
-        border-left: 2px solid transparent;
-        box-sizing: border-box;
-        height: fit-content;
-        
+        margin-left: 50px;
+    }
+
+    .material-icons,
+    .icon-text {
+        vertical-align: middle;
+    }
+
+    .material-icons {
+        padding-bottom: 3px;
+        margin-right: 30px;
+        font-size:35px;
+    }
+
+    #main {
+        margin-left:70px;
+        transition: margin-left 0.4s;
+    }
+
+    @media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {
+        font-size: 18px;
+    }
     }
     
-    .active,
-    .side-bar a:hover {
+    .sidebar .active,
+    .sidebar a:hover{
+        color: #fff;
         background-color: #424242;
         color: #c51d3a;
         border-left: 5px solid #c51d3a;
-    }
+        }
     
     #logo_41 {
         padding-left: 3px;
@@ -476,11 +504,11 @@ Adviser:
     }
     
     .table-hover tbody tr:nth-child(odd) {
-        background-color: #f5f0f6;
+        background-color: transparent;
     }
     
     .table-hover tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #clear_bar_41 {
@@ -529,6 +557,12 @@ Adviser:
         font-size: 15px;
     }
     
+    .active{
+        background-color: #424242;
+        color: #c51d3a;
+        border-left: 5px solid #c51d3a;
+    }
+
     .active,
     .card-header:hover {
         background-color: #616161;
@@ -657,26 +691,31 @@ Adviser:
 
 
 <!--SIDEBAR-->
-<div class="side-bar position-fixed">
-    <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41" title="Technological University of the Philippines- Cavite">
-    <a data-toggle="modal" data-target="#AccountSettings_modal_41" title="Account" class="link" class="trigger-btn"><i class="fa fa-user">
-        </i></a>
-    <a href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right" title="Graduation Form"><i class="fa fa-graduation-cap">    
-        </i> </a>
-    <a href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" title="Clearance Form" class="link" class="trigger-btn"><i class="fa fa-file-text-o">
-        </i> </a>
-    <a href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" title="Request Form" class="link" class="trigger-btn"><i class="fa fa-files-o">
-        </i> </a>
+<div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+    <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
+    <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
+        </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
+    {% if with_graduation >= 4 %}
+        <a  style="padding-left: 15px;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
+        </i><span class="icon-text">Graduation Form</span></a><br>
+    {% else %}
+        <a style="padding-left: 15px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
+        </i><span class="icon-text">Graduation Form</span></a><br>
+    {% endif %}
+    <a style="padding-left: 21px;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+        </i><span class="icon-text">Clearance Form</span></a><br>
+    <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
+        </i><span class="icon-text">Request Form</span></a><br>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
         </i></a> -->
-    <a data-toggle="modal" data-placement="right" data-target="#settings_modal_41" title="Settings" class="link" class="trigger-btn"><i class="fa fa-cogs">
-        </i></a>
-    <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="logo_41" style="position: absolute;bottom: 10px;">
+    <a style="padding-left: 17px;" data-toggle="modal" data-placement="right" data-target="#settings_modal_41" class="link" class="trigger-btn"><i class="fa fa-cogs material-icons">
+        </i><span class="icon-text">Settings</span></a><br>
+    <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">
     <!-- <p id="programmers-text_41">©LEFT</p> -->
 </div>
 
 
-<body>
+<body id="main">
     <basefont face="Lucida Sans Unicode" size="14" color="black">
     </basefont>
 
@@ -1058,7 +1097,8 @@ Adviser:
     <!--MAIN-->
     <div class="container-fluid">
         <div class="row" style="padding-right: 0px;">
-            <div class="col-12" style="padding-right: 0px;">
+            <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
+            text-align: right;">
 
                 <!--DATE INDICATOR LABEL-->
                 <p id="date_text_lbl_41"></p>
@@ -1153,8 +1193,6 @@ Adviser:
                             <td>{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
-                            <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
-                                data-toggle="modal" data-target="#exampleModal_41">View</button></td> -->
                             
                         </tr>
                         {% endfor %}
@@ -1636,4 +1674,22 @@ Adviser:
             document.getElementById("add_btn_41").click();
         }
     });
+    // COLLAPSIBLE SIDEBAR
+    var mini = true;
+
+    function toggleSidebar() {
+    if (mini) {
+        document.getElementById("sidebar").style.width = "70px";
+        document.getElementById("main").style.marginLeft = "70px";
+        document.getElementById("left_logo_41").style.marginLeft = "3px";
+        this.mini = false;
+        
+    } else {
+        document.getElementById("sidebar").style.width = "300px";
+        document.getElementById("main").style.marginLeft = "300px";
+        document.getElementById("left_logo_41").style.marginLeft = "130px";
+        this.mini = true;
+        
+    }
+    }
 </script>

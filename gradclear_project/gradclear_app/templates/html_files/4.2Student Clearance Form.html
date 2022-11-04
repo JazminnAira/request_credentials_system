@@ -698,10 +698,17 @@ Adviser:
                     <input class="form-check-input chk" type="checkbox" id="Diploma_check_42" name="purpose_request_420" value="Diploma">
                     <label class="form-check-label" for="inlineCheckbox5_42">Diploma</label>
                 </div>
+                {% if with_graduation >= 4 %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
                     <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
                 </div>
+                {% else %}
+                <div class="form-check form-check-inline" >
+                    <input class="form-check-input chk" disabled type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
+                    <label class="form-check-label" for="inlineCheckbox6_42" style="opacity: 0.6;">Application for Graduation</label>
+                </div>
+                {% endif %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Certification_check_42" name="purpose_request_420" value="Certification">
                     <label class="form-check-label" for="inlineCheckbox7_42">Certification</label>

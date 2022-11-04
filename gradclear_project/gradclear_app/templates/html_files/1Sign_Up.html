@@ -367,6 +367,13 @@ Adviser:
         border: 2px solid #E2788A !important;
     }
 
+    canvas #signature-pad {
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
+    }
+
 </style>
 
 
@@ -542,19 +549,11 @@ Adviser:
                                             </label>
                                         </div>
                                         <br>
-                                        
-        
-                                        <div class="form-check form-check-inline p-2 ">
-                                            <label class="form-check-label" for="inlineCheckbox1_pre">
-                                                <input class="form-check-input chk " type="checkbox" id="decline_signature" name="agreement" value="DECLINE">
-                                                I DISAGREE to attach my signature to approve the request forms the Students, Old students and Alumni's.I will personally or manually process the signing of forms.</label>
-                                        </div>
-                                        
-                                        <div id = "signature_area" class="border pt-1 p-2 m-2 " style ="visibility:hidden;">
+                                        <div id = "signature_area" class="border pt-1 p-2 m-2 " hidden>
                                             <label>Choose option of saving your Signature</label><br>
                                             <label class="m-3"><input class="form-check-input checkbox " type="checkbox" name="signature_type" value="ESIGN" id="esignature">Option 1: Create E-signature</label>
-                                            <div class="wrapper border border-secondary rounded mr-3 ml-3 p-2" id="esign_area" style ="visibility:hidden;">
-                                                <canvas name="signature" id="signature_pad" width="150" height="300" class="col-md-12 mx-auto m-2 border border-bottom-0"></canvas>
+                                            <div class="wrapper mr-3 ml-3 p-2" align="center" id ="esign_area" hidden>
+                                                <canvas name="signature" id="signature_pad" width="400" height="200" class="mx-auto m-2 border border-dark rounded"></canvas>
                                                 <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
                                                 <textarea id ="image_encoded" name="image_encoded" hidden></textarea>   
                                                 <button type = "button" id="clear" class = "col-2 p-1 m-1"><span> Clear </span></button> 
@@ -563,11 +562,19 @@ Adviser:
                                             
                                             <label for="prof_pic" class="m-3"><input class="form-check-input checkbox " type="checkbox" id="upload" name="signature_type" value="UPLOAD">Option 2: Upload Signature</label><br>
                                             <div id = "upload_area" hidden>
-                                                <label>Please make sure your photo in PNG format file.</label><br>
+                                                <label>*Make sure your signature is in a clean white background</label><br>
                                                 <a id="clicker_detector">{{form.uploaded_signature}}</a>
                                             </div>
                                             <p></p>
                                         </div>
+        
+                                        <div class="form-check form-check-inline p-2 ">
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">
+                                                <input class="form-check-input chk " type="checkbox" id="decline_signature" name="agreement" value="DECLINE">
+                                                I DISAGREE to attach my signature to approve the request forms the Students, Old students and Alumni's.I will personally or manually process the signing of forms.</label>
+                                        </div>
+                                        
+                                        
                                     </div>
                                     
                                 {% endif %}
@@ -723,12 +730,12 @@ Adviser:
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
-    }
+    };
     window.onresize = resizeCanvas;
     resizeCanvas();
 
     var signaturePad = new SignaturePad(canvas, {
-     backgroundColor: 'rgb(250,250,250)'
+     backgroundColor: 'rgb(255,255,255,0)'
     });
 
     //saving upload
@@ -749,11 +756,10 @@ Adviser:
 
     //check box filters
     document.getElementById("agreed_signature").oninput = function(){
-        document.getElementById("signature_area").hidden =false;
-        document.getElementById("signature_area").style.visibility = "visible";
         document.getElementById("decline_signature").checked = false;
         document.getElementById("upload_area").hidden =true;
-        document.getElementById("esign_area").hidden = true;
+        document.getElementById("signature_area").hidden = false;
+
     };
 
     document.getElementById("decline_signature").oninput = function(){
@@ -767,9 +773,10 @@ Adviser:
 
     document.getElementById("esignature").oninput = function(){
         document.getElementById("upload_area").hidden =true;
-        document.getElementById("esign_area").style.visibility = "visible";
         document.getElementById("esign_area").hidden = false;
         document.getElementById("upload").checked = false;
+        document.getElementById('signature_pad').width = 500;
+        document.getElementById('signature_pad').height = 250;
     };
 
     document.getElementById("upload").oninput = function(){
