@@ -2244,7 +2244,855 @@ def faculty_dashboard_graduation_list(request):
         f_n_approved= request.user.full_name + "_APPROVED"
 
         st= graduation_form_table.objects.all()
+        if request.method == "POST":
+            id_list = request.POST.getlist('boxes')
+            print("list:", id_list) 
+            for i in id_list:
+                name_temp = graduation_form_table.objects.filter(
+                id=int(i)).values_list('name', flat=True).distinct()
+                email_temp = graduation_form_table.objects.filter(
+                    id=int(i)).values_list('student_id', flat=True).distinct()
+                email = user_table.objects.filter(
+                    username=email_temp[0]).values_list('email', flat=True).distinct()
         
+                rec_email = email[0]
+                print(rec_email) 
+                f_n1 = request.user.full_name + '_UNAPPROVED'
+                    
+                approval =request.user.full_name + "_APPROVED"
+                c1= graduation_form_table.objects.filter(id=int(i), signature1__contains = "NO_APPROVED").count()
+                c2= graduation_form_table.objects.filter(id=int(i), signature2__contains = "NO_APPROVED").count()
+                c3= graduation_form_table.objects.filter(id=int(i), signature3__contains = "NO_APPROVED").count()
+                c4= graduation_form_table.objects.filter(id=int(i), signature4__contains = "NO_APPROVED").count()
+                c5= graduation_form_table.objects.filter(id=int(i), signature5__contains = "NO_APPROVED").count()
+                c6= graduation_form_table.objects.filter(id=int(i), signature6__contains = "NO_APPROVED").count()
+                c7= graduation_form_table.objects.filter(id=int(i), signature7__contains = "NO_APPROVED").count()
+                c8= graduation_form_table.objects.filter(id=int(i), signature8__contains = "NO_APPROVED").count()
+                c9= graduation_form_table.objects.filter(id=int(i), signature9__contains = "NO_APPROVED").count()
+                c10= graduation_form_table.objects.filter(id=int(i), signature10__contains = "NO_APPROVED").count()
+                ac1= graduation_form_table.objects.filter(id=int(i), addsignature1__contains = "NO_APPROVED").count()
+                ac2= graduation_form_table.objects.filter(id=int(i), addsignature2__contains = "NO_APPROVED").count()
+                ac3= graduation_form_table.objects.filter(id=int(i), addsignature3__contains = "NO_APPROVED").count()
+                ac4= graduation_form_table.objects.filter(id=int(i), addsignature4__contains = "NO_APPROVED").count()
+                ac5= graduation_form_table.objects.filter(id=int(i), addsignature5__contains = "NO_APPROVED").count()
+                ac6= graduation_form_table.objects.filter(id=int(i), addsignature6__contains = "NO_APPROVED").count()
+                ac7= graduation_form_table.objects.filter(id=int(i), addsignature7__contains = "NO_APPROVED").count()
+                ac8= graduation_form_table.objects.filter(id=int(i), addsignature8__contains = "NO_APPROVED").count()
+                ac9= graduation_form_table.objects.filter(id=int(i), addsignature9__contains = "NO_APPROVED").count()
+                ac10= graduation_form_table.objects.filter(id=int(i), addsignature10__contains = "NO_APPROVED").count()
+                sc1= graduation_form_table.objects.filter(id=int(i), sitsignature__contains = "NO_APPROVED").count()
+                
+                 
+                f_n = request.user.full_name
+                if graduation_form_table.objects.filter(
+                    sitsignature__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(sitsignature=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                            approval_status=adder)
+
+                if graduation_form_table.objects.filter(
+                    signature1__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature1=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+
+                if graduation_form_table.objects.filter(
+                    signature2__contains=f_n1, id=int(i)): 
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature2=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature3__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature3=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature4__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature4=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature5__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature5=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature6__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature6=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature7__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature7=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature8__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature8=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature9__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature9=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    signature10__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(signature10=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature1__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature1=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature2__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature2=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature3__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature3=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature4__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature4=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature5__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature5=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature6__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature6=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature7__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature7=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature8__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature8=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature9__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature9=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                if graduation_form_table.objects.filter(
+                    addsignature10__contains=f_n1, id=int(i)):
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(addsignature10=approval)
+                    
+                    total= 0
+                    final_count = [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,ac1,ac2,ac3,ac4,ac5,
+                                    ac6,ac7,ac8,ac9,ac10,sc1]
+                    for a in final_count:
+                        total+= a
+                    denominator = 21 - int(total) 
+                    cursor = connection.cursor()
+                    query= "SELECT approval_status from `gradclear_app_graduation_form_table` where id=%s"
+                    val=(int(i),)
+                    cursor.execute(query, val)
+
+                    row = cursor.fetchone()
+                    rownum=row[0]
+                    print('rownum', rownum)
+                    if len(rownum) <5:
+                        temp=rownum[0]
+                        print(temp,"this 1")
+                    else:
+                        rownum1=rownum[0]
+                        rownum2=rownum[1]
+                        full_num= rownum1[0],rownum2[0]
+                        temp = full_num[0] + full_num[1]
+                        print("this 2",temp)
+
+                    app_status = int(temp)
+                    numerator =app_status +1
+                    adder = str(numerator) + "/" + str(denominator)
+
+                    graduation_form_table.objects.filter(id=int(i)).update(
+                        approval_status=adder)
+                
+                name_temp = graduation_form_table.objects.filter(
+                id=int(i)).values_list('name', flat=True).distinct()
+                email_temp = graduation_form_table.objects.filter(
+                    id=int(i)).values_list('student_id', flat=True).distinct()
+                email = user_table.objects.filter(
+                    username=email_temp[0]).values_list('email', flat=True).distinct()
+        
+                rec_email = email[0]
+                print(rec_email) 
+                f_n_unapproved = request.user.full_name + '_UNAPPROVED'
+                f_n_approved =request.user.full_name + "_APPROVED"
+        
+                messages.success(request, "Subject Approved.") 
+
+                approval_status_checker_2=graduation_form_table.objects.filter(id=int(i),
+                    signature1__endswith = '_APPROVED' ,
+                    signature2__endswith = '_APPROVED' , 
+                    signature3__endswith = '_APPROVED' , 
+                    signature4__endswith = '_APPROVED' , 
+                    signature5__endswith = '_APPROVED' , 
+                    signature6__endswith = '_APPROVED' , 
+                    signature7__endswith = '_APPROVED' , 
+                    signature8__endswith = '_APPROVED' , 
+                    signature9__endswith = '_APPROVED' , 
+                    signature10__endswith = '_APPROVED' , 
+                    addsignature1__endswith = '_APPROVED' , 
+                    addsignature2__endswith = '_APPROVED' , 
+                    addsignature3__endswith = '_APPROVED' , 
+                    addsignature4__endswith = '_APPROVED' , 
+                    addsignature5__endswith = '_APPROVED' , 
+                    addsignature6__endswith = '_APPROVED' , 
+                    addsignature7__endswith = '_APPROVED' , 
+                    addsignature8__endswith = '_APPROVED' , 
+                    addsignature9__endswith = '_APPROVED' , 
+                    addsignature10__endswith = '_APPROVED',
+                    sitsignature__endswith = '_APPROVED')
+
+                if approval_status_checker_2:
+                    print(approval_status_checker_2)
+                    graduation_form_table.objects.filter(
+                        id=int(i)).update(approval_status="APPROVED")
+                    
+                    messages.success(request, "Form Approved.")
+                    subject = 'Graduation Form Approved'
+                    message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [rec_email, ]
+                    send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
+                            auth_password=None, connection=None, html_message=None)
+                
+            return redirect(faculty_dashboard_graduation_list)
+
+                
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -3494,8 +4342,6 @@ def registrar_dashboard_graduation_list(request, id):
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
             
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
-       
-
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -3558,6 +4404,14 @@ def registrar_dashboard_faculty_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
+    
+#DELETE FACULTY  
+def faculty_list_remove(request, id):
+    print("hey")
+    delete_faculty = user_table.objects.get(id=id)
+    delete_faculty.delete()
+    
+    return redirect (registrar_dashboard_faculty_list)
 
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
@@ -3574,20 +4428,18 @@ def faculty_designation_update(request, id):
 def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
-    student_data = user_table.objects.filter(Q(user_type='STUDENT') |Q(user_type='OLD STUDENT'))
+    student_data = user_table.objects.filter(Q(user_type='STUDENT') |Q(user_type='OLD STUDENT') |Q(user_type='ALUMNUS'))
         
     context = {'data':student_data}
     return render(request, template, context)
 
-#ALUMNI LIST
-@login_required(login_url='/')
-def registrar_dashboard_alumni_list(request):
-    # declaring template
-    template = "html_files/Alumni List.html"
-    alumnus_data = user_table.objects.filter(user_type="ALUMNUS")
+#DELETE STUDENT/REQUESTER
+def student_list_remove(request, id):
+    print("hey")
+    delete_student = user_table.objects.get(id=id)
+    delete_student.delete()
     
-    context = {'data':alumnus_data}
-    return render(request, template, context)
+    return redirect (registrar_dashboard_student_list)
 
 #REQUEST LIST AND DOCUMENT CHECKER LIST 
 #REQUEST LIST WITH ORGANIZER

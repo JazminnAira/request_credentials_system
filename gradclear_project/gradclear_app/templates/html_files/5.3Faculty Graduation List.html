@@ -201,6 +201,7 @@ Adviser:
         table-layout: auto; /* TO MAKE ROW FIT*/
         border-collapse: separate;
         
+        
     }
     
    
@@ -652,7 +653,7 @@ Adviser:
                     {% for instance in st %}
                     <tbody> 
                         <tr id="Add"> 
-                            <td><input type="checkbox" class="check" value={{instance.id}}></td>       
+                            <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>       
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
@@ -962,58 +963,12 @@ Adviser:
                     {% endfor %}
                 </table>
             </div>
+            <button type="submit" style="margin-top:30px">Approve All</button>
         </form>
     </div>
         <p class="text-center text-bold" id="p6_53"></p>
 
-        <!--APPROVED TAB-->
-        <!-- <div id="tab2_53" data-tab-content="1" class="tab-content">
-            <div class="wrapper_all">
-                <table class="table results table-hover table-sortable" id="list_tbl2_53">
-                    <thead>
-                        <tr>
-                            <th> # </th>
-                            <th>Student's Name</th>
-                            <th>Course</th>
-                            <th>ID Number</th>
-                            <th>Purpose of Request</th>
-                            <th>Appointment</th>
-                            <th id="Viewform"> View Form</th>  
-                            <th id="Messagebutton"> Message</th>
-                            <th id="Approvalbutton">Approval Status</th>
-                        </tr>
-                        <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
-                        </tr>
-                    </thead>
-                    
-                    {% for instance in st %}
-                    <tbody>
-                        <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.date_filed}}</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                            <td><button type="button" class="table-icon"><i class="fa fa-eye table-i" aria-hidden="true"></i></button></td>
-                            <td><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></td>
-
-                            {% if not val %}
-                            <td><a href="update/{{ instance.id }}" onclick="alert('c')">Approve</a></td>
-                            {% else %}
-                            <td><b>APPROVED</b></td>
-                            {% endif %}
-                        </tr>
-                    </tbody>
-                    {% endfor %} -->
-                </table>
-            </div>
-        </div>
-    </div>
     </hr>
-
-    <p class="text-center text-bold" id="p6_53"></p>
 
 </body>
 
