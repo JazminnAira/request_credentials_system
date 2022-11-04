@@ -686,7 +686,7 @@ Adviser:
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.appointment}}</td>
-                        <td><a href="appointment/{{ instance.id }}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                        <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
                             {% if instance.accountant_signature == "UNAPPROVED" %}

@@ -42,7 +42,14 @@ Adviser:
     }
     
     body {
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/graduation_list.png' %}");
+        /* background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/graduation_list.png' %}"); */
+        /* From https://css.glass */
+/* From https://css.glass */
+        background: rgba(95, 92, 92, 0.49);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15.5px);
+        -webkit-backdrop-filter: blur(15.5px);
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
@@ -404,14 +411,25 @@ Adviser:
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" >
                     <div class="modal-header modal-1"  style="width: 100%;">
-                        <h3 class="modal-title w-100 text-center">Appointment</h3>
+                        {% if request.user.user_type == "FACULTY" %}
+                        <h3 class="modal-title w-100 text-center">Appointment for Concerns</h3>
+                        {% elif request.user.user_type == "REGISTRAR" %}
+                        <h3 class="modal-title w-100 text-center">Appointment for Claiming Requested Credentials</h3>
+                        {% endif %}
 
                          <!--MODAL CLOSE BUTTON-->
-                         {% if request.user.user_type == "FACULTY" %}
-                         <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
-                         {% elif request.user.user_type == "REGISTRAR" %}
-                         <a href="{% url 'registrar_dashboard_request_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
-                         {% endif %}
+                        {% if gform == 'clearance' %}
+                        <a href="{% url 'faculty_dashboard_clearance_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                         
+                        {% elif gform == 'graduation'%}
+                        <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                         
+                        {% elif request.user.user_type == "REGISTRAR" %}
+                        <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+                            x
+                        </a>
+                        {% endif%}
+                         
                     </div>
 
                     <!-- {% if request.user.user_type == "FACULTY" %}
@@ -427,30 +445,30 @@ Adviser:
 
                                         
 
-                                        {% if request.user.user_type == "REGISTRAR" %}
+                                        <!-- {% if request.user.user_type == "REGISTRAR" %} -->
                                         <!--SUBJECT-->
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="cnum">Subject:</label>
                                             <input type="text" id="subject" name="subject" value="Appointment for Claiming of Request Credential Form"class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" readonly>
                                             <p id="scn_error_01"></p>
                                         </div>
-                                        {% endif %}
+                                        {% endif %} -->
 
-                                        {% if request.user.user_type == "FACULTY" %}
+                                        <!-- {% if request.user.user_type == "FACULTY" %} -->
                                         <!--SUBJECT-->
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="cnum">Subject:</label>
                                             <input type="text" id="subject" name="subject" value="Appointment for Concerns with Clearance or Graduation Form"class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" readonly>
                                             <p id="scn_error_01"></p>
-                                        </div>
-                                        {% endif %}
+                                        </div> -->
+                                        <!-- {% endif %} -->
                                          
                                   
                                         <!--DATE OF APPOINTMENT-->
                                         <div class="form-group">
-                                            <label for="idnum">Date Appointment:</label>
+                                            <label for="idnum">Date of Appointment:</label>
                                             <input type="date" id="date" name="date_appointment" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
                                             <p id="sid_error_01"></p>
@@ -458,15 +476,22 @@ Adviser:
                         
                                         <!--TIME OF APPOINTMENT-->
                                         <div class="form-group" id="course_input">
-                                            <label for="course">Time Appointment</label>
-                                            <input type="time" id="time" name="time_appointment" onchange="ampm(this.value)" class="form-control input-field" 
+                                            <label for="course">Time of Appointment:</label>
+                                            <input type="time" id="time" onchange="ampm(this.value)" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
-                                            <span id="display_time"></span>
+                                            <span name="time_appointment"  id="display_time"></span>
                                             <p id="sc_error_01"></p>
                                         </div>
-                                        
-                                        {% if request.user.user_type == "FACULTY" %}
+
+                                        <div class="form-group">
+                                            <label for="cnum">Additional Message:</label>
+                                            <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
+                                            style="height: 150px; margin-bottom: 20px;" >
+                                            <p id="scn_error_01"></p>
+                                        </div>
+
                                         <!--ADDITIONAL MESSAGE-->
+                                        <!-- {% if request.user.user_type == "FACULTY" %}
                                         <label for="cnum">Message: </label>
                                         <div id = "approval_section" class = "p-2 border border-gray">
                                             <label class="form-check-label" for="inlineCheckbox1_pre">
@@ -479,18 +504,13 @@ Adviser:
                                             placeholder ="Additional Message:" style="height: 100px; margin-bottom: 20px;" >
                                             <p id="scn_error_01"></p>
                                         </div>
-                                        {% endif %}
+                                        {% endif %} -->
                                         
 
-                                        {% if request.user.user_type == "REGISTRAR" %}
+                                        <!-- {% if request.user.user_type == "REGISTRAR" %} -->
                                          <!--ADDITIONAL MESSAGE-->
-                                         <div class="form-group">
-                                            <label for="cnum">Additional Message:</label>
-                                            <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
-                                            style="height: 150px; margin-bottom: 20px;" >
-                                            <p id="scn_error_01"></p>
-                                        </div>
-                                        {% endif %}
+                                        
+                                        <!-- {% endif %} -->
 
                                         
                                         
@@ -512,7 +532,11 @@ Adviser:
     </section>
     <ul>
         <li>
-            {% if request.user.user_type == "FACULTY" %}
+            {% if gform == 'clearance' %}
+            <a href="{% url 'faculty_dashboard_clearance_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif gform == 'graduation'%}
             <a href="{% url 'faculty_dashboard_graduation_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
                 <i class="fa fa-home"></i>
             </a>
@@ -520,7 +544,7 @@ Adviser:
             <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
                 <i class="fa fa-home"></i>
             </a>
-            {% endif %}
+            {% endif%}
         </li>
 
     </ul>
