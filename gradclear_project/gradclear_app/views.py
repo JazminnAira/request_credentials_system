@@ -4320,7 +4320,7 @@ def registrar_dashboard_graduation_list(request, id):
             
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
     else:
-             messages.error(
+        messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
