@@ -33,6 +33,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render
 import datetime
 from datetime import datetime
+from datetime import date
 import os
 
 
@@ -1210,6 +1211,15 @@ def cover(request):
 @login_required(login_url='/')
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
+        
+        # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
+        todays_date = date.today()
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(todays_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id 
+ 
         username = request.user.username
         full_name = request.user.full_name
         first = request.user.first_name
@@ -1266,7 +1276,7 @@ def student_dashboard(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display}
+    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'with_graduation': with_graduation}
     return render(request, 'html_files/4.1Student Dashboard.html', context)
 
 
@@ -1275,12 +1285,18 @@ def student_dashboard(request):
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
+        # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
+        todays_date = date.today() 
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(todays_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id
+        
         user = request.user.user_type
-        print(user)
         if request.method == "POST":
             form = clearance_form
 
-            # id_number = request.user.id()
             student_id = request.POST.get('stud_id_420')
             last_name = request.POST.get('ln_box_420')
             first_name = request.POST.get('fn_box_420')
@@ -1319,7 +1335,7 @@ def clearance_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation})
 
 
 @login_required(login_url='/')
