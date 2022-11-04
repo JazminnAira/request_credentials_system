@@ -36,6 +36,12 @@ urlpatterns = [
      path('registrar_dashboard_request_list', registrar_dashboard_request_list, name="registrar_dashboard_request_list"),
      path('registrar_dashboard_organize_request_list/<str:id>', registrar_dashboard_organize_request_list, name="registrar_dashboard_organize_request_list"),
      path('upload_document_checker', upload_document_checker, name="upload_document_checker"),
+     
+     path('registrar_dashboard_organize_request_list/request_official_update/<int:id>', views.request_official_update, name='request_official_update'),
+     path('registrar_dashboard_organize_request_list/request_form137_update/<int:id>', views.request_form137_update, name='request_form137_update'),
+     path('registrar_dashboard_organize_request_list/request_TOR_update/<int:id>', views.request_TOR_update, name='request_TOR_update'),
+     path('registrar_dashboard_organize_request_list/request_claim_update/<int:id>', views.request_claim_update, name='request_claim_update'),
+     
      path('request_official_update/<int:id>', views.request_official_update, name='request_official_update'),
      path('request_form137_update/<int:id>', views.request_form137_update, name='request_form137_update'),
      path('request_TOR_update/<int:id>', views.request_TOR_update, name='request_TOR_update'),

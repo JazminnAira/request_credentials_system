@@ -3312,7 +3312,7 @@ def registrar_dashboard_alumni_list(request):
 def registrar_dashboard_organize_request_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         
-        sorter = request.POST.get('request_table_organizer')
+        sorter = id
         
         if id == "CLAIMED":
             requests = request_form_table.objects.filter(claim = "CLAIMED").order_by('-time_requested').values()
@@ -3331,7 +3331,7 @@ def registrar_dashboard_organize_request_list(request, id):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc, 'sorter_type' : sorter})
 
 #DEFAULT PAGE
 def registrar_dashboard_request_list(request):
@@ -3474,6 +3474,8 @@ def update_clearance_signature(request, id):
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                
+                messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
             recent_sig = request.user.uploaded_signature
@@ -3492,6 +3494,7 @@ def update_clearance_signature(request, id):
             
             user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
     return redirect(faculty_dashboard_clearance_list)
 
@@ -3523,6 +3526,7 @@ def update_grad_signature(request, id):
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
                 user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
             recent_sig = request.user.uploaded_signature
@@ -3541,6 +3545,7 @@ def update_grad_signature(request, id):
             
             user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
     return redirect(faculty_dashboard_graduation_list)
 
