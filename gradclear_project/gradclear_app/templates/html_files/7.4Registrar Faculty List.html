@@ -378,8 +378,6 @@ Adviser:
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
         <a href="{% url 'registrar_dashboard_faculty_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
 
-        
-
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_74" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
@@ -455,7 +453,7 @@ Adviser:
                             {% endif %}-->
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
@@ -492,7 +490,11 @@ Adviser:
                             <td hidden><input type="text" name="id_from_table" hidden value={{instance.id}}>
                             </td>
                             <td>
-                                <button class="button"><a style="color: #fff;" href="" onclick="fun()">Remove</a></button></td>
+                                <form method ="POST" action ="faculty_list_remove/{{instance.id}}">
+                                    {% csrf_token %}
+                                    <input type="text" name="id_from_table" value={{instance.id}} hidden>
+                                    <button type ="submit" class="submit">Remove</button>
+                                </form>
                             </td>
                         </tr>
                     </tbody>

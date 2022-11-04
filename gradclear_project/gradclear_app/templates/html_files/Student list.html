@@ -422,16 +422,18 @@ Adviser:
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Student's Profile</th>
-                            <th>Student's Name</th>
-                            <th>Student's ID</th>
+                            <th>Profile Picture</th>
+                            <th>Name</th>
+                            <th>ID Number</th>
                             <th>Course</th>
                             <th>Year Level</th>
+                            <th>Course Graduated</th>
+                            <th>Year Graduated</th>
                             <th></th>
                             <th></th>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="7"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
@@ -441,11 +443,42 @@ Adviser:
                             <td>{{instance.id}}</td>
                             <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
                             <td>{{instance.full_name}}</td>
-                            <td>{{instance.username}}</td>
-                            <td>{{instance.course}}</td>
-                            <td>{{instance.year_and_section}}</td>
+                            {% if instance.username == None %}
+                                <td>-</td>
+                            {% else %}
+                                <td>{{instance.username}}</td>
+                            {% endif %}
+
+                            {% if instance.course == None %}
+                                <td>-</td>
+                            {% else %}
+                                <td>{{instance.course}}</td>
+                            {% endif %}
+
+                            {% if instance.year_and_section == None %}
+                                <td>-</td>
+                            {% else %}
+                                <td>{{instance.year_and_section}}</td>
+                            {% endif %}
+
+                            {% if instance.course_graduated == None %}
+                                <td>-</td>
+                            {% else %}
+                                <td>{{instance.course_graduated}}</td>
+                            {% endif %}
+
+                            {% if instance.year_graduated == None %}
+                                <td>-</td>
+                            {% else %}
+                                <td>{{instance.year_graduated}}</td>
+                            {% endif %}
+                            
                             <td>{{instance.user_type}}</td>
-                            <td><button class="button"><a style="color: #fff;" href="" onclick="fun()">Remove</a></button></td>
+                            <td><form method ="POST" action ="student_list_remove/{{instance.id}}">
+                                {% csrf_token %}
+                                <input type="text" name="id_from_table" value={{instance.id}} hidden>
+                                <button type ="submit" class="submit">Remove</button>
+                            </form></td>
                         </tr>
                     </tbody>
                     {% endfor %}

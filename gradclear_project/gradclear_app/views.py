@@ -4319,10 +4319,8 @@ def registrar_dashboard_graduation_list(request, id):
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
             
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
-       
-
     else:
-        messages.error(
+             messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
@@ -4383,6 +4381,14 @@ def registrar_dashboard_faculty_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
+    
+#DELETE FACULTY  
+def faculty_list_remove(request, id):
+    print("hey")
+    delete_faculty = user_table.objects.get(id=id)
+    delete_faculty.delete()
+    
+    return redirect (registrar_dashboard_faculty_list)
 
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
@@ -4399,20 +4405,18 @@ def faculty_designation_update(request, id):
 def registrar_dashboard_student_list(request):
     # declaring template
     template = "html_files/Student list.html"
-    student_data = user_table.objects.filter(Q(user_type='STUDENT') |Q(user_type='OLD STUDENT'))
+    student_data = user_table.objects.filter(Q(user_type='STUDENT') |Q(user_type='OLD STUDENT') |Q(user_type='ALUMNUS'))
         
     context = {'data':student_data}
     return render(request, template, context)
 
-#ALUMNI LIST
-@login_required(login_url='/')
-def registrar_dashboard_alumni_list(request):
-    # declaring template
-    template = "html_files/Alumni List.html"
-    alumnus_data = user_table.objects.filter(user_type="ALUMNUS")
+#DELETE STUDENT/REQUESTER
+def student_list_remove(request, id):
+    print("hey")
+    delete_student = user_table.objects.get(id=id)
+    delete_student.delete()
     
-    context = {'data':alumnus_data}
-    return render(request, template, context)
+    return redirect (registrar_dashboard_student_list)
 
 #REQUEST LIST AND DOCUMENT CHECKER LIST 
 #REQUEST LIST WITH ORGANIZER
