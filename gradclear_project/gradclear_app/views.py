@@ -26,7 +26,7 @@ from textwrap import wrap
 from django.db import connection
 import base64
 from PIL import Image
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail, BadHeaderError
@@ -3500,16 +3500,13 @@ def update_clearance_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
@@ -3551,18 +3548,16 @@ def update_grad_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+            
             
     return redirect(faculty_dashboard_graduation_list)
 
