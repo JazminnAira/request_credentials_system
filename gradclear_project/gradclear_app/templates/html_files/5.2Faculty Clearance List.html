@@ -677,7 +677,8 @@ Adviser:
                 {% for instance in st %}
                 <tbody>
                     <tr id="Add">    
-                        <td><input type="checkbox" class="check" value={{instance.id}}></td>    
+                        
+                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
@@ -718,7 +719,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
-                        {% elif dep == "HDIT" %}
+                        {% elif dep == "HDIT" %} 
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
                             <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/it_dept_signature" >Approve</a>
@@ -787,7 +788,8 @@ Adviser:
                 </tbody>
                 {% endfor %}
             </table>
-            </form>
+            <button type="submit">Approve All</button>
+        </form>
     </div>
         <!---->
         
