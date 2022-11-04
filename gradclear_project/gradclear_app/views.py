@@ -37,6 +37,7 @@ from datetime import date
 import os
 
 
+
 def graduation_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)

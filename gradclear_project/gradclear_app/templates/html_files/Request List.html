@@ -158,7 +158,7 @@ Adviser:
     #list_tbl_77 {
         border-collapse: separate;
         border-spacing: 0 5px;
-        table-layout: fixed;
+        table-layout: auto;
         width: 100%;
         margin-bottom: 50px;
     }
@@ -176,12 +176,12 @@ Adviser:
     #list_tbl2_77 {
         border-collapse: separate;
         border-spacing: 0 5px;
-        table-layout: fixed;
+        table-layout: auto;
         width: 99%;
     }
     
     #list_tbl2_77 td {
-        border-width: 2px 0;
+        border-width: 1px 0;
         border-color: black;
         border-style: solid;
         padding: 5px 15px;
@@ -427,9 +427,9 @@ Adviser:
                 <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
                 <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
             </div>
-            <div id="request_table"  class="tab-content" style="background-color:#fff" >
+            <div id="request_table"  class="tab-content" style="background-color:#fff; overflow-x:auto;" >
                 <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
+                    <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
                         <thead>
                             <tr>
                                 <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
@@ -536,9 +536,9 @@ Adviser:
                     </form>
                 {% endif %}
             </div>
-            <div id="document_table" class="tab-content" style="background-color:#fff">
+            <div id="document_table" class="tab-content" style="background-color:#fff; overflow-x:auto;">
                 <div class="wrapper_all">
-                    <table class="table results table-hover table-sortable table-responsive" id="list_tbl_77">
+                    <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl2_77">
                         <thead>
                             <tr>
                                 <th>Name</th>
