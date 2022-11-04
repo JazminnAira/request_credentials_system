@@ -8,11 +8,19 @@ Programmers:
 Adviser:
         Mr.Jay Victor Gumboc
 -->
+<style>
+        .myAlert-top{
+                position: fixed;
+                top: 60px; 
+                left:2%;
+                width: 30%;
+                }
+</style>
 
 {%if messages%}
 {%for message in messages%}
-<div class = 'fade alert {{ message.tags}} m-2 alert-dismissible show' id ="msg" role="alert"  >
-    <b>Success! </b>{{message}}<button type="button" id="asdbut" class="close" data-dismiss="alert" aria-label="Close">
+<div class = 'fade alert {{ message.tags}} m-2 alert-dismissible show myAlert-top' id ="msg" role="alert"  >
+    <b>Great! </b>{{message}}<button type="button" id="asdbut" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
 </div>
