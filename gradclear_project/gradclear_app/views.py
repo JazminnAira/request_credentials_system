@@ -26,7 +26,7 @@ from textwrap import wrap
 from django.db import connection
 import base64
 from PIL import Image
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail, BadHeaderError
@@ -705,77 +705,95 @@ def clearance_print(request, id):
 
 
 def appointment(request, id):
-    if request.method == 'POST':
-        email_temp = request_form_table.objects.filter(
-        id=id).values_list('student_id', flat=True).distinct()
-        email = user_table.objects.filter(
-            username=email_temp[0]).values_list('email', flat=True).distinct()
-        rec_email = email[0]
-        recipient_list = [rec_email, ]
+    if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        if request.method == 'POST':
+            email_temp = request_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+            email = user_table.objects.filter(
+                username=email_temp[0]).values_list('email', flat=True).distinct()
+            rec_email = email[0]
+            recipient_list = [rec_email, ]
 
-        purpose = request_form_table.objects.filter(
-        id=id).values_list('request', flat=True).distinct()
-        purpose_of = request_form_table.objects.filter(
-            request=purpose[0]).values_list('request', flat=True).distinct()
-        purpose_of_req =  purpose_of[0]
-        purpose_of_request = purpose_of_req, 
+            purpose = request_form_table.objects.filter(
+            id=id).values_list('request', flat=True).distinct()
+            purpose_of = request_form_table.objects.filter(
+                request=purpose[0]).values_list('request', flat=True).distinct()
+            purpose_of_req =  purpose_of[0]
+            purpose_of_request = purpose_of_req, 
 
-        name = request_form_table.objects.filter(
-        id=id).values_list('name', flat=True).distinct()
-        s_name = request_form_table.objects.filter(
-            name=name[0]).values_list('name', flat=True).distinct()
-        student_name =  s_name[0]
+            name = request_form_table.objects.filter(
+            id=id).values_list('name', flat=True).distinct()
+            s_name = request_form_table.objects.filter(
+                name=name[0]).values_list('name', flat=True).distinct()
+            student_name =  s_name[0]
+
+            gender_temp = user_table.objects.filter(
+            id=id).values_list('gender', flat=True).distinct()
+            gender = user_table.objects.filter(
+                gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+            gender_choice = gender[0]
+            gender_final=""
+            if gender_choice == "FEMALE":
+                gender_final = "Ms."
+            else:
+                gender_final= "Mr."
+            
+            faculty_gender = request.user.gender
+            gender_fac=""
+            if faculty_gender == "FEMALE":
+                gender_fac = "Ms."
+            else:
+                gender_fac= "Mr."
+
+            subject = 'Application for Clearance Form '
+            message1 = 'Good day, '+ "<strong>" + gender_final +  name[0] + "</strong><br><br>"
+            # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
+            message2 = 'Your Application for Clearance Form has pending concerns with  '+"<strong>"+ gender_fac + request.user.last_name +"</strong><br><br>"
+            message3 = "<strong>"+ gender_fac +  request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
+            message4 =  "<strong>"+'Note:'+"</strong>"+' Failure to comply may result to declined application.'
+            message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
+            message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br>'
+            message7 =  "<i>"+'This is an automated message, do not reply.'+"</i>"
+
+
+            message = message1 + message2 + message3 
+
+            purpose_req = request.POST.get('purpose_of_request')
+            date_appointment = request.POST.get('date_appointment')
+            time_appointment = request.POST.get('time_appointment')
+            additionalmessage = request.POST.get('additionalmessage')  
+            email = request.POST.get('email')
         
-
-        subject = 'Application for Clearance Form '
-        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
-        # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
-        message2 = 'Your Application for Clearance Form has pending concerns with Mr/.Ms.  '+ "<strong>"+ request.user.last_name +"</strong><br><br>"
-        message3 = 'Mr/Ms.  '+ "<strong>"+ request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
-        message4 =  "<strong>"+'Note:'+"</strong>"+' Failure to comply may result to declined application.'
-        message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
-        message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br>'
-        message7 =  "<i>"+'This is an automated message, do not reply.'+"</i>"
-
-
-        message = message1 + message2 + message3 
-
-        purpose_req = request.POST.get('purpose_of_request')
-        date_appointment = request.POST.get('date_appointment')
-        time_appointment = request.POST.get('time_appointment')
-        additionalmessage = request.POST.get('additionalmessage')  
-        email = request.POST.get('email')
-       
-        
-        
-        data = {
-                'date_appointment': date_appointment, 
-                'time_appointment': time_appointment, 
-                'subject': subject, 
-                'message': message,
-                'message4': message4,
-                'message5': message5,
-                'message6': message6,
-                'message7': message7,
-                'additionalmessage': additionalmessage,
-        }
-        message=''''{}
-        <strong>Date:</strong>\n\t\t{}\n<br>
-        <strong>Time:</strong>\n\t\t{}\n<br><br>
-        <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br>
-        \n\t\t{}\n<br><br><br><br>
-        \n\t\t{}\n<br><br><br>
-        \n\t\t{}\n<br>
-        \n\t\t{}\n<br>
-        
-        '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
-        msg = EmailMessage(subject, message,'', email, recipient_list,)
-        msg.content_subtype = "html"
-        msg.send()
-        messages.success(request, "Appointment Schedule Sent.")
-        return redirect('faculty_dashboard_clearance_list')
-    else:
-        return render(request, 'html_files/appointment.html', {})
+            
+            
+            data = {
+                    'date_appointment': date_appointment, 
+                    'time_appointment': time_appointment, 
+                    'subject': subject, 
+                    'message': message,
+                    'message4': message4,
+                    'message5': message5,
+                    'message6': message6,
+                    'message7': message7,
+                    'additionalmessage': additionalmessage,
+            }
+            message=''''{}
+            <strong>Date:</strong>\n\t\t{}\n<br>
+            <strong>Time:</strong>\n\t\t{}\n<br><br>
+            <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br>
+            \n\t\t{}\n<br><br><br><br>
+            \n\t\t{}\n<br><br><br>
+            \n\t\t{}\n<br>
+            \n\t\t{}\n<br>
+            
+            '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
+            msg = EmailMessage(subject, message,'', email, recipient_list,)
+            msg.content_subtype = "html"
+            msg.send()
+            messages.success(request, "Appointment Schedule Sent.")
+            return redirect('faculty_dashboard_clearance_list')
+        else:
+            return render(request, 'html_files/appointment.html', {})
 
 
 def appointmentgrad(request, id):
@@ -799,13 +817,30 @@ def appointmentgrad(request, id):
         s_name = request_form_table.objects.filter(
             name=name[0]).values_list('name', flat=True).distinct()
         student_name =  s_name[0]
+
+        gender_temp = user_table.objects.filter(
+        id=id).values_list('gender', flat=True).distinct()
+        gender = user_table.objects.filter(
+            gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+        gender_choice = gender[0]
+        gender_final=""
+        if gender_choice == "FEMALE":
+            gender_final = "Ms."
+        else:
+            gender_final= "Mr."
         
+        faculty_gender = request.user.gender
+        gender_fac=""
+        if faculty_gender == "FEMALE":
+            gender_fac = "Ms."
+        else:
+            gender_fac= "Mr."
 
         subject = 'Application for Graduation Form '
-        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+        message1 = 'Good day, '+ "<strong>" + gender_final +  name[0] + "</strong><br><br>"
         # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
-        message2 = 'Your Application for Clearance Form has pending concerns with Mr/.Ms.  '+ "<strong>"+ request.user.last_name +"</strong><br><br>"
-        message3 = 'Mr/Ms.  '+ "<strong>"+ request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
+        message2 = 'Your Application for Clearance Form has pending concerns with  '+  "<strong>"+ gender_fac+   request.user.last_name +"</strong><br><br>"
+        message3 =  "<strong>"+ gender_fac +  request.user.last_name +"</strong>"+'  has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment. <br><br>'
         message4 =  "<strong>"+'Note:'+"</strong>"+' Failure to comply may result to declined application.'
         message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
         message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br>'
@@ -865,8 +900,20 @@ def reggrad_appointment(request, id):
         name=name[0]).values_list('name', flat=True).distinct()
     student_name =  s_name[0]
 
+    gender_temp = user_table.objects.filter(
+    id=id).values_list('gender', flat=True).distinct()
+    gender = user_table.objects.filter(
+        gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+    gender_choice = gender[0]
+    gender_final=""
+    if gender_choice == "FEMALE":
+        gender_final = "Ms."
+    else:
+        gender_final= "Mr."
+    
+
     subject = 'Application for Graduation Form'
-    message1 = 'Good day,   '+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+    message1 = 'Good day,   '+ gender_final + "<strong>" + name[0] + "</strong><br><br>"
     # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
     message2 = 'Your Application for Graduation Form has been approved and is now available for printing. Kindly visit this (link to web) and follow the guidelines below.<br><br>'
     message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
@@ -899,8 +946,20 @@ def regclear_appointment(request,id):
         name=name[0]).values_list('name', flat=True).distinct()
     student_name =  s_name[0]
 
+    gender_temp = user_table.objects.filter(
+    id=id).values_list('gender', flat=True).distinct()
+    gender = user_table.objects.filter(
+        gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+    gender_choice = gender[0]
+    gender_final=""
+    if gender_choice == "FEMALE":
+        gender_final = "Ms."
+    else:
+        gender_final= "Mr."
+    
+
     subject = 'Application for Clearance Form'
-    message1 = 'Good day,   '+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+    message1 = 'Good day,   '+ gender_final + "<strong>" + name[0] + "</strong><br><br>"
     # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
     message2 = 'Your Application for Clearance Form has been approved and is now available for printing. Kindly visit this (link to web) and follow the guidelines below.<br><br>'
     message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
@@ -928,6 +987,18 @@ def request_appointment(request,id):
         rec_email = email[0]
         recipient_list = [rec_email, ]
 
+        gender_temp = user_table.objects.filter(
+        id=id).values_list('gender', flat=True).distinct()
+        gender = user_table.objects.filter(
+            gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+        gender_choice = gender[0]
+        gender_final=""
+        if gender_choice == "FEMALE":
+            gender_final = "Ms."
+        else:
+            gender_final= "Mr."
+        
+
         purpose = request_form_table.objects.filter(
         id=id).values_list('request', flat=True).distinct()
         purpose_of = request_form_table.objects.filter(
@@ -940,13 +1011,13 @@ def request_appointment(request,id):
         s_name = request_form_table.objects.filter(
             name=name[0]).values_list('name', flat=True).distinct()
         student_name =  s_name[0]
-        
+
 
         subject = 'Claiming of '+ purpose_of_request[0] 
-        message1 = 'Good day,'+ 'Mr./Ms. ' + "<strong>" + name[0] + "</strong><br><br>"
+        message1 = 'Good day,'+ gender_final + "<strong>" + name[0] + "</strong><br><br>"
         # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
         message2 = 'Your request for  '+ "<strong>"+ purpose_of_request[0] +"</strong>"+  \
-            '   has been approved. Kindly visit the link _____ and follow the guidelines below for claiming your requested credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
+            '   has been approved. Kindly visit the (link) and follow the guidelines below for claiming your requested credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
         message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site (link to webapp).<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br>'
         message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
         message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite'
@@ -3672,16 +3743,13 @@ def update_clearance_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
@@ -3723,18 +3791,16 @@ def update_grad_signature(request, id):
                 os.remove("Media/" + str(recent_sig))
                     
             #save signature in the storage       
-            image_decode = base64.b64decode(create_signature.replace('data:image/png;base64,',''))        
-            file_name = 'Media/signatures/' + full_name + '_APPROVED.png'
-            # Create image file from base64
-            with open(file_name, 'wb') as img_file:
-                img_file.write(image_decode)
-                print("saved")
-                    
-                c_signature = 'signatures/' + full_name + '_APPROVED.png'
+            image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
+            file_name = 'signatures/' + full_name + '_APPROVED.png'
+
+            fs = FileSystemStorage()
+            filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=c_signature)
+            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
             user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+            
             
     return redirect(faculty_dashboard_graduation_list)
 
