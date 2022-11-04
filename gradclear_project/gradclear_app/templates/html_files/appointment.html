@@ -407,24 +407,45 @@ Adviser:
                         <h3 class="modal-title w-100 text-center">Appointment</h3>
 
                          <!--MODAL CLOSE BUTTON-->
+                         {% if request.user.user_type == "FACULTY" %}
+                         <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                         {% elif request.user.user_type == "REGISTRAR" %}
                          <a href="{% url 'registrar_dashboard_request_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
-                       
+                         {% endif %}
                     </div>
 
-                            {% csrf_token %}
+                    <!-- {% if request.user.user_type == "FACULTY" %}
+                        <form id="stud_form_01" method="POST" action="appointment" style="height:100%;" enctype="multipart/form-data">
+                    {% elif request.user.user_type == "REGISTRAR" %}
+                        <form id="stud_form_01" method="POST" action="request_appointment" style="height:100%;" enctype="multipart/form-data">
+                    {% endif %} -->
                             <div class="modal-body ">
                                 <input type="hidden" name="usertype_001" id="usertype" value="">
         
                                 <form method="POST" action="" style="height:100%;" >
                                     {% csrf_token %}
 
+                                        
+
+                                        {% if request.user.user_type == "REGISTRAR" %}
                                         <!--SUBJECT-->
                                         <div class="form-group">
                                             <label for="cnum">Subject:</label>
-                                            <input type="text" id="subject" name="subject" value="Appointment for Request Credential Form"class="form-control input-field" 
-                                            style="height: 50px; margin-bottom: 20px;" required>
+                                            <input type="text" id="subject" name="subject" value="Appointment for Claiming of Request Credential Form"class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" readonly>
                                             <p id="scn_error_01"></p>
                                         </div>
+                                        {% endif %}
+
+                                        {% if request.user.user_type == "FACULTY" %}
+                                        <!--SUBJECT-->
+                                        <div class="form-group">
+                                            <label for="cnum">Subject:</label>
+                                            <input type="text" id="subject" name="subject" value="Appointment for Concerns with Clearance or Graduation Form"class="form-control input-field" 
+                                            style="height: 50px; margin-bottom: 20px;" readonly>
+                                            <p id="scn_error_01"></p>
+                                        </div>
+                                        {% endif %}
                                          
                                   
                                         <!--DATE OF APPOINTMENT-->
@@ -438,18 +459,43 @@ Adviser:
                                         <!--TIME OF APPOINTMENT-->
                                         <div class="form-group" id="course_input">
                                             <label for="course">Time Appointment</label>
-                                            <input type="time" id="time" name="time_appointment" class="form-control input-field" 
+                                            <input type="time" id="time" name="time_appointment" onchange="ampm(this.value)" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
+                                            <span id="display_time"></span>
                                             <p id="sc_error_01"></p>
                                         </div>
-           
+                                        
+                                        {% if request.user.user_type == "FACULTY" %}
                                         <!--ADDITIONAL MESSAGE-->
-                                        <div class="form-group">
-                                            <label for="cnum">Additional Message: (Optional)</label>
+                                        <label for="cnum">Message: </label>
+                                        <div id = "approval_section" class = "p-2 border border-gray">
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">
+                                                Your Application for Clearance Form has pending concerns with Mr/.Ms. facultyname.
+                                            </label>
+                                            <label class="form-check-label" for="inlineCheckbox1_pre">
+                                                Mr/Ms. has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment.
+                                            </label>
+                                            <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
+                                            placeholder ="Additional Message:" style="height: 100px; margin-bottom: 20px;" >
+                                            <p id="scn_error_01"></p>
+                                        </div>
+                                        {% endif %}
+                                        
+
+                                        {% if request.user.user_type == "REGISTRAR" %}
+                                         <!--ADDITIONAL MESSAGE-->
+                                         <div class="form-group">
+                                            <label for="cnum">Additional Message:</label>
                                             <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
                                             style="height: 150px; margin-bottom: 20px;" >
                                             <p id="scn_error_01"></p>
                                         </div>
+                                        {% endif %}
+
+                                        
+                                        
+
+                                      
         
                               
                             <!--MODAL FOOTER-->
@@ -466,9 +512,15 @@ Adviser:
     </section>
     <ul>
         <li>
+            {% if request.user.user_type == "FACULTY" %}
+            <a href="{% url 'faculty_dashboard_graduation_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "REGISTRAR" %}
             <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
                 <i class="fa fa-home"></i>
             </a>
+            {% endif %}
         </li>
 
     </ul>
@@ -477,6 +529,22 @@ Adviser:
 
 
 <script>
+
+    function ampm(time){
+        console.log(time);
+        if (time.value !== ""){
+            var hours = time.split (":")[0];
+            var minutes = time.split(":")[1];
+            var suffix = hours >= 12 ? "pm" :"am";
+            hours = hours % 12 || 12;
+            hours = hours < 10 ? "0" + hours :hours;
+
+            var displayTime =hours + ":" + minutes + " "+ suffix;
+            document.getElementById("display_time").innerHTML=displayTime;
+        }
+
+    }
+            
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
   $(this)
     .find("input,textarea,select")
