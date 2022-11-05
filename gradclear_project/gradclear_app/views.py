@@ -39,6 +39,171 @@ import time
 import datetime
 from datetime import date,timedelta
 
+def req_print(request,id):
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+    content = request_form_table.objects.get(id=id)
+   
+    textob = p.beginText()
+
+    print(content)
+    print("hello world")
+
+    lines = []
+
+    p.setFont("Helvetica", 7)
+    p.drawString(73, 238, f'{content.address}')
+    # List of Payments
+    p.setFont("Helvetica", 9)
+    p.drawString(88, 833, f'{content.name2}')
+    p.drawString(325, 833, f'{content.course}')
+    p.drawString(468, 833, f'{content.date}')
+    
+   
+#   Claim Stub
+    p.setFont("Helvetica", 9)
+    p.drawString(95, 583, f'{content.name2}')
+    p.drawString(322, 583, f'{content.course}')
+    p.drawString(430, 583, f'{content.date}')
+    
+
+
+# Request Form
+    p.setFont("Helvetica", 9)
+    p.drawString(80, 252, f'{content.name2}')
+    p.drawString(300, 252, f'{content.course}')
+    p.drawString(400, 252, f'{content.date}')
+    p.drawString(520, 252, f'{content.control_number}')
+    p.drawString(450, 238, f'{content.contact_number}')
+    
+    p.setFont("Helvetica", 11)
+    status = content.current_status
+    yearget = status.split()
+    yeargrad =yearget[-1]
+    if status == "STUDENT":
+        p.drawString(30, 225, '/')
+    elif status =="OLD STUDENT":
+        p.drawString(195, 225, '/')
+    else:
+        p.drawString(327, 225, '/')
+        p.drawString(460, 225, f"""{yeargrad}""")
+        # PALAGAY NG YEAR GRAD
+
+    # purpose
+    form_purpose = content.request
+    word_list = form_purpose.split()  # list of words
+
+    cert = word_list[0]
+    cert4 = ' '.join(form_purpose.split()[1:])
+    
+    others = ' '.join(form_purpose.split()[1:])
+    
+
+    if form_purpose == "Honorable Dismissal":
+        p.drawString(327, 528, '✔')
+        p.drawString(257, 171, '✔')
+    elif form_purpose == "Verification":
+        p.drawString(266, 777, '✔')
+    elif form_purpose == "Subject Description":
+        p.drawString(266, 803, '✔')
+        p.drawString(327, 555, '✔')
+        p.drawString(257, 198, '✔')
+    elif form_purpose == "CAV":
+        p.drawString(47, 762, '✔')
+        p.drawString(60, 517, '✔')
+        p.drawString(30, 157, '✔')
+    elif form_purpose == "Transcript of Records":
+        p.drawString(47, 803, '✔')
+        p.drawString(60, 555, '✔')
+        p.drawString(30, 198, '✔')
+    elif form_purpose == "Authentication/Verification":
+        p.drawString(264, 790, '✔')
+        p.drawString(327, 541, '✔')
+        p.drawString(257, 184, '✔')
+    elif form_purpose == "Diploma":
+        p.drawString(47, 777, '✔')
+        p.drawString(60, 528, '✔')
+        p.drawString(30, 171, '✔')
+    elif  cert == "Certification:":
+        p.drawString(47, 790, '✔')
+        p.drawString(60, 541, '✔')
+        p.drawString(30, 184, '✔')
+        p.setFont("Helvetica", 9)
+        p.drawString(128, 542, f"""{cert4}""")
+        p.drawString(100, 184, f"""{cert4}""")
+        # paayos pa 
+        # padadagdag additional info
+    else:
+        p.setFont("Helvetica", 11)
+        
+        p.drawString(327, 517, '✔')
+        p.drawString(257, 157, '✔')
+        p.setFont("Helvetica", 9)
+        p.drawString(440, 517, f"""{others}""")
+        p.drawString(375, 157, f"""{others}""")
+        # temporary lang itong purpose_of_request_reason
+        
+        
+    o_r = content.official_receipt
+    f137 = content.form_137
+    clearance = content.clearance
+    
+    
+    if clearance == "✔":
+        p.drawString(230, 130, '✔')
+    else:
+        p.drawString(230, 130, 'X')
+        
+        
+    if f137 == "✔":
+        p.drawString(147, 130, '✔')
+    else:
+        p.drawString(147, 130, 'X')
+        
+    if o_r == "✔":
+        p.drawString(318, 130, '✔')
+    else:
+        p.drawString(318, 130, 'X')
+
+    p.setFont("Helvetica", 9)
+    p.drawString(115, 143, f'{content.purpose_of_request_reason}')
+    
+    
+    reg = user_table.objects.get(user_type="REGISTRAR")
+    p.drawString(425, 450, f'{reg.full_name}')
+    p.drawString(285, 115, f'{reg.full_name}')
+    
+    for line in lines:
+        textob.textLine(line)
+
+    #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
+
+    p.drawText(textob)
+    p.showPage()
+    p.save()
+
+    # Merging 2 Pdfs
+    buffer.seek(0)
+    infos = PdfFileReader(buffer)
+    clearance_pdf = PdfFileReader(open(
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Required_Forms.pdf', 'rb'))
+
+    info_page = clearance_pdf.getPage(0)
+    info_page.mergePage(infos.getPage(0))
+
+    output = PdfFileWriter()
+
+    output.addPage(info_page)
+    to_merge = open(
+        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'wb')
+    output.write(to_merge)
+    to_merge.close()
+
+    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'rb', ) as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
+        return response
+
 
 def graduation_print(request, id):
     buffer = BytesIO()
@@ -4709,3 +4874,19 @@ def delete_graduation_signature(request, id):
         user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
         
     return redirect(faculty_dashboard_graduation_list)
+
+@login_required(login_url='/')
+def display_reqform(request,id):
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "REGISTRAR":
+        reqs = request_form_table.objects.filter(id=id).values()
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    context = {
+        "reqs": reqs
+    }
+
+    print('running')
+    return render(request, 'html_files/Request_form_display.html', context)
