@@ -780,7 +780,7 @@ def appointment(request, id, form):
                     'message7': message7,
                     'additionalmessage': additionalmessage,
             }
-            message=''''{}
+            message='''{}
             <strong>Date:</strong>\n\t\t{}\n<br>
             <strong>Time:</strong>\n\t\t{}\n<br><br>
             <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br>

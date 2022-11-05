@@ -623,7 +623,7 @@ Adviser:
                             <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>
                             <th>Appointment</th> 
-                            <th id="Messagebutton"> Message</th>
+                            <th id="Messagebutton"></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -661,7 +661,7 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.appointment}}</td>
-                            <td><a href="appointmentgrad/{{ instance.id }}/graduation"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a></td>   
+                            <td><a href="appointmentgrad/{{ instance.id }}/graduation"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                             {% if instance.faculty1 == request.user.full_name %}
                                 
                                 {% if instance.signature1 == f_n_unapproved %}

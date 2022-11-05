@@ -545,7 +545,7 @@ Adviser:
                             <th>Date & Time Requested</th>
                             <th>Approval Status</th>
                             <!-- <th id="Approvalbutton"></th> -->
-                            <th> Notify</th>
+                            <th></th>
 
                         </tr>
                         <tr class="warning no-result">
@@ -570,7 +570,7 @@ Adviser:
                             {% endif %}
                             <td>
                             {% if instance.approval_status ==  'APPROVED' %}
-                                <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
+                                <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>   Notify Student</button></a>
                             {% else %}
                                 ❌
                             {% endif %}

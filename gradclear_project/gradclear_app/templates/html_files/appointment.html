@@ -44,7 +44,6 @@ Adviser:
     body {
         /* background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/graduation_list.png' %}"); */
         /* From https://css.glass */
-/* From https://css.glass */
         background: rgba(95, 92, 92, 0.49);
         border-radius: 16px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -55,7 +54,7 @@ Adviser:
         background-attachment: fixed;
         background-size: cover;
         margin: 0;
-        min-height: 400px;
+        min-height: 900px;
         clear: both;
     }
     .normal {
@@ -170,6 +169,7 @@ Adviser:
     .modal-1 {
         background-color: #424242;
         color: white;
+        
     }
     
     .input-group-addon,
@@ -225,6 +225,7 @@ Adviser:
         max-height: calc(100vh - 210px);
         overflow-y: auto;
         height: max-content;
+        
     }
     
     .close_btn {
@@ -257,6 +258,7 @@ Adviser:
         padding-left: 30px;
         padding-right: 30px;
         border: 1px solid;
+        
     }
     
     #des_01 {
@@ -400,13 +402,9 @@ Adviser:
 
 
 <body>
-    <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
-    <!--FOR LETTERS WITH SPACE ONLY onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-         (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"-->
-    {% include 'html_files/message.html'%}
-
+    
     <!--MAIN-->
-
+    {% include 'html_files/message.html'%}
     <section>
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" >
@@ -419,52 +417,25 @@ Adviser:
 
                          <!--MODAL CLOSE BUTTON-->
                         {% if gform == 'clearance' %}
-                        <a href="{% url 'faculty_dashboard_clearance_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                        <a href="{% url 'faculty_dashboard_clearance_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" ="Close">x</a>
                          
                         {% elif gform == 'graduation'%}
-                        <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" title="Close">x</a>
+                        <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Close">x</a>
                          
                         {% elif request.user.user_type == "REGISTRAR" %}
-                        <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+                        <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Home">
                             x
                         </a>
                         {% endif%}
                          
                     </div>
 
-                    <!-- {% if request.user.user_type == "FACULTY" %}
-                        <form id="stud_form_01" method="POST" action="appointment" style="height:100%;" enctype="multipart/form-data">
-                    {% elif request.user.user_type == "REGISTRAR" %}
-                        <form id="stud_form_01" method="POST" action="request_appointment" style="height:100%;" enctype="multipart/form-data">
-                    {% endif %} -->
                             <div class="modal-body ">
                                 <input type="hidden" name="usertype_001" id="usertype" value="">
         
                                 <form method="POST" action="" style="height:100%;" >
                                     {% csrf_token %}
 
-                                        
-
-                                        <!-- {% if request.user.user_type == "REGISTRAR" %} -->
-                                        <!--SUBJECT-->
-                                        <!-- <div class="form-group">
-                                            <label for="cnum">Subject:</label>
-                                            <input type="text" id="subject" name="subject" value="Appointment for Claiming of Request Credential Form"class="form-control input-field" 
-                                            style="height: 50px; margin-bottom: 20px;" readonly>
-                                            <p id="scn_error_01"></p>
-                                        </div>
-                                        {% endif %} -->
-
-                                        <!-- {% if request.user.user_type == "FACULTY" %} -->
-                                        <!--SUBJECT-->
-                                        <!-- <div class="form-group">
-                                            <label for="cnum">Subject:</label>
-                                            <input type="text" id="subject" name="subject" value="Appointment for Concerns with Clearance or Graduation Form"class="form-control input-field" 
-                                            style="height: 50px; margin-bottom: 20px;" readonly>
-                                            <p id="scn_error_01"></p>
-                                        </div> -->
-                                        <!-- {% endif %} -->
-                                         
                                   
                                         <!--DATE OF APPOINTMENT-->
                                         <div class="form-group">
@@ -479,16 +450,21 @@ Adviser:
                                             <label for="course">Time of Appointment:</label>
                                             <input type="time" id="time" onchange="ampm(this.value)" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
-                                            <span name="time_appointment"  id="display_time"></span>
                                             <p id="sc_error_01"></p>
                                         </div>
 
+                                        <div class="form-group" id="course_input">
+                                            <input   id="display_time" name="time_appointment" style="display: none;">
+                                        </div>
+
+                                        <!--ADDITIONAL MESSAGE-->
                                         <div class="form-group">
                                             <label for="cnum">Additional Message:</label>
                                             <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
                                             style="height: 150px; margin-bottom: 20px;" >
                                             <p id="scn_error_01"></p>
                                         </div>
+                                        
 
                                         <!--ADDITIONAL MESSAGE-->
                                         <!-- {% if request.user.user_type == "FACULTY" %}
@@ -505,17 +481,7 @@ Adviser:
                                             <p id="scn_error_01"></p>
                                         </div>
                                         {% endif %} -->
-                                        
-
-                                        <!-- {% if request.user.user_type == "REGISTRAR" %} -->
-                                         <!--ADDITIONAL MESSAGE-->
-                                        
-                                        <!-- {% endif %} -->
-
-                                        
-                                        
-
-                                      
+        
         
                               
                             <!--MODAL FOOTER-->
@@ -530,24 +496,6 @@ Adviser:
                 </div>
         </div>
     </section>
-    <ul>
-        <li>
-            {% if gform == 'clearance' %}
-            <a href="{% url 'faculty_dashboard_clearance_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
-                <i class="fa fa-home"></i>
-            </a>
-            {% elif gform == 'graduation'%}
-            <a href="{% url 'faculty_dashboard_graduation_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
-                <i class="fa fa-home"></i>
-            </a>
-            {% elif request.user.user_type == "REGISTRAR" %}
-            <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
-                <i class="fa fa-home"></i>
-            </a>
-            {% endif%}
-        </li>
-
-    </ul>
 </body>
 </html>
 
@@ -564,7 +512,7 @@ Adviser:
             hours = hours < 10 ? "0" + hours :hours;
 
             var displayTime =hours + ":" + minutes + " "+ suffix;
-            document.getElementById("display_time").innerHTML=displayTime;
+            document.getElementById("display_time").value=displayTime;
         }
 
     }

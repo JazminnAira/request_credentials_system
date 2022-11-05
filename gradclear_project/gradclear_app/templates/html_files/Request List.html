@@ -465,7 +465,7 @@ Adviser:
                                 <th>Official Receipt</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
-                                <th>Appointment</th>
+                                <th></th>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="12"><i class="fa fa-warning"></i> No result</td>
@@ -523,11 +523,7 @@ Adviser:
                                             </form> 
                                     </td>  
                                     <td>
-                                        {% if instance.approval_status ==  'APPROVED' %}
-                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i></button></a>
-                                        {% else %}
-                                            APPOINTMENT NOT YET AVAILABLE
-                                        {% endif %}
+                                        <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set Appointment</i></button></a>
                                     </td>
                                 </tr>
                             </tbody>
