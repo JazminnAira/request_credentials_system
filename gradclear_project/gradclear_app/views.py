@@ -32,12 +32,9 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render
 import datetime
-from datetime import datetime
-from datetime import date
+from datetime import datetime,date,timedelta
 import os
 import time
-import datetime
-from datetime import date,timedelta
 
 
 def graduation_print(request, id):
