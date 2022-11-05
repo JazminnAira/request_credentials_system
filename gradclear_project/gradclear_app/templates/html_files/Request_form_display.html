@@ -469,21 +469,42 @@ Adviser:
 
 <body>
     {% load static %}
-
+    {% for i in reqs %}
     <!--PRINT AND HOME BUTTON-->
     <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
         <i class="fa fa-ellipsis-v"></i>
     </a> -->
     <ul>
-        <!-- <li>
-            <a href="#" onclick="to_beprinted('print_request')" data-toggle="tooltip" data-placement="right" title="Print">
-                <i class="fa fa-print"></i>
-            </a>
-        </li> -->
         <li>
+            {% if i.approval_status ==  'APPROVED' %}
+                <a href="{% url 'req_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print">
+                    <i class="fa fa-print"></i>
+                </a>
+                {% else %}
+                    <div class="myPrint" style="color:red;">
+                        <p>APPROVAL ON PROGRESS</p>
+                        <p>PRINTING NOT AVAILABLE</p> 
+                </div>
+            {% endif %}  
+            </li>
+        <li>
+            {% if request.user.user_type == "STUDENT" %}
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
+            {% elif request.user.user_type == "OLD STUDENT" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "ALUMNUS" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% endif %}
         </li>
 
     </ul>
@@ -494,28 +515,20 @@ Adviser:
 
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
-        <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
         <form method="POST" action="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
 
-            <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_pre" value="{{request.user.username}}" hidden>
+            <input type="text" name="id_pre" value="{{i.name}}" hidden>
 
             <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
             
             <!--NAME BOX-->
-            <div class="form-inline">
+            <div class="form-group row">
                 <label for="name_pre" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_pre" style="padding-right:100px;">Full Name:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div>
-                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <input type="text" id="fn_box_pre" name="fn_box_pre" class="form-control " placeholder="First Name"  value="{{request.user.first_name}}"
-                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <input type="text" id="mn_box_pre" name="mn_box_pre" class="form-control " placeholder="Middle Name" value="{{request.user.middle_name}}"
-                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
-                    <p id="name_error_pre"></p>
+                <div class="col-sm-9">
+                    <input type="text" id="name_pre" name="name_pre" class="form-control" onkeyup="isEmpty()" value="{{i.name}}" readonly required>
                 </div>
             </div><br>
 
@@ -523,7 +536,7 @@ Adviser:
             <div class="form-group row">
                 <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{i.course}}" readonly required>
                 </div>
             </div>
 
@@ -531,7 +544,7 @@ Adviser:
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" readonly>
+                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" value="{{i.date}}"readonly>
                 </div>
             </div>
 
@@ -539,7 +552,7 @@ Adviser:
             <div class="form-group row">
                 <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="000{{request.user.id}}" readonly>
+                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="{{i.control_number}}" readonly>
                 </div>
             </div>
 
@@ -547,7 +560,7 @@ Adviser:
             <div class="form-group row">
                 <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{request.user.address}}" readonly required>
+                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{i.address}}" readonly required>
                 </div>
             </div>
 
@@ -555,7 +568,7 @@ Adviser:
             <div class="form-group row">
                 <label for="contactnum_pre" class="col-sm-2 col-form-label col-form-label-sm" id="contact_pre">Contact Number:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}" readonly>
+                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{i.contact_number}}" readonly>
                 </div>
             </div>
 
@@ -626,7 +639,7 @@ Adviser:
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()"required>
+                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" value="{{i.purpose_of_request_reason}}" oninput="this.value = this.value.toUpperCase()"required>
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
@@ -638,7 +651,7 @@ Adviser:
                 <p>3. Official Receipt <em>(This receipt can be claim after payment)</em></p>
                 <p><em>*Please submit the following requirements to be able to claim the requested credential/s</em></p>
             </div>
-
+            {% endfor %}
             <!--Admin display
             <div id = "admin_display" hidden>
                 <p><strong>Submitted Requirements:</strong></p>
@@ -676,9 +689,7 @@ Adviser:
             
 
             <!--SUBMIT BUTTON onclick="forms_check()"-->
-            <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
-            </p>
+            
 
             <!--FORM FOOTER-->
             <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
@@ -689,213 +700,6 @@ Adviser:
 
 </html>
 
-<script>
-   
-    var today = new Date();
-    
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
-    document.getElementById("date_pre").value = date;
 
-    function submitForm(form) {
-
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-
-        .then(function(isOkay) {
-            if (isOkay) {
-                var btn = document.getElementById('submit_button');
-                btn.disabled = true;
-                btn.innerText = 'Submitted'
-                document.getElementById("ln_box_pre").disabled = true;
-                document.getElementById("fn_box_pre").disabled = true;
-                document.getElementById("mn_box_pre").disabled = true;
-                document.getElementById("date_pre").disabled = true;
-                document.getElementById("add_box_pre").disabled = true;
-                document.getElementById("course_pre").disabled = true;
-                document.getElementById("control_pre").disabled = true;
-                document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose").disabled = true;
-                document.getElementById("certification_box").disabled = true;
-                document.getElementById("others_box_pre").disabled = true;
-                document.getElementById("year_graduated_pre").disabled = true;
-            }
-        });
-        return false;
-    }
-
-    function isEmpty() {
-     
-        let purpose_req = document.getElementById("purpose").value;
-    
-        if (purpose_req != "") {
-            document.getElementById("submit_btn_pre").removeAttribute("disabled");
-        }
-    }
-    
-    //back to top function
-    var button = $("#backtotop_btn_pre");
-    
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 40) {
-            button.addClass("show");
-        } else {
-            button.removeClass("show");
-        }
-    });
-    
-    button.on("click", function(e) {
-        e.preventDefault();
-        $("html, body").animate({
-            scrollTop: 0
-        }, "50");
-    });
-
-    if (document.getElementById("user_stat").value == "STUDENT"){
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").checked = true;
-    }else if(document.getElementById("user_stat").value == "OLD STUDENT"){
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").checked = true;
-    }else{
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").checked = true;
-    }
-
-    year = document.getElementById("year_graduated_pre").value;
-    document.getElementById("year_graduated_check_pre").value = "ALUMNI: " + year;
-
-    certification_box.addEventListener("keyup", function() {
-        kind_of_cert = document.getElementById('certification_box').value;
-        document.getElementById('Certification_check_pre').value = 'Certification: ' + kind_of_cert;
-        document.getElementById('Certification_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-    });
-    
-    others_box_pre.addEventListener("keyup", function(){
-        others= document.getElementById("others_box_pre").value;
-        document.getElementById("Others_check_pre").value = "Others: " + others;
-        document.getElementById('Others_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-    });
-
-    HonorableDismissal_check_pre.addEventListener("click", function(){
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    authentication_verification.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    TranscriptofRecords_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    subject_description.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Diploma_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    cav.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Certification_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('certification_box').hidden =false;
-        document.getElementById("others_box_pre").hidden =true;
-    });
-
-    Others_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =false;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-</script>
 

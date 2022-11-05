@@ -59,6 +59,8 @@ urlpatterns = [
      path('reg_updateEmail', reg_updateEmail, name='reg_updateEmail'),
      path('reg_updatePassword', reg_updatePassword, name='reg_updatePassword'),
      path('reg_updateContact', reg_updateContact, name='reg_updateContact'),
+     path('req_print/<int:id>', req_print, name='req_print'),
+     path('display_reqform/<int:id>', display_reqform, name='display_reqform'),
      path('display_clearform/<int:id>', display_clearform, name='display_clearform'),
      path('display_gradform/<int:id>', display_gradform, name='display_gradform'),
      path('registrar_dashboard_clearance_list/<str:id>', registrar_dashboard_clearance_list,
