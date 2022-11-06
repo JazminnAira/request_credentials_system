@@ -523,8 +523,13 @@ Adviser:
                                             </form> 
                                     </td>  
                                     <td>
-                                        <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set Appointment</i></button></a>
+                                        {% if instance.appointment !=  'NONE' %}
+                                            Appointment Set.
+                                        {% else %}
+                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set Appointment</i></button></a>
+                                        {% endif %}
                                     </td>
+                                   
                                 </tr>
                             </tbody>
                         {% endfor %}

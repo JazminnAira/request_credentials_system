@@ -1178,26 +1178,6 @@ def request_appointment(request,id):
         name = user_table.objects.filter(
             username=name_temp[0]).values_list('last_name', flat=True).distinct()
         last_name = name[0]
-        
-
-        # time = request_form_table.objects.filter(
-        # id=id).values_list('time_requested', flat=True).distinct()
-        # time_s = request_form_table.objects.filter(
-        #     time_requested=time[0]).values_list('time_requested', flat=True).distinct()
-        # time_requested =  time_s[0]
-        # if time_requested:
-        #     try:
-        #         start = datetime.datetime(int(2005), int(5), 1)
-        #         initial_data = {
-        #             "start": start.strftime("%m/%d/%Y %I:%M %p"),
-        #             "end": start + datetime.timedelta(minutes=60)
-        #         }
-                
-        #     except TypeError:
-        #         raise ValueError('something went wrong')
-        #     except ValueError as e:
-        #         print(e)
-
 
         subject = 'Claiming of '+ purpose_of_request[0] 
         message1 = "Good day, "+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
@@ -1216,7 +1196,7 @@ def request_appointment(request,id):
         
         request_form_table.objects.filter(
         id=id).update(appointment =date_appointment)
-        
+
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
         email = request.POST.get('email')
