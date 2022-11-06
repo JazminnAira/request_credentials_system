@@ -1213,6 +1213,10 @@ def request_appointment(request,id):
 
         purpose_req = request.POST.get('purpose_of_request')
         date_appointment = request.POST.get('date_appointment')
+        
+        request_form_table.objects.filter(
+        id=id).update(appointment =date_appointment)
+        
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
         email = request.POST.get('email')
