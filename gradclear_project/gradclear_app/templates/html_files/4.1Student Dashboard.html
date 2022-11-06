@@ -1114,10 +1114,10 @@ Adviser:
                 <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
             </div>
             {% if display %}
-            <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 p-2" id ="missing_document">
-                <h4 class ="pl-2 ml-2 p-2 pr-2" id ="missing">Missing Documents:</h4>
+            <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 mt-2 p-2" id ="missing_document">
+                <h5 class ="pl-2 ml-2 p-2 pr-2" id ="missing">Missing Documents:</h5>
                 {% for requirements in display %}
-                    <i class="fa fa-exclamation-circle pl-4" style ="color :red; font-size: 18px;" id ="req_miss"><label class="text-dark text-lg pl-3 pr-2" id="document1">{{requirements}}</label></i><br>
+                    <i class="fa fa-warning pl-4" style ="color :red; font-size: 17px;" id ="req_miss"><label class="text-dark text-lg pl-3 pr-2" id="document1">{{requirements}}</label></i><br>
                 {% endfor %}
             </div>
         {% endif %}
@@ -1217,6 +1217,11 @@ Adviser:
 </html>
 
 <script>
+    // DATE INDICATOR 
+    var day = new Date();
+
+    document.getElementById('date_text_lbl_41').innerHTML = "<span><b>Today: </b></span>" + day.toDateString();
+
     //determine missing document(not yet working)
     docu1= document.getElementById('document1').length;
     docu2= document.getElementById('document2').length;
@@ -1296,11 +1301,6 @@ Adviser:
         window.location.replace("{% url 'clearance_form' %}");
     }
 
-
-    // DATE INDICATOR 
-    var day = new Date();
-
-    document.getElementById('date_text_lbl_41').innerHTML = "<span><b>Today: </b></span>" + day.toDateString();
 
     /*BUTTON CLICK DETECTOR
                                 var buttonclicked; 

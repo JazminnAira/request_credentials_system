@@ -582,12 +582,12 @@ Adviser:
    
 
         <div id="create_signature_area" class="p-1" hidden>
-            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">PUT YOUR SIGNATURE HERE</h4></div>
+            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
                 <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
-                <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1"><span> Clear </span></button> 
-                <button type="button" id="cancel_create" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
+                <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
+                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
             </div>
         </div>
         
@@ -599,8 +599,8 @@ Adviser:
                 <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
-                <p>*NOTE: Make sure your signature is in a clean white background</p>
-                <button type="button" id="cancel_upload" class = "col-3 p-1 m-1"><span> Cancel </span></button> 
+                <p><label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></p>
+                <button type="button" id="cancel_upload" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
             </div>
             <div id="submit_signature" class="m-3" align="center" hidden>
                 <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
@@ -963,7 +963,7 @@ Adviser:
                     {% endfor %}
                 </table>
             </div>
-            <button type="submit" style="margin-top:30px">Approve All</button>
+            <button type="submit" style="margin-top:30px" class="btn-lg">Approve All</button>
         </form>
     </div>
         <p class="text-center text-bold" id="p6_53"></p>
