@@ -1157,8 +1157,6 @@ class request_form_table(models.Model):
     official_receipt = models.CharField(max_length=50, default="❌",null=True)
     claim = models.CharField(max_length=50, default="UNCLAIMED", null=True)
 
-    approval_status = models.CharField(max_length=15,
-        verbose_name="Approval Status", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     

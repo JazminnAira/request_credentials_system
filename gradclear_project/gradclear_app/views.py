@@ -3522,6 +3522,14 @@ def registrar_dashboard(request):
             course="BET-PPT").values().count()
         cBET_AT = clearance_form_table.objects.filter(
             course="BET-AT").values().count()
+        
+        unapproved_forms_count = clearance_form_table.objects.filter(approval_status="APPROVED").count()
+        clearance_count = all.count() - unapproved_forms_count
+        if clearance_count == 0:
+            clearance_badge =""
+        else:
+            clearance_badge = clearance_count
+        
 
         # GRADUATION FORMS
         gBSCE = graduation_form_table.objects.filter(
@@ -3560,6 +3568,21 @@ def registrar_dashboard(request):
             course="BET-PPT").values().count()
         gBET_AT = graduation_form_table.objects.filter(
             course="BET-AT").values().count()
+        
+        unapproved_forms_count2 = graduation_form_table.objects.filter(approval_status="APPROVED").count()
+        graduation_count = graduation_form_table.objects.all().count() - unapproved_forms_count2
+        if graduation_count == 0:
+            graduation_badge =""
+        else:
+            graduation_badge = graduation_count
+        
+        unapproved_forms_count3 = request_form_table.objects.filter(claim="CLAIMED").count()
+        request_count = request_form_table.objects.all().count() - unapproved_forms_count3
+        if request_count == 0:
+            request_badge =""
+        else:
+            request_badge = request_count
+        
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -3575,7 +3598,7 @@ def registrar_dashboard(request):
                    'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP, 'gBTTE_EI': gBTTE_EI, 'gBTTE_AU': gBTTE_AU,
                    'gBTTE_HVACT': gBTTE_HVACT, 'gBTTE_E': gBTTE_E, 'gBGT_AT': gBGT_AT, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
-                   'gBET_PPT': gBET_PPT, 'gBET_AT': gBET_AT,
+                   'gBET_PPT': gBET_PPT, 'gBET_AT': gBET_AT,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
 
 

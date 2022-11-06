@@ -540,18 +540,18 @@ Adviser:
 
                                 {% if user == "FACULTY" %}
                                     <div id = "approval_section" class = "p-2 border border-dark">
-                                        <div class ="bg-danger text-light p-2"><h5>AGGREEMENT:</h5></div>
+                                        <div class ="bg-danger text-light p-2"><h5>AGGREEMENT FOR SIGNING:</h5></div>
 
                                         <div class="form-check form-check-inline p-2">
                                             <label class="form-check-label" for="inlineCheckbox1_pre">
                                                 <input class="form-check-input checkbox " type="checkbox" id="agreed_signature" name="agreement" value="AGREED">
-                                                I AGREE to attach my signature in the system to be used when I approving the request forms of the Students, Old Student and Alumni's.And agreed to use my signature to be attached and displayed in the forms.
+                                                <b> I AGREE </b>to use my signature upon approving forms (e.g. Graduation, Clearance, Request). I am aware that this will be used and displayed throughout the site.
                                             </label>
                                         </div>
                                         <br>
                                         <div id = "signature_area" class="border pt-1 p-2 m-2 " hidden>
-                                            <label>Choose option of saving your Signature</label><br>
-                                            <label class="m-3"><input class="form-check-input checkbox " type="checkbox" name="signature_type" value="ESIGN" id="esignature">Option 1: Create E-signature</label>
+                                            <label>Choose an option of saving your signature:</label><br>
+                                            <label class="m-3"><input class="form-check-input checkbox " type="checkbox" name="signature_type" value="ESIGN" id="esignature">Option 1: Create an E-signature</label>
                                             <div class="wrapper mr-3 ml-3 p-2" align="center" id ="esign_area" hidden>
                                                 <canvas name="signature" id="signature_pad" width="400" height="200" class="mx-auto m-2 border border-dark rounded"></canvas>
                                                 <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
@@ -560,9 +560,9 @@ Adviser:
                                             </div>
                                             <p></p>
                                             
-                                            <label for="prof_pic" class="m-3"><input class="form-check-input checkbox " type="checkbox" id="upload" name="signature_type" value="UPLOAD">Option 2: Upload Signature</label><br>
+                                            <label for="prof_pic" class="m-3"><input class="form-check-input checkbox " type="checkbox" id="upload" name="signature_type" value="UPLOAD">Option 2: Upload an Image of Signature</label><br>
                                             <div id = "upload_area" hidden>
-                                                <label>*Make sure your signature is in a clean white background</label><br>
+                                                <label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></label><br>
                                                 <a id="clicker_detector">{{form.uploaded_signature}}</a>
                                             </div>
                                             <p></p>
@@ -571,7 +571,8 @@ Adviser:
                                         <div class="form-check form-check-inline p-2 ">
                                             <label class="form-check-label" for="inlineCheckbox1_pre">
                                                 <input class="form-check-input chk " type="checkbox" id="decline_signature" name="agreement" value="DECLINE">
-                                                I DISAGREE to attach my signature to approve the request forms the Students, Old students and Alumni's.I will personally or manually process the signing of forms.</label>
+                                                <b> I DISAGREE </b> to use my signature upon approving forms (e.g. Graduation, Clearance, Request).
+                                                I am aware that I must sign the forms manually in person.</label>
                                         </div>
                                         
                                         
