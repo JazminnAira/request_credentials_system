@@ -436,13 +436,20 @@ Adviser:
                                 <form method="POST" action="" style="height:100%;" >
                                     {% csrf_token %}
 
+                                        <!--AMOUNT TO PAY-->
+                                        <div class="form-group">
+                                            <label >Amount to Pay:</label>
+                                            <div class="input-icon">
+                                                <input type="text" id="amount" name="amount" maxlength="14" class="form-control col-form-label-sm" onkeyup="isEmpty()" placeholder="0.00" oninput="enter_amount()" data-type="currency" required>
+                                                <!-- <i>₱</i> -->
+                                            </div>
+                                        </div>
                                   
                                         <!--DATE OF APPOINTMENT-->
                                         <div class="form-group">
-                                            <label for="idnum">Date of Appointment:</label>
+                                            <label >Date of Appointment:</label>
                                             <input type="date" id="date" name="date_appointment" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
-                                            <p id="sid_error_01"></p>
                                         </div>
                         
                                         <!--TIME OF APPOINTMENT-->
@@ -450,7 +457,6 @@ Adviser:
                                             <label for="course">Time of Appointment:</label>
                                             <input type="time" id="time" onchange="ampm(this.value)" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
-                                            <p id="sc_error_01"></p>
                                         </div>
 
                                         <div class="form-group" id="course_input">
@@ -462,27 +468,9 @@ Adviser:
                                             <label for="cnum">Additional Message:</label>
                                             <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
                                             style="height: 150px; margin-bottom: 20px;" >
-                                            <p id="scn_error_01"></p>
                                         </div>
-                                        
-
-                                        <!--ADDITIONAL MESSAGE-->
-                                        <!-- {% if request.user.user_type == "FACULTY" %}
-                                        <label for="cnum">Message: </label>
-                                        <div id = "approval_section" class = "p-2 border border-gray">
-                                            <label class="form-check-label" for="inlineCheckbox1_pre">
-                                                Your Application for Clearance Form has pending concerns with Mr/.Ms. facultyname.
-                                            </label>
-                                            <label class="form-check-label" for="inlineCheckbox1_pre">
-                                                Mr/Ms. has set an appointment for discussing the said concerns. Arrive at the scheduled date and time of appointment.
-                                            </label>
-                                            <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
-                                            placeholder ="Additional Message:" style="height: 100px; margin-bottom: 20px;" >
-                                            <p id="scn_error_01"></p>
-                                        </div>
-                                        {% endif %} -->
-        
-        
+                                    
+                                     
                               
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
@@ -502,6 +490,7 @@ Adviser:
 
 <script>
 
+// TIME WITH AMPM
     function ampm(time){
         console.log(time);
         if (time.value !== ""){
@@ -598,6 +587,101 @@ Adviser:
        document.getElementById('id_password2').type = "password";
     }
 };
+
+$("input[data-type='currency']").on({
+        keyup: function() {
+            formatCurrency($(this));
+        },
+        blur: function() {
+            formatCurrency($(this), "blur");
+        }
+    });
+
+    function formatNumber(n) {
+        // format number 1000000 to 1,234,567
+        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    function formatCurrency(input, blur) {
+
+var input_val = input.val();
+
+// don't validate empty input
+if (input_val === "") {
+    return;
+}
+
+// original length
+var original_len = input_val.length;
+
+// initial caret position 
+var caret_pos = input.prop("selectionStart");
+
+// check for decimal
+if (input_val.indexOf(".") >= 0) {
+
+    // get position of first decimal
+    // this prevents multiple decimals from
+    // being entered
+    var decimal_pos = input_val.indexOf(".");
+
+    // split number by decimal point
+    var left_ = input_val.substring(0, decimal_pos);
+    var right_ = input_val.substring(decimal_pos);
+
+    // add commas to left  of number
+    left_ = formatNumber(left_);
+
+    // validate right 
+    right_ = formatNumber(right_);
+
+    // On blur make sure 2 numbers after decimal
+    if (blur === "blur") {
+        right_ += "00";
+    }
+
+    // Limit decimal to only 2 digits
+    right_ = right_.substring(0, 2);
+
+    // join number by .
+    input_val = left_ + "." + right_;
+
+} else {
+    // no decimal entered
+    // add commas to number
+    // remove all non-digits
+    input_val = formatNumber(input_val);
+    input_val = input_val;
+
+    // final formatting
+    if (blur === "blur") {
+        input_val += ".00";
+    }
+}
+
+// send updated string to input
+input.val(input_val);
+
+// put caret back in the right position
+var updated_len = input_val.length;
+caret_pos = updated_len - original_len + caret_pos;
+input[0].setSelectionRange(caret_pos, caret_pos);
+}
+
+// Amount Check
+function amount_check() {
+        var amount_input = document.getElementById("amount").value;
+
+        if (amount_input != "") {
+            return true;
+
+        } else {
+            var sign_error13 = document.getElementById("amount");
+
+            sign_error13.style.borderColor = "red";
+        }
+    }
+
 </script>
 
 

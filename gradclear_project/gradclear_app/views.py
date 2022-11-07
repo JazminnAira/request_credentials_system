@@ -1182,8 +1182,8 @@ def request_appointment(request,id):
         subject = 'Claiming of '+ purpose_of_request[0] 
         message1 = "Good day, "+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
         message2 = 'Your request for  '+ "<strong>"+ purpose_of_request[0] +"</strong>"+  \
-            '   has been approved. Kindly visit the'+ '(link)' +' and follow the guidelines below for claiming your requested credentials. Please take note of the date and time of the appointment and bring all the necessary requirements. Thank you! <br><br>'
-        message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site '+ '(link)' +'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the next procedures.<br><br>'
+            '   has been approved. Kindly visit the'+ '(link)' +' and follow the guidelines below for claiming your requested credentials.<br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site '+ '(link)' +'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+ '4. For credentials with payment required, please prepare the amount to pay.'+'5. Arrive at the appointed date and time for claiming your request.<br>'+'6. Proceed to the Office of the University Registrar for the procedures.<br><br>'
         message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
         message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite'
         message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
@@ -1192,8 +1192,8 @@ def request_appointment(request,id):
         message = message1 + message2 + message3 
 
         purpose_req = request.POST.get('purpose_of_request')
+        amount = request.POST.get('amount')
         date_appointment = request.POST.get('date_appointment')
-        
         request_form_table.objects.filter(
         id=id).update(appointment =date_appointment)
 
@@ -1204,6 +1204,7 @@ def request_appointment(request,id):
         
         
         data = {
+                'amount': amount,
                 'date_appointment': date_appointment, 
                 'time_appointment': time_appointment, 
                 'subject': subject, 
@@ -1214,6 +1215,7 @@ def request_appointment(request,id):
                 'additionalmessage': additionalmessage,
         }
         message='''{}
+        <strong>Amount to  Pay:</strong>\n\t\t{}\n<br>
         <strong>Date of  Appointment:</strong>\n\t\t{}\n<br>
         <strong>Time of  Appointment:</strong>\n\t\t{}\n<br><br>
         <strong>Note from the TUPC Registrar:</strong>\n\t\t{}\n<br><br>
@@ -1221,7 +1223,7 @@ def request_appointment(request,id):
         \n\t\t{}\n<br><br><br>
         \n\t\t{}\n<br>
         
-        '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
+        '''''.format(data['message'],data ['amount'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
         msg.send()
