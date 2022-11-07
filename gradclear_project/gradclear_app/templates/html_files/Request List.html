@@ -539,7 +539,7 @@ Adviser:
         </div>
 
         <div class ="col-3 table-responsive-sm float-right">
-            <h3 style="text-align:center;">Required Documents</h3>
+            <h3 style="text-align:center;">Document Records</h3>
             <div id ="upload_file_section">
                 {% if messages %}
                     {% for message in messages %}
@@ -553,7 +553,6 @@ Adviser:
                     <!--Upload students file-->
                     <form class = "pl-4" action="upload_document_checker" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <label for="file1" id ="label_file"> Upload Document Checker List:</label>
                         <input type="file" id="file1" name="file">
                         <button type="submit">Upload</button>
                     </form>
