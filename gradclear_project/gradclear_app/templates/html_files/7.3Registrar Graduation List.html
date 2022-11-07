@@ -526,7 +526,6 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_73">
                     <thead>
                         <tr>
-                            <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
                             <th> # </th>
                             <th>Student's Name</th>
                             <th>Course</th>
@@ -538,14 +537,13 @@ Adviser:
                             <th></th>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="8"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
                     {% for instance in all %}
                     <tbody>
                         <tr>
-                            <td><input type="checkbox" class="check" value={{instance.id}}></td> 
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
@@ -866,22 +864,5 @@ Adviser:
     //     }
     // }
     // window.onload = addRowHandlers();
-    // CHECKBOXES IN TABLE
-    function checkAll(ele) {
-     var checkboxes = document.getElementsByTagName('input');
-     if (ele.checked) {
-         for (var i = 0; i < checkboxes.length; i++) {
-             if (checkboxes[i].type == 'checkbox') {
-                 checkboxes[i].checked = true;
-             }
-         }
-     } else {
-         for (var i = 0; i < checkboxes.length; i++) {
-             console.log(i)
-             if (checkboxes[i].type == 'checkbox') {
-                 checkboxes[i].checked = false;
-             }
-         }
-     }
- }
+    
 </script>

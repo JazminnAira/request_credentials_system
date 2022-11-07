@@ -454,7 +454,6 @@ Adviser:
                     <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
                         <thead>
                             <tr>
-                                <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
                                 <th>#</th>
                                 <th>Student's Name</th>
                                 <th>Request</th>
@@ -468,14 +467,13 @@ Adviser:
                                 <th></th>
                             </tr>
                             <tr class="warning no-result">
-                                <td colspan="12"><i class="fa fa-warning"></i> No result</td>
+                                <td colspan="11"><i class="fa fa-warning"></i> No result</td>
                             </tr>
                         </thead>
                         
                         {% for instance in data %}
                             <tbody>
                                 <tr>
-                                    <td><input type="checkbox" class="check" value={{instance.id}}></td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
@@ -828,23 +826,5 @@ Adviser:
         document.getElementById("search_box_77").value = "";
     });
     
-    // CHECKBOXES IN TABLE
-    function checkAll(ele) {
-     var checkboxes = document.getElementsByTagName('input');
-     if (ele.checked) {
-         for (var i = 0; i < checkboxes.length; i++) {
-             if (checkboxes[i].type == 'checkbox') {
-                 checkboxes[i].checked = true;
-             }
-         }
-     } else {
-         for (var i = 0; i < checkboxes.length; i++) {
-             console.log(i)
-             if (checkboxes[i].type == 'checkbox') {
-                 checkboxes[i].checked = false;
-             }
-         }
-     }
- }
 </script>
 
