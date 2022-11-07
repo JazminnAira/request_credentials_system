@@ -552,7 +552,7 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                            {% if instance.approval_status == "APPROVED"%}
+                            {% if instance.approval_status == "APPROVED"%} 
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.approval_status}}</td>
                             {% else %}
                             <td onclick="window.location='display_gradform/{{ instance.id }}'"><strong>{{instance.approval_status}}</strong> Signatures</td>

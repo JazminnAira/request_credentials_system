@@ -1455,13 +1455,13 @@ def cover(request):
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         
-        # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
+        # TO DETERMINE IF STUDENT HAS IS 4TH YEAR OR NOT
         todays_date = date.today()
         id_num = request.user.id_number
         sliced_id = int(str(id_num)[:2]) 
         current_year ='"'+str(todays_date.year) +'"'
         temp =int(current_year[2:5])  
-        with_graduation = temp - sliced_id 
+        graduating = temp - sliced_id 
  
         username = request.user.username
         full_name = request.user.full_name
@@ -1474,7 +1474,7 @@ def student_dashboard(request):
 
         print(username)
 
-        st0 = request_form_table.objects.filter(name= full_name)
+        st0 = request_form_table.objects.filter(student_id= username)
         st = graduation_form_table.objects.filter(student_id=username)
         st1 = clearance_form_table.objects.filter(student_id=username)
         
@@ -1519,7 +1519,7 @@ def student_dashboard(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'with_graduation': with_graduation}
+    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'graduating': graduating }
     return render(request, 'html_files/4.1Student Dashboard.html', context)
 
 

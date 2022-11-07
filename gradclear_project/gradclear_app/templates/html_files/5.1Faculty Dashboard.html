@@ -1065,11 +1065,11 @@ Adviser:
                     {% for instance in st %}
                     <tbody>
                         <tr>        
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.name}}</td>
-                            <td>{{instance.course}}</td>
-                            <td>{{instance.student_id}}</td>
-                            <td>{{instance.purpose_of_request}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td><a href="display_gradform/{{ instance.id }}"><button type="button">View Form</button></a></td>
                             
                         </tr>
@@ -1078,11 +1078,11 @@ Adviser:
                     {% for instance in st1 %}
                     <tbody>
                         <tr>        
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.name}}</td>
-                            <td>{{instance.course}}</td>
-                            <td>{{instance.student_id}}</td>
-                            <td>{{instance.purpose_of_request}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td><a href="display_clearform/{{ instance.id }}"><button type="button">View Form</button></a></td>
                             
                             {% if val == 'UNAPPROVED' %}

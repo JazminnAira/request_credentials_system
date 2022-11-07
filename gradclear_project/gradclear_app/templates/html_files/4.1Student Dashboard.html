@@ -695,15 +695,20 @@ Adviser:
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
-    {% if with_graduation >= 4 %}
+    {% if graduating >= 4 %}
         <a  style="padding-left: 15px;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
     {% else %}
         <a style="padding-left: 15px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
     {% endif %}
-    <a style="padding-left: 21px;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+    {% if graduating >= 4 %}
+        <a style="padding-left: 21px;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
         </i><span class="icon-text">Clearance Form</span></a><br>
+    {% else %}   
+        <a style="padding-left: 21px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+        </i><span class="icon-text">Clearance Form</span></a><br>
+    {% endif %}
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
@@ -1148,24 +1153,30 @@ Adviser:
                 <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable result+" id="list_tbl_41">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Form No.</th>
+                            <th>Form Type</th>
                             <th>Purpose of Request</th>
-                            <th>Approval Status </th>
+                            <th>Approval Status</th>
                             <th> Date & Time Requested</th>
-                            <th>View Form </th>
+                            <th></th>
                             <!-- <th>Signatures</th> -->
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     <tbody>
                         {% for instance in st0 %}
                         <tr>
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.request}}</td>
-                            <td>{{instance.approval_status}}</td>
-                            <td>{{instance.time_requested}}</td>
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
+                            {% if instance.approval_status == "UNAPPROVED" %}
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(223, 71, 71);">{{instance.approval_status}}</td>
+                            {% else %}
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            {% endif %}
+                            <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
@@ -1174,10 +1185,15 @@ Adviser:
                         {% endfor %}
                         {% for instance in st %}
                         <tr>
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.purpose_of_request}}</td>
-                            <td>{{instance.approval_status}}</td>
-                            <td>{{instance.time_requested}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            {% if instance.approval_status == "APPROVED"%}
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            {% else %}
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            {% endif %}
+                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
@@ -1187,10 +1203,15 @@ Adviser:
 
                         {% for instance in st1 %}
                         <tr>
-                            <td>{{instance.id}}</td>
-                            <td>{{instance.purpose_of_request}}</td>
-                            <td>{{instance.approval_status}}</td>
-                            <td>{{instance.time_requested}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            {% if instance.approval_status == "APPROVED"%}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            {% else %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            {% endif %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             
@@ -1355,10 +1376,10 @@ Adviser:
                     $(this).attr('visible', 'true');
                 });
 
-                var jobCount = $('.results tbody tr[visible="true"]').length;
-                $('.counter').text(jobCount + ' item');
+                var itemcount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(itemcount + ' item');
 
-                if (jobCount == '0') {
+                if (itemcount == '0') {
                     $('.no-result').show();
                 } else {
                     $('.no-result').hide();
@@ -1692,4 +1713,6 @@ Adviser:
         
     }
     }
+
+
 </script>
