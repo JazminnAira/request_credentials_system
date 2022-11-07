@@ -111,7 +111,7 @@ class clearance_form_table(models.Model):
     name = models.CharField(max_length=100, verbose_name="Student Name")
     present_address = models.CharField(max_length=100, verbose_name="Present Address")
     course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
-    
+     
     date_filed = models.CharField(max_length=20, verbose_name="Date Filed")
     date_admitted_in_tup = models.CharField(
         max_length=20, verbose_name="Date Admitted")
