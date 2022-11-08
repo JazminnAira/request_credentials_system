@@ -30,7 +30,7 @@ class signup_form(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
             'course_graduated': forms.Select(attrs={'class': 'form-control'}),
-            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '2000-2001'})
+            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex.2000'})
         }
 
 class Clearance_form_table(ModelForm):
