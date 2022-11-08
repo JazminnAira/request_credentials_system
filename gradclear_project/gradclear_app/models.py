@@ -173,367 +173,6 @@ class clearance_form_table(models.Model):
 
 
 class graduation_form_table(models.Model):
-    subject1 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject2 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject3 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject4 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject5 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject6 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject7 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject8 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject9 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    subject10 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-
-    room1 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room2 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room3 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room4 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room5 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room6 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room7 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room8 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room9 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    room10 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
 
     instructor = [
         ('', '--SELECT--'),
@@ -542,377 +181,6 @@ class graduation_form_table(models.Model):
         ('Instructor3', 'Instructor3'),
         ('Instructor4', 'Instructor4'),
        
-    ]
-
-    day = [
-        ('', '--SELECT--'),
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-    ]
-
-    add_subject1 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject2 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject3 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject4 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject5 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject6 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject7 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject8 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject9 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-    add_subject10 = [
-        ('', '--SELECT--'),
-        ('Subject 1', 'Subject 1'),
-        ('Subject 2', 'Subject 2'),
-        ('Subject 3', 'Subject 3'),
-        ('Subject 4', 'Subject 4'),
-        ('Subject 5', 'Subject 5'),
-        ('Subject 6', 'Subject 6'),
-        ('Subject 7', 'Subject 7'),
-        ('Subject 8', 'Subject 8'),
-        ('Subject 9', 'Subject 9'),
-        ('Subject 10', 'Subject 10'),
-      
-    ]
-
-    add_room1 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room2 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room3 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room4 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room5 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room6 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room7 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room8 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room9 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
-    ]
-    add_room10 = [
-        ('', '--SELECT--'),
-        ('Room 1', 'Room 0110'),
-        ('Room 2', 'Room 0111'),
-        ('Room 3', 'Room 0112'),
-        ('Room 4', 'Room 0113'),
-        ('Room 100', 'Room 0114'),
-        ('Room 101', 'Room 0101'),
-        ('Room 102', 'Room 0102'),
-        ('Room 103', 'Room 0103'),
-        ('Room 104', 'Room 0104'),
-        ('Room 200', 'Room 0200'),
-        ('Room 201', 'Room 0201'),
-        ('Room 202', 'Room 0202'),
-        ('Room 203', 'Room 0203'),
-        ('Room 204', 'Room 0204'),
-        ('Shop 1', 'Shop 1'),
-        ('Shop 2', 'Shop 2'),
-        ('Shop 3', 'Shop 3'),
-        ('Shop 4', 'Shop 4'),
-      
     ]
 
     add_instructor = [
@@ -924,14 +192,6 @@ class graduation_form_table(models.Model):
        
     ]
 
-    add_day = [
-        ('', '--SELECT--'),
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-    ]
     
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
@@ -949,159 +209,145 @@ class graduation_form_table(models.Model):
     enrolled_term = models.CharField(max_length=100, verbose_name="Enrolled Term", null=True, default="NONE")
     unenrolled_application_deadline = models.CharField(max_length=20,verbose_name="Deadline", null=True, default="NONE")
 
-    subject1 = models.CharField(max_length=100, null=True, blank=True, choices=subject1)
-    room1 = models.CharField(max_length=20, null=True, blank=True, choices=room1)
+    subject1 = models.CharField(max_length=100,verbose_name="Subject1", null=True, default="NONE")
+    room1 = models.CharField(max_length=100, verbose_name="Room1", null=True, default="NONE")
     faculty1 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_1 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_1 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_1 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_1 = models.CharField(max_length=100, verbose_name="Day1_1", null=True, default="NONE")
 
-    subject2 = models.CharField(max_length=100, null=True, blank=True, choices=subject2)
-    room2 = models.CharField(max_length=20, null=True, blank=True, choices=room2)
+    subject2 = models.CharField(max_length=100, verbose_name="Subject2", null=True, default="NONE")
+    room2 = models.CharField(max_length=100, verbose_name="Room2", null=True, default="NONE")
     faculty2 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_2 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_2 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_2 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_2 = models.CharField(max_length=100, verbose_name="Day1_2", null=True, default="NONE")
 
-    subject3 = models.CharField(max_length=100, null=True, blank=True, choices=subject3)
-    room3 = models.CharField(max_length=20, null=True, blank=True, choices=room3)
+    subject3 = models.CharField(max_length=100, verbose_name="Subject3", null=True, default="NONE")
+    room3 = models.CharField(max_length=100, verbose_name="Room3", null=True, default="NONE")
     faculty3 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_3 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_3 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_3 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_3 = models.CharField(max_length=100, verbose_name="Day1_3", null=True, default="NONE")
 
-    subject4 = models.CharField(max_length=100, null=True, blank=True, choices=subject4)
-    room4 = models.CharField(max_length=20, null=True, blank=True, choices=room4)
+    subject4 = models.CharField(max_length=100, verbose_name="Subject4", null=True, default="NONE")
+    room4 = models.CharField(max_length=100, verbose_name="Room4", null=True, default="NONE")
     faculty4 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_4 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_4 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_4 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_4 = models.CharField(max_length=100, verbose_name="Day1_4", null=True, default="NONE")
 
-    subject5 = models.CharField(max_length=100, null=True, blank=True, choices=subject5)
-    room5 = models.CharField(max_length=20, null=True, blank=True, choices=room5)
+    subject5 = models.CharField(max_length=100, verbose_name="Subject5", null=True, default="NONE")
+    room5 = models.CharField(max_length=100, verbose_name="Room5", null=True, default="NONE")
     faculty5 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_5 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_5 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_5 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_5 = models.CharField(max_length=100, verbose_name="Day1_5", null=True, default="NONE")
 
-    subject6 = models.CharField(max_length=100, null=True, blank=True, choices=subject6)
-    room6 = models.CharField(max_length=20, null=True, blank=True, choices=room6)
+    subject6 = models.CharField(max_length=100, verbose_name="Subject6", null=True, default="NONE")
+    room6 = models.CharField(max_length=100, verbose_name="Room6", null=True, default="NONE")
     faculty6 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_6 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_6 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_6 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_6 = models.CharField(max_length=100, verbose_name="Day1_6", null=True, default="NONE")
 
-    subject7 = models.CharField(max_length=100, null=True, blank=True, choices=subject7)
-    room7 = models.CharField(max_length=20, null=True, blank=True, choices=room7)
+    subject7 = models.CharField(max_length=100, verbose_name="Subject7", null=True, default="NONE")
+    room7 = models.CharField(max_length=100,verbose_name="Room7", null=True, default="NONE")
     faculty7 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_7 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_7 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_7 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_7 = models.CharField(max_length=100, verbose_name="Day1_7", null=True, default="NONE")
 
-    subject8 = models.CharField(max_length=100, null=True, blank=True, choices=subject8)
-    room8 = models.CharField(max_length=20, null=True, blank=True, choices=room8)
+    subject8 = models.CharField(max_length=100, verbose_name="Subject8", null=True, default="NONE")
+    room8 = models.CharField(max_length=100, verbose_name="Room8", null=True, default="NONE")
     faculty8  = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_8 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_8 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_8 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_8 = models.CharField(max_length=100, verbose_name="Day1_8", null=True, default="NONE")
 
-    subject9 = models.CharField(max_length=100, null=True, blank=True, choices=subject9)
-    room9 = models.CharField(max_length=20, null=True, blank=True, choices=room9)
+    subject9 = models.CharField(max_length=100, verbose_name="Subject9", null=True, default="NONE")
+    room9 = models.CharField(max_length=100, verbose_name="Room9", null=True, default="NONE")
     faculty9 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_9 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_9 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_9 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_9 = models.CharField(max_length=100, verbose_name="Day1_9", null=True, default="NONE")
 
-    subject10 = models.CharField(max_length=100, null=True, blank=True, choices=subject10)
-    room10 = models.CharField(max_length=20, null=True, blank=True, choices=room10)
+    subject10 = models.CharField(max_length=100, verbose_name="Subject10", null=True, default="NONE")
+    room10 = models.CharField(max_length=100, verbose_name="Room10", null=True, default="NONE")
     faculty10 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_10 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_10 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_10 = models.CharField(max_length=100, null=True, blank=True, choices=day)
+    day1_10 = models.CharField(max_length=100, verbose_name="Day1_10", null=True, default="NONE")
 
-    starttime2 = models.TimeField( null=True, blank=True)
-    endtime2 = models.TimeField( null=True, blank=True)
-    day2 = models.CharField(max_length=100, null=True, blank=True, choices=day)
-    starttime3 = models.TimeField( null=True, blank=True, default='00:00')
-    endtime3 = models.TimeField( null=True,  blank=True, default='00:00')
-    day3 = models.CharField(max_length=100, null=True, blank=True, choices=day)
-
-    addsubject1 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject1)
-    addroom1 = models.CharField(max_length=100, null=True, blank=True, choices=add_room1)
+    addsubject1 = models.CharField(max_length=100, verbose_name="Add Subject1", null=True, default="NONE")
+    addroom1 = models.CharField(max_length=100,verbose_name="Add Room1", null=True, default="NONE")
     addfaculty1 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_1 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_1 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_1 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_1 = models.CharField(max_length=100, verbose_name="Add Day1_1", null=True, default="NONE")
 
-    addsubject2 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject2)
-    addroom2 = models.CharField(max_length=100, null=True, blank=True, choices=add_room2)
+    addsubject2 = models.CharField(max_length=100, verbose_name="Add Subject2", null=True, default="NONE")
+    addroom2 = models.CharField(max_length=100, verbose_name="Add Room2", null=True, default="NONE")
     addfaculty2 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_2 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_2 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_2 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_2 = models.CharField(max_length=100, verbose_name="Add Day1_2", null=True, default="NONE")
 
-    addsubject3 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject3)
-    addroom3 = models.CharField(max_length=100, null=True, blank=True, choices=add_room3)
+    addsubject3 = models.CharField(max_length=100, verbose_name="Add Subject3", null=True, default="NONE")
+    addroom3 = models.CharField(max_length=100, verbose_name="Add Room3", null=True, default="NONE")
     addfaculty3 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_3 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_3 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_3 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_3 = models.CharField(max_length=100, verbose_name="Add Day1_3", null=True, default="NONE")
 
-    addsubject4 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject4)
-    addroom4 = models.CharField(max_length=100, null=True, blank=True, choices=add_room4)
+    addsubject4 = models.CharField(max_length=100, verbose_name="Add Subject4", null=True, default="NONE")
+    addroom4 = models.CharField(max_length=100, verbose_name="Add Room4", null=True, default="NONE")
     addfaculty4 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_4 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_4 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_4 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_4 = models.CharField(max_length=100, verbose_name="Add Room1_4", null=True, default="NONE")
 
-    addsubject5 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject5)
-    addroom5 = models.CharField(max_length=100, null=True, blank=True, choices=add_room5)
+    addsubject5 = models.CharField(max_length=100, verbose_name="Add Subject5", null=True, default="NONE")
+    addroom5 = models.CharField(max_length=100, verbose_name="Add Room5", null=True, default="NONE")
     addfaculty5 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_5 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_5 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_5 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_5 = models.CharField(max_length=100,verbose_name="Add Day1_5", null=True, default="NONE")
 
-    addsubject6 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject6)
-    addroom6 = models.CharField(max_length=100, null=True, blank=True, choices=add_room6)
+    addsubject6 = models.CharField(max_length=100, verbose_name="Add Subject6", null=True, default="NONE")
+    addroom6 = models.CharField(max_length=100, verbose_name="Add Room6", null=True, default="NONE")
     addfaculty6 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_6 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_6 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_6 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_6 = models.CharField(max_length=100, verbose_name="Add Day1_6", null=True, default="NONE")
 
-    addsubject7 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject7)
-    addroom7 = models.CharField(max_length=100, null=True, blank=True, choices=add_room7)
+    addsubject7 = models.CharField(max_length=100, verbose_name="Add Subject7", null=True, default="NONE")
+    addroom7 = models.CharField(max_length=100, verbose_name="Add Room7", null=True, default="NONE")
     addfaculty7 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_7 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_7 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_7 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_7 = models.CharField(max_length=100, verbose_name="Add Day1_7", null=True, default="NONE")
 
-    addsubject8 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject8)
-    addroom8 = models.CharField(max_length=100, null=True, blank=True, choices=add_room8)
+    addsubject8 = models.CharField(max_length=100,verbose_name="Add Subject8", null=True, default="NONE")
+    addroom8 = models.CharField(max_length=100,verbose_name="Add Room8", null=True, default="NONE")
     addfaculty8 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_8 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_8 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_8 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_8 = models.CharField(max_length=100, verbose_name="Add Day1_8", null=True, default="NONE")
 
-    addsubject9 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject9)
-    addroom9 = models.CharField(max_length=100, null=True, blank=True, choices=add_room9)
+    addsubject9 = models.CharField(max_length=100, verbose_name="Add Subject9", null=True, default="NONE")
+    addroom9 = models.CharField(max_length=100, verbose_name="Add Room9", null=True, default="NONE")
     addfaculty9 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_9 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_9 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_9 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_9 = models.CharField(max_length=100, verbose_name="Add Day1_9", null=True, default="NONE")
 
-    addsubject10 = models.CharField(max_length=100, null=True, blank=True, choices=add_subject10)
-    addroom10 = models.CharField(max_length=100, null=True, blank=True, choices=add_room10)
+    addsubject10 = models.CharField(max_length=100, verbose_name="Add Subject10", null=True, default="NONE")
+    addroom10 = models.CharField(max_length=100, verbose_name="Add Room10", null=True, default="NONE")
     addfaculty10 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_10 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_10 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_10 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
-
-    add_starttime2 = models.TimeField(null=True, blank=True )
-    add_endtime2 = models.TimeField( null=True, blank=True)
-    addday2 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
-    add_starttime3 = models.TimeField(null=True, blank=True , default='00:00')
-    add_endtime3 = models.TimeField( null=True, blank=True, default='00:00')
-    addday3 = models.CharField(max_length=100, null=True, blank=True, choices=add_day)
+    addday1_10 = models.CharField(max_length=100, verbose_name="Add Day1_10", null=True, default="NONE")
     
     trainP_startdate = models.CharField(max_length=30,verbose_name="Start", null=True, default="NONE")
     trainP_enddate = models.CharField(max_length=30,verbose_name="End", null=True, default="NONE")

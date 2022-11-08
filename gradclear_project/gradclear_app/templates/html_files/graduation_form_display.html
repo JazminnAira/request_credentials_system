@@ -561,6 +561,14 @@ Adviser:
         font-size: 30px;
         padding-top: 15px;
     }
+    #home_btn:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+    
+    #print_btn:hover {
+        background-color: #616161;
+    }
 </style>
 
 
@@ -573,7 +581,7 @@ Adviser:
     <ul>
         <li>
             {% if i.approval_status ==  'APPROVED' %}
-                <a href="{% url 'graduation_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print">
+                <a href="{% url 'graduation_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print" id="print_btn">
                     <i class="fa fa-print"></i>
                 </a>
             {% else %}
@@ -584,15 +592,15 @@ Adviser:
         </li>
         <li>
             {% if request.user.user_type == "STUDENT" %}
-            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "FACULTY" %}
-            <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>
             {% elif request.user.user_type == "REGISTRAR" %}
-            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>
             {% endif %}

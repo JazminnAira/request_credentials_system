@@ -1678,12 +1678,12 @@ def graduation_form(request):
             v1_10 = request.POST.get('endtime1_10')
             q1_10 = request.POST.get('day1_10')
 
-            u2 = request.POST.get('starttime2')
-            v2 = request.POST.get('endtime2')
-            q2 = request.POST.get('day2')
-            u3 = request.POST.get('starttime3')
-            v3 = request.POST.get('endtime3')
-            q3 = request.POST.get('day3')
+            # u2 = request.POST.get('starttime2')
+            # v2 = request.POST.get('endtime2')
+            # q2 = request.POST.get('day2')
+            # u3 = request.POST.get('starttime3')
+            # v3 = request.POST.get('endtime3')
+            # q3 = request.POST.get('day3')
 
             o1 = request.POST.get('addsubject1')
             p1 = request.POST.get('addroom1')
@@ -1755,12 +1755,12 @@ def graduation_form(request):
             x1_10 = request.POST.get('add_endtime1_10')
             r1_10 = request.POST.get('addday1_10')
 
-            w2 = request.POST.get('add_starttime2')
-            x2 = request.POST.get('add_endtime2')
-            r2 = request.POST.get('addday2')
-            r3 = request.POST.get('addday3')
-            w3 = request.POST.get('add_starttime3')
-            x3 = request.POST.get('add_endtime3')
+            # w2 = request.POST.get('add_starttime2')
+            # x2 = request.POST.get('add_endtime2')
+            # r2 = request.POST.get('addday2')
+            # r3 = request.POST.get('addday3')
+            # w3 = request.POST.get('add_starttime3')
+            # x3 = request.POST.get('add_endtime3')
 
             sig_s1  = ""
             sig_s2  = ""
@@ -1896,10 +1896,8 @@ def graduation_form(request):
             
             form = graduation_form_table.objects.create(name=name, student_id=student_id, course=course, shift=d,
                                                         study_load=e, status=f, enrolled_term=h, unenrolled_application_deadline=i,
-                                                        trainP_startdate=j, trainP_enddate=k, instructor_name=l, day2=q2, day3=q3,
-                                                        addday2=r2, addday3=r3, starttime2=u2, endtime2=v2, starttime3=u3, endtime3=v3,
-                                                        add_starttime2=w2,  add_endtime2=x2, add_starttime3=w3,  add_endtime3=x3,
-
+                                                        trainP_startdate=j, trainP_enddate=k, instructor_name=l, 
+                                                       
                                                         subject1=m1, room1=n1, faculty1=s1, starttime1_1=u1_1, endtime1_1=v1_1, day1_1=q1_1,
                                                         subject2=m2, room2=n2, faculty2=s2, starttime1_2=u1_2, endtime1_2=v1_2, day1_2=q1_2,
                                                         subject3=m3, room3=n3, faculty3=s3, starttime1_3=u1_3, endtime1_3=v1_3, day1_3=q1_3,

@@ -463,6 +463,10 @@ Adviser:
         font-size: 30px;
         padding-top: 15px;
     }
+    #home_btn:hover {
+        color: white;
+        background-color: #d3324d;
+    }
 
 </style>
 
@@ -481,7 +485,7 @@ Adviser:
             </a>
         </li> -->
         <li>
-            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
         </li>

@@ -558,6 +558,11 @@ Adviser:
         font-size: 30px;
         padding-top: 15px;
     }
+    #home_btn:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+  
 </style>
 
 
@@ -574,7 +579,7 @@ Adviser:
             </a>
         </li> -->
         <li>
-            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" >
                 <i class="fa fa-home"></i>
             </a>
         </li>
@@ -592,12 +597,12 @@ Adviser:
             <!--SECTION RADIO BOX-->
             <div class="radio" onkeyup="isEmpty()" id="radio_43">
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
+                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day Shift
                 </label>
             </div>
             <div class="radio">
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve
+                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve Shift
                 </label>
             </div>
             <div id="dayeve_error_43"></div>
@@ -697,7 +702,7 @@ Adviser:
                     <th class="sub">Subject</th>
                     <th class="sched">Schedule</th>
                     <th class="rm">Room</th>
-                    <th class="ins">Instructor's Name and Signature</th>
+                    <th class="ins">Instructor's Name </th>
                 </tr>
             </thead>
             <tbody id="Add">
@@ -877,7 +882,7 @@ Adviser:
                     <th class="sub1">Subject</th>
                     <th class="sched1">Schedule</th>
                     <th class="rm1">Room</th>
-                    <th class="ins1">Instructor's Name and Signature</th>
+                    <th class="ins1">Instructor's Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -1051,13 +1056,13 @@ Adviser:
             <div class="form-inline">
                 <label for="name" class="col-sm-0 col-form-label col-form-label-mb">If no, file your application papers. Deadline:</label>
                 <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control mx-sm-3" oninput="enter_deadline()" disabled required>
-            </div>
+            </div><br>
 
 
             <!--SUPERVISED INDUSTRIAL TRAINING BOX-->
             <p2 style="color: #757575;"> <b> B. Supervised Industrial Training: </b><em>(Optional)</em></p2><br>
             <p4>If you have undergone Supervised Industrial Training<em>(12 Unit).</em></p4><br>
-            <p4><em>Please fill up the following:</em></p4><br>
+            <p4><em>Please fill up the following:</em></p4><br><br>
 
             <!--PERIOD OF TRAINING BOX-->
             <div class="form-inline">
@@ -1067,12 +1072,12 @@ Adviser:
                 <label for="To" id="potT_lbl_43"> To:</label>
                 <input type="date" id="potT_box_43" name="trainP_enddate" class="form-control mx-sm-3">
 
-            </div>
+            </div><br>
 
             <!--SIT INSTRUCTOR BOX-->
             <div class="form-inline">
                 <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:</label>
-                <select id="noIns_box_43" name="instructor_name" class="form-control" >
+                <select id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" >
                     <option value="1" select>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
