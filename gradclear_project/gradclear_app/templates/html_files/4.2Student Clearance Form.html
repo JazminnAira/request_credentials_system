@@ -512,14 +512,14 @@ Adviser:
             <div class="form-inline">
                 <label for="name_42" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_42" style="padding-right:100px;">Name:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
-                    <input type="text" id="ln_box_42" name="ln_box_420" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                        readonly required>
                     <input type="text" id="fn_box_42" name="fn_box_420" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}"
                         oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                         readonly  required>
                     <input type="text" id="mn_box_42" name="mn_box_420" class="form-control " placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}"
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                    <input type="text" id="ln_box_42" name="ln_box_420" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"
+                    oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                       readonly required>
                     <p id="name_error_42"></p>
                 </div>
             </div><br>

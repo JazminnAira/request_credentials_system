@@ -695,20 +695,12 @@ Adviser:
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
-    {% if graduating >= 4 %}
-        <a  style="padding-left: 15px;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
+    
+    <a  style="padding-left: 15px;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
-    {% else %}
-        <a style="padding-left: 15px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
-        </i><span class="icon-text">Graduation Form</span></a><br>
-    {% endif %}
-    {% if graduating >= 4 %}
-        <a style="padding-left: 21px;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+    <a style="padding-left: 21px;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
         </i><span class="icon-text">Clearance Form</span></a><br>
-    {% else %}   
-        <a style="padding-left: 21px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
-        </i><span class="icon-text">Clearance Form</span></a><br>
-    {% endif %}
+    
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
     <!-- <a data-toggle="modal" data-placement="right" data-target="#Message_modal_41" title="Messages" class="link" class="trigger-btn"><i class="fa fa-commenting-o">
@@ -755,12 +747,6 @@ Adviser:
                         <!--ACCOUNT CONTENT TABLE-->
                         <table class="table-responsive-sm table-responsive-md">
                             <tr>
-                                <td><b>Surname:</b> </td>
-                                <td>{{request.user.last_name}}</td>
-                                
-                            </tr>
-        
-                            <tr>
                                 <td><b>First Name:</b></td>
                                 <td>{{request.user.first_name}}</td>
                             </tr>
@@ -768,6 +754,12 @@ Adviser:
                             <tr>
                                 <td><b>Middle Name:</b></td>
                                 <td>{{request.user.middle_name}}</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Surname:</b> </td>
+                                <td>{{request.user.last_name}}</td>
+                                
                             </tr>
 
                             <tr>
