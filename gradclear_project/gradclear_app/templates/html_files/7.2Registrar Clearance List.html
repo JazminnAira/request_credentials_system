@@ -536,14 +536,14 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_72">
                     <thead>
                         <tr>
-                            <th> # </th>
+                            <th hidden> # </th>
                             <th>Student's Name</th>
                             <th>Course</th>
                             <th>ID Number</th>
                             <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>
                             <th>Approval Status</th>
-                            <!-- <th id="Approvalbutton"></th> -->
+                            <th>Notify</th>
                             <th></th>
 
                         </tr>
@@ -555,7 +555,7 @@ Adviser:
                     {% for instance in all %}
                     <tbody>
                         <tr>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
@@ -572,6 +572,8 @@ Adviser:
                             {% else %}
                                 ❌
                             {% endif %}
+                            </td>
+                            <td><a href="{% url 'delete_clearform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
                             </td>
                         </tr>
                     </tbody>

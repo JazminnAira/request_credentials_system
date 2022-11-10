@@ -454,7 +454,7 @@ Adviser:
                     <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th hidden>#</th>
                                 <th>Student's Name</th>
                                 <th>Request</th>
                                 <th> Date & Time Requested</th>
@@ -464,6 +464,7 @@ Adviser:
                                 <th>Official Receipt</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
+                                <th>Appointment</th>
                                 <th></th>
                             </tr>
                             <tr class="warning no-result">
@@ -474,7 +475,7 @@ Adviser:
                         {% for instance in data %}
                             <tbody>
                                 <tr>
-                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                                    <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
@@ -524,10 +525,11 @@ Adviser:
                                         {% if instance.appointment !=  'NONE' %}
                                             Appointment Set.
                                         {% else %}
-                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set Appointment</i></button></a>
+                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
                                         {% endif %}
                                     </td>
-                                   
+                                    <td><a href="{% url 'delete_reqform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                                    </td>
                                 </tr>
                             </tbody>
                         {% endfor %}

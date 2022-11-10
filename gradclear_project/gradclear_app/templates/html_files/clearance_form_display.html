@@ -537,7 +537,7 @@ Adviser:
             <h3><b>Personal Information</b></h3>
 
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_420" value="{{request.user.username}}" hidden>
+            <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
             <!--NAME BOX-->
             <div class="form-inline">
                 {% if request.user.user_type == "STUDENT"%}

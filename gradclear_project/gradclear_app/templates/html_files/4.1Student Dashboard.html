@@ -1053,7 +1053,7 @@ Adviser:
                                                 
                                                     
                                                     
-                                            <input type="text" hidden name="validator2" value= {{request.user.username}}> 
+                                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
                                             
                                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
                                             <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
@@ -1148,7 +1148,7 @@ Adviser:
                 <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable result+" id="list_tbl_41">
                     <thead>
                         <tr>
-                            <th>Form No.</th>
+                            <th hidden>Form No.</th>
                             <th>Form Type</th>
                             <th>Purpose of Request</th>
                             <th>Approval Status</th>
@@ -1157,13 +1157,13 @@ Adviser:
                             <!-- <th>Signatures</th> -->
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="6"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="5"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     <tbody>
                         {% for instance in st0 %}
                         <tr>
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
                             <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                             {% if instance.approval_status == "UNAPPROVED" %}
@@ -1180,7 +1180,7 @@ Adviser:
                         {% endfor %}
                         {% for instance in st %}
                         <tr>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}
@@ -1198,7 +1198,7 @@ Adviser:
 
                         {% for instance in st1 %}
                         <tr>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}

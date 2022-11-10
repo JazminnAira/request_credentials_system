@@ -504,7 +504,7 @@ Adviser:
             <h3><b>REQUEST FORM</b></h3>
 
             <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_pre" value="{{request.user.username}}" hidden>
+            <input type="text" name="stud_id_pre" value="{{request.user.student_id}}" hidden>
 
             <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>

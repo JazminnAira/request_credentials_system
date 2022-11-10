@@ -92,8 +92,9 @@ class user_table(AbstractUser):
     contact_number = models.CharField(
         max_length=13, verbose_name="Contact Number", validators=[MinLengthValidator(13)])
     email = models.EmailField(
-        max_length=100, verbose_name="Email Address")
+        max_length=100, verbose_name="Email Address", unique=True)
     user_type = models.CharField(max_length=100, verbose_name="User Type")
+    student_id = models.CharField(max_length=100, verbose_name ="Student ID", null=True)
     username = models.CharField(max_length=100, unique=True)
     profile_picture = models.ImageField(upload_to='uploads/')
     uploaded_signature = models.ImageField(upload_to='signatures/',blank=True)# PIP INSTALL PILLOW

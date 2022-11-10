@@ -747,6 +747,10 @@ Adviser:
                                 <td>{{request.user.address}}</td>
                             </tr>
 
+                            <tr>
+                                <td><b>Gender:</b> </td>
+                                <td>{{request.user.gender}}</td>
+                            </tr>
 
                             <tr>
                                 <td><b>Department:</b> </td>
@@ -928,7 +932,7 @@ Adviser:
                                     <div id="collapseFour_51" class="collapse" data-parent="#accordion_51">
                                         <div class="card-body ">
                                             <div class="input-group">
-                                            <input type="text" hidden name="validator2" value= {{request.user.username}}> 
+                                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
                                             <!--<label for="oldpass_51" class="my-1 mr-5" id="oldpass_lbl_51" style="padding-left: 4px;"> Old Password:</label>
                                             <input type="text" id="old_pass_51" name="old_pass_041" class="form-control col-sm-5 mr-1 "
                                              minlength="4" placeholder="*Minimum of 4 characters*" 
@@ -1046,7 +1050,7 @@ Adviser:
                 <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable" id="list_tbl_51">
                     <thead style="height: 70px;">
                         <tr>
-                            <th> # </th>
+                            <th hidden> # </th>
                             <th>Student's Name</th>
                             <th>Course</th>
                             <th>ID Number</th>
@@ -1061,7 +1065,7 @@ Adviser:
                     {% for instance in st %}
                     <tbody>
                         <tr>        
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
@@ -1074,7 +1078,7 @@ Adviser:
                     {% for instance in st1 %}
                     <tbody>
                         <tr>        
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>

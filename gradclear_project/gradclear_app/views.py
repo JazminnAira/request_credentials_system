@@ -875,7 +875,7 @@ def appointment(request, id, form):
             email_temp = request_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             email = user_table.objects.filter(
-                username=email_temp[0]).values_list('email', flat=True).distinct()
+                student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
 
@@ -889,7 +889,7 @@ def appointment(request, id, form):
             name_temp = request_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             name = user_table.objects.filter(
-                username=name_temp[0]).values_list('last_name', flat=True).distinct()
+                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
             last_name = name[0]
 
             gender_temp = user_table.objects.filter(
@@ -971,7 +971,7 @@ def appointmentgrad(request, id, form):
             email_temp = request_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             email = user_table.objects.filter(
-                username=email_temp[0]).values_list('email', flat=True).distinct()
+                student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
 
@@ -985,7 +985,7 @@ def appointmentgrad(request, id, form):
             name_temp = request_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             name = user_table.objects.filter(
-                username=name_temp[0]).values_list('last_name', flat=True).distinct()
+                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
             last_name = name[0]
 
             gender_temp = user_table.objects.filter(
@@ -1059,14 +1059,14 @@ def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
     email = user_table.objects.filter(
-        username=email_temp[0]).values_list('email', flat=True).distinct()
+        student_id=email_temp[0]).values_list('email', flat=True).distinct()
 
     rec_email = email[0]
-
-    name_temp = request_form_table.objects.filter(
+    name_temp = graduation_form_table.objects.filter(
     id=id).values_list('student_id', flat=True).distinct()
+    print("name_temp",name_temp) 
     name = user_table.objects.filter(
-        username=name_temp[0]).values_list('last_name', flat=True).distinct()
+        student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
     gender_temp = user_table.objects.filter(
@@ -1104,14 +1104,14 @@ def regclear_appointment(request,id):
     email_temp = clearance_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
     email = user_table.objects.filter(
-        username=email_temp[0]).values_list('email', flat=True).distinct()
+        student_id=email_temp[0]).values_list('email', flat=True).distinct()
 
     rec_email = email[0]
 
-    name_temp = request_form_table.objects.filter(
+    name_temp = clearance_form_table.objects.filter(
     id=id).values_list('student_id', flat=True).distinct()
     name = user_table.objects.filter(
-        username=name_temp[0]).values_list('last_name', flat=True).distinct()
+        student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
     gender_temp = user_table.objects.filter(
@@ -1150,7 +1150,7 @@ def request_appointment(request,id):
         email_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
         email = user_table.objects.filter(
-            username=email_temp[0]).values_list('email', flat=True).distinct()
+            student_id=email_temp[0]).values_list('email', flat=True).distinct()
         rec_email = email[0]
         recipient_list = [rec_email, ]
 
@@ -1176,7 +1176,7 @@ def request_appointment(request,id):
         name_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
         name = user_table.objects.filter(
-            username=name_temp[0]).values_list('last_name', flat=True).distinct()
+            student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
         last_name = name[0]
 
         subject = 'Claiming of '+ purpose_of_request[0] 
@@ -1236,13 +1236,16 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST.get('email_box_01')
         password = request.POST.get('password_box_01')
+        print(username) 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             p = user_table.objects.filter(username=username).values_list(
                 'user_type', flat=True).distinct()
+            print("P:",p)
             va = p[0]
+             
             if va == "STUDENT":
                 return redirect('student_dashboard')
             elif va == "ALUMNUS":
@@ -1282,8 +1285,8 @@ def student_registration(request):
             temp= form.cleaned_data.get("profile_picture")
             
             # middle = form.cleaned_data.get("middle_name")
-            form.instance.username = "TUPC-" + id_num
-            username = "TUPC-" + id_num
+            form.instance.student_id = "TUPC-" + id_num
+            form.instance.username = email
             
             form.instance.full_name = last + ", " + first + " "+ middle
            
@@ -1295,7 +1298,7 @@ def student_registration(request):
             # email_from = settings.EMAIL_HOST_USER
             # recipient_list = [email, ]
             # send_mail( subject, message, email_from, recipient_list )
-            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + email)
             return redirect('/')
         else:
             messages.error(
@@ -1318,8 +1321,8 @@ def oldstudent_registration(request):
             middle = form.cleaned_data.get("middle_name")
             email = form.cleaned_data.get("email")
             # middle = form.cleaned_data.get("middle_name")
-            form.instance.username = "TUPC-" + id_num
-            username = "TUPC-" + id_num
+            form.instance.student_id = "TUPC-" + id_num
+            form.instance.username = email
             
             form.instance.full_name = last + ", " + first + " "+ middle
            
@@ -1330,7 +1333,7 @@ def oldstudent_registration(request):
             # email_from = settings.EMAIL_HOST_USER
             # recipient_list = [email, ]
             # send_mail( subject, message, email_from, recipient_list )
-            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + username)
+            messages.success(request, 'Account Saved. Keep in mind that your username is: ' + email)
             return redirect('/')
         else:
             messages.error(
@@ -1346,14 +1349,14 @@ def faculty_registration(request):
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
-            form.cleaned_data.get("username")
+            username=form.cleaned_data.get("email")
             id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
-            form.instance.username = "TUPC-" + id_num
+            form.instance.student_id = "TUPC-" + id_num
             form.instance.position = "FACULTY"
-            username = "TUPC-" + id_num
+            form.instance.username = username
             form.instance.user_type = "FACULTY"
             form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
@@ -1418,13 +1421,13 @@ def alumnus_registration(request):
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
-            user_type = form.cleaned_data.get("username")
+            username = form.cleaned_data.get("email")
             id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
-            form.instance.username = "TUPC-" + id_num
-            username = "TUPC-" + id_num
+            form.instance.student_id = "TUPC-" + id_num
+            form.instance.username = username
             form.instance.user_type = "ALUMNUS"
             form.instance.full_name = last + ", " + first + " " + middle
          
@@ -1455,7 +1458,7 @@ def cover(request):
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         
-        # TO DETERMINE IF STUDENT HAS IS 4TH YEAR OR NOT
+        # TO DETERMINE IF STUDENT IS 4TH YEAR OR NOT
         todays_date = date.today()
         id_num = request.user.id_number
         sliced_id = int(str(id_num)[:2]) 
@@ -1463,7 +1466,7 @@ def student_dashboard(request):
         temp =int(current_year[2:5])  
         graduating = temp - sliced_id 
  
-        username = request.user.username
+        student_id = request.user.student_id
         full_name = request.user.full_name
         first = request.user.first_name
         last = request.user.last_name
@@ -1472,16 +1475,16 @@ def student_dashboard(request):
         mid = middle[0] + "."
         name2 = last + ", " + first + " " + mid
 
-        print(username)
+        print(student_id)
 
-        st0 = request_form_table.objects.filter(student_id= username)
-        st = graduation_form_table.objects.filter(student_id=username)
-        st1 = clearance_form_table.objects.filter(student_id=username)
+        st0 = request_form_table.objects.filter(student_id= student_id)
+        st = graduation_form_table.objects.filter(student_id=student_id)
+        st1 = clearance_form_table.objects.filter(student_id=student_id)
         
         check_form137 = Document_checker_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
-        check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
-        check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
+        check_clearance = clearance_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
+        check_graduation = graduation_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
         
         # document checker
         display =[]
@@ -1943,11 +1946,11 @@ def graduation_form(request):
 @login_required(login_url='/')
 def alumnus_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-        username = request.user.username
-        print(username)
+        student_id = request.user.student_id
+        print(student_id)
 
-        st = graduation_form_table.objects.filter(student_id=username)
-        st1 = clearance_form_table.objects.filter(student_id=username)
+        st = graduation_form_table.objects.filter(student_id=student_id)
+        st1 = clearance_form_table.objects.filter(student_id=student_id)
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -2063,7 +2066,60 @@ def faculty_dashboard_clearance_list(request):
     course_adv= clearance_form_table.objects.filter(course_adviser=request.user.full_name )
     
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        st= clearance_form_table.objects.all()
+        if request.user.department == "HOCS":
+            st = clearance_form_table.objects.filter(accountant_signature="UNAPPROVED").order_by('-time_requested') 
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(accountant_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HDLA":
+            st = clearance_form_table.objects.filter(liberal_arts_signature = "UNAPPROVED").order_by('-time_requested') 
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(liberal_arts_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HDMS":
+            st = clearance_form_table.objects.filter(mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HDPECS":
+            st = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(pe_dept_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HDIT":
+            st = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HDIE":
+            st = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HOCL":
+            st = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(library_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HOGS":
+            st = clearance_form_table.objects.filter(guidance_office_signature="UNAPPROVED").order_by('-time_requested') 
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(guidance_office_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HOSA":
+            st = clearance_form_table.objects.filter(osa_signature="UNAPPROVED").order_by('-time_requested') 
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(osa_signature="UNAPPROVED")).order_by('-time_requested')    
+    
+        elif request.user.department == "HADAA":
+            st = clearance_form_table.objects.filter(academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
+               
+            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
+                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')    
+
+
+
+        # st= clearance_form_table.objects.all().order_by('-time_requested')
         if request.method == "POST":
             id_list = request.POST.getlist('boxes')
             print("list:", id_list) 
@@ -2117,7 +2173,7 @@ def faculty_dashboard_clearance_list(request):
                 email_temp = clearance_form_table.objects.filter(
                     id=int(i)).values_list('student_id', flat=True).distinct()
                 email = user_table.objects.filter(
-                    username=email_temp[0]).values_list('email', flat=True).distinct()
+                    student_id=email_temp[0]).values_list('email', flat=True).distinct()
                 rec_email = email[0]
                 f_n = request.user.full_name
                 cursor = connection.cursor()
@@ -2225,13 +2281,7 @@ def faculty_dashboard_clearance_list(request):
                     name = name_temp[0]
                     request_form_table.objects.filter(
                                 name=name).update(clearance="✔")
-                    subject = 'Clearance Form Approved'
-                    message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
-                    email_from = settings.EMAIL_HOST_USER
-                    recipient_list = [rec_email, ]
-                    send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
-                            auth_password=None, connection=None, html_message=None)
-                
+                    
 
                 messages.success(request, "Form Approved.")
 
@@ -2248,7 +2298,7 @@ def update_clearance(request, id, dep):
     email_temp = clearance_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
     email = user_table.objects.filter(
-        username=email_temp[0]).values_list('email', flat=True).distinct()
+        student_id=email_temp[0]).values_list('email', flat=True).distinct()
     rec_email = email[0]
     f_n = request.user.full_name
     f_n_approved = request.user.full_name + "_APPROVED"
@@ -2362,14 +2412,7 @@ def update_clearance(request, id, dep):
             name = name_temp[0]
             request_form_table.objects.filter(
                         name=name).update(clearance="✔")
-            subject = 'Clearance Form Approved'
-            message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [rec_email, ]
-            send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
-                    auth_password=None, connection=None, html_message=None)
-        
-
+            
         messages.success(request, "Form Approved.")
     else: 
         messages.error(
@@ -2386,10 +2429,16 @@ def faculty_dashboard_graduation_list(request):
         id_Facultynumber = request.user.id
         print(signature)
 
+        full_name=request.user.full_name
         f_n_unapproved= request.user.full_name + "_UNAPPROVED"
         f_n_approved= request.user.full_name + "_APPROVED"
 
-        st= graduation_form_table.objects.all()
+        st= graduation_form_table.objects.filter(Q(faculty1=full_name)| Q(faculty2=full_name) |
+        Q(faculty3=full_name)| Q(faculty4=full_name) |Q(faculty5=full_name)| Q(faculty6=full_name) |
+        Q(faculty7=full_name)| Q(faculty8=full_name) |Q(faculty9=full_name)| Q(faculty10=full_name) |
+        Q(addfaculty1=full_name)| Q(addfaculty2=full_name) |Q(addfaculty3=full_name)| Q(addfaculty4=full_name) |
+        Q(addfaculty5=full_name)| Q(addfaculty6=full_name) |Q(addfaculty7=full_name)| Q(addfaculty8=full_name) |
+        Q(addfaculty9=full_name)| Q(addfaculty10=full_name) ).order_by('-time_requested')
         if request.method == "POST":
             id_list = request.POST.getlist('boxes')
             print("list:", id_list) 
@@ -2399,7 +2448,7 @@ def faculty_dashboard_graduation_list(request):
                 email_temp = graduation_form_table.objects.filter(
                     id=int(i)).values_list('student_id', flat=True).distinct()
                 email = user_table.objects.filter(
-                    username=email_temp[0]).values_list('email', flat=True).distinct()
+                    student_id=email_temp[0]).values_list('email', flat=True).distinct()
         
                 rec_email = email[0]
                 print(rec_email) 
@@ -3191,7 +3240,7 @@ def faculty_dashboard_graduation_list(request):
                 email_temp = graduation_form_table.objects.filter(
                     id=int(i)).values_list('student_id', flat=True).distinct()
                 email = user_table.objects.filter(
-                    username=email_temp[0]).values_list('email', flat=True).distinct()
+                    student_id=email_temp[0]).values_list('email', flat=True).distinct()
         
                 rec_email = email[0]
                 print(rec_email) 
@@ -3228,14 +3277,7 @@ def faculty_dashboard_graduation_list(request):
                     graduation_form_table.objects.filter(
                         id=int(i)).update(approval_status="APPROVED")
                     
-                    messages.success(request, "Form Approved.")
-                    subject = 'Graduation Form Approved'
-                    message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
-                    email_from = settings.EMAIL_HOST_USER
-                    recipient_list = [rec_email, ]
-                    send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
-                            auth_password=None, connection=None, html_message=None)
-                
+                    
             return redirect(faculty_dashboard_graduation_list)
 
                 
@@ -3255,7 +3297,7 @@ def update_graduation(request, id, sig):
         email_temp = graduation_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
         email = user_table.objects.filter(
-            username=email_temp[0]).values_list('email', flat=True).distinct()
+            student_id=email_temp[0]).values_list('email', flat=True).distinct()
  
         rec_email = email[0]
         print(rec_email) 
@@ -3448,14 +3490,6 @@ def update_graduation(request, id, sig):
             graduation_form_table.objects.filter(
                 id=id).update(approval_status="APPROVED")
              
-            messages.success(request, "Form Approved.")
-            subject = 'Graduation Form Approved'
-            message = f'Mr./Ms. {request.user.last_name} has approved your form. Check out our site to see your progress.'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [rec_email, ]
-            send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None,
-                    auth_password=None, connection=None, html_message=None)
-        
         return redirect(faculty_dashboard_graduation_list)
         
     else:
@@ -3590,7 +3624,7 @@ def registrar_dashboard(request):
 def name_list(request):
     enteruser = request.POST.get('validator')
     to_edit = request.POST.get('validator')
-    p = user_table.objects.filter(username=enteruser).values_list(
+    p = user_table.objects.filter(student_id=enteruser).values_list(
         to_edit, flat=True).distinct()
     va = p[0]
 
@@ -3657,7 +3691,7 @@ def updatePassword(request):
             if new_password == confirm_password:
                 print("same")
                 v = request.POST.get('validator2')
-                u = user_table.objects.get(username__exact=v)
+                u = user_table.objects.get(student_id__exact=v)
 
                 u.set_password(new_password)
                 u.save()
@@ -3744,7 +3778,7 @@ def faculty_updatePassword(request):
             if new_password == confirm_password:
                 print("same")
                 v = request.POST.get('validator2')
-                u = user_table.objects.get(username__exact=v)
+                u = user_table.objects.get(student_id__exact=v)
 
                 u.set_password(new_password)
                 u.save()
@@ -3830,7 +3864,7 @@ def reg_updatePassword(request):
             if new_password == confirm_password:
                 print("same")
                 v = request.POST.get('validator2')
-                u = user_table.objects.get(username__exact=v)
+                u = user_table.objects.get(student_id__exact=v)
 
                 u.set_password(new_password)
                 u.save()
@@ -4535,7 +4569,7 @@ def set_appointment(request, id):
             email_temp = clearance_form_table.objects.filter(
                 id=id).values_list('student_id', flat=True).distinct()
             email = user_table.objects.filter(
-                username=email_temp[0]).values_list('email', flat=True).distinct()
+                student_id=email_temp[0]).values_list('email', flat=True).distinct()
 
             rec_email = email[0]
             print(rec_email)
@@ -4894,3 +4928,24 @@ def display_reqform(request,id):
 
     print('running')
     return render(request, 'html_files/Request_form_display.html', context)
+
+@login_required(login_url='/')
+def delete_gradform(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        delete_grad = graduation_form_table.objects.get(id=id)
+        delete_grad.delete()
+        return redirect('/registrar_dashboard_graduation_list/%20')
+
+@login_required(login_url='/')
+def delete_clearform(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        delete_clear = clearance_form_table.objects.get(id=id)
+        delete_clear.delete()
+        return redirect('/registrar_dashboard_clearance_list/%20')
+
+@login_required(login_url='/')
+def delete_reqform(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        delete_req = request_form_table.objects.get(id=id)
+        delete_req.delete()
+        return redirect('registrar_dashboard_request_list')

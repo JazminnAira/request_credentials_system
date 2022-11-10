@@ -180,7 +180,6 @@ Adviser:
     #list_tbl_52 {
         
         border-spacing: 0 5px;
-        table-layout: fixed;
         width: 100%;
         margin-bottom: 50px;
         table-layout: auto; /* TO MAKE ROW FIT*/
@@ -652,14 +651,12 @@ Adviser:
                 <thead style="height: 70px;">
                     <tr>
                         <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
-                        <th> # </th>
+                        <th hidden> # </th>
                         <th>Student's Name</th>
                         <th>Course</th>
                         <th>ID Number</th>
                         <th>Purpose of Request</th>
-                        <th>Date & Time Requested</th>
                         <th>Appointment</th>
-                        <th> </th>
                         <th id="department_th"></th>
                         <th id="course_adviser_th"></th>
                         
@@ -670,7 +667,7 @@ Adviser:
                     </tr>
                     {% endif %} -->
                     <tr class="warning no-result">
-                        <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+                        <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                     </tr>
                 </thead>
                 
@@ -679,13 +676,11 @@ Adviser:
                     <tr id="Add">    
                         
                         <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                        <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.appointment}}</td>
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
@@ -788,7 +783,7 @@ Adviser:
                 </tbody>
                 {% endfor %}
             </table>
-            <button type="submit" class="btn-lg">Approve All</button>
+            <button type="submit" class="btn-m">Approve All</button>
         </form>
     </div>
         <!---->
