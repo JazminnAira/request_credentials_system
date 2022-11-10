@@ -2783,7 +2783,7 @@ def faculty_dashboard_graduation_list(request):
         Q(faculty7=full_name)| Q(faculty8=full_name) |Q(faculty9=full_name)| Q(faculty10=full_name) |
         Q(addfaculty1=full_name)| Q(addfaculty2=full_name) |Q(addfaculty3=full_name)| Q(addfaculty4=full_name) |
         Q(addfaculty5=full_name)| Q(addfaculty6=full_name) |Q(addfaculty7=full_name)| Q(addfaculty8=full_name) |
-        Q(addfaculty9=full_name)| Q(addfaculty10=full_name) ).order_by('-time_requested')
+        Q(addfaculty9=full_name)| Q(addfaculty10=full_name)|Q(instructor_name=full_name) ).order_by('-time_requested')
         if request.method == "POST":
             id_list = request.POST.getlist('boxes')
             print("list:", id_list) 
