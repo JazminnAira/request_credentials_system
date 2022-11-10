@@ -206,9 +206,11 @@ def graduation_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
     content = graduation_form_table.objects.get(id=id)
+    fac = user_table.objects.all()
     textob = p.beginText()
 
     lines = []
+
 
     day_eve = content.shift
     if day_eve == "DAY":
@@ -227,490 +229,543 @@ def graduation_print(request, id):
     p.drawString(220, 670, f'{content.enrolled_term}')
     
     #revised
-    p.setFont("Helvetica", 10)
+    p.setFont("Helvetica", 7)
     sub1 = content.subject1
+    faculty = content.faculty1
+    fac = user_table.objects.get(full_name = faculty)
+    stat = fac.uploaded_signature
+    
+    
+    
+    print(stat)
     if len(sub1) == 0:
-        p.drawString(33, 640, ' ')
-        p.drawString(204, 640,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279, 640, ' ')
-        p.drawString(323, 640, ' ')
-        p.drawString(380, 640, ' ')
-        
+        p.drawString(33, 640, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
     else:
         p.drawString(33, 640, f'{content.subject1}')
-        p.setFont("Helvetica", 8)
+        p.setFont("Helvetica", 7)
         p.drawString(204, 640, f'{content.starttime1_1} - {content.endtime1_1}')
         p.drawString(279, 640, f'{content.room1}')
         p.drawString(323, 640, f'{content.day1_1}')
         sig1 = content.signature1
-        if sig1 == "1_sig":
+        faculty = content.faculty1
+        fac = user_table.objects.get(full_name = faculty)
+        stat = fac.uploaded_signature
+        if sig1 == "NO_APPROVED":
             p.drawString(380, 640, 'Unapproved')
+        elif stat =="DECLINE":  
+            p.drawString(380, 638,f'{content.faculty1}')
+            
         else:
-            p.drawString(380, 640, f'{content.signature1}')
-            
-    p.setFont("Helvetica", 10)
-    sub2 = content.subject2
-    if len(sub2) == 0:
-        p.drawString(33, 625, ' ')
-        p.drawString(204, 625,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,625, ' ')
-        p.drawString(323, 625, ' ')
-        p.drawString(380, 625, ' ')
-        
-    else:
-        p.drawString(33, 625, f'{content.subject2}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
-        p.drawString(279, 625, f'{content.room2}')
-        p.drawString(323, 625, f'{content.day1_2}')
-        sig2 = content.signature2
-        if sig2 == "1_sig":
-            p.drawString(380, 625, 'Unapproved')
-        else:
-            p.drawString(380, 625, f'{content.signature2}')
-            
-    p.setFont("Helvetica", 10)
-    sub3 = content.subject3
-    if len(sub3) == 0:
-        p.drawString(33, 611, ' ')
-        p.drawString(204, 611,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,611, ' ')
-        p.drawString(323, 611, ' ')
-        p.drawString(380, 611, ' ')
-        
-    else:
-        p.drawString(33, 611, f'{content.subject3}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
-        p.drawString(279, 611, f'{content.room3}')
-        p.drawString(323, 611, f'{content.day1_3}')
-        sig3 = content.signature3
-        if sig3 == "1_sig":
-            p.drawString(380, 611, 'Unapproved')
-        else:
-            p.drawString(380, 611, f'{content.signature3}')
-            
-    
-    p.setFont("Helvetica", 10)
-    sub4 = content.subject4
-    if len(sub4) == 0:
-        p.drawString(33, 597, ' ')
-        p.drawString(204, 597,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,597, ' ')
-        p.drawString(323, 597, ' ')
-        p.drawString(380, 597, ' ')
-        
-    else:
-        p.drawString(33, 597, f'{content.subject4}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
-        p.drawString(279, 597, f'{content.room4}')
-        p.drawString(323, 597, f'{content.day1_4}')
-        sig4 = content.signature4
-        if sig4 == "1_sig":
-            p.drawString(380, 597, 'Unapproved')
-        else:
-            p.drawString(380, 597, f'{content.signature4}')
-    
-    
-    p.setFont("Helvetica", 10)
-    sub5 = content.subject5
-    if len(sub5) == 0:
-        p.drawString(33, 584, ' ')
-        p.drawString(204, 584,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,584, ' ')
-        p.drawString(323, 584, ' ')
-        p.drawString(380, 584, ' ')
-        
-    else:
-        p.drawString(33, 584, f'{content.subject5}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
-        p.drawString(279, 584, f'{content.room5}')
-        p.drawString(323, 584, f'{content.day1_5}')
-        sig5 = content.signature5
-        if sig5 == "1_sig":
-            p.drawString(380, 584, 'Unapproved')
-        else:
-            p.drawString(380, 584, f'{content.signature5}')
-            
-            
-    p.setFont("Helvetica", 10)
-    sub6 = content.subject6
-    if len(sub6) == 0:
-        p.drawString(33, 570, ' ')
-        p.drawString(204, 570,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,570, ' ')
-        p.drawString(323, 570, ' ')
-        p.drawString(380, 570, ' ')
-        
-    else:
-        p.drawString(33, 570, f'{content.subject6}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
-        p.drawString(279, 570, f'{content.room6}')
-        p.drawString(323, 570, f'{content.day1_6}')
-        sig6 = content.signature6
-        if sig6 == "1_sig":
-            p.drawString(380, 570, 'Unapproved')
-        else:
-            p.drawString(380, 570, f'{content.signature6}')
-            
-            
-    p.setFont("Helvetica", 10)
-    sub7 = content.subject7
-    if len(sub7) == 0:
-        p.drawString(33, 555, ' ')
-        p.drawString(204, 555,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,555, ' ')
-        p.drawString(323, 555, ' ')
-        p.drawString(380, 555, ' ')
-        
-    else:
-        p.drawString(33, 555, f'{content.subject7}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
-        p.drawString(279, 555, f'{content.room7}')
-        p.drawString(323, 555, f'{content.day1_7}')
-        sig7 = content.signature7
-        if sig7 == "1_sig":
-            p.drawString(380, 555, 'Unapproved')
-        else:
-            p.drawString(380, 555, f'{content.signature7}')
-            
+            sig1trig = content.signature1
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+            p.drawImage(im,500, 640, height = 15, width = 80 , mask='auto')
+            p.drawString(380, 638,f'{content.faculty1}')
+               
+        p.setFont("Helvetica", 7)
+        sub2 = content.subject2
 
-    p.setFont("Helvetica", 10)
-    sub8 = content.subject8
-    if len(sub8) == 0:
-        p.drawString(33, 542, ' ')
-        p.drawString(204, 542,' ')
+        if len(sub2) == 0:
+            p.drawString(33, 625, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
-        p.setFont("Helvetica", 8)
-        p.drawString(279,542, ' ')
-        p.drawString(323, 542, ' ')
-        p.drawString(380, 542, ' ')
-        
-    else:
-        p.drawString(33, 542, f'{content.subject8}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
-        p.drawString(279, 542, f'{content.room8}')
-        p.drawString(323, 542, f'{content.day1_8}')
-        sig8 = content.signature8
-        if sig8 == "1_sig":
-            p.drawString(380, 542, 'Unapproved')
         else:
-            p.drawString(380, 542, f'{content.signature8}')
+            p.drawString(33, 625, f'{content.subject2}')
+            p.setFont("Helvetica", 7)
+            p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
+            p.drawString(279, 625, f'{content.room2}')
+            p.drawString(323, 625, f'{content.day1_2}')
+            sig2 = content.signature2
+            faculty2 = content.faculty2
+            fac2 = user_table.objects.get(full_name = faculty2)
+            stat = fac2.uploaded_signature
+            if sig2 == "NO_APPROVED":
+                p.drawString(380, 625, 'Unapproved')
+            elif stat == "DECLINE":
+                p.drawString(380, 625,f'{content.faculty2}' )
+            else:
+                sig1trig = content.signature2
+                im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                p.drawString(380, 625,f'{content.faculty2}' )
+                p.drawImage(im,500, 625, height = 15, width = 80 , mask='auto')
+
+      
+            p.setFont("Helvetica", 7)
+            sub3 = content.subject3
+            print(sub3)
+            if len(sub3) == 0:
+                p.drawString(33, 611, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+            else:
+                p.drawString(33, 611, f'{content.subject3}')
+                p.setFont("Helvetica", 7)
+                p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
+                p.drawString(279, 611, f'{content.room3}')
+                p.drawString(323, 611, f'{content.day1_3}')
+                sig3 = content.signature3
+                faculty3 = content.faculty3
+                fac3 = user_table.objects.get(full_name = faculty3)
+                stat = fac3.uploaded_signature
+                if sig3 == "NO_APPROVED":
+                    p.drawString(380, 611, 'Unapproved')
+                elif stat == "DECLINE":
+                    p.drawString(380, 611,f'{content.faculty3}' )
+                else:
+                    sig1trig = content.signature3
+                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                    p.drawString(380, 611,f'{content.faculty3}' )
+                    p.drawImage(im,500, 609, height = 15, width = 80 , mask='auto')
+    
+                    p.setFont("Helvetica", 7)
+                    sub4 = content.subject4
+                    if len(sub4) == 0:
+                        p.drawString(33, 597,'----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+
+                    else:
+                        p.drawString(33, 597, f'{content.subject4}')
+                        p.setFont("Helvetica", 7)
+                        p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
+                        p.drawString(279, 597, f'{content.room4}')
+                        p.drawString(323, 597, f'{content.day1_4}')
+                        sig4 = content.signature4
+                        faculty = content.faculty4
+                        fac = user_table.objects.get(full_name = faculty)
+                        stat = fac.uploaded_signature
+                        if sig4 == "NO_APPROVED":
+                            p.drawString(380, 597, 'Unapproved')
+                        elif stat == "DECLINE":
+                                p.drawString(380, 597,f'{content.faculty4}' )
+                        else:
+                            sig1trig = content.signature4
+                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                            p.drawString(380, 597,f'{content.faculty4}' )
+                            p.drawImage(im,500, 597, height = 15, width = 80 , mask='auto')
+
+                            p.setFont("Helvetica", 7)
+                            sub5 = content.subject5
+                            if len(sub5) == 0:
+                                p.drawString(33, 584, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                            else:
+                                p.drawString(33, 584, f'{content.subject5}')
+                                p.setFont("Helvetica", 7)
+                                p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
+                                p.drawString(279, 584, f'{content.room5}')
+                                p.drawString(323, 584, f'{content.day1_5}')
+                                sig5 = content.signature5
+                                faculty = content.faculty5
+                                fac = user_table.objects.get(full_name = faculty)
+                                stat = fac.uploaded_signature
+                                if sig5 == "NO_APPROVED":
+                                    p.drawString(380, 584, 'Unapproved')
+                                elif stat == "DECLINE":
+                                    p.drawString(380, 584,f'{content.faculty5}' )
+                                else:
+                                    sig1trig = content.signature5
+                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                    p.drawString(380, 584,f'{content.faculty5}' )
+                                    p.drawImage(im,500, 584, height = 15, width = 80 , mask='auto')
+
+                                    p.setFont("Helvetica", 7)
+                                    sub6 = content.subject6
+                                    print(sub6)
+                                    if len(sub6) == 0:
+                                        p.drawString(39, 570, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                    else:
+                                        p.drawString(33, 570, f'{content.subject6}')
+                                        p.setFont("Helvetica", 7)
+                                        p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
+                                        p.drawString(279, 570, f'{content.room6}')
+                                        p.drawString(323, 570, f'{content.day1_6}')
+                                        sig6 = content.signature6
+                                        faculty = content.faculty6
+                                        fac = user_table.objects.get(full_name = faculty)
+                                        stat = fac.uploaded_signature
+                                        if sig6 == "NO_APPROVED":
+                                            p.drawString(380, 570, 'Unapproved')
+                                        elif stat == "DECLINE":
+                                                p.drawString(380, 570,f'{content.faculty6}' )
+                                        else:
+                                            sig1trig = content.signature6
+                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                            p.drawString(380, 570,f'{content.faculty6}' )
+                                            p.drawImage(im,500, 570, height = 15, width = 80 , mask='auto')
             
-    p.setFont("Helvetica", 10)
-    sub9 = content.subject9
-    if len(sub9) == 0:
-        p.drawString(33, 529, ' ')
-        p.drawString(204, 529,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,529, ' ')
-        p.drawString(323, 529, ' ')
-        p.drawString(380, 529, ' ')
-        
-    else:
-        p.drawString(33, 529, f'{content.subject9}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
-        p.drawString(279, 529, f'{content.room9}')
-        p.drawString(323, 529, f'{content.day1_9}')
-        sig9 = content.signature9
-        if sig9 == "1_sig":
-            p.drawString(380, 529, 'Unapproved')
-        else:
-            p.drawString(380, 529, f'{content.signature9}')
             
-    
-    
-    p.setFont("Helvetica", 10)
-    sub10 = content.subject10
-    if len(sub10) == 0:
-        p.drawString(33, 515, ' ')
-        p.drawString(204, 515,' ')
+                                            p.setFont("Helvetica", 7)
+                                            sub7 = content.subject7
+                                            if len(sub7) == 0: 
+                                                p.drawString(33, 555, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
-        p.setFont("Helvetica", 8)
-        p.drawString(279,515, ' ')
-        p.drawString(323, 515, ' ')
-        p.drawString(380, 515, ' ')
-        
-    else:
-        p.drawString(33, 515, f'{content.subject10}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
-        p.drawString(279, 515, f'{content.room10}')
-        p.drawString(323, 515, f'{content.day1_10}')
-        sig10 = content.signature10
-        if sig10 == "1_sig":
-            p.drawString(380, 515, 'Unapproved')
-        else:
-            p.drawString(380, 515, f'{content.signature10}')
-    
+                                            else:
+                                                p.drawString(33, 555, f'{content.subject7}')
+                                                p.setFont("Helvetica", 7)
+                                                p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
+                                                p.drawString(279, 555, f'{content.room7}')
+                                                p.drawString(323, 555, f'{content.day1_7}')
+                                                sig7 = content.signature7
+                                                faculty = content.faculty7
+                                                fac = user_table.objects.get(full_name = faculty)
+                                                stat = fac.uploaded_signature
+                                                if sig7 == "NO_APPROVED":
+                                                    p.drawString(380, 555, 'Unapproved')
+                                                elif stat == "DECLINE":
+                                                        p.drawString(380, 555,f'{content.faculty7}' )    
+                                                else:
+                                                    sig1trig = content.signature7
+                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                    p.drawString(380, 555,f'{content.faculty7}' )
+                                                    p.drawImage(im,500, 555, height = 15, width = 80 , mask='auto')
+                
+
+                                                    p.setFont("Helvetica", 7)
+                                                    sub8 = content.subject8
+                                                    if len(sub8) == 0: 
+                                                                                                                      
+                                                        p.drawString(33, 542, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                    else:
+                                                        p.drawString(33, 542, f'{content.subject8}')
+                                                        p.setFont("Helvetica", 7)
+                                                        p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
+                                                        p.drawString(279, 542, f'{content.room8}')
+                                                        p.drawString(323, 542, f'{content.day1_8}')
+                                                        sig8 = content.signature8
+                                                        faculty = content.faculty8
+                                                        fac = user_table.objects.get(full_name = faculty)
+                                                        stat = fac.uploaded_signature
+                                                        if sig8 == "NO_APPROVED":
+                                                            p.drawString(380, 542, 'Unapproved')
+                                                        elif stat == "DECLINE":
+                                                                p.drawString(380, 542,f'{content.faculty8}' )
+                                                        else:
+                                                            sig1trig = content.signature8
+                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                            p.drawString(380, 542,f'{content.faculty8}' )
+                                                            p.drawImage(im,500, 542, height = 15, width = 80 , mask='auto')
+                                                            
+                                                            
+                                                            p.setFont("Helvetica", 7)
+                                                            sub9 = content.subject9
+                                                            if len(sub9) == 0:
+                                                                p.drawString(33, 529, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                            else:
+                                                                p.drawString(33, 529, f'{content.subject9}')
+                                                                p.setFont("Helvetica", 7)
+                                                                p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
+                                                                p.drawString(279, 529, f'{content.room9}')
+                                                                p.drawString(323, 529, f'{content.day1_9}')
+                                                                sig9 = content.signature9
+                                                                faculty = content.faculty9
+                                                                fac = user_table.objects.get(full_name = faculty)
+                                                                stat = fac.uploaded_signature
+                                                                if sig9 == "NO_APPROVED":
+                                                                    p.drawString(380, 529, 'Unapproved')
+                                                                elif stat == "DECLINE":
+                                                                        p.drawString(380, 529,f'{content.faculty9}' )
+                                                                else:
+                                                                    sig1trig = content.signature9
+                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                                    p.drawString(380, 529,f'{content.faculty9}' )
+                                                                    p.drawImage(im,500, 529, height = 15, width = 80 , mask='auto')                    
+            
+            
+                                                                    p.setFont("Helvetica", 7)
+                                                                    sub10 = content.subject10
+                                                                    if len(sub10) == 0:
+                                                                        p.drawString(33, 515, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                
+                                                                    else:
+                                                                        p.drawString(33, 515, f'{content.subject10}')
+                                                                        p.setFont("Helvetica", 7)
+                                                                        p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
+                                                                        p.drawString(279, 515, f'{content.room10}')
+                                                                        p.drawString(323, 515, f'{content.day1_10}')
+                                                                        sig10 = content.signature10
+                                                                        faculty = content.faculty10
+                                                                        fac = user_table.objects.get(full_name = faculty)
+                                                                        stat = fac.uploaded_signature
+                                                                        if sig10 == "NO_APPROVED":
+                                                                            p.drawString(380, 515, 'Unapproved')
+                                                                        elif stat == "DECLINE":
+                                                                                p.drawString(380, 515,f'{content.faculty10}' )
+                                                                        else:
+                                                                            sig1trig = content.signature10
+                                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                                            p.drawString(380, 515,f'{content.faculty10}' )
+                                                                            p.drawImage(im,500, 515, height = 15, width = 80 , mask='auto')
     #additional subj
-    
-    p.setFont("Helvetica", 10)
+  
+
     addsub1 = content.addsubject1
     if len(addsub1) == 0:
-        p.drawString(33, 305, ' ')
-        p.drawString(204, 305,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,305, ' ')
-        p.drawString(323, 305, ' ')
-        p.drawString(380, 305, ' ')
+        p.drawString(33, 305, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
     else:
         p.drawString(33, 305, f'{content.addsubject1}')
-        p.setFont("Helvetica", 8)
+        p.setFont("Helvetica", 7)
         p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_endtime1_1}')
         p.drawString(279, 305, f'{content.addroom1}')
         p.drawString(323, 305, f'{content.addday1_1}')
         addsig1 = content.addsignature1
-        if addsig1 == "1_sig":
+        faculty = content.addfaculty1
+        fac = user_table.objects.get(full_name = faculty)
+        stat = fac.uploaded_signature
+        if addsig1 == "NO_APPROVED":
             p.drawString(380, 305, 'Unapproved')
+        elif stat == "DECLINE":
+                p.drawString(380, 305,f'{content.addfaculty1}' )
         else:
-            p.drawString(380, 305, f'{content.addsignature1}')
+            sig1trig = content.addsignature1
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+            p.drawString(380, 305,f'{content.addfaculty1}' )
+            p.drawImage(im,500, 305, height = 15, width = 80 , mask='auto')
+
     
-    p.setFont("Helvetica", 10)
-    addsub2 = content.addsubject2
-    if len(addsub2) == 0:
-        p.drawString(33, 290, ' ')
-        p.drawString(204, 290,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,290, ' ')
-        p.drawString(323, 290, ' ')
-        p.drawString(380, 290, ' ')
-        
-    else:
-        p.drawString(33, 290, f'{content.addsubject2}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
-        p.drawString(279, 290, f'{content.addroom2}')
-        p.drawString(323, 290, f'{content.addday1_2}')
-        addsig2 = content.addsignature2
-        if addsig2 == "1_sig":
-            p.drawString(380, 290, 'Unapproved')
-        else:
-            p.drawString(380, 290, f'{content.addsignature2}')
-            
+            p.setFont("Helvetica", 7)
+            addsub2 = content.addsubject2
+            if len(addsub2) == 0:
+                p.drawString(33, 290, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+            else:
+                p.drawString(33, 290, f'{content.addsubject2}')
+                p.setFont("Helvetica", 7)
+                p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
+                p.drawString(279, 290, f'{content.addroom2}')
+                p.drawString(323, 290, f'{content.addday1_2}')
+                addsig2 = content.addsignature2
+                faculty = content.addfaculty2
+                fac = user_table.objects.get(full_name = faculty)
+                stat = fac.uploaded_signature
+                if addsig2 == "NO_APPROVED":
+                    p.drawString(380, 290, 'Unapproved')
+                elif stat == "DECLINE":
+                    p.drawString(380, 290,f'{content.addfaculty2}' )
+                else:
+                    sig1trig = content.addsignature2
+                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                    p.drawString(380, 290,f'{content.addfaculty2}' )
+                    p.drawImage(im,500, 290, height = 15, width = 80 , mask='auto')
     
-    p.setFont("Helvetica", 10)
-    addsub3 = content.addsubject3
-    if len(addsub3) == 0:
-        p.drawString(33, 276, ' ')
-        p.drawString(204, 276,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,276, ' ')
-        p.drawString(323, 276, ' ')
-        p.drawString(380, 276, ' ')
-        
-    else:
-        p.drawString(33, 276, f'{content.addsubject3}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
-        p.drawString(279, 276, f'{content.addroom3}')
-        p.drawString(323, 276, f'{content.addday1_3}')
-        addsig3 = content.addsignature3
-        if addsig3 == "1_sig":
-            p.drawString(380, 276, 'Unapproved')
-        else:
-            p.drawString(380, 276, f'{content.addsignature3}')
-            
+                    p.setFont("Helvetica", 7)
+                    addsub3 = content.addsubject3
+                    if len(addsub3) == 0:
+                        p.drawString(33, 276, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                        
+                    else:
+                        p.drawString(33, 276, f'{content.addsubject3}')
+                        p.setFont("Helvetica", 7)
+                        p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
+                        p.drawString(279, 276, f'{content.addroom3}')
+                        p.drawString(323, 276, f'{content.addday1_3}')
+                        addsig3 = content.addsignature3
+                        faculty = content.addfaculty3
+                        fac = user_table.objects.get(full_name = faculty)
+                        stat = fac.uploaded_signature
+                        if addsig3 == "NO_APPROVED":
+                            p.drawString(380, 276, 'Unapproved')
+                        elif stat == "DECLINE":
+                            p.drawString(380, 276,f'{content.addfaculty3}' )
+                        else:
+                            sig1trig = content.addsignature3
+                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                            p.drawString(380, 276,f'{content.addfaculty3}' )
+                            p.drawImage(im,500, 276, height = 15, width = 80 , mask='auto')
+                            
             
 
-    p.setFont("Helvetica", 10)
-    addsub4 = content.addsubject4
-    if len(addsub4) == 0:
-        print ("empty")
-        p.drawString(33, 262, ' ')
-        p.drawString(204, 262,' ')
-        p.setFont("Helvetica", 8)
-        p.drawString(279,262, ' ')
-        p.drawString(323, 262, ' ')
-        p.drawString(380, 262, ' ')
-        
-    else:
-        p.drawString(33, 262, f'{content.addsubject4}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
-        p.drawString(279, 262, f'{content.addroom4}')
-        p.drawString(323, 262, f'{content.addday1_4}')
-        addsig4 = content.addsignature4
-        if addsig4 == "1_sig":
-            p.drawString(380, 262, 'Unapproved')
-        else:
-            p.drawString(380, 262, f'{content.addsignature4}')
+                            p.setFont("Helvetica", 7)
+                            addsub4 = content.addsubject4
+                            if len(addsub4) == 0:
+                                print ("empty")
+                                p.drawString(33, 262, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                
+                            else:
+                                p.drawString(33, 262, f'{content.addsubject4}')
+                                p.setFont("Helvetica", 7)
+                                p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
+                                p.drawString(279, 262, f'{content.addroom4}')
+                                p.drawString(323, 262, f'{content.addday1_4}')
+                                addsig4 = content.addsignature4
+                                faculty = content.addfaculty4
+                                fac = user_table.objects.get(full_name = faculty)
+                                stat = fac.uploaded_signature
+                                if addsig4 == "NO_APPROVED":
+                                    p.drawString(380, 262, 'Unapproved')
+                                elif stat == "DECLINE":
+                                    p.drawString(380, 262,f'{content.addfaculty4}' )
+                                else:
+                                    sig1trig = content.addsignature4
+                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                    p.drawString(380, 262,f'{content.addfaculty4}' )
+                                    p.drawImage(im,500, 262, height = 15, width = 80 , mask='auto')
             
             
-    p.setFont("Helvetica", 10)
-    addsub5 = content.addsubject5
-    if len(addsub5) == 0:
-        p.drawString(33, 249, ' ')
-        p.drawString(204, 249,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,249, ' ')
-        p.drawString(323, 249, ' ')
-        p.drawString(380, 249, ' ')
-        
-    else:
-        p.drawString(33, 249, f'{content.addsubject5}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
-        p.drawString(279, 249, f'{content.addroom5}')
-        p.drawString(323, 249, f'{content.addday1_5}')
-        addsig5 = content.addsignature5
-        if addsig5 == "1_sig":
-            p.drawString(380, 249, 'Unapproved')
-        else:
-            p.drawString(380, 249, f'{content.addsignature5}')
+                                    p.setFont("Helvetica", 7)
+                                    addsub5 = content.addsubject5
+                                    if len(addsub5) == 0:
+                                        p.drawString(33, 249, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                    else:
+                                        p.drawString(33, 249, f'{content.addsubject5}')
+                                        p.setFont("Helvetica", 7)
+                                        p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
+                                        p.drawString(279, 249, f'{content.addroom5}')
+                                        p.drawString(323, 249, f'{content.addday1_5}')
+                                        addsig5 = content.addsignature5
+                                        faculty = content.addfaculty5
+                                        fac = user_table.objects.get(full_name = faculty)
+                                        stat = fac.uploaded_signature
+                                        if addsig5 == "NO_APPROVED":
+                                            p.drawString(380, 249, 'Unapproved')
+                                        elif stat == "DECLINE":
+                                            p.drawString(380, 249,f'{content.addfaculty5}' )
+                                        else:
+                                            sig1trig = content.addsignature5
+                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                            p.drawString(380, 249,f'{content.addfaculty5}' )
+                                            p.drawImage(im,500, 249, height = 15, width = 80 , mask='auto')
+            
+                                            p.setFont("Helvetica", 7)
+                                            addsub6 = content.addsubject6
+                                            if len(addsub6) == 0:
+                                                p.drawString(33, 235, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                            else:
+                                                p.drawString(33, 235, f'{content.addsubject6}')
+                                                p.setFont("Helvetica", 7)
+                                                p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_endtime1_6}')
+                                                p.drawString(279, 235, f'{content.addroom6}')
+                                                p.drawString(323, 235, f'{content.addday1_6}')
+                                                addsig6 = content.addsignature6
+                                                faculty = content.addfaculty6
+                                                fac = user_table.objects.get(full_name = faculty)
+                                                stat = fac.uploaded_signature
+                                                if addsig6 == "NO_APPROVED":
+                                                    p.drawString(380, 235, 'Unapproved')
+                                                elif stat == "DECLINE":
+                                                    p.drawString(380, 235,f'{content.addfaculty6}' )
+                                                else:
+                                                    sig1trig = content.addsignature6
+                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                    p.drawString(380, 235,f'{content.addfaculty6}' )
+                                                    p.drawImage(im,500, 235, height = 15, width = 80 , mask='auto')
+                                                    
             
             
-    p.setFont("Helvetica", 10)
-    addsub6 = content.addsubject6
-    if len(addsub6) == 0:
-        p.drawString(33, 235, ' ')
-        p.drawString(204, 235,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,235, ' ')
-        p.drawString(323, 235, ' ')
-        p.drawString(380, 235, ' ')
-        
-    else:
-        p.drawString(33, 235, f'{content.addsubject6}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_endtime1_6}')
-        p.drawString(279, 235, f'{content.addroom6}')
-        p.drawString(323, 235, f'{content.addday1_6}')
-        addsig6 = content.addsignature6
-        if addsig6 == "1_sig":
-            p.drawString(380, 235, 'Unapproved')
-        else:
-            p.drawString(380, 235, f'{content.addsignature6}')
+                                                    p.setFont("Helvetica", 7)
+                                                    addsub7 = content.addsubject7
+                                                    if len(addsub7) == 0:
+                                                        p.drawString(33, 220, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                    else:
+                                                        p.drawString(33, 220, f'{content.addsubject7}')
+                                                        p.setFont("Helvetica", 7)
+                                                        p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_endtime1_7}')
+                                                        p.drawString(279, 220, f'{content.addroom7}')
+                                                        p.drawString(323, 220, f'{content.addday1_7}')
+                                                        addsig7 = content.addsignature7
+                                                        faculty = content.addfaculty7
+                                                        fac = user_table.objects.get(full_name = faculty)
+                                                        stat = fac.uploaded_signature
+                                                        if addsig7 == "NO_APPROVED":
+                                                            p.drawString(380, 220, 'Unapproved')
+                                                        elif stat == "DECLINE":
+                                                            p.drawString(380, 220,f'{content.addfaculty7}' )
+                                                        else:
+                                                            sig1trig = content.addsignature7
+                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                            p.drawString(380, 220,f'{content.addfaculty7}' )
+                                                            p.drawImage(im,500, 220, height = 15, width = 80 , mask='auto')
             
             
-    p.setFont("Helvetica", 10)
-    addsub7 = content.addsubject7
-    if len(addsub7) == 0:
-        p.drawString(33, 220, ' ')
-        p.drawString(204, 220,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,220, ' ')
-        p.drawString(323, 220, ' ')
-        p.drawString(380, 220, ' ')
-    else:
-        p.drawString(33, 220, f'{content.addsubject7}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_endtime1_7}')
-        p.drawString(279, 220, f'{content.addroom7}')
-        p.drawString(323, 220, f'{content.addday1_7}')
-        addsig7 = content.addsignature7
-        if addsig7 == "1_sig":
-            p.drawString(380, 220, 'Unapproved')
-        else:
-            p.drawString(380, 220, f'{content.addsignature7}')
+                                                            p.setFont("Helvetica", 7)
+                                                            addsub8 = content.addsubject8
+                                                            if len(addsub8) == 0:
+                                                                p.drawString(33, 207, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                                
+                                                            else:
+                                                                p.drawString(33, 207, f'{content.addsubject8}')
+                                                                p.setFont("Helvetica", 7)
+                                                                p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_endtime1_8}')
+                                                                p.drawString(279, 207, f'{content.addroom8}')
+                                                                p.drawString(323, 207, f'{content.addday1_8}')
+                                                                addsig8 = content.addsignature8
+                                                                faculty = content.addfaculty8
+                                                                fac = user_table.objects.get(full_name = faculty)
+                                                                stat = fac.uploaded_signature
+                                                                if addsig8 == "NO_APPROVED":
+                                                                    p.drawString(380, 207, 'Unapproved')
+                                                                elif stat == "DECLINE":
+                                                                    p.drawString(380, 207,f'{content.addfaculty8}' )
+                                                                else:
+                                                                    sig1trig = content.addsignature8
+                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                                    p.drawString(380, 207,f'{content.addfaculty8}' )
+                                                                    p.drawImage(im,500, 207, height = 15, width = 80 , mask='auto')
+                                                                    
+            
+                                                                    p.setFont("Helvetica", 7)
+                                                                    addsub9 = content.addsubject9
+                                                                    if len(addsub9) == 0:
+                                                                        p.drawString(33,193, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                                        
+                                                                    else:
+                                                                        p.drawString(33, 193, f'{content.addsubject9}')
+                                                                        p.setFont("Helvetica", 7)
+                                                                        p.drawString(204,193, f'{content.add_starttime1_9} - {content.add_endtime1_9}')
+                                                                        p.drawString(279,193, f'{content.addroom9}')
+                                                                        p.drawString(323,193, f'{content.addday1_9}')
+                                                                        addsig9 = content.addsignature9
+                                                                        faculty = content.addfaculty9
+                                                                        fac = user_table.objects.get(full_name = faculty)
+                                                                        stat = fac.uploaded_signature
+                                                                        if addsig9 == "NO_APPROVED":
+                                                                            p.drawString(380,193, 'Unapproved')
+                                                                        elif stat == "DECLINE":
+                                                                            p.drawString(380, 193,f'{content.addfaculty9}' )
+                                                                        else:
+                                                                            sig1trig = content.addsignature9
+                                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                                            p.drawString(380, 193,f'{content.addfaculty9}' )
+                                                                            p.drawImage(im,500, 193, height = 15, width = 80 , mask='auto')
             
             
-            
-    p.setFont("Helvetica", 10)
-    addsub8 = content.addsubject8
-    if len(addsub8) == 0:
-        p.drawString(33, 207, ' ')
-        p.drawString(204, 207,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,207, ' ')
-        p.drawString(323, 207, ' ')
-        p.drawString(380, 207, ' ')
-        
-    else:
-        p.drawString(33, 207, f'{content.addsubject8}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_endtime1_8}')
-        p.drawString(279, 207, f'{content.addroom8}')
-        p.drawString(323, 207, f'{content.addday1_8}')
-        addsig8 = content.addsignature8
-        if addsig8 == "1_sig":
-            p.drawString(380, 207, 'Unapproved')
-        else:
-            p.drawString(380, 207, f'{content.addsignature8}')
-            
-            
-    p.setFont("Helvetica", 10)
-    addsub9 = content.addsubject9
-    if len(addsub9) == 0:
-        p.drawString(33,193, ' ')
-        p.drawString(204,193,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279,193, ' ')
-        p.drawString(323,193, ' ')
-        p.drawString(380,193, ' ')
-        
-    else:
-        p.drawString(33, 193, f'{content.addsubject9}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204,193, f'{content.add_starttime1_9} - {content.add_endtime1_9}')
-        p.drawString(279,193, f'{content.addroom9}')
-        p.drawString(323,193, f'{content.addday1_9}')
-        addsig9 = content.addsignature9
-        if addsig9 == "1_sig":
-            p.drawString(380,193, 'Unapproved')
-        else:
-            p.drawString(380,193, f'{content.addsignature9}')
-            
-            
-    p.setFont("Helvetica", 10)
-    addsub10 = content.addsubject10
-    if len(addsub10) == 0:
-        p.drawString(33, 180, ' ')
-        p.drawString(204, 180,' ')
-        
-        p.setFont("Helvetica", 8)
-        p.drawString(279, 180, ' ')
-        p.drawString(323, 180, ' ')
-        p.drawString(380, 180, ' ')
-        
-    else:
-        p.drawString(33, 180, f'{content.addsubject10}')
-        p.setFont("Helvetica", 8)
-        p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_endtime1_10}')
-        p.drawString(279, 180, f'{content.addroom10}')
-        p.drawString(323, 180, f'{content.addday1_10}')
-        addsig10 = content.addsignature10
-        if addsig10 == "1_sig":
-            p.drawString(380, 180, 'Unapproved')
-        else:
-            p.drawString(380, 180, f'{content.addsignature10}')
+                                                                            p.setFont("Helvetica", 7)
+                                                                            addsub10 = content.addsubject10
+                                                                            if len(addsub10) == 0:
+                                                                                p.drawString(33, 180, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+                                                                                
+                                                                            else:
+                                                                                p.drawString(33, 180, f'{content.addsubject10}')
+                                                                                p.setFont("Helvetica", 7)
+                                                                                p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_endtime1_10}')
+                                                                                p.drawString(279, 180, f'{content.addroom10}')
+                                                                                p.drawString(323, 180, f'{content.addday1_10}')
+                                                                                addsig10 = content.addsignature10
+                                                                                faculty = content.addfaculty10
+                                                                                fac = user_table.objects.get(full_name = faculty)
+                                                                                stat = fac.uploaded_signature
+                                                                                if addsig10 == "NO_APPROVED":
+                                                                                    p.drawString(380, 180, 'Unapproved')
+                                                                                elif stat == "DECLINE":
+                                                                                    p.drawString(380, 180,f'{content.addfaculty10}' )
+                                                                                else:
+                                                                                    sig1trig = content.addsignature10
+                                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+                                                                                    p.drawString(380, 180,f'{content.addfaculty10}' )
+                                                                                    p.drawImage(im,500, 180, height = 15, width = 80 , mask='auto')
 
-
-    p.setFont("Helvetica", 10)
+    p.setFont("Helvetica", 7)
     p.drawString(235, 151, f'{content.unenrolled_application_deadline}')
     p.drawString(195, 73, f'{content.trainP_startdate}')
     p.drawString(390, 73, f'{content.trainP_enddate}')
-    p.drawString(258, 58, f'{content.instructor_name}')
+    
+    sitsig = content.sitsignature
+    ins = content.instructor_name
+    fac = user_table.objects.get(full_name = ins)
+    stat = fac.uploaded_signature
+    if sitsig == "NO_APPROVED":
+        p.drawString(258, 58, 'Unapproved')
+    elif stat == "DECLINE":
+        p.drawString(258, 58,f'{content.instructor_name}' )
+    else:
+        sig1trig = content.sitsignature
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+        p.drawString(258, 58,f'{content.instructor_name}' )
+        p.drawImage(im,258, 58, height = 15, width = 80 , mask='auto')
+    
 
     for line in lines:
         textob.textLine(line)
@@ -739,9 +794,8 @@ def graduation_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
-
 
 
 def clearance_print(request, id):
@@ -1485,6 +1539,7 @@ def student_dashboard(request):
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
         check_clearance = clearance_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
         check_graduation = graduation_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
+        check_apply_graduation = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
         
         # document checker
         display =[]
@@ -1504,18 +1559,34 @@ def student_dashboard(request):
                     pass
         else:
             pass
-                  
-        if not check_clearance:
-            display.append("CLEARANCE")
-        else:
-            if check_clearance[0] != 'APPROVED':
-                display.append("CLEARANCE (ON PROGRESS)")
+        
+        if request.user.user_type == "ALUMNUS":
+            pass
+        elif request.user.user_type == "OLD STUDENT":
+            pass
+        else: 
+            if not check_clearance:
+                display.append("CLEARANCE")
+            else:
+                for i in check_clearance:
+                    if i == "APPROVED":
+                        pass
+                    else:
+                        display.append("CLEARANCE (ON PROCESS)")
+            
+            if check_apply_graduation:
+                if check_apply_graduation[0] != "APPROVED":
+                    display.append("CLEARANCE OF APPLICATION FOR GRADUATION (ON PROCESS)")
+                else:
+                    pass
+            else:
+                pass
                 
         if not check_graduation:
             pass
         else:
             if check_graduation[0] != 'APPROVED':
-                print('Clearance Pending')
+               
                 display.append("GRADUATION (ON PROGRESS)")
   
     else:
@@ -1530,7 +1601,7 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
+    if request.user.is_authenticated and request.user.user_type == "STUDENT":
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today() 
         id_num = request.user.id_number
@@ -1538,6 +1609,8 @@ def clearance_form(request):
         current_year ='"'+str(todays_date.year) +'"'
         temp =int(current_year[2:5])  
         with_graduation = temp - sliced_id
+        fullname = request.user.full_name
+        print(with_graduation)
         
         user = request.user.user_type
         if request.method == "POST":
@@ -1576,13 +1649,284 @@ def clearance_form(request):
             form.save()
             
             return redirect('student_dashboard')
+        else:
+            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            application_graduation = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
+            check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
+            
+            if request_clearance:
+                print("hey5")
+                if application_graduation[0] !="Application for Graduation":
+                    if request_clearance[0] =="APPROVED":
+                        allow_request = request_clearance[0]
+                        if check_apply_graduation:
+                            graduation_allow = check_apply_graduation[0]
+                        else:
+                            graduation_allow = ""
+                    else:
+                        allow_request = "UNAPPROVED"
+                        if check_apply_graduation:
+                            if check_apply_graduation[0] == "APPROVED":
+                                graduation_allow = check_apply_graduation[0]
+                                print("done")
+                            else:
+                                graduation_allow = check_apply_graduation[0]
+                                print('disable clear for grad')
+                        else:
+                            graduation_allow = ""
+                else:
+                    allow_request =""
+                    if check_apply_graduation[0] == "APPROVED":
+                        graduation_allow = check_apply_graduation[0]
+                        print("done")
+                    else:
+                        graduation_allow = check_apply_graduation[0]
+                        print('disable clear for grad')
+            else:
+                allow_request = ""
+                graduation_allow = ""
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow})
 
+def clearance_view(request):
+    fullname = request.user.full_name
+    check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
+    id_application_for_grad = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('id', flat=True).distinct()
+    clearance_for_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values()
+    
+    if id_application_for_grad:
+        id = id_application_for_grad[0]
+    else:
+        pass
+    
+    if check_apply_graduation:
+        #Signature Display
+        #ACCOUNTANT
+        check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            accountant = "UNAPPROVED"
+            accountant_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
+            acc_sig = str(faculty_approved[0])
+            fac_name_get = acc_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            account_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            accountant = account_sig[0]
+            accountant_name = str_fac_name
+            
+        #COURSE ADVISER
+        check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            course_adviser = "UNAPPROVED"
+            adviser_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
+            adviser_sig = str(faculty_approved[0])
+            fac_name_get = adviser_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            course_adviser = ca_sig[0]
+            adviser_name = str_fac_name
+        
+        #LIBERAL ARTS
+        check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            liberal_arts = "UNAPPROVED"
+            liberal_artsName = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
+            lib_sig = str(faculty_approved[0])
+            fac_name_get = lib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            liberal_arts = libart_sig[0]
+            liberal_artsName = str_fac_name
+        
+        #CAMPUS LIBRARIAN
+        check_status = clearance_form_table.objects.filter(id=id,library_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            campus_library = "UNAPPROVED"
+            librarian_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
+            camlib_sig = str(faculty_approved[0])
+            fac_name_get = camlib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            campus_library = cam_lib_sig[0]
+            librarian_name = str_fac_name
+        
+        #MATH & SCIENCES
+        check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            math_and_science = "UNAPPROVED"
+            math_and_science_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
+            mas_sig = str(faculty_approved[0])
+            fac_name_get = mas_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            math_and_science = mathsci_sig[0]
+            math_and_science_name = str_fac_name
+            
+        #GUIDANCE COUNCELOR
+        check_status = clearance_form_table.objects.filter(id=id,guidance_office_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            guidance = "UNAPPROVED"
+            guidance_councelor = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('guidance_office_signature', flat=True).distinct()
+            guid_sig = str(faculty_approved[0])
+            fac_name_get = guid_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            guidance = gui_sig[0]
+            guidance_councelor = str_fac_name
+        
+        #DPECS
+        check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            dpecs = "UNAPPROVED"
+            dpecs_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
+            pe_sig = str(faculty_approved[0])
+            fac_name_get = pe_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            dpecs = pe_dept_sig[0]
+            dpecs_name = str_fac_name
+        
+        #OSA
+        check_status = clearance_form_table.objects.filter(id=id,osa_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            osa = "UNAPPROVED"
+            osa_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('osa_signature', flat=True).distinct()
+            student_osa_sig = str(faculty_approved[0])
+            fac_name_get = student_osa_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            student_affairs_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            osa = student_affairs_sig[0]
+            osa_name = str_fac_name
+        
+        #ADAA
+        check_status = clearance_form_table.objects.filter(id=id,academic_affairs_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            adaa = "UNAPPROVED"
+            adaa_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('academic_affairs_signature', flat=True).distinct()
+            asst_dir_acad_sig = str(faculty_approved[0])
+            fac_name_get = asst_dir_acad_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            adaa = adaa_sig[0]
+            adaa_name = str_fac_name
+        
+        #INDUSTRIAL
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            industrial = "UNAPPROVED"
+            it_department = "NONE"
+            it_name = " "
+        else:
+            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                ieduc = str(faculty_approved[0])
+                fac_name_get = ieduc.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = ieduc_sig[0]
+                it_department = "EDUCATOR"
+                it_name = str_fac_name
+            
+            if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                it = str(faculty_approved[0])
+                fac_name_get = it.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = it_dept_sig[0]
+                it_department = "TECHNOLOGIES"
+                it_name = str_fac_name
+                
+            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                eng = str(faculty_approved[0])
+                fac_name_get = eng.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = eng_dept_sig[0]
+                it_department = "ENGINEERS"
+                it_name = str_fac_name
+        
+        context ={
+            'clearance' : clearance_for_graduation,
+            'accountant': accountant,
+            'liberal_arts': liberal_arts,
+            'math_and_science': math_and_science,
+            'dpecs' : dpecs,
+            'industrial': industrial,
+            'it_department' : it_department,
+            'course_adviser' : course_adviser,
+            'campus_library' : campus_library,
+            'guidance' : guidance,
+            'osa' : osa,
+            'adaa' : adaa,
+            'accountant_name' : accountant_name,
+            'adviser_name' : adviser_name,
+            'liberal_artsName' : liberal_artsName,
+            'librarian_name' : librarian_name,
+            'math_and_science_name' : math_and_science_name,
+            'guidance_councelor' : guidance_councelor,
+            'dpecs_name' : dpecs_name,
+            'osa_name' : osa_name,
+            'adaa_name' : adaa_name,
+            'it_name' : it_name,
+                
+            }
+        return render(request, 'html_files/clearance_form_display.html',context)
+    else:
+        return redirect(clearance_form)
 
 @login_required(login_url='/')
 def graduation_form(request):
@@ -1951,6 +2295,7 @@ def alumnus_dashboard(request):
 
         st = graduation_form_table.objects.filter(student_id=student_id)
         st1 = clearance_form_table.objects.filter(student_id=student_id)
+    
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -3502,30 +3847,14 @@ def update_graduation(request, id, sig):
 @login_required(login_url='/')
 def registrar_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
-        # CLEARANCE FORMS
-        all = clearance_form_table.objects.all()
-        cBSCE = clearance_form_table.objects.filter(
-            course="BSCE").values().count()
-        cBSEE = clearance_form_table.objects.filter(
-            course="BSEE").values().count()
-        cBSME = clearance_form_table.objects.filter(
-            course="BSME").values().count()
-        cBSIE_ICT = clearance_form_table.objects.filter(
-            course="BSIE-ICT").values().count()
-        cBSIE_HE = clearance_form_table.objects.filter(
-            course="BSIE-HE").values().count()
-        cBTTE_CP = clearance_form_table.objects.filter(
-            course="BTTE-CP").values().count()
-        cBTTE_EI = clearance_form_table.objects.filter(
-            course="BTTE-EI").values().count()
-        cBTTE_AU = clearance_form_table.objects.filter(
-            course="BTTE-AU").values().count()
-        cBTTE_HVACT = clearance_form_table.objects.filter(
-            course="BTTE-HVACT").values().count()
-        cBTTE_E = clearance_form_table.objects.filter(
-            course="BTTE-E").values().count()
-        cBGT_AT = clearance_form_table.objects.filter(
-            course="BGT-AT").values().count()
+        # CLEARANCE FORMS 
+        all = clearance_form_table.objects.all() 
+        cBSIE_ICT = clearance_form_table.objects.filter( 
+            course="BSIE-ICT").values().count() 
+        cBSIE_IA = clearance_form_table.objects.filter(
+            course="BSIE-IA").values().count()
+        cBGT_ART = clearance_form_table.objects.filter(
+            course="BGT-ART").values().count()
         cBET_CT = clearance_form_table.objects.filter(
             course="BET-CT").values().count()
         cBET_ET = clearance_form_table.objects.filter(
@@ -3538,8 +3867,44 @@ def registrar_dashboard(request):
             course="BET-MT").values().count()
         cBET_PPT = clearance_form_table.objects.filter(
             course="BET-PPT").values().count()
-        cBET_AT = clearance_form_table.objects.filter(
-            course="BET-AT").values().count()
+        cBT_CET = clearance_form_table.objects.filter(
+            course="BT-CET").values().count()
+        cBT_CoET = clearance_form_table.objects.filter(
+            course="BT-CoET").values().count()
+        cBT_EET = clearance_form_table.objects.filter(
+            course="BT-EET").values().count()
+        cBT_EsET = clearance_form_table.objects.filter(
+            course="BT-EsET").values().count()
+        cBT_MPET = clearance_form_table.objects.filter(
+            course="BT-MPET").values().count()
+        cBT_PPET = clearance_form_table.objects.filter(
+            course="BT-PPET").values().count()
+        c_MPET = clearance_form_table.objects.filter(
+            course="MPET").values().count()
+        c_PPET = clearance_form_table.objects.filter(
+            course="PPET").values().count()
+        cBSIE_AET = clearance_form_table.objects.filter(
+            course="BSIE-AET").values().count()
+        cBSIE_MPET = clearance_form_table.objects.filter(
+            course="BSIE-MPET").values().count()
+        cBTTE_ART = clearance_form_table.objects.filter(
+            course="BTTE-ART").values().count()
+        cBTTE_AET = clearance_form_table.objects.filter(
+            course="BTTE-AET").values().count()
+        cBTTE_CET = clearance_form_table.objects.filter(
+            course="BTTE-CET").values().count()
+        cBTTE_CoET = clearance_form_table.objects.filter(
+            course="BTTE-CoET").values().count()
+        cBTTE_EET = clearance_form_table.objects.filter(
+            course="BTTE-EET").values().count()
+        cBTTE_EsET = clearance_form_table.objects.filter(
+            course="BTTE-EsET").values().count()
+        cBTTE_MPET = clearance_form_table.objects.filter(
+            course="BTTE-MPET").values().count()
+        cBTTE_PPET = clearance_form_table.objects.filter(
+            course="BTTE-PPET").values().count()
+      
+       
         
         unapproved_forms_count = clearance_form_table.objects.filter(approval_status="APPROVED").count()
         clearance_count = all.count() - unapproved_forms_count
@@ -3550,28 +3915,12 @@ def registrar_dashboard(request):
         
 
         # GRADUATION FORMS
-        gBSCE = graduation_form_table.objects.filter(
-            course="BSCE").values().count()
-        gBSEE = graduation_form_table.objects.filter(
-            course="BSEE").values().count()
-        gBSME = graduation_form_table.objects.filter(
-            course="BSME").values().count()
         gBSIE_ICT = graduation_form_table.objects.filter(
             course="BSIE-ICT").values().count()
-        gBSIE_HE = graduation_form_table.objects.filter(
-            course="BSIE-HE").values().count()
-        gBTTE_CP = graduation_form_table.objects.filter(
-            course="BTTE-CP").values().count()
-        gBTTE_EI = graduation_form_table.objects.filter(
-            course="BTTE-EI").values().count()
-        gBTTE_AU = graduation_form_table.objects.filter(
-            course="BTTE-AU").values().count()
-        gBTTE_HVACT = graduation_form_table.objects.filter(
-            course="BTTE-HVACT").values().count()
-        gBTTE_E = graduation_form_table.objects.filter(
-            course="BTTE-E").values().count()
-        gBGT_AT = graduation_form_table.objects.filter(
-            course="BGT-AT").values().count()
+        gBSIE_IA = graduation_form_table.objects.filter(
+            course="BSIE-IA").values().count()
+        gBGT_ART = graduation_form_table.objects.filter(
+            course="BGT-ART").values().count()
         gBET_CT = graduation_form_table.objects.filter(
             course="BET-CT").values().count()
         gBET_ET = graduation_form_table.objects.filter(
@@ -3584,9 +3933,45 @@ def registrar_dashboard(request):
             course="BET-MT").values().count()
         gBET_PPT = graduation_form_table.objects.filter(
             course="BET-PPT").values().count()
-        gBET_AT = graduation_form_table.objects.filter(
-            course="BET-AT").values().count()
-        
+        gBT_CET = graduation_form_table.objects.filter(
+            course="BT-CET").values().count()
+        gBT_CoET = graduation_form_table.objects.filter(
+            course="BT-CoET").values().count()
+        gBT_EET = graduation_form_table.objects.filter(
+            course="BT-EET").values().count()
+        gBT_EsET = graduation_form_table.objects.filter(
+            course="BT-EsET").values().count()
+        gBT_MPET = graduation_form_table.objects.filter(
+            course="BT-MPET").values().count()
+        gBT_PPET = graduation_form_table.objects.filter(
+            course="BT-PPET").values().count()
+        g_MPET = graduation_form_table.objects.filter(
+            course="MPET").values().count()
+        g_PPET = graduation_form_table.objects.filter(
+            course="PPET").values().count()
+        gBSIE_AET = graduation_form_table.objects.filter(
+            course="BSIE-AET").values().count()
+        gBSIE_MPET = graduation_form_table.objects.filter(
+            course="BSIE-MPET").values().count()
+        gBTTE_ART = graduation_form_table.objects.filter(
+            course="BTTE-ART").values().count()
+        gBTTE_AET = graduation_form_table.objects.filter(
+            course="BTTE-AET").values().count()
+        gBTTE_CET = graduation_form_table.objects.filter(
+            course="BTTE-CET").values().count()
+        gBTTE_CoET = graduation_form_table.objects.filter(
+            course="BTTE-CoET").values().count()
+        gBTTE_EET = graduation_form_table.objects.filter(
+            course="BTTE-EET").values().count()
+        gBTTE_EsET = graduation_form_table.objects.filter(
+            course="BTTE-EsET").values().count()
+        gBTTE_MPET = graduation_form_table.objects.filter(
+            course="BTTE-MPET").values().count()
+        gBTTE_PPET = graduation_form_table.objects.filter(
+            course="BTTE-PPET").values().count()
+       
+
+       
         unapproved_forms_count2 = graduation_form_table.objects.filter(approval_status="APPROVED").count()
         graduation_count = graduation_form_table.objects.all().count() - unapproved_forms_count2
         if graduation_count == 0:
@@ -3606,19 +3991,22 @@ def registrar_dashboard(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     return render(request, 'html_files/7.1Registrar Dashboard.html',
-                  {'all': all, 'cBSCE': cBSCE, 'cBSEE': cBSEE, 'cBSME': cBSME, 'cBSIE_ICT': cBSIE_ICT,
-                   'cBSIE_HE': cBSIE_HE, 'cBTTE_CP': cBTTE_CP, 'cBTTE_EI': cBTTE_EI, 'cBTTE_AU': cBTTE_AU,
-                   'cBTTE_HVACT': cBTTE_HVACT, 'cBTTE_E': cBTTE_E, 'cBGT_AT': cBGT_AT, 'cBET_CT': cBET_CT,
+                  {'all': all, 'cBSIE_ICT': cBSIE_ICT, 'cBSIE_IA': cBSIE_IA, 'cBGT_ART': cBGT_ART, 'cBET_CT': cBET_CT,
                    'cBET_ET': cBET_ET, 'cBET_EsET': cBET_EsET, 'cBET_CoET': cBET_CoET, 'cBET_MT': cBET_MT,
-                   'cBET_PPT': cBET_PPT, 'cBET_AT': cBET_AT,
+                   'cBET_PPT': cBET_PPT, 'cBT_CET': cBT_CET, 'cBT_CoET': cBT_CoET, 'cBT_EET': cBT_EET,
+                   'cBT_EsET': cBT_EsET, 'cBT_MPET': cBT_MPET, 'cBT_PPET': cBT_PPET, 'c_MPET': c_MPET,
+                   'c_PPET': c_PPET, 'cBSIE_AET': cBSIE_AET,'cBSIE_MPET': cBSIE_MPET, 'cBTTE_ART': cBTTE_ART, 
+                   'cBTTE_AET': cBTTE_AET, 'cBTTE_CET': cBTTE_CET,'cBTTE_CoET': cBTTE_CoET, 'cBBTTE_EET': cBTTE_EET, 
+                   'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,
 
-                   'gBSCE': gBSCE, 'gBSEE': gBSEE, 'gBSME': gBSME, 'gBSIE_ICT': gBSIE_ICT,
-                   'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP, 'gBTTE_EI': gBTTE_EI, 'gBTTE_AU': gBTTE_AU,
-                   'gBTTE_HVACT': gBTTE_HVACT, 'gBTTE_E': gBTTE_E, 'gBGT_AT': gBGT_AT, 'gBET_CT': gBET_CT,
+                   'gBSIE_ICT': gBSIE_ICT, 'gBSIE_IA': gBSIE_IA, 'gBGT_ART': gBGT_ART, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
-                   'gBET_PPT': gBET_PPT, 'gBET_AT': gBET_AT,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
+                   'gBET_PPT': gBET_PPT, 'gBT_CET': gBT_CET, 'gBT_CoET': gBT_CoET, 'gBT_EET': gBT_EET,
+                   'gBT_EsET': gBT_EsET, 'gBT_MPET': gBT_MPET, 'gBT_PPET': gBT_PPET, 'g_MPET': g_MPET,
+                   'g_PPET': g_PPET, 'gBSIE_AET': gBSIE_AET,'gBSIE_MPET': gBSIE_MPET, 'gBTTE_ART': gBTTE_ART, 
+                   'gBTTE_AET': gBTTE_AET, 'gBTTE_CET': gBTTE_CET,'gBTTE_CoET': gBTTE_CoET, 'gBBTTE_EET': gBTTE_EET, 
+                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
-
 
 @login_required(login_url='/')
 def name_list(request):
@@ -4709,7 +5097,8 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
-
+        student_name = request.user.full_name
+        
         print(user)            
         if request.method == "POST":
             form = request_form
@@ -4737,8 +5126,51 @@ def request_form(request):
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
-            return redirect('student_dashboard')
-            
+
+            if user == "STUDENT":
+                if request == 'Honorable Dismissal':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                        
+                elif request == 'Transcript of Records':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request == 'Diploma':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Certification'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Others'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                else: 
+                    return redirect('student_dashboard')
+            else:
+                return redirect('student_dashboard')
+        else:
+            unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            if unapproved_request:
+                allow_request = unapproved_request[0]
+            else:
+                allow_request =""
+            context ={'allow' : allow_request}
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")

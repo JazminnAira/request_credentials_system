@@ -503,18 +503,20 @@ Adviser:
 
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
             <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
+            <input type ="text" id ="allow_apply" value ="{{allow}}" hidden>
+            <input type ="text" id ="apply_grad_determiner" value = "{{graduation_allow}}" hidden>
             <!--NAME BOX-->
             <div class="form-inline">
                 <label for="name_42" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_42" style="padding-right:100px;">Name:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
-                    <input type="text" id="ln_box_42" name="ln_box_420" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                        readonly required>
                     <input type="text" id="fn_box_42" name="fn_box_420" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}"
                         oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                         readonly  required>
                     <input type="text" id="mn_box_42" name="mn_box_420" class="form-control " placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}"
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                    <input type="text" id="ln_box_42" name="ln_box_420" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"
+                    oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                       readonly required>
                     <p id="name_error_42"></p>
                 </div>
             </div><br>
@@ -548,10 +550,22 @@ Adviser:
             <!--COURSE DROPDOWN BOX-->
             <div class="form-group row">
                 <label for="course_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_42">Course:<span id="asteris_42" style="color:red;">*</span></label>
+                {% if request.user.user_type == "STUDENT" %}
                 <div class="col-sm-9">
                     <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" oninput="enter_dait()" required>
                     <p id="admitdate_error_42"></p>
                 </div>
+                {% elif request.user.user_type == "ALUMNUS" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% elif request.user.user_type == "OLD STUDENT" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% endif %}
             </div>
             <br>
 
@@ -699,15 +713,15 @@ Adviser:
                     <label class="form-check-label" for="inlineCheckbox5_42">Diploma</label>
                 </div>
                 {% if with_graduation >= 4 %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
-                    <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
-                </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
+                        <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
+                    </div>
                 {% else %}
-                <div class="form-check form-check-inline" >
-                    <input class="form-check-input chk" disabled type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
-                    <label class="form-check-label" for="inlineCheckbox6_42" style="opacity: 0.6;">Application for Graduation</label>
-                </div>
+                    <div class="form-check form-check-inline" >
+                        <input class="form-check-input chk" disabled type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation">
+                        <label class="form-check-label" for="inlineCheckbox6_42" style="opacity: 0.6;">Application for Graduation</label>
+                    </div>
                 {% endif %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Certification_check_42" name="purpose_request_420" value="Certification">
@@ -1752,18 +1766,27 @@ Adviser:
 
     // SET ONE CHECKBOX TO CHOOSE ONLY
     $('input.chk').on('change', function() {
-    $('input.chk').not(this).prop('checked', false);  
-});
+        $('input.chk').not(this).prop('checked', false);  
+    });
 
-// RESET FORMS
-function reset_form(){
-    document.getElementById("clear_form").reset();
-}
+    // RESET FORMS
+    function reset_form(){
+        document.getElementById("clear_form").reset();
+    }
 
-// GET OTHERS PURPOSE INPUT
-function get_other_purpose(){
-    others= document.getElementById("others_box_42").value;
-    document.getElementById("Others_check_42").value = "Others:" + others;
-}
+    // GET OTHERS PURPOSE INPUT
+    function get_other_purpose(){
+        others= document.getElementById("others_box_42").value;
+        document.getElementById("Others_check_42").value = "Others: " + others;
+    }
+
+    if (document.getElementById('apply_grad_determiner').value == "0"){
+        document.getElementById('ApplicationforGraduation_check_42').disabled = true;
+    }else if (document.getElementById('apply_grad_determiner').value == "APPROVED"){
+        document.getElementById('ApplicationforGraduation_check_42').disabled = true;
+    }else{
+        document.getElementById('ApplicationforGraduation_check_42').disabled = false;
+    }
+
 
 </script>

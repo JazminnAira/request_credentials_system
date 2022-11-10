@@ -397,10 +397,8 @@ Adviser:
         cursor: pointer;
         margin-right: 20px;
         right: 0;
-        position:absolute;
+        position:fixed;
         border: none;
-        transform: rotate(-90deg);
-        transform-origin : top right;
     }
 
     @media screen and (max-height: 450px) {
@@ -590,7 +588,9 @@ Adviser:
 
     <!--MAIN--> 
     <h3 style="text-align:center; margin-top: 10px;" id="h3_title">List of Clearance Forms</h3>
-    <button type="button" class="btn btn-dark text-white btn-lg mr-5 pb-2" id="open_signature">View and Edit Signature</button>
+    <div >
+        <button type="button" class="btn btn-dark text-white btn-lg mr-5 pb-2" id="open_signature">View and Edit Signature</button>
+    </div>
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
         
@@ -644,7 +644,7 @@ Adviser:
         </form>
     </div>
 
-    <div class =" mr-3 table_list" id = "table_list">
+    <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_clearance_list" id="table_main">
             {% csrf_token %}
             <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">

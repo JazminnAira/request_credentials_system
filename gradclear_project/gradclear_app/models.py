@@ -13,25 +13,74 @@ class user_table(AbstractUser):
 
     courses = [
         ('', '--SELECT--'),
-        ('BSCE', 'Bachelor of Science in Civil Engineering'),
-        ('BSEE', 'Bachelor of Science in Electrical Engineering'),
-        ('BSME', 'Bachelor of Science in Mechanical Engineering'),
         ('BSIE-ICT', 'Bachelor of Science in Industrial Education major in Information and Communication Technology'),
-        ('BSIE-HE', 'Bachelor of Science in Industrial Education major in Home Economics'),
-        ('BTTE-CP', 'Bachelor of Technical Teachers Education major in Computer Programming'),
-        ('BTTE-EI', 'Bachelor of Technical Teachers Education major in Electronics'),
-        ('BTTE-AU', 'Bachelor of Technical Teachers Education major in Automotive'),
-        ('BTTE-HVACT', 'Bachelor of Technical Teachers Education major in Heatingg, Ventilation and Air Conditioning Tecnology'),
-        ('BTTE-E', 'Bachelor of Technical Teachers Education major in Electrical'),
-        ('BGT-AT', 'Bachelor of Engineering Technolgy major in Architecture Technology'),
+        ('BSIE-IA', 'Bachelor of Industrial Education major in Industrial Arts'),
+        ('BGT-ART', 'Bachelor in Graphics Technology major in Architecture Technology'),
         ('BET-CT', 'Bachelor of Engineering Technolgy major in Civil Engineering Technology'),
         ('BET-ET', 'Bachelor of Engineering Technolgy major in Electrical Engineering Technology'),
         ('BET-EsET', 'Bachelor of Engineering Technolgy major in Electronics Engineering Technology'),
         ('BET-CoET', 'Bachelor of Engineering Technolgy major in Computer Engineering Technology'),
         ('BET-MT', 'Bachelor of Engineering Technolgy major in Mechanical & Production Engineering Technology'),
         ('BET-PPT', 'Bachelor of Engineering Technolgy major in Power Plant Engineering Technology'),
-        ('BET-AT', 'Bachelor of Engineering Technolgy major in Automotive Engineering Technology'),
+        ('BT-CET', 'Bachelor of Technology major in  Civil Engineering Technology '),
+        ('BT-CoET', 'Bachelor of Technology major in  Computer Engineering Technology'),
+        ('BT-EET', 'Bachelor of Technology major in  Electrical Engineering Technology'),
+        ('BT-EsET', 'Bachelor of Technology major in  Electronics Engineering Technology'),
+        ('BT-MPET', 'Bachelor of Technology major in  Mechanical & Production Engineering Technology'),
+        ('BT-PPET', 'Bachelor of Technolgy major in Powerplant Engineering Technology'),
+        ('MPET', 'Mechanical & Production Engineering Technology'),
+        ('PPET', 'Powerplant Engineering Technology'),
+        ('BSIE-AET', 'Bachelor of Science in Industrial Education major in Automotive Engineering Technology'),
+        ('BSIE-MPET', 'Bachelor of Science in Industrial Education major in Mechanical & Production Engineering Technology'),
+        ('BTTE-ART', 'Bachelor of Technical Teacher Education major in Architecture Technology'),
+        ('BTTE-AET', 'Bachelor of Technical Teacher Education major in Automotive Engineering Technology'),
+        ('BTTE-CET', 'Bachelor of Technical Teacher Education major in Civil Engineering Technology'),
+        ('BTTE-CoET', 'Bachelor of Technical Teacher Education major in Computer Engineering Technology'),
+        ('BTTE-EET', 'Bachelor of Technical Teacher Education major in Electrical Engineering Technology'),
+        ('BTTE-EsET', 'Bachelor of Technical Teacher Education major in Electronics Engineering Technology'),
+        ('BTTE-MPET', 'Bachelor of Technical Teacher Education major in  Mechanical & Production Engineering Technology '),
+        ('BTTE-PPET', 'Bachelor of Technical Teacher Education major in  Powerplant Engineering Technology'),
+        ('BTTE-AET', 'Bachelor of Technical Teacher Education major in  Automotive Engineering Technology'),
+        ('BTTE-CET', 'Bachelor of Technical Teacher Education major in  Civil Engineering Technology'),    
     ]
+
+    graduates_courses = [
+        ('', '--SELECT--'),
+        ('BSIE', 'Bachelor of Science in Industrial Education '),
+        ('ART', 'Architecture Technology'),
+        ('AET', 'Automotive Engineering Technology'),
+        ('COET', 'Computer Engineering Technology'),
+        ('ESET', 'Electronics Engineering Technology'),
+        ('EET', 'Electrical Engineering Technology'),
+        ('CET', 'Civil Engineering Technology'),
+        ('MPET', 'Mechanical & Production Engineering Technology'),
+        ('PPET', 'Power Plant Engineering Technology'),
+        ('BTTE', 'Bachelor of Technical Teacher Education'),
+        ('AME', 'Associate Marine Engineering'),
+        ('AT', 'Automotive Technology'),
+        ('BSIE-ART', 'Bachelor of Science in Industrial Education  major in Architecture Technology'),
+        ('BSIE-AT', 'Bachelor of Science in Industrial Education  major in  Automotive Engineering Technology'),
+        ('BSIE-CET', 'Bachelor of Science in Industrial Education  major in  Civil Engineering Technology'),
+        ('BSIE-CT', 'Bachelor of Science in Industrial Education  major in  Civil Technology'),
+        ('BSIE-COET', 'Bachelor of Science in Industrial Education  major in Computer Engineering Technology'),
+        ('BSIE-DT', 'Bachelor of Science in Industrial Education  major in Drafting Engineering Technology'),
+        ('BSIE-EET', 'Bachelor of Science in Industrial Education  major in Electrical Engineering Technology'),
+        ('BSIE-ET', 'Bachelor of Science in Industrial Education major in Electrical Technology'),
+        ('BSIE-ESET', 'Bachelor of Science in Industrial Education major in Electronics Engineering Technology'),
+        ('BSIE-EST', 'Bachelor of Science in Industrial Education major in Electronics Technology'),
+        ('BSIE-MT', 'Bachelor of Science in Industrial Education major in Mechanical Engineering Technology'),
+        ('BSME', 'Bachelor of of Science in Marine Engineering'),
+        ('BTECH', 'Bachelor of Technology '),
+        ('CT', 'Civil Technology'),
+        ('ET', 'Electrical Technology'),
+        ('EST', 'Electronics Technology '),
+        ('ME', 'Marine Engineering Technology'),
+        ('MET', 'Mechanical Engineering Technology'),
+        ('MT', 'Mechanical Technology'),
+        ('PET', 'Power Engineering Technology'),
+        ('SME', 'Stationary Marine Engineering'),    
+    ]
+
 
     year = [
         ('', '--SELECT--'),
@@ -77,14 +126,14 @@ class user_table(AbstractUser):
         max_length=7, verbose_name="ID Number", validators=[MinLengthValidator(7)],  unique=True)
     course = models.CharField(
         max_length=100, choices=courses, null=True, blank=True)
+    course_graduated = models.CharField(
+        max_length=100, choices=graduates_courses, null=True, blank=True)
     department = models.CharField(
         max_length=100, choices=department, verbose_name="Department", null=True, blank=True)
     position = models.CharField(
         max_length=100, verbose_name="Position ", null=True, blank=True)
     designation = models.CharField(
         max_length=100, verbose_name="Designation ", null=True, blank=True)
-    course_graduated = models.CharField(
-        max_length=100, choices=courses, null=True, blank=True)
     year_graduated = models.CharField(
         max_length=100, verbose_name="Year Graduated", null=True, blank=True)
     year_and_section = models.CharField(
@@ -196,7 +245,7 @@ class graduation_form_table(models.Model):
     
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
-    course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
+    course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
     purpose_of_request = models.CharField(max_length=100, verbose_name="Purpose of Request",
                                         default="Graduation Form", null=True)
     approval_status = models.CharField(max_length=15,
@@ -210,145 +259,145 @@ class graduation_form_table(models.Model):
     enrolled_term = models.CharField(max_length=100, verbose_name="Enrolled Term", null=True, default="NONE")
     unenrolled_application_deadline = models.CharField(max_length=20,verbose_name="Deadline", null=True, default="NONE")
 
-    subject1 = models.CharField(max_length=100,verbose_name="Subject1", null=True, default="NONE")
-    room1 = models.CharField(max_length=100, verbose_name="Room1", null=True, default="NONE")
+    subject1 = models.CharField(max_length=100,verbose_name="Subject1", null=True, blank=True)
+    room1 = models.CharField(max_length=100, verbose_name="Room1", null=True, blank=True)
     faculty1 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_1 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_1 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_1 = models.CharField(max_length=100, verbose_name="Day1_1", null=True, default="NONE")
+    day1_1 = models.CharField(max_length=100, verbose_name="Day1_1", null=True, blank=True)
 
-    subject2 = models.CharField(max_length=100, verbose_name="Subject2", null=True, default="NONE")
-    room2 = models.CharField(max_length=100, verbose_name="Room2", null=True, default="NONE")
+    subject2 = models.CharField(max_length=100, verbose_name="Subject2", null=True, blank=True)
+    room2 = models.CharField(max_length=100, verbose_name="Room2", null=True, blank=True)
     faculty2 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_2 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_2 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_2 = models.CharField(max_length=100, verbose_name="Day1_2", null=True, default="NONE")
+    day1_2 = models.CharField(max_length=100, verbose_name="Day1_2", null=True, blank=True)
 
-    subject3 = models.CharField(max_length=100, verbose_name="Subject3", null=True, default="NONE")
-    room3 = models.CharField(max_length=100, verbose_name="Room3", null=True, default="NONE")
+    subject3 = models.CharField(max_length=100, verbose_name="Subject3", null=True, blank=True)
+    room3 = models.CharField(max_length=100, verbose_name="Room3", null=True, blank=True)
     faculty3 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_3 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_3 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_3 = models.CharField(max_length=100, verbose_name="Day1_3", null=True, default="NONE")
+    day1_3 = models.CharField(max_length=100, verbose_name="Day1_3", null=True, blank=True)
 
-    subject4 = models.CharField(max_length=100, verbose_name="Subject4", null=True, default="NONE")
-    room4 = models.CharField(max_length=100, verbose_name="Room4", null=True, default="NONE")
+    subject4 = models.CharField(max_length=100, verbose_name="Subject4", null=True, blank=True)
+    room4 = models.CharField(max_length=100, verbose_name="Room4", null=True, blank=True)
     faculty4 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_4 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_4 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_4 = models.CharField(max_length=100, verbose_name="Day1_4", null=True, default="NONE")
+    day1_4 = models.CharField(max_length=100, verbose_name="Day1_4", null=True, blank=True)
 
-    subject5 = models.CharField(max_length=100, verbose_name="Subject5", null=True, default="NONE")
-    room5 = models.CharField(max_length=100, verbose_name="Room5", null=True, default="NONE")
+    subject5 = models.CharField(max_length=100, verbose_name="Subject5", null=True, blank=True)
+    room5 = models.CharField(max_length=100, verbose_name="Room5", null=True, blank=True)
     faculty5 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_5 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_5 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_5 = models.CharField(max_length=100, verbose_name="Day1_5", null=True, default="NONE")
+    day1_5 = models.CharField(max_length=100, verbose_name="Day1_5", null=True, blank=True)
 
-    subject6 = models.CharField(max_length=100, verbose_name="Subject6", null=True, default="NONE")
-    room6 = models.CharField(max_length=100, verbose_name="Room6", null=True, default="NONE")
+    subject6 = models.CharField(max_length=100, verbose_name="Subject6", null=True, blank=True)
+    room6 = models.CharField(max_length=100, verbose_name="Room6", null=True, blank=True)
     faculty6 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_6 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_6 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_6 = models.CharField(max_length=100, verbose_name="Day1_6", null=True, default="NONE")
+    day1_6 = models.CharField(max_length=100, verbose_name="Day1_6", null=True, blank=True)
 
-    subject7 = models.CharField(max_length=100, verbose_name="Subject7", null=True, default="NONE")
-    room7 = models.CharField(max_length=100,verbose_name="Room7", null=True, default="NONE")
+    subject7 = models.CharField(max_length=100, verbose_name="Subject7", null=True, blank=True)
+    room7 = models.CharField(max_length=100,verbose_name="Room7", null=True, blank=True)
     faculty7 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_7 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_7 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_7 = models.CharField(max_length=100, verbose_name="Day1_7", null=True, default="NONE")
+    day1_7 = models.CharField(max_length=100, verbose_name="Day1_7", null=True, blank=True)
 
-    subject8 = models.CharField(max_length=100, verbose_name="Subject8", null=True, default="NONE")
-    room8 = models.CharField(max_length=100, verbose_name="Room8", null=True, default="NONE")
+    subject8 = models.CharField(max_length=100, verbose_name="Subject8", null=True, blank=True)
+    room8 = models.CharField(max_length=100, verbose_name="Room8", null=True, blank=True)
     faculty8  = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_8 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_8 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_8 = models.CharField(max_length=100, verbose_name="Day1_8", null=True, default="NONE")
+    day1_8 = models.CharField(max_length=100, verbose_name="Day1_8", null=True, blank=True)
 
-    subject9 = models.CharField(max_length=100, verbose_name="Subject9", null=True, default="NONE")
-    room9 = models.CharField(max_length=100, verbose_name="Room9", null=True, default="NONE")
+    subject9 = models.CharField(max_length=100, verbose_name="Subject9", null=True, blank=True)
+    room9 = models.CharField(max_length=100, verbose_name="Room9", null=True, blank=True)
     faculty9 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_9 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_9 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_9 = models.CharField(max_length=100, verbose_name="Day1_9", null=True, default="NONE")
+    day1_9 = models.CharField(max_length=100, verbose_name="Day1_9", null=True, blank=True)
 
-    subject10 = models.CharField(max_length=100, verbose_name="Subject10", null=True, default="NONE")
-    room10 = models.CharField(max_length=100, verbose_name="Room10", null=True, default="NONE")
+    subject10 = models.CharField(max_length=100, verbose_name="Subject10", null=True, blank=True)
+    room10 = models.CharField(max_length=100, verbose_name="Room10", null=True, blank=True)
     faculty10 = models.CharField(max_length=100, null=True, blank=True, choices=instructor)
     starttime1_10 = models.TimeField( null=True,  blank=True, default='00:00')
     endtime1_10 = models.TimeField( null=True, blank=True, default='00:00')
-    day1_10 = models.CharField(max_length=100, verbose_name="Day1_10", null=True, default="NONE")
+    day1_10 = models.CharField(max_length=100, verbose_name="Day1_10", null=True, blank=True)
 
-    addsubject1 = models.CharField(max_length=100, verbose_name="Add Subject1", null=True, default="NONE")
-    addroom1 = models.CharField(max_length=100,verbose_name="Add Room1", null=True, default="NONE")
+    addsubject1 = models.CharField(max_length=100, verbose_name="Add Subject1", null=True, blank=True)
+    addroom1 = models.CharField(max_length=100,verbose_name="Add Room1", null=True, blank=True)
     addfaculty1 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_1 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_1 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_1 = models.CharField(max_length=100, verbose_name="Add Day1_1", null=True, default="NONE")
+    addday1_1 = models.CharField(max_length=100, verbose_name="Add Day1_1", null=True, blank=True)
 
-    addsubject2 = models.CharField(max_length=100, verbose_name="Add Subject2", null=True, default="NONE")
-    addroom2 = models.CharField(max_length=100, verbose_name="Add Room2", null=True, default="NONE")
+    addsubject2 = models.CharField(max_length=100, verbose_name="Add Subject2", null=True, blank=True)
+    addroom2 = models.CharField(max_length=100, verbose_name="Add Room2", null=True, blank=True)
     addfaculty2 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_2 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_2 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_2 = models.CharField(max_length=100, verbose_name="Add Day1_2", null=True, default="NONE")
+    addday1_2 = models.CharField(max_length=100, verbose_name="Add Day1_2", null=True, blank=True)
 
-    addsubject3 = models.CharField(max_length=100, verbose_name="Add Subject3", null=True, default="NONE")
-    addroom3 = models.CharField(max_length=100, verbose_name="Add Room3", null=True, default="NONE")
+    addsubject3 = models.CharField(max_length=100, verbose_name="Add Subject3", null=True, blank=True)
+    addroom3 = models.CharField(max_length=100, verbose_name="Add Room3", null=True, blank=True)
     addfaculty3 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_3 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_3 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_3 = models.CharField(max_length=100, verbose_name="Add Day1_3", null=True, default="NONE")
+    addday1_3 = models.CharField(max_length=100, verbose_name="Add Day1_3", null=True, blank=True)
 
-    addsubject4 = models.CharField(max_length=100, verbose_name="Add Subject4", null=True, default="NONE")
-    addroom4 = models.CharField(max_length=100, verbose_name="Add Room4", null=True, default="NONE")
+    addsubject4 = models.CharField(max_length=100, verbose_name="Add Subject4", null=True, blank=True)
+    addroom4 = models.CharField(max_length=100, verbose_name="Add Room4", null=True, blank=True)
     addfaculty4 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_4 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_4 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_4 = models.CharField(max_length=100, verbose_name="Add Room1_4", null=True, default="NONE")
+    addday1_4 = models.CharField(max_length=100, verbose_name="Add Room1_4", null=True, blank=True)
 
-    addsubject5 = models.CharField(max_length=100, verbose_name="Add Subject5", null=True, default="NONE")
-    addroom5 = models.CharField(max_length=100, verbose_name="Add Room5", null=True, default="NONE")
+    addsubject5 = models.CharField(max_length=100, verbose_name="Add Subject5", null=True, blank=True)
+    addroom5 = models.CharField(max_length=100, verbose_name="Add Room5", null=True, blank=True)
     addfaculty5 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_5 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_5 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_5 = models.CharField(max_length=100,verbose_name="Add Day1_5", null=True, default="NONE")
+    addday1_5 = models.CharField(max_length=100,verbose_name="Add Day1_5", null=True, blank=True)
 
-    addsubject6 = models.CharField(max_length=100, verbose_name="Add Subject6", null=True, default="NONE")
-    addroom6 = models.CharField(max_length=100, verbose_name="Add Room6", null=True, default="NONE")
+    addsubject6 = models.CharField(max_length=100, verbose_name="Add Subject6", null=True, blank=True)
+    addroom6 = models.CharField(max_length=100, verbose_name="Add Room6", null=True, blank=True)
     addfaculty6 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_6 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_6 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_6 = models.CharField(max_length=100, verbose_name="Add Day1_6", null=True, default="NONE")
+    addday1_6 = models.CharField(max_length=100, verbose_name="Add Day1_6", null=True, blank=True)
 
-    addsubject7 = models.CharField(max_length=100, verbose_name="Add Subject7", null=True, default="NONE")
-    addroom7 = models.CharField(max_length=100, verbose_name="Add Room7", null=True, default="NONE")
+    addsubject7 = models.CharField(max_length=100, verbose_name="Add Subject7", null=True, blank=True)
+    addroom7 = models.CharField(max_length=100, verbose_name="Add Room7", null=True, blank=True)
     addfaculty7 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_7 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_7 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_7 = models.CharField(max_length=100, verbose_name="Add Day1_7", null=True, default="NONE")
+    addday1_7 = models.CharField(max_length=100, verbose_name="Add Day1_7", null=True, blank=True)
 
-    addsubject8 = models.CharField(max_length=100,verbose_name="Add Subject8", null=True, default="NONE")
-    addroom8 = models.CharField(max_length=100,verbose_name="Add Room8", null=True, default="NONE")
+    addsubject8 = models.CharField(max_length=100,verbose_name="Add Subject8", null=True, blank=True)
+    addroom8 = models.CharField(max_length=100,verbose_name="Add Room8", null=True, blank=True)
     addfaculty8 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_8 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_8 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_8 = models.CharField(max_length=100, verbose_name="Add Day1_8", null=True, default="NONE")
+    addday1_8 = models.CharField(max_length=100, verbose_name="Add Day1_8", null=True, blank=True)
 
-    addsubject9 = models.CharField(max_length=100, verbose_name="Add Subject9", null=True, default="NONE")
-    addroom9 = models.CharField(max_length=100, verbose_name="Add Room9", null=True, default="NONE")
+    addsubject9 = models.CharField(max_length=100, verbose_name="Add Subject9", null=True, blank=True)
+    addroom9 = models.CharField(max_length=100, verbose_name="Add Room9", null=True, blank=True)
     addfaculty9 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_9 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_9 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_9 = models.CharField(max_length=100, verbose_name="Add Day1_9", null=True, default="NONE")
+    addday1_9 = models.CharField(max_length=100, verbose_name="Add Day1_9", null=True, blank=True)
 
-    addsubject10 = models.CharField(max_length=100, verbose_name="Add Subject10", null=True, default="NONE")
-    addroom10 = models.CharField(max_length=100, verbose_name="Add Room10", null=True, default="NONE")
+    addsubject10 = models.CharField(max_length=100, verbose_name="Add Subject10", null=True, blank=True)
+    addroom10 = models.CharField(max_length=100, verbose_name="Add Room10", null=True, blank=True)
     addfaculty10 = models.CharField(max_length=100, null=True, blank=True, choices=add_instructor)
     add_starttime1_10 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_10 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_10 = models.CharField(max_length=100, verbose_name="Add Day1_10", null=True, default="NONE")
+    addday1_10 = models.CharField(max_length=100, verbose_name="Add Day1_10", null=True, blank=True)
     
     trainP_startdate = models.CharField(max_length=30,verbose_name="Start", null=True, default="NONE")
     trainP_enddate = models.CharField(max_length=30,verbose_name="End", null=True, default="NONE")
@@ -388,7 +437,7 @@ class request_form_table(models.Model):
     name = models.CharField(max_length=100, verbose_name="Student Name")
     name2 = models.CharField(max_length=100, verbose_name="2nd Format Student Name")
     address = models.CharField(max_length=100, verbose_name="Address")
-    course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
+    course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
     date = models.CharField(max_length=20, verbose_name="Date")
     control_number = models.CharField(max_length=50, verbose_name="Control Number",null=True,default="NONE")
     contact_number = models.CharField( max_length=13, verbose_name="Contact Number", validators=[MinLengthValidator(13)])

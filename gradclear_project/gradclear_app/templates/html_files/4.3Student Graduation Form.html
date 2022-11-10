@@ -616,14 +616,13 @@ Adviser:
                 <div class="form-inline">
                     <label for="name" class="my-1 mr-2" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
 
-                    <div>
-                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                            readonly required autofocus>
-                            
+                    <div>      
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required>
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" id="mn_box_43" class="form-control mr-3" placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly>
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                            readonly required autofocus>
 
                     </div>
                 </div><br>
@@ -635,29 +634,21 @@ Adviser:
                     <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
 
                     <div>
+                        {% if request.user.user_type == "STUDENT" %}
                         <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
                             <option value="1" selected>{{request.user.course}}</option>
-                            <option value="" hidden>--SELECT--</option>
-                            <option value="BSCE">BSCE</option>
-                            <option value="BSEE">BSEE</option>
-                            <option value="BSME">BSME</option>
-                            <option value="BSIE-ICT">BSIE-ICT</option>
-                            <option value="BSIE-HE">BSIE-HE</option>
-                            <option value="BTTE-CP">BTTE-CP</option>
-                            <option value="BTTE-EI">BTTE-EI</option>
-                            <option value="BTTE-AU">BTTE-AU</option>
-                            <option value="BTTE-HVAC">BTTE-HVAC</option>
-                            <option value="BTTE-E">BTTE-E</option>
-                            <option value="BGT-AT">BGT-AT</option>
-                            <option value="BET-CT">BET-CT</option>
-                            <option value="BET-ET">BET-ET</option>
-                            <option value="BET-EsET">BET-EsET</option>
-                            <option value="BET-CoET">BET-CoET</option>
-                            <option value="BET-MT">BET-MT</option>
-                            <option value="BET-PPT">BET-PPT</option>
-                            <option value="BET-AT">BET-AT</option>
                         </select>
 
+                        {% elif request.user.user_type == "ALUMNUS" %}
+                        <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
+                            <option value="1" selected>{{request.user.course_graduated}}</option>
+                        </select>
+
+                        {% elif request.user.user_type == "OLD STUDENT" %}
+                        <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
+                            <option value="1" selected>{{request.user.course_graduated}}</option>
+                        </select>
+                        {% endif %}
                     </div>
                 </div>
             </div>

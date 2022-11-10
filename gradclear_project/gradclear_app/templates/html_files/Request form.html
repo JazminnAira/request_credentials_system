@@ -117,11 +117,15 @@ Adviser:
         margin: 5px 10px 5px 0;
     }
     
-    #course_pre,
+    /* #course_pre,
     #receiptnum_box_pre,
     #ln_box_pre,
     #fn_box_pre,
     #mn_box_pre {
+        background-color: #e7dfe4;
+        border: 1px solid #ccc9c9;
+    } */
+    #receiptnum_box_pre{
         background-color: #e7dfe4;
         border: 1px solid #ccc9c9;
     }
@@ -472,7 +476,9 @@ Adviser:
 
 
 <body>
+    
     {% load static %}
+    {% include 'html_files/message.html'%}
 
     <!--PRINT AND HOME BUTTON-->
     <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
@@ -495,10 +501,11 @@ Adviser:
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_pre"></a>
 
-
+    
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
         <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
+        <input type="text" id ="allow_request" value ="{{allow}}" hidden>
         <form method="POST" action="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
@@ -513,24 +520,39 @@ Adviser:
             <div class="form-inline">
                 <label for="name_pre" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_pre" style="padding-right:100px;">Full Name:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div>
-                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
                     <input type="text" id="fn_box_pre" name="fn_box_pre" class="form-control " placeholder="First Name"  value="{{request.user.first_name}}"
                         oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
                     <input type="text" id="mn_box_pre" name="mn_box_pre" class="form-control " placeholder="Middle Name" value="{{request.user.middle_name}}"
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
+                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
                     <p id="name_error_pre"></p>
                 </div>
             </div><br>
 
             <!--COURSE DROPDOWN BOX-->
+            {% if request.user.user_type == "STUDENT" %}
             <div class="form-group row">
                 <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
                     <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
                 </div>
             </div>
-
+            {% elif request.user.user_type == "ALUMNUS" %}
+            <div class="form-group row">
+                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
+                </div>
+            </div>
+            {% elif request.user.user_type == "OLD STUDENT" %}
+            <div class="form-group row">
+                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
+                </div>
+            </div>
+            {% endif %}
             <!--DATE-->
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
@@ -565,15 +587,15 @@ Adviser:
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
             <div class="form-group row pl-3">
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
                     <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
@@ -890,6 +912,30 @@ Adviser:
         document.getElementById("others_box_pre").hidden =false;
         document.getElementById('certification_box').hidden =true;
     });
+
+    if (document.getElementById('allow_request').value == "UNAPPROVED"){
+        document.getElementById('HonorableDismissal_check_pre').disabled = true;
+        document.getElementById('authentication_verification').disabled = true;
+        document.getElementById('TranscriptofRecords_check_pre').disabled = true;
+        document.getElementById('subject_description').disabled = true;
+        document.getElementById('Diploma_check_pre').disabled = true;
+        document.getElementById('cav').disabled = true;
+        document.getElementById('Certification_check_pre').disabled = true;
+        document.getElementById('Others_check_pre').disabled = true;
+        document.getElementById("purpose").disabled = true;
+        document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
+    }else{
+        document.getElementById('HonorableDismissal_check_pre').disabled = false;
+        document.getElementById('authentication_verification').disabled = false;
+        document.getElementById('TranscriptofRecords_check_pre').disabled = false;
+        document.getElementById('subject_description').disabled = false;
+        document.getElementById('Diploma_check_pre').disabled = false;
+        document.getElementById('cav').disabled = false;
+        document.getElementById('Certification_check_pre').disabled = false;
+        document.getElementById('Others_check_pre').disabled = false;
+        document.getElementById("purpose").disabled = false;
+        document.getElementById("submit_btn_pre").textContent ="Submit";
+    }
 
 </script>
 

@@ -512,6 +512,14 @@ Adviser:
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
+            {% elif request.user.user_type == "ALUMNUS" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "OLD STUDENT" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
             {% elif request.user.user_type == "FACULTY" %}
             <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>

@@ -478,6 +478,21 @@ Adviser:
                                         {{form.year_graduated}}
                                         <p id="sys_error_01"></p>
                                     </div>
+                                
+                                {% elif user == "OLD STUDENT" %}
+                                    <!--COURSE GRADUATED DROPDOWN BOX-->
+                                    <div class="form-group" id="course_graduated_input">
+                                        <label for="course_graduated">Course Graduated:</label><label id="Scourse_graduated_aste01" style="color:red;">*</label>
+                                        {{form.course_graduated}}
+                                        <p id="sc_error_01"></p>
+                                    </div>
+                                    
+                                    <!--YEAR GRADUATED DROPDOWN BOX-->
+                                    <div class="form-group" id="y_graduated_input" >
+                                        <label for="year_graduated">Year Graduated:</label><label id="Syear_graduated_aste01" style="color:red;">*</label>
+                                        {{form.year_graduated}}
+                                        <p id="sys_error_01"></p>
+                                    </div>
 
                                 {% elif user == "FACULTY" %}
                                     <!--DEPARTMENT DROPDOWN BOX-->
