@@ -13,25 +13,74 @@ class user_table(AbstractUser):
 
     courses = [
         ('', '--SELECT--'),
-        ('BSCE', 'Bachelor of Science in Civil Engineering'),
-        ('BSEE', 'Bachelor of Science in Electrical Engineering'),
-        ('BSME', 'Bachelor of Science in Mechanical Engineering'),
         ('BSIE-ICT', 'Bachelor of Science in Industrial Education major in Information and Communication Technology'),
-        ('BSIE-HE', 'Bachelor of Science in Industrial Education major in Home Economics'),
-        ('BTTE-CP', 'Bachelor of Technical Teachers Education major in Computer Programming'),
-        ('BTTE-EI', 'Bachelor of Technical Teachers Education major in Electronics'),
-        ('BTTE-AU', 'Bachelor of Technical Teachers Education major in Automotive'),
-        ('BTTE-HVACT', 'Bachelor of Technical Teachers Education major in Heatingg, Ventilation and Air Conditioning Tecnology'),
-        ('BTTE-E', 'Bachelor of Technical Teachers Education major in Electrical'),
-        ('BGT-AT', 'Bachelor of Engineering Technolgy major in Architecture Technology'),
+        ('BSIE-IA', 'Bachelor of Industrial Education major in Industrial Arts'),
+        ('BGT-ART', 'Bachelor in Graphics Technology major in Architecture Technology'),
         ('BET-CT', 'Bachelor of Engineering Technolgy major in Civil Engineering Technology'),
         ('BET-ET', 'Bachelor of Engineering Technolgy major in Electrical Engineering Technology'),
         ('BET-EsET', 'Bachelor of Engineering Technolgy major in Electronics Engineering Technology'),
         ('BET-CoET', 'Bachelor of Engineering Technolgy major in Computer Engineering Technology'),
         ('BET-MT', 'Bachelor of Engineering Technolgy major in Mechanical & Production Engineering Technology'),
         ('BET-PPT', 'Bachelor of Engineering Technolgy major in Power Plant Engineering Technology'),
-        ('BET-AT', 'Bachelor of Engineering Technolgy major in Automotive Engineering Technology'),
+        ('BT-CET', 'Bachelor of Technology major in  Civil Engineering Technology '),
+        ('BT-CoET', 'Bachelor of Technology major in  Computer Engineering Technology'),
+        ('BT-EET', 'Bachelor of Technology major in  Electrical Engineering Technology'),
+        ('BT-EsET', 'Bachelor of Technology major in  Electronics Engineering Technology'),
+        ('BT-MPET', 'Bachelor of Technology major in  Mechanical & Production Engineering Technology'),
+        ('BT-PPET', 'Bachelor of Technolgy major in Powerplant Engineering Technology'),
+        ('MPET', 'Mechanical & Production Engineering Technology'),
+        ('PPET', 'Powerplant Engineering Technology'),
+        ('BSIE-AET', 'Bachelor of Science in Industrial Education major in Automotive Engineering Technology'),
+        ('BSIE-MPET', 'Bachelor of Science in Industrial Education major in Mechanical & Production Engineering Technology'),
+        ('BTTE-ART', 'Bachelor of Technical Teacher Education major in Architecture Technology'),
+        ('BTTE-AET', 'Bachelor of Technical Teacher Education major in Automotive Engineering Technology'),
+        ('BTTE-CET', 'Bachelor of Technical Teacher Education major in Civil Engineering Technology'),
+        ('BTTE-CoET', 'Bachelor of Technical Teacher Education major in Computer Engineering Technology'),
+        ('BTTE-EET', 'Bachelor of Technical Teacher Education major in Electrical Engineering Technology'),
+        ('BTTE-EsET', 'Bachelor of Technical Teacher Education major in Electronics Engineering Technology'),
+        ('BTTE-MPET', 'Bachelor of Technical Teacher Education major in  Mechanical & Production Engineering Technology '),
+        ('BTTE-PPET', 'Bachelor of Technical Teacher Education major in  Powerplant Engineering Technology'),
+        ('BTTE-AET', 'Bachelor of Technical Teacher Education major in  Automotive Engineering Technology'),
+        ('BTTE-CET', 'Bachelor of Technical Teacher Education major in  Civil Engineering Technology'),    
     ]
+
+    graduates_courses = [
+        ('', '--SELECT--'),
+        ('BSIE', 'Bachelor of Science in Industrial Education '),
+        ('ART', 'Architecture Technology'),
+        ('AET', 'Automotive Engineering Technology'),
+        ('COET', 'Computer Engineering Technology'),
+        ('ESET', 'Electronics Engineering Technology'),
+        ('EET', 'Electrical Engineering Technology'),
+        ('CET', 'Civil Engineering Technology'),
+        ('MPET', 'Mechanical & Production Engineering Technology'),
+        ('PPET', 'Power Plant Engineering Technology'),
+        ('BTTE', 'Bachelor of Technical Teacher Education'),
+        ('AME', 'Associate Marine Engineering'),
+        ('AT', 'Automotive Technology'),
+        ('BSIE-ART', 'Bachelor of Science in Industrial Education  major in Architecture Technology'),
+        ('BSIE-AT', 'Bachelor of Science in Industrial Education  major in  Automotive Engineering Technology'),
+        ('BSIE-CET', 'Bachelor of Science in Industrial Education  major in  Civil Engineering Technology'),
+        ('BSIE-CT', 'Bachelor of Science in Industrial Education  major in  Civil Technology'),
+        ('BSIE-COET', 'Bachelor of Science in Industrial Education  major in Computer Engineering Technology'),
+        ('BSIE-DT', 'Bachelor of Science in Industrial Education  major in Drafting Engineering Technology'),
+        ('BSIE-EET', 'Bachelor of Science in Industrial Education  major in Electrical Engineering Technology'),
+        ('BSIE-ET', 'Bachelor of Science in Industrial Education major in Electrical Technology'),
+        ('BSIE-ESET', 'Bachelor of Science in Industrial Education major in Electronics Engineering Technology'),
+        ('BSIE-EST', 'Bachelor of Science in Industrial Education major in Electronics Technology'),
+        ('BSIE-MT', 'Bachelor of Science in Industrial Education major in Mechanical Engineering Technology'),
+        ('BSME', 'Bachelor of of Science in Marine Engineering'),
+        ('BTECH', 'Bachelor of Technology '),
+        ('CT', 'Civil Technology'),
+        ('ET', 'Electrical Technology'),
+        ('EST', 'Electronics Technology '),
+        ('ME', 'Marine Engineering Technology'),
+        ('MET', 'Mechanical Engineering Technology'),
+        ('MT', 'Mechanical Technology'),
+        ('PET', 'Power Engineering Technology'),
+        ('SME', 'Stationary Marine Engineering'),    
+    ]
+
 
     year = [
         ('', '--SELECT--'),
@@ -77,14 +126,14 @@ class user_table(AbstractUser):
         max_length=7, verbose_name="ID Number", validators=[MinLengthValidator(7)],  unique=True)
     course = models.CharField(
         max_length=100, choices=courses, null=True, blank=True)
+    course_graduated = models.CharField(
+        max_length=100, choices=graduates_courses, null=True, blank=True)
     department = models.CharField(
         max_length=100, choices=department, verbose_name="Department", null=True, blank=True)
     position = models.CharField(
         max_length=100, verbose_name="Position ", null=True, blank=True)
     designation = models.CharField(
         max_length=100, verbose_name="Designation ", null=True, blank=True)
-    course_graduated = models.CharField(
-        max_length=100, choices=courses, null=True, blank=True)
     year_graduated = models.CharField(
         max_length=100, verbose_name="Year Graduated", null=True, blank=True)
     year_and_section = models.CharField(
