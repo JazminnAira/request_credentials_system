@@ -658,7 +658,6 @@ Adviser:
                         <th>ID Number</th>
                         <th>Purpose of Request</th>
                         <th>Date & Time Requested</th>
-                        <th>Appointment</th>
                         <th> </th>
                         <th id="department_th"></th>
                         <th id="course_adviser_th"></th>
@@ -685,7 +684,7 @@ Adviser:
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.appointment}}</td>
+                        
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
