@@ -17,7 +17,7 @@ urlpatterns = [
      path('clearance_form', views.clearance_form, name='clearance_form'),
      path('graduation_form', views.graduation_form, name='graduation_form'),
      path('request_form', views.request_form, name="request_form"),
-     path('alumnus_dashboard', views.alumnus_dashboard, name='alumnus_dashboard'),
+     # path('alumnus_dashboard', views.alumnus_dashboard, name='alumnus_dashboard'),
      path('faculty_dashboard', views.faculty_dashboard, name='faculty_dashboard'),
      path('faculty_dashboard_clearance_list', views.faculty_dashboard_clearance_list,
           name='faculty_dashboard_clearance_list'),

@@ -1501,18 +1501,26 @@ def student_dashboard(request):
                     pass
         else:
             pass
-                  
-        if not check_clearance:
-            display.append("CLEARANCE")
-        else:
-            if check_clearance[0] != 'APPROVED':
-                display.append("CLEARANCE (ON PROGRESS)")
+        
+        if request.user.user_type == "ALUMNUS":
+            pass
+        elif request.user.user_type == "OLD STUDENT":
+            pass
+        else: 
+            if not check_clearance:
+                display.append("CLEARANCE")
+            else:
+                for i in check_clearance:
+                    if i == "APPROVED":
+                        pass
+                    else:
+                        display.append("CLERANCE (ON PROCESS)")
                 
         if not check_graduation:
             pass
         else:
             if check_graduation[0] != 'APPROVED':
-                print('Clearance Pending')
+               
                 display.append("GRADUATION (ON PROGRESS)")
   
     else:
@@ -1527,7 +1535,7 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
+    if request.user.is_authenticated and request.user.user_type == "STUDENT":
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today() 
         id_num = request.user.id_number
@@ -1940,19 +1948,19 @@ def graduation_form(request):
 # alumnus not yet working
 
 
-@login_required(login_url='/')
-def alumnus_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-        username = request.user.username
-        print(username)
+# @login_required(login_url='/')
+# def alumnus_dashboard(request):
+#     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
+#         username = request.user.username
+#         print(username)
 
-        st = graduation_form_table.objects.filter(student_id=username)
-        st1 = clearance_form_table.objects.filter(student_id=username)
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
+#         st = graduation_form_table.objects.filter(student_id=username)
+#         st1 = clearance_form_table.objects.filter(student_id=username)
+#     else:
+#         messages.error(
+#             request, "You are trying to access an unauthorized page and is forced to logout.")
+#         return redirect('/')
+#     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
 
 
 # @login_required(login_url='/')
@@ -4675,7 +4683,8 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
-
+        student_name = request.user.full_name
+        
         print(user)            
         if request.method == "POST":
             form = request_form
@@ -4703,8 +4712,51 @@ def request_form(request):
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
-            return redirect('student_dashboard')
-            
+
+            if user == "STUDENT":
+                if request == 'Honorable Dismissal':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                        
+                elif request == 'Transcript of Records':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request == 'Diploma':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Certification'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Others'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                else: 
+                    return redirect('student_dashboard')
+            else:
+                return redirect('student_dashboard')
+        else:
+            unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            if unapproved_request:
+                allow_request = unapproved_request[0]
+            else:
+                allow_request =""
+            context ={'allow' : allow_request}
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
