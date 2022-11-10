@@ -476,7 +476,9 @@ Adviser:
 
 
 <body>
+    
     {% load static %}
+    {% include 'html_files/message.html'%}
 
     <!--PRINT AND HOME BUTTON-->
     <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
@@ -499,10 +501,11 @@ Adviser:
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_pre"></a>
 
-
+    
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
         <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
+        <input type="text" id ="allow_request" value ="{{allow}}" hidden>
         <form method="POST" action="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
@@ -909,6 +912,30 @@ Adviser:
         document.getElementById("others_box_pre").hidden =false;
         document.getElementById('certification_box').hidden =true;
     });
+
+    if (document.getElementById('allow_request').value == "UNAPPROVED"){
+        document.getElementById('HonorableDismissal_check_pre').disabled = true;
+        document.getElementById('authentication_verification').disabled = true;
+        document.getElementById('TranscriptofRecords_check_pre').disabled = true;
+        document.getElementById('subject_description').disabled = true;
+        document.getElementById('Diploma_check_pre').disabled = true;
+        document.getElementById('cav').disabled = true;
+        document.getElementById('Certification_check_pre').disabled = true;
+        document.getElementById('Others_check_pre').disabled = true;
+        document.getElementById("purpose").disabled = true;
+        document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
+    }else{
+        document.getElementById('HonorableDismissal_check_pre').disabled = false;
+        document.getElementById('authentication_verification').disabled = false;
+        document.getElementById('TranscriptofRecords_check_pre').disabled = false;
+        document.getElementById('subject_description').disabled = false;
+        document.getElementById('Diploma_check_pre').disabled = false;
+        document.getElementById('cav').disabled = false;
+        document.getElementById('Certification_check_pre').disabled = false;
+        document.getElementById('Others_check_pre').disabled = false;
+        document.getElementById("purpose").disabled = false;
+        document.getElementById("submit_btn_pre").textContent ="Submit";
+    }
 
 </script>
 

@@ -1482,6 +1482,7 @@ def student_dashboard(request):
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
         check_clearance = clearance_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
         check_graduation = graduation_form_table.objects.filter(student_id=username).values_list('approval_status',flat=True).distinct()
+        check_apply_graduation = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
         
         # document checker
         display =[]
@@ -1501,18 +1502,34 @@ def student_dashboard(request):
                     pass
         else:
             pass
-                  
-        if not check_clearance:
-            display.append("CLEARANCE")
-        else:
-            if check_clearance[0] != 'APPROVED':
-                display.append("CLEARANCE (ON PROGRESS)")
+        
+        if request.user.user_type == "ALUMNUS":
+            pass
+        elif request.user.user_type == "OLD STUDENT":
+            pass
+        else: 
+            if not check_clearance:
+                display.append("CLEARANCE")
+            else:
+                for i in check_clearance:
+                    if i == "APPROVED":
+                        pass
+                    else:
+                        display.append("CLEARANCE (ON PROCESS)")
+            
+            if check_apply_graduation:
+                if check_apply_graduation[0] != "APPROVED":
+                    display.append("CLEARANCE OF APPLICATION FOR GRADUATION (ON PROCESS)")
+                else:
+                    pass
+            else:
+                pass
                 
         if not check_graduation:
             pass
         else:
             if check_graduation[0] != 'APPROVED':
-                print('Clearance Pending')
+               
                 display.append("GRADUATION (ON PROGRESS)")
   
     else:
@@ -1527,7 +1544,7 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or 'ALUMNUS' or 'OLD STUDENT':
+    if request.user.is_authenticated and request.user.user_type == "STUDENT":
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today() 
         id_num = request.user.id_number
@@ -1535,6 +1552,8 @@ def clearance_form(request):
         current_year ='"'+str(todays_date.year) +'"'
         temp =int(current_year[2:5])  
         with_graduation = temp - sliced_id
+        fullname = request.user.full_name
+        print(with_graduation)
         
         user = request.user.user_type
         if request.method == "POST":
@@ -1573,13 +1592,284 @@ def clearance_form(request):
             form.save()
             
             return redirect('student_dashboard')
+        else:
+            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            application_graduation = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
+            check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
+            
+            if request_clearance:
+                print("hey5")
+                if application_graduation[0] !="Application for Graduation":
+                    if request_clearance[0] =="APPROVED":
+                        allow_request = request_clearance[0]
+                        if check_apply_graduation:
+                            graduation_allow = check_apply_graduation[0]
+                        else:
+                            graduation_allow = ""
+                    else:
+                        allow_request = "UNAPPROVED"
+                        if check_apply_graduation:
+                            if check_apply_graduation[0] == "APPROVED":
+                                graduation_allow = check_apply_graduation[0]
+                                print("done")
+                            else:
+                                graduation_allow = check_apply_graduation[0]
+                                print('disable clear for grad')
+                        else:
+                            graduation_allow = ""
+                else:
+                    allow_request =""
+                    if check_apply_graduation[0] == "APPROVED":
+                        graduation_allow = check_apply_graduation[0]
+                        print("done")
+                    else:
+                        graduation_allow = check_apply_graduation[0]
+                        print('disable clear for grad')
+            else:
+                allow_request = ""
+                graduation_allow = ""
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow})
 
+def clearance_view(request):
+    fullname = request.user.full_name
+    check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
+    id_application_for_grad = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('id', flat=True).distinct()
+    clearance_for_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values()
+    
+    if id_application_for_grad:
+        id = id_application_for_grad[0]
+    else:
+        pass
+    
+    if check_apply_graduation:
+        #Signature Display
+        #ACCOUNTANT
+        check_status = clearance_form_table.objects.filter(id=id,accountant_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            accountant = "UNAPPROVED"
+            accountant_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('accountant_signature', flat=True).distinct()
+            acc_sig = str(faculty_approved[0])
+            fac_name_get = acc_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            account_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            accountant = account_sig[0]
+            accountant_name = str_fac_name
+            
+        #COURSE ADVISER
+        check_status = clearance_form_table.objects.filter(id=id,course_adviser_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            course_adviser = "UNAPPROVED"
+            adviser_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('course_adviser_signature', flat=True).distinct()
+            adviser_sig = str(faculty_approved[0])
+            fac_name_get = adviser_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            course_adviser = ca_sig[0]
+            adviser_name = str_fac_name
+        
+        #LIBERAL ARTS
+        check_status = clearance_form_table.objects.filter(id=id,liberal_arts_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            liberal_arts = "UNAPPROVED"
+            liberal_artsName = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('liberal_arts_signature', flat=True).distinct()
+            lib_sig = str(faculty_approved[0])
+            fac_name_get = lib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            liberal_arts = libart_sig[0]
+            liberal_artsName = str_fac_name
+        
+        #CAMPUS LIBRARIAN
+        check_status = clearance_form_table.objects.filter(id=id,library_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            campus_library = "UNAPPROVED"
+            librarian_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
+            camlib_sig = str(faculty_approved[0])
+            fac_name_get = camlib_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            campus_library = cam_lib_sig[0]
+            librarian_name = str_fac_name
+        
+        #MATH & SCIENCES
+        check_status = clearance_form_table.objects.filter(id=id,mathsci_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            math_and_science = "UNAPPROVED"
+            math_and_science_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('mathsci_dept_signature', flat=True).distinct()
+            mas_sig = str(faculty_approved[0])
+            fac_name_get = mas_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            math_and_science = mathsci_sig[0]
+            math_and_science_name = str_fac_name
+            
+        #GUIDANCE COUNCELOR
+        check_status = clearance_form_table.objects.filter(id=id,guidance_office_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            guidance = "UNAPPROVED"
+            guidance_councelor = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('guidance_office_signature', flat=True).distinct()
+            guid_sig = str(faculty_approved[0])
+            fac_name_get = guid_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            guidance = gui_sig[0]
+            guidance_councelor = str_fac_name
+        
+        #DPECS
+        check_status = clearance_form_table.objects.filter(id=id,pe_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            dpecs = "UNAPPROVED"
+            dpecs_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('pe_dept_signature', flat=True).distinct()
+            pe_sig = str(faculty_approved[0])
+            fac_name_get = pe_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            dpecs = pe_dept_sig[0]
+            dpecs_name = str_fac_name
+        
+        #OSA
+        check_status = clearance_form_table.objects.filter(id=id,osa_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            osa = "UNAPPROVED"
+            osa_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('osa_signature', flat=True).distinct()
+            student_osa_sig = str(faculty_approved[0])
+            fac_name_get = student_osa_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            student_affairs_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            osa = student_affairs_sig[0]
+            osa_name = str_fac_name
+        
+        #ADAA
+        check_status = clearance_form_table.objects.filter(id=id,academic_affairs_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            adaa = "UNAPPROVED"
+            adaa_name = " "
+        else:
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('academic_affairs_signature', flat=True).distinct()
+            asst_dir_acad_sig = str(faculty_approved[0])
+            fac_name_get = asst_dir_acad_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+            adaa = adaa_sig[0]
+            adaa_name = str_fac_name
+        
+        #INDUSTRIAL
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        if check_status:
+            industrial = "UNAPPROVED"
+            it_department = "NONE"
+            it_name = " "
+        else:
+            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                ieduc = str(faculty_approved[0])
+                fac_name_get = ieduc.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = ieduc_sig[0]
+                it_department = "EDUCATOR"
+                it_name = str_fac_name
+            
+            if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                it = str(faculty_approved[0])
+                fac_name_get = it.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = it_dept_sig[0]
+                it_department = "TECHNOLOGIES"
+                it_name = str_fac_name
+                
+            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+                pass
+            else:
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                eng = str(faculty_approved[0])
+                fac_name_get = eng.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                industrial = eng_dept_sig[0]
+                it_department = "ENGINEERS"
+                it_name = str_fac_name
+        
+        context ={
+            'clearance' : clearance_for_graduation,
+            'accountant': accountant,
+            'liberal_arts': liberal_arts,
+            'math_and_science': math_and_science,
+            'dpecs' : dpecs,
+            'industrial': industrial,
+            'it_department' : it_department,
+            'course_adviser' : course_adviser,
+            'campus_library' : campus_library,
+            'guidance' : guidance,
+            'osa' : osa,
+            'adaa' : adaa,
+            'accountant_name' : accountant_name,
+            'adviser_name' : adviser_name,
+            'liberal_artsName' : liberal_artsName,
+            'librarian_name' : librarian_name,
+            'math_and_science_name' : math_and_science_name,
+            'guidance_councelor' : guidance_councelor,
+            'dpecs_name' : dpecs_name,
+            'osa_name' : osa_name,
+            'adaa_name' : adaa_name,
+            'it_name' : it_name,
+                
+            }
+        return render(request, 'html_files/clearance_form_display.html',context)
+    else:
+        return redirect(clearance_form)
 
 @login_required(login_url='/')
 def graduation_form(request):
@@ -1940,19 +2230,19 @@ def graduation_form(request):
 # alumnus not yet working
 
 
-@login_required(login_url='/')
-def alumnus_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-        username = request.user.username
-        print(username)
+# @login_required(login_url='/')
+# def alumnus_dashboard(request):
+#     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
+#         username = request.user.username
+#         print(username)
 
-        st = graduation_form_table.objects.filter(student_id=username)
-        st1 = clearance_form_table.objects.filter(student_id=username)
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-    return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
+#         st = graduation_form_table.objects.filter(student_id=username)
+#         st1 = clearance_form_table.objects.filter(student_id=username)
+#     else:
+#         messages.error(
+#             request, "You are trying to access an unauthorized page and is forced to logout.")
+#         return redirect('/')
+#     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
 
 
 # @login_required(login_url='/')
@@ -4718,7 +5008,8 @@ def request_form(request):
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
         user = request.user.user_type
-
+        student_name = request.user.full_name
+        
         print(user)            
         if request.method == "POST":
             form = request_form
@@ -4746,8 +5037,51 @@ def request_form(request):
                                                      contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
-            return redirect('student_dashboard')
-            
+
+            if user == "STUDENT":
+                if request == 'Honorable Dismissal':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                        
+                elif request == 'Transcript of Records':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request == 'Diploma':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Certification'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                elif request.__contains__('Others'):
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form')
+                else: 
+                    return redirect('student_dashboard')
+            else:
+                return redirect('student_dashboard')
+        else:
+            unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            if unapproved_request:
+                allow_request = unapproved_request[0]
+            else:
+                allow_request =""
+            context ={'allow' : allow_request}
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
