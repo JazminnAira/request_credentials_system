@@ -3468,30 +3468,14 @@ def update_graduation(request, id, sig):
 @login_required(login_url='/')
 def registrar_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
-        # CLEARANCE FORMS
-        all = clearance_form_table.objects.all()
-        cBSCE = clearance_form_table.objects.filter(
-            course="BSCE").values().count()
-        cBSEE = clearance_form_table.objects.filter(
-            course="BSEE").values().count()
-        cBSME = clearance_form_table.objects.filter(
-            course="BSME").values().count()
-        cBSIE_ICT = clearance_form_table.objects.filter(
-            course="BSIE-ICT").values().count()
-        cBSIE_HE = clearance_form_table.objects.filter(
-            course="BSIE-HE").values().count()
-        cBTTE_CP = clearance_form_table.objects.filter(
-            course="BTTE-CP").values().count()
-        cBTTE_EI = clearance_form_table.objects.filter(
-            course="BTTE-EI").values().count()
-        cBTTE_AU = clearance_form_table.objects.filter(
-            course="BTTE-AU").values().count()
-        cBTTE_HVACT = clearance_form_table.objects.filter(
-            course="BTTE-HVACT").values().count()
-        cBTTE_E = clearance_form_table.objects.filter(
-            course="BTTE-E").values().count()
-        cBGT_AT = clearance_form_table.objects.filter(
-            course="BGT-AT").values().count()
+        # CLEARANCE FORMS 
+        all = clearance_form_table.objects.all() 
+        cBSIE_ICT = clearance_form_table.objects.filter( 
+            course="BSIE-ICT").values().count() 
+        cBSIE_IA = clearance_form_table.objects.filter(
+            course="BSIE-IA").values().count()
+        cBGT_ART = clearance_form_table.objects.filter(
+            course="BGT-ART").values().count()
         cBET_CT = clearance_form_table.objects.filter(
             course="BET-CT").values().count()
         cBET_ET = clearance_form_table.objects.filter(
@@ -3504,8 +3488,44 @@ def registrar_dashboard(request):
             course="BET-MT").values().count()
         cBET_PPT = clearance_form_table.objects.filter(
             course="BET-PPT").values().count()
-        cBET_AT = clearance_form_table.objects.filter(
-            course="BET-AT").values().count()
+        cBT_CET = clearance_form_table.objects.filter(
+            course="BT-CET").values().count()
+        cBT_CoET = clearance_form_table.objects.filter(
+            course="BT-CoET").values().count()
+        cBT_EET = clearance_form_table.objects.filter(
+            course="BT-EET").values().count()
+        cBT_EsET = clearance_form_table.objects.filter(
+            course="BT-EsET").values().count()
+        cBT_MPET = clearance_form_table.objects.filter(
+            course="BT-MPET").values().count()
+        cBT_PPET = clearance_form_table.objects.filter(
+            course="BT-PPET").values().count()
+        c_MPET = clearance_form_table.objects.filter(
+            course="MPET").values().count()
+        c_PPET = clearance_form_table.objects.filter(
+            course="PPET").values().count()
+        cBSIE_AET = clearance_form_table.objects.filter(
+            course="BSIE-AET").values().count()
+        cBSIE_MPET = clearance_form_table.objects.filter(
+            course="BSIE-MPET").values().count()
+        cBTTE_ART = clearance_form_table.objects.filter(
+            course="BTTE-ART").values().count()
+        cBTTE_AET = clearance_form_table.objects.filter(
+            course="BTTE-AET").values().count()
+        cBTTE_CET = clearance_form_table.objects.filter(
+            course="BTTE-CET").values().count()
+        cBTTE_CoET = clearance_form_table.objects.filter(
+            course="BTTE-CoET").values().count()
+        cBTTE_EET = clearance_form_table.objects.filter(
+            course="BTTE-EET").values().count()
+        cBTTE_EsET = clearance_form_table.objects.filter(
+            course="BTTE-EsET").values().count()
+        cBTTE_MPET = clearance_form_table.objects.filter(
+            course="BTTE-MPET").values().count()
+        cBTTE_PPET = clearance_form_table.objects.filter(
+            course="BTTE-PPET").values().count()
+      
+       
         
         unapproved_forms_count = clearance_form_table.objects.filter(approval_status="APPROVED").count()
         clearance_count = all.count() - unapproved_forms_count
@@ -3516,28 +3536,12 @@ def registrar_dashboard(request):
         
 
         # GRADUATION FORMS
-        gBSCE = graduation_form_table.objects.filter(
-            course="BSCE").values().count()
-        gBSEE = graduation_form_table.objects.filter(
-            course="BSEE").values().count()
-        gBSME = graduation_form_table.objects.filter(
-            course="BSME").values().count()
         gBSIE_ICT = graduation_form_table.objects.filter(
             course="BSIE-ICT").values().count()
-        gBSIE_HE = graduation_form_table.objects.filter(
-            course="BSIE-HE").values().count()
-        gBTTE_CP = graduation_form_table.objects.filter(
-            course="BTTE-CP").values().count()
-        gBTTE_EI = graduation_form_table.objects.filter(
-            course="BTTE-EI").values().count()
-        gBTTE_AU = graduation_form_table.objects.filter(
-            course="BTTE-AU").values().count()
-        gBTTE_HVACT = graduation_form_table.objects.filter(
-            course="BTTE-HVACT").values().count()
-        gBTTE_E = graduation_form_table.objects.filter(
-            course="BTTE-E").values().count()
-        gBGT_AT = graduation_form_table.objects.filter(
-            course="BGT-AT").values().count()
+        gBSIE_IA = graduation_form_table.objects.filter(
+            course="BSIE-IA").values().count()
+        gBGT_ART = graduation_form_table.objects.filter(
+            course="BGT-ART").values().count()
         gBET_CT = graduation_form_table.objects.filter(
             course="BET-CT").values().count()
         gBET_ET = graduation_form_table.objects.filter(
@@ -3550,9 +3554,45 @@ def registrar_dashboard(request):
             course="BET-MT").values().count()
         gBET_PPT = graduation_form_table.objects.filter(
             course="BET-PPT").values().count()
-        gBET_AT = graduation_form_table.objects.filter(
-            course="BET-AT").values().count()
-        
+        gBT_CET = graduation_form_table.objects.filter(
+            course="BT-CET").values().count()
+        gBT_CoET = graduation_form_table.objects.filter(
+            course="BT-CoET").values().count()
+        gBT_EET = graduation_form_table.objects.filter(
+            course="BT-EET").values().count()
+        gBT_EsET = graduation_form_table.objects.filter(
+            course="BT-EsET").values().count()
+        gBT_MPET = graduation_form_table.objects.filter(
+            course="BT-MPET").values().count()
+        gBT_PPET = graduation_form_table.objects.filter(
+            course="BT-PPET").values().count()
+        g_MPET = graduation_form_table.objects.filter(
+            course="MPET").values().count()
+        g_PPET = graduation_form_table.objects.filter(
+            course="PPET").values().count()
+        gBSIE_AET = graduation_form_table.objects.filter(
+            course="BSIE-AET").values().count()
+        gBSIE_MPET = graduation_form_table.objects.filter(
+            course="BSIE-MPET").values().count()
+        gBTTE_ART = graduation_form_table.objects.filter(
+            course="BTTE-ART").values().count()
+        gBTTE_AET = graduation_form_table.objects.filter(
+            course="BTTE-AET").values().count()
+        gBTTE_CET = graduation_form_table.objects.filter(
+            course="BTTE-CET").values().count()
+        gBTTE_CoET = graduation_form_table.objects.filter(
+            course="BTTE-CoET").values().count()
+        gBTTE_EET = graduation_form_table.objects.filter(
+            course="BTTE-EET").values().count()
+        gBTTE_EsET = graduation_form_table.objects.filter(
+            course="BTTE-EsET").values().count()
+        gBTTE_MPET = graduation_form_table.objects.filter(
+            course="BTTE-MPET").values().count()
+        gBTTE_PPET = graduation_form_table.objects.filter(
+            course="BTTE-PPET").values().count()
+       
+
+       
         unapproved_forms_count2 = graduation_form_table.objects.filter(approval_status="APPROVED").count()
         graduation_count = graduation_form_table.objects.all().count() - unapproved_forms_count2
         if graduation_count == 0:
@@ -3572,19 +3612,22 @@ def registrar_dashboard(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     return render(request, 'html_files/7.1Registrar Dashboard.html',
-                  {'all': all, 'cBSCE': cBSCE, 'cBSEE': cBSEE, 'cBSME': cBSME, 'cBSIE_ICT': cBSIE_ICT,
-                   'cBSIE_HE': cBSIE_HE, 'cBTTE_CP': cBTTE_CP, 'cBTTE_EI': cBTTE_EI, 'cBTTE_AU': cBTTE_AU,
-                   'cBTTE_HVACT': cBTTE_HVACT, 'cBTTE_E': cBTTE_E, 'cBGT_AT': cBGT_AT, 'cBET_CT': cBET_CT,
+                  {'all': all, 'cBSIE_ICT': cBSIE_ICT, 'cBSIE_IA': cBSIE_IA, 'cBGT_ART': cBGT_ART, 'cBET_CT': cBET_CT,
                    'cBET_ET': cBET_ET, 'cBET_EsET': cBET_EsET, 'cBET_CoET': cBET_CoET, 'cBET_MT': cBET_MT,
-                   'cBET_PPT': cBET_PPT, 'cBET_AT': cBET_AT,
+                   'cBET_PPT': cBET_PPT, 'cBT_CET': cBT_CET, 'cBT_CoET': cBT_CoET, 'cBT_EET': cBT_EET,
+                   'cBT_EsET': cBT_EsET, 'cBT_MPET': cBT_MPET, 'cBT_PPET': cBT_PPET, 'c_MPET': c_MPET,
+                   'c_PPET': c_PPET, 'cBSIE_AET': cBSIE_AET,'cBSIE_MPET': cBSIE_MPET, 'cBTTE_ART': cBTTE_ART, 
+                   'cBTTE_AET': cBTTE_AET, 'cBTTE_CET': cBTTE_CET,'cBTTE_CoET': cBTTE_CoET, 'cBBTTE_EET': cBTTE_EET, 
+                   'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,
 
-                   'gBSCE': gBSCE, 'gBSEE': gBSEE, 'gBSME': gBSME, 'gBSIE_ICT': gBSIE_ICT,
-                   'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP, 'gBTTE_EI': gBTTE_EI, 'gBTTE_AU': gBTTE_AU,
-                   'gBTTE_HVACT': gBTTE_HVACT, 'gBTTE_E': gBTTE_E, 'gBGT_AT': gBGT_AT, 'gBET_CT': gBET_CT,
+                   'gBSIE_ICT': gBSIE_ICT, 'gBSIE_IA': gBSIE_IA, 'gBGT_ART': gBGT_ART, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
-                   'gBET_PPT': gBET_PPT, 'gBET_AT': gBET_AT,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
+                   'gBET_PPT': gBET_PPT, 'gBT_CET': gBT_CET, 'gBT_CoET': gBT_CoET, 'gBT_EET': gBT_EET,
+                   'gBT_EsET': gBT_EsET, 'gBT_MPET': gBT_MPET, 'gBT_PPET': gBT_PPET, 'g_MPET': g_MPET,
+                   'g_PPET': g_PPET, 'gBSIE_AET': gBSIE_AET,'gBSIE_MPET': gBSIE_MPET, 'gBTTE_ART': gBTTE_ART, 
+                   'gBTTE_AET': gBTTE_AET, 'gBTTE_CET': gBTTE_CET,'gBTTE_CoET': gBTTE_CoET, 'gBBTTE_EET': gBTTE_EET, 
+                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
-
 
 @login_required(login_url='/')
 def name_list(request):

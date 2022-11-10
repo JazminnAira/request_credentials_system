@@ -767,10 +767,31 @@ Adviser:
                                 <td>{{request.user.address}}</td>
                             </tr>
 
+                            {% if request.user.user_type == "STUDENT" %}
                             <tr>
+                                
                                 <td><b>Course:</b> </td>
                                 <td>{{request.user.course}}</td>
+                                
                             </tr>
+                        
+                            {% elif request.user.user_type == "ALUMNUS" %}
+                            <tr>
+                                
+                                <td><b>Course:</b> </td>
+                                <td>{{request.user.course_graduated}}</td>
+                                
+                            </tr>
+
+                            {% elif request.user.user_type == "OLD STUDENT" %}
+                            <tr>
+                                
+                                <td><b>Course:</b> </td>
+                                <td>{{request.user.course_graduated}}</td>
+                                
+                            </tr>
+                            {% endif %}
+                            
 
                             <tr>
                                 <td><b>ID No.:</b></td>

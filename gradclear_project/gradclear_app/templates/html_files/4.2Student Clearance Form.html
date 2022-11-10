@@ -553,10 +553,22 @@ Adviser:
             <!--COURSE DROPDOWN BOX-->
             <div class="form-group row">
                 <label for="course_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_42">Course:<span id="asteris_42" style="color:red;">*</span></label>
+                {% if request.user.user_type == "STUDENT" %}
                 <div class="col-sm-9">
                     <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" oninput="enter_dait()" required>
                     <p id="admitdate_error_42"></p>
                 </div>
+                {% elif request.user.user_type == "ALUMNUS" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% elif request.user.user_type == "OLD STUDENT" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% endif %}
             </div>
             <br>
 
