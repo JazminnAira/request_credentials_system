@@ -1544,6 +1544,7 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
+    
     if request.user.is_authenticated and request.user.user_type == "STUDENT":
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today() 
@@ -1598,7 +1599,6 @@ def clearance_form(request):
             check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
             
             if request_clearance:
-                print("hey5")
                 if application_graduation[0] !="Application for Graduation":
                     if request_clearance[0] =="APPROVED":
                         allow_request = request_clearance[0]
@@ -1611,20 +1611,18 @@ def clearance_form(request):
                         if check_apply_graduation:
                             if check_apply_graduation[0] == "APPROVED":
                                 graduation_allow = check_apply_graduation[0]
-                                print("done")
+    
                             else:
                                 graduation_allow = check_apply_graduation[0]
-                                print('disable clear for grad')
                         else:
                             graduation_allow = ""
                 else:
                     allow_request =""
                     if check_apply_graduation[0] == "APPROVED":
                         graduation_allow = check_apply_graduation[0]
-                        print("done")
+
                     else:
                         graduation_allow = check_apply_graduation[0]
-                        print('disable clear for grad')
             else:
                 allow_request = ""
                 graduation_allow = ""

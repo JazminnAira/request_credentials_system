@@ -610,7 +610,7 @@ Adviser:
                 <label for="amountp_42" class="col-sm-2 col-form-label col-form-label-sm" id="amountp_lbl_42">Amount Paid:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
                     <div class="input-icon">
-                        <input type="text" id="amountp_box_42" name="amountp_box_420" maxlength="14" class="form-control col-form-label-sm" onkeyup="isEmpty()" placeholder="0.00" oninput="enter_amount()" data-type="currency" required>
+                        <input type="text" id="amountp_box_42" name="amountp_box_420" maxlength="14" class="form-control col-form-label-sm" onkeyup="isEmpty()" placeholder="0.00" oninput="enter_amount()" data-type="currency" required readonly>
                         <i>₱</i>
                         <p id="amount_error_42"></p>
                     </div>
@@ -1606,9 +1606,9 @@ Adviser:
         let dait_box = document.getElementById("dait_box_42").value;
         let course_drp = document.getElementById("course_42").value;
         let hswg_box = document.getElementById("hswg_box_42").value;
-        let amountp_box = document.getElementById("amountp_box_42").value;
+       
 
-        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && amountp_box != "") {
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "") {
             document.getElementById("submit_btn_42").removeAttribute("disabled");
         }
 
@@ -1631,15 +1631,12 @@ Adviser:
         var reqYes_radio = document.getElementById("reqYes_radio_42");
         var dbrtime_box = document.getElementById("dbrtime_box_42");
         var lasterm_box = document.getElementById("lasterm_box_42");
-        var preq_box = document.getElementById("preq_box_42");
         dbrtime_box.disabled = reqYes_radio.checked ? false : true;
         lasterm_box.disabled = reqYes_radio.checked ? false : true;
-        preq_box.disabled = reqYes_radio.checked ? false : true;
 
-        if (!dbrtime_box.disabled && !lasterm_box.disabled && !preq_box.disabled) {
+        if (!dbrtime_box.disabled && !lasterm_box.disabled) {
             dbrtime_box.focus();
             lasterm_box.focus();
-            preq_box.focus();
 
         }
     }
@@ -1781,5 +1778,74 @@ Adviser:
         document.getElementById('ApplicationforGraduation_check_42').disabled = false;
     }
 
+    HonorableDismissal_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "0.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    Evaluation_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "60.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    TranscriptofRecords_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "100.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    ReEvaluation_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "0.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    Diploma_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "150.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    ApplicationforGraduation_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "60.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    Certification_check_42.addEventListener("change", function(){
+        if(this.checked){
+            document.getElementById('amountp_box_42').value = "100.00";
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
+
+    Others_check_42.addEventListener("change", function(){
+        if(this.checked){
+            if (document.getElementById('others_box_42').value == "CAV" || "AUTHENTICATION/VERIFICATION" || "AUTHENTICATION"){
+                document.getElementById('amountp_box_42').value = "100.00";
+            }else if (ocument.getElementById('others_box_42').value == "SUBJECT DESCRIPTION"){
+                document.getElementById('amountp_box_42').value = "70.00";
+            }else{
+                document.getElementById('amountp_box_42').value = "0.00";
+            }
+        }else{
+            document.getElementById('amountp_box_42').value = "0.00";
+        }
+    });
 
 </script>
