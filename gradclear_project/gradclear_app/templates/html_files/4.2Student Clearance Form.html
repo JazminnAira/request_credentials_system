@@ -466,11 +466,6 @@ Adviser:
         padding-top: 15px;
     }
 
-    #home_btn:hover {
-        color: white;
-        background-color: #d3324d;
-    }
-
    
 </style>
 
@@ -489,7 +484,7 @@ Adviser:
             </a>
         </li> -->
         <li>
-            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
         </li>
@@ -507,7 +502,7 @@ Adviser:
             <h3><b>Personal Information</b></h3>
 
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_420" value="{{request.user.username}}" hidden>
+            <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
             <input type ="text" id ="allow_apply" value ="{{allow}}" hidden>
             <input type ="text" id ="apply_grad_determiner" value = "{{graduation_allow}}" hidden>
             <!--NAME BOX-->
@@ -555,10 +550,22 @@ Adviser:
             <!--COURSE DROPDOWN BOX-->
             <div class="form-group row">
                 <label for="course_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_42">Course:<span id="asteris_42" style="color:red;">*</span></label>
+                {% if request.user.user_type == "STUDENT" %}
                 <div class="col-sm-9">
                     <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" oninput="enter_dait()" required>
                     <p id="admitdate_error_42"></p>
                 </div>
+                {% elif request.user.user_type == "ALUMNUS" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% elif request.user.user_type == "OLD STUDENT" %}
+                <div class="col-sm-9">
+                    <input type="text" id="course_42" name="course_420" readonly class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" oninput="enter_dait()" required>
+                    <p id="admitdate_error_42"></p>
+                </div>
+                {% endif %}
             </div>
             <br>
 

@@ -20,7 +20,7 @@ class signup_form(UserCreationForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'middle_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Middle Name'}),
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'TUPC-00-0000'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
             'id_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}),

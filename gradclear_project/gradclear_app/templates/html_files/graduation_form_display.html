@@ -633,7 +633,7 @@ Adviser:
 
                <!--NAME BOX-->
                <div class="form-row">
-                    <input type="text" hidden name="id_getter" value="{{request.user.username}}">
+                    <input type="text" hidden name="id_getter" value="{{request.user.student_id}}">
                     <input type="text" hidden name="course_getter" value="{{request.user.course}}">
 
                     <div class="form-inline">
@@ -666,27 +666,7 @@ Adviser:
                          <div>
                          <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()" value="{{i.course}}"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
                               <option value="1" selected>{{i.course}}</option>
-                              <option value="" hidden>--SELECT--</option>
-                              <option value="BSCE">BSCE</option>
-                              <option value="BSEE">BSEE</option>
-                              <option value="BSME">BSME</option>
-                              <option value="BSIE-ICT">BSIE-ICT</option>
-                              <option value="BSIE-HE">BSIE-HE</option>
-                              <option value="BTTE-CP">BTTE-CP</option>
-                              <option value="BTTE-EI">BTTE-EI</option>
-                              <option value="BTTE-AU">BTTE-AU</option>
-                              <option value="BTTE-HVAC">BTTE-HVAC</option>
-                              <option value="BTTE-E">BTTE-E</option>
-                              <option value="BGT-AT">BGT-AT</option>
-                              <option value="BET-CT">BET-CT</option>
-                              <option value="BET-ET">BET-ET</option>
-                              <option value="BET-EsET">BET-EsET</option>
-                              <option value="BET-CoET">BET-CoET</option>
-                              <option value="BET-MT">BET-MT</option>
-                              <option value="BET-PPT">BET-PPT</option>
-                              <option value="BET-AT">BET-AT</option>
                          </select>
-
                          </div>
                     </div>
                </div>

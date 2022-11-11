@@ -526,29 +526,27 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_73">
                     <thead>
                         <tr>
-                            <th> # </th>
+                            <th hidden> # </th>
                             <th>Student's Name</th>
                             <th>Course</th>
                             <th>ID Number</th>
-                            <th>Purpose of Request</th>
                             <th>Date & Time Requested</th>  
                             <th>Approval Status</th>
-                            <!-- <th id="Approvalbutton"></th> -->
+                            <th></th>
                             <th></th>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="8"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="7"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
                     {% for instance in all %}
                     <tbody>
                         <tr>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             {% if instance.approval_status == "APPROVED"%} 
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.approval_status}}</td>
@@ -562,7 +560,8 @@ Adviser:
                                 <p>❌</p>
                             {% endif %}
                             </td>
-                            
+                            <td><a href="{% url 'delete_gradform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                            </td>
                             
                         </tr>
                     </tbody>

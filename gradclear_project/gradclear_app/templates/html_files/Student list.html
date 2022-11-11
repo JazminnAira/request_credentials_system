@@ -443,10 +443,10 @@ Adviser:
                             <td>{{instance.id}}</td>
                             <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
                             <td>{{instance.full_name}}</td>
-                            {% if instance.username == None %}
+                            {% if instance.student_id == None %}
                                 <td>-</td>
                             {% else %}
-                                <td>{{instance.username}}</td>
+                                <td>{{instance.student_id}}</td>
                             {% endif %}
 
                             {% if instance.course == None %}

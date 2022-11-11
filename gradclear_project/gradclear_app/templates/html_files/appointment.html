@@ -436,6 +436,7 @@ Adviser:
                                 <form method="POST" action="" style="height:100%;" >
                                     {% csrf_token %}
 
+                                        {% if request.user.user_type == "REGISTRAR"%}
                                         <!--AMOUNT TO PAY-->
                                         <div class="form-group">
                                             <label >Amount to Pay:</label>
@@ -444,6 +445,8 @@ Adviser:
                                                 <!-- <i>₱</i> -->
                                             </div>
                                         </div>
+                                        {% endif %}
+                                      
                                   
                                         <!--DATE OF APPOINTMENT-->
                                         <div class="form-group">

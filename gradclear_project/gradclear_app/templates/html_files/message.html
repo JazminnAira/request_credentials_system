@@ -20,7 +20,7 @@ Adviser:
 {%if messages%}
 {%for message in messages%}
 <div class = 'fade alert {{ message.tags}} m-2 alert-dismissible show myAlert-top' id ="msg" role="alert"  >
-    <b>Great! </b>{{message}}<button type="button" id="asdbut" class="close" data-dismiss="alert" aria-label="Close">
+    {{message}}<button type="button" id="asdbut" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
 </div>
@@ -28,9 +28,9 @@ Adviser:
 
 {%endif%}
 
-<script>
+<!-- <script>
   $("#msg").fadeTo(2000, 500).slideUp(500, function(){
     $("#msg").slideUp(500);
 })
-</script>
+</script> -->
 

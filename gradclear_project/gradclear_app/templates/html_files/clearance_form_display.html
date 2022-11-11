@@ -512,6 +512,14 @@ Adviser:
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
+            {% elif request.user.user_type == "ALUMNUS" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% elif request.user.user_type == "OLD STUDENT" %}
+            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
             {% elif request.user.user_type == "FACULTY" %}
             <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
@@ -537,7 +545,7 @@ Adviser:
             <h3><b>Personal Information</b></h3>
 
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_420" value="{{request.user.username}}" hidden>
+            <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
             <!--NAME BOX-->
             <div class="form-inline">
                 {% if request.user.user_type == "STUDENT"%}

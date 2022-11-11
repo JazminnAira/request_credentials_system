@@ -78,7 +78,9 @@ urlpatterns = [
      path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
      path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
      path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
-    
+     path('delete_gradform/<int:id>', delete_gradform, name='delete_gradform'),
+     path('delete_clearform/<int:id>', delete_clearform, name='delete_clearform'),
+     path('delete_reqform/<int:id>', delete_reqform, name='delete_reqform'),
     ] 
 
 if settings.DEBUG:

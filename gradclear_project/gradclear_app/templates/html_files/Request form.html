@@ -511,7 +511,7 @@ Adviser:
             <h3><b>REQUEST FORM</b></h3>
 
             <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_pre" value="{{request.user.username}}" hidden>
+            <input type="text" name="stud_id_pre" value="{{request.user.student_id}}" hidden>
 
             <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
@@ -531,13 +531,28 @@ Adviser:
             </div><br>
 
             <!--COURSE DROPDOWN BOX-->
+            {% if request.user.user_type == "STUDENT" %}
             <div class="form-group row">
                 <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
                     <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
                 </div>
             </div>
-
+            {% elif request.user.user_type == "ALUMNUS" %}
+            <div class="form-group row">
+                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
+                </div>
+            </div>
+            {% elif request.user.user_type == "OLD STUDENT" %}
+            <div class="form-group row">
+                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
+                </div>
+            </div>
+            {% endif %}
             <!--DATE-->
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
