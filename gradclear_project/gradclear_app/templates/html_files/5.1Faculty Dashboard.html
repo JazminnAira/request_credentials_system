@@ -718,7 +718,7 @@ Adviser:
                         </div>
 
                         <!--MODAL CLOSE BUTTON-->
-                        <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                        <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
                     </div>
 
                     <!--MODAL BODY-->
@@ -727,21 +727,11 @@ Adviser:
                         <!--ACCOUNT TABLE MODAL-->
                         <table class="table-responsive-sm table-responsive-md">
                             <tr>
-                                <td><b>Surname:</b> </td>
-                                <td>{{request.user.last_name}}</td>
+                                <td><b>Name:</b> </td>
+                                <td>{{request.user.full_name}}</td>
                                 
                             </tr>
         
-                            <tr>
-                                <td><b>First Name:</b></td>
-                                <td>{{request.user.first_name}}</td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Middle Name:</b></td>
-                                <td>{{request.user.middle_name}}</td>
-                            </tr>
-
                             <tr>
                                 <td><b>Address:</b> </td>
                                 <td>{{request.user.address}}</td>
@@ -798,7 +788,7 @@ Adviser:
                     </h3>
 
                     <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
                 </div>
 
                 <!--MODAL BODY-->
@@ -845,7 +835,7 @@ Adviser:
 
                     <!--MODAL CLOSE BUTTON-->
                     <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
-                    data-placement="right" title="Close" onclick="reset_close()">×</button>
+                    data-placement="right" title="Close" onclick="reset_close()">X</button>
                 </div>
 
                 <!--MODAL BODY-->
