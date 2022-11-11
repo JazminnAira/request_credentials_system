@@ -149,18 +149,18 @@ def req_print(request,id):
     if clearance == "✔":
         p.drawString(230, 130, '✔')
     else:
-        p.drawString(230, 130, 'X')
+        p.drawString(230, 130, '')
         
         
     if f137 == "✔":
         p.drawString(147, 130, '✔')
     else:
-        p.drawString(147, 130, 'X')
+        p.drawString(147, 130, '')
         
     if o_r == "✔":
         p.drawString(318, 130, '✔')
     else:
-        p.drawString(318, 130, 'X')
+        p.drawString(318, 130, '')
 
     p.setFont("Helvetica", 9)
     p.drawString(115, 143, f'{content.purpose_of_request_reason}')
@@ -2461,7 +2461,8 @@ def faculty_dashboard_clearance_list(request):
                
             if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
                 st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')    
-
+        else:
+            st = clearance_form_table.objects.filter(course_adviser_signature=f_n_unapproved).order_by('-time_requested')
 
 
         # st= clearance_form_table.objects.all().order_by('-time_requested')
