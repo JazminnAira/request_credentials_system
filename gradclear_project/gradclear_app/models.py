@@ -146,8 +146,12 @@ class user_table(AbstractUser):
     student_id = models.CharField(max_length=100, verbose_name ="Student ID", null=True)
     username = models.CharField(max_length=100, unique=True)
     profile_picture = models.ImageField(upload_to='uploads/')
-    uploaded_signature = models.ImageField(upload_to='signatures/',blank=True)# PIP INSTALL PILLOW
-    signature_timesaved = models.DateTimeField(auto_now_add=True)
+    e_signature = models.ImageField(upload_to='esignatures/',blank=True)# PIP INSTALL PILLOW
+    e_signature_timesaved = models.DateTimeField(auto_now_add=True)
+    uploaded_signature = models.ImageField(upload_to='uploaded signatures/',blank=True)# PIP INSTALL PILLOW
+    uploaded_signature_timesaved = models.DateTimeField(auto_now_add=True)
+    no_signature = models.CharField(max_length=100, verbose_name="Approve",default="APPROVED *Required Live Signature")
+
     REQUIRED_FIELDS = ('email',)
     
     # WHAT SHOWS IN ADMIN PAGE

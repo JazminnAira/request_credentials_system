@@ -393,14 +393,6 @@ Adviser:
         padding: 16px;
     }
 
-    #open_signature {
-        font-size: 20px;
-        cursor: pointer;
-        margin-right: 20px;
-        right: 0;
-        position:fixed;
-        border: none;
-    }
 
     @media screen and (max-height: 450px) {
         .signature_section {padding-top: 15px;}
@@ -589,32 +581,51 @@ Adviser:
 
     <!--MAIN--> 
     <h3 style="text-align:center; margin-top: 10px;" id="h3_title">List of Clearance Forms</h3>
-    <div >
-        <button type="button" class="btn btn-dark text-white btn-lg mr-5 pb-2" id="open_signature">Edit Signature</button>
-    </div>
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
+        <div class = "p-4"><h3 class = "text-dark">APPROVE</h3>
+            <h4 class="label text-lg text-dark" id ="name_approve"></h4>
+            <h5 class ="label text-lg text-dark" id ="request_approve"></h5></h4>
+        </div>
         
-        {% if saved_signature == 'DECLINE' %}
-            <div id = "signature_display" class = "p-3">
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
-                <h3 class="lead p-4 border border-dark m-3" align="center"><b>NO SIGNATURE SAVED</b></h3>
-                <p>I decline to attach my signature in the system.</p>
-                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
-            </div>
-        {% else %}
-            <div id = "signature_display" class = "p-3">
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR SIGNATURE</h4></div>
-                <img src ="{{saved_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-                <label class="lead">Recorded in: <b>{{signature_datetime}}</b></label>
-            </div>
-        {% endif %}
+        <input type="text" id="attach_signature_to" hidden>
+        <input type = "text" id="department" hidden>
+        <!--CHOOSING APPROVAL SIGNATURE-->
         <div class= "mx-auto" align="center" id="button_area">
+            <br>
+            <!--ATTACH ESIGN BUTTON-->
+            <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">ATTACH E-SIGNATURE</button><br>
+            <br>
+            <!--ATTACH UPLOADED BUTTON-->
+            <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">ATTACH UPLOADED SIGNATURE</button><br>
+            <br>
+            <!--APPROVE ONLY-->
+            <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">APPROVE</button><br>
+            <br>
+            <button type = "button" id = "edit_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">EDIT SIGNATURE</button><br>
+        </div>
+
+        <!--EDIT SIGNATURE-->
+        <div class= "mx-auto" align="center" id="edit_button_area" hidden>
+            {% if e_signature %}
+            <div id = "esignature_display" class = "p-3">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR E-SIGNATURE</h4></div>
+                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
+            </div>
+            {% endif %}
             <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
             <br>
+            {% if uploaded_signature %}
+            <div id = "upload_signature_display" class = "p-3">
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
+                <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>
+            </div>
+            {% endif %}
             <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
             <br>
-            <a href ="delete_clearance_signature/{{id}}" ><button type = "button" id = "delete_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">DELETE SIGNATURE</button></a><br>
+            <button type = "button" id = "back_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">BACK</button><br>
         </div>
    
 
@@ -677,89 +688,79 @@ Adviser:
                     <tr id="Add">    
                         
                         <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
-                        <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
+                        <td class="nr" hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                        <td class="name"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                        <td class="request"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
                             {% if instance.accountant_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/accountant_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDMS" %}
                             <script>document.querySelector('#department_th').innerText = "DMS";</script>
                             {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/mathsci_dept_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department2(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDPECS" %}
                             <script>document.querySelector('#department_th').innerText = "DPECS";</script>
                             {% if instance.pe_dept_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/pe_dept_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department3(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDED" %}
                             <script>document.querySelector('#department_th').innerText = "DED";</script>
                             {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieduc_dept_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department4(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDIT" %} 
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/it_dept_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department5(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDIE" %}
                             <script>document.querySelector('#department_th').innerText = "DIE";</script>
                             {% if instance.ieng_dept_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/ieng_dept_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department6(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOCL" %}
                             <script>document.querySelector('#department_th').innerText = "OCL";</script>
                             {% if instance.library_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/library_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department7(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOGS" %}
                             <script>document.querySelector('#department_th').innerText = "OGS";</script>
                             {% if instance.guidance_office_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/guidance_office_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department8(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOSA" %}
                             <script>document.querySelector('#department_th').innerText = "OSA";</script>
                             {% if instance.osa_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/osa_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department9(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HADAA" %}
                             <script>document.querySelector('#department_th').innerText = "ADAA";</script>
                             {% if instance.academic_affairs_signature == "UNAPPROVED" %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/academic_affairs_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department10(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
@@ -769,8 +770,7 @@ Adviser:
                         {% if course_adv %} 
                             <script>document.querySelector('#course_adviser_th').innerText = "Course/Shop Adviser";</script>
                             {% if instance.course_adviser_signature == f_n_unapproved %}
-                            <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_clearance/{{ instance.id }}/course_adviser_signature" >Approve</a>
-                            </button></td>
+                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department11(this)">Approve</button></td>
                             {% elif instance.course_adviser_signature != f_n_unapproved and instance.course_adviser != request.user.full_name %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
                             {% else %}
@@ -784,7 +784,7 @@ Adviser:
                 </tbody>
                 {% endfor %}
             </table>
-            <button type="submit" class="btn-m">Approve All</button>
+            <button type ="button" class="button btn-m user_id" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
         </form>
     </div>
         <!---->
@@ -844,29 +844,32 @@ Adviser:
         //imgConverted.src = dataURI;
     });
 
+    //show edit signature section 
+    edit_sig_btn.addEventListener("click", function() {
+        document.getElementById("edit_button_area").hidden = false;
+        document.getElementById("button_area").hidden = true;
+    });
+
     //show create signature are
     create_sig_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
         document.getElementById("signature_pad").width = 350;
         document.getElementById("signature_pad").height = 200;
         document.getElementById("submit_signature").hidden = false;
-        document.getElementById("signature_display").hidden = true;
-        document.getElementById("button_area").hidden = true;
+        document.getElementById("edit_button_area").hidden = true;
     });
 
     upload_sig_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = true;
         document.getElementById("new_upload_signature_area").hidden = false;
         document.getElementById("submit_signature").hidden = false;
-        document.getElementById("signature_display").hidden = true;
-        document.getElementById("button_area").hidden = true;
+        document.getElementById("edit_button_area").hidden = true;
     });
 
     cancel_create.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden =true;
         document.getElementById("submit_signature").hidden = true;
-        document.getElementById("signature_display").hidden = false;
-        document.getElementById("button_area").hidden = false;
+        document.getElementById("edit_button_area").hidden = false;
         signaturePad.clear();
         document.getElementById('image_encoded').value = "";
     });
@@ -874,8 +877,7 @@ Adviser:
     cancel_upload.addEventListener("click", function() {
         document.getElementById("new_upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
-        document.getElementById("signature_display").hidden = false;
-        document.getElementById("button_area").hidden = false;
+        document.getElementById("edit_button_area").hidden = false;
         document.getElementById('uploaded_signature_new').value =null;
         document.getElementById('preview').src ="";
     });
@@ -886,14 +888,104 @@ Adviser:
         image.src=URL.createObjectURL(event.target.files[0]);
     };
 
-    open_signature.addEventListener("click", function()  {
+    function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
-    });
+    };
+
+    function department1(elem){
+        document.getElementById('department').value = "accountant_signature";
+    };
+
+    function department2(elem){
+        document.getElementById('department').value = "mathsci_dept_signature";
+    };
+
+    function department3(elem){
+        document.getElementById('department').value = "pe_dept_signature";
+    };
+
+    function department4(elem){
+        document.getElementById('department').value = "ieduc_dept_signature";
+    };
+
+    function department5(elem){
+        document.getElementById('department').value = "it_dept_signature";
+    };
+
+    function department6(elem){
+        document.getElementById('department').value = "ieng_dept_signature";
+    };
+    function department7(elem){
+        document.getElementById('department').value = "library_signature";
+    };
+    function department8(elem){
+        document.getElementById('department').value = "guidance_office_signature";
+    };
+
+    function department9(elem){
+        document.getElementById('department').value = "osa_signature";
+    };
+
+    function department10(elem){
+        document.getElementById('department').value = "academic_affairs_signature";
+    };
+
+    function department11(elem){
+        document.getElementById('department').value = "course_adviser_signature";
+    };
+
+    const handleClick = ({ target }) => {
+        if (target.classList.contains('user_id')) {
+          const row = target.closest('tr');
+          const id = row.querySelector('.nr').textContent.trim();
+          const name = row.querySelector('.name').textContent.trim();
+          const request = row.querySelector('.request').textContent.trim();
+          document.getElementById('attach_signature_to').value = id;
+          document.getElementById('name_approve').innerHTML = name;
+          document.getElementById('request_approve').innerHTML = request;
+        }
+      };
+      
+      document.querySelector('table').addEventListener('click', handleClick);
     
+    esign_attach_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var dept = document.getElementById('department').value;
+        var sig = "ESIGN";
+
+        location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
+    });
+
+    upload_attach_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var dept = document.getElementById('department').value;
+        var sig = "UPLOAD";
+
+        location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
+    });
+
+    approve_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var dept = document.getElementById('department').value;
+        var sig = "APPROVE";
+
+        location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
+    });
+
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
+        document.getElementById("button_area").hidden = false;
+        document.getElementById("edit_button_area").hidden = true;
+        document.getElementById("create_signature_area").hidden = true;
+        document.getElementById("new_upload_signature_area").hidden = true;
+        document.getElementById("submit_signature").hidden = true;
+    });
+
+    back_btn.addEventListener("click", function() {
+        document.getElementById("button_area").hidden = false;
+        document.getElementById("edit_button_area").hidden = true;
     });
 
     function openfdb() {
@@ -1187,16 +1279,6 @@ Adviser:
         }
     }
     }
-
-    open_signature.addEventListener("click", function()  {
-        document.getElementById("signature_section").style.width = "400px";
-        document.getElementById("table_list").style.marginRight = "400px";
-    });
-    
-    close_signature.addEventListener("click", function() {
-        document.getElementById("signature_section").style.width = "0";
-        document.getElementById("table_list").style.marginRight= "0";
-    });
 
 
 </script>

@@ -1414,47 +1414,6 @@ def faculty_registration(request):
             form.instance.user_type = "FACULTY"
             form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
-            
-            agreement = request.POST.get('agreement')
-            chosen_SignatureType = request.POST.get('signature_type')
-            
-            if agreement == "AGREED":
-                if chosen_SignatureType =="ESIGN":
-                    esign_signature = request.POST.get('image_encoded')
-            
-                    if esign_signature == "":
-                        messages.error(request, "Signature Pad is BLANK. Please create your Signature.")
-                        
-                        return redirect(faculty_registration)
-                    else:
-                        image_decode = base64.b64decode(esign_signature.replace('data:image/png;base64,',''))
-
-                        file_name = 'Media/signatures/' + last + ", " + first + " " + middle + '_APPROVED.png'
-
-                        # Create image file from base64 and saved in MEDIA file
-                        with open(file_name, 'wb') as img_file:
-                            img_file.write(image_decode)
-                            #file name saved in the database
-                            form.instance.uploaded_signature = 'signatures/' + last + ", " + first + " " + middle + '_APPROVED.png'
-                            form.instance.time_savedsignature = datetime.now()
-                            
-                elif chosen_SignatureType =="UPLOAD":
-                    if bool(form.cleaned_data.get('uploaded_signature')) == False:
-                        messages.error(request, "No New Signature Saved. Please Try Again.")
-                        return redirect(faculty_registration)  
-                    else:
-                        print('Signature Uploaded Saved')
-                        
-                else:
-                    messages.error(request, "Type of Signature is Missing")
-                    return redirect(faculty_registration)
-                
-            elif agreement == "DECLINE":
-                form.instance.uploaded_signature = "DECLINE"
-                form.instance.time_savedsignature = datetime.now()
-            else:
-                messages.error(request, "Approval Type is not determine")
-                return redirect(faculty_registration)
 
             form.save()
             messages.success(
@@ -2394,13 +2353,14 @@ def faculty_dashboard(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
-    signature = request.user.uploaded_signature
-    signature_datetime = request.user.signature_timesaved
+    esignature = request.user.e_signature
+    esignature_datetime = request.user.e_signature_timesaved
+    uploaded_signature = request.user.uploaded_signature
+    uploaded_signature_datetime = request.user.uploaded_signature_timesaved
     id_Facultynumber = request.user.id
-    print(signature)
+    print(esignature)
     f_n_unapproved = request.user.full_name + "_UNAPPROVED"
     f_n_approved = request.user.full_name + "_APPROVED"
     f_n = request.user.full_name
@@ -2633,10 +2593,11 @@ def faculty_dashboard_clearance_list(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/') 
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep':dep, 'f_n_unapproved':f_n_unapproved, 'f_n_approved':f_n_approved, 'course_adv':course_adv, 'e_signature' : esignature, 'esignature_datetime' : esignature_datetime, 'uploaded_signature': uploaded_signature, 'uploaded_datetime' : uploaded_signature_datetime,  'id' : id_Facultynumber})
 
 @login_required(login_url='/')
-def update_clearance(request, id, dep):
+def update_clearance(request, id, dep, sign):
+    print(sign)
     name_temp = clearance_form_table.objects.filter(
             id=id).values_list('name', flat=True).distinct()
     email_temp = clearance_form_table.objects.filter(
@@ -2768,10 +2729,11 @@ def update_clearance(request, id, dep):
 def faculty_dashboard_graduation_list(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         #signature
-        signature = request.user.uploaded_signature
-        signature_datetime = request.user.signature_timesaved
+        esignature = request.user.e_signature
+        esignature_datetime = request.user.e_signature_timesaved
+        uploaded_signature = request.user.uploaded_signature
+        uploaded_signature_datetime = request.user.uploaded_signature_timesaved
         id_Facultynumber = request.user.id
-        print(signature)
 
         full_name=request.user.full_name
         f_n_unapproved= request.user.full_name + "_UNAPPROVED"
@@ -3630,7 +3592,7 @@ def faculty_dashboard_graduation_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'saved_signature' : signature, 'signature_datetime' : signature_datetime, 'id' : id_Facultynumber})
+    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'e_signature' : esignature, 'esignature_datetime' : esignature_datetime, 'uploaded_signature': uploaded_signature, 'uploaded_datetime' : uploaded_signature_datetime, 'id' : id_Facultynumber})
 
 @login_required(login_url='/')
 def update_graduation(request, id, sig):
@@ -5229,11 +5191,14 @@ def update_clearance_signature(request, id):
                 messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
-                print(str(recent_sig))
-                if os.path.exists("Media/" + str(recent_sig)):
-                    os.remove("Media/" + str(recent_sig))
+                if recent_sig:
+                    print(str(recent_sig))
+                    if os.path.exists("Media/" + str(recent_sig)):
+                        os.remove("Media/" + str(recent_sig))
+                else:
+                    pass
                         
-                file_name ="signatures/"+ str(uploaded_signature)
+                file_name ="uploaded signatures/"+ str(uploaded_signature)
                         
                 fs = FileSystemStorage()
                         
@@ -5242,24 +5207,28 @@ def update_clearance_signature(request, id):
                 print(uploaded_file_url)
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
-                user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                user_table.objects.filter(id=id).update(uploaded_signature_timesaved=signature_timesaved)
                 
                 messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
-            recent_sig = request.user.uploaded_signature
-            if os.path.exists("Media/" + str(recent_sig)):
-                os.remove("Media/" + str(recent_sig))
+            recent_sig = request.user.e_signature
+            if recent_sig:
+                    print(str(recent_sig))
+                    if os.path.exists("Media/" + str(recent_sig)):
+                        os.remove("Media/" + str(recent_sig))
+                    else:
+                        pass
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
-            file_name = 'signatures/' + full_name + '_APPROVED.png'
+            file_name = 'esignatures/' + full_name + '_APPROVED.png'
 
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
-            user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            user_table.objects.filter(id=id).update(e_signature=file_name)
+            user_table.objects.filter(id=id).update(e_signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
     return redirect(faculty_dashboard_clearance_list)
@@ -5278,10 +5247,13 @@ def update_grad_signature(request, id):
                 messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
-                print(str(recent_sig))
-                if os.path.exists("Media/" + str(recent_sig)):
-                    os.remove("Media/" + str(recent_sig))
-                        
+                if recent_sig:
+                    print(str(recent_sig))
+                    if os.path.exists("Media/" + str(recent_sig)):
+                        os.remove("Media/" + str(recent_sig))
+                else:
+                    pass
+                    
                 file_name ="signatures/"+ str(uploaded_signature)
                         
                 fs = FileSystemStorage()
@@ -5291,13 +5263,17 @@ def update_grad_signature(request, id):
                 print(uploaded_file_url)
                         
                 user_table.objects.filter(id=id).update(uploaded_signature=file_name)
-                user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+                user_table.objects.filter(id=id).update(uploaded_signature_timesaved=signature_timesaved)
                 messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
         else:
             #remove recent signature
-            recent_sig = request.user.uploaded_signature
-            if os.path.exists("Media/" + str(recent_sig)):
-                os.remove("Media/" + str(recent_sig))
+            recent_sig = request.user.e_signature
+            if recent_sig:
+                print(str(recent_sig))
+                if os.path.exists("Media/" + str(recent_sig)):
+                    os.remove("Media/" + str(recent_sig))
+                else:
+                    pass
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
@@ -5306,42 +5282,11 @@ def update_grad_signature(request, id):
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
             
-            user_table.objects.filter(id=id).update(uploaded_signature=file_name)
-            user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
+            user_table.objects.filter(id=id).update(e_signature=file_name)
+            user_table.objects.filter(id=id).update(e_signature_timesaved=signature_timesaved)
             messages.success(request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
             
             
-    return redirect(faculty_dashboard_graduation_list)
-
-#DELETE SIGNATURE
-@login_required(login_url='/')
-def delete_clearance_signature(request, id):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        recent_sig = request.user.uploaded_signature
-        signature_timesaved = datetime.now()
-        signature_saved = "DECLINE"
-        print(str(recent_sig))
-        if os.path.exists("Media/" + str(recent_sig)):
-            os.remove("Media/" + str(recent_sig))
-
-        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
-        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
-        
-    return redirect(faculty_dashboard_clearance_list)
-
-@login_required(login_url='/')
-def delete_graduation_signature(request, id):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        recent_sig = request.user.uploaded_signature
-        signature_timesaved = datetime.now()
-        signature_saved = "DECLINE"
-        print(str(recent_sig))
-        if os.path.exists("Media/" + str(recent_sig)):
-            os.remove("Media/" + str(recent_sig))
-
-        user_table.objects.filter(id=id).update(uploaded_signature=signature_saved)
-        user_table.objects.filter(id=id).update(signature_timesaved=signature_timesaved)
-        
     return redirect(faculty_dashboard_graduation_list)
 
 @login_required(login_url='/')
