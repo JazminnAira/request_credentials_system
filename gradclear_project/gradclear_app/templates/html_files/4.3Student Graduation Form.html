@@ -94,11 +94,11 @@ Adviser:
     }
     
     tr:nth-child(odd) {
-        background-color: #f5f0f6;
+        background-color: transparent;
     }
     
     tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     tr:hover {
@@ -185,30 +185,7 @@ Adviser:
         width: 100%;
     }
     
-    td,
-    th {
-        border: 1px solid #000000;
-        text-align: left;
-        padding: 8px;
-    }
     
-    th {
-        background-color: #c51d3a;
-        color: #ffff;
-    }
-    
-    tr:nth-child(odd) {
-        background-color: #f5f0f6;
-    }
-    
-    tr:nth-child(even) {
-        background-color: #dedede;
-    }
-    
-    tr:hover {
-        background-color: #636363;
-        color: #ffff;
-    }
     
     .modal-body {
         background: #e0e0e0;
@@ -619,9 +596,9 @@ Adviser:
                     <div>      
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required>
-                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" id="mn_box_43" class="form-control mr-3" placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" id="mn_box_43" class="form-control " placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly>
-                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control mr-3" placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required autofocus>
 
                     </div>
