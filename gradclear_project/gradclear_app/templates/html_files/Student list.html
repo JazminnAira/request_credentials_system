@@ -432,6 +432,9 @@ Adviser:
                             <th></th>
                             <th></th>
                         </tr>
+                        <tr class="no_data">
+                            <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
                         <tr class="warning no-result">
                             <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                         </tr>
@@ -505,6 +508,17 @@ Adviser:
 
 
 <script>
+    // no data by default
+    var dattable = document.getElementById("list_tbl_75");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
 
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");

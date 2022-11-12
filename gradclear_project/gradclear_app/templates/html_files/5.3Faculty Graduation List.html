@@ -715,6 +715,9 @@ Adviser:
                             <th colspan="21" style="text-align: left;">For Approval</th>
                             
                         </tr>
+                        <tr class="no_data">
+                            <td colspan="27"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
                         <tr class="warning no-result">
                             <td colspan="27"><i class="fa fa-warning"></i> No result</td>
                         </tr>
@@ -1051,6 +1054,19 @@ Adviser:
 
 
 <script>
+
+// no data by default
+    var dattable = document.getElementById("list_tbl_53");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+
     //signature
     var canvas = document.getElementById("signature_pad");
     function resizeCanvas() {

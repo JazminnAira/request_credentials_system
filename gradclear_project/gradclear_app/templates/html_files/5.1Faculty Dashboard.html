@@ -872,6 +872,11 @@ Adviser:
                             <th>Purpose of Request</th>
                             <th id="Viewform"> </th>  
                         </tr>
+
+                        <tr class="no_data">
+                            <td colspan="6"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
+                        
                         <tr class="warning no-result">
                             <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
@@ -931,6 +936,20 @@ Adviser:
 
 
 <script>
+// no data by default
+    var dattable = document.getElementById("list_tbl_51");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+
+
+
     //SETTING MODAL CLOSE
 
     function reset_close() {
@@ -1060,6 +1079,15 @@ Adviser:
                     $('.no-result').show();
                 } else {
                     $('.no-result').hide();
+                }
+
+                var dattable = document.getElementById("list_tbl_41");
+                var rowcount = dattable.tBodies[0].rows.length;
+
+                if (rowcount == '0') {
+                    $('.no_data').show();
+                } else {
+                    $('.no_data').hide();
                 }
             });
         });
