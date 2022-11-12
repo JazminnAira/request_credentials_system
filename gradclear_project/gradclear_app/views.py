@@ -1332,9 +1332,9 @@ def student_registration(request):
         print(form.errors)
         if form.is_valid():
             id_num = form.cleaned_data.get("id_number")
-            last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
+            last = form.cleaned_data.get("last_name")
             email = form.cleaned_data.get("email")
             temp= form.cleaned_data.get("profile_picture")
             
@@ -1342,7 +1342,7 @@ def student_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
             
-            form.instance.full_name = last + ", " + first + " "+ middle
+            form.instance.full_name = first + " " + middle + " "+ last
            
             form.instance.user_type = "STUDENT"
             
@@ -1378,7 +1378,7 @@ def oldstudent_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
             
-            form.instance.full_name = last + ", " + first + " "+ middle
+            form.instance.full_name =   first + " "+ middle + " " + last 
            
             form.instance.user_type = "OLD STUDENT"
             form.save()
@@ -1442,8 +1442,7 @@ def alumnus_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "ALUMNUS"
-            form.instance.full_name = last + ", " + first + " " + middle
-         
+            form.instance.full_name = first + " " + middle + " "+ last
         
             form.save()
             # subject = 'SIGNUP SUCCESS'

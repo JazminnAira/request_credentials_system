@@ -429,7 +429,7 @@ Adviser:
         </div> -->
         {% include 'html_files/message.html'%}
         <div class = "float-left col-9"  >
-            <h3 style="text-align:center;">List of Request Form</h3>
+            <h3 style="text-align:center;">List of Request Forms</h3>
             <div id ="button_claim_and_unclaim" class="mt-3">
                 {% if sorter_type == "ALL" %}
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
@@ -466,6 +466,9 @@ Adviser:
                                 <th>Status</th>
                                 <th>Appointment</th>
                                 <th></th>
+                            </tr>
+                            <tr class="no_data">
+                                <td colspan="11"><i class="fa fa-warning"></i> No Data</td>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="11"><i class="fa fa-warning"></i> No result</td>
@@ -567,6 +570,9 @@ Adviser:
                                 <th>Form 137-A</th>
                                 <th>TOR</th>
                             </tr>
+                            <tr class="no_data2">
+                                <td colspan="4"><i class="fa fa-warning"></i> No Data</td>
+                            </tr>
                             <tr class="warning no-result2">
                                 <td colspan="4"><i class="fa fa-warning"></i> No result</td>
                             </tr>
@@ -606,6 +612,28 @@ Adviser:
 
 
 <script>
+    // no data by default
+    var dattable = document.getElementById("list_tbl_77");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+    // no data by default
+    var dattable2 = document.getElementById("list_tbl2_77");
+    var rowcount2 = dattable2.tBodies[0].rows.length;
+
+    if (rowcount2 == '0') {
+        $('.no_data2').show();
+        $('.no-result2').hide();
+    } else {
+        $('.no_data2').hide();
+        $('.no-result2').hide();
+    }
 
     document.getElementById('button_sorter').onclick = function() {
         location.href = "/registrar_dashboard_organize_request_list/ALL"
@@ -716,6 +744,7 @@ Adviser:
 
                 if (jobCount == '0') {
                     $('.no-result').show();
+                    $('.no_data').hide();
                 } else {
                     $('.no-result').hide();
                 }
@@ -747,6 +776,7 @@ Adviser:
 
                 if (DocCount == '0') {
                     $('.no-result2').show();
+                    $('.no_data2').hide();
                 } else {
                     $('.no-result2').hide();
                 }

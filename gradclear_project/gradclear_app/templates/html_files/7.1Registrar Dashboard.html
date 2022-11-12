@@ -1169,7 +1169,7 @@ Adviser:
                     </div>
 
                     <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
                 </div>
 
                 <!--MODAL BODY-->
@@ -1178,21 +1178,11 @@ Adviser:
                     <!--ACCOUNT CONTENT TABLE-->
                     <table class="table-responsive-md table-responsive-lg">
                         <tr>
-                            <td><b>Surname:</b> </td>
-                            <td>{{request.user.last_name}}</td>
+                            <td><b>Name:</b> </td>
+                            <td>{{request.user.full_name}}</td>
                                
                         </tr>
     
-                        <tr>
-                            <td><b>First Name:</b></td>
-                            <td>{{request.user.first_name}}</td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Middle Name:</b></td>
-                            <td>{{request.user.middle_name}}</td>
-                        </tr>
-
                         <tr>
                             <td><b>Position:</b></td>
                             <td>Administrator</td>
@@ -1240,7 +1230,7 @@ Adviser:
                 <div class="modal-header">
 
                     <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" onclick="resetter()" title="Close">×</button>
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" onclick="resetter()" title="Close">X</button>
                 </div>
 
                 <!--MODAL BODY-->
@@ -1321,7 +1311,7 @@ Adviser:
 
                     <!--MODAL CLOSE BUTTON-->
                     <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
-                    data-placement="right" title="Close" onclick="reset_close()">×</button>
+                    data-placement="right" title="Close" onclick="reset_close()">X</button>
                 </div>
 
                 <!--MODAL BODY-->

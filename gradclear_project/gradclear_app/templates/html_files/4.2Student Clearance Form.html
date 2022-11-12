@@ -523,9 +523,9 @@ Adviser:
 
             <!--DATE FILED BOX-->
             <div class="form-group row">
-                <label for="dfiled2_42" class="col-sm-2 col-form-label col-form-label-sm " id="dfiled_lbl2_42" >Date Filed:<span id="asteris_42" style="color:red;">*</span></label>
+                <label for="dfiled2_42" class="col-sm-2 col-form-label col-form-label-sm " id="dfiled_lbl2_42" >Date Filed:</label>
                 <div class="col-sm-9">
-                    <input type="date" id="dfiled_box_42" name="dfiled_box_420" class="form-control" required>
+                    <input type="date" id="dfiled_box_42" name="dfiled_box_420" class="form-control" readonly>
                 </div>
             </div>
 
@@ -571,7 +571,7 @@ Adviser:
 
             <!--HIGHSCHOOL GRADUATED BOX-->
             <div class="form-group row">
-                <label for="hswg_42" class="col-sm-2 col-form-label col-form-label-sm" id="hswg_lbl_42">High School where Graduated:<span id="asteris_42" style="color:red;">*</span></label>
+                <label for="hswg_42" class="col-sm-2 col-form-label col-form-label-sm" id="hswg_lbl_42">High School where Graduated:</label>
                 <div class="col-sm-9">
                     <input type="text" id="hswg_box_42" name="hswg_box_420" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" oninput="enter_hswg()" required>
                     <p id="hswg_error_42"></p>
@@ -659,13 +659,13 @@ Adviser:
             <div class="form-group row">
                 <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" onkeypress="isNumber(event)" required>
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="ex. 2020" onkeypress="isNumber(event)" required>
                     <p id="lterm_error_42"></p>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="course_adviser_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_adviser_lbl_42">Course/ Shop Adviser:</label>
+                <label for="course_adviser_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_adviser_lbl_42">Course/ Shop Adviser:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
                     <form method="POST" action="clearance_form">
                     {% csrf_token %}
@@ -681,7 +681,7 @@ Adviser:
 
             <!--PURPOSE OF REQUEST BOX-->
             <div class="form-group row">
-                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
+                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
                     <input type="text" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                         required>
@@ -1040,58 +1040,63 @@ Adviser:
 
 
 <script>
-    
 
+//Date filed
+$(document).ready( function() {
+    var now = new Date();
+    var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+    $('#dfiled_box_42').val(today);
+});
     // CONFIRMATION MSGBOX_BANNER
-    function submitForm(form) {
+    // function submitForm(form) {
 
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
+    //     swal({
+    //         title: "Are you sure?",
+    //         text: "This form will be submitted",
+    //         icon: "warning",
+    //         buttons: true,
+    //         dangerMode: true,
+    //     })
 
-        .then(function(isOkay) {
-            if (isOkay) {
-                var btn = document.getElementById('submit_btn_42');
-                btn.disabled = true;
-                btn.innerText = 'Submitted'
-                document.getElementById("ln_box_42").disabled = true;
-                document.getElementById("fn_box_42").disabled = true;
-                document.getElementById("mn_box_42").disabled = true;
-                document.getElementById("dfiled_box_42").disabled = true;
-                document.getElementById("padd_box_42").disabled = true;
-                document.getElementById("dait_box_42").disabled = true;
-                document.getElementById("course_42").disabled = true;
-                document.getElementById("hswg_box_42").disabled = true;
-                document.getElementById("gradYes_radio_42").checked = true;
-                document.getElementById("gradNo_radio_42").checked = true;
-                document.getElementById("iydfiled_box_42").disabled = true;
-                document.getElementById("notit_box_42").disabled = true;
-                document.getElementById("amountp_box_42").disabled = true;
-                document.getElementById("receiptnum_box_42").value = '';
-                document.getElementById("reqYes_radio_42").checked = true;
-                document.getElementById("reqNo_radio_42").checked = true;
-                document.getElementById("dbrtime_box_42").disabled = true;
-                document.getElementById("lasterm_box_42").disabled = true;
-                document.getElementById("preq_box_42").disabled = true;
-                document.getElementById("HonorableDismissal_check_42").checked = false;
-                document.getElementById("Evaluation_check_42").checked = false;
-                document.getElementById("TranscriptofRecords_check_42").checked = false;
-                document.getElementById("ReEvaluation_check_42").checked = false;
-                document.getElementById("Diploma_check_42").checked = false;
-                document.getElementById("ApplicationforGraduation_check_42").checked = false;
-                document.getElementById("Certification_check_42").checked = false;
-                document.getElementById("others_box_42").checked = false;
+    //     .then(function(isOkay) {
+    //         if (isOkay) {
+    //             var btn = document.getElementById('submit_btn_42');
+    //             btn.disabled = true;
+    //             btn.innerText = 'Submitted'
+    //             document.getElementById("ln_box_42").disabled = true;
+    //             document.getElementById("fn_box_42").disabled = true;
+    //             document.getElementById("mn_box_42").disabled = true;
+    //             document.getElementById("dfiled_box_42").disabled = true;
+    //             document.getElementById("padd_box_42").disabled = true;
+    //             document.getElementById("dait_box_42").disabled = true;
+    //             document.getElementById("course_42").disabled = true;
+    //             document.getElementById("hswg_box_42").disabled = true;
+    //             document.getElementById("gradYes_radio_42").checked = true;
+    //             document.getElementById("gradNo_radio_42").checked = true;
+    //             document.getElementById("iydfiled_box_42").disabled = true;
+    //             document.getElementById("notit_box_42").disabled = true;
+    //             document.getElementById("amountp_box_42").disabled = true;
+    //             document.getElementById("receiptnum_box_42").value = '';
+    //             document.getElementById("reqYes_radio_42").checked = true;
+    //             document.getElementById("reqNo_radio_42").checked = true;
+    //             document.getElementById("dbrtime_box_42").disabled = true;
+    //             document.getElementById("lasterm_box_42").disabled = true;
+    //             document.getElementById("preq_box_42").disabled = true;
+    //             document.getElementById("HonorableDismissal_check_42").checked = false;
+    //             document.getElementById("Evaluation_check_42").checked = false;
+    //             document.getElementById("TranscriptofRecords_check_42").checked = false;
+    //             document.getElementById("ReEvaluation_check_42").checked = false;
+    //             document.getElementById("Diploma_check_42").checked = false;
+    //             document.getElementById("ApplicationforGraduation_check_42").checked = false;
+    //             document.getElementById("Certification_check_42").checked = false;
+    //             document.getElementById("others_box_42").checked = false;
 
 
 
-            }
-        });
-        return false;
-    }
+    //         }
+    //     });
+    //     return false;
+    // }
 
     // BACK TO TOP FUNCTION
 
@@ -1637,13 +1642,13 @@ Adviser:
     function EnableDisableTextBox1() {
         var reqYes_radio = document.getElementById("reqYes_radio_42");
         var dbrtime_box = document.getElementById("dbrtime_box_42");
-        var lasterm_box = document.getElementById("lasterm_box_42");
+        
         dbrtime_box.disabled = reqYes_radio.checked ? false : true;
-        lasterm_box.disabled = reqYes_radio.checked ? false : true;
+        
 
         if (!dbrtime_box.disabled && !lasterm_box.disabled) {
             dbrtime_box.focus();
-            lasterm_box.focus();
+            
 
         }
     }

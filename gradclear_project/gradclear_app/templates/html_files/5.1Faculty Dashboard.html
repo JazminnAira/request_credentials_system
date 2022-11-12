@@ -683,10 +683,8 @@ Adviser:
     <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% elif with_clearance %}
     <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
-    
     {% endif %}
     
-    <a style="padding-left: 19px;" href="" data-toggle="modal" data-target="#Settings_modal_51"><i class="fa fa-cogs material-icons"></i><span class="icon-text">Settings</span></a>
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="left_logo_51" style="position: absolute;bottom: 10px;">
     
 </div>
@@ -718,7 +716,7 @@ Adviser:
                         </div>
 
                         <!--MODAL CLOSE BUTTON-->
-                        <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                        <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
                     </div>
 
                     <!--MODAL BODY-->
@@ -727,21 +725,11 @@ Adviser:
                         <!--ACCOUNT TABLE MODAL-->
                         <table class="table-responsive-sm table-responsive-md">
                             <tr>
-                                <td><b>Surname:</b> </td>
-                                <td>{{request.user.last_name}}</td>
+                                <td><b>Name:</b> </td>
+                                <td>{{request.user.full_name}}</td>
                                 
                             </tr>
         
-                            <tr>
-                                <td><b>First Name:</b></td>
-                                <td>{{request.user.first_name}}</td>
-                            </tr>
-
-                            <tr>
-                                <td><b>Middle Name:</b></td>
-                                <td>{{request.user.middle_name}}</td>
-                            </tr>
-
                             <tr>
                                 <td><b>Address:</b> </td>
                                 <td>{{request.user.address}}</td>
@@ -798,7 +786,7 @@ Adviser:
                     </h3>
 
                     <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
                 </div>
 
                 <!--MODAL BODY-->
@@ -832,179 +820,6 @@ Adviser:
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- SETTINGS MODAL -->
-    <div id="Settings_modal_51" class="modal fade" id="exampleModal_51" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" style="max-width:51%;" role="document">
-            <div class="modal-content">
-
-                <!--MODAL HEADER-->
-                <div class="modal-header">
-                    <h2 class="modal-title" id="Settings_header_51" id="settings_lbl_51">Settings&nbsp;<i class="fa fa-cogs"></i></h2>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
-                    data-placement="right" title="Close" onclick="reset_close()">×</button>
-                </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body">
-                    <div class="container">
-                        <div id="accordion_51">
-                            <div class="card">
-
-                                <!--ADRESS CARD-->
-                                <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_51">
-                                        <table class="table-responsive-sm">
-                                            <div class="d-flex bd-highlight">
-                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="address" id="address_lbl_51">
-                                                    Address: {{request.user.address}}</div>
-                                                <div class="d-flex justify-content-end" style="color: #000000;"
-                                                 id="edit_btn_51"><button class="btn btn-secondary btn-sm" 
-                                                 type="submit">Edit<i class="fa fa-edit"></i></div>
-                                            </div>
-                                        </table>
-                                    </a>
-                                </div>
-                                <form method = "POST" action="faculty_updateAddress">
-                                    {% csrf_token %}
-                                    <div id="collapseTwo_51" class="collapse" data-parent="#accordion_51">
-                                        <div class="card-body">
-                                            <div class="form-inline">
-                                                <input type="address" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="name" class="my-1 mr-4" id="address_lbl_51">Address:</label>
-                                                <input type="address" id="address_box_51" name="address_box_051" value="{{ request.GET.address_box_051 }}" class="form-control 
-                                                 col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
-                                                <button class="btn btn-secondary btn-sm  mr-1" name="submit6"
-                                                 id="addresssavechanges_btn_51" type="submit">Save Changes</button><br>
-                                                </div><br>
-                                            </div>
-                                </div>
-                                </form>
-
-                                <!--EMAIL CARD-->
-                                <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_51">
-                                        <table class="table-responsive-sm">
-                                            <div class="d-flex justify-content">
-                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="uemail_lbl_51">
-                                                    Email Address: {{request.user.email}}</div>
-                                                <div class="d-flex justify-content-end" style="color: #000000;" 
-                                                id="edit_btn_51"><button class="btn btn-secondary btn-sm" 
-                                                type="submit">Edit<i class="fa fa-edit"></i></div>
-                                            </div>
-                                        </table>
-                                    </a>
-                                </div>
-                                <form method = "POST" action="faculty_updateEmail">
-                                    {% csrf_token %}
-                                    <div id="collapseThree_51" class="collapse" data-parent="#accordion_51">
-                                        <div class="card-body">
-                                            <p>Note: Your email address should include your authentic name.</p>
-                                            <div class="form-inline">
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="email_51" class="my-1 mr-4" id="email_lbl_51">Email:</label>
-                                                <input type="text" id="ea_box_51" name="ea_box_051" value="{{ request.GET.ea_box_051 }}" class="form-control col-sm-5 mr-1 "
-                                                 placeholder="abcd@gmail.com" required>
-                                                <button class="btn btn-secondary btn-sm mr-1" id="emailsavechanges_btn_51" 
-                                                name="submit2" type="submit" onclick="emailValidatorset()">Save Changes</button><br>
-                                                </div><br>
-                                            </div>
-                                </div>
-                                </form>
-                                <!--PASSWORD CARD-->
-                                <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour_51">
-                                        <table class="table-responsive-sm">
-                                            <div class="d-flex bd-highlight">
-                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_51">Password </div>
-                                                <div class="d-flex justify-content-end" style="color: #000000;"
-                                                 id="edit_btn_51"><button class="btn btn-secondary btn-sm" 
-                                                 type="submit">Edit<i class="fa fa-edit"></i></div>
-                                            </div>
-                                        </table>
-                                    </a>
-                                </div>
-                                <form method="POST" action="faculty_updatePassword">
-                                    {% csrf_token %}
-                                    <div id="collapseFour_51" class="collapse" data-parent="#accordion_51">
-                                        <div class="card-body ">
-                                            <div class="input-group">
-                                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
-                                            <!--<label for="oldpass_51" class="my-1 mr-5" id="oldpass_lbl_51" style="padding-left: 4px;"> Old Password:</label>
-                                            <input type="text" id="old_pass_51" name="old_pass_041" class="form-control col-sm-5 mr-1 "
-                                             minlength="4" placeholder="*Minimum of 4 characters*" 
-                                             oninput="old_pass_length(),new_old_pass_detect()" required>
-                                            </div><br>-->
-                                            <div class="input-group">
-                                            <label for="newpass_51" class="my-1 mr-5" id="newpass_lbl_51">New Password:</label>
-                                            <input type="text" id="new_pass_51" name="new_pass_051" value="{{ request.GET.new_pass_051 }}" class="form-control col-sm-5 mr-2 "
-                                             minlength="4" placeholder="*Minimum of 4 characters*" 
-                                             oninput="new_pass_length(),match_new_pass(),new_old_pass_detect1()"required></div><br>
-                                            <div class="input-group">
-                                            <label for="confirmpass_51" class="my-1 mr-4" id="confirmpass_lbl_51">Confirm Password:</label>
-                                            <input type="text" id="confirm_pass_51" name="confirm_pass_051" value="{{ request.GET.confirm_pass_051 }}" 
-                                            class="form-control col-sm-5 mr-2 " minlength="4" placeholder="*Minimum of 4 characters*"
-                                             oninput="confirm_pass_length(),match_confirm_pass(),new_old_pass_detect()"required>
-                                            <div class="input-group-append " >
-                                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit3"
-                                                 id="passwordsavechanges_btn_51">Save Changes</button>
-                                                </div>
-                                            </div>
-                                            <p id="sp_error_51" style="color:red;"></p>
-                                            <p id="spm_error_51" style="color:red;"></p>
-                                            <p id="spon_error_51" style="color:red;"></p>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                        <!--CONTACT NUMBER CARD-->
-                        <div class="card">
-                            <div class="card-header">
-                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive_51">
-                                    <table class="table-responsive-sm">
-                                        <div class="d-flex bd-highlight">
-                                            <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="fnum_lbl_51"> 
-                                                Contact Number:{{request.user.contact_number}}</div>
-                                            <div class="d-flex justify-content-end" style="color: #000000;"
-                                             id="edit_btn_51"><button class="btn btn-secondary btn-sm" type="submit">Edit<i class="fa fa-edit"></i></div>
-                                                </div>
-                                            </table>
-                                        </a>
-                                    </div>
-                                </div>
-                                <form method= "POST" action="faculty_updateContact">
-                                    {% csrf_token%}
-                                    <div id="collapseFive_51" class="collapse" data-parent="#accordion_51">
-                                        <div class="card-body">
-                                            <div class="form-inline">
-                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="cnum_box_051" class="my-1 mr-4" id="cnum_lbl_51">Contact Number:</label>
-                                                <input type="text" id="cnum_box_51" name="cnum_box_051" value="{{ request.GET.cnum_box_051 }}" class="form-control mr-1 "
-                                                 oninput="checkcpnum()" onkeypress="isNumber(event)" maxlength="13"
-                                                  minlength="13" placeholder="09**-***-****" required>
-                                                <button class="btn btn-secondary btn-sm mr-1" name="submit4" type="submit" id="add_btn_51"
-                                                 onclick="checkcpnumnotif()">Save Changes</button><br>
-                                            </div>
-                                            <p id="scn_error_51" style="color: red; font-size: 10px; padding-left: 150px;"></p>
-                                            <br>
-                                        </div>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!--MODAL FOOTER-->
-            <div class="modal-footer">
-                <!-- <a href="{% url 'logout' %}" class="btn btn-secondary" id="logout_btn_51" aria-pressed="true">Log Out</a> -->
-            </div>
-        </div>
-    </div>
     </div>
 
     <!--MAIN-->
@@ -1057,6 +872,11 @@ Adviser:
                             <th>Purpose of Request</th>
                             <th id="Viewform"> </th>  
                         </tr>
+
+                        <tr class="no_data">
+                            <td colspan="6"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
+                        
                         <tr class="warning no-result">
                             <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
@@ -1116,6 +936,20 @@ Adviser:
 
 
 <script>
+// no data by default
+    var dattable = document.getElementById("list_tbl_51");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+
+
+
     //SETTING MODAL CLOSE
 
     function reset_close() {
@@ -1243,8 +1077,18 @@ Adviser:
 
                 if (jobCount == '0') {
                     $('.no-result').show();
+                    $('.no_data').hide();
                 } else {
                     $('.no-result').hide();
+                }
+
+                var dattable = document.getElementById("list_tbl_41");
+                var rowcount = dattable.tBodies[0].rows.length;
+
+                if (rowcount == '0') {
+                    $('.no_data').show();
+                } else {
+                    $('.no_data').hide();
                 }
             });
         });

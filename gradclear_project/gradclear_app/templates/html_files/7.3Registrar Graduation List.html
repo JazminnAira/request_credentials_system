@@ -499,7 +499,7 @@ Adviser:
     </div>
 
     <!-- MAIN-->
-    <h3 style="text-align:center;">Graduation Form</h3>
+    <h3 style="text-align:center;">List of Graduation Forms</h3>
     {% include 'html_files/message.html'%}
     <!--TAB BAR-->
     <!-- <div data-tabs="1" id="tabz_72">
@@ -534,6 +534,9 @@ Adviser:
                             <th>Approval Status</th>
                             <th></th>
                             <th></th>
+                        </tr>
+                        <tr class="no_data">
+                            <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
                             <td colspan="7"><i class="fa fa-warning"></i> No result</td>
@@ -626,6 +629,18 @@ Adviser:
 
 
 <script>
+// no data by default
+    var dattable = document.getElementById("list_tbl_73");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+
     function to_beprinted(el) {
         var restorepage = document.body.innerHTML;
         var printcontent = document.getElementById(el).innerHTML;
@@ -730,6 +745,7 @@ Adviser:
 
                 if (jobCount == '0') {
                     $('.no-result').show();
+                    $('.no_data').hide();
                 } else {
                     $('.no-result').hide();
                 }
