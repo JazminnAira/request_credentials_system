@@ -3607,9 +3607,10 @@ def faculty_dashboard_graduation_list(request):
     return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'e_signature' : esignature, 'esignature_datetime' : esignature_datetime, 'uploaded_signature': uploaded_signature, 'uploaded_datetime' : uploaded_signature_datetime, 'id' : id_Facultynumber})
 
 @login_required(login_url='/')
-def update_graduation(request, id, sig):
+def update_graduation(request, id, sig, type):
     print("starts here")
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        print(type)
         name_temp = graduation_form_table.objects.filter(
             id=id).values_list('name', flat=True).distinct()
         email_temp = graduation_form_table.objects.filter(
@@ -5270,7 +5271,7 @@ def update_grad_signature(request, id):
                 else:
                     pass
                     
-                file_name ="signatures/"+ str(uploaded_signature)
+                file_name ="uploaded signatures/"+ str(uploaded_signature)
                         
                 fs = FileSystemStorage()
                         
@@ -5293,7 +5294,7 @@ def update_grad_signature(request, id):
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
-            file_name = 'signatures/' + full_name + '_APPROVED.png'
+            file_name = 'esignatures/' + full_name + '_APPROVED.png'
 
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
