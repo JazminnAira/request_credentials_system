@@ -429,7 +429,7 @@ Adviser:
                             <th>Year Level</th>
                             <th>Course Graduated</th>
                             <th>Year Graduated</th>
-                            <th></th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         <tr class="no_data">
@@ -476,7 +476,22 @@ Adviser:
                                 <td>{{instance.year_graduated}}</td>
                             {% endif %}
                             
-                            <td>{{instance.user_type}}</td>
+                            {% if instance.user_type == "STUDENT" and instance.year_and_section == "4th Year"%} 
+                            <td>
+                                <form name="change_status" id="change" action="student_status_update/{{ instance.id }}" method=POST>
+                                {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="status_select" id="changer"> 
+                                        <option value="">{{instance.user_type}}</option>
+                                        <option value="ALUMNUS">ALUMNUS</option>
+                                    </select>
+                                </form> 
+                            </td>
+                            {% else %}
+                                <td>{{instance.user_type}}</td>
+                            {% endif %}
+
+
+                            
                             <td><form method ="POST" action ="student_list_remove/{{instance.id}}">
                                 {% csrf_token %}
                                 <input type="text" name="id_from_table" value={{instance.id}} hidden>

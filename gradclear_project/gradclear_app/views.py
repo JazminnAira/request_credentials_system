@@ -1123,6 +1123,14 @@ def reggrad_appointment(request, id):
         student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
+  
+
+    notification = "NOTIFIED"
+    grad_notif = request.POST.get('notification')
+    graduation_form_table.objects.filter(
+    id=id).update(grad_notif = notification)
+   
+
     gender_temp = user_table.objects.filter(
     id=id).values_list('gender', flat=True).distinct()
     gender = user_table.objects.filter(
@@ -1167,6 +1175,11 @@ def regclear_appointment(request,id):
     name = user_table.objects.filter(
         student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
+
+    notification = "NOTIFIED"
+    clear_notif = request.POST.get('notification')
+    clearance_form_table.objects.filter(
+    id=id).update(clear_notif = notification)
 
     gender_temp = user_table.objects.filter(
     id=id).values_list('gender', flat=True).distinct()
@@ -3607,9 +3620,10 @@ def faculty_dashboard_graduation_list(request):
     return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved,'f_n_approved': f_n_approved, 'e_signature' : esignature, 'esignature_datetime' : esignature_datetime, 'uploaded_signature': uploaded_signature, 'uploaded_datetime' : uploaded_signature_datetime, 'id' : id_Facultynumber})
 
 @login_required(login_url='/')
-def update_graduation(request, id, sig):
+def update_graduation(request, id, sig, type):
     print("starts here")
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
+        print(type)
         name_temp = graduation_form_table.objects.filter(
             id=id).values_list('name', flat=True).distinct()
         email_temp = graduation_form_table.objects.filter(
@@ -3823,59 +3837,61 @@ def registrar_dashboard(request):
         # CLEARANCE FORMS 
         all = clearance_form_table.objects.all() 
         cBSIE_ICT = clearance_form_table.objects.filter( 
-            course="BSIE-ICT").values().count() 
+            course="BSIE-Information and Communication Technology").values().count() 
         cBSIE_IA = clearance_form_table.objects.filter(
-            course="BSIE-IA").values().count()
+            course="BSIE-Industrial Arts").values().count()
         cBGT_ART = clearance_form_table.objects.filter(
-            course="BGT-ART").values().count()
+            course="BGT-Architecture Technology").values().count()
         cBET_CT = clearance_form_table.objects.filter(
-            course="BET-CT").values().count()
+            course="BET-Civil Technology").values().count()
         cBET_ET = clearance_form_table.objects.filter(
-            course="BET-ET").values().count()
+            course="BET-Electrical Technology").values().count()
         cBET_EsET = clearance_form_table.objects.filter(
-            course="BET-EsET").values().count()
+            course="BET-Electronics Engineering Technology").values().count()
         cBET_CoET = clearance_form_table.objects.filter(
-            course="BET-CoET").values().count()
+            course="BET-Computer Engineering Technology").values().count()
         cBET_MT = clearance_form_table.objects.filter(
-            course="BET-MT").values().count()
+            course="BET-Mechanical & Production Engineering Technology").values().count()
         cBET_PPT = clearance_form_table.objects.filter(
-            course="BET-PPT").values().count()
+            course="BET-Power Plant Engineering Technology").values().count()
         cBT_CET = clearance_form_table.objects.filter(
-            course="BT-CET").values().count()
+            course="BT-Civil Engineering Technology").values().count()
         cBT_CoET = clearance_form_table.objects.filter(
-            course="BT-CoET").values().count()
+            course="BT-Computer Engineering Technology").values().count()
         cBT_EET = clearance_form_table.objects.filter(
-            course="BT-EET").values().count()
+            course="BT-Electrical Engineering Technology").values().count()
         cBT_EsET = clearance_form_table.objects.filter(
-            course="BT-EsET").values().count()
+            course="BT-Electronics Engineering Technology").values().count()
         cBT_MPET = clearance_form_table.objects.filter(
-            course="BT-MPET").values().count()
+            course="BT-Mechanical & Production Engineering Technology").values().count()
         cBT_PPET = clearance_form_table.objects.filter(
-            course="BT-PPET").values().count()
+            course="BT-Powerplant Engineering Technology").values().count()
         c_MPET = clearance_form_table.objects.filter(
-            course="MPET").values().count()
+            course="Mechanical & Production Engineering Technology").values().count()
         c_PPET = clearance_form_table.objects.filter(
-            course="PPET").values().count()
+            course="Powerplant Engineering Technology").values().count()
         cBSIE_AET = clearance_form_table.objects.filter(
-            course="BSIE-AET").values().count()
+            course="BSIE-Automotive Engineering Technology").values().count()
         cBSIE_MPET = clearance_form_table.objects.filter(
-            course="BSIE-MPET").values().count()
+            course="BSIE-Mechanical & Production Engineering Technology").values().count()
         cBTTE_ART = clearance_form_table.objects.filter(
-            course="BTTE-ART").values().count()
+            course="BTTE-Architecture Technology").values().count()
         cBTTE_AET = clearance_form_table.objects.filter(
-            course="BTTE-AET").values().count()
+            course="BTTE-Automotive Engineering Technology").values().count()
         cBTTE_CET = clearance_form_table.objects.filter(
-            course="BTTE-CET").values().count()
+            course="BTTE-Civil Engineering Technology").values().count()
         cBTTE_CoET = clearance_form_table.objects.filter(
-            course="BTTE-CoET").values().count()
+            course="BTTE-Computer Engineering Technology").values().count()
         cBTTE_EET = clearance_form_table.objects.filter(
-            course="BTTE-EET").values().count()
+            course="BTTE-Electrical Engineering Technology").values().count()
         cBTTE_EsET = clearance_form_table.objects.filter(
-            course="BTTE-EsET").values().count()
+            course="BTTE-Electronics Engineering Technology").values().count()
         cBTTE_MPET = clearance_form_table.objects.filter(
-            course="BTTE-MPET").values().count()
+            course="BTTE-Mechanical & Production Engineering Technology").values().count()
         cBTTE_PPET = clearance_form_table.objects.filter(
-            course="BTTE-PPET").values().count()
+            course="BTTE-Powerplant Engineering Technology").values().count()
+        cBT_AET = clearance_form_table.objects.filter(
+            course="BT-Automotive Engineering Technology").values().count()
       
        
         
@@ -3888,60 +3904,62 @@ def registrar_dashboard(request):
         
 
         # GRADUATION FORMS
-        gBSIE_ICT = graduation_form_table.objects.filter(
-            course="BSIE-ICT").values().count()
+        gBSIE_ICT = graduation_form_table.objects.filter( 
+            course="BSIE-Information and Communication Technology").values().count() 
         gBSIE_IA = graduation_form_table.objects.filter(
-            course="BSIE-IA").values().count()
+            course="BSIE-Industrial Arts").values().count()
         gBGT_ART = graduation_form_table.objects.filter(
-            course="BGT-ART").values().count()
+            course="BGT-Architecture Technology").values().count()
         gBET_CT = graduation_form_table.objects.filter(
-            course="BET-CT").values().count()
+            course="BET-Civil Engineering Technology").values().count()
         gBET_ET = graduation_form_table.objects.filter(
-            course="BET-ET").values().count()
+            course="BET-Electrical Technology").values().count()
         gBET_EsET = graduation_form_table.objects.filter(
-            course="BET-EsET").values().count()
+            course="BET-Electronics Engineering Technology").values().count()
         gBET_CoET = graduation_form_table.objects.filter(
-            course="BET-CoET").values().count()
+            course="BET-Computer Engineering Technology").values().count()
         gBET_MT = graduation_form_table.objects.filter(
-            course="BET-MT").values().count()
+            course="BET-Mechanical & Production Engineering Technology").values().count()
         gBET_PPT = graduation_form_table.objects.filter(
-            course="BET-PPT").values().count()
+            course="BET-Power Plant Engineering Technology").values().count()
         gBT_CET = graduation_form_table.objects.filter(
-            course="BT-CET").values().count()
+            course="BT-Civil Engineering Technology").values().count()
         gBT_CoET = graduation_form_table.objects.filter(
-            course="BT-CoET").values().count()
+            course="BT-Computer Engineering Technology").values().count()
         gBT_EET = graduation_form_table.objects.filter(
-            course="BT-EET").values().count()
+            course="BT-Electrical Engineering Technology").values().count()
         gBT_EsET = graduation_form_table.objects.filter(
-            course="BT-EsET").values().count()
+            course="BT-Electronics Engineering Technology").values().count()
         gBT_MPET = graduation_form_table.objects.filter(
-            course="BT-MPET").values().count()
+            course="BT-Mechanical & Production Engineering Technology").values().count()
         gBT_PPET = graduation_form_table.objects.filter(
-            course="BT-PPET").values().count()
+            course="BT-Powerplant Engineering Technology").values().count()
         g_MPET = graduation_form_table.objects.filter(
-            course="MPET").values().count()
+            course="Mechanical & Production Engineering Technology").values().count()
         g_PPET = graduation_form_table.objects.filter(
-            course="PPET").values().count()
+            course="Powerplant Engineering Technology").values().count()
         gBSIE_AET = graduation_form_table.objects.filter(
-            course="BSIE-AET").values().count()
+            course="BSIE-Automotive Engineering Technology").values().count()
         gBSIE_MPET = graduation_form_table.objects.filter(
-            course="BSIE-MPET").values().count()
+            course="BSIE-Mechanical & Production Engineering Technology").values().count()
         gBTTE_ART = graduation_form_table.objects.filter(
-            course="BTTE-ART").values().count()
+            course="BTTE-Architecture Technology").values().count()
         gBTTE_AET = graduation_form_table.objects.filter(
-            course="BTTE-AET").values().count()
+            course="BTTE-Automotive Engineering Technology").values().count()
         gBTTE_CET = graduation_form_table.objects.filter(
-            course="BTTE-CET").values().count()
+            course="BTTE-Civil Engineering Technology").values().count()
         gBTTE_CoET = graduation_form_table.objects.filter(
-            course="BTTE-CoET").values().count()
+            course="BTTE-Computer Engineering Technology").values().count()
         gBTTE_EET = graduation_form_table.objects.filter(
-            course="BTTE-EET").values().count()
+            course="BTTE-Electrical Engineering Technology").values().count()
         gBTTE_EsET = graduation_form_table.objects.filter(
-            course="BTTE-EsET").values().count()
+            course="BTTE-Electronics Engineering Technology").values().count()
         gBTTE_MPET = graduation_form_table.objects.filter(
-            course="BTTE-MPET").values().count()
+            course="BTTE-Mechanical & Production Engineering Technology").values().count()
         gBTTE_PPET = graduation_form_table.objects.filter(
-            course="BTTE-PPET").values().count()
+            course="BTTE-Powerplant Engineering Technology").values().count()
+        gBT_AET = graduation_form_table.objects.filter(
+            course="BT-Automotive Engineering Technology").values().count()
        
 
        
@@ -3970,7 +3988,7 @@ def registrar_dashboard(request):
                    'cBT_EsET': cBT_EsET, 'cBT_MPET': cBT_MPET, 'cBT_PPET': cBT_PPET, 'c_MPET': c_MPET,
                    'c_PPET': c_PPET, 'cBSIE_AET': cBSIE_AET,'cBSIE_MPET': cBSIE_MPET, 'cBTTE_ART': cBTTE_ART, 
                    'cBTTE_AET': cBTTE_AET, 'cBTTE_CET': cBTTE_CET,'cBTTE_CoET': cBTTE_CoET, 'cBBTTE_EET': cBTTE_EET, 
-                   'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,
+                   'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,'cBT_AET':cBT_AET,
 
                    'gBSIE_ICT': gBSIE_ICT, 'gBSIE_IA': gBSIE_IA, 'gBGT_ART': gBGT_ART, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
@@ -3978,7 +3996,7 @@ def registrar_dashboard(request):
                    'gBT_EsET': gBT_EsET, 'gBT_MPET': gBT_MPET, 'gBT_PPET': gBT_PPET, 'g_MPET': g_MPET,
                    'g_PPET': g_PPET, 'gBSIE_AET': gBSIE_AET,'gBSIE_MPET': gBSIE_MPET, 'gBTTE_ART': gBTTE_ART, 
                    'gBTTE_AET': gBTTE_AET, 'gBTTE_CET': gBTTE_CET,'gBTTE_CoET': gBTTE_CoET, 'gBBTTE_EET': gBTTE_EET, 
-                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
+                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'gBT_AET':gBT_AET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
 
 @login_required(login_url='/')
@@ -5266,7 +5284,7 @@ def update_grad_signature(request, id):
                 else:
                     pass
                     
-                file_name ="signatures/"+ str(uploaded_signature)
+                file_name ="uploaded signatures/"+ str(uploaded_signature)
                         
                 fs = FileSystemStorage()
                         
@@ -5289,7 +5307,7 @@ def update_grad_signature(request, id):
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
-            file_name = 'signatures/' + full_name + '_APPROVED.png'
+            file_name = 'esignatures/' + full_name + '_APPROVED.png'
 
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
@@ -5337,3 +5355,19 @@ def delete_reqform(request, id):
         delete_req = request_form_table.objects.get(id=id)
         delete_req.delete()
         return redirect('registrar_dashboard_request_list')
+    
+def student_status_update(request,id):
+    student_update = request.POST.get('status_select')
+    user_table.objects.filter(id=id).update(user_type = student_update)
+    getter = user_table.objects.get(id=id)
+    today = date.today().year
+    getter = user_table.objects.get(id=id)
+
+    user_table.objects.filter(id=id).update(year_graduated = today)
+    cur_course = getter.course
+    user_table.objects.filter(id=id).update(course_graduated = cur_course)
+    user_table.objects.filter(id=id).update(course = None)
+    user_table.objects.filter(id=id).update(year_and_section = None)
+
+    
+    return redirect(registrar_dashboard_student_list)

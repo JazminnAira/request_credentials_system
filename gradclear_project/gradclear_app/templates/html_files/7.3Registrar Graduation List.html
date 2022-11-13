@@ -532,7 +532,7 @@ Adviser:
                             <th>ID Number</th>
                             <th>Date & Time Requested</th>  
                             <th>Approval Status</th>
-                            <th></th>
+                            <th>Notify</th>
                             <th></th>
                         </tr>
                         <tr class="no_data">
@@ -558,9 +558,13 @@ Adviser:
                             {% endif %}
                             <td>
                             {% if instance.approval_status ==  'APPROVED' %}
+                                {% if instance.grad_notif ==  'NOTIFIED' %}
+                                 Notification Sent.
+                                {% else %}
                                 <a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Notify Student</button></a>
+                                {% endif %}
                             {% else %}
-                                <p>❌</p>
+                                ❌
                             {% endif %}
                             </td>
                             <td><a href="{% url 'delete_gradform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>

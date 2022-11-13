@@ -585,7 +585,7 @@ Adviser:
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
         <div class = "p-4"><h3 class = "text-dark">APPROVE</h3>
             <h4 class="label text-lg text-dark" id ="name_approve"></h4>
-            <h5 class ="label text-lg text-dark" id ="request_approve"></h5></h4>
+            <h5 class ="label text-lg text-dark" id ="request_approve"></h5>
         </div>
         
         <input type="text" id="attach_signature_to" hidden>
@@ -601,8 +601,6 @@ Adviser:
             <br>
             <!--APPROVE ONLY-->
             <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">APPROVE</button><br>
-            <br>
-            <button type = "button" id = "edit_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">EDIT SIGNATURE</button><br>
         </div>
 
         <!--EDIT SIGNATURE-->
@@ -864,12 +862,6 @@ Adviser:
         console.log(dataURI);
         document.getElementById('image_encoded').value = dataURI;
         //imgConverted.src = dataURI;
-    });
-
-    //show edit signature section 
-    edit_sig_btn.addEventListener("click", function() {
-        document.getElementById("edit_button_area").hidden = false;
-        document.getElementById("button_area").hidden = true;
     });
 
     //show create signature are

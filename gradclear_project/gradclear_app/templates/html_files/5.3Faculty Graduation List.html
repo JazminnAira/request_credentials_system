@@ -636,12 +636,12 @@ Adviser:
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
         <div class = "p-4"><h3 class = "text-dark">APPROVE</h3>
-            <h4 class="label text-lg text-dark" id ="name_approve"></h4>
-            <h5 class ="label text-lg text-dark" id ="request_approve"></h5></h4>
+            <h4 class="label text-lg text-dark" id ="name_approve"></h4><!--not working pa-->
+            <h5 class ="label text-lg text-dark" id ="course_approve"></h5><!--not working pa-->
         </div>
         
         <input type="text" id="attach_signature_to" hidden>
-        <input type = "text" id="department" hidden>
+        <input type = "text" id="subject" hidden>
         <!--CHOOSING APPROVAL SIGNATURE-->
         <div class= "mx-auto" align="center" id="button_area">
             <br>
@@ -654,27 +654,38 @@ Adviser:
             <!--APPROVE ONLY-->
             <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">APPROVE</button><br>
             <br>
-            <button type = "button" id = "edit_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">EDIT SIGNATURE</button><br>
+            <div id ="viewedit_section">
+                <button type = "button" id = "view_sig_btn" class ="btn btn-lg bg-danger col-4 text-white border border-dark">VIEW SIGNATURE</button>
+                <button type = "button" id = "edit_sig_btn" class ="btn btn-lg bg-danger col-4 text-white border border-dark">EDIT SIGNATURE</button>
+            </div>
         </div>
 
-        <!--EDIT SIGNATURE-->
+        <!--VIEW AND EDIT SIGNATURE-->
         <div class= "mx-auto" align="center" id="edit_button_area" hidden>
+            <h4>EDIT SIGNATURES</h4>
+            <br>
             {% if e_signature %}
             <div id = "esignature_display" class = "p-3">
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR E-SIGNATURE</h4></div>
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR LIVE E-SIGNATURE</h4></div>
                 <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             </div>
+            {% else %}
+            <div class="p-6">NO LIVE E-SIGNATURE SAVED</div>
             {% endif %}
-            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
-            <br>
+            
             {% if uploaded_signature %}
             <div id = "upload_signature_display" class = "p-3">
                 <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
                 <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>
             </div>
+            {% else %}
+            <div class="p-6">NO UPLOADED SIGNATURE SAVED</div>
             {% endif %}
+            
+            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
+            <br>
             <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
             <br>
             <button type = "button" id = "back_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">BACK</button><br>
@@ -684,10 +695,11 @@ Adviser:
         <div id="create_signature_area" class="p-1" hidden>
             <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
-                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
-                <img src ="" id ="imgConverted" name = "signature_img" class="p-1" >
+                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas> 
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
-                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
+                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button>
+                <br>
+    
             </div>
         </div>
         
@@ -735,20 +747,20 @@ Adviser:
                     <tbody> 
                         <tr id="Add"> 
                             <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>       
-                            <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td class ="nr" hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td class ="name" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
+                            <td class = "course" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             {%if instance.appointment == "NONE" %}
                             <td><a href="appointmentgrad/{{ instance.id }}/graduation"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                             {% else %}
                             <td>{{instance.appointment}}</td>
-                            {% endif %}           
+                            {% endif %}     
+                                  
                             {% if instance.instructor_name == request.user.full_name %}
                                 
                                 {% if instance.sitsignature == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/sitsignature" >SIT Subject</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), sitsubject(this), document.getElementById('attach_signature_to').value ={{instance.id}}">SIT Subject</button></td>
                                 {% elif instance.sitsignature == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">SIT Subject✔️</td>
                                 {% else %}
@@ -760,7 +772,7 @@ Adviser:
                                 
                             {% if instance.faculty1 == request.user.full_name %}    
                                 {% if instance.signature1 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject1(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject1}}</button></td>
                                 {% elif instance.signature1 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject1}}✔️</td>
                                 {% else %}
@@ -773,8 +785,7 @@ Adviser:
                             {% if instance.faculty2 == request.user.full_name %}
                                 
                                 {% if instance.signature2 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature2" >{{instance.subject2}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject2(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject2}}</button></td>
                                 {% elif instance.signature2 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject2}}✔️</td>
                                 {% else %}
@@ -787,8 +798,7 @@ Adviser:
                             {% if instance.faculty3 == request.user.full_name %}
                                 
                                 {% if instance.signature3 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature3" >{{instance.subject3}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject3(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject3}}</button></td>
                                 {% elif instance.signature3 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject3}}✔️</td>
                                 {% else %}
@@ -801,8 +811,7 @@ Adviser:
                             {% if instance.faculty4 == request.user.full_name %}
                                 
                                 {% if instance.signature4 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature4" >{{instance.subject4}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject4(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject4}}</button></td>
                                 {% elif instance.signature4 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject4}}✔️</td>
                                 {% else %}
@@ -815,8 +824,7 @@ Adviser:
                             {% if instance.faculty5 == request.user.full_name %}
                                 
                                 {% if instance.signature5 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature5" >{{instance.subject5}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject5(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject5}}</button></td>
                                 {% elif instance.signature5 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject5}}✔️</td>
                                 {% else %}
@@ -829,8 +837,7 @@ Adviser:
                             {% if instance.faculty6 == request.user.full_name %}
                                 
                                 {% if instance.signature6 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature6" >{{instance.subject6}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject6(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject6}}</button></td>
                                 {% elif instance.signature6 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject6}}✔️</td>
                                 {% else %}
@@ -843,8 +850,7 @@ Adviser:
                             {% if instance.faculty7 == request.user.full_name %}
                                 
                                 {% if instance.signature7 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature7" >{{instance.subject7}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject7(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject7}}</button></td>
                                 {% elif instance.signature7 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject7}}✔️</td>
                                 {% else %}
@@ -857,8 +863,7 @@ Adviser:
                             {% if instance.faculty8 == request.user.full_name %}
                                 
                                 {% if instance.signature8 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature8" >{{instance.subject8}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject8(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject8}}</button></td>
                                 {% elif instance.signature8 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject8}}✔️</td>
                                 {% else %}
@@ -871,8 +876,7 @@ Adviser:
                             {% if instance.faculty9 == request.user.full_name %}
                                 
                                 {% if instance.signature9 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature9" >{{instance.subject9}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject9(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject9}}</button></td>
                                 {% elif instance.signature9 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject9}}✔️</td>
                                 {% else %}
@@ -885,8 +889,7 @@ Adviser:
                             {% if instance.faculty10 == request.user.full_name %}
                                 
                                 {% if instance.signature10 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/signature10" >{{instance.subject10}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), subject10(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.subject10}}</button></td>
                                 {% elif instance.signature10 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.subject10}}✔️</td>
                                 {% else %}
@@ -899,8 +902,7 @@ Adviser:
                             {% if instance.addfaculty1 == request.user.full_name %}
                                 
                                 {% if instance.addsignature1 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature1" >{{instance.addsubject1}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject1(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject1}}</button></td>
                                 {% elif instance.addsignature1 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject1}}✔️</td>
                                 {% else %}
@@ -913,8 +915,7 @@ Adviser:
                             {% if instance.addfaculty2 == request.user.full_name %}
                                 
                                 {% if instance.addsignature2 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature2" >{{instance.addsubject2}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject2(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject2}}</button></td>
                                 {% elif instance.addsignature2 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject2}}✔️</td>
                                 {% else %}
@@ -927,8 +928,7 @@ Adviser:
                             {% if instance.addfaculty3 == request.user.full_name %}
                                 
                                 {% if instance.addsignature3 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature3" >{{instance.addsubject3}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject3(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject3}}</button></td>
                                 {% elif instance.addsignature3 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject3}}✔️</td>
                                 {% else %}
@@ -941,8 +941,7 @@ Adviser:
                             {% if instance.addfaculty4 == request.user.full_name %}
                                 
                                 {% if instance.addsignature4 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature4" >{{instance.addsubject4}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject4(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject4}}</button></td>
                                 {% elif instance.addsignature4 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject4}}✔️</td>
                                 {% else %}
@@ -955,8 +954,7 @@ Adviser:
                             {% if instance.addfaculty5 == request.user.full_name %}
                                 
                                 {% if instance.addsignature5 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature5" >{{instance.addsubject5}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject5(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject5}}</button></td>
                                 {% elif instance.addsignature5 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject5}}✔️</td>
                                 {% else %}
@@ -969,8 +967,7 @@ Adviser:
                             {% if instance.addfaculty6 == request.user.full_name %}
                                 
                                 {% if instance.addsignature6 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature6" >{{instance.addsubject6}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject6(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject6}}</button></td>
                                 {% elif instance.addsignature6 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject6}}✔️</td>
                                 {% else %}
@@ -983,8 +980,7 @@ Adviser:
                             {% if instance.addfaculty7 == request.user.full_name %}
                                 
                                 {% if instance.addsignature7 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature7" >{{instance.addsubject7}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject7(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject7}}</button></td>
                                 {% elif instance.addsignature7 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject7}}✔️</td>
                                 {% else %}
@@ -997,8 +993,7 @@ Adviser:
                             {% if instance.addfaculty8 == request.user.full_name %}
                                 
                                 {% if instance.addsignature8 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature8" >{{instance.addsubject8}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject8(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject8}}</button></td>
                                 {% elif instance.addsignature8 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject8}}✔️</td>
                                 {% else %}
@@ -1011,8 +1006,7 @@ Adviser:
                             {% if instance.addfaculty9 == request.user.full_name %}
                                 
                                 {% if instance.addsignature9 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature9" >{{instance.addsubject9}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject9(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject9}}</button></td>
                                 {% elif instance.addsignature9 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject9}}✔️</td>
                                 {% else %}
@@ -1025,8 +1019,7 @@ Adviser:
                             {% if instance.addfaculty10 == request.user.full_name %}
                                 
                                 {% if instance.addsignature10 == f_n_unapproved %}
-                                <td><button class="button" id="appr_btn"><a style="color: #fff;" href="update_graduation/{{ instance.id }}/addsignature10" >{{instance.addsubject10}}</a>
-                                </button></td>
+                                <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), addsubject10(this), document.getElementById('attach_signature_to').value ={{instance.id}}">{{instance.addsubject10}}</button></td>
                                 {% elif instance.addsignature10 == f_n_approved %} 
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject10}}✔️</td>
                                 {% else %}
@@ -1156,8 +1149,119 @@ Adviser:
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
+        document.getElementById('name_approve').innerHTML = "NAME";
+        document.getElementById('course_approve').innerHTML = "course";
     };
-    
+
+    function sitsubject(elem){
+        document.getElementById('subject').value = "sitsignature";
+    };
+
+    function subject1(elem){
+        document.getElementById('subject').value = "signature1";
+    };
+
+    function subject2(elem){
+        document.getElementById('subject').value = "signature2";
+    };
+
+    function subject3(elem){
+        document.getElementById('subject').value = "signature3";
+    };
+
+    function subject4(elem){
+        document.getElementById('subject').value = "signature4";
+    };
+
+    function subject5(elem){
+        document.getElementById('subject').value = "signature5";
+    };
+
+    function subject6(elem){
+        document.getElementById('subject').value = "signature6";
+    };
+
+    function subject7(elem){
+        document.getElementById('subject').value = "signature7";
+    };
+
+    function subject8(elem){
+        document.getElementById('subject').value = "signature8";
+    };
+
+    function subject9(elem){
+        document.getElementById('subject').value = "signature9";
+    };
+
+    function subject10(elem){
+        document.getElementById('subject').value = "signature10";
+    };
+
+    function addsubject1(elem){
+        document.getElementById('subject').value = "addsignature1";
+    };
+
+    function addsubject2(elem){
+        document.getElementById('subject').value = "addsignature2";
+    };
+
+    function addsubject3(elem){
+        document.getElementById('subject').value = "addsignature3";
+    };
+
+    function addsubject4(elem){
+        document.getElementById('subject').value = "addsignature4";
+    };
+
+    function addsubject5(elem){
+        document.getElementById('subject').value = "addsignature5";
+    };
+
+    function addsubject6(elem){
+        document.getElementById('subject').value = "addsignature6";
+    };
+
+    function addsubject7(elem){
+        document.getElementById('subject').value = "addsignature7";
+    };
+
+    function addsubject8(elem){
+        document.getElementById('subject').value = "addsignature8";
+    };
+
+    function addsubject9(elem){
+        document.getElementById('subject').value = "addsignature9";
+    };
+
+    function addsubject10(elem){
+        document.getElementById('subject').value = "addsignature10";
+    };
+
+    esign_attach_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var sub = document.getElementById('subject').value;
+        var sig = "ESIGN";
+
+        location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+    });
+
+    upload_attach_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var sub = document.getElementById('subject').value;
+        var sig = "UPLOAD";
+
+        location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+    });
+
+    approve_sig_btn.addEventListener("click", function() {
+        var id_user = document.getElementById('attach_signature_to').value;
+        var sub = document.getElementById('subject').value;
+        var sig = "APPROVE";
+
+        location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+    });
+
+
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";

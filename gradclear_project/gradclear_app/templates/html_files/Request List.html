@@ -457,7 +457,6 @@ Adviser:
                                 <th hidden>#</th>
                                 <th>Student's Name</th>
                                 <th>Request</th>
-                                <th> Date & Time Requested</th>
                                 <th>Form 137-A</th>
                                 <th>TOR</th>
                                 <th>Clearance</th>
@@ -468,7 +467,7 @@ Adviser:
                                 <th></th>
                             </tr>
                             <tr class="no_data">
-                                <td colspan="11"><i class="fa fa-warning"></i> No Data</td>
+                                <td colspan="10"><i class="fa fa-warning"></i> No Data</td>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="11"><i class="fa fa-warning"></i> No result</td>
@@ -481,7 +480,7 @@ Adviser:
                                     <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
-                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                                    <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -526,9 +525,9 @@ Adviser:
                                     </td>  
                                     <td>
                                         {% if instance.appointment !=  'NONE' %}
-                                            Appointment Set.
+                                        <a href="{% url 'request_appointment' instance.id %}" ><button type="button" class="table-icon" ><i class="fa fa-comments table-i" aria-hidden="true" >  {{instance.appointment}}</i></button></a>
                                         {% else %}
-                                            <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
+                                        <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
                                         {% endif %}
                                     </td>
                                     <td><a href="{% url 'delete_reqform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>

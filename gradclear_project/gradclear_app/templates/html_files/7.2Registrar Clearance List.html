@@ -572,7 +572,11 @@ Adviser:
                             {% endif %}
                             <td>
                             {% if instance.approval_status ==  'APPROVED' %}
+                                {% if instance.clear_notif ==  'NOTIFIED' %}
+                                Notification Sent.
+                                {% else %}
                                 <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>   Notify Student</button></a>
+                                {% endif %}
                             {% else %}
                                 ❌
                             {% endif %}
