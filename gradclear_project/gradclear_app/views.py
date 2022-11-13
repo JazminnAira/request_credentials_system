@@ -5342,3 +5342,19 @@ def delete_reqform(request, id):
         delete_req = request_form_table.objects.get(id=id)
         delete_req.delete()
         return redirect('registrar_dashboard_request_list')
+    
+def student_status_update(request,id):
+    student_update = request.POST.get('status_select')
+    user_table.objects.filter(id=id).update(user_type = student_update)
+    getter = user_table.objects.get(id=id)
+    today = date.today().year
+    getter = user_table.objects.get(id=id)
+
+    user_table.objects.filter(id=id).update(year_graduated = today)
+    cur_course = getter.course
+    user_table.objects.filter(id=id).update(course_graduated = cur_course)
+    user_table.objects.filter(id=id).update(course = None)
+    user_table.objects.filter(id=id).update(year_and_section = None)
+
+    
+    return redirect(registrar_dashboard_student_list)
