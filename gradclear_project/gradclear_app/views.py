@@ -1123,6 +1123,14 @@ def reggrad_appointment(request, id):
         student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
+  
+
+    notification = "NOTIFIED"
+    grad_notif = request.POST.get('notification')
+    graduation_form_table.objects.filter(
+    id=id).update(grad_notif = notification)
+   
+
     gender_temp = user_table.objects.filter(
     id=id).values_list('gender', flat=True).distinct()
     gender = user_table.objects.filter(
@@ -1167,6 +1175,11 @@ def regclear_appointment(request,id):
     name = user_table.objects.filter(
         student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
+
+    notification = "NOTIFIED"
+    clear_notif = request.POST.get('notification')
+    clearance_form_table.objects.filter(
+    id=id).update(clear_notif = notification)
 
     gender_temp = user_table.objects.filter(
     id=id).values_list('gender', flat=True).distinct()

@@ -40,7 +40,7 @@ class user_table(AbstractUser):
         ('BTTE-Electronics Engineering Technology', 'BTTE-Electronics Engineering Technology'),
         ('BTTE-Mechanical & Production Engineering Technology', 'BTTE-Mechanical & Production Engineering Technology'),
         ('BTTE-Powerplant Engineering Technology', 'BTTE-Powerplant Engineering Technology'),
-        
+        ('BT-Automotive Engineering Technology', 'BT-Automotive Engineering Technology'),
           
     ]
 
@@ -219,6 +219,8 @@ class clearance_form_table(models.Model):
     course_adviser_signature = models.ImageField(upload_to='signature/')
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
+    clear_notif = models.CharField(
+        max_length=100, verbose_name="Notification", default="NONE", null=True)
     
     time_requested = models.DateTimeField(auto_now_add=True)
 
@@ -430,6 +432,8 @@ class graduation_form_table(models.Model):
     addsignature10 = models.CharField(max_length=100)
 
     sitsignature = models.CharField(max_length=100)
+    grad_notif = models.CharField(
+        max_length=100, verbose_name="Notification", default="NONE", null=True)
     
     time_requested = models.DateTimeField(auto_now_add=True)
 
