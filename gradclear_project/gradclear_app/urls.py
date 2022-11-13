@@ -79,7 +79,8 @@ urlpatterns = [
      path('delete_gradform/<int:id>', delete_gradform, name='delete_gradform'),
      path('delete_clearform/<int:id>', delete_clearform, name='delete_clearform'),
      path('delete_reqform/<int:id>', delete_reqform, name='delete_reqform'),
+     path('faculty_dashboard_clearance_list_all', faculty_dashboard_clearance_list_all, name='faculty_dashboard_clearance_list_all')
     ] 
-
+ 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

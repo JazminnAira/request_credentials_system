@@ -2341,7 +2341,36 @@ def faculty_dashboard(request):
                
         if clearance_form_table.objects.filter(course_adviser_signature = unapproved):
             st1= clearance_form_table.objects.filter(course_adviser_signature = unapproved).order_by('-time_requested')    
-
+            if request.user.department == "HOCS":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(accountant_signature="UNAPPROVED")).order_by('-time_requested') 
+            
+            if request.user.department == "HDLA":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(liberal_arts_signature = "UNAPPROVED")).order_by('-time_requested') 
+                
+            if request.user.department == "HDMS":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDPECS":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(pe_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDIT":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDIE":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                
+            if request.user.department == "HOCL":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(library_signature="UNAPPROVED")).order_by('-time_requested')
+                
+            if request.user.department == "HOGS":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(guidance_office_signature="UNAPPROVED")).order_by('-time_requested') 
+                
+            if request.user.department == "HOSA":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(osa_signature="UNAPPROVED")).order_by('-time_requested') 
+                
+            if request.user.department == "HADAA":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
+        
         with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name)  
         return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance })
 
@@ -2351,6 +2380,143 @@ def faculty_dashboard(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
+
+@login_required(login_url='/')
+def faculty_dashboard_clearance_list_all(request):
+    f_n= request.user.full_name
+    f_n_approved = request.user.full_name + "_APPROVED"
+    id_list =[]
+    sig=""
+    if request.method == "POST":
+        sig = request.POST.get('sig')
+        ilist = request.POST.get('id_list')
+        for i in ilist:
+            id_list.append(i)
+        comma = ","
+        while(comma in id_list):
+            id_list.remove(comma)
+        
+        print("sadsa", id_list)
+    name_temp = clearance_form_table.objects.filter(
+        id=int(i)).values_list('name', flat=True).distinct()
+       
+    f_n = request.user.full_name
+    cursor = connection.cursor()
+    query= "SELECT approval_status from `gradclear_app_clearance_form_table` where id=%s"
+    val=(int(i),)
+    cursor.execute(query, val)
+
+    row = cursor.fetchone()
+    rownum=row[0]
+    print('rownum', rownum)
+    if len(rownum) <5:
+        temp=rownum[0]
+        print(temp,"this 1")
+    else:
+        rownum1=rownum[0]
+        rownum2=rownum[1]
+        full_num= rownum1[0],rownum2[0]
+        temp = full_num[0] + full_num[1]
+        print("this 2",temp)
+
+    app_status = int(temp)
+    print(app_status)
+    numerator =app_status +1
+    adder = str(numerator) + "/12"
+    dep = request.user.department
+    signature_saved = f_n_approved + " " + sig
+
+    print("list:", id_list) 
+    for i in id_list:
+
+        if dep == "HDLA":
+            clearance_form_table.objects.filter(id=int(i)).update(
+            liberal_arts_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+            approval_status=adder)               
+        if dep == "HOCS":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                accountant_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+        if dep == "HDMS":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                mathsci_dept_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)               
+        if dep == "HDPECS":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                pe_dept_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+        if dep == "HDED":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                ieduc_dept_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+        if dep == "HDIT":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                it_dept_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)               
+        if dep == "HDIE":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                ieng_dept_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+        if dep == "HOCL":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                library_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)               
+        if dep == "HOGS":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                guidance_office_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+        if dep == "HOSA":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                osa_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)               
+        if dep == "HADAA":
+            clearance_form_table.objects.filter(id=int(i)).update(
+                academic_affairs_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)  
+        if clearance_form_table.objects.filter(course_adviser_signature=f_n + "_UNAPPROVED", id=int(i)):
+            
+            clearance_form_table.objects.filter(id=int(i)).update(
+                course_adviser_signature=signature_saved)
+            clearance_form_table.objects.filter(id=int(i)).update(
+                approval_status=adder)
+            print('forda go')
+        approved_text = "_APPROVED"
+        approval_status_checker=clearance_form_table.objects.filter(
+            Q(liberal_arts_signature__contains=approved_text) &
+            Q(accountant_signature__contains=approved_text) &
+            Q(mathsci_dept_signature__contains=approved_text) &
+            Q(pe_dept_signature__contains=approved_text) &
+            Q(ieduc_dept_signature__contains=approved_text) &
+            Q(it_dept_signature__contains=approved_text) &
+            Q(ieng_dept_signature__contains=approved_text) &
+            Q(library_signature__contains=approved_text) &
+            Q(guidance_office_signature__contains=approved_text) &
+            Q(osa_signature__contains=approved_text) &
+            Q(academic_affairs_signature__contains=approved_text) &
+            Q(course_adviser_signature__contains=approved_text), id=int(i))
+        if approval_status_checker:
+            clearance_form_table.objects.filter(
+                id=int(i)).update(approval_status="APPROVED")
+            
+            name = name_temp[0]
+            request_form_table.objects.filter(
+                name=name).update(clearance="✔")
+            
+
+        messages.success(request, "Form Approved.")
+    return redirect('faculty_dashboard_clearance_list')
+
 
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
@@ -2365,228 +2531,75 @@ def faculty_dashboard_clearance_list(request):
     f_n = request.user.full_name
     st = ""
     dep= request.user.department 
+
     course_adv= clearance_form_table.objects.filter(course_adviser=request.user.full_name )
     
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        if request.user.department == "HOCS":
+        
+        if course_adv:
+
+            st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved)).order_by('-time_requested')    
+
+            if request.user.department == "HOCS":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(accountant_signature="UNAPPROVED")).order_by('-time_requested') 
+            
+            if request.user.department == "HDLA":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(liberal_arts_signature = "UNAPPROVED")).order_by('-time_requested') 
+                
+            if request.user.department == "HDMS":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDPECS":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(pe_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDIT":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDIE":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                
+            if request.user.department == "HOCL":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(library_signature="UNAPPROVED")).order_by('-time_requested')
+                
+            if request.user.department == "HOGS":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(guidance_office_signature="UNAPPROVED")).order_by('-time_requested') 
+            
+            if request.user.department == "HOSA":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(osa_signature="UNAPPROVED")).order_by('-time_requested') 
+                
+            if request.user.department == "HADAA":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
+
+        elif request.user.department == "HOCS":
             st = clearance_form_table.objects.filter(accountant_signature="UNAPPROVED").order_by('-time_requested') 
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(accountant_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HDLA":
             st = clearance_form_table.objects.filter(liberal_arts_signature = "UNAPPROVED").order_by('-time_requested') 
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(liberal_arts_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HDMS":
             st = clearance_form_table.objects.filter(mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+           
         elif request.user.department == "HDPECS":
             st = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(pe_dept_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+           
         elif request.user.department == "HDIT":
             st = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+           
         elif request.user.department == "HDIE":
             st = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HOCL":
             st = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(library_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HOGS":
             st = clearance_form_table.objects.filter(guidance_office_signature="UNAPPROVED").order_by('-time_requested') 
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(guidance_office_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HOSA":
             st = clearance_form_table.objects.filter(osa_signature="UNAPPROVED").order_by('-time_requested') 
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(osa_signature="UNAPPROVED")).order_by('-time_requested')    
-    
+            
         elif request.user.department == "HADAA":
             st = clearance_form_table.objects.filter(academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
-               
-            if clearance_form_table.objects.filter(course_adviser_signature = f_n_unapproved):
-                st= clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) & Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')    
-        else:
-            st = clearance_form_table.objects.filter(course_adviser_signature=f_n_unapproved).order_by('-time_requested')
-
-
-        # st= clearance_form_table.objects.all().order_by('-time_requested')
-        if request.method == "POST":
-            id_list = request.POST.getlist('boxes')
-            print("list:", id_list) 
-            for i in id_list:
-                if clearance_form_table.objects.filter(course_adviser_signature=f_n +"_UNAPPROVED", id=int(i)):
-                 clearance_form_table.objects.filter(id=int(i)).update(
-                course_adviser_signature=f_n_approved)
-    
-                if request.user.department == "HOCS":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(accountant_signature=f_n_approved)
-
-                if request.user.department == "HDMS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        mathsci_dept_signature=f_n_approved)
-
-                if request.user.department == "HDPECS":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(pe_dept_signature=f_n_approved)
-
-                if request.user.department == "HDED":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(ieduc_dept_signature=f_n_approved)
-
-                if request.user.department == "HDIT":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(it_dept_signature=f_n_approved)
-
-                if request.user.department == "HDIE":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(ieng_dept_signature=f_n_approved)
-
-                if request.user.department == "HOCL":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(library_signature=f_n_approved)
-
-                if request.user.department == "HOGS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        guidance_office_signature=f_n_approved)
-
-                if request.user.department == "HOSA":
-                    clearance_form_table.objects.filter(
-                        id=int(i)).update(osa_signature=f_n_approved)
-
-                if request.user.department == "HADAA":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        academic_affairs_signature=f_n_approved)
-            
-                name_temp = clearance_form_table.objects.filter(
-                id=int(i)).values_list('name', flat=True).distinct()
-                email_temp = clearance_form_table.objects.filter(
-                    id=int(i)).values_list('student_id', flat=True).distinct()
-                email = user_table.objects.filter(
-                    student_id=email_temp[0]).values_list('email', flat=True).distinct()
-                rec_email = email[0]
-                f_n = request.user.full_name
-                cursor = connection.cursor()
-                query= "SELECT approval_status from `gradclear_app_clearance_form_table` where id=%s"
-                val=(int(i),)
-                cursor.execute(query, val)
-
-                row = cursor.fetchone()
-                rownum=row[0]
-                print('rownum', rownum)
-                if len(rownum) <5:
-                    temp=rownum[0]
-                    print(temp,"this 1")
-                else:
-                    rownum1=rownum[0]
-                    rownum2=rownum[1]
-                    full_num= rownum1[0],rownum2[0]
-                    temp = full_num[0] + full_num[1]
-                    print("this 2",temp)
-
-                app_status = int(temp)
-                print(app_status)
-                numerator =app_status +1
-                adder = str(numerator) + "/12"
-                dep = request.user.department
-                
-                if dep == "HDLA":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                    liberal_arts_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                    approval_status=adder)               
-                if dep == "HOCS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        accountant_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                if dep == "HDMS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        mathsci_dept_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)               
-                if dep == "HDPECS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        pe_dept_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                if dep == "HDED":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        ieduc_dept_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                if dep == "HDIT":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        it_dept_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)               
-                if dep == "HDIE":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        ieng_dept_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                if dep == "HOCL":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        library_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)               
-                if dep == "HOGS":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        guidance_office_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                if dep == "HOSA":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        osa_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)               
-                if dep == "HADAA":
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        academic_affairs_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)  
-                if clearance_form_table.objects.filter(course_adviser=f_n):
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        course_adviser_signature=f_n_approved)
-                    clearance_form_table.objects.filter(id=int(i)).update(
-                        approval_status=adder)
-                approved_text = "_APPROVED"
-                approval_status_checker=clearance_form_table.objects.filter(
-                    Q(liberal_arts_signature__endswith=approved_text) &
-                    Q(accountant_signature__endswith=approved_text) &
-                    Q(mathsci_dept_signature__endswith=approved_text) &
-                    Q(pe_dept_signature__endswith=approved_text) &
-                    Q(ieduc_dept_signature__endswith=approved_text) &
-                    Q(it_dept_signature__endswith=approved_text) &
-                    Q(ieng_dept_signature__endswith=approved_text) &
-                    Q(library_signature__endswith=approved_text) &
-                    Q(guidance_office_signature__endswith=approved_text) &
-                    Q(osa_signature__endswith=approved_text) &
-                    Q(academic_affairs_signature__endswith=approved_text) &
-                    Q(course_adviser_signature__endswith=approved_text), id=int(i))
-                if approval_status_checker:
-                    clearance_form_table.objects.filter(
-                                id=int(i)).update(approval_status="APPROVED")
-                    
-                    name = name_temp[0]
-                    request_form_table.objects.filter(
-                                name=name).update(clearance="✔")
-                    
-
-                messages.success(request, "Form Approved.")
+             
 
     else:
         messages.error(
@@ -2632,83 +2645,83 @@ def update_clearance(request, id, dep, sign):
     numerator =app_status +1
     adder = str(numerator) + "/12"
 
-
+    signature_saved= f_n_approved + " " + sign
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         if dep == "liberal_arts_signature":
             clearance_form_table.objects.filter(id=id).update(
-                liberal_arts_signature=f_n_approved)
+                liberal_arts_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
         if dep == "accountant_signature":
             clearance_form_table.objects.filter(id=id).update(
-                accountant_signature=f_n_approved)
+                accountant_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "mathsci_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                mathsci_dept_signature=f_n_approved)
+                mathsci_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
         if dep == "pe_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                pe_dept_signature=f_n_approved)
+                pe_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "ieduc_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                ieduc_dept_signature=f_n_approved)
+                ieduc_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "it_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                it_dept_signature=f_n_approved)
+                it_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
         if dep == "ieng_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                ieng_dept_signature=f_n_approved)
+                ieng_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "library_signature":
             clearance_form_table.objects.filter(id=id).update(
-                library_signature=f_n_approved)
+                library_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
         if dep == "guidance_office_signature":
             clearance_form_table.objects.filter(id=id).update(
-                guidance_office_signature=f_n_approved)
+                guidance_office_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "osa_signature":
             clearance_form_table.objects.filter(id=id).update(
-                osa_signature=f_n_approved)
+                osa_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
         if dep == "academic_affairs_signature":
             clearance_form_table.objects.filter(id=id).update(
-                academic_affairs_signature=f_n_approved)
+                academic_affairs_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)  
         if dep == "course_adviser_signature":
             clearance_form_table.objects.filter(id=id).update(
-                course_adviser_signature=f_n_approved)
+                course_adviser_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         
         approved_text = "_APPROVED"
         approval_status_checker=clearance_form_table.objects.filter(
-            Q(liberal_arts_signature__endswith=approved_text) &
-            Q(accountant_signature__endswith=approved_text) &
-            Q(mathsci_dept_signature__endswith=approved_text) &
-            Q(pe_dept_signature__endswith=approved_text) &
-            Q(ieduc_dept_signature__endswith=approved_text) &
-            Q(it_dept_signature__endswith=approved_text) &
-            Q(ieng_dept_signature__endswith=approved_text) &
-            Q(library_signature__endswith=approved_text) &
-            Q(guidance_office_signature__endswith=approved_text) &
-            Q(osa_signature__endswith=approved_text) &
-            Q(academic_affairs_signature__endswith=approved_text) &
-            Q(course_adviser_signature__endswith=approved_text), id=id)
+            Q(liberal_arts_signature__contains=approved_text) &
+            Q(accountant_signature__contains=approved_text) &
+            Q(mathsci_dept_signature__contains=approved_text) &
+            Q(pe_dept_signature__contains=approved_text) &
+            Q(ieduc_dept_signature__contains=approved_text) &
+            Q(it_dept_signature__contains=approved_text) &
+            Q(ieng_dept_signature__contains=approved_text) &
+            Q(library_signature__contains=approved_text) &
+            Q(guidance_office_signature__contains=approved_text) &
+            Q(osa_signature__contains=approved_text) &
+            Q(academic_affairs_signature__contains=approved_text) &
+            Q(course_adviser_signature__contains=approved_text), id=id)
         if approval_status_checker:
             clearance_form_table.objects.filter(
                         id=id).update(approval_status="APPROVED")

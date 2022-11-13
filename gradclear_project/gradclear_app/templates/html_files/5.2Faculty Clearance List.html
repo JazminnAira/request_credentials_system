@@ -673,11 +673,6 @@ Adviser:
                         <th id="course_adviser_th"></th>
                         
                     </tr>
-                    <!-- {% if st == ""%}
-                    <tr>
-                        <td colspan="10"><i class="fa fa-warning"></i> No Data Available</td>
-                    </tr>
-                    {% endif %} -->
 
                     <tr class="no_data">
                         <td colspan="10"><i class="fa fa-warning"></i> No Data</td>
@@ -690,9 +685,10 @@ Adviser:
                 
                 {% for instance in st %}
                 <tbody>
+                    
                     <tr id="Add">    
                         
-                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
+                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}} onclick="close_boxes(this)"></td>    
                         <td class="nr" hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                         <td class="name"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
@@ -789,11 +785,16 @@ Adviser:
                 </tbody>
                 {% endfor %}
             </table>
-            <button type ="button" class="button btn-m user_id" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
         </form>
+        <form method="POST" action="faculty_dashboard_clearance_list_all" hidden >
+            {% csrf_token %}
+            <input type="text" id="id_list" name="id_list" />
+            <input type="text" id="sig" name="sig" />
+            
+            <button type="submit" id="submit_btn_all" hidden/>
+        </form>
+        <button type ="button" class="button btn-m user_id" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     </div>
-        <!---->
-        
     
 
         <p class="text-center text-bold" id="p6_52"></p>
@@ -816,6 +817,9 @@ Adviser:
 
 
 <script>
+  
+
+
     // no data by default
     var dattable = document.getElementById("list_tbl_52");
     var rowcount = dattable.tBodies[0].rows.length;
@@ -905,10 +909,23 @@ Adviser:
         var image = document.getElementById('preview');
         image.src=URL.createObjectURL(event.target.files[0]);
     };
+    // close signature section when not needed
+    function close_boxes(elem){
+        document.getElementById("signature_section").style.width = "0";
+        document.getElementById("table_list").style.marginRight= "0";
+    }
 
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
+        
+        var array = []
+        var checkboxes = document.querySelectorAll('input[name=boxes]:checked')
+
+        for (var i = 0; i < checkboxes.length; i++) {
+        array.push(checkboxes[i].value)
+        }
+        document.getElementById('id_list').value= array;
     };
 
     function department1(elem){
@@ -967,29 +984,50 @@ Adviser:
       
       document.querySelector('table').addEventListener('click', handleClick);
     
+ 
+
     esign_attach_sig_btn.addEventListener("click", function() {
+        id_list = document.getElementById('id_list').value;
         var id_user = document.getElementById('attach_signature_to').value;
         var dept = document.getElementById('department').value;
         var sig = "ESIGN";
-
-        location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
-    });
+        if (id_list.length != 0){
+            document.getElementById('id_list').value = id_list
+            document.getElementById('sig').value= sig
+            document.getElementById("submit_btn_all").click()
+        }  
+        else {
+            location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
+    }});
 
     upload_attach_sig_btn.addEventListener("click", function() {
+        id_list = document.getElementById('id_list').value;
         var id_user = document.getElementById('attach_signature_to').value;
         var dept = document.getElementById('department').value;
         var sig = "UPLOAD";
+        if (id_list.length != 0){
+            document.getElementById('id_list').value = id_list
+            document.getElementById('sig').value= sig
+            document.getElementById("submit_btn_all").click()
+        }  
+        else {
 
         location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
-    });
+    }});
 
     approve_sig_btn.addEventListener("click", function() {
+        id_list = document.getElementById('id_list').value;
         var id_user = document.getElementById('attach_signature_to').value;
         var dept = document.getElementById('department').value;
         var sig = "APPROVE";
-
+        if (id_list.length != 0){
+            document.getElementById('id_list').value = id_list
+            document.getElementById('sig').value= sig
+            document.getElementById("submit_btn_all").click()
+        }  
+        else {
         location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
-    });
+    }});
 
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
