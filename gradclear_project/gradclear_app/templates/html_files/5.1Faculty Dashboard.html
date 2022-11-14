@@ -1072,10 +1072,10 @@ Adviser:
                     $(this).attr('visible', 'true');
                 });
 
-                var jobCount = $('.results tbody tr[visible="true"]').length;
-                $('.counter').text(jobCount + ' item');
+                var itemcount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(itemcount + ' item');
 
-                if (jobCount == '0') {
+                if (itemcount == '0') {
                     $('.no-result').show();
                     $('.no_data').hide();
                 } else {
