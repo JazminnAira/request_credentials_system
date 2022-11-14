@@ -35,6 +35,15 @@ import datetime
 from datetime import datetime,date,timedelta
 import os
 import time
+ 
+
+try:
+    reg = user_table.objects.get(first_name='SARAH JANE', last_name='VELOS')
+except user_table.DoesNotExist:
+    reg = user_table(first_name='SARAH JANE', last_name='VELOS', 
+    full_name='SARAH JANE VELOS', user_type='REGISTRAR', username='registrar_admin', id_number='11-1111')
+    reg.save()
+
 
 def req_print(request,id):
     buffer = BytesIO()
