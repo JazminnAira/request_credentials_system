@@ -516,11 +516,19 @@ Adviser:
                                     <td>
                                         <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
-                                                <select onchange="this.form.submit()" name="claim_select" id="changer"> 
-                                                    <option value="">{{instance.claim}}</option>
+                                            {% if instance.appointment ==  'NONE' %}
+                                                <select onchange="this.form.submit()" name="claim_select" id="changer" style="opacity:0.5;" disabled > 
+                                                    <option value="" >{{instance.claim}}</option>
                                                     <option value="CLAIMED">CLAIMED</option>
                                                     <option value="UNCLAIMED">UNCLAIMED</option>
                                                 </select>
+                                                {% else %}
+                                                <select onchange="this.form.submit()" name="claim_select" id="changer"> 
+                                                    <option value="" >{{instance.claim}}</option>
+                                                    <option value="CLAIMED">CLAIMED</option>
+                                                    <option value="UNCLAIMED">UNCLAIMED</option>
+                                                </select>
+                                            {% endif %}
                                             </form> 
                                     </td>  
                                     <td>
