@@ -386,6 +386,20 @@ Adviser:
         border-radius: 0px;
         padding: 5px;
     }
+    #button_sorter:hover,#button_sorter3:hover,#button_sorter2:hover  {
+        color: white;
+        background-color: #d3324d;
+    }
+    .dropdown-item:hover{
+        background-color:#c51d3a;
+        border:#ffff;
+    }
+    .btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+  
 
 </style>
 
@@ -538,7 +552,8 @@ Adviser:
                                         <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
                                         {% endif %}
                                     </td>
-                                    <td><a href="{% url 'delete_reqform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                                    <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
+                                        role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -564,7 +579,8 @@ Adviser:
                     <form class = "pl-4" action="upload_document_checker" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="file" id="file1" name="file">
-                        <button type="submit">Upload</button>
+                        <button type="submit" class="btn btn-white border-light btn-xl btn-1"
+                        role="button" style="border-radius: 10px; height: 35px;" >Upload</button>
                     </form>
                 {% endif %}
             </div>
