@@ -5655,7 +5655,7 @@ def delete_clearform(request, id):
         delete_clear.delete()
         messages.success(request, "Form has been deleted.")
         return redirect('/registrar_dashboard_clearance_list/%20')
-
+ 
 @login_required(login_url='/')
 def delete_reqform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
