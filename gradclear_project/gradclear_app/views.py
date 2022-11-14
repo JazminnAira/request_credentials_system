@@ -1181,6 +1181,12 @@ def regclear_appointment(request,id):
     clearance_form_table.objects.filter(
     id=id).update(clear_notif = notification)
 
+    amount_paid = clearance_form_table.objects.filter(
+    id=id).values_list('amount_paid', flat=True).distinct()
+    amount_to = clearance_form_table.objects.filter(
+        amount_paid=amount_paid[0]).values_list('amount_paid', flat=True).distinct()
+    amount_to_pay =  amount_to[0]
+
     gender_temp = user_table.objects.filter(
     id=id).values_list('gender', flat=True).distinct()
     gender = user_table.objects.filter(
@@ -1196,12 +1202,13 @@ def regclear_appointment(request,id):
     subject = 'Application for Clearance Form'
     message1 = 'Good day,   '+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
     message2 = 'Your Application for Clearance Form has been approved and is now available for printing. Kindly visit this' + '(link)' +' and follow the guidelines below.<br><br>'
-    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site'+ '(link)'+'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
-    message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
-    message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
-    message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site'+ '(link)'+'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br>'
+    message4 =  "<strong>"+'Amount to Pay:'+"</strong>"+ "<strong>" + amount_to[0] + "</strong><br><br>"
+    message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
+    message6 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
+    message7 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
 
-    message = message1 + message2 + message3 +message4 + message5 + message6 
+    message = message1 + message2 + message3 +message4 + message5 + message6 + message7
 
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [rec_email, ]
@@ -1240,6 +1247,13 @@ def request_appointment(request,id):
         purpose_of_req =  purpose_of[0]
         purpose_of_request = purpose_of_req, 
 
+        amount_paid = clearance_form_table.objects.filter(
+        id=id).values_list('amount_paid', flat=True).distinct()
+        amount_to = clearance_form_table.objects.filter(
+            amount_paid=amount_paid[0]).values_list('amount_paid', flat=True).distinct()
+        amount_to_pay =  amount_to[0]
+        
+
         name_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
         name = user_table.objects.filter(
@@ -1259,7 +1273,7 @@ def request_appointment(request,id):
         message = message1 + message2 + message3 
 
         purpose_req = request.POST.get('purpose_of_request')
-        amount = request.POST.get('amount')
+        amount_paid = request.POST.get('amount_paid')
         date_appointment = request.POST.get('date_appointment')
         request_form_table.objects.filter(
         id=id).update(appointment =date_appointment)
@@ -1271,7 +1285,7 @@ def request_appointment(request,id):
         
         
         data = {
-                'amount': amount,
+                'amount_paid': amount_to[0], 
                 'date_appointment': date_appointment, 
                 'time_appointment': time_appointment, 
                 'subject': subject, 
@@ -1290,7 +1304,7 @@ def request_appointment(request,id):
         \n\t\t{}\n<br><br><br>
         \n\t\t{}\n<br>
         
-        '''''.format(data['message'],data ['amount'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
+        '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
         msg.send()

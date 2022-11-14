@@ -436,18 +436,6 @@ Adviser:
                                 <form method="POST" action="" style="height:100%;" >
                                     {% csrf_token %}
 
-                                        {% if request.user.user_type == "REGISTRAR"%}
-                                        <!--AMOUNT TO PAY-->
-                                        <div class="form-group">
-                                            <label >Amount to Pay:</label>
-                                            <div class="input-icon">
-                                                <input type="text" id="amount" name="amount" maxlength="14" class="form-control col-form-label-sm" onkeyup="isEmpty()" placeholder="0.00" oninput="enter_amount()" data-type="currency" required>
-                                                <!-- <i>₱</i> -->
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                      
-                                  
                                         <!--DATE OF APPOINTMENT-->
                                         <div class="form-group">
                                             <label >Date of Appointment:</label>
