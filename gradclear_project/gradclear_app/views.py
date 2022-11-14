@@ -1355,7 +1355,7 @@ def student_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
             
-            form.instance.full_name = first + " " + middle + " "+ last
+            form.instance.full_name = last +", " + first + " "+ middle
            
             form.instance.user_type = "STUDENT"
             
@@ -1391,7 +1391,7 @@ def oldstudent_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
             
-            form.instance.full_name =   first + " "+ middle + " " + last 
+            form.instance.full_name =   last + ", " + first + " " + middle
            
             form.instance.user_type = "OLD STUDENT"
             form.save()
@@ -1455,7 +1455,7 @@ def alumnus_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "ALUMNUS"
-            form.instance.full_name = first + " " + middle + " "+ last
+            form.instance.full_name = last + ", " + first + " " + middle
         
             form.save()
             # subject = 'SIGNUP SUCCESS'
@@ -5356,6 +5356,7 @@ def request_form(request):
         user = request.user.user_type
         student_name = request.user.full_name
         
+        print(student_name)
         print(user)            
         if request.method == "POST":
             form = request_form
