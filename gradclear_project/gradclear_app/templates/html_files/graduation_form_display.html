@@ -618,18 +618,33 @@ Adviser:
           <form method="POST" action="graduation_form" id="grad_form" >
                {% csrf_token %}
                <!--SECTION RADIO BOX-->
-               <div class="radio" onkeyup="isEmpty()" id="radio_43">
-                    <label class="my-1 mr-2" class="form-control">
-                         <input class="my-1 mr-2" type="radio" name="shift_option" disabled value="DAY" id="day_radio_43" onclick="EnableDisableInputs()" oninput="enter_dayeve()">Day
+               <div class="form-row">
+                <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+               
+                <div class="radio" onkeyup="isEmpty()" id="radio_43">
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
                     </label>
-               </div>
-               <div class="radio">
-                    <label class="my-1 mr-2" class="form-control">
-                         <input class="my-1 mr-2" type="radio" name="shift_option" disabled value="EVE" id="eve_radio_43" onclick="EnableDisableInputs()" oninput="enter_dayeve()">Eve
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve  
                     </label>
-               </div>
-               <div id="dayeve_error_43"></div>
-               <hr>
+                </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="radio"  onkeyup="isEmpty()" id="radio_43">
+                    <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+                    
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()"required>Semester
+                    </label>
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" required>  Summer    
+                    </label>
+                </div>
+                </div>
+                <div id="dayeve_error_43"></div>
+                <hr>
 
                <!--NAME BOX-->
                <div class="form-row">
@@ -638,7 +653,7 @@ Adviser:
 
                     <div class="form-inline">
                         {% if request.user.user_type == "STUDENT" %}
-                            <label for="name" class="my-1 mr-2" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
+                            <label for="name" class="my-1 mr-3" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
 
                             
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" disabled id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
@@ -660,7 +675,7 @@ Adviser:
 
 
                     <!--COURSE DROPDOWN BOX-->
-                    <div class="form-inline col-sm-3">
+                    <div class="form-inline">
                          <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
 
                          <div>
@@ -672,36 +687,7 @@ Adviser:
                </div>
 
                <br>
-
-               <!--STUDY LOAD BOX-->
-               <div class="form-inline">
-                    <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-
-                    <label class="my-1 mr-2" class="form-control">
-                         <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" disabled id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()" disabled required>Semester
-                    </label>
-                    <label class="my-1 mr-3" class="form-control">
-                         <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SUMMER" disabled id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" disabled required>Summer    
-                    </label>
-
-
-                    <!--ENROLLED THIS SEM BOX-->
-                    <div class="form-inline">
-                         <label for="Esum/Esem" id="Esum/Esem_lbl_43"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-
-                         <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" onkeypress="isNumber(event)" disabled required>
-
-
-                         <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                         <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43" disabled  oninput="enter_deadline()"  onclick="getEnrolled();EnableDisableEnrolled();" disabled required>Yes
-                         
-                         </label>
-
-                         <label class="my-1 mr-2" class="form-control">
-                         <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43" disabled  oninput="enter_enroll()"  onclick="getEnrolled();EnableDisableDeadline();" disabled required>No
-                         </label>
-                    </div>
-               </div><br>
+             
 
                <!--SUBJECT TABLE-->
                
@@ -902,7 +888,7 @@ Adviser:
      
 
                <!--ADDITIONAL SUBJECTS TABLE-->
-               <p1>Additional Subjects. <em>(Indicate if Day or Evening)</em></p1>
+               <p1 style="color:#757575"><b>Additional Subjects:</b></p1>
                <table class="table-responsive-sm" id="addSubject_table_43">
                     <thead>
                     <tr>
@@ -1087,29 +1073,43 @@ Adviser:
                </tbody>
                </table><br><br>
 
-               
+               <div class="form-inline">
+                <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+
+                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
+
+
+                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" required>Yes
+                    
+                </label>
+
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" required>No
+                </label>
+                </div>
 
                <!--DEADLINE BOX-->
                <div class="form-inline">
-                    <label for="name" class="col-sm-0 col-form-label col-form-label-mb">If no, file your application papers. Deadline:</label>
-                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control mx-sm-3" oninput="enter_deadline()" disabled required>
-               </div>
+                    <label for="name" class="col-form-label my-1">If no, file your application papers. Deadline:</label>
+                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled required>
+               </div><br>
 
 
                <!--SUPERVISED INDUSTRIAL TRAINING BOX-->
                <p2 style="color: #757575;"> <b> B. Supervised Industrial Training: </b><em>(Optional)</em></p2><br>
-               <p4>If you have undergone Supervised Industrial Training<em>(12 Unit).</em></p4><br>
-               <p4><em>Please fill up the following:</em></p4><br>
+               <p4>If you have undergone Supervised Industrial Training<em>(12 Unit).</em></p4>
+               <p4><em>Please fill up the following:</em></p4><br><br>
 
                <!--PERIOD OF TRAINING BOX-->
                <div class="form-inline">
                     <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="potF_lbl_43">1. Period of Training From:</label>
-                    <input type="date" id="potF_box_43" name="trainP_startdate" value="{{i.trainP_startdate}}" disabled class="form-control mx-sm-3">
+                    <input type="date" id="potF_box_43" name="trainP_startdate" value="{{i.trainP_startdate}}" disabled class="form-control mx-sm-2">
 
                     <label for="To" id="potT_lbl_43"> To:</label>
                     <input type="date" id="potT_box_43" name="trainP_enddate" value="{{i.trainP_enddate}}" disabled class="form-control mx-sm-3">
 
-               </div>
+               </div><br>
 
                <!--SIT INSTRUCTOR BOX-->
                <div class="form-inline">
@@ -1118,7 +1118,7 @@ Adviser:
                </div>
 
 
-               
+             
                <!--HOME BUTTON
                <a onclick="opensdb()" class="float">
                     <i class='fa fa-home my-float'></i>

@@ -507,14 +507,6 @@ Adviser:
         color: black;
     }
     
-    .table-hover tbody td,
-    .table-hover tbody tr {
-        height: 70px;
-        border: 1px solid black;
-        text-align: center;
-        padding: 5px;
-    }
-    
     #list_tbl_51 th {
         text-align: center;
         border: 1px solid black;
@@ -533,15 +525,12 @@ Adviser:
         text-align: center;
         padding: 5px;
     }
-    
-    .table-hover tbody tr:nth-child(odd) {
+    .table-hover tbody tr:nth-child(even) {
         background-color: #f5f0f6;
     }
-    
-    .table-hover tbody tr:nth-child(even) {
-        background-color: #dedede;
+    .table-hover tbody tr:nth-child(odd) {
+        background-color: transparent;
     }
-    
     footer {
         position: fixed;
         bottom: 0;

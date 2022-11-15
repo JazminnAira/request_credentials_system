@@ -349,7 +349,7 @@ Adviser:
         color: #ffff;
     }
 
-    #drpdwn{
+    #dropdownMenuLink{
         background-color: #e7dfe4;
         color: black;
         margin-bottom: 5px;
@@ -358,6 +358,30 @@ Adviser:
         padding-bottom: 1px;
         font-family: Arial, Helvetica, sans-serif;
         font-style: normal;
+    }
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+    .dropdown-item:hover{
+        background-color:#c51d3a;
+        border:#ffff;
+    }
+    #btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: #fff;
+    }
+    #btn:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
     }
 </style>
 
@@ -373,7 +397,7 @@ Adviser:
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
-        <a class="btn btn-secondary dropdown-toggle" id= "drpdwn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select Course
         </a>
         
@@ -579,7 +603,7 @@ Adviser:
                                 ❌
                             {% endif %}
                             </td>
-                            <td><a href="{% url 'delete_clearform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                            <td><a href="{% url 'delete_clearform' instance.id %}"><button class="table-icon" id="btn" >Remove</button></a>
                             </td>
                         </tr>
                     </tbody>

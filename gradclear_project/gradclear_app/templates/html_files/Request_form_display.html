@@ -582,15 +582,15 @@ Adviser:
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
             <div class="form-group row pl-3">
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
                     <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||

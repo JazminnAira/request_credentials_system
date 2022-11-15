@@ -358,8 +358,18 @@ Adviser:
         color: #ffff;
     }
 
-    #drpdwn{
+    #dropdownMenuLink{
         background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
         color: black;
         margin-bottom: 5px;
         margin-left: 10px;
@@ -374,10 +384,10 @@ Adviser:
         border:none;
     }
 
-    #changer:hover {
+    /* #changer:hover {
         background-color:#636363;
         border:#ffff;
-    }
+    } */
 
     #button_sorter,#button_sorter3,#button_sorter2   {
         background-color: #424242;
@@ -386,6 +396,20 @@ Adviser:
         border-radius: 0px;
         padding: 5px;
     }
+    #button_sorter:hover,#button_sorter3:hover,#button_sorter2:hover  {
+        color: black;
+        background-color: #d3324d;
+    }
+    .dropdown-item:hover{
+        background-color:#c51d3a;
+        border:#ffff;
+    }
+    .btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+  
 
 </style>
 
@@ -403,7 +427,7 @@ Adviser:
         <!--SEARCH BUTTON
         <a><button onClick="return search()" type = "button" id="search_btn_77">Search</button></a>-->
 
-        <a class="btn btn-secondary dropdown-toggle" id= "drpdwn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
             Select
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -465,6 +489,7 @@ Adviser:
                                 <th>Status</th>
                                 <th>Appointment</th>
                                 <th></th>
+                            
                             </tr>
                             <tr class="no_data">
                                 <td colspan="10"><i class="fa fa-warning"></i> No Data</td>
@@ -481,6 +506,7 @@ Adviser:
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                                     <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
+                                
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -538,8 +564,10 @@ Adviser:
                                         <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
                                         {% endif %}
                                     </td>
-                                    <td><a href="{% url 'delete_reqform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                                    <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
+                                        role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
                                     </td>
+                                   
                                 </tr>
                             </tbody>
                         {% endfor %}
@@ -564,7 +592,8 @@ Adviser:
                     <form class = "pl-4" action="upload_document_checker" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="file" id="file1" name="file">
-                        <button type="submit">Upload</button>
+                        <button type="submit" class="btn btn-white border-light btn-xl btn-1"
+                        role="button" style="border-radius: 10px; height: 35px;" >Upload</button>
                     </form>
                 {% endif %}
             </div>
@@ -620,6 +649,23 @@ Adviser:
 
 <script>
     // no data by default
+    document.getElementById('button_sorter').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/ALL"
+    };
+
+    document.getElementById('button_sorter2').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/CLAIMED"
+    };
+
+    document.getElementById('button_sorter3').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/UNCLAIMED"
+    };
+
+    function openrdb() {
+        window.location.replace("{% url 'registrar_dashboard' %}");
+    }
+
+
     var dattable = document.getElementById("list_tbl_77");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -642,22 +688,7 @@ Adviser:
         $('.no-result2').hide();
     }
 
-    document.getElementById('button_sorter').onclick = function() {
-        location.href = "/registrar_dashboard_organize_request_list/ALL"
-    };
-
-    document.getElementById('button_sorter2').onclick = function() {
-        location.href = "/registrar_dashboard_organize_request_list/CLAIMED"
-    };
-
-    document.getElementById('button_sorter3').onclick = function() {
-        location.href = "/registrar_dashboard_organize_request_list/UNCLAIMED"
-    };
-
-    function openrdb() {
-        window.location.replace("{% url 'registrar_dashboard' %}");
-    }
-
+    
    
     // TAB JS
     var items = document.querySelectorAll('#tabz_77');
