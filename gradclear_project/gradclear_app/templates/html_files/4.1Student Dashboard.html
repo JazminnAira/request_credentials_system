@@ -369,10 +369,6 @@ Adviser:
         overflow-wrap: break-word;
     }
     
-    .modal-footer {
-        background-color: #c51d3a;
-    }
-    
     #account_body_41 {
         background-color: #dedede;
         border-radius: 10px 10px 0px 0px;
@@ -388,10 +384,6 @@ Adviser:
     
     #account_footer_41 {
         background-color: #424242;
-    }
-    
-    .modal-footer {
-        background-color: #c51d3a;
     }
     
     h6 {
@@ -416,11 +408,15 @@ Adviser:
         text-align: right;
         padding-right: 10px;
     }
-    
+    #passwordsavechanges_btn_41,
     .btn {
         border-radius: 10px;
         background-color: #c51d3a;
         color: white;
+    }
+    #passwordsavechanges_btn_41:hover {
+        color: white;
+        background-color: #d3324d;
     }
     
     .btn.list_tbl_41 {
@@ -586,7 +582,7 @@ Adviser:
     #addresssavechanges_btn_41,
     #emailsavechanges_btn_41,
     #coursesavechanges_btn_41,
-    #passwordsavechanges_btn_41,
+    
     #add_btn_41,
     #logout_btn_41 {
         background-color: #424242;
@@ -596,7 +592,6 @@ Adviser:
     #addresssavechanges_btn_41:hover,
     #emailsavechanges_btn_41:hover,
     #coursesavechanges_btn_41:hover,
-    #passwordsavechanges_btn_41:hover,
     #add_btn_41:hover,
     #logout_btn_41:hover,
     #button:hover {
@@ -712,6 +707,7 @@ Adviser:
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">
+    
    
 </div>
 
@@ -804,7 +800,8 @@ Adviser:
 
                     <!--MODAL FOOTER-->
                     <div class="modal-footer" id="account_footer_41">
-                        
+                        <!--CHANGEPASSWORD BUTTON-->
+                        <a href="#" data-toggle="modal" data-target="#settings_modal_41" class="btn btn-secondary" role="button" data-dismiss="modal" style="border-radius: 10px;">Change Password</a>
                         <!--LOGOUT BUTTON-->
                         <a href="{% url 'logout' %}" type="submit" class="btn btn-secondary" role="button" style="border-radius: 10px;" aria-pressed="true">Log Out</a>
                     </div>
@@ -857,99 +854,55 @@ Adviser:
         </div>
     </div>
 
-    <!--CLEARANCE STATUS MODAL-->
-    <div class="modal fade" id="ClearanceStatus_modal_41" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+    <!--SETTINGS STATUS MODAL-->
+    <div class="modal fade" id="settings_modal_41" tabindex="-1" >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width: 100%;">
 
-                <!--MODAL HEADER-->
-                <div class="modal-header" id="clearance_header_41">
-                    <h6 class="modal-title" id="header_lbl_41"><b>THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE (To be signed by the responsible officials concerned.)</b></h6>
+                <!--CHANGE PASSWORD MODAL HEADER-->
+                <div class="modal-header">
+                    <h3 class="modal-title">Change Password</h3>
 
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
+                    <!--CHANGE PASSWORD CLOSE BUTTON-->
+                    <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
+                     data-placement="right" title="Close">x</button>
                 </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group row">
-                            <label for="accnt_41" class="col-sm-2 col-form-label col-form-label-sm" id="accnt_lbl_41">1.ACOUNTANT:</i></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="accnt_box_41" name="accnt_box_041" class="form-control" readonly>
+                
+                <!--CHANGE PASSWORD MODAL BODY-->
+                <div class="modal-body w-100 text-center">
+                    <form method= "POST" action="updatePassword">
+                        {% csrf_token %}
+        
+                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
+                            
+                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
+                            <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
+                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="old_pass_length(),ON_match()" required>
+                            </div><br>-->
+                            <div class="input-group">
+                            <label for="newpass_41" class="my-1 mr-5" id="newpass_lbl_41">New Password:</label>
+                            <input type="text" id="new_pass_41" name="new_pass_041" value="{{ request.GET.new_pass_041 }}" class="form-control"
+                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="new_pass_length(),match_new_pass(),ON_match1()"required></div>
+                            <div class="input-group">
+                            <label for="confirmpass_41" class="my-1 mr-4" id="confirmpass_lbl_41">Confirm Password:</label>
+                            <input type="text" id="confirm_pass_41" name="confirm_pass_041" value="{{ request.GET.confirm_pass_041 }}" class="form-control"
+                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="confirm_pass_length(),match_confirm_pass(),ON_match2()"required>
+                            </div>
+                                <p id="sp_error_41" style="color:red;"></p>
+                                <p id="spm_error_41" style="color:red;"></p>
+                                <p id="spon_error_41" style="color:red;"></p>
+                            </div>
+                             <!--CHANGE PASSWORD MODAL FOOTER-->
+                            <div class="modal-footer" id="account_footer_41">
+                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit4" id="passwordsavechanges_btn_41" >Save Changes</button>
                             </div>
                         </div>
-                        <label for="dfiled_41" id="dfiled_lbl_41"><b>2.DEPARTMENT HEADS:</b></label>
+                    </form>    
 
-                        <div class="form-group row">
-                            <label for="la_41" class="col-sm-2 col-form-label col-form-label-sm" id="la_lbl_41">a.LIBERAL ARTS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="la_box_41" name="la_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="mathsci_41" class="col-sm-2 col-form-label col-form-label-sm" id="mathsci_lbl_41">b.MATH & SCIENCES:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="mathsci_box_41" name="mathsci_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="dpecs_41" class="col-sm-2 col-form-label col-form-label-sm" id="dpecs_lbl_41">b.DPECS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="dpecs_box_41" name="dpecs_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <p><b>d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL EDUCATION/ENGINEERING:</b></p>
-
-                        <div class="form-group row">
-                            <label for="it_41" class="col-sm-2 col-form-label col-form-label-sm" id="it_lbl_41"><i>(Please underline the appropriate department)</i></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="it_box_41" name="it_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="crsshop_41" class="col-sm-2 col-form-label col-form-label-sm" id="crsshop_lbl_41">3.COURSE/SHOP ADVISER:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="crsshop_box_41" name="crsshop_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="cl_41" class="col-sm-2 col-form-label col-form-label-sm" id="cl_lbl_41">4.CAMPUS LIBRARIAN:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="cl_box_41" name="cl_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="gc_41" class="col-sm-2 col-form-label col-form-label-sm" id="gc_lbl_41">5.GUIDANCE COUNSELOR:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="gc_box_41" name="gc_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="hosf_41" class="col-sm-2 col-form-label col-form-label-sm" id="hosf_lbl_41">6.HEAD OF STUDENT AFFAIRS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="hosf_box_41" name="hosf_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="adfac_41" class="col-sm-2 col-form-label col-form-label-sm" id="adfac_lbl_41">7.ASST. DIR. FOR ACADEMIC AFFAIRS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="adfac_box_41" name="adfac_box_041" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!--MAIN-->
     <div class="container-fluid">
@@ -1093,6 +1046,10 @@ Adviser:
 </html>
 
 <script>
+    $('#AccountSettings_modal_41').on('hidden.bs.modal', function () {
+    // Load up a new modal...
+    $('#ClearanceStatus_modal_41').modal('show')
+    })
     // no data by default
     var dattable = document.getElementById("list_tbl_41");
     var rowcount = dattable.tBodies[0].rows.length;

@@ -126,6 +126,10 @@ urlpatterns = [
      path('reg_updatePassword', reg_updatePassword, name='reg_updatePassword'),
      path('reg_updateContact', reg_updateContact, name='reg_updateContact'),
 
+      # UPDATE STAFF SETTINGS
+     path('staff_updatePassword', staff_updatePassword, name='staff_updatePassword'),
+
+
      # PRINT FORMS  
      path('clearance_print/<str:id>', clearance_print, name='clearance_print'),
      path('graduation_print/<str:id>', graduation_print, name='graduation_print'), 

@@ -4541,6 +4541,35 @@ def reg_updatePassword(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
+def staff_updatePassword(request):
+    if request.user.is_authenticated and request.user.user_type == "STAFF":
+        print('here')
+        if request.method == "POST":
+            new_password = request.POST.get('new_pass_071')
+            confirm_password = request.POST.get('confirm_pass_071')
+
+            if new_password == confirm_password:
+                print("same")
+                v = request.POST.get('validator2')
+                u = user_table.objects.get(student_id__exact=v)
+
+                u.set_password(new_password)
+                u.save()
+                messages.success(
+                    request, 'You have successfully changed your password. Please log in again.')
+                return redirect('/')
+
+            else:
+                messages.success(
+                    request, 'New and Confirm Password does not match. ')
+                return redirect('/registrar_dashboard')
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+    print('running')
+    return render(request, 'html_files/7.1Registrar Dashboard.html')
+
 
 @login_required(login_url='/')
 def reg_updateContact(request):
