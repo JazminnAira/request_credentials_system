@@ -5391,11 +5391,6 @@ def request_form137_update(request, id):
     request_form_table.objects.filter(id=id).update(form_137=form_change)
     return redirect(registrar_dashboard_request_list)
 
-def request_TOR_update(request, id):
-    form_change = request.POST.get('TOR_select')
-    request_form_table.objects.filter(id=id).update(TOR=form_change)
-    return redirect(registrar_dashboard_request_list)
-
 def request_claim_update(request, id):
     form_change = request.POST.get('claim_select')
     request_form_table.objects.filter(id=id).update(claim=form_change)
