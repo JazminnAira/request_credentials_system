@@ -368,6 +368,16 @@ Adviser:
            margin-bottom: 0;
          }
    }
+    #btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: #fff;
+    }
+    #btn:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
+    }
 
 
 </style>
@@ -565,7 +575,7 @@ Adviser:
                                 ❌
                             {% endif %}
                             </td>
-                            <td><a href="{% url 'delete_gradform' instance.id %}"><button type="button" class="table-icon" style="background-color:#c51d3a; color:#fff;">Delete</button></a>
+                            <td><a href="{% url 'delete_gradform' instance.id %}"><button type="button" class="table-icon" id="btn">Remove</button></a>
                             </td>
                             
                         </tr>
