@@ -18,6 +18,7 @@ urlpatterns = [
      path('faculty_signup', faculty_registration, name='faculty_signup'),
      path('oldstudent_signup', oldstudent_registration, name='oldstudent_signup'),
      path('student_signup', student_registration, name='student_signup'),
+     path('staff_signup', staff_registration, name='staff_signup'),
 
      # 
      path('clearance_view', clearance_view, name='clearance_view'),
@@ -49,17 +50,21 @@ urlpatterns = [
           name='faculty_dashboard_clearance_list'),
      path('faculty_dashboard_graduation_list', faculty_dashboard_graduation_list,
           name='faculty_dashboard_graduation_list'),
-     path('registrar_dashboard_faculty_list', registrar_dashboard_faculty_list,
-          name="registrar_dashboard_faculty_list"),
      path('registrar_dashboard_request_list', registrar_dashboard_request_list, 
           name="registrar_dashboard_request_list"),
+     path('registrar_dashboard_clearance_list/<str:id>', registrar_dashboard_clearance_list,
+          name='registrar_dashboard_clearance_list'),
+     path('registrar_dashboard_graduation_list/<str:id>', registrar_dashboard_graduation_list,
+          name='registrar_dashboard_graduation_list'),
+     
+     # USER LISTS
+     path('registrar_dashboard_faculty_list', registrar_dashboard_faculty_list,
+          name="registrar_dashboard_faculty_list"),
      path('registrar_dashboard_student_list', registrar_dashboard_student_list,
           name="registrar_dashboard_student_list"),
-     path('registrar_dashboard_clearance_list/<str:id>', registrar_dashboard_clearance_list,
-               name='registrar_dashboard_clearance_list'),
-     path('registrar_dashboard_graduation_list/<str:id>', registrar_dashboard_graduation_list,
-               name='registrar_dashboard_graduation_list'),
-     
+     path('registrar_dashboard_staff_list', registrar_dashboard_staff_list,
+          name="registrar_dashboard_staff_list"),
+
      # FORM LISTS (WITH FUNCTION OF APPROVING ALL)
      path('faculty_dashboard_clearance_list_all', faculty_dashboard_clearance_list_all, 
           name='faculty_dashboard_clearance_list_all'),
@@ -79,6 +84,7 @@ urlpatterns = [
      # REMOVE USER
      path('faculty_list_remove/<int:id>', faculty_list_remove, name="faculty_list_remove"),
      path('student_list_remove/<int:id>', student_list_remove, name="student_list_remove"),
+     path('staff_list_remove/<int:id>', staff_list_remove, name="staff_list_remove"),
 
      # LIST ORGANIZER
      path('registrar_dashboard_organize_request_list/<str:id>', registrar_dashboard_organize_request_list,

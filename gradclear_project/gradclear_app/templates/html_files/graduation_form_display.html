@@ -599,7 +599,7 @@ Adviser:
             <a href="{% url 'faculty_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>
-            {% elif request.user.user_type == "REGISTRAR" %}
+            {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
             <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>

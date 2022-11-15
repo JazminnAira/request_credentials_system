@@ -11,7 +11,7 @@ class signup_form(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': '********', 'autocomplete': 'off', 'data-toggle': 'password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': '********', 'autocomplete': 'off', 'data-toggle': 'password'}))
-
+    
     class Meta(UserCreationForm):
         model = user_table
         fields = ['email', 'first_name', 'last_name', 'middle_name','address', 'gender', 'course', 'password1',

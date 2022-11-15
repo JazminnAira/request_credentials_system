@@ -118,7 +118,7 @@ class user_table(AbstractUser):
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    address = models.CharField(max_length=100, verbose_name="Address")
+    address = models.CharField(max_length=100, verbose_name="Address", null=True, blank=True)
     gender = models.CharField(
         max_length=100, choices=gender, null=True, blank=True)
     id_number = models.CharField(
@@ -163,7 +163,7 @@ class clearance_form_table(models.Model):
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     present_address = models.CharField(max_length=100, verbose_name="Present Address")
-    course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
+    course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
      
     date_filed = models.CharField(max_length=20, verbose_name="Date Filed")
     date_admitted_in_tup = models.CharField(
