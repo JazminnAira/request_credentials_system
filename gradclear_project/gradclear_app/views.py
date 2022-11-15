@@ -44,7 +44,7 @@ import time
 #     full_name='SARAH JANE VELOS', user_type='REGISTRAR', username='registrar_admin', id_number='11-1111')
 #     reg.save()
 
-
+@login_required(login_url='/')
 def req_print(request,id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
@@ -210,7 +210,7 @@ def req_print(request,id):
         response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
         return response
 
-
+@login_required(login_url='/')
 def graduation_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
@@ -806,7 +806,7 @@ def graduation_print(request, id):
         response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
-
+@login_required(login_url='/')
 def clearance_print(request, id):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
@@ -930,7 +930,7 @@ def clearance_print(request, id):
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
-
+@login_required(login_url='/')
 def appointment(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         gform = form
@@ -1026,7 +1026,7 @@ def appointment(request, id, form):
             return render(request, 'html_files/appointment.html', {'gform' : gform})
         
         
-
+@login_required(login_url='/')
 def appointmentgrad(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         gform = form
@@ -1118,6 +1118,7 @@ def appointmentgrad(request, id, form):
         else:
             return render(request, 'html_files/appointment.html', {'gform' : gform})
 
+@login_required(login_url='/')
 def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
@@ -1171,6 +1172,7 @@ def reggrad_appointment(request, id):
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_graduation_list/%20')
 
+@login_required(login_url='/')
 def regclear_appointment(request,id):
     email_temp = clearance_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
@@ -1228,6 +1230,7 @@ def regclear_appointment(request,id):
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_clearance_list/%20')
 
+@login_required(login_url='/')
 def request_appointment(request,id):
     if request.method == 'POST':
         email_temp = request_form_table.objects.filter(
@@ -1360,7 +1363,6 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('/')
-
 
 def student_registration(request):
     form = signup_form()
@@ -1719,6 +1721,7 @@ def clearance_form(request):
 
     return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow})
 
+@login_required(login_url='/')
 def clearance_view(request):
     fullname = request.user.full_name
     check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
@@ -5281,7 +5284,7 @@ def registrar_dashboard_graduation_list(request, id):
         return redirect('/')
     return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
 
-
+@login_required(login_url='/')
 def set_appointment(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         date = ""
@@ -5339,6 +5342,7 @@ def registrar_dashboard_faculty_list(request):
     # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
     
 #DELETE FACULTY  
+@login_required(login_url='/')
 def faculty_list_remove(request, id):
     print("hey")
     delete_faculty = user_table.objects.get(id=id)
@@ -5347,6 +5351,7 @@ def faculty_list_remove(request, id):
     
     return redirect (registrar_dashboard_faculty_list)
 
+@login_required(login_url='/')
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
     
@@ -5411,6 +5416,7 @@ def registrar_dashboard_staff_list(request):
     return render(request, template, context)
 
 #DELETE STUDENT/REQUESTER
+@login_required(login_url='/')
 def student_list_remove(request, id):
     print("hey")
     delete_student = user_table.objects.get(id=id)
@@ -5420,6 +5426,7 @@ def student_list_remove(request, id):
     return redirect (registrar_dashboard_student_list)
 
 #DELETE STAFF
+@login_required(login_url='/')
 def staff_list_remove(request, id):
     delete_staff = user_table.objects.get(id=id)
     delete_staff.delete()
@@ -5455,6 +5462,7 @@ def registrar_dashboard_organize_request_list(request, id):
     return render(request,'html_files/Request List.html', {'data': requests,'data2': doc, 'sorter_type' : sorter})
 
 #DEFAULT PAGE
+@login_required(login_url='/')
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
         requests = request_form_table.objects.all().order_by('-time_requested').values()
@@ -5466,21 +5474,25 @@ def registrar_dashboard_request_list(request):
     
     return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
 
+@login_required(login_url='/')
 def request_official_update(request, id):
     form_change = request.POST.get('or_select')
     request_form_table.objects.filter(id=id).update(official_receipt=form_change)
     return redirect(registrar_dashboard_request_list)
 
+@login_required(login_url='/')
 def request_form137_update(request, id):
     form_change = request.POST.get('form137_select')
     request_form_table.objects.filter(id=id).update(form_137=form_change)
     return redirect(registrar_dashboard_request_list)
 
+@login_required(login_url='/')
 def request_TOR_update(request, id):
     form_change = request.POST.get('TOR_select')
     request_form_table.objects.filter(id=id).update(TOR=form_change)
     return redirect(registrar_dashboard_request_list)
 
+@login_required(login_url='/')
 def request_claim_update(request, id):
     form_change = request.POST.get('claim_select')
     request_form_table.objects.filter(id=id).update(claim=form_change)
@@ -5764,6 +5776,7 @@ def delete_reqform(request, id):
         messages.success(request, "Form has been deleted.")
         return redirect('registrar_dashboard_request_list')
     
+@login_required(login_url='/')
 def student_status_update(request,id):
     student_update = request.POST.get('status_select')
     user_table.objects.filter(id=id).update(user_type = student_update)
