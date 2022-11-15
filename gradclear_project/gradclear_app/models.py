@@ -454,8 +454,6 @@ class request_form_table(models.Model):
     purpose_of_request_reason = models.CharField(
         max_length=100, verbose_name="Purpose of Request",null=True)
     amount = models.CharField(max_length=100, verbose_name="Amount", default="0")
-    
-    TOR = models.CharField(max_length=50,default="❌",null=True)
     form_137 = models.CharField(max_length=50, default="❌",null=True)
     clearance = models.CharField(max_length=50, default="❌",null=True)
     official_receipt = models.CharField(max_length=50, default="❌",null=True)
