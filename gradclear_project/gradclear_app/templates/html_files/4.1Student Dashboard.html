@@ -706,7 +706,7 @@ Adviser:
         <a style="padding-left: 21px;" href="{% url 'clearance_view'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
         </i><span class="icon-text">Clearance Form</span></a><br>
     {% else %}   
-        <a style="padding-left: 21px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'clearance_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+        <a style="padding-left: 21px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="clearance_form/ApplicationForGraduation/ApplyForGraduation"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
         </i><span class="icon-text">Clearance Form</span></a><br>
     {% endif %}
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
@@ -1184,11 +1184,6 @@ Adviser:
     function opengrad() {
         window.location.replace("{% url 'graduation_form' %}");
     }
-
-    function openclear() {
-        window.location.replace("{% url 'clearance_form' %}");
-    }
-
 
     /*BUTTON CLICK DETECTOR
                                 var buttonclicked; 

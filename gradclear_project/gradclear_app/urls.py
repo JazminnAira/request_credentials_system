@@ -23,7 +23,7 @@ urlpatterns = [
      path('clearance_view', clearance_view, name='clearance_view'),
 
      # FORMS
-     path('clearance_form', clearance_form, name='clearance_form'),
+     path('clearance_form/<str:type>/<str:req>', clearance_form, name='clearance_form'),
      path('graduation_form', graduation_form, name='graduation_form'),
      path('request_form', request_form, name="request_form"),
 

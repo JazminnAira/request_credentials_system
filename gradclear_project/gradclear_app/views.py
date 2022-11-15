@@ -1593,9 +1593,10 @@ def student_dashboard(request):
 
 
 @login_required(login_url='/')
-def clearance_form(request):
+def clearance_form(request, type, req):
     a = user_table.objects.filter(user_type="FACULTY").values_list('full_name', flat=True).distinct()
-    
+    clearance_type = type
+    requested = req
     if request.user.is_authenticated and request.user.user_type == "STUDENT":
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today() 
@@ -1648,6 +1649,8 @@ def clearance_form(request):
             request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             application_graduation = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
             check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
+            latest_others = request_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('request', flat=True).distinct()
+            print(latest_others[0])
             
             if request_clearance:
                 if application_graduation[0] !="Application for Graduation":
@@ -1655,46 +1658,101 @@ def clearance_form(request):
                         allow_request = request_clearance[0]
                         if check_apply_graduation:
                             graduation_allow = check_apply_graduation[0]
+                            if latest_others:
+                                latest_data = latest_others[0]
+                                if latest_data.__contains__('Others'):
+                                    requested = "Others"
+                                    other_data = latest_others[0]
+                                else:
+                                    other_data = latest_others[0]
+                            else:
+                                other_data=""
                         else:
                             graduation_allow = ""
+                            if latest_others:
+                                latest_data = latest_others[0]
+                                if latest_data.__contains__('Others'):
+                                    requested = "Others"
+                                    other_data = latest_others[0]
+                                else:
+                                    pass
+                            else:
+                                other_data=""
                     else:
                         allow_request = "UNAPPROVED"
                         if check_apply_graduation:
                             if check_apply_graduation[0] == "APPROVED":
                                 graduation_allow = check_apply_graduation[0]
-    
+                                if latest_others:
+                                    latest_data = latest_others[0]
+                                    if latest_data.__contains__('Others'):
+                                        requested = "Others"
+                                        other_data = latest_others[0]
+                                    else:
+                                        pass
+                                else:
+                                    other_data=""
                             else:
                                 graduation_allow = check_apply_graduation[0]
+                                if latest_others:
+                                    latest_data = latest_others[0]
+                                    if latest_data.__contains__('Others'):
+                                        requested = "Others"
+                                        other_data = latest_others[0]
+                                    else:
+                                        other_data = latest_others[0]
+                                else:
+                                    other_data=""
                         else:
                             graduation_allow = ""
+                            if latest_others:
+                                latest_data = latest_others[0]
+                                if latest_data.__contains__('Others'):
+                                    requested = "Others"
+                                    other_data = latest_others[0]
+                                else:
+                                    other_data =""
+                            else:
+                                other_data=""
                 else:
                     allow_request =""
                     if check_apply_graduation[0] == "APPROVED":
                         graduation_allow = check_apply_graduation[0]
+                        other_data=""
 
                     else:
                         graduation_allow = check_apply_graduation[0]
+                        other_data=""
             else:
                 allow_request = ""
                 graduation_allow = ""
+                other_data=""
+
 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow, 'clearance_type' : clearance_type, 'requested': requested, 'other_data' : other_data})
 
 def clearance_view(request):
     fullname = request.user.full_name
     check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
     id_application_for_grad = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('id', flat=True).distinct()
     clearance_for_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values()
+    latest_others = request_form_table.objects.filter(name = fullname).order_by('-time_requested').values_list('request', flat=True).distinct()
     
     if id_application_for_grad:
         id = id_application_for_grad[0]
     else:
         pass
+    
+    if latest_others:
+        other_data = latest_others[0]
+        print(other_data)
+    else:
+        other_data =""
     
     if check_apply_graduation:
         #Signature Display
@@ -2040,11 +2098,12 @@ def clearance_view(request):
             'osa_name' : osa_name,
             'adaa_name' : adaa_name,
             'it_name' : it_name,
+            'other_data':other_data 
                 
             }
         return render(request, 'html_files/clearance_form_display.html',context)
     else:
-        return redirect(clearance_form)
+        return redirect('clearance_form/ApplicationForGraduation/ApplyForGraduation')
 
 @login_required(login_url='/')
 def graduation_form(request):
@@ -4478,6 +4537,19 @@ def reg_updateContact(request):
 def display_clearform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "FACULTY" or "REGISTRAR":
         clearance = clearance_form_table.objects.filter(id=id).values()
+        others_data = clearance_form_table.objects.filter(id=id).values_list('purpose_of_request', flat=True).distinct()
+        
+        if others_data:
+            o_data = others_data[0]
+            if o_data.__contains__("Others"):
+                requested = "Others"
+                others = others_data[0]
+            else:
+                requested = ""
+                others ="" 
+        else:
+            others =""
+            requested = ""
         
         #Signature Display
         #ACCOUNTANT
@@ -4827,6 +4899,8 @@ def display_clearform(request, id):
         'osa_name' : osa_name,
         'adaa_name' : adaa_name,
         'it_name' : it_name,
+        'others': others,
+        'requested':requested
     }
 
     print('running')
@@ -5409,6 +5483,7 @@ def request_form(request):
         if request.method == "POST":
             form = request_form
             student_id = request.POST.get('stud_id_pre')
+            amount = request.POST.get('amount_paid')
             last_name = request.POST.get('ln_box_pre')
             first_name = request.POST.get('fn_box_pre')
             middle_name = request.POST.get('mn_box_pre')
@@ -5428,8 +5503,7 @@ def request_form(request):
             print(name2)
     
             form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
-                                                     address=address, course=course,date=date, control_number=control_num,
-                                                     contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     address=address, course=course,date=date, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
 
@@ -5439,44 +5513,86 @@ def request_form(request):
                     if check_clearance:
                         return redirect('student_dashboard')
                     else:
-                        return redirect('clearance_form')
+                        return redirect('clearance_form/RequestCredentials/HonorableDismissal')
                         
                 elif request == 'Transcript of Records':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
                         return redirect('student_dashboard')
                     else:
-                        return redirect('clearance_form')
+                        return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
                 elif request == 'Diploma':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
                         return redirect('student_dashboard')
                     else:
-                        return redirect('clearance_form')
+                        return redirect('clearance_form/RequestCredentials/Diploma')
+                elif request == 'Evaluation':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form/RequestCredentials/Evaluation')
+                elif request == 'Re_evaluation':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                    if check_clearance:
+                        return redirect('student_dashboard')
+                    else:
+                        return redirect('clearance_form/RequestCredentials/Re-evaluation')
                 elif request.__contains__('Certification'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
                     if check_clearance:
                         return redirect('student_dashboard')
                     else:
-                        return redirect('clearance_form')
+                        return redirect('clearance_form/RequestCredentials/Certification')
                 elif request.__contains__('Others'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
                     if check_clearance:
                         return redirect('student_dashboard')
                     else:
-                        return redirect('clearance_form')
+                        return redirect('clearance_form/RequestCredentials/Others')
                 else: 
                     return redirect('student_dashboard')
             else:
                 return redirect('student_dashboard')
         else:
             unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            latest_request = request_form_table.objects.filter(name = student_name, approval_status="UNAPPROVED").order_by('-time_requested').values_list('request', flat=True).distinct()
+            latest_purpose = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('purpose_of_request_reason', flat=True).distinct()
+            if latest_purpose:
+                request_pur = latest_purpose[0]
+            else:
+                request_pur = ""
             if unapproved_request:
                 allow_request = unapproved_request[0]
+                if latest_request:
+                    latest = latest_request[0]
+                    if latest.__contains__('Certification'):
+                        latest_req ="Certification"
+                        request_cert = latest
+                        request_other = ""
+                    elif latest.__contains__('Others'):
+                        latest_req ="Others"
+                        request_other = latest
+                        request_cert = ""
+            
+                    else:
+                        latest_req = latest_request[0]
+                        request_other = ""
+                        request_cert = ""
+                else:
+                    request_other = ""
+                    request_cert = ""
+                    latest_req =""
+        
             else:
                 allow_request =""
-            context ={'allow' : allow_request}
+                latest_req = ""
+                request_other = ""
+                request_cert = ""
 
+            context ={'allow' : allow_request, 'latest_request': latest_req, 'request_purpose': request_pur, 'request_other':request_other, 'request_cert': request_cert}
+ 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -5638,13 +5754,49 @@ def update_grad_signature(request, id):
 def display_reqform(request,id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "REGISTRAR":
         reqs = request_form_table.objects.filter(id=id).values()
+        certification_data = request_form_table.objects.filter(id=id).values('request')
+        others_data = request_form_table.objects.filter(id=id).values('request')
+        if certification_data:
+            c = certification_data[0]
+            if c.__contains__('Certification'):
+                latest_req ="Certification"
+                cert_request = str(certification_data[0])
+                cert_request.rsplit(':',1)[-1]
+                request_cert = str(cert_request)
+            else:
+                request_cert =""
+                latest_req =""
+        else:
+            request_cert =""
+            latest_req =""
+            request_other = ""
+        
+        if others_data:
+            o = others_data[0]
+            if o.__contains__('Others'):
+                latest_req ="Others"
+                other_request = str(others_data[0])
+                other_request.rsplit(':',1)[-1]
+                request_other = str(cert_request)
+            else:
+                request_other = ""
+                latest_req =""
+            
+        else:
+            request_other = ""
+            latest_req =""
+            request_cert =""
 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     context = {
-        "reqs": reqs
+        "reqs": reqs,
+        "request_cert": request_cert,
+        "request_other" : request_other,
+        "latest_req": latest_req,
+        
     }
 
     print('running')

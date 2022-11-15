@@ -620,12 +620,21 @@ Adviser:
             <div class="form-group row">
                 <label for="dygt_42" class="col-sm-3 col-form-label col-form-label-sm" id="dygt_lbl_42">Did you graduate at TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
+                    {% if i.tupc_graduate == "NO" %}
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" >Yes
-                </label>
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" disabled>Yes
+                    </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()">No
-                </label>
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" checked disabled>No
+                    </label>
+                    {% else %}
+                    <label class="radio-inline">
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()"checked disabled>Yes
+                    </label>
+                    <label class="radio-inline">
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
+                    </label>
+                    {% endif %}
                     <p id="tupcans_error_42"></p>
                 </div>
             </div>
@@ -634,7 +643,7 @@ Adviser:
             <div class="form-group row">
                 <label for="iypitd_42" class="col-sm-2 col-form-label col-form-label-sm" id="dfiled_lbl3_42">If yes please indicate the date :</label>
                 <div class="col-sm-9">
-                    <input type="date" id="iydfiled_box_42" name="iydfiled_box_420" value="{{i.year_graduated_in_tupc}}" disabled class="form-control" oninput="enter_iydfilled()" required>
+                    <input type="text" id="iydfiled_box_42" name="iydfiled_box_420" value="{{i.year_graduated_in_tupc}}" disabled class="form-control" oninput="enter_iydfilled()" required>
                     <p id="hgdate_error_42"></p>
                 </div>
             </div>
@@ -672,14 +681,25 @@ Adviser:
 
             <!--REQUESTED FORMS CHECK BOX-->
             <div class="form-group row">
+                {% if i.have_previously_requested_form == "NO" %}
                 <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()">Yes
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" disabled>Yes
                 </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()">No
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" checked disabled>No
                 </label>
+                {% else %}
+                <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
+                <div>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()"checked  disabled>Yes
+                </label>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
+                </label>
+                {% endif %}
                     <p id="req_error_42"></p>
                 </div>
             </div>
@@ -688,7 +708,7 @@ Adviser:
             <div class="form-group row">
                 <label for="dbrtime_42" class="col-sm-2 col-form-label col-form-label-sm" id="dbrtime_lbl_42">If yes, please indicate the date before its respective item(s):</label>
                 <div class="col-sm-9">
-                    <input type="date" id="dbrtime_box_42" name="dbrtime_box_420" value="{{i.date_of_previously_requested_form}}" disabled class="form-control" oninput="enter_dbrtime()" required>
+                    <input type="text" id="dbrtime_box_42" name="dbrtime_box_420" value="{{i.date_of_previously_requested_form}}" disabled class="form-control" oninput="enter_dbrtime()" required>
                     <p id="dbrtime_error_42"></p>
                 </div>
             </div>
@@ -723,41 +743,97 @@ Adviser:
             <!--PURPOSE OF REQUEST CHECK BOXES-->
             
                 <h3><b>CLEARANCE REQUESTED FOR:<em>(Check items below)</em><span id="asteris_42" style="color:rgb(255, 196, 196);">*</span></b></h3>
+                {% if i.purpose_of_request == "Honorable Dismissal" %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" disabled value="Honorable Dismissal">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" disabled value="Honorable Dismissal" checked>
                     <label class="form-check-label" for="inlineCheckbox1_42">Honorable Dismissal</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" disabled value="Honorable Dismissal" >
+                    <label class="form-check-label" for="inlineCheckbox1_42">Honorable Dismissal</label>
+                </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Evaluation" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation" checked >
                     <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
                 </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation" >
+                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
+                </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Transcript of Records" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_42" name="purpose_request_420" disabled value="Transcript of Records" checked>
+                    <label class="form-check-label" for="inlineCheckbox3_42">Transcript of Records</label>
+                </div>
+                {% else %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_42" name="purpose_request_420" disabled value="Transcript of Records">
                     <label class="form-check-label" for="inlineCheckbox3_42">Transcript of Records</label>
                 </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Re-Evaluation" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" disabled value="Re-Evaluation" checked>
+                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
+                </div>
+                {% else %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" disabled value="Re-Evaluation">
                     <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
                 </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Diploma" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_42" name="purpose_request_420" disabled value="Diploma" checked>
+                    <label class="form-check-label" for="inlineCheckbox5_42">Diploma</label>
+                </div>
+                {% else %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Diploma_check_42" name="purpose_request_420" disabled value="Diploma">
                     <label class="form-check-label" for="inlineCheckbox5_42">Diploma</label>
                 </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Application for Graduation" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" disabled value="Application for Graduation" checked>
+                    <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
+                </div>
+                {% else %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" disabled value="Application for Graduation">
                     <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
                 </div>
+                {% endif %}
+                {% if i.purpose_of_request == "Certification" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_42" name="purpose_request_420" disabled value="Certification" checked>
+                    <label class="form-check-label" for="inlineCheckbox7_42">Certification</label>
+                </div>
+                {% else %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Certification_check_42" name="purpose_request_420" disabled value="Certification">
                     <label class="form-check-label" for="inlineCheckbox7_42">Certification</label>
                 </div>
+                {% endif %}
+                {% if requested == "Others" %}
                 <div style="margin-left:20px;">
-                    <input class="form-check-input chk" type="checkbox" id="Others_check_42" disabled  oninput="insert_others()">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_42" disabled checked>
                     <label for="others" id="others_lbl_42"><em>Others (please specify):</em></label>
                     <input type="text" id="others_box_42" name="purpose_request_420" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" disabled><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value ="{{others}}" disabled><br><br>
                 </div>
+                {% else %}
+                <div style="margin-left:20px;">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_42" disabled>
+                    <label for="others" id="others_lbl_42"><em>Others (please specify):</em></label>
+                </div>
+                {% endif %}
 
 
             <div class="note">
@@ -1259,7 +1335,11 @@ Adviser:
 
 
 <script>
-    
+    if (document.getElementById('Others_check_42').checked == true){
+        var o_data = document.getElementById('others_box_42').value;
+        var split_data = o_data.split(': ').pop();
+        document.getElementById('others_box_42').value = split_data;    
+    };
 
     // CONFIRMATION MSGBOX_BANNER
     function submitForm(form) {
@@ -1968,19 +2048,6 @@ Adviser:
             document.getElementById("submit_btn_42").click();
         }
     });
-
-    //Show Others Check Box 
-    function insert_others() {
-        var othersbox = document.getElementById("Others_check_42").checked;
-
-        if (othersbox == true) {
-            document.getElementById("others_box_42").style.display = "block";
-        } else {
-            document.getElementById("others_box_42").style.display = "none";
-        }
-    }
-
-    document.getElementById("others_box_42").style.display = "none";
 
 
     // SET ONE CHECKBOX TO CHOOSE ONLY

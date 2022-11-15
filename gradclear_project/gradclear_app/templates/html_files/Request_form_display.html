@@ -581,6 +581,7 @@ Adviser:
             </div>
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
+            {% if i.current_status == "STUDENT" %}
             <div class="form-group row pl-3">
                 <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
@@ -597,49 +598,161 @@ Adviser:
                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
                 </div>
             </div>
+            {% elif i.current_status == "OLD STUDENT" %}
+            <div class="form-group row pl-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" checked disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
+                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                </div>
+            </div>
+            {% else %}
+            <div class="form-group row pl-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" checked disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
+                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
+                </div>
+            </div>
+            {% endif %}
 
             <!--PURPOSE OF REQUEST CHECK BOXES-->
             
                 <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
+                {% if i.request == "Honorable Dismissal" %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" checked>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Authentication/Verification" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records">
+                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification" disabled>
+                    <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Transcript of Records" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records" disabled>
+                    <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Subject Description" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma">
+                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description" disabled>
+                    <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
+                </div>
+                {% endif%}
+                {% if i.request == "Diploma" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma" disabled>
+                    <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
+                </div>
+                {% endif%}
+                {% if i.request == "CAV" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="">
+                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV" disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Evaluation" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Evaluation" name="purpose_request_pre" value="Evaluation" checked disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">Evaluation</label>
+                </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Evaluation" name="purpose_request_pre" value="Evaluation" disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">Evaluation</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Re-Evaluation" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Re_evaluation" name="purpose_request_pre" value="Re-Evaluation" checked disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">Re-Evaluation</label>
+                </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Re_evaluation" name="purpose_request_pre" value="Re-Evaluation" disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">Re-Evaluation</label>
+                </div>
+                {% endif %}
+                {% if latest_req == "Certification" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
                     <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" hidden><br><br>
-
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value ="{{request_cert}}"><br><br>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="" disabled>
+                    <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
+                </div>
+                {% endif %}
+                {% if latest_req == "Others" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" checked disabled>
                     <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
                     <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" hidden><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value = "{{request_other}}"><br><br>
                 </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" disabled>
+                    <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
+                </div>
+                {% endif %}
                 <br>
                 <br>
 
@@ -647,18 +760,12 @@ Adviser:
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" value="{{i.purpose_of_request_reason}}" oninput="this.value = this.value.toUpperCase()"required>
+                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" value="{{i.purpose_of_request_reason}}" oninput="this.value = this.value.toUpperCase()" disabled>
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
 
-            <div>
-                <p><strong>Please submit the following documents/requirements</strong></p>
-                <p>1. Form 137-A</p>
-                <p>2. Clearance</p>
-                <p>3. Official Receipt <em>(This receipt can be claim after payment)</em></p>
-                <p><em>*Please submit the following requirements to be able to claim the requested credential/s</em></p>
-            </div>
+            <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
             {% endfor %}
             <!--Admin display
             <div id = "admin_display" hidden>
