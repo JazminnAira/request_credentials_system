@@ -978,7 +978,6 @@ Adviser:
         border: 1px solid #000000;
     }
     
-    #button_71,
     #addresssavechanges_btn_71,
     #emailsavechanges_btn_71,
     #passwordsavechanges_btn_71,
@@ -996,12 +995,11 @@ Adviser:
     #emailsavechanges_btn_71:hover,
     #passwordsavechanges_btn_71:hover,
     #cancel_btn1_71:hover,
-    #cancel_btn2_71:hover,
+    #cancel_btn2_71:hover
     #cancel_btn3_71:hover,
     #cancel_btn4_71:hover,
     #add_btn_71:hover,
-    #logout_btn_71:hover,
-    #button_71:hover {
+    #logout_btn_71:hover, {
         background-color: #616161;
     }
     
@@ -1126,6 +1124,17 @@ Adviser:
     a:hover .badge2{
         color:#fff;
     }
+     #button_71{
+        background-color: #c51d3a;
+        border-radius: 10px;
+    }
+    #button_71:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+   
+
+
 
 </style>
 
@@ -1180,7 +1189,7 @@ Adviser:
                     <table class="table-responsive-md table-responsive-lg">
                         <tr>
                             <td><b>Name:</b> </td>
-                            <td>{{request.user.full_name}}</td>
+                            <td>{{request.user.first_name}} {{request.user.last_name}}</td>
                                
                         </tr>
     
@@ -1216,7 +1225,7 @@ Adviser:
                 <div class="modal-footer" id="account_modal_footer_71">
                     
                     <!--LOGOUT BUTTON-->
-                    <a href="{% url 'logout' %}" class="btn btn-secondary" role="button" id="button_71" aria-pressed="true" style="background-color: #c51d3a;">Log Out</a>
+                    <a href="{% url 'logout' %}" class="btn btn-secondary" role="button" id="button_71" aria-pressed="true">Log Out</a>
                 </div>
             </div>
         </div>
@@ -1390,7 +1399,7 @@ Adviser:
                                         <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour_71">
                                             <table class="table-responsive-sm">
                                                 <div class="d-flex bd-highlight">
-                                                    <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_71">Password </div>
+                                                    <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_71">Password:</div>
                                                     <div class="d-flex justify-content-end" style="color: #000000;" 
                                                     id="edit_btn_71"><button class="btn btn-secondary btn-sm" 
                                                     type="submit">Edit<i class="fa fa-edit"></i></div>

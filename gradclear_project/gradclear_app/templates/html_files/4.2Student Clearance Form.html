@@ -499,7 +499,7 @@ Adviser:
     <div class="myDiv" id="myDiv">
         <form method="POST" action="clearance_form" id="clear_form">
             {% csrf_token %}
-            <h3><b>Personal Information</b></h3>
+            <h3><b>Personal Information</b></h3><br>
 
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
             <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
@@ -1082,8 +1082,7 @@ Adviser:
             </div>
 
         </div>
-        <p class="p-2"></p>
-        <p>TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+        
 
     </div>
 </body>

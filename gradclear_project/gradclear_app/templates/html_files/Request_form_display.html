@@ -583,16 +583,16 @@ Adviser:
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
             {% if i.current_status == "STUDENT" %}
             <div class="form-group row pl-3">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" checked disabled>
+                <div class="form-check form-check-row">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                <div class="form-check form-check-row">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" disabled>
+                <div class="form-check form-check-row">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
                     <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
@@ -806,8 +806,7 @@ Adviser:
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             
 
-            <!--FORM FOOTER-->
-            <p style="color:#9e9e9e;"> TUPC-F-OAA-OCR-002 ØØ (03.21.18)</p>
+            
         </form>
     </div>
     

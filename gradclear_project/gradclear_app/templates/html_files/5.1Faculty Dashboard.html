@@ -507,14 +507,6 @@ Adviser:
         color: black;
     }
     
-    .table-hover tbody td,
-    .table-hover tbody tr {
-        height: 70px;
-        border: 1px solid black;
-        text-align: center;
-        padding: 5px;
-    }
-    
     #list_tbl_51 th {
         text-align: center;
         border: 1px solid black;
@@ -533,15 +525,12 @@ Adviser:
         text-align: center;
         padding: 5px;
     }
-    
-    .table-hover tbody tr:nth-child(odd) {
+    .table-hover tbody tr:nth-child(even) {
         background-color: #f5f0f6;
     }
-    
-    .table-hover tbody tr:nth-child(even) {
-        background-color: #dedede;
+    .table-hover tbody tr:nth-child(odd) {
+        background-color: transparent;
     }
-    
     footer {
         position: fixed;
         bottom: 0;
@@ -726,7 +715,7 @@ Adviser:
                         <table class="table-responsive-sm table-responsive-md">
                             <tr>
                                 <td><b>Name:</b> </td>
-                                <td>{{request.user.full_name}}</td>
+                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>
                                 
                             </tr>
         
@@ -1072,10 +1061,10 @@ Adviser:
                     $(this).attr('visible', 'true');
                 });
 
-                var jobCount = $('.results tbody tr[visible="true"]').length;
-                $('.counter').text(jobCount + ' item');
+                var itemcount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(itemcount + ' item');
 
-                if (jobCount == '0') {
+                if (itemcount == '0') {
                     $('.no-result').show();
                     $('.no_data').hide();
                 } else {
