@@ -409,6 +409,9 @@ Adviser:
         background-color: #c51d3a;
         color: white;
     }
+    #button_claim_and_unclaim{
+        padding: 2px 12px;
+    }
   
 
 </style>
@@ -417,8 +420,8 @@ Adviser:
 <body>
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_77">
-        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
-        <a href="{% url 'registrar_dashboard_request_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'registrar_dashboard_request_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         
         <!--SEARCH BAR-->
@@ -481,13 +484,12 @@ Adviser:
                                 <th hidden>#</th>
                                 <th>Student's Name</th>
                                 <th>Request</th>
-                                <th>Form 137-A</th>
-                                <th>TOR</th>
                                 <th>Clearance</th>
+                                <th>Form 137-A</th>
                                 <th>Official Receipt</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
-                                <th>Appointment</th>
+                                <th colspan="2">Appointment</th>
                                 <th></th>
                             
                             </tr>
@@ -507,6 +509,7 @@ Adviser:
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                                     <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
                                 
+                                    <td>{{instance.clearance}}</td>
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
                                         {% csrf_token %}
@@ -517,17 +520,6 @@ Adviser:
                                                 </select>
                                         </form> 
                                     </td>
-                                    <td>
-                                        <form name="change_TOR" id="change" action="request_TOR_update/{{ instance.id }}" method=POST>
-                                            {% csrf_token %}
-                                                <select onchange="this.form.submit()" name="TOR_select" id="changer"> 
-                                                    <option value="">{{instance.TOR}}</option>
-                                                    <option value="✔">✔</option>
-                                                    <option value="❌">❌</option>
-                                                </select>
-                                        </form> 
-                                    </td>
-                                    <td>{{instance.clearance}}</td>
                                     <td>
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -558,12 +550,9 @@ Adviser:
                                             </form> 
                                     </td>  
                                     <td>
-                                        {% if instance.appointment !=  'NONE' %}
-                                        <a href="{% url 'request_appointment' instance.id %}" ><button type="button" class="table-icon" ><i class="fa fa-comments table-i" aria-hidden="true" >  {{instance.appointment}}</i></button></a>
-                                        {% else %}
-                                        <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">    Set</i></button></a>
-                                        {% endif %}
+                                    <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set</i></button></a>
                                     </td>
+                                    <td style="width: 8%;">{{instance.appointment}}</td>
                                     <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
                                         role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
                                     </td>

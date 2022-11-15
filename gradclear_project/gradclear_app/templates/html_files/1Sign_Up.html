@@ -234,8 +234,8 @@ Adviser:
     }
 
     p3 {
-        border-color: red;
-        color: red;
+        border-color: black;
+        color: black;
         font-size: 13px;
     }
     
@@ -501,13 +501,6 @@ Adviser:
                                         {{form.course_graduated}}
                                         <p id="sc_error_01"></p>
                                     </div>
-                                    
-                                    <!--YEAR GRADUATED DROPDOWN BOX-->
-                                    <div class="form-group" id="y_graduated_input" >
-                                        <label for="year_graduated">Year Graduated:</label><label id="Syear_graduated_aste01" style="color:red;">*</label>
-                                        {{form.year_graduated}}
-                                        <p id="sys_error_01"></p>
-                                    </div>
 
                                 {% elif user == "FACULTY" %}
                                     {% if user != "STAFF" %}
@@ -568,10 +561,14 @@ Adviser:
                                 <div class="form-group">
                                     <label for="prof_pic">Profile Picture:</label>
                                     {{form.profile_picture}}
+                                    <p><b>Note:</b><p3> Attach a presentable picture of yours with a clean white background in <b>2x2 picture size </b>.
+                                        <br>Filename format: NAME.jpg/png</p3></p>
                                     <p id="se_error_01"></p>
+                                     
                                 </div> 
                                 
                             </div>
+                           
 
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">

@@ -24,7 +24,7 @@ urlpatterns = [
      path('clearance_view', clearance_view, name='clearance_view'),
 
      # FORMS
-     path('clearance_form', clearance_form, name='clearance_form'),
+     path('clearance_form/<str:type>/<str:req>', clearance_form, name='clearance_form'),
      path('graduation_form', graduation_form, name='graduation_form'),
      path('request_form', request_form, name="request_form"),
 
@@ -93,15 +93,12 @@ urlpatterns = [
           request_official_update, name='request_official_update'),
      path('registrar_dashboard_organize_request_list/request_form137_update/<int:id>', 
           request_form137_update, name='request_form137_update'),
-     path('registrar_dashboard_organize_request_list/request_TOR_update/<int:id>', 
-          request_TOR_update, name='request_TOR_update'),
+   
      path('registrar_dashboard_organize_request_list/request_claim_update/<int:id>', 
           request_claim_update, name='request_claim_update'),
-
      #  DOCUMENT CHECKER
      path('request_official_update/<int:id>', request_official_update, name='request_official_update'),
      path('request_form137_update/<int:id>', request_form137_update, name='request_form137_update'),
-     path('request_TOR_update/<int:id>', request_TOR_update, name='request_TOR_update'),
      path('request_claim_update/<int:id>', request_claim_update, name='request_claim_update'),
 
      # FORM APPROVAL
