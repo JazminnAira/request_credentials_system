@@ -678,8 +678,7 @@ Adviser:
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_51"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_51"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
     <a href="{% url 'faculty_dashboard_graduation_list'%}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
-    <!-- missing course/shop adviser  -->
-    {% if request.user.department == "HOCS" or request.user.department == "HOCL" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDIT" or request.user.department == "HDIE" or request.user.department == "HDOE" or request.user.department == "OGS" or request.user.department == "HOSA" or request.user.department == "HADAA" or request.user.department == "HDLA" %}
+    {% if request.user.department == "HOCS" or request.user.department == "HOCL" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDIT" or request.user.department == "HDOE" or request.user.department == "OGS" or request.user.department == "HOSA" or request.user.department == "HADAA" or request.user.department == "HDLA" %}
     <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% elif with_clearance %}
     <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>

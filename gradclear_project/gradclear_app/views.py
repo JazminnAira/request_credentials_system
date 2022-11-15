@@ -1634,6 +1634,7 @@ def clearance_form(request):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
+            
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
@@ -1933,7 +1934,7 @@ def clearance_view(request):
             
         
         #INDUSTRIAL
-        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
@@ -1992,10 +1993,10 @@ def clearance_view(request):
                     it_name = str_fac_name
                 
                 
-            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
                 pass
             else:
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
                 eng = str(faculty_approved[0])
                 fac_name_get = eng.split('_',1)[0]
                 str_fac_name = str(fac_name_get)
@@ -2490,7 +2491,7 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HDIT":
             st1 = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
-        elif request.user.department == "HDIE":
+        elif request.user.department == "HDOE":
             st1 = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HOCL":
             st1 = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
@@ -2518,7 +2519,7 @@ def faculty_dashboard(request):
             if request.user.department == "HDIT":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
             
-            if request.user.department == "HDIE":
+            if request.user.department == "HDOE":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
                 
             if request.user.department == "HOCL":
@@ -2585,7 +2586,7 @@ def faculty_dashboard_clearance_list_all(request):
         app_status = int(temp)
         print(app_status)
         numerator =app_status +1
-        adder = str(numerator) + "/12"
+        adder = str(numerator) + "/10"
         dep = request.user.department
         signature_saved = f_n_approved + " " + sig
 
@@ -2622,9 +2623,9 @@ def faculty_dashboard_clearance_list_all(request):
                     it_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)               
-            if dep == "HDIE":
+            if dep == "HDOE":
                 clearance_form_table.objects.filter(id=int(i)).update(
-                    ieng_dept_signature=signature_saved)
+                    eng_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
             if dep == "HOCL":
@@ -2653,7 +2654,7 @@ def faculty_dashboard_clearance_list_all(request):
                     course_adviser_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
-                print('forda go')
+               
             approved_text = "_APPROVED"
             approval_status_checker=clearance_form_table.objects.filter(
                 Q(liberal_arts_signature__contains=approved_text) &
@@ -2662,7 +2663,7 @@ def faculty_dashboard_clearance_list_all(request):
                 Q(pe_dept_signature__contains=approved_text) &
                 Q(ieduc_dept_signature__contains=approved_text) &
                 Q(it_dept_signature__contains=approved_text) &
-                Q(ieng_dept_signature__contains=approved_text) &
+                Q(eng_dept_signature__contains=approved_text) &
                 Q(library_signature__contains=approved_text) &
                 Q(guidance_office_signature__contains=approved_text) &
                 Q(osa_signature__contains=approved_text) &
@@ -2724,7 +2725,7 @@ def faculty_dashboard_clearance_list(request):
             if request.user.department == "HDIT":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
             
-            if request.user.department == "HDIE":
+            if request.user.department == "HDOE":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
                 
             if request.user.department == "HOCL":
@@ -2754,7 +2755,7 @@ def faculty_dashboard_clearance_list(request):
         elif request.user.department == "HDIT":
             st = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
            
-        elif request.user.department == "HDIE":
+        elif request.user.department == "HDOE":
             st = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
             
         elif request.user.department == "HOCL":
@@ -2823,7 +2824,7 @@ def update_clearance(request, id, dep, sign):
     app_status = int(temp)
     print(app_status)
     numerator =app_status +1
-    adder = str(numerator) + "/12"
+    adder = str(numerator) + "/10"
 
     signature_saved= f_n_approved + " " + sign
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -2857,9 +2858,9 @@ def update_clearance(request, id, dep, sign):
                 it_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)               
-        if dep == "ieng_dept_signature":
+        if dep == "eng_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
-                ieng_dept_signature=signature_saved)
+                eng_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
         if dep == "library_signature":
@@ -2896,7 +2897,7 @@ def update_clearance(request, id, dep, sign):
             Q(pe_dept_signature__contains=approved_text) &
             Q(ieduc_dept_signature__contains=approved_text) &
             Q(it_dept_signature__contains=approved_text) &
-            Q(ieng_dept_signature__contains=approved_text) &
+            Q(eng_dept_signature__contains=approved_text) &
             Q(library_signature__contains=approved_text) &
             Q(guidance_office_signature__contains=approved_text) &
             Q(osa_signature__contains=approved_text) &
@@ -4715,7 +4716,7 @@ def display_clearform(request, id):
             
         
         #INDUSTRIAL
-        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
@@ -4774,10 +4775,10 @@ def display_clearform(request, id):
                     it_name = str_fac_name
                 
                 
-            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
                 pass
             else:
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieng_dept_signature', flat=True).distinct()
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
                 eng = str(faculty_approved[0])
                 fac_name_get = eng.split('_',1)[0]
                 str_fac_name = str(fac_name_get)
@@ -5315,12 +5316,45 @@ def faculty_list_remove(request, id):
 
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
-    user_table.objects.filter(id=id).update(designation=form_change)
     
+
     if form_change == "---":
         user_table.objects.filter(id=id).update(position="FACULTY")
-    else:
+        temp = user_table.objects.filter(id=id).values_list('department', flat=True).distinct()
+        dep=temp[0]
+        hremover = dep[1:]
+        print(dep)
+        print(hremover)
+        user_table.objects.filter(id=id).update(department=hremover)
+    else: 
         user_table.objects.filter(id=id).update(position="HEAD")
+        user_table.objects.filter(id=id).update(department=form_change)
+    
+    if form_change == "HOCS":
+        user_table.objects.filter(id=id).update(designation="ACCOUNTANT") 
+    elif form_change == "HDLA":
+        user_table.objects.filter(id=id).update(designation="HEAD OF LIBERAL ARTS") 
+    elif form_change == "HDMS":
+        user_table.objects.filter(id=id).update(designation="HEAD OF MATH AND SCIENCES") 
+    elif form_change == "HDPECS":
+        user_table.objects.filter(id=id).update(designation="HEAD OF PHYSICAL EDUCATION") 
+    elif form_change == "HDIT":
+        user_table.objects.filter(id=id).update(designation="HEAD OF INDUSTRIAL TECHNOLOGY") 
+    elif form_change == "HDED":
+        user_table.objects.filter(id=id).update(designation="HEAD OF INDUSTRIAL EDUCATION") 
+    elif form_change == "HDOE":
+        user_table.objects.filter(id=id).update(designation="HEAD OF ENGINEERING") 
+    elif form_change == "HOCL":
+        user_table.objects.filter(id=id).update(designation="CAMPUS LIBRARIAN") 
+    elif form_change == "HOGS":
+        user_table.objects.filter(id=id).update(designation="GUIDANCE COUNCELOR") 
+    elif form_change == "HOSA":
+        user_table.objects.filter(id=id).update(designation="HEAD OF STUDENT AFFAIRS") 
+    elif form_change == "HADAA":
+        user_table.objects.filter(id=id).update(designation="ASST. DIRECTOR FOR ACADEMIC AFFAIRS") 
+    else:
+        user_table.objects.filter(id=id).update(designation="---") 
+   
     return redirect(registrar_dashboard_faculty_list)
 
 #STUDENT LIST

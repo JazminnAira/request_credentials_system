@@ -100,9 +100,8 @@ class user_table(AbstractUser):
         ('OCL', 'Library (OCL)'),
         ('DMS', 'Math and Science Department (DMS)'),
         ('DPECS', 'Department of Physical Education Culture and Sports (DPECS)'),
-        ('DED', 'Industrial Educational Department (DED)'),
+        ('DED', 'Industrial Education Department (DED)'),
         ('DIT', 'Industrial Technology Department (DIT)'),
-        ('DIE', 'Industrial Engineering Department (DIE)'),
         ('DLA', 'Liberal Arts Department (DLA)'),
         ('DOE', 'Department of Engineering (DOE)'),
         
@@ -204,8 +203,8 @@ class clearance_form_table(models.Model):
         verbose_name="Industrial Educ. Signature", default="UNAPPROVED")
     it_dept_signature = models.CharField(max_length=100,
         verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
-    ieng_dept_signature = models.CharField(max_length=100,
-        verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
+    eng_dept_signature = models.CharField(max_length=100,
+        verbose_name="Engineering Signature", default="UNAPPROVED")
     library_signature = models.CharField(max_length=100,
         verbose_name="Library Signature", default="UNAPPROVED")
     guidance_office_signature = models.CharField(max_length=100,
