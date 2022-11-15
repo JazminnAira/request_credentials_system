@@ -118,13 +118,12 @@ class user_table(AbstractUser):
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    address = models.CharField(max_length=100, verbose_name="Address", null=True, blank=True)
-    gender = models.CharField(
-        max_length=100, choices=gender, null=True, blank=True)
-    id_number = models.CharField(
-        max_length=7, verbose_name="ID Number", validators=[MinLengthValidator(7)],  unique=True, blank=True)
+    address = models.CharField(max_length=100, verbose_name="Address", null=True)
+    gender = models.CharField(max_length=100, choices=gender)
+    id_number = models.CharField(max_length=10, verbose_name="ID Number", 
+                validators=[MinLengthValidator(3)],  unique=True, null=True, blank=True)
     course = models.CharField(
-        max_length=100, choices=courses, null=True, blank=True)
+            max_length=100, choices=courses, null=True, blank=True)
     course_graduated = models.CharField(
         max_length=100, choices=graduates_courses, null=True, blank=True)
     department = models.CharField(

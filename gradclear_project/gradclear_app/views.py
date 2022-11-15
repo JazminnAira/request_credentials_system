@@ -1663,7 +1663,7 @@ def clearance_form(request, type, req):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
-            
+             
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
@@ -2579,8 +2579,10 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(pe_dept_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HDIT":
             st1 = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
-        elif request.user.department == "HDOE":
+        elif request.user.department == "HDED":
             st1 = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+        elif request.user.department == "HDOE":
+            st1 = clearance_form_table.objects.filter(eng_dept_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HOCL":
             st1 = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HOGS":
@@ -2608,8 +2610,11 @@ def faculty_dashboard(request):
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
             
             if request.user.department == "HDOE":
+                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(eng_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDED":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
-                
+                  
             if request.user.department == "HOCL":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(library_signature="UNAPPROVED")).order_by('-time_requested')
                 
@@ -2814,6 +2819,9 @@ def faculty_dashboard_clearance_list(request):
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(it_dept_signature="UNAPPROVED")).order_by('-time_requested')
             
             if request.user.department == "HDOE":
+                st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(eng_dept_signature="UNAPPROVED")).order_by('-time_requested')
+            
+            if request.user.department == "HDED":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature = f_n_unapproved) | Q(ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
                 
             if request.user.department == "HOCL":
@@ -2843,8 +2851,11 @@ def faculty_dashboard_clearance_list(request):
         elif request.user.department == "HDIT":
             st = clearance_form_table.objects.filter(it_dept_signature="UNAPPROVED").order_by('-time_requested')
            
-        elif request.user.department == "HDOE":
+        elif request.user.department == "HDED":
             st = clearance_form_table.objects.filter(ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+        
+        elif request.user.department == "HDOE":
+            st = clearance_form_table.objects.filter(eng_dept_signature="UNAPPROVED").order_by('-time_requested')
             
         elif request.user.department == "HOCL":
             st = clearance_form_table.objects.filter(library_signature="UNAPPROVED").order_by('-time_requested')
