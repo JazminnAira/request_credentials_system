@@ -1531,7 +1531,7 @@ def cover(request):
 
 @login_required(login_url='/')
 def student_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         
         # TO DETERMINE IF STUDENT IS 4TH YEAR OR NOT
         todays_date = date.today()
@@ -4112,7 +4112,7 @@ def update_graduation(request, id, sub, sig):
 
 @login_required(login_url='/')
 def registrar_dashboard(request):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         # CLEARANCE FORMS 
         all = clearance_form_table.objects.all() 
         cBSIE_ICT = clearance_form_table.objects.filter( 
@@ -4307,7 +4307,7 @@ def updateAddress(request):
 
 @login_required(login_url='/')
 def updateEmail(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         if request.method == "POST":
             semail = request.POST.get('ea_box_041')
             a = request.POST.get('validator')
@@ -4565,7 +4565,7 @@ def reg_updateContact(request):
 
 @login_required(login_url='/')
 def display_clearform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "FACULTY" or "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "FACULTY" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         clearance = clearance_form_table.objects.filter(id=id).values()
         others_data = clearance_form_table.objects.filter(id=id).values_list('purpose_of_request', flat=True).distinct()
         
@@ -4939,7 +4939,7 @@ def display_clearform(request, id):
 
 @login_required(login_url='/')
 def display_gradform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "OLD STUDENT" or "ALUMNUS" or "FACULTY" or "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "FACULTY" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         graduation = graduation_form_table.objects.filter(id=id).values()
         
         #SUBJECT #1
@@ -5316,7 +5316,7 @@ def display_gradform(request, id):
 
 @login_required(login_url='/')
 def registrar_dashboard_clearance_list(request, id):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         
         if id == " ":
             all = clearance_form_table.objects.all()
@@ -5333,7 +5333,7 @@ def registrar_dashboard_clearance_list(request, id):
 
 @login_required(login_url='/')
 def registrar_dashboard_graduation_list(request, id):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         
         if id == " ":
             all = graduation_form_table.objects.all()
@@ -5505,7 +5505,7 @@ def staff_list_remove(request, id):
 #REQUEST LIST WITH ORGANIZER
 @login_required(login_url='/')
 def registrar_dashboard_organize_request_list(request, id):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         
         sorter = id
         
@@ -5531,7 +5531,7 @@ def registrar_dashboard_organize_request_list(request, id):
 #DEFAULT PAGE
 @login_required(login_url='/')
 def registrar_dashboard_request_list(request):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         requests = request_form_table.objects.all().order_by('-time_requested').values()
         doc = Document_checker_table.objects.all().values()
     else:
@@ -5562,7 +5562,7 @@ def request_claim_update(request, id):
 @login_required(login_url='/')
 def request_form(request):
     context = {}
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         user = request.user.user_type 
         student_name = request.user.full_name
         
@@ -5840,7 +5840,7 @@ def update_grad_signature(request, id):
 
 @login_required(login_url='/')
 def display_reqform(request,id):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or "ALUMNUS" or "OLD STUDENT" or "REGISTRAR" or "STAFF":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         reqs = request_form_table.objects.filter(id=id).values()
         certification_data = request_form_table.objects.filter(id=id).values('request')
         others_data = request_form_table.objects.filter(id=id).values('request')
