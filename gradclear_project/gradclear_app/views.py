@@ -1679,7 +1679,6 @@ def clearance_form(request, type, req):
             application_graduation = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
             check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
             latest_others = request_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('request', flat=True).distinct()
-            print(latest_others[0])
             
             if request_clearance:
                 if application_graduation[0] !="Application for Graduation":
@@ -4902,7 +4901,7 @@ def display_clearform(request, id):
                 signature_type9 = "APPROVE"
             
         #INDUSTRIAL 
-        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',ieng_dept_signature__icontains = 'UNAPPROVED')
+        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
@@ -4969,7 +4968,7 @@ def display_clearform(request, id):
                     signature_type10 = "APPROVE"
                 
             #ENGINEERING
-            if clearance_form_table.objects.filter(id=id,ieng_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
                 pass
             else:
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
