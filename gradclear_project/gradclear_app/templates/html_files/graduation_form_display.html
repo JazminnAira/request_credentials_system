@@ -709,8 +709,8 @@ Adviser:
                          <td>{{i.room1}}</td>
                          <td>{{i.faculty1}}</td>
                          <td class ="text-center">
-                            {% if subject_1 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type1 == "APPROVE" %}
+                                <label class="text-dark">{{subject_1}}</label>
                             {% elif subject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -728,8 +728,8 @@ Adviser:
                          <td>{{i.room2}}</td>
                          <td>{{i.faculty2}}</td>
                          <td class ="text-center">
-                            {% if subject_2 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type2 == "APPROVE" %}
+                                <label class="text-dark">{{subject_2}}</label>
                             {% elif subject_2 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -746,8 +746,8 @@ Adviser:
                          <td>{{i.room3}}</td>
                          <td>{{i.faculty3}}</td>
                          <td class ="text-center">
-                            {% if subject_3 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type3 == "APPROVE" %}
+                                <label class="text-dark">{{subject_3}}</label>
                             {% elif subject_3 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -764,8 +764,8 @@ Adviser:
                          <td>{{i.room4}}</td>
                          <td>{{i.faculty4}}</td>
                          <td class ="text-center">
-                            {% if subject_4 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type4 == "APPROVE" %}
+                                <label class="text-dark">{{subject_4}}</label>
                             {% elif subject_4 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -782,8 +782,8 @@ Adviser:
                          <td>{{i.room5}}</td>
                          <td>{{i.faculty5}}</td>
                          <td class ="text-center">
-                            {% if subject_5 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type5 == "APPROVE" %}
+                                <label class="text-dark">{{subject_5}}</label>
                             {% elif subject_5 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -800,8 +800,8 @@ Adviser:
                          <td>{{i.room6}}</td>
                          <td>{{i.faculty6}}</td>
                          <td class ="text-center">
-                            {% if subject_6 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type6 == "APPROVE" %}
+                                <label class="text-dark">{{subject_6}}</label>
                             {% elif subject_6 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -818,8 +818,8 @@ Adviser:
                          <td>{{i.room7}}</td>
                          <td>{{i.faculty7}}</td>
                          <td class ="text-center">
-                            {% if subject_7 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type7 == "APPROVE" %}
+                                <label class="text-dark">{{subject_7}}</label>
                             {% elif subject_7 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -836,8 +836,8 @@ Adviser:
                          <td>{{i.room8}}</td>
                          <td>{{i.faculty8}}</td>
                          <td class ="text-center">
-                            {% if subject_8 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type8 == "APPROVE" %}
+                                <label class="text-dark">{{subject_8}}</label>
                             {% elif subject_8 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -854,8 +854,8 @@ Adviser:
                          <td>{{i.room9}}</td>
                          <td>{{i.faculty9}}</td>
                          <td class ="text-center">
-                            {% if subject_9 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type9 == "APPROVE" %}
+                                <label class="text-dark">{{subject_9}}</label>
                             {% elif subject_9 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -872,8 +872,8 @@ Adviser:
                          <td>{{i.room10}}</td>
                          <td>{{i.faculty10}}</td>
                          <td class ="text-center">
-                            {% if subject_10 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type10 == "APPROVE" %}
+                                <label class="text-dark">{{subject_10}}</label>
                             {% elif subject_10 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -907,8 +907,8 @@ Adviser:
                          <td>{{i.addroom1}}</td>
                          <td>{{i.addfaculty1}}</td>
                          <td class ="text-center">
-                            {% if addsubject_1 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type11 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_1}}</label>
                             {% elif addsubject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -924,8 +924,8 @@ Adviser:
                          <td>{{i.addroom2}}</td>
                          <td>{{i.addfaculty2}}</td>
                          <td class ="text-center">
-                            {% if addsubject_2 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type12 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_2}}</label>
                             {% elif addsubject_2 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -941,8 +941,8 @@ Adviser:
                          <td>{{i.addroom3}}</td>
                          <td>{{i.addfaculty3}}</td>
                          <td class ="text-center">
-                            {% if addsubject_3 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type13 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_3}}</label>
                             {% elif addsubject_3 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -958,8 +958,8 @@ Adviser:
                          <td>{{i.addroom4}}</td>
                          <td>{{i.addfaculty4}}</td>
                          <td class ="text-center">
-                            {% if addsubject_4 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type14 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_4}}</label>
                             {% elif addsubject_4 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -975,8 +975,8 @@ Adviser:
                          <td>{{i.addroom5}}</td>
                          <td>{{i.addfaculty5}}</td>
                          <td class ="text-center">
-                            {% if addsubject_5 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type15 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_5}}</label>
                             {% elif addsubject_5 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -992,8 +992,8 @@ Adviser:
                          <td>{{i.addroom6}}</td>
                          <td>{{i.addfaculty6}}</td>
                          <td class ="text-center">
-                            {% if addsubject_6 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type16 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_6}}</label>
                             {% elif addsubject_6 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1009,8 +1009,8 @@ Adviser:
                          <td>{{i.addroom7}}</td>
                          <td>{{i.addfaculty7}}</td>
                          <td class ="text-center">
-                            {% if addsubject_7 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type17 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_7}}</label>
                             {% elif addsubject_7 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1026,8 +1026,8 @@ Adviser:
                          <td>{{i.addroom8}}</td>
                          <td>{{i.addfaculty8}}</td>
                          <td class ="text-center">
-                            {% if addsubject_8 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type18 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_8}}</label>
                             {% elif addsubject_8 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1043,8 +1043,8 @@ Adviser:
                          <td>{{i.addroom9}}</td>
                          <td>{{i.addfaculty9}}</td>
                          <td class ="text-center">
-                            {% if addsubject_9 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type19 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_9}}</label>
                             {% elif addsubject_9 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1060,8 +1060,8 @@ Adviser:
                          <td>{{i.addroom10}}</td>
                          <td>{{i.addfaculty10}}</td>
                          <td class ="text-center">
-                            {% if addsubject_10 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type20 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_10}}</label>
                             {% elif addsubject_10 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
