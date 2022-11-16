@@ -100,9 +100,8 @@ class user_table(AbstractUser):
         ('OCL', 'Library (OCL)'),
         ('DMS', 'Math and Science Department (DMS)'),
         ('DPECS', 'Department of Physical Education Culture and Sports (DPECS)'),
-        ('DED', 'Industrial Educational Department (DED)'),
+        ('DED', 'Industrial Education Department (DED)'),
         ('DIT', 'Industrial Technology Department (DIT)'),
-        ('DIE', 'Industrial Engineering Department (DIE)'),
         ('DLA', 'Liberal Arts Department (DLA)'),
         ('DOE', 'Department of Engineering (DOE)'),
         
@@ -119,13 +118,12 @@ class user_table(AbstractUser):
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    address = models.CharField(max_length=100, verbose_name="Address")
-    gender = models.CharField(
-        max_length=100, choices=gender, null=True, blank=True)
-    id_number = models.CharField(
-        max_length=7, verbose_name="ID Number", validators=[MinLengthValidator(7)],  unique=True, blank=True)
+    address = models.CharField(max_length=100, verbose_name="Address", null=True)
+    gender = models.CharField(max_length=100, choices=gender)
+    id_number = models.CharField(max_length=10, verbose_name="ID Number", 
+                validators=[MinLengthValidator(3)],  unique=True, null=True, blank=True)
     course = models.CharField(
-        max_length=100, choices=courses, null=True, blank=True)
+            max_length=100, choices=courses, null=True, blank=True)
     course_graduated = models.CharField(
         max_length=100, choices=graduates_courses, null=True, blank=True)
     department = models.CharField(
@@ -164,7 +162,7 @@ class clearance_form_table(models.Model):
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     present_address = models.CharField(max_length=100, verbose_name="Present Address")
-    course = models.CharField(max_length=50, verbose_name="Student Course",null=True, default="NONE")
+    course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
      
     date_filed = models.CharField(max_length=20, verbose_name="Date Filed")
     date_admitted_in_tup = models.CharField(
@@ -204,8 +202,8 @@ class clearance_form_table(models.Model):
         verbose_name="Industrial Educ. Signature", default="UNAPPROVED")
     it_dept_signature = models.CharField(max_length=100,
         verbose_name="Industrial Tech. Signature", default="UNAPPROVED")
-    ieng_dept_signature = models.CharField(max_length=100,
-        verbose_name="Industrial Eng. Signature", default="UNAPPROVED")
+    eng_dept_signature = models.CharField(max_length=100,
+        verbose_name="Engineering Signature", default="UNAPPROVED")
     library_signature = models.CharField(max_length=100,
         verbose_name="Library Signature", default="UNAPPROVED")
     guidance_office_signature = models.CharField(max_length=100,
@@ -216,7 +214,8 @@ class clearance_form_table(models.Model):
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
     course_adviser = models.CharField(max_length=100,
         verbose_name="Course Adviser", default="NONE")
-    course_adviser_signature = models.ImageField(upload_to='signature/')
+    course_adviser_signature = models.CharField(max_length=100,
+        verbose_name="Course Adviser Signature", default="NONE")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     clear_notif = models.CharField(
@@ -455,8 +454,6 @@ class request_form_table(models.Model):
     purpose_of_request_reason = models.CharField(
         max_length=100, verbose_name="Purpose of Request",null=True)
     amount = models.CharField(max_length=100, verbose_name="Amount", default="0")
-    
-    TOR = models.CharField(max_length=50,default="❌",null=True)
     form_137 = models.CharField(max_length=50, default="❌",null=True)
     clearance = models.CharField(max_length=50, default="❌",null=True)
     official_receipt = models.CharField(max_length=50, default="❌",null=True)

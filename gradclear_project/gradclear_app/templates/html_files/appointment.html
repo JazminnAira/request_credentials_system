@@ -28,7 +28,7 @@ Adviser:
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <title> Application for Graduation and Clearance </title>
+    <title> Appointment</title>
 </head>              
 
 
@@ -411,7 +411,7 @@ Adviser:
                     <div class="modal-header modal-1"  style="width: 100%;">
                         {% if request.user.user_type == "FACULTY" %}
                         <h3 class="modal-title w-100 text-center">Appointment for Concerns</h3>
-                        {% elif request.user.user_type == "REGISTRAR" %}
+                        {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                         <h3 class="modal-title w-100 text-center">Appointment for Claiming Requested Credentials</h3>
                         {% endif %}
 
@@ -422,7 +422,7 @@ Adviser:
                         {% elif gform == 'graduation'%}
                         <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Close">x</a>
                          
-                        {% elif request.user.user_type == "REGISTRAR" %}
+                        {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                         <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Home">
                             x
                         </a>

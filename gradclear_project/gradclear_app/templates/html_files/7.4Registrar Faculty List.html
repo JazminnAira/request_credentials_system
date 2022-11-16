@@ -380,8 +380,8 @@ Adviser:
 <body>
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_74">
-        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
-        <a href="{% url 'registrar_dashboard_faculty_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'registrar_dashboard_faculty_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_74" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
@@ -422,52 +422,57 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_74">
                     <thead>
                         <tr>
-                            <th> # </th>
-                            <th>Faculty's Name</th>
+                            <th hidden> # </th>
+                            <th>Name</th>
                             <th>Department</th>
                             <th>ID Number</th>
                             <th>Email</th>
-                            <th>Gender</th>
-                            <th>Position</th>     
-                            <th>Designation</th>
+                            <th>Designation</th>     
                             <th></th>
                             
                         </tr>
                         <tr class="no_data">
-                            <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
+                            <td colspan="6"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
                     {% for instance in all %}
+                    
                     <tbody>
                         <tr>
-                            <td>{{instance.id}}</td>
+                            <td hidden>{{instance.id}}</td>
                             <td>{{instance.full_name}}</td>
+                            {% if instance.department|first == "H" %}
+                            <td>{{ instance.department|make_list|slice:'1:'|join:'' }}</td>
+                            {% else %}
                             <td>{{instance.department}}</td>
+                            {% endif %}
                             <td>{{instance.id_number}}</td>
                             <td>{{instance.email}}</td>
-                            <td>{{instance.gender}}</td>
-                            <td>{{instance.position}}</td>
+                            
                             <td>   
                                 <form name="change_position" id="change" action="faculty_designation_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
                                     <select onchange="this.form.submit()" name="designationSelect" id="changer" class="col-12"> 
+                                        
                                         <option value="">{{instance.designation}}</option>
-                                        <option value="---"></option>
-                                        <option value="ACCOUNTANT">ACCOUNTANT</option>
-                                        <option value="HEAD OF LIBERAL ARTS">HEAD OF LIBERAL ARTS</option>
-                                        <option value="HEAD OF MATH AND SCIENECES">HEAD OF MATH AND SCIENECES</option>
-                                        <option value="HEAD OF DPECS">HEAD OF DPECS</option>
-                                        <option value="HEAD OF INDUSTRIAL TECHNOLOGY">HEAD OF INDUSTRIAL TECHNOLOGY</option>
-                                        <option value="HEAD OF INDUTRIAL EDUCATION ">HEAD OF INDUTRIAL EDUCATION</option> 
-                                        <option value="HEAD OF ENGINEERING ">HEAD OF ENGINEERING</option> 
-                                        <option value="CAMPUS LIBRARIAN">CAMPUS LIBRARIAN</option>
-                                        <option value="GUIDANCE COUNCELOR">GUIDANCE COUNCELOR</option>
-                                        <option value="HEAD OF STUDENT AFFAIRS">HEAD OF STUDENT AFFAIRS</option>
-                                        <option value="ASST. DIR FOR ACADEMIC AFFAIRS">ASST. DIR FOR ACADEMIC AFFAIRS</option>
+                                        {% if instance.designation != "---" %}
+                                        <option value="---">---</option>
+                                        {% endif %}
+                                        <option value="HOCS">ACCOUNTANT</option>
+                                        <option value="HDLA">HEAD OF LIBERAL ARTS</option>
+                                        <option value="HDMS">HEAD OF MATH AND SCIENCES</option>
+                                        <option value="HDPECS">HEAD OF PHYSICAL EDUCATION</option>
+                                        <option value="HDIT">HEAD OF INDUSTRIAL TECHNOLOGY</option>
+                                        <option value="HDED">HEAD OF INDUSTRIAL EDUCATION</option> 
+                                        <option value="HDOE">HEAD OF ENGINEERING</option> 
+                                        <option value="HOCL">CAMPUS LIBRARIAN</option>
+                                        <option value="HOGS">GUIDANCE COUNCELOR</option>
+                                        <option value="HOSA">HEAD OF STUDENT AFFAIRS</option>
+                                        <option value="HADAA">ASST. DIRECTOR FOR ACADEMIC AFFAIRS</option>
                                     </select>
                                 </form> 
                             </td>

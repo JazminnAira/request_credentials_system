@@ -10,7 +10,7 @@ class clearance_form_table_admin(admin.ModelAdmin):
 class graduation_form_table_admin(admin.ModelAdmin):
      list_display = ('student_id','name','course','approval_status')
 class request_form_table_admin(admin.ModelAdmin):
-     list_display = ('student_id','name','date','current_status', 'form_137','TOR','clearance','request','official_receipt','claim')
+     list_display = ('student_id','name','date','current_status', 'form_137','clearance','request','official_receipt','claim')
 
 class document_checker_table_admin(admin.ModelAdmin):
      list_display = ('id','name','form_137','TOR')

@@ -944,7 +944,7 @@ Adviser:
     }
     
     .modal-footer {
-        background: #c51d3a;
+        background: #424242;
     }
     
     h2 {
@@ -1132,6 +1132,15 @@ Adviser:
         color: white;
         background-color: #d3324d;
     }
+    #passwordsavechanges_btn_71 {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    #passwordsavechanges_btn_71:hover {
+        color: white;
+        background-color: #d3324d;
+    }
    
 
 
@@ -1143,13 +1152,15 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-pill top-0 position-fixed p-2" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-pill top-0 position-absolute p-2" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
-    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-pill top-0 position-fixed p-2" style="font-size: 12px;" >{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-pill top-0 position-absolute p-2" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
+    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
+    {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-pill top-0 position-fixed p-2" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-pill top-0 position-absolute p-2" style="font-size: 12px;">{{request_badge}}</span></a><br>
+    <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     <a style="padding-left: 19px;" href="" data-toggle="modal" data-target="#Settings_modal_71"><i class="fa fa-cogs material-icons"></i><span class="icon-text">Settings<span></a>
-    
+    {% endif %}
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="logo_71" style="position: absolute;bottom: 10px;">
 
 </div>
@@ -1223,9 +1234,14 @@ Adviser:
 
                 <!--MODAL FOOTER-->
                 <div class="modal-footer" id="account_modal_footer_71">
-                    
+                    {% if request.user.user_type == "STAFF" %}
+                    <!--CHANGEPASSWORD BUTTON-->
+                    <a href="#" data-toggle="modal" data-target="#Settings_modal_71" class="btn btn-secondary" role="button" data-dismiss="modal" style="border-radius: 10px;">Change Password</a>
                     <!--LOGOUT BUTTON-->
                     <a href="{% url 'logout' %}" class="btn btn-secondary" role="button" id="button_71" aria-pressed="true">Log Out</a>
+                    {% elif request.user.user_type == "REGISTRAR" %}
+                    <a href="{% url 'logout' %}" class="btn btn-secondary" role="button" id="button_71" aria-pressed="true">Log Out</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -1282,16 +1298,15 @@ Adviser:
                             <select class="form-control" name="Department" id="department_modal_box_71" required>
                                 <option value="selectdepart" hidden>--SELECT--</option>
                                 <option value="DIT">Industrial Technology Department (DIT)</option>
-                                <option value="DED">Industrial Educational Department (DED)</option>
-                                <option value="IED">Industrial Engineering Department (IED)</option>
+                                <option value="DED">Industrial Education Department (DED)</option>
                                 <option value="DLA">Liberal Arts Department (DLA)</option>
                                 <option value="DMS">Math and Science Department (DMS)</option>
                                 <option value="OGS">Guidance (OGS)</option>
                                 <option value="OCL">Library (OCL)</option>
                                 <option value="OSA">Student Affairs (OSA)</option>
                                 <option value="DOE">Department of Engineering (DOE)</option>
-                                <option value="OAC">ADAA (OAC)</option>
-                                <option value="DPE">Department of Physical Education Culture and Sports (DPE)</option>
+                                <option value="ADAA">ADAA (ADAA)</option>
+                                <option value="DPECS">Department of Physical Education Culture and Sports (DPECS)</option>
                                 <option value="OCS">Accountant (OCS)</option>
                                 <option value="OES">Extension Services (OES)</option>
                             </select>
@@ -1310,6 +1325,7 @@ Adviser:
         </div>
     </div>
 
+    {% if request.user.user_type == "REGISTRAR" %}
     <!-- SETTINGS MODAL -->
     <div id="Settings_modal_71" class="modal fade" id="exampleModal_71" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog" style="max-width: 51%;" role="document">
@@ -1419,7 +1435,7 @@ Adviser:
                                                 <input type="text" id="new_pass_71" name="new_pass_071" value="{{ request.GET.new_pass_071 }}"
                                                 class="form-control col-sm-5 mr-2 " minlength="4" 
                                                 placeholder="*Minimum of 4 characters*" 
-                                                oninput="new_pass_length(),match_new_pass(),new_old_pass_detect1()"required></div><br>
+                                                oninput="new_pass_length(),match_new_pass(),new_old_pass_detect1()"required></div>
                                                 <div class="input-group">
                                                 <label for="confirmpass_71" class="my-1 mr-4" id="confirmpass_lbl_71">Confirm Password:</label>
                                                 <input type="text" id="confirm_pass_71" name="confirm_pass_071" value="{{ request.GET.confirm_pass_071 }}"
@@ -1482,6 +1498,58 @@ Adviser:
         </div>
     </div>
     </div>
+    {% elif request.user.user_type == "STAFF" %}
+      <!--SETTINGS STATUS MODAL-->
+      <div class="modal fade" id="Settings_modal_71" tabindex="-1" >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width: 100%;">
+
+                <!--CHANGE PASSWORD MODAL HEADER-->
+                <div class="modal-header">
+                    <h3 class="modal-title">Change Password</h3>
+
+                    <!--CHANGE PASSWORD CLOSE BUTTON-->
+                    <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
+                     data-placement="right" title="Close">x</button>
+                </div>
+                
+                <!--CHANGE PASSWORD MODAL BODY-->
+                <div class="modal-body w-100 text-center">
+                    <form method= "POST" action="staff_updatePassword">
+                        {% csrf_token %}
+        
+                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
+                            
+                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
+                            <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
+                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="old_pass_length(),ON_match()" required>
+                            </div><br>-->
+                            <div class="input-group">
+                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}>
+                            <label for="newpass_71" class="my-1 mr-5" id="newpass_lbl_71">New Password:</label>
+                            <input type="text" id="new_pass_71" name="new_pass_071" value="{{ request.GET.new_pass_071 }}"class="form-control" 
+                            minlength="4" placeholder="*Minimum of 4 characters*" oninput="new_pass_length(),match_new_pass(),new_old_pass_detect1()"required></div>
+                            <div class="input-group">
+                            <label for="confirmpass_71" class="my-1 mr-4" id="confirmpass_lbl_71">Confirm Password:</label>
+                            <input type="text" id="confirm_pass_71" name="confirm_pass_071" value="{{ request.GET.confirm_pass_071 }}"class="form-control" 
+                            minlength="4" placeholder="*Minimum of 4 characters*"oninput="confirm_pass_length(),match_confirm_pass(),new_old_pass_detect()"required>
+                            </div>
+                            <p id="sp_error_71" style="color:red;"></p>
+                            <p id="spm_error_71" style="color:red;"></p>
+                            <p id="spon_error_71" style="color:red;"></p>
+                            </div>
+                             <!--CHANGE PASSWORD MODAL FOOTER-->
+                            <div class="modal-footer" id="account_footer_71">
+                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit5" id="passwordsavechanges_btn_71" >Save Changes</button>
+                            </div>
+                        </div>
+                    </form>    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!--MAIN-->
     <div class="container-fluid" >
@@ -2385,10 +2453,6 @@ Adviser:
 
     function opengrad() {
         window.location.replace("{% url 'graduation_form' %}");
-    }
-
-    function openclear() {
-        window.location.replace("{% url 'clearance_form' %}");
     }
 
     var mini = true;

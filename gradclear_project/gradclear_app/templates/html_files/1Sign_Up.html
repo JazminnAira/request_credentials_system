@@ -238,6 +238,11 @@ Adviser:
         color: red;
         font-size: 13px;
     }
+    p4 {
+        border-color: black;
+        color: black;
+        font-size: 13px;
+    }
     
     #displink:hover {
         color: #c51d3a;
@@ -378,7 +383,9 @@ Adviser:
 
 
 <body>
-    
+    {% if user == "STAFF" %}
+    <body style="background-image: linear-gradient(0deg, rgba(124, 122, 122, 0.55), rgba(136, 136, 136, 0.55)), url('/static/Media/bgdash.jpg')">
+    {% endif %}
     <!--FOR LETTERS ONLY onkeypress="return /[a-z]/i.test(event.key)"-->
     <!--FOR LETTERS WITH SPACE ONLY onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
          (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"-->
@@ -386,24 +393,34 @@ Adviser:
 
     <!--MAIN-->
     <section>
+        {% if user == "STAFF" %}
+        <br>
+        {% endif %}
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" >
                     <div class="modal-header modal-1"  style="width: 100%;">
                         <h3 class="modal-title w-100 text-center">Sign Up</h3>
 
                          <!--MODAL CLOSE BUTTON-->
+                        {% if user != "STAFF" %}
                         <button type="button" class="close_btn" data-placement="right" title="Close" 
                         onclick="window.location.assign('/')">X</button>
+                        {% else %}
+                        <button type="button" class="close_btn" data-placement="right" title="Close" 
+                        onclick="window.location.assign('/registrar_dashboard_staff_list')">X</button>
+                        {% endif %}
                     </div>
-
+                    
                     {% if user == "STUDENT" %}
                         <form id="stud_form_01" method="POST" action="student_signup" style="height:100%;" enctype="multipart/form-data">
                     {% elif user == "ALUMNUS" %}
                         <form id="stud_form_01" method="POST" action="alumnus_signup" style="height:100%;" enctype="multipart/form-data">
                     {% elif user == "OLD STUDENT" %}
                         <form id="stud_form_01" method="POST" action="oldstudent_signup" style="height:100%;" enctype="multipart/form-data">
-                    {% else %}
+                    {% elif user == "FACULTY" %}
                         <form id="stud_form_01" method="POST" action="faculty_signup" style="height:100%;" enctype="multipart/form-data">
+                    {% else %}
+                        <form id="stud_form_01" method="POST" action="staff_signup" style="height:100%;" enctype="multipart/form-data">
                     {% endif %}
                             {% csrf_token %}
                             <div class="modal-body ">
@@ -426,28 +443,31 @@ Adviser:
                                         </div>
                                     </div>
                                 </div>
-
+                                
+                                {% if user != "STAFF" %}
                                 <!--ADDRESS-->
                                 <div class="form-group">
                                     <label for="address">Address:</label><label id="Sid_aste01" style="color:red;">*</label>
                                     {{form.address}}
                                     <p id="sid_error_01"></p>
                                 </div>
-
+                                {% endif %}
+                                
                                 <!--GENDER-->
                                 <div class="form-group" id="course_input">
                                     <label for="gender">Gender:</label><label id="Scourse_aste01" style="color:red;">*</label>
                                     {{form.gender}}
                                     <p id="sc_error_01"></p>
                                 </div>
-
+                                {% if user != "STAFF" %}
                                 <!--ID NUMBER BOX-->
                                 <div class="form-group">
                                     <label for="idnum">ID Number:</label><label id="Sid_aste01" style="color:red;">*</label>
                                     {{form.id_number}}
                                     <p id="sid_error_01"></p>
                                 </div>
-
+                                
+                                {% endif %}
                                 
                                 {% if user == "STUDENT" %}
                                     <!--COURSE DROPDOWN BOX-->
@@ -486,21 +506,16 @@ Adviser:
                                         {{form.course_graduated}}
                                         <p id="sc_error_01"></p>
                                     </div>
-                                    
-                                    <!--YEAR GRADUATED DROPDOWN BOX-->
-                                    <div class="form-group" id="y_graduated_input" >
-                                        <label for="year_graduated">Year Graduated:</label><label id="Syear_graduated_aste01" style="color:red;">*</label>
-                                        {{form.year_graduated}}
-                                        <p id="sys_error_01"></p>
-                                    </div>
 
                                 {% elif user == "FACULTY" %}
+                                    {% if user != "STAFF" %}
                                     <!--DEPARTMENT DROPDOWN BOX-->
                                     <div class="form-group" id="department_input" >
                                         <label for="Sdepartment01">Department:</label><label id="Sdepartment01" style="color:red;">*</label>
                                         {{form.department}}
                                         <p id="sys_error_01"></p>
                                     </div>
+                                    {% endif %}
                                 {% endif %}
 
                                 <!--CONTACT NUMBER BOX-->
@@ -516,7 +531,7 @@ Adviser:
                                     {{form.email}}
                                     <p id="se_error_01"></p>
                                 </div>
-                
+                                
                                 <!--PASSWORD BOX-->
                                 <div class="form-group">
                                     <label for="password">Password:</label><label id="Spass_aste01" style="color:red;">*</label>
@@ -529,6 +544,7 @@ Adviser:
                                     </div>
                                     <p id="sp_error_01"></p>
                                 </div>
+                                
         
                                 <!--CONFIRM PASSWORD BOX-->
                                 <div class="form-group">
@@ -545,14 +561,19 @@ Adviser:
                 
                                 <!--PASSWORD MATCHER LABEL-->
                                 <p id="spm_error_01"></p>
-
+                                
                                 <!--PROFILE PICTURE BOX-->
                                 <div class="form-group">
                                     <label for="prof_pic">Profile Picture:</label>
                                     {{form.profile_picture}}
+                                    <p><b>Note:</b><p4> Attach a presentable picture of yours with a clean white background in <b>2x2 picture size </b>.
+                                        <br>Filename format: NAME.jpg/png</p4></p>
                                     <p id="se_error_01"></p>
+                                     
                                 </div> 
+                                
                             </div>
+                           
 
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">

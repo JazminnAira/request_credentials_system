@@ -1,0 +1,703 @@
+<!--
+BET-COET-3A 2021-2023
+Programmers:
+        Trisha Eunis Elicot
+        Dana Grace Fulla
+        Allora Blesse Lagura
+        Jazminn Aira Terencio
+Adviser:
+        Mr.Jay Victor Gumboc
+-->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Staff List</title>
+
+</head>
+
+
+<style>
+    .table-icon {
+        background-color: #dedede;
+        color: #000;
+        align-content: center;
+    }
+
+    .table-i{
+        padding: 0%;
+    }
+
+    #unapproveds_75:hover, #approveds_75:hover{
+        background-color: #c51d3a;
+        color: #fff;
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+    
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+    
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+    
+    a {
+        font-style: italic;
+        color: #000;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    
+    #backtotop_btn_75 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_75::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_75:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_75:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_75.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    #list_tbl_75 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    
+    #list_tbl_75 td {
+        border-width: 1px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 2px 10px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    #list_tbl2_75 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl2_75 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+    
+    a :hover {
+        color: #fff;
+    }
+    
+    #dashboard_header_75 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+    
+    #search_box_75 {
+        width: 54%;
+        border-radius: 30px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_75 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_75:hover {
+        color: #c51d3a;
+    }
+    
+    #list_tbl_75 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_75 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_75 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_75 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_75 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_75 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #request_box_75 {
+        width: auto;
+        margin: 0 0 10px 5px;
+    }
+    
+    #schoolyear_box_75 {
+        margin: 0 0 10px 5px;
+    }
+    
+    #course_box_75 {
+        margin: 0 0 10px 5px;
+    }
+    
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    #list_tbl_75 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_75 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_75 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_75 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+    
+    #clearance_header_75 {
+        background-color: #c51d3a;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+    
+    h6 {
+        text-align: center;
+        color: #ffff;
+    }
+
+    #drpdwn{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+
+    #changer  {
+        background-color: #f5f0f6;
+        border:none;
+    }
+
+    /* #changer:hover {
+        background-color:#636363;
+        border:#ffff;
+    } */
+
+    .profile-pic {
+        color: transparent;
+        transition: all .3s ease;
+        transition: all .3s ease;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: -70px;
+        border-radius: 30%;
+        z-index: 9;
+        padding: 15px;}
+    
+    .submit:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
+    }
+
+</style>
+
+
+<body>
+    <!--NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_75">
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
+        <a href="{% url 'registrar_dashboard_staff_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+        <a href="{% url 'staff_signup'%}" data-toggle="tooltip" data-placement="right" title="Add Staff"><i class="fa fa-user-plus" aria-hidden="true" style="font-size:25px;"></i></a>
+
+        
+
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_75" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+
+        <!--SEARCH BUTTON
+        <a><button onClick="return search()" type = "button" id="search_btn_75">Search</button></a>-->
+
+    </div>
+
+    <!--BACK TO TOP BUTTON-->
+    <a id="backtotop_btn_75"></a>
+
+
+
+    <!-- MAIN-->
+    <h3 style="text-align:center;">List of Staffs</h3>
+    <div class="div">{% include 'html_files/message.html'%}</div>
+    <!--TAB BAR-->
+    <div data-tabs="1" id="tabz_75">
+
+        <div id="tab1_75" class="tab-content" style="background-color:#fff">
+            <div class="wrapper_all">
+                <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_75">
+                    <thead>
+                        <tr>
+                            <th hidden>#</th>
+                            <th>Name</th>
+                            <th>Email/Username</th>
+                            <th>Gender</th>
+                            <th></th>
+                        </tr>
+                        <tr class="no_data">
+                            <td colspan="4"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                    </thead>
+                    
+                    {% for instance in data %}
+                    <tbody>
+                        <tr>
+                            <td hidden>{{instance.id}}</td>
+                            <td>{{instance.full_name}}</td>
+                            <td>{{instance.username}}</td>
+                            <td>{{instance.gender}}</td>
+                            <td><form method ="POST" action ="staff_list_remove/{{instance.id}}">
+                                {% csrf_token %}
+                                <input type="text" name="id_from_table" value={{instance.id}} hidden>
+                                <button type ="submit" class="submit">Remove</button>
+                            </form></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <p class="text-center text-bold" id="p6_75"></p>
+    </div>
+    </hr>
+
+    <p class="text-center text-bold" id="p6_75"></p>
+</body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
+
+</html>
+
+
+<script>
+    // no data by default
+    var dattable = document.getElementById("list_tbl_75");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+
+    function openrdb() {
+        window.location.replace("{% url 'registrar_dashboard' %}");
+    }
+
+   
+    // TAB JS
+    var items = document.querySelectorAll('#tabz_75');
+    for (var i = 0, len = items.length; i < len; i++) {
+        (function() {
+                var t, e = this,
+                    a = "[data-tab]",
+                    n = document.body,
+                    r = n.matchesSelector || n.webkitMatchesSelector || n.mozMatchesSelector || n.msMatchesSelector,
+                    o = function() {
+                        var a = e.querySelectorAll("[data-tab-content]") || [];
+                        for (t = 0; t < a.length; t++) a[t].style.display = "none"
+                    },
+                    i = function(n) {
+                        var r = e.querySelectorAll(a) || [];
+                        for (t = 0; t < r.length; t++) {
+                            var i = r[t],
+                                s = i.className.replace("tab-active", "").trim();
+                            i.className = s
+                        }
+                        o(), n.className += " tab-active";
+                        var l = n.getAttribute("href"),
+                            c = e.querySelector(l);
+                        c && (c.style.display = "")
+                    },
+                    s = e.querySelector(".tab-active" + a);
+                s = s || e.querySelector(a), s && i(s), e.addEventListener("click", function(t) {
+                    var e = t.target;
+                    r.call(e, a) && i(e)
+                })
+            }
+            .bind(items[i]))();
+    }
+
+    // TO APPROVE STUDENT
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_75").deleteRow(i);
+        swal({
+            title: "Done",
+            text: "Application Approved!",
+            icon: "success",
+            button: "Ok",
+        })
+    }
+
+
+
+    //MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#search_box_75");
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+    });
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#search_box_75', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    // SEARCH1
+    function searching1() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                    $('.no_data').hide();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // SEARCH2
+    function searching2() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+    }
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_75");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // SORTING 
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
+    
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; 
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // PREVENT SCROLLING WHILE SWITCHING TABS
+    $('#tabz_75 a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+
+        var checked = $(this).find('input').prop('checked');
+        $(this).find('input').prop('checked', !checked);
+    });
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_75").value = "";
+    });
+
+    
+</script>

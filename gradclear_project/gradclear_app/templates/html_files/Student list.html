@@ -26,7 +26,7 @@ Adviser:
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <title>Student List Records</title>
+    <title>Student List</title>
 
 </head>
 
@@ -394,8 +394,8 @@ Adviser:
 <body>
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_75">
-        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
-        <a href="{% url 'registrar_dashboard_student_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'registrar_dashboard_student_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         
 
@@ -427,7 +427,7 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_75">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th hidden>#</th>
                             <th>Profile Picture</th>
                             <th>Name</th>
                             <th>ID Number</th>
@@ -439,17 +439,17 @@ Adviser:
                             <th></th>
                         </tr>
                         <tr class="no_data">
-                            <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
+                            <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="10"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     
                     {% for instance in data %}
                     <tbody>
                         <tr>
-                            <td>{{instance.id}}</td>
+                            <td hidden>{{instance.id}}</td>
                             <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
                             <td>{{instance.full_name}}</td>
                             {% if instance.student_id == None %}

@@ -26,7 +26,7 @@ Adviser:
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <title>Clearance Form Database</title>
+    <title>Clearance Form List</title>
 
 </head>
 
@@ -389,8 +389,8 @@ Adviser:
 <body>
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_72">
-        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
-        <a href="{% url 'registrar_dashboard_clearance_list' id=' '%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'registrar_dashboard_clearance_list' id=' '%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         
 
@@ -566,16 +566,25 @@ Adviser:
                             <th>Date & Time Requested</th>
                             <th>Approval Status</th>
                             <th>Notify</th>
+                            {% if request.user.user_type == "REGISTRAR" %}
                             <th></th>
-
+                            {% endif %}
                         </tr>
-
+                        {% if request.user.user_type == "REGISTRAR" %}
                         <tr class="no_data">
                             <td colspan="8"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
                             <td colspan="8"><i class="fa fa-warning"></i> No result</td>
                         </tr>
+                        {% elif request.user.user_type == "STAFF" %}
+                        <tr class="no_data">
+                            <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="7"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                        {% endif %}
                     </thead>
                     
                     {% for instance in all %}
@@ -603,8 +612,10 @@ Adviser:
                                 ❌
                             {% endif %}
                             </td>
+                            {% if request.user.user_type == "REGISTRAR" %}
                             <td><a href="{% url 'delete_clearform' instance.id %}"><button class="table-icon" id="btn" >Remove</button></a>
                             </td>
+                            {% endif %}
                         </tr>
                     </tbody>
                     {% endfor %}

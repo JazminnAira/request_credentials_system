@@ -30,7 +30,7 @@ Adviser:
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.3.5/signature_pad.min.js" integrity="sha512-kw/nRM/BMR2XGArXnOoxKOO5VBHLdITAW00aG8qK4zBzcLVZ4nzg7/oYCaoiwc8U9zrnsO9UHqpyljJ8+iqYiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <title>Clearance Form Database</title>
+    <title>Clearance Form List</title>
 </head>
 
 
@@ -657,7 +657,7 @@ Adviser:
             <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
                 <thead style="height: 70px;">
                     <tr>
-                        <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+                        <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check" /></th>
                         <th hidden> # </th>
                         <th>Student's Name</th>
                         <th>Course</th>
@@ -690,73 +690,81 @@ Adviser:
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                         <td class="request"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
+                        
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
                             {% if instance.accountant_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
+                            {% else %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            {% endif %}
+                        {% elif dep == "HDLA" %}
+                            <script>document.querySelector('#department_th').innerText = "DLA";</script>
+                            {% if instance.liberal_arts_signature == "UNAPPROVED" %}
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department12(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDMS" %}
                             <script>document.querySelector('#department_th').innerText = "DMS";</script>
                             {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department2(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department2(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDPECS" %}
                             <script>document.querySelector('#department_th').innerText = "DPECS";</script>
                             {% if instance.pe_dept_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department3(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department3(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDED" %}
                             <script>document.querySelector('#department_th').innerText = "DED";</script>
                             {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department4(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department4(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDIT" %} 
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department5(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department5(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
-                        {% elif dep == "HDIE" %}
-                            <script>document.querySelector('#department_th').innerText = "DIE";</script>
-                            {% if instance.ieng_dept_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department6(this)">Approve</button></td>
+                        {% elif dep == "HDOE" %}
+                            <script>document.querySelector('#department_th').innerText = "DOE";</script>
+                            {% if instance.eng_dept_signature == "UNAPPROVED" %}
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department6(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOCL" %}
                             <script>document.querySelector('#department_th').innerText = "OCL";</script>
                             {% if instance.library_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department7(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department7(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOGS" %}
                             <script>document.querySelector('#department_th').innerText = "OGS";</script>
                             {% if instance.guidance_office_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department8(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department8(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOSA" %}
                             <script>document.querySelector('#department_th').innerText = "OSA";</script>
                             {% if instance.osa_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department9(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department9(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HADAA" %}
                             <script>document.querySelector('#department_th').innerText = "ADAA";</script>
                             {% if instance.academic_affairs_signature == "UNAPPROVED" %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department10(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department10(this)">Approve</button></td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
@@ -766,7 +774,7 @@ Adviser:
                         {% if course_adv %} 
                             <script>document.querySelector('#course_adviser_th').innerText = "Course/Shop Adviser";</script>
                             {% if instance.course_adviser_signature == f_n_unapproved %}
-                            <td><button type ="button" class="button user_id" id="open_signature" onclick = "OpenSignature(this), department11(this)">Approve</button></td>
+                            <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department11(this)">Approve</button></td>
                             {% elif instance.course_adviser_signature != f_n_unapproved and instance.course_adviser != request.user.full_name %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
                             {% else %}
@@ -788,7 +796,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" class="button btn-m user_id" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" style="display: none;" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     </div>
     
 
@@ -946,7 +954,7 @@ Adviser:
     };
 
     function department6(elem){
-        document.getElementById('department').value = "ieng_dept_signature";
+        document.getElementById('department').value = "eng_dept_signature";
     };
     function department7(elem){
         document.getElementById('department').value = "library_signature";
@@ -965,6 +973,10 @@ Adviser:
 
     function department11(elem){
         document.getElementById('department').value = "course_adviser_signature";
+    };
+
+    function department12(elem){
+        document.getElementById('department').value = "liberal_arts_signature";
     };
 
     const handleClick = ({ target }) => {
@@ -1353,5 +1365,37 @@ Adviser:
     }
     }
 
+    // DISABLE APPROVE BUTTONS WHEN CHECKBOX CHECKED
+    buttons =document.getElementsByClassName('apprv')
+    $('.check').change(function() {
+    if ( this.checked ) {
+        for(var i=0; i<buttons.length; i++){
+        buttons[i].disabled = true;
+        buttons[i].style.opacity = '0.5';}
+        $(".approve_all").show();
+    }
+    else {
+        for(var i=0; i<buttons.length; i++){
+        buttons[i].disabled = false;
+        buttons[i].style.opacity = '1';}
+        $(".approve_all").hide();
+    };
+    });
 
+    $('#all_check').change(function() {
+    if ( this.checked ) {
+    
+        for(var i=0; i<buttons.length; i++){
+        buttons[i].disabled = true;
+        buttons[i].style.opacity = '0.5';}
+        $(".approve_all").show();
+    }
+    else {
+        for(var i=0; i<buttons.length; i++){
+        buttons[i].disabled = false;
+        buttons[i].style.opacity = '1';}
+        $(".approve_all").hide();
+    };
+    });
+    
 </script>
