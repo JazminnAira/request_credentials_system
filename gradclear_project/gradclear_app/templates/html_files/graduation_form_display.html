@@ -618,29 +618,48 @@ Adviser:
           <form method="POST" action="graduation_form" id="grad_form" >
                {% csrf_token %}
                <!--SECTION RADIO BOX-->
-               <div class="form-row">
+                <div class="form-row">
                 <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-               
+                
+                {% if i.shift == "DAY" %}
                 <div class="radio" onkeyup="isEmpty()" id="radio_43">
                     <label class="my-1 mr-4" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()" checked disabled>Day
                     </label>
                     <label class="my-1 mr-4" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve  
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()" disabled>Eve  
                     </label>
                 </div>
+                {% else %}
+                <div class="radio" onkeyup="isEmpty()" id="radio_43">
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()" disabled>Day
+                    </label>
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()" checked disabled>Eve  
+                    </label>
+                </div>
+                {% endif %}
                 </div>
                 
                 <div class="form-row">
                     <div class="radio"  onkeyup="isEmpty()" id="radio_43">
                     <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-                    
+                    {% if i.study_load == "SEMESTER" %}
                     <label class="my-1 mr-2" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()"required>Semester
+                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()" checked disabled>Semester
                     </label>
                     <label class="my-1 mr-2" class="form-control">
-                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" required>  Summer    
+                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" disabled>  Summer    
                     </label>
+                    {% else %}
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()" disabled>Semester
+                    </label>
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" checked disabled>  Summer    
+                    </label>
+                    {% endif %}
                 </div>
                 </div>
                 <div id="dayeve_error_43"></div>
@@ -657,16 +676,16 @@ Adviser:
 
                             
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" disabled id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required autofocus>
+                                disabled  autofocus>
                                 
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" disabled id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required>
+                                disabled >
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" disabled id="mn_box_43" class="form-control mr-3" placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                                 disabled>
                         {% else %}
                             <label for="name" class="my-1 mr-2" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
                             <input type="text" size="78" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" disabled id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{i.name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required autofocus>
+                                disabled  autofocus>
                         {% endif %}
                             
                         
@@ -679,7 +698,7 @@ Adviser:
                          <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
 
                          <div>
-                         <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()" value="{{i.course}}"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
+                         <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()" value="{{i.course}}"  onkeyup="isEmpty()" onchange="course_check()" disabled >
                               <option value="1" selected>{{i.course}}</option>
                          </select>
                          </div>
@@ -1076,23 +1095,31 @@ Adviser:
                <div class="form-inline">
                 <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
 
-                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
+                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" value = "{{i.enrolled_term}}" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled>
 
-
+                {% if i.status == "YES" %}
                 <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" required>Yes
-                    
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" checked disabled>Yes
                 </label>
 
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" required>No
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" disabled>No
                 </label>
+                {% else %}
+                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" disabled>Yes
+                </label>
+
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" checked disabled>No
+                </label>
+                {% endif %}
                 </div>
 
                <!--DEADLINE BOX-->
                <div class="form-inline">
                     <label for="name" class="col-form-label my-1">If no, file your application papers. Deadline:</label>
-                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled required>
+                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled >
                </div><br>
 
 

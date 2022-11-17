@@ -691,7 +691,7 @@ Adviser:
     <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
     {% if graduating >= 4 and request.user.user_type == "STUDENT" %}
-        <a  style="padding-left: 15px;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
+        <a  style="padding-left: 15px;" href="{% url 'graduation_view'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
     {% else %}
         <a style="padding-left: 15px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
