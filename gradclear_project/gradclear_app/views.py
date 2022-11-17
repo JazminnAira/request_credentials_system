@@ -1661,6 +1661,7 @@ def request_appointment(request, id):
         name = user_table.objects.filter(
             student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
         last_name = name[0]
+        
 
         subject = 'Claiming of '+ purpose_of_request[0] 
         message1 = "Good day, "+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
