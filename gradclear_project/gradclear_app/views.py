@@ -1359,7 +1359,6 @@ def logout_user(request):
 
 def student_registration(request):
     form = signup_form()
-    print(form.errors)
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         print(form.errors)
@@ -1390,6 +1389,7 @@ def student_registration(request):
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
+            
     img_object = form.instance
     user_identifier = "STUDENT"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}

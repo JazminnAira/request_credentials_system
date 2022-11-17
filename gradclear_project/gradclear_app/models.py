@@ -121,7 +121,7 @@ class user_table(AbstractUser):
     address = models.CharField(max_length=100, verbose_name="Address", null=True)
     gender = models.CharField(max_length=100, choices=gender)
     birthday = models.CharField(max_length=100,verbose_name="Birthday")
-    id_number = models.CharField(max_length=10, verbose_name="ID Number", 
+    id_number = models.CharField(max_length=17, verbose_name="ID Number", 
                 validators=[MinLengthValidator(17)], unique=True, null=True)
     course = models.CharField(
             max_length=100, choices=courses, null=True, blank=True)
