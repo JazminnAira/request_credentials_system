@@ -44,6 +44,16 @@ import time
 #     full_name='SARAH JANE VELOS', user_type='REGISTRAR', username='registrar_admin', id_number='11-1111')
 #     reg.save()
 
+# dateSTR = datetime.now().strftime("%H:%M:%S" )
+# if dateSTR == ("11:37:00"):
+#    #do function
+#     print(dateSTR)
+# else:
+#     # do something useful till this time
+#     time.sleep(1)
+#     pass
+
+
 @login_required(login_url='/')
 def req_print(request,id):
     buffer = BytesIO()
@@ -1379,6 +1389,7 @@ def student_registration(request):
             form.instance.user_type = "STUDENT"
             
             form.save()
+            
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -1663,7 +1674,24 @@ def clearance_form(request, type, req):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
-            
+
+            unapproved = "UNAPPROVED"
+            approved = "_APPROVED"
+            if course.startswith('BSIE-') or course.startswith('BTTE-'):
+                print("ded")
+                dit_signature = approved
+                doe_signature = approved
+                ded_signature = unapproved
+            elif course.startswith('BS-'):
+                print("doe")
+                dit_signature = approved
+                doe_signature = unapproved
+                ded_signature = approved
+            else:
+                print("dit")
+                dit_signature = unapproved
+                doe_signature = approved
+                ded_signature = approved
             #semester_term = clearance_form_table.objects.filter(name=fullname,purpose_of_request=purpose).order_by('-time_requested').values_list('last_term_in_tupc')
              
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
@@ -1672,7 +1700,8 @@ def clearance_form(request, type, req):
                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
                                                        course_adviser=course_adviser, course_adviser_signature=course_adviser_signature, 
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
+                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,
+                                                       ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
             
             form.save()
             
@@ -4926,14 +4955,14 @@ def display_clearform(request, id):
                 signature_type9 = "APPROVE"
             
         #INDUSTRIAL 
-        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
+        check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature__icontains = 'UNAPPROVED') or Q(it_dept_signature__icontains = 'UNAPPROVED')or Q(eng_dept_signature__icontains = 'UNAPPROVED'))
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
             it_name = " "
             signature_type10 = ""
         else:
-            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature= '_APPROVED'):
                 pass
             else:
                 #INDUSTRIAL EDUCATION
@@ -4964,7 +4993,7 @@ def display_clearform(request, id):
                     
                 
             #INDUSTRIAL TECHNOLOGY
-            if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,it_dept_signature = '_APPROVED'):
                 pass
             else:
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
@@ -4993,7 +5022,7 @@ def display_clearform(request, id):
                     signature_type10 = "APPROVE"
                 
             #ENGINEERING
-            if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,eng_dept_signature= '_APPROVED'):
                 pass
             else:
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
@@ -6351,3 +6380,6 @@ def student_status_update(request,id):
 
     
     return redirect(registrar_dashboard_student_list)
+
+
+
