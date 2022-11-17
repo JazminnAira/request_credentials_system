@@ -141,7 +141,7 @@ Adviser:
     }
     
     #main2_41 {
-        padding-left: 30px;
+        padding-left: 15px;
     }
     
     .sidebar {
@@ -706,23 +706,21 @@ Adviser:
 
 
 <!--SIDEBAR-->
+{% if request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" %}
+<div id="sidebar" class="sidebar" onmouseover="toggleSidebaralumni()" onmouseout="toggleSidebaralumni()">
+{% else %}
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+{% endif %}
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
     {% if graduating >= 4 and request.user.user_type == "STUDENT" %}
         <a  style="padding-left: 15px;" href="{% url 'graduation_view'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
-    {% else %}
-        <a style="padding-left: 15px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="{% url 'graduation_form'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
-        </i><span class="icon-text">Graduation Form</span></a><br>
     {% endif %}
     {% if graduating >= 4 and request.user.user_type == "STUDENT" %}
         <a style="padding-left: 21px;" href="{% url 'clearance_view'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
-        </i><span class="icon-text">Clearance Form</span></a><br>
-    {% else %}   
-        <a style="padding-left: 21px; pointer-events: none; cursor: default; color: dedede; opacity: 0.1;" href="clearance_form/ApplicationForGraduation/ApplyForGraduation"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
-        </i><span class="icon-text">Clearance Form</span></a><br>
+        </i><span class="icon-text">Application for Graduation</span></a><br>
     {% endif %}
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
@@ -741,7 +739,7 @@ Adviser:
         <form method="POST">
             {% csrf_token %}
             <div class="modal-dialog modal-confirm" id="Smodal_size">
-                <div class="modal-content">
+                <div class="modal-content" >
 
                     <!--MODAL HEADER-->
                     <div class="modal-header">
@@ -765,7 +763,7 @@ Adviser:
                     <div class="modal-body" id="account_body_41">
 
                         <!--ACCOUNT CONTENT TABLE-->
-                        <table class="table-responsive-sm table-responsive-md">
+                        <table class="table-responsive-sm table-responsive-md" >
                             <tr>
                                 <td><b>Name:</b></td>
                                 <td>{{request.user.first_name}} {{request.user.last_name}}</td>
@@ -1537,13 +1535,30 @@ Adviser:
         this.mini = false;
         
     } else {
-        document.getElementById("sidebar").style.width = "300px";
-        document.getElementById("main").style.marginLeft = "300px";
-        document.getElementById("left_logo_41").style.marginLeft = "130px";
+        document.getElementById("sidebar").style.width = "400px";
+        document.getElementById("main").style.marginLeft = "400px";
+        document.getElementById("left_logo_41").style.marginLeft = "170px";
         this.mini = true;
         
     }
     }
 
+    function toggleSidebaralumni() {
+    if (mini) {
+        document.getElementById("sidebar").style.width = "70px";
+        document.getElementById("main").style.marginLeft = "70px";
+        document.getElementById("left_logo_41").style.marginLeft = "3px";
+        this.mini = false;
+        
+    } else {
+        document.getElementById("sidebar").style.width = "260px";
+        document.getElementById("main").style.marginLeft = "260px";
+        document.getElementById("left_logo_41").style.marginLeft = "100px";
+        this.mini = true;
+        
+    }
+    }
+    
+        
 
 </script>
