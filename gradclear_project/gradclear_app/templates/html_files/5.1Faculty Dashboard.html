@@ -664,6 +664,28 @@ Adviser:
         color: #000;
         width: max-content;
     }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 10px;
+    }
+
+    .table-wrapper{
+        max-height: 450px;
+        overflow-y: scroll;
+        margin: 20px;
+
+    }
+   .outer-wrapper{
+    margin: 20px;
+    border-radius: 5px;
+   
+   }
 
     
 </style>
@@ -860,6 +882,8 @@ Adviser:
 
             <!--MAIN TABLE-->
             <div class="col-12" style="margin-top: 20px; padding-right: 30px;">
+                <div class="outer-wrapper">
+                    <div class="table-wrapper">
                 <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable" id="list_tbl_51">
                     <thead style="height: 70px;">
                         <tr>
@@ -889,8 +913,7 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td><a href="display_gradform/{{ instance.id }}"><button type="button">View Form</button></a></td>
-                            
-                        </tr>
+                   
                     </tbody>
                     {% endfor %}
                     {% for instance in st1 %}
@@ -916,6 +939,8 @@ Adviser:
                     </tbody>
                     {% endfor %}
                 </table>
+                </div>
+                </div>
             </div>
         </div>
     </div>

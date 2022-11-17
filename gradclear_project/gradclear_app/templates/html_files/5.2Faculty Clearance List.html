@@ -397,6 +397,28 @@ Adviser:
     @media screen and (max-height: 450px) {
         .signature_section {padding-top: 15px;}
     }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 10px;
+    }
+
+    .table-wrapper{
+        max-height: 600px;
+        overflow-y: scroll;
+        
+       
+    }
+   .outer-wrapper{
+    margin: 20px;
+    border-radius: 5px;
+   
+   }
 
 
 </style>
@@ -422,104 +444,8 @@ Adviser:
     <a id="backtotop_btn_52"></a>
 
     
-    <!--CLEARANCE STATUS MODAL-->
-    <div class="modal fade" id="ClearanceStatus_modal_52" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-
-                <!--MODAL HEADER-->
-                <div class="modal-header" id="clearance_header_52">
-                    <h6 class="modal-title" id="header_lbl_52"><b>THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE  (To be signed by the responsible officials concerned.)</b></h6>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" id="close_btn_52" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="right" title="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group row">
-                            <label for="accnt_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="accnt_lbl_52">1.ACOUNTANT:</i></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="accnt_box_52" nameass="form-co0ntrol" readonly>
-                            </div>
-                        </div>
-                        <label for="dfiled" id="dfiled_lbl_52"><b>2.DEAPARTMENT HEADS:</b></label>
-
-                        <div class="form-group row">
-                            <label for="la_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="la_lbl_52">a.LIBERAL ARTS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="la_box_52" name="la_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="mathsci_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="mathsci_lbl_52">b.MATH & SCIENCES:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="mathsci_box_52" name="mathsci_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="dpecs_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="dpecs_lbl_52">b.DPECS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="dpecs_box_52" name="dpecs_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <p><b>d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL EDUCATION/ENGINEERING:</b></p>
-
-                        <div class="form-group row">
-                            <label for="it_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="it_lbl_52"><i>(Please underline the appropriate department)</i></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="it_box_52" name="it_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="crsshop_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="crsshop_lbl_52">3.COURSE/SHOP ADVISER:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="crsshop_box_52" name="crsshop_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="cl_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="cl_lbl_52">4.CAMPUS LIBRARIAN:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="cl_box_52" name="cl_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="gc_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="gc_lbl_52">5.GUIDANCE COUNSELOR:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="gc_box_52" nameass="form0-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="hosf_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="hosf_lbl_52">6.HEAD OF STUDENT AFFAIRS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="hosf_box_52" name="hosf_box_052" class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="adfac_box_052" class="col-sm-2 col-form-label col-form-label-sm" id="adfac_lbl_52">7.ASST. DIR. FOR ACADEMIC AFFAIRS:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="adfac_box_52"="amedfac_box_52" 0 class="form-control" readonly>
-                            </div>
-                        </div>
-
-                        
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <!--APPOINTMENT MODAL-->
+   
     <div class="modal fade" id="appointmentmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-confirm">
             <div class="modal-content">
@@ -654,6 +580,8 @@ Adviser:
     <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_clearance_list" id="table_main">
             {% csrf_token %}
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
             <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
                 <thead style="height: 70px;">
                     <tr>
@@ -785,9 +713,11 @@ Adviser:
                         {% endif %}
                           
                     </tr>
+                    
                 </tbody>
                 {% endfor %}
             </table>
+            </div>
         </form>
         <form method="POST" action="faculty_dashboard_clearance_list_all" hidden >
             {% csrf_token %}

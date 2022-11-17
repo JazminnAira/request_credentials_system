@@ -170,6 +170,7 @@ Adviser:
         table-layout: auto;
         width: 100%;
         margin-bottom: 50px;
+        overflow-wrap: break-word;
     }
     
     #list_tbl_77 td {
@@ -410,8 +411,30 @@ Adviser:
         color: white;
     }
     #button_claim_and_unclaim{
-        padding: 2px 12px;
+        padding: 2px 22px;
     }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 5px;
+        overflow-wrap: break-word;
+    }
+
+    .table-wrapper{
+        max-height: 650px;
+        overflow-y: scroll;
+        
+
+    }
+   .outer-wrapper{
+    margin: 10px;
+   
+   }
   
 
 </style>
@@ -476,8 +499,9 @@ Adviser:
                     <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
                 {% endif %}
             </div>
-            <div id="request_table"  class="tab-content" style="background-color:#fff; overflow-x:auto;" >
-                <div class="wrapper_all">
+            <div id="request_table"  class="tab-content" >
+                <div class="outer-wrapper">
+                    <div class="table-wrapper">
                     <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
                         <thead>
                             <tr>
@@ -505,7 +529,7 @@ Adviser:
                             <tbody>
                                 <tr>
                                     <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
-                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
+                                    <td "window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                                     <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
                                 
@@ -562,10 +586,11 @@ Adviser:
                         {% endfor %}
                     </table>
                 </div>
+                </div>
             </div>
         </div>
 
-        <div class ="col-3 table-responsive-sm float-right">
+        <div class ="col-3 table-responsive-sm float-right" >
             <h3 style="text-align:center;">Document Records</h3>
             <div id ="upload_file_section">
                 {% if messages %}
