@@ -172,6 +172,3 @@ EMAIL_HOST_PASSWORD = 'fwfldyzwddwbmsxg'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True     # LOGOUT WHEN BROWSER IS CLOSED
 SESSION_COOKIE_AGE = 600                  # 10 MINS INACTIVITY, AUTO LOGOUT
 SESSION_SAVE_EVERY_REQUEST = True          # Will prevent from logging you out after 300 seconds
-
-ADMINS= [('', 'chimkenflet@gmail.com'),] 
-MANAGERS= [('', 'chimkenflet@gmail.com'),] 

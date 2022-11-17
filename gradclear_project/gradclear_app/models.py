@@ -144,7 +144,7 @@ class user_table(AbstractUser):
     user_type = models.CharField(max_length=100, verbose_name="User Type")
     student_id = models.CharField(max_length=100, verbose_name ="Student ID", null=True)
     username = models.CharField(max_length=100, unique=True)
-    profile_picture = models.ImageField(upload_to='profile pictures/')
+    profile_picture = models.ImageField(upload_to='uploads/')
     e_signature = models.ImageField(upload_to='esignatures/',blank=True)# PIP INSTALL PILLOW
     e_signature_timesaved = models.DateTimeField(auto_now_add=True)
     uploaded_signature = models.ImageField(upload_to='uploaded signatures/',blank=True)# PIP INSTALL PILLOW
@@ -168,7 +168,7 @@ class clearance_form_table(models.Model):
     date_admitted_in_tup = models.CharField(
         max_length=20, verbose_name="Date Admitted")
     highschool_graduated = models.TextField(
-        max_length=10, verbose_name="High School Graduated")
+        max_length=100, verbose_name="High School Graduated")
     tupc_graduate = models.CharField(
         max_length=10, verbose_name="TUPC Graduate")
     year_graduated_in_tupc = models.CharField(max_length=20,

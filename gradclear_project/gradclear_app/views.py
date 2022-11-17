@@ -1399,7 +1399,7 @@ def student_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, "There is an error with your form. Try again." )
             
     img_object = form.instance
     user_identifier = "STUDENT"
@@ -2053,13 +2053,13 @@ def clearance_view(request):
                 
             
             #INDUSTRIAL
-            check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
+            check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature = 'UNAPPROVED') or Q(it_dept_signature = 'UNAPPROVED') or Q(eng_dept_signature = 'UNAPPROVED'))
             if check_status:
                 industrial = "UNAPPROVED"
                 it_department = "NONE"
                 it_name = " "
             else:
-                if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,ieduc_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
@@ -2086,7 +2086,7 @@ def clearance_view(request):
                         
                     
                 
-                if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,it_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
@@ -2112,7 +2112,7 @@ def clearance_view(request):
                         it_name = str_fac_name
                     
                     
-                if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,eng_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
@@ -4955,7 +4955,7 @@ def display_clearform(request, id):
                 signature_type9 = "APPROVE"
             
         #INDUSTRIAL 
-        check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature__icontains = 'UNAPPROVED') or Q(it_dept_signature__icontains = 'UNAPPROVED')or Q(eng_dept_signature__icontains = 'UNAPPROVED'))
+        check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature = 'UNAPPROVED') or Q(it_dept_signature = 'UNAPPROVED')or Q(eng_dept_signature = 'UNAPPROVED'))
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
