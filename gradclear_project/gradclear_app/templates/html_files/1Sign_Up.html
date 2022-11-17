@@ -459,7 +459,8 @@ Adviser:
                                     {{form.gender}}
                                     <p id="sc_error_01"></p>
                                 </div>
-                                {% if user != "STAFF" %}
+                                <div>Birthday</div>
+                                
                                 <!--ID NUMBER BOX-->
                                 <div class="form-group">
                                     <label for="idnum">ID Number:</label><label id="Sid_aste01" style="color:red;">*</label> (number only)
@@ -467,7 +468,7 @@ Adviser:
                                     <p id="sid_error_01"></p>
                                 </div>
                                 
-                                {% endif %}
+                                
                                 
                                 {% if user == "STUDENT" %}
                                     <!--COURSE DROPDOWN BOX-->
@@ -563,6 +564,7 @@ Adviser:
                                 <p id="spm_error_01"></p>
                                 
                                 <!--PROFILE PICTURE BOX-->
+                                {% if user != "STAFF" %}
                                 <div class="form-group">
                                     <label for="prof_pic">Profile Picture:</label>
                                     {{form.profile_picture}}
@@ -571,6 +573,7 @@ Adviser:
                                     <p id="se_error_01"></p>
                                      
                                 </div> 
+                                {% endif %}
                                 
                             </div>
                            

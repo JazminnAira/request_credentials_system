@@ -1510,17 +1510,18 @@ def staff_registration(request):
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
-            username=form.cleaned_data.get("email")
+            username = form.cleaned_data.get("email")
+            id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
             
-            form.instance.student_id = "TUPC-99-9999"
-           
+            form.instance.student_id = "TUPC-" + id_num
+            form.instance.birthday = "---"
             form.instance.username = username
             form.instance.user_type = "STAFF"
-            form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
+            
 
             form.save()
             messages.success(
