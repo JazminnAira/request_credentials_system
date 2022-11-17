@@ -44,6 +44,16 @@ import time
 #     full_name='SARAH JANE VELOS', user_type='REGISTRAR', username='registrar_admin', id_number='11-1111')
 #     reg.save()
 
+# dateSTR = datetime.now().strftime("%H:%M:%S" )
+# if dateSTR == ("11:37:00"):
+#    #do function
+#     print(dateSTR)
+# else:
+#     # do something useful till this time
+#     time.sleep(1)
+#     pass
+
+
 @login_required(login_url='/')
 def req_print(request,id):
     buffer = BytesIO()
@@ -826,7 +836,7 @@ def clearance_print(request, id):
     p.drawString(150, 681, f'{content.date_admitted_in_tup}')
     p.drawString(120, 655, f'{content.course}')
     # p.drawString(180, 629, f'{content.highschool_graduated}')
-
+    
     hs_grad = content.highschool_graduated
     num=len(hs_grad.split())
     
@@ -840,69 +850,447 @@ def clearance_print(request, id):
         p.setFont("Helvetica", 9)
         p.drawString(180, 629, f'{content.highschool_graduated}')
         
+    p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+        
     p.setFont("Helvetica", 10)  
     p.drawString(400, 681, f'{content.amount_paid}')
     p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
     p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
 
-    # signature
-    p.drawString(130, 290, f'{content.accountant_signature}')
-    p.drawString(150, 240, f'{content.liberal_arts_signature}')
-    p.drawString(169, 215, f'{content.mathsci_dept_signature}')
-    p.drawString(120, 190, f'{content.pe_dept_signature}')
-    # wala sa liberal arts
-    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
     
-    p.drawString(100, 115, f'{content.ieduc_dept_signature}')
-    p.drawString(435, 290, f'{content.it_dept_signature}')
-    
-
-    
-    
-    p.drawString(425, 265, f'{content.library_signature}')
-    p.drawString(435, 240, f'{content.guidance_office_signature}')
-    p.drawString(455, 215, f'{content.osa_signature}')
-    p.drawString(482, 190, f'{content.academic_affairs_signature}')
 
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
-        p.drawString(208, 580, '/')
+        p.drawString(208, 582, '✔')
         p.drawString(183, 555, f'{content.year_graduated_in_tupc}')
     else:
-        p.drawString(270, 580, '/')
+        p.drawString(270, 582, '✔')
 
     prev_form = content.have_previously_requested_form
     if prev_form == "YES":
-        p.drawString(428, 611, '/')
+        p.drawString(428, 611, '✔')
         p.drawString(380, 560, f'{content.date_of_previously_requested_form}')
-        p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+        
     else:
-        p.drawString(490, 611, '/')
+        p.drawString(490, 611, '✔')
 
     # purpose
     form_purpose = content.purpose_of_request
 
     if form_purpose == "Honorable Dismissal":
-        p.drawString(45, 434, '/')
+        p.drawString(45, 436, '✔')
     elif form_purpose == "Evaluation":
-        p.drawString(298, 434, '/')
+        p.drawString(298, 434, '✔')
     elif form_purpose == "Transcript of Records":
-        p.drawString(45, 412, '/')
+        p.drawString(45, 412, '✔')
     elif form_purpose == "Re-Evaluation":
-        p.drawString(298, 412, '/')
+        p.drawString(298, 412, '✔')
     elif form_purpose == "Diploma":
-        p.drawString(45, 390, '/')
+        p.drawString(45, 390, '✔')
     elif form_purpose == "Application for Graduation":
-        p.drawString(298, 390, '/')
+        p.drawString(298, 390, '✔')
     elif form_purpose == "Certification":
-        p.drawString(45, 370, '/')
+        p.drawString(45, 370, '✔')
     else:
         p.drawString(400, 370, f'{content.purpose_of_request}')
 
+
+# signature
+    p.setFont("Helvetica", 7)
+    sig_acc = content.accountant_signature
+    acc_stat = sig_acc.split(' ')[-1]
+    accs = sig_acc.rsplit(' ', 1)[0]
+    acc_name = accs.split('_',1)[0]
+    
+    accountant = user_table.objects.get(full_name = acc_name)
+    upload_acc_sign = accountant.uploaded_signature
+    str_upload_acc = str(upload_acc_sign)
+    esign_acc_sign = accountant.e_signature
+    str_esign_acc = str(esign_acc_sign)
+    
+    
+    if acc_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_acc
+        p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
+
+    elif acc_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_acc
+        p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
+
+    else: 
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)      
+        p.drawString(130, 290, f"""{acc_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(53, 283, "**Approved but requires live signature**")
+        
+    
+    
+    # Liberal arts
+    
+    p.setFont("Helvetica", 7)
+    sig_dla = content.liberal_arts_signature
+    dla_stat = sig_dla.split(' ')[-1]
+    dlas = sig_dla.rsplit(' ', 1)[0]
+    dla_name = dlas.split('_',1)[0]
+    
+    liberal_arts = user_table.objects.get(full_name = dla_name)
+    upload_dla_sign = liberal_arts.uploaded_signature
+    str_upload_dla = str(upload_dla_sign)
+    esign_dla_sign = liberal_arts.e_signature
+    str_esign_dla = str(esign_dla_sign)
+    
+    
+    
+    if dla_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dla
+        p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
+
+    elif dla_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dla
+        p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
+
+    else:
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)       
+        p.drawString(147, 240, f"""{dla_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 234, "**Approved but requires live signature**")
+            
+                 
+    # # # math and sci
+    p.setFont("Helvetica", 7)
+    sig_dms = content.mathsci_dept_signature
+    dms_stat = sig_dms.split(' ')[-1]
+    dmss = sig_dms.rsplit(' ', 1)[0]
+    dms_name = dmss.split('_',1)[0]
+    
+    mathsci = user_table.objects.get(full_name = dms_name)
+    upload_dms_sign = mathsci.uploaded_signature
+    str_upload_dms = str(upload_dms_sign)
+    esign_dms_sign = mathsci.e_signature
+    str_esign_dms = str(esign_dms_sign)
+
+    
+    
+    
+    if dms_stat == "ESIGN":
+
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dms
+        p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
+
+    elif dms_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dms
+        p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(170, 215, f"""{dms_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 209, "**Approved but requires live signature**")
+        
+    
+    # # # dpecs
+    
+    pe_acc = content.pe_dept_signature
+    pe_stat = pe_acc.split(' ')[-1]
+    dpecs = pe_acc.rsplit(' ', 1)[0]
+    pe_name = dpecs.split('_',1)[0]
+    
+    pe_dept = user_table.objects.get(full_name = pe_name)
+    upload_pe_sign = pe_dept.uploaded_signature
+    str_upload_pe = str(upload_pe_sign)
+    esign_pe_sign = pe_dept.e_signature
+    str_esign_pe = str(esign_pe_sign)
+    p.setFont("Helvetica", 4.5)
+    p.setFillColorRGB(1,0,0)
+    
+    
+    if pe_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_pe
+        p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
+
+    elif pe_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_pe
+        p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(120, 190, f"""{pe_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 183, "**Approved but requires live signature**")
+        
+        
+        
+        
+    
+    # # depts
+    itdept_acc = content.it_dept_signature
+    educ_dept = content.ieduc_dept_signature
+    eng = content.eng_dept_signature
+    if itdept_acc != "_APPROVED":
+        p.drawString(100, 115, f'{content.it_dept_signature}')
+        p.setFont("Helvetica", 7)
+        
+        itdept_stat = itdept_acc.split(' ')[-1]
+        itdepartments = itdept_acc.rsplit(' ', 1)[0]
+        itdept_name = itdepartments.split('_',1)[0]
+        
+        itdept_dept = user_table.objects.get(full_name = itdept_name)
+        upload_itdept_sign = itdept_dept.uploaded_signature
+        str_upload_itdept = str(upload_itdept_sign)
+        esign_itdept_sign = itdept_dept.e_signature
+        str_esign_itdept = str(esign_itdept_sign)
+
+        if itdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_itdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        elif itdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_itdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(120, 190, f"""{itdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+    
+    elif educ_dept != "_APPROVED":   
+        p.setFont("Helvetica", 7)
+
+        educdept_stat = educ_dept.split(' ')[-1]
+        educdepartments = educ_dept.rsplit(' ', 1)[0]
+        educdept_name = educdepartments.split('_',1)[0]
+        
+        educdept_dept = user_table.objects.get(full_name = educdept_name)
+        upload_educdept_sign = educdept_dept.uploaded_signature
+        str_upload_educdept = str(upload_educdept_sign)
+        esign_educdept_sign = educdept_dept.e_signature
+        str_esign_educdept = str(esign_educdept_sign)
+
+        if educdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_educdept
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
+            
+
+        elif educdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_educdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(105, 113, f"""{educdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+    
+    elif eng != "_APPROVED":   
+        p.setFont("Helvetica", 7)
+
+        engdept_stat = eng.split(' ')[-1]
+        engdepartments = eng.rsplit(' ', 1)[0]
+        engdept_name = engdepartments.split('_',1)[0]
+        
+        engdept_dept = user_table.objects.get(full_name = engdept_name)
+        upload_engdept_sign = engdept_dept.uploaded_signature
+        str_upload_engdept = str(upload_engdept_sign)
+        esign_engdept_sign = engdept_dept.e_signature
+        str_esign_engdept = str(esign_engdept_sign)
+
+        if engdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_engdept
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
+            
+
+        elif engdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_engdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(105, 113, f"""{engdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+
+    # # shop
+    p.setFont("Helvetica", 7)
+    sig_shop = content.course_adviser_signature
+    shop_stat = sig_shop.split(' ')[-1]
+    shops = sig_shop.rsplit(' ', 1)[0]
+    shop_name = shops.split('_',1)[0]
+    
+    shop_ad = user_table.objects.get(full_name = shop_name)
+    upload_shop_sign = shop_ad.uploaded_signature
+    str_upload_shop = str(upload_shop_sign)
+    esign_shop_sign = shop_ad.e_signature
+    str_esign_shop = str(esign_shop_sign)
+    p.setFont("Helvetica", 4.5)
+    p.setFillColorRGB(1,0,0)
+    
+    
+    if shop_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_shop
+        p.drawImage(im,435, 290, height = 15, width = 80 , mask='auto')
+
+    elif shop_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_shop
+        p.drawImage(im ,435, 290, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(435, 290, f"""{shop_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(320, 285, "**Approved but requires live signature**")
+    
+    # # library
+    p.setFont("Helvetica", 7)
+    sig_lib = content.library_signature
+    lib_stat = sig_lib.split(' ')[-1]
+    libb = sig_lib.rsplit(' ', 1)[0]
+    lib_name = libb.split('_',1)[0]
+    
+    lib_ad = user_table.objects.get(full_name = lib_name)
+    upload_lib_sign = lib_ad.uploaded_signature
+    str_upload_lib = str(upload_lib_sign)
+    esign_lib_sign = lib_ad.e_signature
+    str_esign_lib = str(esign_lib_sign)
+    
+    if lib_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_lib
+        p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
+
+    elif lib_stat == "UPLOAD":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_lib
+        p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
+
+    else:    
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)   
+        p.drawString(425, 265, f"""{lib_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(325, 260, "**Approved but requires live signature**")
+    
+    
+    
+    # guidance
+    
+    
+    sig_guidance = content.guidance_office_signature
+    guidance_stat = sig_guidance.split(' ')[-1]
+    guidances = sig_guidance.rsplit(' ', 1)[0]
+    guidance_name = guidances.split('_',1)[0]
+    
+    guidance = user_table.objects.get(full_name = guidance_name)
+    upload_guidance_sign = guidance.uploaded_signature
+    str_upload_guidance = str(upload_guidance_sign)
+    esign_guidance_sign = guidance.e_signature
+    str_esign_guidance = str(esign_guidance_sign)
+    
+    if guidance_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_guidance
+        p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
+
+    elif guidance_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_guidance
+        p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
+
+    else:      
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0) 
+        p.drawString(435, 240, f"""{guidance_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(325, 234, "**Approved but requires live signature**")
+    
+    # osa
+    p.setFont("Helvetica", 7)
+    sig_osa = content.osa_signature
+    osa_stat = sig_osa.split(' ')[-1]
+    osas = sig_osa.rsplit(' ', 1)[0]
+    osa_name = osas.split('_',1)[0]
+    
+    osa = user_table.objects.get(full_name = osa_name)
+    upload_osa_sign = osa.uploaded_signature
+    str_upload_osa = str(upload_osa_sign)
+    esign_osa_sign = osa.e_signature
+    str_esign_osa = str(esign_osa_sign)
+    
+    
+    if osa_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_osa
+        p.drawImage(im ,455, 210, height = 25, width = 80 , mask='auto')
+
+    elif osa_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_osa
+        p.drawImage(im ,455, 215, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(435, 290, f"""{osa_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(430, 260, "**Approved but requires live signature**")
+    
+    
+    
+    
+    
+    # adaa
+    
+    sig_adaa = content.academic_affairs_signature
+    adaa_stat = sig_adaa.split(' ')[-1]
+    adaas = sig_adaa.rsplit(' ', 1)[0]
+    adaa_name = adaas.split('_',1)[0]
+    
+    adaa = user_table.objects.get(full_name = adaa_name)
+    upload_adaa_sign = adaa.uploaded_signature
+    str_upload_adaa = str(upload_adaa_sign)
+    esign_adaa_sign = adaa.e_signature
+    str_esign_adaa = str(esign_adaa_sign)
+    
+    
+    
+    if adaa_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_adaa
+        p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
+
+    elif adaa_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_adaa
+        p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(482, 190, f"""{adaa_name}""")
+        p.setFillColorRGB(1,0,0)
+        p.setFont("Helvetica", 4.5)  
+        p.drawString(325, 185, "**Approved but requires live signature**")
+
+    
     for line in lines:
         textob.textLine(line)
 
-    #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
 
     p.drawText(textob)
     p.showPage()
@@ -927,8 +1315,9 @@ def clearance_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
+
 
 @login_required(login_url='/')
 def appointment(request, id, form):
@@ -1360,7 +1749,6 @@ def logout_user(request):
 
 def student_registration(request):
     form = signup_form()
-    print(form.errors)
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         print(form.errors)
@@ -1381,6 +1769,7 @@ def student_registration(request):
             form.instance.user_type = "STUDENT"
             
             form.save()
+            
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -1390,7 +1779,8 @@ def student_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, "There is an error with your form. Try again." )
+            
     img_object = form.instance
     user_identifier = "STUDENT"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
@@ -1628,7 +2018,24 @@ def clearance_form(request, type, req):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
-            
+
+            unapproved = "UNAPPROVED"
+            approved = "_APPROVED"
+            if course.startswith('BSIE-') or course.startswith('BTTE-'):
+                print("ded")
+                dit_signature = approved
+                doe_signature = approved
+                ded_signature = unapproved
+            elif course.startswith('BS-'):
+                print("doe")
+                dit_signature = approved
+                doe_signature = unapproved
+                ded_signature = approved
+            else:
+                print("dit")
+                dit_signature = unapproved
+                doe_signature = approved
+                ded_signature = approved
             #semester_term = clearance_form_table.objects.filter(name=fullname,purpose_of_request=purpose).order_by('-time_requested').values_list('last_term_in_tupc')
              
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
@@ -1637,7 +2044,7 @@ def clearance_form(request, type, req):
                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
                                                        course_adviser=course_adviser, course_adviser_signature=course_adviser_signature, 
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,semester_enrolled=semester)
+                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,semester_enrolled=semester,ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
             
             form.save()
             
@@ -1989,13 +2396,13 @@ def clearance_view(request):
                 
             
             #INDUSTRIAL
-            check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
+            check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature = 'UNAPPROVED') or Q(it_dept_signature = 'UNAPPROVED') or Q(eng_dept_signature = 'UNAPPROVED'))
             if check_status:
                 industrial = "UNAPPROVED"
                 it_department = "NONE"
                 it_name = " "
             else:
-                if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,ieduc_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
@@ -2022,7 +2429,7 @@ def clearance_view(request):
                         
                     
                 
-                if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,it_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
@@ -2048,7 +2455,7 @@ def clearance_view(request):
                         it_name = str_fac_name
                     
                     
-                if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
+                if clearance_form_table.objects.filter(id=id,eng_dept_signature = '_APPROVED'):
                     pass
                 else:
                     faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
@@ -4891,14 +5298,14 @@ def display_clearform(request, id):
                 signature_type9 = "APPROVE"
             
         #INDUSTRIAL 
-        check_status = clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED',it_dept_signature__icontains = 'UNAPPROVED',eng_dept_signature__icontains = 'UNAPPROVED')
+        check_status = clearance_form_table.objects.filter(Q(id=id) and Q(ieduc_dept_signature = 'UNAPPROVED') or Q(it_dept_signature = 'UNAPPROVED')or Q(eng_dept_signature = 'UNAPPROVED'))
         if check_status:
             industrial = "UNAPPROVED"
             it_department = "NONE"
             it_name = " "
             signature_type10 = ""
         else:
-            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,ieduc_dept_signature= '_APPROVED'):
                 pass
             else:
                 #INDUSTRIAL EDUCATION
@@ -4929,7 +5336,7 @@ def display_clearform(request, id):
                     
                 
             #INDUSTRIAL TECHNOLOGY
-            if clearance_form_table.objects.filter(id=id,it_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,it_dept_signature = '_APPROVED'):
                 pass
             else:
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
@@ -4958,7 +5365,7 @@ def display_clearform(request, id):
                     signature_type10 = "APPROVE"
                 
             #ENGINEERING
-            if clearance_form_table.objects.filter(id=id,eng_dept_signature__icontains = 'UNAPPROVED'):
+            if clearance_form_table.objects.filter(id=id,eng_dept_signature= '_APPROVED'):
                 pass
             else:
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
@@ -6325,3 +6732,6 @@ def student_status_update(request,id):
 
     
     return redirect(registrar_dashboard_student_list)
+
+
+

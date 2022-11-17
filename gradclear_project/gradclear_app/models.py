@@ -120,8 +120,9 @@ class user_table(AbstractUser):
     first_name = models.CharField(max_length=100, verbose_name="First Name")
     address = models.CharField(max_length=100, verbose_name="Address", null=True)
     gender = models.CharField(max_length=100, choices=gender)
-    id_number = models.CharField(max_length=10, verbose_name="ID Number", 
-                validators=[MinLengthValidator(3)],  unique=True, null=True, blank=True)
+    birthday = models.CharField(max_length=100,verbose_name="Birthday")
+    id_number = models.CharField(max_length=17, verbose_name="ID Number", 
+                validators=[MinLengthValidator(6)], unique=True, null=True)
     course = models.CharField(
             max_length=100, choices=courses, null=True, blank=True)
     course_graduated = models.CharField(
@@ -158,7 +159,6 @@ class user_table(AbstractUser):
  
 
 class clearance_form_table(models.Model):
-    # form_id = models.ForeignKey(user_table, on_delete=models.CASCADE, primary_key=True, unique=True)
     student_id = models.CharField(max_length=20, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     present_address = models.CharField(max_length=100, verbose_name="Present Address")
@@ -168,7 +168,7 @@ class clearance_form_table(models.Model):
     date_admitted_in_tup = models.CharField(
         max_length=20, verbose_name="Date Admitted")
     highschool_graduated = models.TextField(
-        max_length=10, verbose_name="High School Graduated")
+        max_length=100, verbose_name="High School Graduated")
     tupc_graduate = models.CharField(
         max_length=10, verbose_name="TUPC Graduate")
     year_graduated_in_tupc = models.CharField(max_length=20,
@@ -255,8 +255,6 @@ class graduation_form_table(models.Model):
     course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
     purpose_of_request = models.CharField(max_length=100, verbose_name="Purpose of Request",
                                         default="Graduation Form", null=True)
-    approval_status = models.CharField(max_length=15,
-        verbose_name="Approval Status", default="0")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
 
@@ -410,6 +408,8 @@ class graduation_form_table(models.Model):
     trainP_enddate = models.CharField(max_length=30,verbose_name="End", null=True, default="NONE")
     instructor_name = models.CharField(max_length=50, verbose_name="SIT Instructor")
     
+    approval_status = models.CharField(max_length=15,
+                    verbose_name="Approval Status", default="0")
     signature1 = models.CharField(max_length=100)
     signature2 = models.CharField(max_length=100)
     signature3 = models.CharField(max_length=100)

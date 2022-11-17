@@ -374,6 +374,28 @@ Adviser:
         background-color: #c51d3a;
         color: black;
     }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 5px;
+        overflow-wrap: break-word;
+    }
+
+    .table-wrapper{
+        max-height: 650px;
+        overflow-y: scroll;
+        
+
+    }
+   .outer-wrapper{
+    margin: 10px;
+   
+   }
 </style>
 
 
@@ -418,7 +440,8 @@ Adviser:
         </script>
 
         <div id="tab1_74" class="tab-content" style="background-color:#fff">
-            <div class="wrapper_all">
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_74">
                     <thead>
                         <tr>
@@ -442,6 +465,7 @@ Adviser:
                     {% for instance in all %}
                     
                     <tbody>
+
                         <tr>
                             <td hidden>{{instance.id}}</td>
                             <td>{{instance.full_name}}</td>
@@ -456,7 +480,7 @@ Adviser:
                             <td>   
                                 <form name="change_position" id="change" action="faculty_designation_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
-                                    <select onchange="this.form.submit()" name="designationSelect" id="changer" class="col-12"> 
+                                    <select onchange="this.form.submit()" name="designationSelect" id="changer" > 
                                         
                                         <option value="">{{instance.designation}}</option>
                                         {% if instance.designation != "---" %}
@@ -486,6 +510,8 @@ Adviser:
                                 </form>
                             </td>
                         </tr>
+                        
+                       
                     </tbody>
                     {% endfor %} 
                 </table>
