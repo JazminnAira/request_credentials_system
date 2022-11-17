@@ -48,9 +48,9 @@ class user_table(AbstractUser):
         ('BSIE-Home Economics', 'BSIE-Home Economics'),
         ('BTTE-Computer Programming', 'BTTE-Computer Programming'),
         ('BTTE-Electrical', 'BTTE-Electrical'),
-        ('Bachelor of Science in Civil Engineering', 'Bachelor of Science in Civil Engineering'),
-        ('Bachelor of Science in Electrical Engineering', 'Bachelor of Science in Electrical Engineering'),
-        ('Bachelor of Science in Mechanical Engineering', 'Bachelor of Science in Mechanical Engineering'),
+        ('BS-Civil Engineering', 'BS-Civil Engineering'),
+        ('BS-Electrical Engineering', 'BS-Electrical Engineering'),
+        ('BS-Mechanical Engineering', 'BS-Mechanical Engineering'),
 
 
           
@@ -93,8 +93,8 @@ class user_table(AbstractUser):
         ('Stationary Marine Engineering', 'Stationary Marine Engineering'),
         ('Automotive Technoloy', 'Automotive Technoloy'),
         ('Drafting Technology', 'Drafting Technology'),
-        ('Bachelor of Science in Industrial Education major in Drafting Technology', 'Bachelor of Science in Industrial Education major in Drafting Technology'),
-        ('Bachelor of Science major in Mechanical & Production Engineering Technology', 'Bachelor of Science major in Mechanical & Production Engineering Technology'),
+        ('BSIE-Drafting Technology', 'BSIE-Drafting Technology'),
+        ('BS-Mechanical & Production Engineering Technology', 'BS-Mechanical & Production Engineering Technology'),
         ('Marine Engineering', 'Marine Engineering'),
        
     ]
@@ -121,8 +121,8 @@ class user_table(AbstractUser):
         ('DED', 'Industrial Education Department (DED)'),
         ('DIT', 'Industrial Technology Department (DIT)'),
         ('DLA', 'Liberal Arts Department (DLA)'),
-        ('DOE', 'Department of Engineering (DOE)'),
-        
+        ('DOE', 'Department of Engineering (DOE)'), 
+       
     ]
 
     gender = [
