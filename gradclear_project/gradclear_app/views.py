@@ -1517,11 +1517,9 @@ def staff_registration(request):
             middle = form.cleaned_data.get("middle_name")
             
             form.instance.student_id = "TUPC-" + id_num
-            form.instance.birthday = "---"
             form.instance.username = username
             form.instance.user_type = "STAFF"
             form.instance.full_name = last + ", " + first + " " + middle
-            
 
             form.save()
             messages.success(
