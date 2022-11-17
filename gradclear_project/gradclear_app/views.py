@@ -6799,8 +6799,21 @@ def student_status_update(request,id):
     user_table.objects.filter(id=id).update(course = None)
     user_table.objects.filter(id=id).update(year_and_section = None)
 
-    
     return redirect(registrar_dashboard_student_list)
 
+@login_required(login_url='/')
+def school_year_update(request):
+    id_num = user_table.objects.filter( ~Q(year_and_section__startswith = "4") and Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
+    yands = user_table.objects.filter( ~Q(year_and_section__startswith = "4") and Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    
+    for x,y in zip(yands,id_num):
+        year_num = int(x[0]) + 1
+        if year_num == 2:
+            user_table.objects.filter(id=int(y)).update(year_and_section = "2nd Year")
+        elif year_num == 3:
+            user_table.objects.filter(id=int(y)).update(year_and_section = "3rd Year")
+        elif year_num == 4:
+            user_table.objects.filter(id=int(y)).update(year_and_section = "4th Year")
 
-
+    
+    return redirect(registrar_dashboard_student_list)
