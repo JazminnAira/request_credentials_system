@@ -63,7 +63,7 @@ def req_print(request,id):
     textob = p.beginText()
 
     print(content)
-    print("hello world")
+    print("hello world")    
 
     lines = []
 
