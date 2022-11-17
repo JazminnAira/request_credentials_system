@@ -459,7 +459,12 @@ Adviser:
                                     {{form.gender}}
                                     <p id="sc_error_01"></p>
                                 </div>
-                                <div>Birthday</div>
+                                <!-- BIRTHDAY -->
+                                <div class="form-group" id="course_input">
+                                    <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
+                                    {{form.birthday}}
+                                    <p id="sc_error_01"></p>
+                                </div>
                                 
                                 <!--ID NUMBER BOX-->
                                 <div class="form-group">
@@ -665,7 +670,25 @@ Adviser:
         
         })
     });
-    
+
+    $(function () {
+        $('#id_birthday').keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            $text = $(this); 
+            if (key !== 8 && key !== 9) {
+                if ($text.val().length === 2) {
+                    $text.val($text.val() + '/');
+                }
+                if ($text.val().length === 5) {
+                    $text.val($text.val() + '/');
+                }
+                
+            }
+            return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+            
+        })
+    });
+     
     // Show Password
     document.getElementById('showPassword1').onclick = function() {
         if ( this.checked ) {

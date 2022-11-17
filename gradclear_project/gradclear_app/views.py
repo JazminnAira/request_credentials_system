@@ -1380,6 +1380,7 @@ def student_registration(request):
             email = form.cleaned_data.get("email")
             temp= form.cleaned_data.get("profile_picture")
             
+            
             # middle = form.cleaned_data.get("middle_name")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
@@ -1516,6 +1517,7 @@ def staff_registration(request):
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
             
+            form.instance.birthday = "MM/DD/YY"
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "STAFF"
