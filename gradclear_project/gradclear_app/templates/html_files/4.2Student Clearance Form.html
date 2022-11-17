@@ -675,7 +675,7 @@ Adviser:
                     <form method="POST" action="clearance_form">
                     {% csrf_token %}
                     <select id="course_adviser_42" name="course_adviser_420" class="form-control" required >
-                        <option value="1" select>--SELECT--</option>
+                        <option value="1" select disabled>--SELECT--</option>
                         
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
