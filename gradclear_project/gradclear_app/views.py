@@ -6801,12 +6801,24 @@ def student_status_update(request,id):
     getter = user_table.objects.get(id=id)
     today = date.today().year
     getter = user_table.objects.get(id=id)
-
+ 
     user_table.objects.filter(id=id).update(year_graduated = today)
     cur_course = getter.course
     user_table.objects.filter(id=id).update(course_graduated = cur_course)
     user_table.objects.filter(id=id).update(course = None)
     user_table.objects.filter(id=id).update(year_and_section = None)
+    user_id = getter.id_number
+    userbday = getter.birthday
+    mbday = userbday[:2]
+    dbday = userbday[3:5]
+    ybday=userbday[6:8]
+    year_id = str(today)
+    id_year = year_id[2:]
+    if student_update == "ALUMNUS":
+        update_id = user_id+"-"+id_year+"-"+mbday+dbday+ybday
+        user_table.objects.filter(id=id).update(id_number = update_id)
+        user_table.objects.filter(id=id).update(student_id = update_id)
+    
 
     
     return redirect(registrar_dashboard_student_list)
