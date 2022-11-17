@@ -10,8 +10,8 @@ from PIL import Image
 from distutils.command.upload import upload
 
 class user_table(AbstractUser):
-
-    courses = [sdasad
+     
+    courses = [
         ('', '--SELECT--'),
         ('BSIE-Information and Communication Technology', 'BSIE-Information and Communication Technology'),
         ('BSIE-Industrial Arts', 'BSIE-Industrial Arts'),
