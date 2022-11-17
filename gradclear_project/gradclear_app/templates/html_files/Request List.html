@@ -531,7 +531,7 @@ Adviser:
                             <tbody>
                                 <tr>
                                     <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
-                                    <td "window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                                     <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
                                 
@@ -575,14 +575,17 @@ Adviser:
                                             {% endif %}
                                             </form> 
                                     </td>  
-                                    <td>
-                                    <a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set</i></button></a>
+                                    <td >{{instance.appointment}}</td>
+                                    {% if instance.appointment == "NONE" %}
+                                    <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set</i></button></a>
                                     </td>
-                                    <td style="width: 8%;">{{instance.appointment}}</td>
+                                    {% else %}
+                                    <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set New</i></button></a>
+                                    </td>
+                                    {% endif%}
                                     <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
                                         role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
                                     </td>
-                                   
                                 </tr>
                             </tbody>
                         {% endfor %}
