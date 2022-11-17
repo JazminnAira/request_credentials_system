@@ -4636,11 +4636,11 @@ def registrar_dashboard(request):
         cBTTE_E = clearance_form_table.objects.filter(
             course="BTTE-Electrical").values().count()
         cBSCE = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Civil Engineering").values().count()
+            course="BS-Civil Engineering").values().count()
         cBSEE = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Electrical Engineering").values().count()
+            course="BS-Electrical Engineering").values().count()
         cBSME = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Mechanical Engineering").values().count()
+            course="BS-Mechanical Engineering").values().count()
        
        
         
@@ -4725,11 +4725,11 @@ def registrar_dashboard(request):
         gBTTE_E = graduation_form_table.objects.filter(
             course="BTTE-Electrical").values().count()
         gBSCE = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Civil Engineering").values().count()
+            course="BS-Civil Engineering").values().count()
         gBSEE = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Electrical Engineering").values().count()
+            course="BS-Electrical Engineering").values().count()
         gBSME = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Mechanical Engineering").values().count()
+            course="BS-Mechanical Engineering").values().count()
        
 
        
