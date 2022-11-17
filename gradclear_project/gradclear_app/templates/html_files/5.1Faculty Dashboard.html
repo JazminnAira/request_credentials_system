@@ -550,7 +550,7 @@ Adviser:
     }
     
     .modal-footer {
-        background: #c51d3a;
+        background: #424242;
     }
     
     h2 {
@@ -588,11 +588,19 @@ Adviser:
     #course_drp_51 {
         background-color: #e7dfe4;
     }
+    #passwordsavechanges_btn_51 {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    #passwordsavechanges_btn_51:hover {
+        color: white;
+        background-color: #d3324d;
+    }
     
     #button_51,
     #addresssavechanges_btn_51,
     #emailsavechanges_btn_51,
-    #passwordsavechanges_btn_51,
     #cancel_btn1_51,
     #cancel_btn2_51,
     #cancel_btn3_51,
@@ -605,7 +613,6 @@ Adviser:
     
     #addresssavechanges_btn_51:hover,
     #emailsavechanges_btn_51:hover,
-    #passwordsavechanges_btn_51:hover,
     #cancel_btn1_51:hover,
     #cancel_btn2_51:hover,
     #cancel_btn3_51:hover,
@@ -753,6 +760,8 @@ Adviser:
 
                     <!--MODAL FOOTER-->
                     <div class="modal-footer" id="account-footer_51">
+                        <!--CHANGEPASSWORD BUTTON-->
+                        <a href="#" data-toggle="modal" data-target="#Settings_modal_51" class="btn btn-secondary" role="button" data-dismiss="modal" style="border-radius: 10px;">Change Password</a>
                         <!--LOGOUT BUTTON-->
                         <a href="{% url 'logout' %}" class="btn btn-secondary" role="button" aria-pressed="true" style="border-radius: 10px;">Log Out</a>
                     </div>
@@ -761,55 +770,56 @@ Adviser:
         </div>
     </div>
 
-    <!-- ABOUT US MODAL -->
-    <div id="AboutUs_modal_51" class="modal fade">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
+     <!--SETTINGS STATUS MODAL-->
+     <div class="modal fade" id="Settings_modal_51" tabindex="-1" >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="width: 100%;">
 
-                <!--MODAL HEADER-->
+                <!--CHANGE PASSWORD MODAL HEADER-->
                 <div class="modal-header">
-                    <h3><b>About Us</b>
-                        <i aria-hidden="true" class="fa fa-info-circle">
-                        </i>
-                    </h3>
+                    <h3 class="modal-title">Change Password</h3>
 
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">X</button>
+                    <!--CHANGE PASSWORD CLOSE BUTTON-->
+                    <button type="button" class="close" data-dismiss="modal" data-toggle="tooltip"
+                     data-placement="right" title="Close">x</button>
                 </div>
-
-                <!--MODAL BODY-->
-                <div class="modal-body" id="maincontent_51">
-
-                    <!--DESCRIPTION LABEL-->
-                    <div id="description_lbl_51" class="container">
-                        Services at the Registrar&#039;s Office such as requests for Transcript of Records, Diploma, Certifications, Subject Descriptions, Evaluation of Grades, Authentication of Documents are exclusively offered to TUP-CAVITE students
-                    </div>
-
-                    <!--OFFICER IN CHARGE LABEL-->
-                    <div id="person_51" class="container">
-                        <p1 id="title_lbl_51">Officer-in-Charge:</p1>
-
-                        <!--OIC VARIABLE-->
-                        <p2 id="officername_lbl_51"><b>Ms Sarrah Jane Velos</b></p2>
-                    </div>
-
-                    <!--FORM LINK-->
-                    <div id="title2_lbl_51" class="container">
-                        <div>To request Forms this is the link:
+                
+                <!--CHANGE PASSWORD MODAL BODY-->
+                <div class="modal-body w-100 text-center">
+                    <form method= "POST" action="faculty_updatePassword">
+                        {% csrf_token %}
+        
+                            <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
+                            
+                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
+                            <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
+                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="old_pass_length(),ON_match()" required>
+                            </div><br>-->
+                            <div class="input-group">
+                            <label for="newpass_51" class="my-1 mr-5" id="newpass_lbl_51">New Password:</label>
+                                <input type="text" id="new_pass_51" name="new_pass_051" value="{{ request.GET.new_pass_051 }}" class="form-control"
+                                 minlength="4" placeholder="*Minimum of 4 characters*" oninput="new_pass_length(),match_new_pass(),new_old_pass_detect1()"required></div>
+                            <div class="input-group">
+                            <label for="confirmpass_51" class="my-1 mr-4" id="confirmpass_lbl_51">Confirm Password:</label>
+                                <input type="text" id="confirm_pass_51" name="confirm_pass_051" value="{{ request.GET.confirm_pass_051 }}" class="form-control"
+                                 minlength="4" placeholder="*Minimum of 4 characters*"oninput="confirm_pass_length(),match_confirm_pass(),new_old_pass_detect()"required>
+                            </div>
+                                <p id="sp_error_51" style="color:red;"></p>
+                                <p id="spm_error_51" style="color:red;"></p>
+                                <p id="spon_error_51" style="color:red;"></p>
+                            </div>
+                             <!--CHANGE PASSWORD MODAL FOOTER-->
+                            <div class="modal-footer" id="account_footer_51">
+                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit3" id="passwordsavechanges_btn_51" >Save Changes</button>
+                            </div>
                         </div>
-                        <div id="title3_lbl_51">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfaYdt_de1Uslga6k--J3wuftjavQdJuPmwmnjqwT3vIE3Lsg/viewform" id="link_lbl_51">https://forms.gle/x7BP4uxpdEeLaxPB9</a>
-                        </div>
-                    </div>
-                </div>
+                    </form>    
 
-                <!--MODAL FOOTER-->
-                <div class="modal-footer">
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!--MAIN-->
     <div class="container-fluid" >
         <div class="row" style="padding-right: 0px;">

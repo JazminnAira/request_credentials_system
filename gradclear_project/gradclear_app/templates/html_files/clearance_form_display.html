@@ -848,8 +848,8 @@ Adviser:
                         <!--ACCOUNTANT-->
                         <th class="align-middle col-2"><label><b>Accountant:</b></label></th>
                         <td class="align-middle col-4"> 
-                            {% if accountant == "DECLINE" %}
-                                <label class="text-center">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type1 == "APPROVE" %}
+                                <label class="col-12 text-center">{{accountant}}</label>
                                 <br>
                                 <small class= "row">{{accountant_name}}</small>
                             {% elif accountant == "UNAPPROVED" %}
@@ -865,8 +865,8 @@ Adviser:
                         <!--COURSE ADVISER-->
                         <th class="align-middle col-2"><label><b>Course/Shop Adviser:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if course_adviser == "DECLINE" %}
-                                <label class = "col-12">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type2 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{course_adviser}}</label>
                                 <br>  
                                 <small>{{adviser_name}}</small>
                             {% elif course_adviser == "UNAPPROVED" %}
@@ -884,8 +884,8 @@ Adviser:
                     <tr><!--LIBERAL ARTS-->
                         <th class="align-middle col-2"><label><b>Head of Liberal Arts:</b></label></th>
                         <td class="align-middle col-4"> 
-                            {% if liberal_arts == "DECLINE" %}
-                                <label class="text-center">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type3 == "APPROVE" %}
+                                <label class=" col-12 text-center">{{liberal_arts}}</label>
                                 <br>
                                 <small class= "row">{{liberal_artsName}}</small>
                             {% elif liberal_arts == "UNAPPROVED" %}
@@ -902,8 +902,8 @@ Adviser:
                         <!--CAMPUS LIBRARIAN-->
                         <th class="align-middle col-2"><label><b>Campus Librarian:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if campus_library == "DECLINE" %}
-                                <label class = "col-12">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type4 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{campus_library}}</label>
                                 <br>  
                                 <small>{{librarian_name}}</small>
                             {% elif campus_library == "UNAPPROVED" %}
@@ -921,8 +921,8 @@ Adviser:
                     <tr><!--MATH AND SCIENCES-->
                         <th class="align-middle col-2"><label><b>Head of Math and Sciences:</b></label></th>
                         <td class="align-middle col-4"> 
-                            {% if math_and_science == "DECLINE" %}
-                                <label class="text-center">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type5 == "APPROVE" %}
+                                <label class=" col-12 text-center">{{math_and_science}}</label>
                                 <br>
                                 <small class= "row">{{math_and_science_name}}</small>
                             {% elif math_and_science == "UNAPPROVED" %}
@@ -939,8 +939,8 @@ Adviser:
                         <!--GUIDANCE COUNCELOR-->
                         <th class="align-middle col-2"><label><b>Guidance Councelor:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if guidance == "DECLINE" %}
-                                <label class = "col-12">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type6 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{guidance}}</label>
                                 <br>  
                                 <small>{{guidance_councelor}}</small>
                             {% elif guidance == "UNAPPROVED" %}
@@ -958,8 +958,8 @@ Adviser:
                     <tr><!--DPECS-->
                         <th class="align-middle col-2"><label><b>Head of DPECS:</b></label></th>
                         <td class="align-middle col-4"> 
-                            {% if dpecs == "DECLINE" %}
-                                <label class="text-center">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type7 == "APPROVE" %}
+                                <label class="col-12 text-center">{{dpecs}}</label>
                                 <br>
                                 <small class= "row">{{dpecs_name}}</small>
                             {% elif dpecs == "UNAPPROVED" %}
@@ -976,8 +976,8 @@ Adviser:
                         <!--HEAD OF STUDENT AFFAIRS-->
                         <th class="align-middle col-2"><label><b>Head of Student Affairs:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if osa == "DECLINE" %}
-                                <label class = "col-12">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type8 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{osa}}</label>
                                 <br>  
                                 <small>{{osa_name}}</small>
                             {% elif osa == "UNAPPROVED" %}
@@ -1004,8 +1004,8 @@ Adviser:
                                 Head of Industrial Technology/Industrial Education/Engineering:</b> 
                             {% endif %}</label></th>
                         <td class="align-middle col-4"> 
-                            {% if industrial == "DECLINE" %}
-                                <label class="text-center">APPROVED</label><br><small class="text-danger">**note manual signature**</small>
+                            {% if signature_type10 == "APPROVE" %}
+                                <label class="col-12 text-center">{{industrial}}</label>
                                 <br>
                                 <small class= "row">{{it_name}}</small>
                             {% elif industrial == "UNAPPROVED" %}
@@ -1022,8 +1022,8 @@ Adviser:
                         <!--ASST. DIR. FOR ACADEMIC AFFAIRS-->
                         <th class="align-middle col-2"><label><b>Asst. DIR. for Academic Affairs:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if adaa == "DECLINE" %}
-                                <label class = "col-12">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type9 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{adaa}}</label>
                                 <br>  
                                 <small>{{adaa_name}}</small>
                             {% elif adaa == "UNAPPROVED" %}

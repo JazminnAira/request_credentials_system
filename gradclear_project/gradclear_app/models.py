@@ -149,7 +149,7 @@ class user_table(AbstractUser):
     e_signature_timesaved = models.DateTimeField(auto_now_add=True)
     uploaded_signature = models.ImageField(upload_to='uploaded signatures/',blank=True)# PIP INSTALL PILLOW
     uploaded_signature_timesaved = models.DateTimeField(auto_now_add=True)
-    no_signature = models.CharField(max_length=100, verbose_name="Approve",default="APPROVED *Required Live Signature")
+    no_signature = models.CharField(max_length=100, verbose_name="Approve",default="*Approve with Live Signature Required*")
 
     REQUIRED_FIELDS = ('email',)
     
@@ -214,7 +214,8 @@ class clearance_form_table(models.Model):
         verbose_name="Academic Affairs Signature", default="UNAPPROVED")
     course_adviser = models.CharField(max_length=100,
         verbose_name="Course Adviser", default="NONE")
-    course_adviser_signature = models.ImageField(upload_to='signature/')
+    course_adviser_signature = models.CharField(max_length=100,
+        verbose_name="Course Adviser Signature", default="NONE")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     clear_notif = models.CharField(

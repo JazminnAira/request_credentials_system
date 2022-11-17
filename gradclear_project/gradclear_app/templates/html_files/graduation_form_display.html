@@ -618,29 +618,48 @@ Adviser:
           <form method="POST" action="graduation_form" id="grad_form" >
                {% csrf_token %}
                <!--SECTION RADIO BOX-->
-               <div class="form-row">
+                <div class="form-row">
                 <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-               
+                
+                {% if i.shift == "DAY" %}
                 <div class="radio" onkeyup="isEmpty()" id="radio_43">
                     <label class="my-1 mr-4" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()" checked disabled>Day
                     </label>
                     <label class="my-1 mr-4" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve  
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()" disabled>Eve  
                     </label>
                 </div>
+                {% else %}
+                <div class="radio" onkeyup="isEmpty()" id="radio_43">
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()" disabled>Day
+                    </label>
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()" checked disabled>Eve  
+                    </label>
+                </div>
+                {% endif %}
                 </div>
                 
                 <div class="form-row">
                     <div class="radio"  onkeyup="isEmpty()" id="radio_43">
                     <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-                    
+                    {% if i.study_load == "SEMESTER" %}
                     <label class="my-1 mr-2" class="form-control">
-                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()"required>Semester
+                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()" checked disabled>Semester
                     </label>
                     <label class="my-1 mr-2" class="form-control">
-                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" required>  Summer    
+                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" disabled>  Summer    
                     </label>
+                    {% else %}
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()" disabled>Semester
+                    </label>
+                    <label class="my-1 mr-2" class="form-control">
+                        <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" checked disabled>  Summer    
+                    </label>
+                    {% endif %}
                 </div>
                 </div>
                 <div id="dayeve_error_43"></div>
@@ -657,16 +676,16 @@ Adviser:
 
                             
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" disabled id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required autofocus>
+                                disabled  autofocus>
                                 
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" disabled id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required>
+                                disabled >
                             <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" disabled id="mn_box_43" class="form-control mr-3" placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                                 disabled>
                         {% else %}
                             <label for="name" class="my-1 mr-2" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
                             <input type="text" size="78" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" disabled id="ln_box_43" class="form-control " placeholder="Last Name" onkeyup="isEmpty()" value="{{i.name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                                disabled required autofocus>
+                                disabled  autofocus>
                         {% endif %}
                             
                         
@@ -679,7 +698,7 @@ Adviser:
                          <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
 
                          <div>
-                         <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()" value="{{i.course}}"  onkeyup="isEmpty()" onchange="course_check()" disabled required>
+                         <select name="CHOOSE" id="course_drp1_43" class="form-control" onclick="getCourse()" value="{{i.course}}"  onkeyup="isEmpty()" onchange="course_check()" disabled >
                               <option value="1" selected>{{i.course}}</option>
                          </select>
                          </div>
@@ -709,8 +728,8 @@ Adviser:
                          <td>{{i.room1}}</td>
                          <td>{{i.faculty1}}</td>
                          <td class ="text-center">
-                            {% if subject_1 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type1 == "APPROVE" %}
+                                <label class="text-dark">{{subject_1}}</label>
                             {% elif subject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -728,8 +747,8 @@ Adviser:
                          <td>{{i.room2}}</td>
                          <td>{{i.faculty2}}</td>
                          <td class ="text-center">
-                            {% if subject_2 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type2 == "APPROVE" %}
+                                <label class="text-dark">{{subject_2}}</label>
                             {% elif subject_2 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -746,8 +765,8 @@ Adviser:
                          <td>{{i.room3}}</td>
                          <td>{{i.faculty3}}</td>
                          <td class ="text-center">
-                            {% if subject_3 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type3 == "APPROVE" %}
+                                <label class="text-dark">{{subject_3}}</label>
                             {% elif subject_3 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -764,8 +783,8 @@ Adviser:
                          <td>{{i.room4}}</td>
                          <td>{{i.faculty4}}</td>
                          <td class ="text-center">
-                            {% if subject_4 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type4 == "APPROVE" %}
+                                <label class="text-dark">{{subject_4}}</label>
                             {% elif subject_4 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -782,8 +801,8 @@ Adviser:
                          <td>{{i.room5}}</td>
                          <td>{{i.faculty5}}</td>
                          <td class ="text-center">
-                            {% if subject_5 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type5 == "APPROVE" %}
+                                <label class="text-dark">{{subject_5}}</label>
                             {% elif subject_5 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -800,8 +819,8 @@ Adviser:
                          <td>{{i.room6}}</td>
                          <td>{{i.faculty6}}</td>
                          <td class ="text-center">
-                            {% if subject_6 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type6 == "APPROVE" %}
+                                <label class="text-dark">{{subject_6}}</label>
                             {% elif subject_6 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -818,8 +837,8 @@ Adviser:
                          <td>{{i.room7}}</td>
                          <td>{{i.faculty7}}</td>
                          <td class ="text-center">
-                            {% if subject_7 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type7 == "APPROVE" %}
+                                <label class="text-dark">{{subject_7}}</label>
                             {% elif subject_7 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -836,8 +855,8 @@ Adviser:
                          <td>{{i.room8}}</td>
                          <td>{{i.faculty8}}</td>
                          <td class ="text-center">
-                            {% if subject_8 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type8 == "APPROVE" %}
+                                <label class="text-dark">{{subject_8}}</label>
                             {% elif subject_8 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -854,8 +873,8 @@ Adviser:
                          <td>{{i.room9}}</td>
                          <td>{{i.faculty9}}</td>
                          <td class ="text-center">
-                            {% if subject_9 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type9 == "APPROVE" %}
+                                <label class="text-dark">{{subject_9}}</label>
                             {% elif subject_9 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -872,8 +891,8 @@ Adviser:
                          <td>{{i.room10}}</td>
                          <td>{{i.faculty10}}</td>
                          <td class ="text-center">
-                            {% if subject_10 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type10 == "APPROVE" %}
+                                <label class="text-dark">{{subject_10}}</label>
                             {% elif subject_10 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -907,8 +926,8 @@ Adviser:
                          <td>{{i.addroom1}}</td>
                          <td>{{i.addfaculty1}}</td>
                          <td class ="text-center">
-                            {% if addsubject_1 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type11 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_1}}</label>
                             {% elif addsubject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -924,8 +943,8 @@ Adviser:
                          <td>{{i.addroom2}}</td>
                          <td>{{i.addfaculty2}}</td>
                          <td class ="text-center">
-                            {% if addsubject_2 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type12 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_2}}</label>
                             {% elif addsubject_2 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -941,8 +960,8 @@ Adviser:
                          <td>{{i.addroom3}}</td>
                          <td>{{i.addfaculty3}}</td>
                          <td class ="text-center">
-                            {% if addsubject_3 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type13 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_3}}</label>
                             {% elif addsubject_3 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -958,8 +977,8 @@ Adviser:
                          <td>{{i.addroom4}}</td>
                          <td>{{i.addfaculty4}}</td>
                          <td class ="text-center">
-                            {% if addsubject_4 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type14 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_4}}</label>
                             {% elif addsubject_4 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -975,8 +994,8 @@ Adviser:
                          <td>{{i.addroom5}}</td>
                          <td>{{i.addfaculty5}}</td>
                          <td class ="text-center">
-                            {% if addsubject_5 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type15 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_5}}</label>
                             {% elif addsubject_5 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -992,8 +1011,8 @@ Adviser:
                          <td>{{i.addroom6}}</td>
                          <td>{{i.addfaculty6}}</td>
                          <td class ="text-center">
-                            {% if addsubject_6 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type16 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_6}}</label>
                             {% elif addsubject_6 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1009,8 +1028,8 @@ Adviser:
                          <td>{{i.addroom7}}</td>
                          <td>{{i.addfaculty7}}</td>
                          <td class ="text-center">
-                            {% if addsubject_7 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type17 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_7}}</label>
                             {% elif addsubject_7 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1026,8 +1045,8 @@ Adviser:
                          <td>{{i.addroom8}}</td>
                          <td>{{i.addfaculty8}}</td>
                          <td class ="text-center">
-                            {% if addsubject_8 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type18 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_8}}</label>
                             {% elif addsubject_8 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1043,8 +1062,8 @@ Adviser:
                          <td>{{i.addroom9}}</td>
                          <td>{{i.addfaculty9}}</td>
                          <td class ="text-center">
-                            {% if addsubject_9 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type19 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_9}}</label>
                             {% elif addsubject_9 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1060,8 +1079,8 @@ Adviser:
                          <td>{{i.addroom10}}</td>
                          <td>{{i.addfaculty10}}</td>
                          <td class ="text-center">
-                            {% if addsubject_10 == "DECLINE" %}
-                                <label class="text-dark">APPROVED<br><small class="text-danger">**note manual signature**</small></label>
+                            {% if signature_type20 == "APPROVE" %}
+                                <label class="text-dark">{{addsubject_10}}</label>
                             {% elif addsubject_10 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
@@ -1076,23 +1095,31 @@ Adviser:
                <div class="form-inline">
                 <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
 
-                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
+                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" value = "{{i.enrolled_term}}" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled>
 
-
+                {% if i.status == "YES" %}
                 <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" required>Yes
-                    
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" checked disabled>Yes
                 </label>
 
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" required>No
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" disabled>No
                 </label>
+                {% else %}
+                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" disabled>Yes
+                </label>
+
+                <label class="my-1 mr-2" class="form-control">
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" checked disabled>No
+                </label>
+                {% endif %}
                 </div>
 
                <!--DEADLINE BOX-->
                <div class="form-inline">
                     <label for="name" class="col-form-label my-1">If no, file your application papers. Deadline:</label>
-                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled required>
+                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled >
                </div><br>
 
 

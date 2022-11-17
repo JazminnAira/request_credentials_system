@@ -641,73 +641,47 @@ Adviser:
     </script> -->
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
-        <div class = "p-4"><h3 class = "text-dark">APPROVE</h3>
-            <h4 class="label text-lg text-dark" id ="name_approve"></h4><!--not working pa-->
-            <h5 class ="label text-lg text-dark" id ="course_approve"></h5><!--not working pa-->
+        <div class = "p-4" id="show_details">
+            <div class="bg-dark p-2"><h3 class = "text-white">APPROVE</h3></div>
         </div>
         
         <input type="text" id="attach_signature_to" hidden>
         <input type = "text" id="subject" hidden>
         <input type ="text" id = "esign_checker" value="{{esign_check}}" hidden>
         <input type = "text" id = "upload_checker" value = "{{uploadsig_check}}" hidden>
+        
         <!--CHOOSING APPROVAL SIGNATURE-->
         <div class= "mx-auto" align="center" id="button_area">
             <br>
             <!--ATTACH ESIGN BUTTON-->
-            <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">ATTACH E-SIGNATURE</button><br>
+            <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">ATTACH E-SIGNATURE</button>
+            <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary text-white center-block col-2" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
             <br>
             <!--ATTACH UPLOADED BUTTON-->
-            <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">ATTACH UPLOADED SIGNATURE</button><br>
+            <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">ATTACH UPLOADED SIGNATURE</button>
+            <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-dark pt-3 pb-3 bg-secondary text-white center-block col-2" title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
+            <br>
             <br>
             <!--APPROVE ONLY-->
-            <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">APPROVE</button><br>
-            <br>
-            <div id ="viewedit_section">
-                <button type = "button" id = "view_sig_btn" class ="btn btn-lg bg-danger col-4 text-white border border-dark">VIEW SIGNATURE</button>
-                <button type = "button" id = "edit_sig_btn" class ="btn btn-lg bg-danger col-4 text-white border border-dark">EDIT SIGNATURE</button>
-            </div>
+            <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-10 bg-light text-dark border border-dark">APPROVE</button><br>
         </div>
-
-        <!--VIEW AND EDIT SIGNATURE-->
-        <div class= "mx-auto" align="center" id="edit_button_area" hidden>
-            <h4>EDIT SIGNATURES</h4>
-            <br>
-            {% if e_signature %}
-            <div id = "esignature_display" class = "p-3">
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR LIVE E-SIGNATURE</h4></div>
-                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-                <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
-            </div>
-            {% else %}
-            <div class="p-6">NO LIVE E-SIGNATURE SAVED</div>
-            {% endif %}
-            
-            {% if uploaded_signature %}
-            <div id = "upload_signature_display" class = "p-3">
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
-                <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-                <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>
-            </div>
-            {% else %}
-            <div class="p-6">NO UPLOADED SIGNATURE SAVED</div>
-            {% endif %}
-            
-            <button type = "button" id = "create_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">CREATE NEW SIGNATURE</button><br>
-            <br>
-            <button type = "button" id = "upload_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">UPLOAD NEW SIGNATURE</button><br>
-            <br>
-            <button type = "button" id = "back_btn" class ="btn btn-lg col-8 bg-light text-dark border border-dark">BACK</button><br>
-        </div>
-   
 
         <div id="create_signature_area" class="p-1" hidden>
+            <div id = "esignature_display" class = "m-2 mt-3 p-1" align = "center">
+            {% if e_signature %}
+                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR E-SIGNATURE</h4></div>
+                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-40 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
+            {% else %}
+                <div clas="p-2 border rounded">NO LIVE E-SIGNATURE SAVED</div>
+            {% endif %}
+            </div>
+            <br>
             <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
-                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas> 
+                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
-                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button>
-                <br>
-    
+                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
             </div>
         </div>
         
@@ -715,7 +689,7 @@ Adviser:
             {% csrf_token %}
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
             <input type="text" name ="id_num" value ="{{id}}" hidden>
-            <div id ="new_upload_signature_area" class="p-2" hidden>
+            <div id ="upload_signature_area" class="p-2" hidden>
                 <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
@@ -726,6 +700,15 @@ Adviser:
                 <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
             </div>
         </form>
+        <div id = "upload_signature_display" class = "p-3" hidden>
+        {% if uploaded_signature %}
+            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
+            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
+        {% else %}
+            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
+        {% endif %}
+        </div>
     </div>
 
     <div class ="table_list" id = "table_list">
@@ -754,7 +737,7 @@ Adviser:
                     {% for instance in st %}
                     <tbody> 
                         <tr id="Add"> 
-                            <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>       
+                            <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}} onclick="close_boxes(this)"></td>       
                             <td class ="nr" hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td class ="name" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
                             <td class = "course" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
@@ -1152,55 +1135,60 @@ Adviser:
         //imgConverted.src = dataURI;
     });
 
-    //show edit signature section 
-    edit_sig_btn.addEventListener("click", function() {
-        document.getElementById("edit_button_area").hidden = false;
-        document.getElementById("button_area").hidden = true;
-    });
-
-    //show create signature area
-    create_sig_btn.addEventListener("click", function() {
+    //show create signature are
+    edit_esign_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
+        document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("signature_pad").width = 350;
         document.getElementById("signature_pad").height = 200;
         document.getElementById("submit_signature").hidden = false;
-        document.getElementById("edit_button_area").hidden = true;
+        document.getElementById("button_area").hidden = true;
+        document.getElementById("show_details").hidden = true;
     });
 
-    upload_sig_btn.addEventListener("click", function() {
+    edit_uploaded_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = true;
-        document.getElementById("new_upload_signature_area").hidden = false;
+        document.getElementById("upload_signature_area").hidden = false;
         document.getElementById("submit_signature").hidden = false;
-        document.getElementById("edit_button_area").hidden = true;
+        document.getElementById("button_area").hidden = true;
+        document.getElementById("show_details").hidden = true;
+        document.getElementById("upload_signature_display").hidden = false;
     });
 
     cancel_create.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden =true;
         document.getElementById("submit_signature").hidden = true;
-        document.getElementById("edit_button_area").hidden = false;
+        document.getElementById("upload_signature_area").hidden = true;
         signaturePad.clear();
         document.getElementById('image_encoded').value = "";
+        document.getElementById("button_area").hidden = false;
+        document.getElementById("show_details").hidden = false;
     });
 
     cancel_upload.addEventListener("click", function() {
-        document.getElementById("new_upload_signature_area").hidden = true;
+        document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
-        document.getElementById("edit_button_area").hidden = false;
         document.getElementById('uploaded_signature_new').value =null;
         document.getElementById('preview').src ="";
+        document.getElementById("upload_signature_display").hidden = true;
+        document.getElementById("button_area").hidden = false;
+        document.getElementById("show_details").hidden = false;
     });
-    
 
     var loadFile = function(event) {
         var image = document.getElementById('preview');
         image.src=URL.createObjectURL(event.target.files[0]);
     };
 
+    // close signature section when not needed
+    function close_boxes(elem){
+        document.getElementById("signature_section").style.width = "0";
+        document.getElementById("table_list").style.marginRight= "0";
+    };
+
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
-        document.getElementById('name_approve').innerHTML = "NAME";
-        document.getElementById('course_approve').innerHTML = "course";
 
         var array = []
         var checkboxes = document.querySelectorAll('input[name=boxes]:checked')
@@ -1210,7 +1198,7 @@ Adviser:
         }
         document.getElementById('id_list').value= array;
     };
-
+    
     function sitsubject(elem){
         document.getElementById('subject').value = "sitsignature";
     };
@@ -1296,15 +1284,15 @@ Adviser:
     };
 
     esign_attach_sig_btn.addEventListener("click", function() {
-        // if (document.getElementById('esign_checker').value == ""){
-        //     document.getElementById("create_signature_area").hidden = false;
-        //     document.getElementById("upload_signature_area").hidden = true;
-        //     document.getElementById("signature_pad").width = 350;
-        //     document.getElementById("signature_pad").height = 200;
-        //     document.getElementById("submit_signature").hidden = false;
-        //     document.getElementById("button_area").hidden = true;
-        //     document.getElementById("show_details").hidden = true;
-        // }else{
+        if (document.getElementById('esign_checker').value == ""){
+            document.getElementById("create_signature_area").hidden = false;
+            document.getElementById("upload_signature_area").hidden = true;
+            document.getElementById("signature_pad").width = 350;
+            document.getElementById("signature_pad").height = 200;
+            document.getElementById("submit_signature").hidden = false;
+            document.getElementById("button_area").hidden = true;
+            document.getElementById("show_details").hidden = true;
+        }else{
             id_list = document.getElementById('id_list').value;
             var id_user = document.getElementById('attach_signature_to').value;
             var sub = document.getElementById('subject').value;
@@ -1317,18 +1305,18 @@ Adviser:
             else {
                 location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
             }
-        // }
+        }
     });
 
     upload_attach_sig_btn.addEventListener("click", function() {
-        // if (document.getElementById('upload_checker').value == ""){
-        //     document.getElementById("create_signature_area").hidden = true;
-        //     document.getElementById("upload_signature_area").hidden = false;
-        //     document.getElementById("submit_signature").hidden = false;
-        //     document.getElementById("button_area").hidden = true;
-        //     document.getElementById("show_details").hidden = true;
-        //     document.getElementById("upload_signature_display").hidden = false;
-        // }else{
+        if (document.getElementById('upload_checker').value == ""){
+            document.getElementById("create_signature_area").hidden = true;
+            document.getElementById("upload_signature_area").hidden = false;
+            document.getElementById("submit_signature").hidden = false;
+            document.getElementById("button_area").hidden = true;
+            document.getElementById("show_details").hidden = true;
+            document.getElementById("upload_signature_display").hidden = false;
+        }else{
             id_list = document.getElementById('id_list').value;
             var id_user = document.getElementById('attach_signature_to').value;
             var sub = document.getElementById('subject').value;
@@ -1341,7 +1329,7 @@ Adviser:
             else {
                 location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
             }
-        // }
+        }
     });
 
     approve_sig_btn.addEventListener("click", function() {
@@ -1364,17 +1352,13 @@ Adviser:
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
         document.getElementById("button_area").hidden = false;
-        document.getElementById("edit_button_area").hidden = true;
+        document.getElementById("show_details").hidden = false;
         document.getElementById("create_signature_area").hidden = true;
-        document.getElementById("new_upload_signature_area").hidden = true;
+        document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
+        document.getElementById("upload_signature_display").hidden = true;
+        
     });
-
-    back_btn.addEventListener("click", function() {
-        document.getElementById("button_area").hidden = false;
-        document.getElementById("edit_button_area").hidden = true;
-    });
-
 
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");

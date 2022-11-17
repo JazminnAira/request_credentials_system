@@ -20,8 +20,9 @@ urlpatterns = [
      path('student_signup', student_registration, name='student_signup'),
      path('staff_signup', staff_registration, name='staff_signup'),
 
-     # 
+     # DETERMINER OF FILLING UP FORMS IN SIDEBAR
      path('clearance_view', clearance_view, name='clearance_view'),
+     path('graduation_view', graduation_view, name='graduation_view'),
 
      # FORMS
      path('clearance_form/<str:type>/<str:req>', clearance_form, name='clearance_form'),
@@ -125,6 +126,10 @@ urlpatterns = [
      path('reg_updateEmail', reg_updateEmail, name='reg_updateEmail'),
      path('reg_updatePassword', reg_updatePassword, name='reg_updatePassword'),
      path('reg_updateContact', reg_updateContact, name='reg_updateContact'),
+
+      # UPDATE STAFF SETTINGS
+     path('staff_updatePassword', staff_updatePassword, name='staff_updatePassword'),
+
 
      # PRINT FORMS  
      path('clearance_print/<str:id>', clearance_print, name='clearance_print'),
