@@ -468,13 +468,11 @@ Adviser:
                                 
                                 <!--ID NUMBER BOX-->
                                 <div class="form-group">
-                                    <label for="idnum">ID Number:</label><label id="Sid_aste01" style="color:red;">*</label> (number only)
+                                    <label for="idnum">ID Number:</label>{% if user != "ALUMNUS" %}<label id="Sid_aste01" style="color:red;">*</label> {% endif %} (number only)
                                     {{form.id_number}}
                                     <p id="sid_error_01"></p>
                                 </div>
-                                
-                                
-                                
+
                                 {% if user == "STUDENT" %}
                                     <!--COURSE DROPDOWN BOX-->
                                     <div class="form-group" id="course_input">
@@ -587,8 +585,13 @@ Adviser:
                             <div class="modal-footer">
                 
                                 <!--SIGNUP BUTTON-->
+                                {% if user == "ALUMNUS"%}
                                 <a><button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
-                                    id="Ssubmit_btn_01" >Sign Up</button></a>
+                                    id="Ssubmit_btn_01" onclick="get_id()">Sign Up</button></a>
+                                {% else %}
+                                <a><button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
+                                    id="Ssubmit_btn_01">Sign Up</button></a>
+                                {% endif %}
                             </div>
                         </form>
         </div>
@@ -598,6 +601,9 @@ Adviser:
 
 
 <script>
+    function get_id() {
+    document.getElementById("id_id_number").value = "00-000";
+    }
 
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
     $(this)
@@ -642,12 +648,7 @@ Adviser:
                 if ($text.val().length === 2) {
                     $text.val($text.val() + '-');
                 }
-                if ($text.val().length === 7) {
-                    $text.val($text.val() + '-');
-                }
-                if ($text.val().length === 10) {
-                    $text.val($text.val() + '-');
-                }
+                
             }
             return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
             
@@ -733,7 +734,6 @@ Adviser:
         });
     });
 
-   
 </script>
 
 

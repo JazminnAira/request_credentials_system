@@ -35,7 +35,7 @@ import datetime
 from datetime import datetime,date,timedelta
 import os
 import time
- 
+import random
 
 # try:
 #     reg = user_table.objects.get(first_name='SARAH JANE', last_name='VELOS')
@@ -1472,15 +1472,33 @@ def faculty_registration(request):
     user_identifier = "FACULTY"
     context = {'form': form,'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
-
+             
 
 def alumnus_registration(request):
     form = signup_form()
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
+            year_graduated = form.cleaned_data.get("year_graduated")
+            birthday = form.cleaned_data.get("birthday")
+            birthdaym = birthday[:2]
+            birthdayd = birthday[3:5]
+            birthdayy=birthday[6:8]
             username = form.cleaned_data.get("email")
-            id_num = form.cleaned_data.get("id_number")
+            year = random.randint(0, 18)
+            year_grad = year_graduated[2:4]
+            randomizer = random.randint(0, 9999)
+            print(year_grad)
+            id_num = str(year).zfill(2) + "-" + str(randomizer).zfill(4) + "-" + year_grad + "-" + birthdaym + birthdayd + birthdayy 
+            
+            while id_num in user_table.objects.values_list('id_number'):
+                year = random.randint(0, 18)
+                year_grad = year_graduated[2:4]
+                randomizer = random.randint(0, 9999)
+                print(year_grad)
+                id_num = str(year).zfill(2) + "-" + str(randomizer).zfill(4) + "-" + year_grad + "-" + birthdaym + birthdayd + birthdayy 
+
+            form.instance.id_number = id_num 
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
@@ -1501,6 +1519,7 @@ def alumnus_registration(request):
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
+            print(form.errors) 
     img_object = form.instance
     user_identifier = "ALUMNUS"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
