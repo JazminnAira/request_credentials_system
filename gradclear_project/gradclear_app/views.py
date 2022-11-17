@@ -836,7 +836,7 @@ def clearance_print(request, id):
     p.drawString(150, 681, f'{content.date_admitted_in_tup}')
     p.drawString(120, 655, f'{content.course}')
     # p.drawString(180, 629, f'{content.highschool_graduated}')
-
+    
     hs_grad = content.highschool_graduated
     num=len(hs_grad.split())
     
@@ -850,69 +850,447 @@ def clearance_print(request, id):
         p.setFont("Helvetica", 9)
         p.drawString(180, 629, f'{content.highschool_graduated}')
         
+    p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+        
     p.setFont("Helvetica", 10)  
     p.drawString(400, 681, f'{content.amount_paid}')
     p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
     p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
 
-    # signature
-    p.drawString(130, 290, f'{content.accountant_signature}')
-    p.drawString(150, 240, f'{content.liberal_arts_signature}')
-    p.drawString(169, 215, f'{content.mathsci_dept_signature}')
-    p.drawString(120, 190, f'{content.pe_dept_signature}')
-    # wala sa liberal arts
-    # temporary lang itong sa dept like dit, educ etc. pati na sa shop adviser
     
-    p.drawString(100, 115, f'{content.ieduc_dept_signature}')
-    p.drawString(435, 290, f'{content.it_dept_signature}')
-    
-
-    
-    
-    p.drawString(425, 265, f'{content.library_signature}')
-    p.drawString(435, 240, f'{content.guidance_office_signature}')
-    p.drawString(455, 215, f'{content.osa_signature}')
-    p.drawString(482, 190, f'{content.academic_affairs_signature}')
 
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
-        p.drawString(208, 580, '/')
+        p.drawString(208, 582, '✔')
         p.drawString(183, 555, f'{content.year_graduated_in_tupc}')
     else:
-        p.drawString(270, 580, '/')
+        p.drawString(270, 582, '✔')
 
     prev_form = content.have_previously_requested_form
     if prev_form == "YES":
-        p.drawString(428, 611, '/')
+        p.drawString(428, 611, '✔')
         p.drawString(380, 560, f'{content.date_of_previously_requested_form}')
-        p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+        
     else:
-        p.drawString(490, 611, '/')
+        p.drawString(490, 611, '✔')
 
     # purpose
     form_purpose = content.purpose_of_request
 
     if form_purpose == "Honorable Dismissal":
-        p.drawString(45, 434, '/')
+        p.drawString(45, 436, '✔')
     elif form_purpose == "Evaluation":
-        p.drawString(298, 434, '/')
+        p.drawString(298, 434, '✔')
     elif form_purpose == "Transcript of Records":
-        p.drawString(45, 412, '/')
+        p.drawString(45, 412, '✔')
     elif form_purpose == "Re-Evaluation":
-        p.drawString(298, 412, '/')
+        p.drawString(298, 412, '✔')
     elif form_purpose == "Diploma":
-        p.drawString(45, 390, '/')
+        p.drawString(45, 390, '✔')
     elif form_purpose == "Application for Graduation":
-        p.drawString(298, 390, '/')
+        p.drawString(298, 390, '✔')
     elif form_purpose == "Certification":
-        p.drawString(45, 370, '/')
+        p.drawString(45, 370, '✔')
     else:
         p.drawString(400, 370, f'{content.purpose_of_request}')
 
+
+# signature
+    p.setFont("Helvetica", 7)
+    sig_acc = content.accountant_signature
+    acc_stat = sig_acc.split(' ')[-1]
+    accs = sig_acc.rsplit(' ', 1)[0]
+    acc_name = accs.split('_',1)[0]
+    
+    accountant = user_table.objects.get(full_name = acc_name)
+    upload_acc_sign = accountant.uploaded_signature
+    str_upload_acc = str(upload_acc_sign)
+    esign_acc_sign = accountant.e_signature
+    str_esign_acc = str(esign_acc_sign)
+    
+    
+    if acc_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_acc
+        p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
+
+    elif acc_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_acc
+        p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
+
+    else: 
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)      
+        p.drawString(130, 290, f"""{acc_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(53, 283, "**Approved but requires live signature**")
+        
+    
+    
+    # Liberal arts
+    
+    p.setFont("Helvetica", 7)
+    sig_dla = content.liberal_arts_signature
+    dla_stat = sig_dla.split(' ')[-1]
+    dlas = sig_dla.rsplit(' ', 1)[0]
+    dla_name = dlas.split('_',1)[0]
+    
+    liberal_arts = user_table.objects.get(full_name = dla_name)
+    upload_dla_sign = liberal_arts.uploaded_signature
+    str_upload_dla = str(upload_dla_sign)
+    esign_dla_sign = liberal_arts.e_signature
+    str_esign_dla = str(esign_dla_sign)
+    
+    
+    
+    if dla_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dla
+        p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
+
+    elif dla_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dla
+        p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
+
+    else:
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)       
+        p.drawString(147, 240, f"""{dla_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 234, "**Approved but requires live signature**")
+            
+                 
+    # # # math and sci
+    p.setFont("Helvetica", 7)
+    sig_dms = content.mathsci_dept_signature
+    dms_stat = sig_dms.split(' ')[-1]
+    dmss = sig_dms.rsplit(' ', 1)[0]
+    dms_name = dmss.split('_',1)[0]
+    
+    mathsci = user_table.objects.get(full_name = dms_name)
+    upload_dms_sign = mathsci.uploaded_signature
+    str_upload_dms = str(upload_dms_sign)
+    esign_dms_sign = mathsci.e_signature
+    str_esign_dms = str(esign_dms_sign)
+
+    
+    
+    
+    if dms_stat == "ESIGN":
+
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dms
+        p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
+
+    elif dms_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dms
+        p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(170, 215, f"""{dms_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 209, "**Approved but requires live signature**")
+        
+    
+    # # # dpecs
+    
+    pe_acc = content.pe_dept_signature
+    pe_stat = pe_acc.split(' ')[-1]
+    dpecs = pe_acc.rsplit(' ', 1)[0]
+    pe_name = dpecs.split('_',1)[0]
+    
+    pe_dept = user_table.objects.get(full_name = pe_name)
+    upload_pe_sign = pe_dept.uploaded_signature
+    str_upload_pe = str(upload_pe_sign)
+    esign_pe_sign = pe_dept.e_signature
+    str_esign_pe = str(esign_pe_sign)
+    p.setFont("Helvetica", 4.5)
+    p.setFillColorRGB(1,0,0)
+    
+    
+    if pe_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_pe
+        p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
+
+    elif pe_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_pe
+        p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(120, 190, f"""{pe_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(75, 183, "**Approved but requires live signature**")
+        
+        
+        
+        
+    
+    # # depts
+    itdept_acc = content.it_dept_signature
+    educ_dept = content.ieduc_dept_signature
+    eng = content.eng_dept_signature
+    if itdept_acc != "_APPROVED":
+        p.drawString(100, 115, f'{content.it_dept_signature}')
+        p.setFont("Helvetica", 7)
+        
+        itdept_stat = itdept_acc.split(' ')[-1]
+        itdepartments = itdept_acc.rsplit(' ', 1)[0]
+        itdept_name = itdepartments.split('_',1)[0]
+        
+        itdept_dept = user_table.objects.get(full_name = itdept_name)
+        upload_itdept_sign = itdept_dept.uploaded_signature
+        str_upload_itdept = str(upload_itdept_sign)
+        esign_itdept_sign = itdept_dept.e_signature
+        str_esign_itdept = str(esign_itdept_sign)
+
+        if itdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_itdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        elif itdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_itdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(120, 190, f"""{itdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+    
+    elif educ_dept != "_APPROVED":   
+        p.setFont("Helvetica", 7)
+
+        educdept_stat = educ_dept.split(' ')[-1]
+        educdepartments = educ_dept.rsplit(' ', 1)[0]
+        educdept_name = educdepartments.split('_',1)[0]
+        
+        educdept_dept = user_table.objects.get(full_name = educdept_name)
+        upload_educdept_sign = educdept_dept.uploaded_signature
+        str_upload_educdept = str(upload_educdept_sign)
+        esign_educdept_sign = educdept_dept.e_signature
+        str_esign_educdept = str(esign_educdept_sign)
+
+        if educdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_educdept
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
+            
+
+        elif educdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_educdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(105, 113, f"""{educdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+    
+    elif eng != "_APPROVED":   
+        p.setFont("Helvetica", 7)
+
+        engdept_stat = eng.split(' ')[-1]
+        engdepartments = eng.rsplit(' ', 1)[0]
+        engdept_name = engdepartments.split('_',1)[0]
+        
+        engdept_dept = user_table.objects.get(full_name = engdept_name)
+        upload_engdept_sign = engdept_dept.uploaded_signature
+        str_upload_engdept = str(upload_engdept_sign)
+        esign_engdept_sign = engdept_dept.e_signature
+        str_esign_engdept = str(esign_engdept_sign)
+
+        if engdept_stat == "ESIGN":
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_engdept
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
+            
+
+        elif engdept_stat == "UPLOAD":
+            
+            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_engdept
+            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+
+        else:       
+            p.drawString(105, 113, f"""{engdept_name}""")
+            p.setFont("Helvetica", 4.5)
+            p.setFillColorRGB(1,0,0)
+            p.drawString(75, 183, "**Approved but requires live signature**")
+
+    # # shop
+    p.setFont("Helvetica", 7)
+    sig_shop = content.course_adviser_signature
+    shop_stat = sig_shop.split(' ')[-1]
+    shops = sig_shop.rsplit(' ', 1)[0]
+    shop_name = shops.split('_',1)[0]
+    
+    shop_ad = user_table.objects.get(full_name = shop_name)
+    upload_shop_sign = shop_ad.uploaded_signature
+    str_upload_shop = str(upload_shop_sign)
+    esign_shop_sign = shop_ad.e_signature
+    str_esign_shop = str(esign_shop_sign)
+    p.setFont("Helvetica", 4.5)
+    p.setFillColorRGB(1,0,0)
+    
+    
+    if shop_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_shop
+        p.drawImage(im,435, 290, height = 15, width = 80 , mask='auto')
+
+    elif shop_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_shop
+        p.drawImage(im ,435, 290, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(435, 290, f"""{shop_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(320, 285, "**Approved but requires live signature**")
+    
+    # # library
+    p.setFont("Helvetica", 7)
+    sig_lib = content.library_signature
+    lib_stat = sig_lib.split(' ')[-1]
+    libb = sig_lib.rsplit(' ', 1)[0]
+    lib_name = libb.split('_',1)[0]
+    
+    lib_ad = user_table.objects.get(full_name = lib_name)
+    upload_lib_sign = lib_ad.uploaded_signature
+    str_upload_lib = str(upload_lib_sign)
+    esign_lib_sign = lib_ad.e_signature
+    str_esign_lib = str(esign_lib_sign)
+    
+    if lib_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_lib
+        p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
+
+    elif lib_stat == "UPLOAD":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_lib
+        p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
+
+    else:    
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)   
+        p.drawString(425, 265, f"""{lib_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(325, 260, "**Approved but requires live signature**")
+    
+    
+    
+    # guidance
+    
+    
+    sig_guidance = content.guidance_office_signature
+    guidance_stat = sig_guidance.split(' ')[-1]
+    guidances = sig_guidance.rsplit(' ', 1)[0]
+    guidance_name = guidances.split('_',1)[0]
+    
+    guidance = user_table.objects.get(full_name = guidance_name)
+    upload_guidance_sign = guidance.uploaded_signature
+    str_upload_guidance = str(upload_guidance_sign)
+    esign_guidance_sign = guidance.e_signature
+    str_esign_guidance = str(esign_guidance_sign)
+    
+    if guidance_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_guidance
+        p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
+
+    elif guidance_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_guidance
+        p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
+
+    else:      
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0) 
+        p.drawString(435, 240, f"""{guidance_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(325, 234, "**Approved but requires live signature**")
+    
+    # osa
+    p.setFont("Helvetica", 7)
+    sig_osa = content.osa_signature
+    osa_stat = sig_osa.split(' ')[-1]
+    osas = sig_osa.rsplit(' ', 1)[0]
+    osa_name = osas.split('_',1)[0]
+    
+    osa = user_table.objects.get(full_name = osa_name)
+    upload_osa_sign = osa.uploaded_signature
+    str_upload_osa = str(upload_osa_sign)
+    esign_osa_sign = osa.e_signature
+    str_esign_osa = str(esign_osa_sign)
+    
+    
+    if osa_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_osa
+        p.drawImage(im ,455, 210, height = 25, width = 80 , mask='auto')
+
+    elif osa_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_osa
+        p.drawImage(im ,455, 215, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(435, 290, f"""{osa_name}""")
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(1,0,0)
+        p.drawString(430, 260, "**Approved but requires live signature**")
+    
+    
+    
+    
+    
+    # adaa
+    
+    sig_adaa = content.academic_affairs_signature
+    adaa_stat = sig_adaa.split(' ')[-1]
+    adaas = sig_adaa.rsplit(' ', 1)[0]
+    adaa_name = adaas.split('_',1)[0]
+    
+    adaa = user_table.objects.get(full_name = adaa_name)
+    upload_adaa_sign = adaa.uploaded_signature
+    str_upload_adaa = str(upload_adaa_sign)
+    esign_adaa_sign = adaa.e_signature
+    str_esign_adaa = str(esign_adaa_sign)
+    
+    
+    
+    if adaa_stat == "ESIGN":
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_adaa
+        p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
+
+    elif adaa_stat == "UPLOAD":
+        
+        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_adaa
+        p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
+
+    else:       
+        p.setFont("Helvetica", 5.5)
+        p.setFillColorRGB(0,0,0)
+        p.drawString(482, 190, f"""{adaa_name}""")
+        p.setFillColorRGB(1,0,0)
+        p.setFont("Helvetica", 4.5)  
+        p.drawString(325, 185, "**Approved but requires live signature**")
+
+    
     for line in lines:
         textob.textLine(line)
 
-    #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
 
     p.drawText(textob)
     p.showPage()
@@ -937,8 +1315,9 @@ def clearance_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
+
 
 @login_required(login_url='/')
 def appointment(request, id, form):
@@ -1234,7 +1613,7 @@ def regclear_appointment(request,id):
     return redirect('/registrar_dashboard_clearance_list/%20')
 
 @login_required(login_url='/')
-def request_appointment(request,id):
+def request_appointment(request, id):
     if request.method == 'POST':
         email_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
@@ -1243,8 +1622,7 @@ def request_appointment(request,id):
         rec_email = email[0]
         recipient_list = [rec_email, ]
 
-        gender_temp = user_table.objects.filter(
-        id=id).values_list('gender', flat=True).distinct()
+        gender_temp = user_table.objects.filter(id=id).values_list('gender', flat=True).distinct()
         gender = user_table.objects.filter(
             gender=gender_temp[0]).values_list('gender', flat=True).distinct()
         gender_choice = gender[0]
@@ -1292,6 +1670,7 @@ def request_appointment(request,id):
         date_appointment = request.POST.get('date_appointment')
         request_form_table.objects.filter(
         id=id).update(appointment =date_appointment)
+        request_form_table.objects.filter(id=id).update(approval_status="APPROVED")
 
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
@@ -1324,6 +1703,7 @@ def request_appointment(request,id):
         msg.content_subtype = "html"
         msg.send()
         messages.success(request, "Appointment Schedule Sent.")
+        
         return redirect('registrar_dashboard_request_list')
     else:
         return render(request, 'html_files/appointment.html', {})
@@ -1588,21 +1968,13 @@ def student_dashboard(request):
         st = graduation_form_table.objects.filter(student_id=student_id)
         st1 = clearance_form_table.objects.filter(student_id=student_id)
         
-        check_form137 = Document_checker_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
-        check_clearance = clearance_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
-        check_graduation = graduation_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
-        check_apply_graduation = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
         
         # document checker
         display =[]
         # Form137-A
-        if check_form137.exists():
-            if check_form137[0] == '❌':
-                print('Missing FORM 137-A')
-                display.append("FORM 137-A")
                 
-        elif check_form137_inrequest.exists():
+        if check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
                     print(check_form137_inrequest)
@@ -1612,35 +1984,6 @@ def student_dashboard(request):
                     pass
         else:
             pass
-        
-        if request.user.user_type == "ALUMNUS":
-            pass
-        elif request.user.user_type == "OLD STUDENT":
-            pass
-        else: 
-            if not check_clearance:
-                display.append("CLEARANCE")
-            else:
-                for i in check_clearance:
-                    if i == "APPROVED":
-                        pass
-                    else:
-                        display.append("CLEARANCE (ON PROCESS)")
-            
-            if check_apply_graduation:
-                if check_apply_graduation[0] != "APPROVED":
-                    display.append("CLEARANCE OF APPLICATION FOR GRADUATION (ON PROCESS)")
-                else:
-                    pass
-            else:
-                pass
-                
-        if not check_graduation:
-            pass
-        else:
-            if check_graduation[0] != 'APPROVED':
-               
-                display.append("GRADUATION (ON PROGRESS)")
   
     else:
         messages.error(
@@ -1691,6 +2034,7 @@ def clearance_form(request, type, req):
             last_request_date = request.POST.get('dbrtime_box_420')
             last_term = request.POST.get('lasterm_box_420')
             course_adviser = request.POST.get('course_adviser_420')
+            semester = request.POST.get('sem_term')
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
@@ -1720,8 +2064,7 @@ def clearance_form(request, type, req):
                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
                                                        course_adviser=course_adviser, course_adviser_signature=course_adviser_signature, 
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,
-                                                       ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
+                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,semester_enrolled=semester,ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
             
             form.save()
             
@@ -4268,7 +4611,28 @@ def registrar_dashboard(request):
             course="BTTE-Powerplant Engineering Technology").values().count()
         cBT_AET = clearance_form_table.objects.filter(
             course="BT-Automotive Engineering Technology").values().count()
-      
+
+        cBET_CT = clearance_form_table.objects.filter(
+            course="BET-Construction Technology").values().count()
+        cBET_MT = clearance_form_table.objects.filter(
+            course="BET-Mechanical Technology").values().count()
+        cBET_AT = clearance_form_table.objects.filter(
+            course="BET-Automotive Technology").values().count()
+        cBET_PPT = clearance_form_table.objects.filter(
+            course="BET-Power Plant Technology").values().count()
+        cBSIE_HE = clearance_form_table.objects.filter(
+            course="BSIE-Home Economics").values().count()
+        cBTTE_CP = clearance_form_table.objects.filter(
+            course="BTTE-Computer Programming").values().count()
+        cBTTE_E = clearance_form_table.objects.filter(
+            course="BTTE-Electrical").values().count()
+        cBSCE = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Civil Engineering").values().count()
+        cBSEE = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Electrical Engineering").values().count()
+        cBSME = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Mechanical Engineering").values().count()
+       
        
         
         unapproved_forms_count = clearance_form_table.objects.filter(approval_status="APPROVED").count()
@@ -4336,6 +4700,27 @@ def registrar_dashboard(request):
             course="BTTE-Powerplant Engineering Technology").values().count()
         gBT_AET = graduation_form_table.objects.filter(
             course="BT-Automotive Engineering Technology").values().count()
+        
+        gBET_CT = graduation_form_table.objects.filter(
+            course="BET-Construction Technology").values().count()
+        gBET_MT = graduation_form_table.objects.filter(
+            course="BET-Mechanical Technology").values().count()
+        gBET_AT = graduation_form_table.objects.filter(
+            course="BET-Automotive Technology").values().count()
+        gBET_PPT = graduation_form_table.objects.filter(
+            course="BET-Power Plant Technology").values().count()
+        gBSIE_HE = graduation_form_table.objects.filter(
+            course="BSIE-Home Economics").values().count()
+        gBTTE_CP = graduation_form_table.objects.filter(
+            course="BTTE-Computer Programming").values().count()
+        gBTTE_E = graduation_form_table.objects.filter(
+            course="BTTE-Electrical").values().count()
+        gBSCE = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Civil Engineering").values().count()
+        gBSEE = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Electrical Engineering").values().count()
+        gBSME = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Mechanical Engineering").values().count()
        
 
        
@@ -4366,13 +4751,20 @@ def registrar_dashboard(request):
                    'cBTTE_AET': cBTTE_AET, 'cBTTE_CET': cBTTE_CET,'cBTTE_CoET': cBTTE_CoET, 'cBTTE_EET': cBTTE_EET, 
                    'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,'cBT_AET':cBT_AET,
 
+                   'cBET_CT': cBET_CT, 'cBET_MT': cBET_MT,'cBET_AT': cBET_AT, 'cBET_PPT': cBET_PPT, 
+                   'cBSIE_HE': cBSIE_HE, 'cBTTE_CP': cBTTE_CP,'cBTTE_E': cBTTE_E, 'cBSCE': cBSCE, 
+                   'cBSEE': cBSEE, 'cBSME': cBSME,
+
                    'gBSIE_ICT': gBSIE_ICT, 'gBSIE_IA': gBSIE_IA, 'gBGT_ART': gBGT_ART, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
                    'gBET_PPT': gBET_PPT, 'gBT_CET': gBT_CET, 'gBT_CoET': gBT_CoET, 'gBT_EET': gBT_EET,
                    'gBT_EsET': gBT_EsET, 'gBT_MPET': gBT_MPET, 'gBT_PPET': gBT_PPET, 'g_MPET': g_MPET,
                    'g_PPET': g_PPET, 'gBSIE_AET': gBSIE_AET,'gBSIE_MPET': gBSIE_MPET, 'gBTTE_ART': gBTTE_ART, 
                    'gBTTE_AET': gBTTE_AET, 'gBTTE_CET': gBTTE_CET,'gBTTE_CoET': gBTTE_CoET, 'gBTTE_EET': gBTTE_EET, 
-                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'gBT_AET':gBT_AET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
+                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'gBT_AET':gBT_AET,
+                   'gBET_CT': gBET_CT, 'gBET_MT': gBET_MT,'gBET_AT': gBET_AT, 'gBET_PPT': gBET_PPT, 
+                   'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP,'gBTTE_E': gBTTE_E, 'gBSCE': gBSCE, 
+                   'gBSEE': gBSEE, 'gBSME': gBSME,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
 
 @login_required(login_url='/')
@@ -5981,27 +6373,25 @@ def registrar_dashboard_organize_request_list(request, id):
             requests = request_form_table.objects.all().order_by('-time_requested').values()
         else:
             requests = request_form_table.objects.all().order_by('-time_requested').values()
-            
-        doc = Document_checker_table.objects.all().values()
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc, 'sorter_type' : sorter})
+    return render(request,'html_files/Request List.html', {'data': requests, 'sorter_type' : sorter})
 
 #DEFAULT PAGE
 @login_required(login_url='/')
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         requests = request_form_table.objects.all().order_by('-time_requested').values()
-        doc = Document_checker_table.objects.all().values()
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+    return render(request,'html_files/Request List.html', {'data': requests})
 
 @login_required(login_url='/')
 def request_official_update(request, id):
@@ -6028,17 +6418,29 @@ def request_form(request):
         user = request.user.user_type 
         student_name = request.user.full_name
         
+        #DETERMINE UNDERGRADUATE STUDENTS
+        today_date = date.today() 
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(today_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id
+        year_today = today_date.year
+        print(year_today)
+        print(with_graduation)
+        
         print(student_name)
         print(user)            
         if request.method == "POST":
             form = request_form
             student_id = request.POST.get('stud_id_pre')
             amount = request.POST.get('amount_paid')
+            semester = request.POST.get('sem_term')
             last_name = request.POST.get('ln_box_pre')
             first_name = request.POST.get('fn_box_pre')
             middle_name = request.POST.get('mn_box_pre')
             course = request.POST.get('course_pre')
-            date = request.POST.get('date_pre')
+            date_today = request.POST.get('date_pre')
             control_num = request.POST.get('control_pre')
             address = request.POST.get('add_box_pre')
             contact_num = request.POST.get('contact_pre')
@@ -6046,59 +6448,93 @@ def request_form(request):
             purpose = request.POST.get('purpose')
             request = request.POST.get('purpose_request_pre')
             
+            
             full_name = last_name + ", " + first_name + " " + middle_name
             mid = middle_name[0] + "."
             name2 = last_name + ", " + first_name + " " + mid
             
             print(name2)
-    
-            form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
-                                                     address=address, course=course,date=date, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+            
+            
+            check_form137 = request_form_table.objects.filter(name=full_name, form_137="✔").values_list('form_137', flat=True).distinct()
+            if check_form137:
+                have_form137 = "✔"
+                form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
+                                                     address=address, course=course,date=date_today, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     request=request, form_137=have_form137)
+            else:
+                form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
+                                                     address=address, course=course,date=date_today, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
-
+            print(request)
+            
             if user == "STUDENT":
+                # CHECK REQUESTED DOCUMENT BY SEMESTER
+                semester_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('semester_enrolled', flat = True).distinct()
+                term_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('last_term_in_tupc', flat = True).distinct()
                 if request == 'Honorable Dismissal':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/HonorableDismissal') 
                     else:
                         return redirect('clearance_form/RequestCredentials/HonorableDismissal')
                         
                 elif request == 'Transcript of Records':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
                     else:
                         return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
                 elif request == 'Diploma':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Diploma')
                     else:
                         return redirect('clearance_form/RequestCredentials/Diploma')
                 elif request == 'Evaluation':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Evaluation')
                     else:
                         return redirect('clearance_form/RequestCredentials/Evaluation')
-                elif request == 'Re_evaluation':
-                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                elif request == 'Re-Evaluation':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Re-evaluation"))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Re-evaluation')
                     else:
                         return redirect('clearance_form/RequestCredentials/Re-evaluation')
                 elif request.__contains__('Certification'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Certification')
                     else:
                         return redirect('clearance_form/RequestCredentials/Certification')
                 elif request.__contains__('Others'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Others')
                     else:
                         return redirect('clearance_form/RequestCredentials/Others')
                 else: 
@@ -6106,6 +6542,8 @@ def request_form(request):
             else:
                 return redirect('student_dashboard')
         else:
+            
+            
             unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             latest_request = request_form_table.objects.filter(name = student_name, approval_status="UNAPPROVED").order_by('-time_requested').values_list('request', flat=True).distinct()
             latest_purpose = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('purpose_of_request_reason', flat=True).distinct()
@@ -6140,53 +6578,16 @@ def request_form(request):
                 latest_req = ""
                 request_other = ""
                 request_cert = ""
-
-            context ={'allow' : allow_request, 'latest_request': latest_req, 'request_purpose': request_pur, 'request_other':request_other, 'request_cert': request_cert}
+            
+            context ={'with_graduation' : with_graduation, 'allow' : allow_request, 'latest_request': latest_req, 'request_purpose': request_pur, 'request_other':request_other, 'request_cert': request_cert}
  
     else:
+        today_date =""
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
     return render(request,'html_files/Request form.html', context)
-
-#UPLOAD DOCUMENT CHECKER LIST
-@login_required(login_url='/')
-def upload_document_checker(request):
-      # declaring template
-    template = "html_files/Request List.html"
-    data = Document_checker_table.objects.all()
-# prompt is a context variable that can have different values      depending on their context
-    prompt = {
-        'data': data
-              }
-    # GET request returns the value of the data with the specified key.
-    if request.method == "GET":
-        return render(request, template, prompt)
-    
-    csv_file = request.FILES['file']
-    # let's check if it is a csv file
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
-    data_set = csv_file.read().decode('UTF-8')
-    # setup a stream which is when we loop through each line we are able to handle a data in a stream
-    
-    io_string = io.StringIO(data_set)
-    next(io_string)
-    for column in csv.reader(io_string, delimiter=',', quotechar='"') or my_csv.reader(io_string, delimiter=',', quotechar='"'):
-        _, created = Document_checker_table.objects.update_or_create(
-            name = column[0],
-            form_137 = column[1],
-            TOR = column[2],
-        )
-        
-    for row in Document_checker_table.objects.all().reverse():
-        if Document_checker_table.objects.filter(name=row.name).count() > 1:
-            row.delete()
-    requests = request_form_table.objects.all().order_by('-id').values()
-    
-    context = {'data':requests,'data2':data}
-    return render(request, template, context)
 
 #UPDATE SIGNATURE
 @login_required(login_url='/')

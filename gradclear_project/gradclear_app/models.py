@@ -41,6 +41,18 @@ class user_table(AbstractUser):
         ('BTTE-Mechanical & Production Engineering Technology', 'BTTE-Mechanical & Production Engineering Technology'),
         ('BTTE-Powerplant Engineering Technology', 'BTTE-Powerplant Engineering Technology'),
         ('BT-Automotive Engineering Technology', 'BT-Automotive Engineering Technology'),
+        ('BET-Construction Technology', 'BET-Construction Technology'),
+        ('BET-Mechanical Technology', 'BET-Mechanical Technology'),
+        ('BET-Automotive Technology', 'BET-Automotive Technology'),
+        ('BET-Power Plant Technology', 'BET-Power Plant Technology'),
+        ('BSIE-Home Economics', 'BSIE-Home Economics'),
+        ('BTTE-Computer Programming', 'BTTE-Computer Programming'),
+        ('BTTE-Electrical', 'BTTE-Electrical'),
+        ('Bachelor of Science in Civil Engineering', 'Bachelor of Science in Civil Engineering'),
+        ('Bachelor of Science in Electrical Engineering', 'Bachelor of Science in Electrical Engineering'),
+        ('Bachelor of Science in Mechanical Engineering', 'Bachelor of Science in Mechanical Engineering'),
+
+
           
     ]
 
@@ -59,7 +71,7 @@ class user_table(AbstractUser):
         ('Associate Marine Engineering', 'Associate Marine Engineering'),
         ('Automotive Technology', 'Automotive Technology'),
         ('BSIE-Architecture Technology', 'BSIE-Architecture Technology'),
-        ('BSIE-Automotive Engineering Technology', 'BSIE-Automotive Engineering Technology'),
+        ('BSIE-Automotive Technology', 'BSIE-Automotive Technology'),
         ('BSIE-Civil Engineering Technology', 'BSIE-Civil Engineering Technology'),
         ('BSIE-Civil Technology', 'BSIE-Civil Technology'),
         ('BSIE-Computer Engineering Technology', 'BSIE-Computer Engineering Technology'),
@@ -78,7 +90,13 @@ class user_table(AbstractUser):
         ('Mechanical Engineering Technology', 'Mechanical Engineering Technology'),
         ('Mechanical Technology', 'Mechanical Technology'),
         ('Power Engineering Technology', 'Power Engineering Technology'),
-        ('Stationary Marine Engineering', 'Stationary Marine Engineering'),    
+        ('Stationary Marine Engineering', 'Stationary Marine Engineering'),
+        ('Automotive Technoloy', 'Automotive Technoloy'),
+        ('Drafting Technology', 'Drafting Technology'),
+        ('Bachelor of Science in Industrial Education major in Drafting Technology', 'Bachelor of Science in Industrial Education major in Drafting Technology'),
+        ('Bachelor of Science major in Mechanical & Production Engineering Technology', 'Bachelor of Science major in Mechanical & Production Engineering Technology'),
+        ('Marine Engineering', 'Marine Engineering'),
+       
     ]
 
 
@@ -187,6 +205,8 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request", default="NONE", null=True)
     purpose_of_request_reason = models.CharField(
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
+    semester_enrolled = models.CharField(
+        max_length=100, verbose_name="Semester Enrolled in TUPC", default="NONE", null=True)
 
     approval_status = models.CharField(max_length=15,
         verbose_name="Approval Status", default="0")
@@ -467,11 +487,3 @@ class request_form_table(models.Model):
 
     def __str__(self):
         return self.student_id    
-class Document_checker_table(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150)
-    TOR = models.CharField(max_length=50)
-    form_137 = models.CharField(max_length=50)
-   
-    def __str__(self):
-        return self.name

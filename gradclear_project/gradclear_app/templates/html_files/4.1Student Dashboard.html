@@ -681,6 +681,28 @@ Adviser:
         color: #000;
         width: max-content;
     }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 10px;
+    }
+
+    .table-wrapper{
+        max-height: 490px;
+        overflow-y: scroll;
+        margin: 20px;
+
+    }
+   .outer-wrapper{
+    margin: 20px;
+    border-radius: 5px;
+   
+   }
 
 </style>
 
@@ -953,6 +975,8 @@ Adviser:
         <div class="row">
             <div class="col-14 col-sm-14 col-md-14 col-lg-14 col-xl-10 wrapper_all" style="margin-top: 10px;">
                 <span class="counter pull-right"></span>
+                <div class="outer-wrapper">
+                    <div class="table-wrapper">
                 <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable result+" id="list_tbl_41">
                     <thead>
                         <tr>
@@ -1007,26 +1031,12 @@ Adviser:
                         </tr>
                         {% endfor %}
 
-                        {% for instance in st1 %}
-                        <tr>
-                            <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            {% if instance.approval_status == "APPROVED"%}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
-                            {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
-                            {% endif %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
-                            <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
-                            
-                        </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
                 <p class="text-center text-bold" id="p6_41"></p>
             </div>
+        </div>
+        </div>
         </div>
     </div>
     </div>
