@@ -466,12 +466,21 @@ Adviser:
                                     <p id="sc_error_01"></p>
                                 </div>
                                 
+                                {% if user != "ALUMNUS" %}
                                 <!--ID NUMBER BOX-->
                                 <div class="form-group">
-                                    <label for="idnum">ID Number:</label>{% if user != "ALUMNUS" %}<label id="Sid_aste01" style="color:red;">*</label> {% endif %} (number only)
+                                    <label for="idnum">ID Number:</label><label id="Sid_aste01" style="color:red;">*</label> (number only)
                                     {{form.id_number}}
                                     <p id="sid_error_01"></p>
                                 </div>
+                                {% elif user == "ALUMNUS" %}
+                                <!--ID NUMBER BOX-->
+                                <div class="form-group">
+                                    <label for="idnum">ID Number: (number only)</label>
+                                    {{form.id_number}}
+                                    <p id="sid_error_01"></p>
+                                </div>
+                                {% endif %}
 
                                 {% if user == "STUDENT" %}
                                     <!--COURSE DROPDOWN BOX-->
