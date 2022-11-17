@@ -513,6 +513,18 @@ Adviser:
                                     <select onchange="this.form.submit()" name="status_select" id="changer"> 
                                         <option value="">{{instance.user_type}}</option>
                                         <option value="ALUMNUS">ALUMNUS</option>
+                                        <option value="OLD STUDENT">OLD STUDENT</option>
+                                    </select>
+                                </form> 
+                            </td>
+                            {% elif instance.user_type == "STUDENT"%} 
+                            <td>
+                                <form name="change_status" id="change" action="student_status_update/{{ instance.id }}" method=POST>
+                                {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="status_select" id="changer"> 
+                                        <option value="">{{instance.user_type}}</option>
+                                        <option value="OLD STUDENT">OLD STUDENT</option>
+                                        
                                     </select>
                                 </form> 
                             </td>

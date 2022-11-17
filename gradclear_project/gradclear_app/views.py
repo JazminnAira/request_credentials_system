@@ -63,7 +63,7 @@ def req_print(request,id):
     textob = p.beginText()
 
     print(content)
-    print("hello world")
+    print("hello world")    
 
     lines = []
 
@@ -852,8 +852,10 @@ def clearance_print(request, id):
         
     p.drawString(430, 505, f'{content.purpose_of_request_reason}')
         
-    p.setFont("Helvetica", 10)  
-    p.drawString(400, 681, f'{content.amount_paid}')
+    p.setFont("Helvetica", 10)
+    amount_paid = content.amount_paid
+    if amount_paid != "0.00":
+        p.drawString(400, 681, f'{content.amount_paid}')
     p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
     p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
 
@@ -924,7 +926,7 @@ def clearance_print(request, id):
         p.drawString(130, 290, f"""{acc_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(53, 283, "**Approved but requires live signature**")
+        p.drawString(53, 283, "APPROVED *Required Live Signature")
         
     
     
@@ -959,7 +961,7 @@ def clearance_print(request, id):
         p.drawString(147, 240, f"""{dla_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(75, 234, "**Approved but requires live signature**")
+        p.drawString(75, 234, "APPROVED *Required Live Signature")
             
                  
     # # # math and sci
@@ -994,7 +996,7 @@ def clearance_print(request, id):
         p.drawString(170, 215, f"""{dms_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(75, 209, "**Approved but requires live signature**")
+        p.drawString(75, 209, "APPROVED *Required Live Signature")
         
     
     # # # dpecs
@@ -1028,7 +1030,7 @@ def clearance_print(request, id):
         p.drawString(120, 190, f"""{pe_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(75, 183, "**Approved but requires live signature**")
+        p.drawString(75, 183, "APPROVED *Required Live Signature")
         
         
         
@@ -1039,7 +1041,7 @@ def clearance_print(request, id):
     educ_dept = content.ieduc_dept_signature
     eng = content.eng_dept_signature
     if itdept_acc != "_APPROVED":
-        p.drawString(100, 115, f'{content.it_dept_signature}')
+       
         p.setFont("Helvetica", 7)
         
         itdept_stat = itdept_acc.split(' ')[-1]
@@ -1054,22 +1056,25 @@ def clearance_print(request, id):
 
         if itdept_stat == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_itdept
-            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         elif itdept_stat == "UPLOAD":
             
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_itdept
-            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
-        else:       
-            p.drawString(120, 190, f"""{itdept_name}""")
+        else:   
+            p.setFont("Helvetica", 5.5)
+            p.setFillColorRGB(0,0,0)    
+            p.drawString(105, 113, f"""{itdept_name}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
-            p.drawString(75, 183, "**Approved but requires live signature**")
+            p.drawString(75, 105, "APPROVED *Required Live Signature")
     
     elif educ_dept != "_APPROVED":   
-        p.setFont("Helvetica", 7)
-
+        
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(0,0,0)
         educdept_stat = educ_dept.split(' ')[-1]
         educdepartments = educ_dept.rsplit(' ', 1)[0]
         educdept_name = educdepartments.split('_',1)[0]
@@ -1088,16 +1093,19 @@ def clearance_print(request, id):
         elif educdept_stat == "UPLOAD":
             
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_educdept
-            p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
+            p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
-        else:       
+        else:   
+            p.setFont("Helvetica", 5.5)
+            p.setFillColorRGB(0,0,0)    
             p.drawString(105, 113, f"""{educdept_name}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
-            p.drawString(75, 183, "**Approved but requires live signature**")
+            p.drawString(75, 105, "APPROVED *Required Live Signature")
     
     elif eng != "_APPROVED":   
-        p.setFont("Helvetica", 7)
+        p.setFont("Helvetica", 4.5)
+        p.setFillColorRGB(0,0,0)
 
         engdept_stat = eng.split(' ')[-1]
         engdepartments = eng.rsplit(' ', 1)[0]
@@ -1119,11 +1127,13 @@ def clearance_print(request, id):
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_engdept
             p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
 
-        else:       
+        else:      
+            p.setFont("Helvetica", 5.5)
+            p.setFillColorRGB(0,0,0) 
             p.drawString(105, 113, f"""{engdept_name}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
-            p.drawString(75, 183, "**Approved but requires live signature**")
+            p.drawString(75, 105, "APPROVED *Required Live Signature")
 
     # # shop
     p.setFont("Helvetica", 7)
@@ -1137,8 +1147,7 @@ def clearance_print(request, id):
     str_upload_shop = str(upload_shop_sign)
     esign_shop_sign = shop_ad.e_signature
     str_esign_shop = str(esign_shop_sign)
-    p.setFont("Helvetica", 4.5)
-    p.setFillColorRGB(1,0,0)
+    
     
     
     if shop_stat == "ESIGN":
@@ -1156,7 +1165,7 @@ def clearance_print(request, id):
         p.drawString(435, 290, f"""{shop_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(320, 285, "**Approved but requires live signature**")
+        p.drawString(320, 285, "APPROVED *Required Live Signature")
     
     # # library
     p.setFont("Helvetica", 7)
@@ -1185,7 +1194,7 @@ def clearance_print(request, id):
         p.drawString(425, 265, f"""{lib_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(325, 260, "**Approved but requires live signature**")
+        p.drawString(325, 260, "APPROVED *Required Live Signature")
     
     
     
@@ -1218,7 +1227,7 @@ def clearance_print(request, id):
         p.drawString(435, 240, f"""{guidance_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(325, 234, "**Approved but requires live signature**")
+        p.drawString(325, 234, "APPROVED *Required Live Signature")
     
     # osa
     p.setFont("Helvetica", 7)
@@ -1249,7 +1258,7 @@ def clearance_print(request, id):
         p.drawString(435, 290, f"""{osa_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(430, 260, "**Approved but requires live signature**")
+        p.drawString(430, 260, "APPROVED *Required Live Signature")
     
     
     
@@ -1285,7 +1294,7 @@ def clearance_print(request, id):
         p.drawString(482, 190, f"""{adaa_name}""")
         p.setFillColorRGB(1,0,0)
         p.setFont("Helvetica", 4.5)  
-        p.drawString(325, 185, "**Approved but requires live signature**")
+        p.drawString(325, 185, "APPROVED *Required Live Signature")
 
     
     for line in lines:
@@ -2265,7 +2274,7 @@ def clearance_view(request):
                 campus_library = "UNAPPROVED"
                 librarian_name = " "
             else:
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature', flat=True).distinct()
                 camlib_sig = str(faculty_approved[0])
                 fac_name_get = camlib_sig.split('_',1)[0]
                 str_fac_name = str(fac_name_get)
@@ -4627,11 +4636,11 @@ def registrar_dashboard(request):
         cBTTE_E = clearance_form_table.objects.filter(
             course="BTTE-Electrical").values().count()
         cBSCE = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Civil Engineering").values().count()
+            course="BS-Civil Engineering").values().count()
         cBSEE = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Electrical Engineering").values().count()
+            course="BS-Electrical Engineering").values().count()
         cBSME = clearance_form_table.objects.filter(
-            course="Bachelor of Science in Mechanical Engineering").values().count()
+            course="BS-Mechanical Engineering").values().count()
        
        
         
@@ -4716,11 +4725,11 @@ def registrar_dashboard(request):
         gBTTE_E = graduation_form_table.objects.filter(
             course="BTTE-Electrical").values().count()
         gBSCE = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Civil Engineering").values().count()
+            course="BS-Civil Engineering").values().count()
         gBSEE = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Electrical Engineering").values().count()
+            course="BS-Electrical Engineering").values().count()
         gBSME = graduation_form_table.objects.filter(
-            course="Bachelor of Science in Mechanical Engineering").values().count()
+            course="BS-Mechanical Engineering").values().count()
        
 
        
@@ -5196,7 +5205,7 @@ def display_clearform(request, id):
             librarian_name = " "
             signature_type4 = " "
         else:
-            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature_signature', flat=True).distinct()
+            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('library_signature', flat=True).distinct()
             camlib_sig = str(faculty_approved[0])
             fac_name_get = camlib_sig.split('_',1)[0]
             str_fac_name = str(fac_name_get)
@@ -6792,12 +6801,24 @@ def student_status_update(request,id):
     getter = user_table.objects.get(id=id)
     today = date.today().year
     getter = user_table.objects.get(id=id)
-
+ 
     user_table.objects.filter(id=id).update(year_graduated = today)
     cur_course = getter.course
     user_table.objects.filter(id=id).update(course_graduated = cur_course)
     user_table.objects.filter(id=id).update(course = None)
     user_table.objects.filter(id=id).update(year_and_section = None)
+    user_id = getter.id_number
+    userbday = getter.birthday
+    mbday = userbday[:2]
+    dbday = userbday[3:5]
+    ybday=userbday[6:8]
+    year_id = str(today)
+    id_year = year_id[2:]
+    if student_update == "ALUMNUS":
+        update_id = user_id+"-"+id_year+"-"+mbday+dbday+ybday
+        user_table.objects.filter(id=id).update(id_number = update_id)
+        user_table.objects.filter(id=id).update(student_id = update_id)
+    
 
     return redirect(registrar_dashboard_student_list)
 

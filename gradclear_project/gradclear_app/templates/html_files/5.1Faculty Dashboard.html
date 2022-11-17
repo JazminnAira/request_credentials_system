@@ -678,11 +678,10 @@ Adviser:
     .table-wrapper{
         max-height: 450px;
         overflow-y: scroll;
-        margin: 20px;
+        
 
     }
    .outer-wrapper{
-    margin: 20px;
     border-radius: 5px;
    
    }
@@ -913,7 +912,7 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td><a href="display_gradform/{{ instance.id }}"><button type="button">View Form</button></a></td>
-                   
+                            
                     </tbody>
                     {% endfor %}
                     {% for instance in st1 %}
@@ -939,9 +938,9 @@ Adviser:
                     </tbody>
                     {% endfor %}
                 </table>
-                </div>
-                </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
     <p class="text-center text-bold" id="p6_51"></p>
