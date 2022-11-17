@@ -35,7 +35,7 @@ import datetime
 from datetime import datetime,date,timedelta
 import os
 import time
- 
+import random
 
 # try:
 #     reg = user_table.objects.get(first_name='SARAH JANE', last_name='VELOS')
@@ -1760,6 +1760,7 @@ def student_registration(request):
             email = form.cleaned_data.get("email")
             temp= form.cleaned_data.get("profile_picture")
             
+            
             # middle = form.cleaned_data.get("middle_name")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
@@ -1851,15 +1852,33 @@ def faculty_registration(request):
     user_identifier = "FACULTY"
     context = {'form': form,'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
-
+             
 
 def alumnus_registration(request):
     form = signup_form()
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
+            year_graduated = form.cleaned_data.get("year_graduated")
+            birthday = form.cleaned_data.get("birthday")
+            birthdaym = birthday[:2]
+            birthdayd = birthday[3:5]
+            birthdayy=birthday[6:8]
             username = form.cleaned_data.get("email")
-            id_num = form.cleaned_data.get("id_number")
+            year = random.randint(0, 18)
+            year_grad = year_graduated[2:4]
+            randomizer = random.randint(0, 9999)
+            print(year_grad)
+            id_num = str(year).zfill(2) + "-" + str(randomizer).zfill(4) + "-" + year_grad + "-" + birthdaym + birthdayd + birthdayy 
+            
+            while id_num in user_table.objects.values_list('id_number'):
+                year = random.randint(0, 18)
+                year_grad = year_graduated[2:4]
+                randomizer = random.randint(0, 9999)
+                print(year_grad)
+                id_num = str(year).zfill(2) + "-" + str(randomizer).zfill(4) + "-" + year_grad + "-" + birthdaym + birthdayd + birthdayy 
+
+            form.instance.id_number = id_num 
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
@@ -1880,6 +1899,7 @@ def alumnus_registration(request):
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
+            print(form.errors) 
     img_object = form.instance
     user_identifier = "ALUMNUS"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
@@ -1890,16 +1910,16 @@ def staff_registration(request):
     if request.method == "POST":
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
-            username=form.cleaned_data.get("email")
+            username = form.cleaned_data.get("email")
+            id_num = form.cleaned_data.get("id_number")
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
             
-            form.instance.student_id = "TUPC-99-9999"
-           
+            form.instance.birthday = "MM/DD/YY"
+            form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "STAFF"
-            form.instance.designation = "---"
             form.instance.full_name = last + ", " + first + " " + middle
 
             form.save()
@@ -4591,7 +4611,28 @@ def registrar_dashboard(request):
             course="BTTE-Powerplant Engineering Technology").values().count()
         cBT_AET = clearance_form_table.objects.filter(
             course="BT-Automotive Engineering Technology").values().count()
-      
+
+        cBET_CT = clearance_form_table.objects.filter(
+            course="BET-Construction Technology").values().count()
+        cBET_MT = clearance_form_table.objects.filter(
+            course="BET-Mechanical Technology").values().count()
+        cBET_AT = clearance_form_table.objects.filter(
+            course="BET-Automotive Technology").values().count()
+        cBET_PPT = clearance_form_table.objects.filter(
+            course="BET-Power Plant Technology").values().count()
+        cBSIE_HE = clearance_form_table.objects.filter(
+            course="BSIE-Home Economics").values().count()
+        cBTTE_CP = clearance_form_table.objects.filter(
+            course="BTTE-Computer Programming").values().count()
+        cBTTE_E = clearance_form_table.objects.filter(
+            course="BTTE-Electrical").values().count()
+        cBSCE = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Civil Engineering").values().count()
+        cBSEE = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Electrical Engineering").values().count()
+        cBSME = clearance_form_table.objects.filter(
+            course="Bachelor of Science in Mechanical Engineering").values().count()
+       
        
         
         unapproved_forms_count = clearance_form_table.objects.filter(approval_status="APPROVED").count()
@@ -4659,6 +4700,27 @@ def registrar_dashboard(request):
             course="BTTE-Powerplant Engineering Technology").values().count()
         gBT_AET = graduation_form_table.objects.filter(
             course="BT-Automotive Engineering Technology").values().count()
+        
+        gBET_CT = graduation_form_table.objects.filter(
+            course="BET-Construction Technology").values().count()
+        gBET_MT = graduation_form_table.objects.filter(
+            course="BET-Mechanical Technology").values().count()
+        gBET_AT = graduation_form_table.objects.filter(
+            course="BET-Automotive Technology").values().count()
+        gBET_PPT = graduation_form_table.objects.filter(
+            course="BET-Power Plant Technology").values().count()
+        gBSIE_HE = graduation_form_table.objects.filter(
+            course="BSIE-Home Economics").values().count()
+        gBTTE_CP = graduation_form_table.objects.filter(
+            course="BTTE-Computer Programming").values().count()
+        gBTTE_E = graduation_form_table.objects.filter(
+            course="BTTE-Electrical").values().count()
+        gBSCE = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Civil Engineering").values().count()
+        gBSEE = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Electrical Engineering").values().count()
+        gBSME = graduation_form_table.objects.filter(
+            course="Bachelor of Science in Mechanical Engineering").values().count()
        
 
        
@@ -4689,13 +4751,20 @@ def registrar_dashboard(request):
                    'cBTTE_AET': cBTTE_AET, 'cBTTE_CET': cBTTE_CET,'cBTTE_CoET': cBTTE_CoET, 'cBTTE_EET': cBTTE_EET, 
                    'cBTTE_EsET': cBTTE_EsET, 'cBTTE_MPET': cBTTE_MPET,'cBTTE_PPET': cBTTE_PPET,'cBT_AET':cBT_AET,
 
+                   'cBET_CT': cBET_CT, 'cBET_MT': cBET_MT,'cBET_AT': cBET_AT, 'cBET_PPT': cBET_PPT, 
+                   'cBSIE_HE': cBSIE_HE, 'cBTTE_CP': cBTTE_CP,'cBTTE_E': cBTTE_E, 'cBSCE': cBSCE, 
+                   'cBSEE': cBSEE, 'cBSME': cBSME,
+
                    'gBSIE_ICT': gBSIE_ICT, 'gBSIE_IA': gBSIE_IA, 'gBGT_ART': gBGT_ART, 'gBET_CT': gBET_CT,
                    'gBET_ET': gBET_ET, 'gBET_EsET': gBET_EsET, 'gBET_CoET': gBET_CoET, 'gBET_MT': gBET_MT,
                    'gBET_PPT': gBET_PPT, 'gBT_CET': gBT_CET, 'gBT_CoET': gBT_CoET, 'gBT_EET': gBT_EET,
                    'gBT_EsET': gBT_EsET, 'gBT_MPET': gBT_MPET, 'gBT_PPET': gBT_PPET, 'g_MPET': g_MPET,
                    'g_PPET': g_PPET, 'gBSIE_AET': gBSIE_AET,'gBSIE_MPET': gBSIE_MPET, 'gBTTE_ART': gBTTE_ART, 
                    'gBTTE_AET': gBTTE_AET, 'gBTTE_CET': gBTTE_CET,'gBTTE_CoET': gBTTE_CoET, 'gBTTE_EET': gBTTE_EET, 
-                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'gBT_AET':gBT_AET,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
+                   'gBTTE_EsET': gBTTE_EsET, 'gBTTE_MPET': gBTTE_MPET,'gBTTE_PPET': gBTTE_PPET,'gBT_AET':gBT_AET,
+                   'gBET_CT': gBET_CT, 'gBET_MT': gBET_MT,'gBET_AT': gBET_AT, 'gBET_PPT': gBET_PPT, 
+                   'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP,'gBTTE_E': gBTTE_E, 'gBSCE': gBSCE, 
+                   'gBSEE': gBSEE, 'gBSME': gBSME,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
                    })
 
 @login_required(login_url='/')

@@ -41,6 +41,18 @@ class user_table(AbstractUser):
         ('BTTE-Mechanical & Production Engineering Technology', 'BTTE-Mechanical & Production Engineering Technology'),
         ('BTTE-Powerplant Engineering Technology', 'BTTE-Powerplant Engineering Technology'),
         ('BT-Automotive Engineering Technology', 'BT-Automotive Engineering Technology'),
+        ('BET-Construction Technology', 'BET-Construction Technology'),
+        ('BET-Mechanical Technology', 'BET-Mechanical Technology'),
+        ('BET-Automotive Technology', 'BET-Automotive Technology'),
+        ('BET-Power Plant Technology', 'BET-Power Plant Technology'),
+        ('BSIE-Home Economics', 'BSIE-Home Economics'),
+        ('BTTE-Computer Programming', 'BTTE-Computer Programming'),
+        ('BTTE-Electrical', 'BTTE-Electrical'),
+        ('Bachelor of Science in Civil Engineering', 'Bachelor of Science in Civil Engineering'),
+        ('Bachelor of Science in Electrical Engineering', 'Bachelor of Science in Electrical Engineering'),
+        ('Bachelor of Science in Mechanical Engineering', 'Bachelor of Science in Mechanical Engineering'),
+
+
           
     ]
 
@@ -59,7 +71,7 @@ class user_table(AbstractUser):
         ('Associate Marine Engineering', 'Associate Marine Engineering'),
         ('Automotive Technology', 'Automotive Technology'),
         ('BSIE-Architecture Technology', 'BSIE-Architecture Technology'),
-        ('BSIE-Automotive Engineering Technology', 'BSIE-Automotive Engineering Technology'),
+        ('BSIE-Automotive Technology', 'BSIE-Automotive Technology'),
         ('BSIE-Civil Engineering Technology', 'BSIE-Civil Engineering Technology'),
         ('BSIE-Civil Technology', 'BSIE-Civil Technology'),
         ('BSIE-Computer Engineering Technology', 'BSIE-Computer Engineering Technology'),
@@ -78,7 +90,13 @@ class user_table(AbstractUser):
         ('Mechanical Engineering Technology', 'Mechanical Engineering Technology'),
         ('Mechanical Technology', 'Mechanical Technology'),
         ('Power Engineering Technology', 'Power Engineering Technology'),
-        ('Stationary Marine Engineering', 'Stationary Marine Engineering'),    
+        ('Stationary Marine Engineering', 'Stationary Marine Engineering'),
+        ('Automotive Technoloy', 'Automotive Technoloy'),
+        ('Drafting Technology', 'Drafting Technology'),
+        ('Bachelor of Science in Industrial Education major in Drafting Technology', 'Bachelor of Science in Industrial Education major in Drafting Technology'),
+        ('Bachelor of Science major in Mechanical & Production Engineering Technology', 'Bachelor of Science major in Mechanical & Production Engineering Technology'),
+        ('Marine Engineering', 'Marine Engineering'),
+       
     ]
 
 
@@ -118,9 +136,9 @@ class user_table(AbstractUser):
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    address = models.CharField(max_length=100, verbose_name="Address", null=True)
+    address = models.CharField(max_length=100, verbose_name="Address", null=True, blank=True)
     gender = models.CharField(max_length=100, choices=gender)
-    birthday = models.CharField(max_length=100,verbose_name="Birthday")
+    birthday = models.CharField(max_length=8,verbose_name="Birthday")
     id_number = models.CharField(max_length=17, verbose_name="ID Number", 
                 validators=[MinLengthValidator(6)], unique=True, null=True)
     course = models.CharField(
@@ -144,7 +162,7 @@ class user_table(AbstractUser):
     user_type = models.CharField(max_length=100, verbose_name="User Type")
     student_id = models.CharField(max_length=100, verbose_name ="Student ID", null=True)
     username = models.CharField(max_length=100, unique=True)
-    profile_picture = models.ImageField(upload_to='uploads/')
+    profile_picture = models.ImageField(upload_to='uploads/', default="Media/account.png")
     e_signature = models.ImageField(upload_to='esignatures/',blank=True)# PIP INSTALL PILLOW
     e_signature_timesaved = models.DateTimeField(auto_now_add=True)
     uploaded_signature = models.ImageField(upload_to='uploaded signatures/',blank=True)# PIP INSTALL PILLOW

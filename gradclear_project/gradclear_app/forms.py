@@ -11,11 +11,11 @@ class signup_form(UserCreationForm):
         attrs={'class': 'form-control', 'placeholder': '********', 'autocomplete': 'off', 'data-toggle': 'password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': '********', 'autocomplete': 'off', 'data-toggle': 'password'}))
-    
+
     class Meta(UserCreationForm):
         model = user_table
-        fields = ['email', 'first_name', 'last_name', 'middle_name','address', 'gender', 'course', 'password1',
-                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department','profile_picture','course_graduated','year_graduated', 'uploaded_signature']
+        fields = ['email', 'first_name', 'last_name', 'middle_name', 'address', 'gender', 'birthday', 'course', 'password1',
+                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department', 'profile_picture', 'course_graduated', 'year_graduated', 'uploaded_signature']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
@@ -23,7 +23,7 @@ class signup_form(UserCreationForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
-            'birthday':forms.TextInput(attrs={'class': 'form-control'}),
+            'birthday': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'MM/DD/YY'}),
             'id_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'course_graduated': forms.Select(attrs={'class': 'form-control'}),
@@ -31,56 +31,59 @@ class signup_form(UserCreationForm):
             'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(09)00-000-0000'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
-            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex.2000'})
+            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'})
         }
+
 
 class Clearance_form_table(ModelForm):
     class Meta(ModelForm):
         model = clearance_form_table
         fields = ['course_adviser_signature']
-    
+
+
 class TimePickerInput(forms.TimeInput):
-        input_type = 'time'
+    input_type = 'time'
+
 
 class Graduation_form_table(ModelForm):
     class Meta(ModelForm):
         model = graduation_form_table
-        fields = ['subject1','subject2','subject3','subject4','subject5','subject6','subject7','subject8','subject9','subject10', 
-        'room1', 'room2','room3','room4','room5','room6','room7','room8','room9','room10',
-        'faculty1','faculty2','faculty3','faculty4','faculty5', 'faculty6', 'faculty7','faculty8','faculty9','faculty10', 
-        'day1_1','day1_2','day1_3','day1_4','day1_5','day1_6','day1_7','day1_8','day1_9','day1_10', 
-        'starttime1_1','starttime1_2','starttime1_3','starttime1_4','starttime1_5','starttime1_6','starttime1_7','starttime1_8','starttime1_9','starttime1_10',
-        'endtime1_1','endtime1_2','endtime1_3','endtime1_4','endtime1_5','endtime1_6','endtime1_7','endtime1_8','endtime1_9','endtime1_10',
-        'addsubject1','addsubject2','addsubject3','addsubject4','addsubject5','addsubject6','addsubject7','addsubject8','addsubject9','addsubject10',
-        'addroom1','addroom2','addroom3','addroom4','addroom5','addroom6','addroom7','addroom8','addroom9','addroom10',
-        'addfaculty1','addfaculty2','addfaculty3','addfaculty4','addfaculty5','addfaculty6','addfaculty7','addfaculty8','addfaculty9','addfaculty10',
-        'addday1_1','addday1_2','addday1_3','addday1_4','addday1_5','addday1_6','addday1_7','addday1_8','addday1_9','addday1_10',
-        'add_starttime1_1','add_starttime1_2','add_starttime1_3','add_starttime1_4','add_starttime1_5','add_starttime1_6','add_starttime1_7','add_starttime1_8','add_starttime1_9','add_starttime1_10',
-        'add_endtime1_1','add_endtime1_2','add_endtime1_3','add_endtime1_4','add_endtime1_5','add_endtime1_6','add_endtime1_7','add_endtime1_8','add_endtime1_9','add_endtime1_10',
-        'enrolled_term', 'unenrolled_application_deadline']
+        fields = ['subject1', 'subject2', 'subject3', 'subject4', 'subject5', 'subject6', 'subject7', 'subject8', 'subject9', 'subject10',
+                  'room1', 'room2', 'room3', 'room4', 'room5', 'room6', 'room7', 'room8', 'room9', 'room10',
+                  'faculty1', 'faculty2', 'faculty3', 'faculty4', 'faculty5', 'faculty6', 'faculty7', 'faculty8', 'faculty9', 'faculty10',
+                  'day1_1', 'day1_2', 'day1_3', 'day1_4', 'day1_5', 'day1_6', 'day1_7', 'day1_8', 'day1_9', 'day1_10',
+                  'starttime1_1', 'starttime1_2', 'starttime1_3', 'starttime1_4', 'starttime1_5', 'starttime1_6', 'starttime1_7', 'starttime1_8', 'starttime1_9', 'starttime1_10',
+                  'endtime1_1', 'endtime1_2', 'endtime1_3', 'endtime1_4', 'endtime1_5', 'endtime1_6', 'endtime1_7', 'endtime1_8', 'endtime1_9', 'endtime1_10',
+                  'addsubject1', 'addsubject2', 'addsubject3', 'addsubject4', 'addsubject5', 'addsubject6', 'addsubject7', 'addsubject8', 'addsubject9', 'addsubject10',
+                  'addroom1', 'addroom2', 'addroom3', 'addroom4', 'addroom5', 'addroom6', 'addroom7', 'addroom8', 'addroom9', 'addroom10',
+                  'addfaculty1', 'addfaculty2', 'addfaculty3', 'addfaculty4', 'addfaculty5', 'addfaculty6', 'addfaculty7', 'addfaculty8', 'addfaculty9', 'addfaculty10',
+                  'addday1_1', 'addday1_2', 'addday1_3', 'addday1_4', 'addday1_5', 'addday1_6', 'addday1_7', 'addday1_8', 'addday1_9', 'addday1_10',
+                  'add_starttime1_1', 'add_starttime1_2', 'add_starttime1_3', 'add_starttime1_4', 'add_starttime1_5', 'add_starttime1_6', 'add_starttime1_7', 'add_starttime1_8', 'add_starttime1_9', 'add_starttime1_10',
+                  'add_endtime1_1', 'add_endtime1_2', 'add_endtime1_3', 'add_endtime1_4', 'add_endtime1_5', 'add_endtime1_6', 'add_endtime1_7', 'add_endtime1_8', 'add_endtime1_9', 'add_endtime1_10',
+                  'enrolled_term', 'unenrolled_application_deadline']
 
         widgets = {
-            'subject1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.CPET16'}),
-            'subject2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.CPET18'}),
-            'subject3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.BET5'}),
-            'subject4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.BET3'}),
-            'subject5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ELECTIVE'}),
-            'subject6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.GEC3'}),
-            'subject7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.GEC7'}),
-            'subject8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.LAB1'}),
-            'subject9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.LAP2'}),
-            'subject10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.CPET8'}),
+            'subject1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET16'}),
+            'subject2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET18'}),
+            'subject3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.BET5'}),
+            'subject4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.BET3'}),
+            'subject5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ELECTIVE'}),
+            'subject6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.GEC3'}),
+            'subject7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.GEC7'}),
+            'subject8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.LAB1'}),
+            'subject9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.LAB2'}),
+            'subject10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET8'}),
 
-            'room1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM201'}),
-            'room2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM202'}),
-            'room3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM203'}),
-            'room4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM204'}),
-            'room5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM205'}),
-            'room6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM206'}),
-            'room7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM207'}),
-            'room8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM208'}),
-            'room9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM209'}),
-            'room10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'ex.ROOM210'}),
+            'room1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM201'}),
+            'room2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM202'}),
+            'room3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM203'}),
+            'room4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM204'}),
+            'room5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM205'}),
+            'room6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM206'}),
+            'room7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM207'}),
+            'room8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM208'}),
+            'room9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM209'}),
+            'room10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM210'}),
 
             'faculty1': forms.Select(attrs={'class': 'form-control input-add col-m-9'}),
             'faculty2': forms.Select(attrs={'class': 'form-control input-add col-m-9'}),
@@ -104,7 +107,7 @@ class Graduation_form_table(ModelForm):
             'day1_9': forms.TextInput(attrs={'class': 'form-control input-add col-sm-9', 'placeholder': 'no. of days'}),
             'day1_10': forms.TextInput(attrs={'class': 'form-control input-add col-sm-9', 'placeholder': 'no. of days'}),
 
-           
+
 
             'starttime1_1': TimePickerInput(),
             'endtime1_1': TimePickerInput(),
@@ -124,30 +127,30 @@ class Graduation_form_table(ModelForm):
             'endtime1_8': TimePickerInput(),
             'starttime1_9': TimePickerInput(),
             'endtime1_9': TimePickerInput(),
-            'starttime1_10':TimePickerInput(),
+            'starttime1_10': TimePickerInput(),
             'endtime1_10': TimePickerInput(),
 
-            'addsubject1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.CPET16'}),
-            'addsubject2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.CPET18'}),
-            'addsubject3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.BET5'}),
-            'addsubject4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.BET3'}),
-            'addsubject5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ELECTIVE'}),
-            'addsubject6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.GEC3'}),
-            'addsubject7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.GEC7'}),
-            'addsubject8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.LAB1'}),
-            'addsubject9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.LAB2'}),
-            'addsubject10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.CPET8'}),
+            'addsubject1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET16'}),
+            'addsubject2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET18'}),
+            'addsubject3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.BET5'}),
+            'addsubject4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.BET3'}),
+            'addsubject5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ELECTIVE'}),
+            'addsubject6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.GEC3'}),
+            'addsubject7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.GEC7'}),
+            'addsubject8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.LAB1'}),
+            'addsubject9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.LAB2'}),
+            'addsubject10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.CPET8'}),
 
-            'addroom1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM201'}),
-            'addroom2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM202'}),
-            'addroom3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM203'}),
-            'addroom4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM204'}),
-            'addroom5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM205'}),
-            'addroom6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM206'}),
-            'addroom7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM207'}),
-            'addroom8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM208'}),
-            'addroom9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM209'}),
-            'addroom10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8','placeholder': 'ex.ROOM210'}),
+            'addroom1': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM201'}),
+            'addroom2': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM202'}),
+            'addroom3': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM203'}),
+            'addroom4': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM204'}),
+            'addroom5': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM205'}),
+            'addroom6': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM206'}),
+            'addroom7': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM207'}),
+            'addroom8': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM208'}),
+            'addroom9': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM209'}),
+            'addroom10': forms.TextInput(attrs={'class': 'form-control input-add col-m-8', 'placeholder': 'e.g.ROOM210'}),
 
             'addfaculty1': forms.Select(attrs={'class': 'form-control input-add col-sm-9'}),
             'addfaculty2': forms.Select(attrs={'class': 'form-control input-add col-sm-9'}),
@@ -178,7 +181,7 @@ class Graduation_form_table(ModelForm):
             'add_endtime1_2': TimePickerInput(),
             'add_starttime1_3': TimePickerInput(),
             'add_endtime1_3': TimePickerInput(),
-            'add_starttime1_4':TimePickerInput(),
+            'add_starttime1_4': TimePickerInput(),
             'add_endtime1_4': TimePickerInput(),
             'add_starttime1_5': TimePickerInput(),
             'add_endtime1_5': TimePickerInput(),
@@ -193,7 +196,6 @@ class Graduation_form_table(ModelForm):
             'add_starttime1_10': TimePickerInput(),
             'add_endtime1_10': TimePickerInput(),
 
-            'enrolled_term': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}), 
+            'enrolled_term': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}),
             'unenrolled_application_deadline': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'})
         }
-
