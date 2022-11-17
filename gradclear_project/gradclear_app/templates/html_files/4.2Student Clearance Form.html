@@ -655,10 +655,21 @@ Adviser:
             <div class="form-group row">
                 <label for="dbrtime_42" class="col-sm-2 col-form-label col-form-label-sm" id="dbrtime_lbl_42">If yes, please indicate the date before its respective item(s):</label>
                 <div class="col-sm-9">
-                    <input type="date" id="dbrtime_box_42" name="dbrtime_box_420" class="form-control" oninput="enter_dbrtime()" required>
+                    <input type="text" id="dbrtime_box_42" name="dbrtime_box_420" class="form-control" oninput="enter_dbrtime()" required>
                     <p id="dbrtime_error_42"></p>
                 </div>
             </div>
+
+            <!--SEMESTER ENROLLED-->
+            {% if with_graduation <= 4 and request.user.user_type == "STUDENT" %}
+            <div class="form-group row">
+                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Enrolled/Last Term in TUPC:</label>
+                <div class="col-sm-9">
+                    <input type="number" id="sem_term" name="sem_term" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+            {% endif %}
 
             <!--LAST TERM BOX-->
             <div class="form-group row">

@@ -187,6 +187,8 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request", default="NONE", null=True)
     purpose_of_request_reason = models.CharField(
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
+    semester_enrolled = models.CharField(
+        max_length=100, verbose_name="Semester Enrolled in TUPC", default="NONE", null=True)
 
     approval_status = models.CharField(max_length=15,
         verbose_name="Approval Status", default="0")
@@ -467,11 +469,3 @@ class request_form_table(models.Model):
 
     def __str__(self):
         return self.student_id    
-class Document_checker_table(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150)
-    TOR = models.CharField(max_length=50)
-    form_137 = models.CharField(max_length=50)
-   
-    def __str__(self):
-        return self.name

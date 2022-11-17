@@ -106,9 +106,6 @@ urlpatterns = [
      path('update_clearance/<int:id>/<str:dep>/<str:sign>', update_clearance, name='update_clearance'),
      path('update_graduation/<int:id>/<str:sub>/<str:sig>', update_graduation, name='update_graduation'),
 
-     # UPLOAD CSV
-     path('upload_document_checker', upload_document_checker, name="upload_document_checker"),
-
      # UPDATE STUDENT SETTINGS
      path('updateAddress', updateAddress, name='updateAddress'),
      path('updateEmail', updateEmail, name='updateEmail'),
