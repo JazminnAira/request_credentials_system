@@ -658,6 +658,17 @@ Adviser:
                 <br>
                 <br>
 
+            <!--LAST TERM OR SEMESTER ENROLLED-->
+            {% if with_graduation <= 4 and request.user.user_type == "STUDENT" %}
+            <div class="form-group row" id="semester_notdisplay">
+                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Enrolled/Last Term in TUPC:</label>
+                <div class="col-sm-9 mt-3">
+                    <input type="text" id="sem_term" name="sem_term" class="form-control" placeholder ="1 for 1st Semester" onkeyup="isEmpty()" onkeypress="isNumber(event)" oninput="this.value = this.value.toUpperCase()" required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+            {% endif %}
+
             <!--PURPOSE OF REQUEST-->
             
             <div class="form-group row">
@@ -818,6 +829,7 @@ Adviser:
         document.getElementById('Evaluation').disabled = true;
         document.getElementById('Re_evaluation').disabled = true;
         document.getElementById("purpose").disabled = true;
+        document.getElementById("semester_notdisplay").hidden = true;
         document.getElementById('purpose').value = document.getElementById("display_pur_request").value
         document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
 
@@ -1211,6 +1223,17 @@ Adviser:
         }
     });
     
-
+        // ONLY NUMBERS IN INPUT BOX JS
+    function isNumber(evt) {
+        if (event.key.length === 1 && /\D/.test(event.key)) {
+            event.preventDefault();
+        }
+    }
+    $.fn.digits = function() {
+        return this.each(function() {
+            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        })
+    }
+    $("span.numbers").digits();
 </script>
 

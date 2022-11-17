@@ -1613,7 +1613,7 @@ def regclear_appointment(request,id):
     return redirect('/registrar_dashboard_clearance_list/%20')
 
 @login_required(login_url='/')
-def request_appointment(request,id):
+def request_appointment(request, id):
     if request.method == 'POST':
         email_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
@@ -1622,8 +1622,7 @@ def request_appointment(request,id):
         rec_email = email[0]
         recipient_list = [rec_email, ]
 
-        gender_temp = user_table.objects.filter(
-        id=id).values_list('gender', flat=True).distinct()
+        gender_temp = user_table.objects.filter(id=id).values_list('gender', flat=True).distinct()
         gender = user_table.objects.filter(
             gender=gender_temp[0]).values_list('gender', flat=True).distinct()
         gender_choice = gender[0]
@@ -1671,6 +1670,7 @@ def request_appointment(request,id):
         date_appointment = request.POST.get('date_appointment')
         request_form_table.objects.filter(
         id=id).update(appointment =date_appointment)
+        request_form_table.objects.filter(id=id).update(approval_status="APPROVED")
 
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
@@ -1703,6 +1703,7 @@ def request_appointment(request,id):
         msg.content_subtype = "html"
         msg.send()
         messages.success(request, "Appointment Schedule Sent.")
+        
         return redirect('registrar_dashboard_request_list')
     else:
         return render(request, 'html_files/appointment.html', {})
@@ -1947,21 +1948,13 @@ def student_dashboard(request):
         st = graduation_form_table.objects.filter(student_id=student_id)
         st1 = clearance_form_table.objects.filter(student_id=student_id)
         
-        check_form137 = Document_checker_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
-        check_clearance = clearance_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
-        check_graduation = graduation_form_table.objects.filter(student_id=student_id).values_list('approval_status',flat=True).distinct()
-        check_apply_graduation = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
         
         # document checker
         display =[]
         # Form137-A
-        if check_form137.exists():
-            if check_form137[0] == '❌':
-                print('Missing FORM 137-A')
-                display.append("FORM 137-A")
                 
-        elif check_form137_inrequest.exists():
+        if check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
                     print(check_form137_inrequest)
@@ -1971,35 +1964,6 @@ def student_dashboard(request):
                     pass
         else:
             pass
-        
-        if request.user.user_type == "ALUMNUS":
-            pass
-        elif request.user.user_type == "OLD STUDENT":
-            pass
-        else: 
-            if not check_clearance:
-                display.append("CLEARANCE")
-            else:
-                for i in check_clearance:
-                    if i == "APPROVED":
-                        pass
-                    else:
-                        display.append("CLEARANCE (ON PROCESS)")
-            
-            if check_apply_graduation:
-                if check_apply_graduation[0] != "APPROVED":
-                    display.append("CLEARANCE OF APPLICATION FOR GRADUATION (ON PROCESS)")
-                else:
-                    pass
-            else:
-                pass
-                
-        if not check_graduation:
-            pass
-        else:
-            if check_graduation[0] != 'APPROVED':
-               
-                display.append("GRADUATION (ON PROGRESS)")
   
     else:
         messages.error(
@@ -2050,6 +2014,7 @@ def clearance_form(request, type, req):
             last_request_date = request.POST.get('dbrtime_box_420')
             last_term = request.POST.get('lasterm_box_420')
             course_adviser = request.POST.get('course_adviser_420')
+            semester = request.POST.get('sem_term')
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
@@ -2079,8 +2044,7 @@ def clearance_form(request, type, req):
                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
                                                        course_adviser=course_adviser, course_adviser_signature=course_adviser_signature, 
-                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,
-                                                       ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
+                                                       purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,semester_enrolled=semester,ieduc_dept_signature=ded_signature, eng_dept_signature=doe_signature, it_dept_signature=dit_signature)
             
             form.save()
             
@@ -6389,27 +6353,25 @@ def registrar_dashboard_organize_request_list(request, id):
             requests = request_form_table.objects.all().order_by('-time_requested').values()
         else:
             requests = request_form_table.objects.all().order_by('-time_requested').values()
-            
-        doc = Document_checker_table.objects.all().values()
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc, 'sorter_type' : sorter})
+    return render(request,'html_files/Request List.html', {'data': requests, 'sorter_type' : sorter})
 
 #DEFAULT PAGE
 @login_required(login_url='/')
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         requests = request_form_table.objects.all().order_by('-time_requested').values()
-        doc = Document_checker_table.objects.all().values()
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     
-    return render(request,'html_files/Request List.html', {'data': requests,'data2': doc})
+    return render(request,'html_files/Request List.html', {'data': requests})
 
 @login_required(login_url='/')
 def request_official_update(request, id):
@@ -6436,17 +6398,29 @@ def request_form(request):
         user = request.user.user_type 
         student_name = request.user.full_name
         
+        #DETERMINE UNDERGRADUATE STUDENTS
+        today_date = date.today() 
+        id_num = request.user.id_number
+        sliced_id = int(str(id_num)[:2]) 
+        current_year ='"'+str(today_date.year) +'"'
+        temp =int(current_year[2:5])  
+        with_graduation = temp - sliced_id
+        year_today = today_date.year
+        print(year_today)
+        print(with_graduation)
+        
         print(student_name)
         print(user)            
         if request.method == "POST":
             form = request_form
             student_id = request.POST.get('stud_id_pre')
             amount = request.POST.get('amount_paid')
+            semester = request.POST.get('sem_term')
             last_name = request.POST.get('ln_box_pre')
             first_name = request.POST.get('fn_box_pre')
             middle_name = request.POST.get('mn_box_pre')
             course = request.POST.get('course_pre')
-            date = request.POST.get('date_pre')
+            date_today = request.POST.get('date_pre')
             control_num = request.POST.get('control_pre')
             address = request.POST.get('add_box_pre')
             contact_num = request.POST.get('contact_pre')
@@ -6454,59 +6428,93 @@ def request_form(request):
             purpose = request.POST.get('purpose')
             request = request.POST.get('purpose_request_pre')
             
+            
             full_name = last_name + ", " + first_name + " " + middle_name
             mid = middle_name[0] + "."
             name2 = last_name + ", " + first_name + " " + mid
             
             print(name2)
-    
-            form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
-                                                     address=address, course=course,date=date, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+            
+            
+            check_form137 = request_form_table.objects.filter(name=full_name, form_137="✔").values_list('form_137', flat=True).distinct()
+            if check_form137:
+                have_form137 = "✔"
+                form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
+                                                     address=address, course=course,date=date_today, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
+                                                     request=request, form_137=have_form137)
+            else:
+                form = request_form_table.objects.create(student_id=student_id, name=full_name, name2=name2,
+                                                     address=address, course=course,date=date_today, control_number=control_num,amount=amount,contact_number=contact_num,current_status=current_stat,purpose_of_request_reason = purpose,
                                                      request=request)
             form.save()
-
+            print(request)
+            
             if user == "STUDENT":
+                # CHECK REQUESTED DOCUMENT BY SEMESTER
+                semester_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('semester_enrolled', flat = True).distinct()
+                term_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('last_term_in_tupc', flat = True).distinct()
                 if request == 'Honorable Dismissal':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/HonorableDismissal') 
                     else:
                         return redirect('clearance_form/RequestCredentials/HonorableDismissal')
                         
                 elif request == 'Transcript of Records':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
                     else:
                         return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
                 elif request == 'Diploma':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Diploma')
                     else:
                         return redirect('clearance_form/RequestCredentials/Diploma')
                 elif request == 'Evaluation':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Evaluation')
                     else:
                         return redirect('clearance_form/RequestCredentials/Evaluation')
-                elif request == 'Re_evaluation':
-                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
+                elif request == 'Re-Evaluation':
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Re-evaluation"))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Re-evaluation')
                     else:
                         return redirect('clearance_form/RequestCredentials/Re-evaluation')
                 elif request.__contains__('Certification'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Certification')
                     else:
                         return redirect('clearance_form/RequestCredentials/Certification')
                 elif request.__contains__('Others'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
                     if check_clearance:
-                        return redirect('student_dashboard')
+                        if semester_check[0] == semester and term_check[0] == year_today:
+                            return redirect('student_dashboard')
+                        else:
+                            return redirect('clearance_form/RequestCredentials/Others')
                     else:
                         return redirect('clearance_form/RequestCredentials/Others')
                 else: 
@@ -6514,6 +6522,8 @@ def request_form(request):
             else:
                 return redirect('student_dashboard')
         else:
+            
+            
             unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             latest_request = request_form_table.objects.filter(name = student_name, approval_status="UNAPPROVED").order_by('-time_requested').values_list('request', flat=True).distinct()
             latest_purpose = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('purpose_of_request_reason', flat=True).distinct()
@@ -6548,53 +6558,16 @@ def request_form(request):
                 latest_req = ""
                 request_other = ""
                 request_cert = ""
-
-            context ={'allow' : allow_request, 'latest_request': latest_req, 'request_purpose': request_pur, 'request_other':request_other, 'request_cert': request_cert}
+            
+            context ={'with_graduation' : with_graduation, 'allow' : allow_request, 'latest_request': latest_req, 'request_purpose': request_pur, 'request_other':request_other, 'request_cert': request_cert}
  
     else:
+        today_date =""
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
     return render(request,'html_files/Request form.html', context)
-
-#UPLOAD DOCUMENT CHECKER LIST
-@login_required(login_url='/')
-def upload_document_checker(request):
-      # declaring template
-    template = "html_files/Request List.html"
-    data = Document_checker_table.objects.all()
-# prompt is a context variable that can have different values      depending on their context
-    prompt = {
-        'data': data
-              }
-    # GET request returns the value of the data with the specified key.
-    if request.method == "GET":
-        return render(request, template, prompt)
-    
-    csv_file = request.FILES['file']
-    # let's check if it is a csv file
-    if not csv_file.name.endswith('.csv'):
-        messages.error(request, 'THIS IS NOT A CSV FILE')
-    data_set = csv_file.read().decode('UTF-8')
-    # setup a stream which is when we loop through each line we are able to handle a data in a stream
-    
-    io_string = io.StringIO(data_set)
-    next(io_string)
-    for column in csv.reader(io_string, delimiter=',', quotechar='"') or my_csv.reader(io_string, delimiter=',', quotechar='"'):
-        _, created = Document_checker_table.objects.update_or_create(
-            name = column[0],
-            form_137 = column[1],
-            TOR = column[2],
-        )
-        
-    for row in Document_checker_table.objects.all().reverse():
-        if Document_checker_table.objects.filter(name=row.name).count() > 1:
-            row.delete()
-    requests = request_form_table.objects.all().order_by('-id').values()
-    
-    context = {'data':requests,'data2':data}
-    return render(request, template, context)
 
 #UPDATE SIGNATURE
 @login_required(login_url='/')
