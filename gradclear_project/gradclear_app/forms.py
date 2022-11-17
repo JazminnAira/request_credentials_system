@@ -23,6 +23,7 @@ class signup_form(UserCreationForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
+            'birthday':forms.TextInput(attrs={'class': 'form-control'}),
             'id_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '00-0000'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'course_graduated': forms.Select(attrs={'class': 'form-control'}),
