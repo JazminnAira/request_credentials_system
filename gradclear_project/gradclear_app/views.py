@@ -1415,7 +1415,7 @@ def appointment(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
     
             return redirect(faculty_dashboard_clearance_list) 
@@ -1510,7 +1510,7 @@ def appointmentgrad(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
             return redirect('faculty_dashboard_graduation_list')
         else:
@@ -1565,7 +1565,7 @@ def reggrad_appointment(request, id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send()
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_graduation_list/%20')
@@ -1616,7 +1616,7 @@ def regclear_appointment(request,id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send()
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_clearance_list/%20')
@@ -1711,7 +1711,7 @@ def request_appointment(request, id):
         '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
-        msg.send()
+        msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
         return redirect('registrar_dashboard_request_list')
@@ -6292,7 +6292,7 @@ def set_appointment(request, id):
             recipient_list = [rec_email, ]
             msg = EmailMessage(subject, message, email_from, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
