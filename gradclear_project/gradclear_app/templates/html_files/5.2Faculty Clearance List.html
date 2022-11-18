@@ -397,6 +397,21 @@ Adviser:
     @media screen and (max-height: 450px) {
         .signature_section {padding-top: 15px;}
     }
+
+    #btn,
+    #open_signature,
+    #approve_sig_btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: #fff;
+    }
+    #btn:hover,
+    #open_signature:hover,
+    #approve_sig_btn:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
+    }
     table{
        min-width: max-content;
     }
@@ -506,7 +521,7 @@ Adviser:
     <!--MAIN--> 
     <h3 style="text-align:center; margin-top: 10px;" id="h3_title">List of Clearance Forms</h3>
     <div class="border pt-2 signature_section" id ="signature_section">
-        <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
+        <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >X</button></div>
         <div class = "p-4" id="show_details">
             <div class="bg-dark p-2"><h3 class = "text-white">APPROVE</h3></div>
         </div>
@@ -624,7 +639,7 @@ Adviser:
                             {% if instance.accountant_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDLA" %}
                             <script>document.querySelector('#department_th').innerText = "DLA";</script>
