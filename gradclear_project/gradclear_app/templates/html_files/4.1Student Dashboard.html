@@ -141,7 +141,7 @@ Adviser:
     }
     
     #main2_41 {
-        padding-left: 30px;
+        padding-left: 15px;
     }
     
     .sidebar {
@@ -952,7 +952,7 @@ Adviser:
                     <i class="fa fa-exclamation pl-4" style ="color :red; font-size: 17px;" id ="req_miss"><label class="text-dark text-lg pl-3 pr-2" id="document1">{{requirements}}</label></i><br>
                 {% endfor %}
             </div>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
     <hr style="border: 1px solid #424242;">
@@ -962,6 +962,15 @@ Adviser:
     <!--ACCESS BAR-->
     <!--SEARCH BAR-->
     <div class="container-fluid" id="main2_41">
+        
+        <div class = "col-sm-10 col-md-10 col-xl-10 border border-dark rounded-right p-2" id ="Note_section" style = "background: rgba(255,2555,255); padding-left: 5px;">
+            <small><b>NOTES ON CLAIMING:</b>
+                •Print your Request Form 
+                •Print your Clearance Form (depends on request)
+                •Present your Official Receipt (depends on request)
+                For full details, follow the instructions sent to your email</small>
+        </div>
+        
         <div class="row">
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">
                 <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">
@@ -1030,6 +1039,21 @@ Adviser:
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
                                 data-toggle="modal" data-target="#exampleModal_41">View</button></td> -->
+                        </tr>
+                        {% endfor %}
+                        {% for instance in st1 %}
+                        <tr>
+                            <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            {% if instance.approval_status == "APPROVED"%}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            {% else %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            {% endif %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
+                            <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
+                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
                         </tr>
                         {% endfor %}
 

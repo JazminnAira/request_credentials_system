@@ -659,12 +659,15 @@ Adviser:
                 <br>
 
             <!--LAST TERM OR SEMESTER ENROLLED-->
-            {% if with_graduation <= 4 and request.user.user_type == "STUDENT" %}
+            {% if request.user.user_type == "STUDENT" %}
             <div class="form-group row" id="semester_notdisplay">
-                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Enrolled/Last Term in TUPC:</label>
-                <div class="col-sm-9 mt-3">
-                    <input type="text" id="sem_term" name="sem_term" class="form-control" placeholder ="1 for 1st Semester" onkeyup="isEmpty()" onkeypress="isNumber(event)" oninput="this.value = this.value.toUpperCase()" required>
-                    <p id="pureq_error_42"></p>
+                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
+                <div class="col-sm-9">
+                    <select id = "sem_term" name = "sem_term" class = "form-control">
+                        <option value = "" select>--SELECT--</option>
+                        <option value ="1">1st SEMESTER</option>
+                        <option value ="2">2nd SEMESTER</option>
+                    </select>
                 </div>
             </div>
             {% endif %}
@@ -956,7 +959,7 @@ Adviser:
 
             var ot_data = document.getElementById('others_box_pre').value;
             var split_other = ot_data.split(':').pop();
-            document.getElementById('others_box_pre').value = split_cert;
+            document.getElementById('others_box_pre').value = split_other;
         }
     }else{
         document.getElementById('HonorableDismissal_check_pre').disabled = false;
