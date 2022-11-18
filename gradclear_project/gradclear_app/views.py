@@ -2080,6 +2080,7 @@ def clearance_form(request, type, req):
             
             return redirect('student_dashboard')
         else:
+            #CHECKER OF PREVIOUS CLEARANCE
             request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             application_graduation = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
             check_apply_graduation = clearance_form_table.objects.filter(Q(name=fullname), Q(purpose_of_request="Application for Graduation")).values_list('approval_status', flat=True).distinct()
@@ -2160,14 +2161,32 @@ def clearance_form(request, type, req):
                 allow_request = ""
                 graduation_allow = ""
                 other_data=""
-
+                
+            #GETTING PREVIOUS CLEARANCE
+            
+            previous_term = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('date_filed', flat=True).distinct()
+            previous_purpose = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('purpose_of_request', flat=True).distinct()
+            
+            if previous_term:
+                year_then = str(previous_term[0].split('-',1)[0])
+                date_previous = previous_term[0]
+                purpose_then = previous_purpose[0]
+                print(year_then)
+                print(date_previous)
+                print(purpose_then)
+                print("hey")
+            else:
+                year_then =""
+                date_previous = ""
+                purpose_then = ""
+                print("nooo")
 
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow, 'clearance_type' : clearance_type, 'requested': requested, 'other_data' : other_data})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'graduation_allow': graduation_allow, 'clearance_type' : clearance_type, 'requested': requested, 'other_data' : other_data, 'year_then' : year_then, 'date_previous' : date_previous, 'purpose_then' : purpose_then})
 
 @login_required(login_url='/')
 def clearance_view(request):
@@ -6459,7 +6478,7 @@ def request_form(request):
             control_num = request.POST.get('control_pre')
             address = request.POST.get('add_box_pre')
             contact_num = request.POST.get('contact_pre')
-            current_stat = request.POST.get('check_status_pre')
+            current_stat = request.user.user_type
             purpose = request.POST.get('purpose')
             request = request.POST.get('purpose_request_pre')
             
@@ -6487,11 +6506,12 @@ def request_form(request):
             if user == "STUDENT":
                 # CHECK REQUESTED DOCUMENT BY SEMESTER
                 semester_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('semester_enrolled', flat = True).distinct()
-                term_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('last_term_in_tupc', flat = True).distinct()
+                term_check = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request)).order_by('-time_requested').values_list('date_filed', flat = True).distinct()
                 if request == 'Honorable Dismissal':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/HonorableDismissal') 
@@ -6501,7 +6521,8 @@ def request_form(request):
                 elif request == 'Transcript of Records':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/TrascriptOfRecords')
@@ -6510,7 +6531,8 @@ def request_form(request):
                 elif request == 'Diploma':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/Diploma')
@@ -6519,7 +6541,8 @@ def request_form(request):
                 elif request == 'Evaluation':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/Evaluation')
@@ -6528,16 +6551,20 @@ def request_form(request):
                 elif request == 'Re-Evaluation':
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Re-evaluation"))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/Re-evaluation')
                     else:
                         return redirect('clearance_form/RequestCredentials/Re-evaluation')
                 elif request.__contains__('Certification'):
-                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request=request.__contains__('Certification')))
+                    check_clearance = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Certification"))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        semester_check_clear = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Certification")).order_by('-time_requested').values_list('semester_enrolled', flat = True).distinct()
+                        term_check_clear = clearance_form_table.objects.filter(Q(name=full_name), Q(purpose_of_request="Certification")).order_by('-time_requested').values_list('date_filed', flat = True).distinct()
+                        year_then = str(term_check_clear[0].split('-',1)[0])
+                        if semester_check_clear[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/Certification')
@@ -6546,7 +6573,8 @@ def request_form(request):
                 elif request.__contains__('Others'):
                     check_clearance = clearance_form_table.objects.filter(Q(name=full_name),Q(purpose_of_request=request))
                     if check_clearance:
-                        if semester_check[0] == semester and term_check[0] == year_today:
+                        year_then = str(term_check[0].split('-',1)[0])
+                        if semester_check[0] == semester and str(year_then) == str(year_today):
                             return redirect('student_dashboard')
                         else:
                             return redirect('clearance_form/RequestCredentials/Others')
@@ -6557,8 +6585,6 @@ def request_form(request):
             else:
                 return redirect('student_dashboard')
         else:
-            
-            
             unapproved_request = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             latest_request = request_form_table.objects.filter(name = student_name, approval_status="UNAPPROVED").order_by('-time_requested').values_list('request', flat=True).distinct()
             latest_purpose = request_form_table.objects.filter(name = student_name).order_by('-time_requested').values_list('purpose_of_request_reason', flat=True).distinct()
@@ -6574,6 +6600,7 @@ def request_form(request):
                         latest_req ="Certification"
                         request_cert = latest
                         request_other = ""
+                        print("CERT")
                     elif latest.__contains__('Others'):
                         latest_req ="Others"
                         request_other = latest

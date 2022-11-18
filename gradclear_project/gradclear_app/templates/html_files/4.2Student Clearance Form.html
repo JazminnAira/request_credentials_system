@@ -630,48 +630,108 @@ Adviser:
             </div>
 
 
+
+            
             <!--REQUESTED FORMS CHECK BOX-->
+            
             <div class="form-group row">
+                {% if date_previous %}
                 <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()">Yes
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" checked>Yes
                 </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()">No
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
                 </label>
-                    <p id="req_error_42"></p>
                 </div>
+                {% else %}
+                <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
+                <div>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" >Yes
+                </label>
+                    <label class="radio-inline">
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" >No
+                </label>
+                </div>
+                {% endif %}
             </div>
 
             <!--REQUESTED FORMS DATE BOX-->
+            {% if date_previous %}
             <div class="form-group row">
                 <label for="dbrtime_42" class="col-sm-2 col-form-label col-form-label-sm" id="dbrtime_lbl_42">If yes, please indicate the date before its respective item(s):</label>
                 <div class="col-sm-9">
-                    <input type="text" id="dbrtime_box_42" name="dbrtime_box_420" class="form-control" oninput="enter_dbrtime()" required>
+                    <input type="date" id="dbrtime_box_42" name="dbrtime_box_420" class="form-control" oninput="enter_dbrtime()" value="{{date_previous}}">
                     <p id="dbrtime_error_42"></p>
                 </div>
             </div>
-
-            <!--SEMESTER ENROLLED-->
-            {% if with_graduation <= 4 and request.user.user_type == "STUDENT" %}
+            {% else %}
             <div class="form-group row">
-                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Enrolled/Last Term in TUPC:</label>
+                <label for="dbrtime_42" class="col-sm-2 col-form-label col-form-label-sm" id="dbrtime_lbl_42">If yes, please indicate the date before its respective item(s):</label>
                 <div class="col-sm-9">
-                    <input type="number" id="sem_term" name="sem_term" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" required>
-                    <p id="pureq_error_42"></p>
+                    <input type="date" id="dbrtime_box_42" name="dbrtime_box_420" class="form-control" oninput="enter_dbrtime()" required>
+                    <p id="dbrtime_error_42"></p>
                 </div>
             </div>
             {% endif %}
 
+
             <!--LAST TERM BOX-->
+            {% if date_previous %}
             <div class="form-group row">
                 <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="e.g. 2020" onkeypress="isNumber(event)" required>
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="ex. 2020" onkeypress="isNumber(event)" value="{{year_then}}">
                     <p id="lterm_error_42"></p>
                 </div>
             </div>
+            {% else %}
+            <div class="form-group row">
+                <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="ex. 2020" onkeypress="isNumber(event)" >
+                    <p id="lterm_error_42"></p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if date_previous %}
+            <!--PURPOSE OF REQUEST BOX-->
+            <div class="form-group row">
+                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" value="{{purpose_then}}" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+            {% else %}
+            <div class="form-group row">
+                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
+                <div class="col-sm-9">
+                    <input type="text" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        required>
+                    <p id="pureq_error_42"></p>
+                </div>
+            </div>
+            {% endif %}
+            
+
+            <!--SEMESTER ENROLLED-->
+            {% if request.user.user_type == "STUDENT" %}
+            <div class="form-group row">
+                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
+                <div class="col-sm-9">
+                    <select id = "sem_term" name = "sem_term" class = "form-control">
+                        <option value = "" select>--SELECT--</option>
+                        <option value ="1">1st SEMESTER</option>
+                        <option value ="2">2nd SEMESTER</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
 
             <div class="form-group row">
                 <label for="course_adviser_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_adviser_lbl_42">Course/ Shop Adviser:<span id="asteris_42" style="color:red;">*</span></label>
@@ -684,17 +744,6 @@ Adviser:
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select>
-                    
-                </div>
-            </div>
-
-            <!--PURPOSE OF REQUEST BOX-->
-            <div class="form-group row">
-                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                        required>
-                    <p id="pureq_error_42"></p>
                 </div>
             </div>
 
@@ -1120,7 +1169,7 @@ Adviser:
     }else if (document.getElementById('amount_pay').value == "Certification"){
         document.getElementById('amountp_box_42').value = "100.00";
     }else{
-        document.getElementById('amountp_box_42').value = "0.00";
+        docum6ent.getElementById('amountp_box_42').value = "0.00";
     };
 
     //Date filed
@@ -1708,6 +1757,8 @@ Adviser:
 
     }
 
+    //ENABLE AND DISABLE CHECKBOXES
+
     function EnableDisableTextBox() {
         var gradYes_radio = document.getElementById("gradYes_radio_42");
         var iydfiled_box = document.getElementById("iydfiled_box_42");
@@ -1724,11 +1775,14 @@ Adviser:
     function EnableDisableTextBox1() {
         var reqYes_radio = document.getElementById("reqYes_radio_42");
         var dbrtime_box = document.getElementById("dbrtime_box_42");
+        var lasterm_box = document.getElementById("lasterm_box_42");
+        var preq_box = document.getElementById("preq_box_42");
         
         dbrtime_box.disabled = reqYes_radio.checked ? false : true;
-        
+        lasterm_box.disabled = reqYes_radio.checked ? false : true;
+        preq_box.disabled = reqYes_radio.checked ? false : true;
 
-        if (!dbrtime_box.disabled && !lasterm_box.disabled) {
+        if (!dbrtime_box.disabled && !lasterm_box.disabled && !preq_box.disabled) {
             dbrtime_box.focus();
             
 
