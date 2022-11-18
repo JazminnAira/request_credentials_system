@@ -463,7 +463,7 @@ Adviser:
         }
     }
     
-    .fa-ellipsis-v,
+    .fa-arrow-left ,
     .fa-print,
     .fa-home {
         color: white;
@@ -481,6 +481,9 @@ Adviser:
         height: auto;
       }
       #print_btn:hover {
+        background-color: #616161;
+    }
+    #back_btn:hover {
         background-color: #616161;
     }
 
@@ -522,6 +525,20 @@ Adviser:
             </a>
             {% endif %}
         </li>
+
+        <li>
+            {% if request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'regclear_back' i.id %}"  data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Home">
+                <i class="fa fa-arrow-left" ></i>
+            </a>
+            {% elif request.user.user_type == "FACULTY" %}
+            <a href="{% url 'faculty_dashboard_clearance_list' %}"  data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Home">
+                <i class="fa fa-arrow-left" ></i>
+            </a>
+            {% endif%}
+        </li>
+
+
 
     </ul>
 

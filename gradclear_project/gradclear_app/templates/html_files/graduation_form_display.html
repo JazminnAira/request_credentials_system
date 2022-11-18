@@ -452,11 +452,6 @@ Adviser:
         }
     }
     
-    .my-float {
-        font-size: 24px;
-        margin-top: 18px;
-    }
-    
     @media print {
         .float,
         #backtotop_btn_43,
@@ -554,13 +549,14 @@ Adviser:
         }
     }
     
-    .fa-ellipsis-v,
+    .fa-arrow-left ,
     .fa-print,
     .fa-home {
         color: white;
         font-size: 30px;
         padding-top: 15px;
     }
+  
     #home_btn:hover {
         color: white;
         background-color: #d3324d;
@@ -569,16 +565,22 @@ Adviser:
     #print_btn:hover {
         background-color: #616161;
     }
+    #back_btn:hover {
+        background-color: #616161;
+    }
 </style>
 
 
 <body>
     {% for i in graduation %}
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
+ 
+   
+
     <ul>
+       
+        
+    
+
         <li>
             {% if i.approval_status ==  'APPROVED' %}
                 <a href="{% url 'graduation_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print" id="print_btn">
@@ -606,6 +608,23 @@ Adviser:
             {% endif %}
         </li>
 
+        <li>
+       
+            {% if request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'reggrad_back' i.id %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
+                <i class="fa fa-arrow-left" ></i>
+            </a>
+            {% elif request.user.user_type == "FACULTY" %}
+            <a href="{% url 'faculty_dashboard_graduation_list' %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+            {% endif%}
+          
+        </li>
+
+      
+        
+       
     </ul>
 
     <!--BACK TO TOP BUTTON-->

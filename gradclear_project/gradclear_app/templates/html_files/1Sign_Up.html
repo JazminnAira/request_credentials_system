@@ -605,6 +605,28 @@ Adviser:
                         </form>
         </div>
     </section>
+
+    {% if user == "STUDENT" %}
+    <script>
+        document.getElementById("id_id_number").placeholder = "00-0000";
+        document.getElementById("id_id_number").maxLength=7;
+    </script>
+    {% elif user == "OLD STUDENT" %}
+    <script>
+        document.getElementById("id_id_number").placeholder = "00-0000";
+        document.getElementById("id_id_number").maxLength=7;
+    </script>
+    {% elif user == "ALUMNUS" %}
+    <script>
+        document.getElementById("id_id_number").placeholder = "00-0000-00-000000";
+    </script>
+    {% else %}
+    <script>
+        document.getElementById("id_id_number").placeholder = "00-000";
+        document.getElementById("id_id_number").maxLength=6;
+    </script>
+    {% endif %}
+    
 </body>  
 </html>
 
@@ -742,6 +764,19 @@ Adviser:
             }
         });
     });
+
+    $('#id_first_name, #id_last_name, #id_middle_name').keypress(function (e) {
+        var regex = new RegExp("^[a-zA-Z]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        e.preventDefault();
+        return false;
+    });
+
+
+    
 
 </script>
 

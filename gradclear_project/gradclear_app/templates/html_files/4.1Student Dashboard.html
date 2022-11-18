@@ -681,9 +681,9 @@ Adviser:
         color: #000;
         width: max-content;
     }
-    table{
+    /* table{
        min-width: max-content;
-    }
+    } */
     thead{
         position: sticky;
         top: 0px;
@@ -763,7 +763,7 @@ Adviser:
                     <div class="modal-body" id="account_body_41">
 
                         <!--ACCOUNT CONTENT TABLE-->
-                        <table class="table-responsive-sm table-responsive-md" >
+                        <table id="table" class="table-responsive-sm table-responsive-sm" >
                             <tr>
                                 <td><b>Name:</b></td>
                                 <td>{{request.user.first_name}} {{request.user.last_name}}</td>
@@ -959,12 +959,11 @@ Adviser:
     <!--SEARCH BAR-->
     <div class="container-fluid" id="main2_41">
         
-        <div class = "col-sm-10 col-md-10 col-xl-10 border border-dark rounded-right p-2" id ="Note_section" style = "background: rgba(255,2555,255); padding-left: 5px;">
-            <small><b>NOTES ON CLAIMING:</b>
-                •Print your Request Form 
-                •Print your Clearance Form (depends on request)
-                •Present your Official Receipt (depends on request)
-                For full details, follow the instructions sent to your email</small>
+        <div class = "border border-dark rounded-right p-2" id ="Note_section" style = "background: rgba(255,2555,255); padding-left: 5px; display: inline-block;">
+            <small><b>NOTES ON CLAIMING REQUESTS:</b>
+                Prepare to print your <b>Request Form</b>, <b>Clearance Form</b> and <b>Official Receipt</b> 
+                depending on your request.
+                For full details, follow the instructions sent to your email.</small>
         </div>
         
         <div class="row">
