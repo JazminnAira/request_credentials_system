@@ -77,10 +77,11 @@ urlpatterns = [
           name='update_clearance_signature'),
      path('update_grad_signature/<int:id>', update_grad_signature ,name='update_grad_signature'),
      
-     # UPDATE FACULTY DESIGNATION
+     # UPDATE STATUS
      path('faculty_designation_update/<int:id>', faculty_designation_update, 
           name="faculty_designation_update"),
      path('student_status_update/<int:id>', student_status_update, name='student_status_update'),
+     path('school_year_update', school_year_update, name='school_year_update'),
      
      # REMOVE USER
      path('faculty_list_remove/<int:id>', faculty_list_remove, name="faculty_list_remove"),

@@ -651,6 +651,8 @@ Adviser:
                             <script>document.querySelector('#department_th').innerText = "DED";</script>
                             {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department4(this)">Approve</button></td>
+                            {% elif instance.ieduc_dept_signature == "_APPROVED" %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
@@ -658,6 +660,8 @@ Adviser:
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department5(this)">Approve</button></td>
+                            {% elif instance.it_dept_signature == "_APPROVED" %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
@@ -665,6 +669,8 @@ Adviser:
                             <script>document.querySelector('#department_th').innerText = "DOE";</script>
                             {% if instance.eng_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department6(this)">Approve</button></td>
+                            {% elif instance.eng_dept_signature == "_APPROVED" %}
+                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}

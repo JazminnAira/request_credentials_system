@@ -418,6 +418,7 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_75">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
         <a href="{% url 'registrar_dashboard_student_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'school_year_update'%}" data-toggle="tooltip" data-placement="right" title="New School Year"><i class="fa fa-calendar-o" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         
 
@@ -512,6 +513,18 @@ Adviser:
                                     <select onchange="this.form.submit()" name="status_select" id="changer"> 
                                         <option value="">{{instance.user_type}}</option>
                                         <option value="ALUMNUS">ALUMNUS</option>
+                                        <option value="OLD STUDENT">OLD STUDENT</option>
+                                    </select>
+                                </form> 
+                            </td>
+                            {% elif instance.user_type == "STUDENT"%} 
+                            <td>
+                                <form name="change_status" id="change" action="student_status_update/{{ instance.id }}" method=POST>
+                                {% csrf_token %}
+                                    <select onchange="this.form.submit()" name="status_select" id="changer"> 
+                                        <option value="">{{instance.user_type}}</option>
+                                        <option value="OLD STUDENT">OLD STUDENT</option>
+                                        
                                     </select>
                                 </form> 
                             </td>
