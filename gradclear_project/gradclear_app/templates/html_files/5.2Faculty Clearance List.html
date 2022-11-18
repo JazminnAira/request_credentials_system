@@ -435,6 +435,28 @@ Adviser:
    
    }
 
+   html {
+    font-size: 1rem;
+    }
+  
+    @include media-breakpoint-up(sm) {
+        html {
+            font-size: 1.2rem;
+        }
+    }
+  
+    @include media-breakpoint-up(md) {
+        html {
+            6font-size: 1.4rem;
+        }
+    }
+  
+    @include media-breakpoint-up(lg) {
+        html {
+            font-size: 1.6rem;
+        }
+    }
+
 
 </style>
 
@@ -472,7 +494,7 @@ Adviser:
                 
                             <!--MODAL CLOSE BUTTON-->
                             <button type="button" class="close_btn" data-placement="right" title="Close" 
-                            onclick="window.location.assign('faculty_dashboard_clearance_list')">x</button>
+                            onclick="window.location.assign('faculty_dashboard_clearance_list')">X</button>
                     </div>
                     <form method="POST" action="appointment" style="height:100%;" >
                         {% csrf_token %}
@@ -535,16 +557,23 @@ Adviser:
         <div class= "mx-auto" align="center" id="button_area">
             <br>
             <!--ATTACH ESIGN BUTTON-->
-            <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">ATTACH E-SIGNATURE</button>
-            <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary text-white center-block col-2" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
+            <div class="btn-group col-sm-10 col-md-10 col-xl-10">
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">LIVE SIGNATURE</button>
+                <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
+            </div>
+            <br>
             <br>
             <!--ATTACH UPLOADED BUTTON-->
-            <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">ATTACH UPLOADED SIGNATURE</button>
-            <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-dark pt-3 pb-3 bg-secondary text-white center-block col-2" title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
+            <div class ="btn-group col-sm-10 col-md-10 col-xl-10 ">
+                <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark text-white border p-3 border-white">UPLOADED SIGNATURE</button>
+                <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-darK col-3 bg-secondary p-3 text-white center-block " title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
+            </div>  
             <br>
             <br>
             <!--APPROVE ONLY-->
-            <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-10 bg-light text-dark border border-dark">APPROVE</button><br>
+            <div class="btn-group col-sm-10 col-md-10 col-xl-10">
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE</button><br>
+            </div>
         </div>
 
         <div id="create_signature_area" class="p-1" hidden>
@@ -566,6 +595,15 @@ Adviser:
             </div>
         </div>
         
+        <div id = "upload_signature_display" class = "p-3" hidden>
+        {% if uploaded_signature %}
+            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
+            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
+        {% else %}
+            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
+        {% endif %}
+        </div>
         <form method="POST" action ="update_clearance_signature/{{id}}" enctype="multipart/form-data">
             {% csrf_token %}
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
@@ -581,15 +619,8 @@ Adviser:
                 <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
             </div>
         </form>
-        <div id = "upload_signature_display" class = "p-3" hidden>
-        {% if uploaded_signature %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
-            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
-        {% else %}
-            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
-        {% endif %}
-        </div>
+        
+        
     </div>
 
     <div class ="table_list" id = "table_list">
@@ -786,7 +817,6 @@ Adviser:
         $('.no-result').hide();
     }
 
-
     //signature
     var canvas = document.getElementById("signature_pad");
     function resizeCanvas() {
@@ -943,8 +973,6 @@ Adviser:
       };
       
       document.querySelector('table').addEventListener('click', handleClick);
-    
- 
 
     esign_attach_sig_btn.addEventListener("click", function() {
         if (document.getElementById('esign_checker').value == ""){
@@ -1021,6 +1049,16 @@ Adviser:
         document.getElementById("upload_signature_display").hidden = true;
         
     });
+
+    
+    //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
+    if(document.getElementById('esign_checker').value == ""){
+        document.getElementById('esign_attach_sig_btn').textContent = "DRAW E-LIVE SIGNATURE";
+    };
+    
+    if(document.getElementById('upload_checker').value == ""){
+        document.getElementById('upload_attach_sig_btn').textContent = "UPLOAD SIGNATURE";
+    };
 
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
