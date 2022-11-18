@@ -1415,7 +1415,7 @@ def appointment(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
     
             return redirect(faculty_dashboard_clearance_list) 
@@ -1510,7 +1510,7 @@ def appointmentgrad(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
             return redirect('faculty_dashboard_graduation_list')
         else:
@@ -1565,7 +1565,7 @@ def reggrad_appointment(request, id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send()
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_graduation_list/%20')
@@ -1616,7 +1616,7 @@ def regclear_appointment(request,id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send()
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_clearance_list/%20')
@@ -1711,7 +1711,7 @@ def request_appointment(request, id):
         '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html"
-        msg.send()
+        msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
         return redirect('registrar_dashboard_request_list')
@@ -2453,88 +2453,90 @@ def clearance_view(request):
             it_name = " "
             signature_type10 = ""
 
-
-            #INDUSTRIAL EDUCATION
-            if doe.exists() and dit.exists():
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
-                ieduc = str(faculty_approved[0])
-                fac_name_get = ieduc.split('_',1)[0]
-                str_fac_name = str(fac_name_get)
-                print(str_fac_name)
-                
-                if faculty_approved[0].__contains__('ESIGN'):
-                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                    industrial = ieduc_sig[0]
-                    it_department = "EDUCATOR"
-                    it_name = str_fac_name
-                    signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                    industrial = ieduc_sig[0]
-                    it_department = "EDUCATOR"
-                    it_name = str_fac_name
-                    signature_type10 = "UPLOAD"
-                else:
-                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                    industrial = ieduc_sig[0]
-                    it_department = "EDUCATOR"
-                    it_name = str_fac_name
-                    signature_type10 = "APPROVE"
+            if check_status.exists():
+                pass
+            else:
+                #INDUSTRIAL EDUCATION
+                if doe.exists() and dit.exists():
+                    faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                    ieduc = str(faculty_approved[0])
+                    fac_name_get = ieduc.split('_',1)[0]
+                    str_fac_name = str(fac_name_get)
+                    print(str_fac_name)
                     
+                    if faculty_approved[0].__contains__('ESIGN'):
+                        ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                        industrial = ieduc_sig[0]
+                        it_department = "EDUCATOR"
+                        it_name = str_fac_name
+                        signature_type10 = "ESIGN"
+                    elif faculty_approved[0].__contains__('UPLOAD'):
+                        ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                        industrial = ieduc_sig[0]
+                        it_department = "EDUCATOR"
+                        it_name = str_fac_name
+                        signature_type10 = "UPLOAD"
+                    else:
+                        ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                        industrial = ieduc_sig[0]
+                        it_department = "EDUCATOR"
+                        it_name = str_fac_name
+                        signature_type10 = "APPROVE"
+                        
+                        
+                #INDUSTRIAL TECHNOLOGY
+                if doe.exists() and ded.exists() :
+                    faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                    it = str(faculty_approved[0])
+                    fac_name_get = it.split('_',1)[0]
+                    str_fac_name = str(fac_name_get)
+                    print(str_fac_name)
                     
-            #INDUSTRIAL TECHNOLOGY
-            if doe.exists() and ded.exists() :
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
-                it = str(faculty_approved[0])
-                fac_name_get = it.split('_',1)[0]
-                str_fac_name = str(fac_name_get)
-                print(str_fac_name)
-                
-                if faculty_approved[0].__contains__('ESIGN'):
-                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                    industrial = it_dept_sig[0]
-                    it_department = "TECHNOLOGIES"
-                    it_name = str_fac_name
-                    signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                    industrial = it_dept_sig[0]
-                    it_department = "TECHNOLOGIES"
-                    it_name = str_fac_name
-                    signature_type10 = "UPLOAD"
-                else:
-                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                    industrial = it_dept_sig[0]
-                    it_department = "TECHNOLOGIES"
-                    it_name = str_fac_name
-                    signature_type10 = "APPROVE"
-                
-            #ENGINEERING
-            if dit.exists() and ded.exists():
-                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
-                eng = str(faculty_approved[0])
-                fac_name_get = eng.split('_',1)[0]
-                str_fac_name = str(fac_name_get)
-                print(str_fac_name)
-                
-                if faculty_approved[0].__contains__('ESIGN'):
-                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                    industrial = eng_dept_sig[0]
-                    it_department = "ENGINEERS"
-                    it_name = str_fac_name
-                    signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                    industrial = eng_dept_sig[0]
-                    it_department = "ENGINEERS"
-                    it_name = str_fac_name
-                    signature_type10 = "UPLOAD"
-                else:
-                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                    industrial = eng_dept_sig[0]
-                    it_department = "ENGINEERS"
-                    it_name = str_fac_name
-                    signature_type10 = "APPROVE"
+                    if faculty_approved[0].__contains__('ESIGN'):
+                        it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                        industrial = it_dept_sig[0]
+                        it_department = "TECHNOLOGIES"
+                        it_name = str_fac_name
+                        signature_type10 = "ESIGN"
+                    elif faculty_approved[0].__contains__('UPLOAD'):
+                        it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                        industrial = it_dept_sig[0]
+                        it_department = "TECHNOLOGIES"
+                        it_name = str_fac_name
+                        signature_type10 = "UPLOAD"
+                    else:
+                        it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                        industrial = it_dept_sig[0]
+                        it_department = "TECHNOLOGIES"
+                        it_name = str_fac_name
+                        signature_type10 = "APPROVE"
+                    
+                #ENGINEERING
+                if dit.exists() and ded.exists():
+                    faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
+                    eng = str(faculty_approved[0])
+                    fac_name_get = eng.split('_',1)[0]
+                    str_fac_name = str(fac_name_get)
+                    print(str_fac_name)
+                    
+                    if faculty_approved[0].__contains__('ESIGN'):
+                        eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                        industrial = eng_dept_sig[0]
+                        it_department = "ENGINEERS"
+                        it_name = str_fac_name
+                        signature_type10 = "ESIGN"
+                    elif faculty_approved[0].__contains__('UPLOAD'):
+                        eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                        industrial = eng_dept_sig[0]
+                        it_department = "ENGINEERS"
+                        it_name = str_fac_name
+                        signature_type10 = "UPLOAD"
+                    else:
+                        eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                        industrial = eng_dept_sig[0]
+                        it_department = "ENGINEERS"
+                        it_name = str_fac_name
+                        signature_type10 = "APPROVE"
             
             context ={
                 'clearance' : clearance_for_graduation,
@@ -5413,88 +5415,90 @@ def display_clearform(request, id):
         it_name = " "
         signature_type10 = ""
 
-
-        #INDUSTRIAL EDUCATION
-        if doe.exists() and dit.exists():
-            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
-            ieduc = str(faculty_approved[0])
-            fac_name_get = ieduc.split('_',1)[0]
-            str_fac_name = str(fac_name_get)
-            print(str_fac_name)
-            
-            if faculty_approved[0].__contains__('ESIGN'):
-                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                industrial = ieduc_sig[0]
-                it_department = "EDUCATOR"
-                it_name = str_fac_name
-                signature_type10 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                industrial = ieduc_sig[0]
-                it_department = "EDUCATOR"
-                it_name = str_fac_name
-                signature_type10 = "UPLOAD"
-            else:
-                ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                industrial = ieduc_sig[0]
-                it_department = "EDUCATOR"
-                it_name = str_fac_name
-                signature_type10 = "APPROVE"
+        if check_status.exists():
+            pass
+        else:
+            #INDUSTRIAL EDUCATION
+            if doe.exists() and dit.exists():
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('ieduc_dept_signature', flat=True).distinct()
+                ieduc = str(faculty_approved[0])
+                fac_name_get = ieduc.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
                 
+                if faculty_approved[0].__contains__('ESIGN'):
+                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    industrial = ieduc_sig[0]
+                    it_department = "EDUCATOR"
+                    it_name = str_fac_name
+                    signature_type10 = "ESIGN"
+                elif faculty_approved[0].__contains__('UPLOAD'):
+                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    industrial = ieduc_sig[0]
+                    it_department = "EDUCATOR"
+                    it_name = str_fac_name
+                    signature_type10 = "UPLOAD"
+                else:
+                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                    industrial = ieduc_sig[0]
+                    it_department = "EDUCATOR"
+                    it_name = str_fac_name
+                    signature_type10 = "APPROVE"
+                    
+                    
+            #INDUSTRIAL TECHNOLOGY
+            if doe.exists() and ded.exists() :
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
+                it = str(faculty_approved[0])
+                fac_name_get = it.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
                 
-        #INDUSTRIAL TECHNOLOGY
-        if doe.exists() and ded.exists() :
-            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
-            it = str(faculty_approved[0])
-            fac_name_get = it.split('_',1)[0]
-            str_fac_name = str(fac_name_get)
-            print(str_fac_name)
-            
-            if faculty_approved[0].__contains__('ESIGN'):
-                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                industrial = it_dept_sig[0]
-                it_department = "TECHNOLOGIES"
-                it_name = str_fac_name
-                signature_type10 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                industrial = it_dept_sig[0]
-                it_department = "TECHNOLOGIES"
-                it_name = str_fac_name
-                signature_type10 = "UPLOAD"
-            else:
-                it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                industrial = it_dept_sig[0]
-                it_department = "TECHNOLOGIES"
-                it_name = str_fac_name
-                signature_type10 = "APPROVE"
-            
-        #ENGINEERING
-        if dit.exists() and ded.exists():
-            faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
-            eng = str(faculty_approved[0])
-            fac_name_get = eng.split('_',1)[0]
-            str_fac_name = str(fac_name_get)
-            print(str_fac_name)
-            
-            if faculty_approved[0].__contains__('ESIGN'):
-                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
-                industrial = eng_dept_sig[0]
-                it_department = "ENGINEERS"
-                it_name = str_fac_name
-                signature_type10 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                industrial = eng_dept_sig[0]
-                it_department = "ENGINEERS"
-                it_name = str_fac_name
-                signature_type10 = "UPLOAD"
-            else:
-                eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
-                industrial = eng_dept_sig[0]
-                it_department = "ENGINEERS"
-                it_name = str_fac_name
-                signature_type10 = "APPROVE"
+                if faculty_approved[0].__contains__('ESIGN'):
+                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    industrial = it_dept_sig[0]
+                    it_department = "TECHNOLOGIES"
+                    it_name = str_fac_name
+                    signature_type10 = "ESIGN"
+                elif faculty_approved[0].__contains__('UPLOAD'):
+                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    industrial = it_dept_sig[0]
+                    it_department = "TECHNOLOGIES"
+                    it_name = str_fac_name
+                    signature_type10 = "UPLOAD"
+                else:
+                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                    industrial = it_dept_sig[0]
+                    it_department = "TECHNOLOGIES"
+                    it_name = str_fac_name
+                    signature_type10 = "APPROVE"
+                
+            #ENGINEERING
+            if dit.exists() and ded.exists():
+                faculty_approved = clearance_form_table.objects.filter(id=id).values_list('eng_dept_signature', flat=True).distinct()
+                eng = str(faculty_approved[0])
+                fac_name_get = eng.split('_',1)[0]
+                str_fac_name = str(fac_name_get)
+                print(str_fac_name)
+                
+                if faculty_approved[0].__contains__('ESIGN'):
+                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    industrial = eng_dept_sig[0]
+                    it_department = "ENGINEERS"
+                    it_name = str_fac_name
+                    signature_type10 = "ESIGN"
+                elif faculty_approved[0].__contains__('UPLOAD'):
+                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    industrial = eng_dept_sig[0]
+                    it_department = "ENGINEERS"
+                    it_name = str_fac_name
+                    signature_type10 = "UPLOAD"
+                else:
+                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                    industrial = eng_dept_sig[0]
+                    it_department = "ENGINEERS"
+                    it_name = str_fac_name
+                    signature_type10 = "APPROVE"
                 
  
     else:
@@ -6274,7 +6278,7 @@ def set_appointment(request, id):
             recipient_list = [rec_email, ]
             msg = EmailMessage(subject, message, email_from, recipient_list,)
             msg.content_subtype = "html"
-            msg.send()
+            msg.send(fail_silently=True)
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
