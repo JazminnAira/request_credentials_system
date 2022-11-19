@@ -6526,6 +6526,8 @@ def registrar_dashboard_request_list(request):
 def request_official_update(request, id):
     form_change = request.POST.get('or_select')
     request_form_table.objects.filter(id=id).update(official_receipt=form_change)
+    or_number = request.POST.get('or_number')
+    request_form_table.objects.filter(id=id).update(or_num=or_number)
     return redirect(registrar_dashboard_request_list)
 
 @login_required(login_url='/')
