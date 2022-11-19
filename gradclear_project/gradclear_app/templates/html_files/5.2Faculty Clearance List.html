@@ -558,7 +558,7 @@ Adviser:
             <br>
             <!--ATTACH ESIGN BUTTON-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">LIVE SIGNATURE</button>
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">E-SIGNATURE</button>
                 <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
             </div>
             <br>
@@ -572,7 +572,7 @@ Adviser:
             <br>
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE</button><br>
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE MANUALLY</button><br>
             </div>
         </div>
 
@@ -583,11 +583,11 @@ Adviser:
                 <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-40 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             {% else %}
-                <div clas="p-2 border rounded">NO LIVE E-SIGNATURE SAVED</div>
+                <div clas="p-2 border rounded">NO E-SIGNATURE SAVED</div>
             {% endif %}
             </div>
             <br>
-            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
+            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">CREATE SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
                 <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
@@ -657,7 +657,7 @@ Adviser:
                     
                     <tr id="Add">    
                         
-                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}} onclick="close_boxes(this)"></td>    
+                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
                         <td class="nr" hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                         <td class="name"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
@@ -778,7 +778,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" style="display: none;" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     </div>
     
 
@@ -1053,11 +1053,11 @@ Adviser:
     
     //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
     if(document.getElementById('esign_checker').value == ""){
-        document.getElementById('esign_attach_sig_btn').textContent = "DRAW E-LIVE SIGNATURE";
+        document.getElementById('esign_attach_sig_btn').textContent = "CREATE E-LIVE SIGNATURE";
     };
     
     if(document.getElementById('upload_checker').value == ""){
-        document.getElementById('upload_attach_sig_btn').textContent = "UPLOAD SIGNATURE";
+        document.getElementById('upload_attach_sig_btn').textContent = "ATTACH SIGNATURE";
     };
 
     function openfdb() {
@@ -1313,29 +1313,8 @@ Adviser:
     });
     $(this).closest("tr").addClass("highlight");
 }); 
-
-    // ALLOW TO VIEW FORM ON TABLE ROW CLICK
-    // function addRowHandlers() {
-    //     var table = document.getElementById("list_tbl_52");
-    //     var rows = table.getElementsByTagName("tr");
-    //     for (i = 0; i < rows.length; i++) {
-    //         var currentRow = table.rows[i];
-    //         var createClickHandler = 
-    //             function(row) 
-    //             {
-    //                 return function() { 
-    //                                         var cell = row.getElementsByTagName("td")[0];
-    //                                         var id = cell.innerHTML;
-    //                                         location.href = "display_clearform/" + id 
-    //                                 };
-    //             };
-
-    //         currentRow.onclick = createClickHandler(currentRow);
-    //     }
-    // }
-    // window.onload = addRowHandlers();
     
-    // CHECKBOXES IN TABLE
+    //CHECKBOXES IN TABLE
     function checkAll(ele) {
     var checkboxes = document.getElementsByTagName('input');
     if (ele.checked) {
@@ -1354,37 +1333,55 @@ Adviser:
     }
     }
 
-    // DISABLE APPROVE BUTTONS WHEN CHECKBOX CHECKED
-    buttons =document.getElementsByClassName('apprv')
-    $('.check').change(function() {
-    if ( this.checked ) {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // DISABLE APPROVE ALL BUTTON WHEN CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").prop("disabled", true);
+            
+        else
+            $("button[name='approve_all']").removeAttr("disabled");
+            
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
-    $('#all_check').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // LOW OPACITY OF APPROVE ALL WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").css('opacity', '0.5');
+        else
+            $("button[name='approve_all']").css('opacity', '1');
     });
-    
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // DISABLE SINGLE APPROVE BUTTONS IF CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").prop("disabled", false);
+            
+        else
+        $("button[class='button user_id apprv']").prop("disabled", true);
+            
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // LOW OPACITY OF SINGLE APPROVE BTN WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").css('opacity', '1');
+        else
+            $("button[class='button user_id apprv']").css('opacity', '0.5');
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
 </script>

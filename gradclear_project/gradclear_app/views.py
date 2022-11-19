@@ -1774,8 +1774,10 @@ def student_registration(request):
             # middle = form.cleaned_data.get("middle_name")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
-            
-            form.instance.full_name = last +", " + first + " "+ middle
+            if middle is None:
+                form.instance.full_name = last +", " + first
+            else:
+                form.instance.full_name = last +", " + first + " "+ middle
            
             form.instance.user_type = "STUDENT"
             
@@ -1969,8 +1971,11 @@ def student_dashboard(request):
         last = request.user.last_name
         middle = request.user.middle_name
         
-        mid = middle[0] + "."
-        name2 = last + ", " + first + " " + mid
+        if middle is None:
+            name2 = last + ", " + first 
+        else:
+            mid = middle[0] + "."
+            name2 = last + ", " + first + " " + mid
 
         print(student_id)
 
