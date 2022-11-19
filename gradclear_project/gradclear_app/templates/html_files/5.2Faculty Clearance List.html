@@ -611,7 +611,7 @@ Adviser:
                     
                     <tr id="Add">    
                         
-                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}} onclick="close_boxes(this)"></td>    
+                        <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
                         <td class="nr" hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                         <td class="name"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
@@ -732,7 +732,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" style="display: none;" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     </div>
     
 
@@ -1260,29 +1260,8 @@ Adviser:
     });
     $(this).closest("tr").addClass("highlight");
 }); 
-
-    // ALLOW TO VIEW FORM ON TABLE ROW CLICK
-    // function addRowHandlers() {
-    //     var table = document.getElementById("list_tbl_52");
-    //     var rows = table.getElementsByTagName("tr");
-    //     for (i = 0; i < rows.length; i++) {
-    //         var currentRow = table.rows[i];
-    //         var createClickHandler = 
-    //             function(row) 
-    //             {
-    //                 return function() { 
-    //                                         var cell = row.getElementsByTagName("td")[0];
-    //                                         var id = cell.innerHTML;
-    //                                         location.href = "display_clearform/" + id 
-    //                                 };
-    //             };
-
-    //         currentRow.onclick = createClickHandler(currentRow);
-    //     }
-    // }
-    // window.onload = addRowHandlers();
     
-    // CHECKBOXES IN TABLE
+    //CHECKBOXES IN TABLE
     function checkAll(ele) {
     var checkboxes = document.getElementsByTagName('input');
     if (ele.checked) {
@@ -1301,37 +1280,55 @@ Adviser:
     }
     }
 
-    // DISABLE APPROVE BUTTONS WHEN CHECKBOX CHECKED
-    buttons =document.getElementsByClassName('apprv')
-    $('.check').change(function() {
-    if ( this.checked ) {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // DISABLE APPROVE ALL BUTTON WHEN CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").prop("disabled", true);
+            
+        else
+            $("button[name='approve_all']").removeAttr("disabled");
+            
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
-    $('#all_check').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // LOW OPACITY OF APPROVE ALL WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").css('opacity', '0.5');
+        else
+            $("button[name='approve_all']").css('opacity', '1');
     });
-    
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // DISABLE SINGLE APPROVE BUTTONS IF CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").prop("disabled", false);
+            
+        else
+        $("button[class='button user_id apprv']").prop("disabled", true);
+            
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // LOW OPACITY OF SINGLE APPROVE BTN WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").css('opacity', '1');
+        else
+            $("button[class='button user_id apprv']").css('opacity', '0.5');
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
 </script>

@@ -1034,7 +1034,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" name="approve_all" style="margin-top:30px;margin-left: 25px; display: none;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" name="approve_all" style="margin-top:30px;margin-left: 25px;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     
     </div>
         <p class="text-center text-bold" id="p6_53"></p>
@@ -1055,39 +1055,56 @@ Adviser:
 
 
 <script>
-    // DISABLE APPROVE BUTTONS WHEN CHECKBOX CHECKED
-    buttons =document.getElementsByClassName('apprv')
-    
-    $('#boxes').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // DISABLE APPROVE ALL BUTTON WHEN CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").prop("disabled", true);
+            
+        else
+            $("button[name='approve_all']").removeAttr("disabled");
+            
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
-    $('#all_check').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // LOW OPACITY OF APPROVE ALL WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").css('opacity', '0.5');
+        else
+            $("button[name='approve_all']").css('opacity', '1');
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // DISABLE SINGLE APPROVE BUTTONS IF CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").prop("disabled", false);
+            
+        else
+        $("button[class='button user_id apprv']").prop("disabled", true);
+            
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // LOW OPACITY OF SINGLE APPROVE BTN WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").css('opacity', '1');
+        else
+            $("button[class='button user_id apprv']").css('opacity', '0.5');
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
 
