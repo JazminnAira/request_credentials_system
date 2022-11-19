@@ -617,9 +617,13 @@ Adviser:
         document.getElementById("id_id_number").placeholder = "00-0000";
         document.getElementById("id_id_number").maxLength=7;
 
-        $("input").keyup(function(){
+        $("input").change(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+
             let fn_box = document.getElementById("id_first_name").value;
-            let mn_box = document.getElementById("id_middle_name").value;
             let ln_box = document.getElementById("id_last_name").value;
             let add_box = document.getElementById("id_address").value;
             let gender_box = document.getElementById("id_gender").value;
@@ -632,8 +636,9 @@ Adviser:
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
             let pic_box = document.getElementById("id_profile_picture").value;
-            if (fn_box != "" && mn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
-                && course_box != "" && year_box != "" && cp_box != "" && email_box != "" && pass1_box != "" && pass2_box != "" && pic_box != ""){    
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
+                && course_box != "" && year_box != "" && cp_box != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 7 && bday_val.length == 8 && cp_val.length == 13   ){    
                 document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }
          });
@@ -644,8 +649,11 @@ Adviser:
         document.getElementById("id_id_number").maxLength=7;
 
         $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
             let fn_box = document.getElementById("id_first_name").value;
-            let mn_box = document.getElementById("id_middle_name").value;
             let ln_box = document.getElementById("id_last_name").value;
             let add_box = document.getElementById("id_address").value;
             let gender_box = document.getElementById("id_gender").value;
@@ -657,8 +665,9 @@ Adviser:
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
             let pic_box = document.getElementById("id_profile_picture").value;
-            if (fn_box != "" && mn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
-                && cp_box != "" && course_grad != "" && email_box != "" && pass1_box != "" && pass2_box != "" && pic_box != ""){    
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
+                && cp_box != "" && course_grad != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 7 && bday_val.length == 8 && cp_val.length == 13){    
                 document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }
          });
@@ -669,8 +678,11 @@ Adviser:
 
 
         $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
             let fn_box = document.getElementById("id_first_name").value;
-            let mn_box = document.getElementById("id_middle_name").value;
             let ln_box = document.getElementById("id_last_name").value;
             let add_box = document.getElementById("id_address").value;
             let gender_box = document.getElementById("id_gender").value;
@@ -682,9 +694,11 @@ Adviser:
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
             let pic_box = document.getElementById("id_profile_picture").value;
-            if (fn_box != "" && mn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
-                && cp_box != "" && course_grad != ""  && year_grad != "" && email_box != "" && pass1_box != "" && pass2_box != "" && pic_box != ""){    
-                document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
+                && cp_box != "" && course_grad != ""  && year_grad != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 17 && bday_val.length == 8 && cp_val.length == 13   ){    
+                
+                    document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }
          });
     </script>
@@ -694,8 +708,12 @@ Adviser:
         document.getElementById("id_id_number").maxLength=6;
         
         $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+
             let fn_box = document.getElementById("id_first_name").value;
-            let mn_box = document.getElementById("id_middle_name").value;
             let ln_box = document.getElementById("id_last_name").value;
             let add_box = document.getElementById("id_address").value;
             let gender_box = document.getElementById("id_gender").value;
@@ -707,8 +725,9 @@ Adviser:
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
             let pic_box = document.getElementById("id_profile_picture").value;
-            if (fn_box != "" && mn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
-                && cp_box != "" && id_number != ""  && dep_box != "" && email_box != "" && pass1_box != "" && pass2_box != "" && pic_box != ""){    
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
+                && cp_box != "" && id_number != ""  && dep_box != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 6 && bday_val.length == 8 && cp_val.length == 13   ){    
                 document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }
          });
