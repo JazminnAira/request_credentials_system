@@ -1333,12 +1333,18 @@ def appointment(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         gform = form
         if request.method == 'POST':
-            email_temp = request_form_table.objects.filter(
+            email_temp = clearance_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             email = user_table.objects.filter(
                 student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
+
+            name_temp = clearance_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+            name = user_table.objects.filter(
+                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
+            last_name = name[0]
 
             purpose = request_form_table.objects.filter(
             id=id).values_list('request', flat=True).distinct()
@@ -1346,12 +1352,6 @@ def appointment(request, id, form):
                 request=purpose[0]).values_list('request', flat=True).distinct()
             purpose_of_req =  purpose_of[0]
             purpose_of_request = purpose_of_req, 
-
-            name_temp = request_form_table.objects.filter(
-            id=id).values_list('student_id', flat=True).distinct()
-            name = user_table.objects.filter(
-                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
-            last_name = name[0]
 
             gender_temp = user_table.objects.filter(
             id=id).values_list('gender', flat=True).distinct()
@@ -1429,12 +1429,18 @@ def appointmentgrad(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         gform = form
         if request.method == 'POST':
-            email_temp = request_form_table.objects.filter(
+            email_temp = graduation_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             email = user_table.objects.filter(
                 student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
+
+            name_temp = graduation_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+            name = user_table.objects.filter(
+                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
+            last_name = name[0]
 
             purpose = request_form_table.objects.filter(
             id=id).values_list('request', flat=True).distinct()
@@ -1442,12 +1448,6 @@ def appointmentgrad(request, id, form):
                 request=purpose[0]).values_list('request', flat=True).distinct()
             purpose_of_req =  purpose_of[0]
             purpose_of_request = purpose_of_req, 
-
-            name_temp = request_form_table.objects.filter(
-            id=id).values_list('student_id', flat=True).distinct()
-            name = user_table.objects.filter(
-                student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
-            last_name = name[0]
 
             gender_temp = user_table.objects.filter(
             id=id).values_list('gender', flat=True).distinct()
@@ -1469,7 +1469,7 @@ def appointmentgrad(request, id, form):
 
             subject = 'Application for Graduation Form '
             message1 = 'Good day, '+ "<strong>" + gender_final +  name[0] + ",</strong><br><br>"
-            message2 = 'Your Application for Clearance Form has pending concerns with  '+  "<strong>"+ gender_fac+   request.user.last_name +".</strong><br><br>"
+            message2 = 'Your Application for Graduation Form has pending concerns with  '+  "<strong>"+ gender_fac+   request.user.last_name +".</strong><br><br>"
             message3 =  '  An appointment for discussing the said concerns was scheduled. Please arrive at the set date and time of appointment. <br><br>'
             message4 =  "<i>"+' Failure to comply may result to declined application.'+"</i>"
             message5 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
@@ -1774,8 +1774,10 @@ def student_registration(request):
             # middle = form.cleaned_data.get("middle_name")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
-            
-            form.instance.full_name = last +", " + first + " "+ middle
+            if middle is None:
+                form.instance.full_name = last +", " + first
+            else:
+                form.instance.full_name = last +", " + first + " "+ middle
            
             form.instance.user_type = "STUDENT"
             
@@ -1969,8 +1971,11 @@ def student_dashboard(request):
         last = request.user.last_name
         middle = request.user.middle_name
         
-        mid = middle[0] + "."
-        name2 = last + ", " + first + " " + mid
+        if middle is None:
+            name2 = last + ", " + first 
+        else:
+            mid = middle[0] + "."
+            name2 = last + ", " + first + " " + mid
 
         print(student_id)
 
@@ -5499,6 +5504,8 @@ def display_clearform(request, id):
                     it_name = str_fac_name
                     signature_type10 = "APPROVE"
                     
+                    
+            #INDUSTRIAL TECHNOLOGY
             if doe.exists() and ded.exists() :
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
                 it = str(faculty_approved[0])
