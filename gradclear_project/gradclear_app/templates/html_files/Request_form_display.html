@@ -483,13 +483,14 @@ Adviser:
     </a> -->
     <ul>
         <li>
-            {% if i.approval_status ==  'APPROVED' %}
+            {% if i.appointment == "NONE" %}
+            <a class='button' title="Print Not Available" style="opacity:0.4;" disabled>
+                <i class="fa fa-print slash" style="opacity:0.5;"></i>    
+            
+                </a>
+            {% else %}
                 <a href="{% url 'req_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print" id="print_btn">
                     <i class="fa fa-print"></i>
-                </a>
-                {% else %}
-                <a class='button' title="Print Not Available" style="opacity:0.4;" disabled>
-                    <i class="fa fa-print slash" style="opacity:0.5;"></i>
                 </a>
             {% endif %}  
             </li>
