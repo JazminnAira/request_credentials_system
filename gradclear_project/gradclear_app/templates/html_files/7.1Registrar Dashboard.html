@@ -1153,7 +1153,7 @@ Adviser:
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
     <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
-    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Application for Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
     {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
@@ -1552,9 +1552,12 @@ Adviser:
     {% endif %}
 
     <!--MAIN-->
+   
     <div class="container-fluid" >
         <div class="row" style="padding-right: 0px;">
-            <div class="col-12" style="padding-right: 10px; background-color: transparent; height: 24px; text-align: right;">
+        <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
+            text-align: right;">
+                <!--DATE INDICATOR JS-->
                 <p id="date_text_lbl_71"></p>
             </div>
         </div>
@@ -2566,9 +2569,9 @@ Adviser:
 function toggleSidebar() {
   if (mini) {
     console.log("opening sidebar");
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("logo_71").style.marginLeft = "90px";
+    document.getElementById("sidebar").style.width = "400px";
+    document.getElementById("main").style.marginLeft = "400px";
+    document.getElementById("logo_71").style.marginLeft = "170px";
     this.mini = false;
   } else {
     console.log("closing sidebar");

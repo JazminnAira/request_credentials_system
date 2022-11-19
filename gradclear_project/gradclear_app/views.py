@@ -2570,6 +2570,8 @@ def clearance_view(request):
     else:
         messages.error(request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
+ 
+        return redirect('/')
         
 
 
@@ -2588,6 +2590,17 @@ def graduation_view(request):
     else:
         messages.error(request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
+
+
+@login_required(login_url='/')
+def reggrad_back(request, id):
+     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        return redirect('/registrar_dashboard_graduation_list/%20')
+
+@login_required(login_url='/')
+def regclear_back(request, id):
+     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        return redirect('/registrar_dashboard_clearance_list/%20')
 
 @login_required(login_url='/')
 def graduation_form(request):
@@ -5414,6 +5427,7 @@ def display_clearform(request, id):
         it_department = "NONE"
         it_name = " "
         signature_type10 = ""
+        print(check_status)
 
         if check_status.exists():
             pass
@@ -5445,8 +5459,6 @@ def display_clearform(request, id):
                     it_name = str_fac_name
                     signature_type10 = "APPROVE"
                     
-                    
-            #INDUSTRIAL TECHNOLOGY
             if doe.exists() and ded.exists() :
                 faculty_approved = clearance_form_table.objects.filter(id=id).values_list('it_dept_signature', flat=True).distinct()
                 it = str(faculty_approved[0])
@@ -5545,6 +5557,7 @@ def display_clearform(request, id):
 
     print('running')
     return render(request, 'html_files/clearance_form_display.html', context)
+
 
 
 @login_required(login_url='/')

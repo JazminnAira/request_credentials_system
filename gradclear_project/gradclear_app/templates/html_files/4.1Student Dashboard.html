@@ -681,9 +681,9 @@ Adviser:
         color: #000;
         width: max-content;
     }
-    table{
+    /* table{
        min-width: max-content;
-    }
+    } */
     thead{
         position: sticky;
         top: 0px;
@@ -763,7 +763,7 @@ Adviser:
                     <div class="modal-body" id="account_body_41">
 
                         <!--ACCOUNT CONTENT TABLE-->
-                        <table class="table-responsive-sm table-responsive-md" >
+                        <table id="table" class="table-responsive-sm table-responsive-sm" >
                             <tr>
                                 <td><b>Name:</b></td>
                                 <td>{{request.user.first_name}} {{request.user.last_name}}</td>
