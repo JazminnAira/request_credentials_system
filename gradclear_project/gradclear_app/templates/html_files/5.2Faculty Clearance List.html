@@ -558,7 +558,7 @@ Adviser:
             <br>
             <!--ATTACH ESIGN BUTTON-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">LIVE SIGNATURE</button>
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">E-SIGNATURE</button>
                 <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
             </div>
             <br>
@@ -572,7 +572,7 @@ Adviser:
             <br>
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE</button><br>
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE MANUALLY</button><br>
             </div>
         </div>
 
@@ -583,11 +583,11 @@ Adviser:
                 <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-40 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             {% else %}
-                <div clas="p-2 border rounded">NO LIVE E-SIGNATURE SAVED</div>
+                <div clas="p-2 border rounded">NO E-SIGNATURE SAVED</div>
             {% endif %}
             </div>
             <br>
-            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
+            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">CREATE SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
                 <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
@@ -1053,11 +1053,11 @@ Adviser:
     
     //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
     if(document.getElementById('esign_checker').value == ""){
-        document.getElementById('esign_attach_sig_btn').textContent = "DRAW E-LIVE SIGNATURE";
+        document.getElementById('esign_attach_sig_btn').textContent = "CREATE E-LIVE SIGNATURE";
     };
     
     if(document.getElementById('upload_checker').value == ""){
-        document.getElementById('upload_attach_sig_btn').textContent = "UPLOAD SIGNATURE";
+        document.getElementById('upload_attach_sig_btn').textContent = "ATTACH SIGNATURE";
     };
 
     function openfdb() {
