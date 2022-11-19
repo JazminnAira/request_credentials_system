@@ -5019,6 +5019,22 @@ def faculty_updateContact(request):
 
     return render(request, 'html_files/5.1Faculty Dashboard.html')
 
+@login_required(login_url='/')
+def reg_updateName(request):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR": 
+        print('here')
+        if request.method == "POST":
+            relast_name=request.POST.get('ln_box_071')
+            refirst_name=request.POST.get('fn_box_071')
+            a=request.POST.get('validator')
+        
+            user_table.objects.filter(id_number=a).update(last_name=relast_name, first_name=refirst_name,)
+            return redirect('/registrar_dashboard')  
+    else:      
+        messages.error(request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/') 
+    print('running')
+    return render(request, 'html_files/7.1Registrar Dashboard.html' )
 
 @login_required(login_url='/')
 def reg_updateAddress(request):

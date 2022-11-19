@@ -551,9 +551,14 @@ Adviser:
                                             {% csrf_token %}
                                                 <select onchange="this.form.submit()" name="or_select" id="changer"> 
                                                     <option value="">{{instance.official_receipt}}</option>
-                                                    <option value="✔">✔</option>
+                                                    <option id="or" value="✔">✔</option>
                                                     <option value="❌">❌</option>
                                                 </select>
+                                                {% if instance.official_receipt == "✔" %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input id="or_number" name="or_number" placeholder="e.g 00001"  class="form-control-sm" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% endif %}
                                         </form> 
                                     </td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
@@ -613,6 +618,7 @@ Adviser:
 
 
 <script>
+
     // no data by default
     document.getElementById('button_sorter').onclick = function() {
         location.href = "/registrar_dashboard_organize_request_list/ALL"
@@ -700,6 +706,18 @@ Adviser:
         })
     }
 
+    // ONLY NUMBERS IN INPUT BOX JS
+     function isNumber(evt) {
+        if (event.key.length === 1 && /\D/.test(event.key)) {
+            event.preventDefault();
+        }
+    }
+    $.fn.digits = function() {
+        return this.each(function() {
+            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        })
+    }
+    $("span.numbers").digits();
 
 
     //MULTIPLE SPACE REMOVER

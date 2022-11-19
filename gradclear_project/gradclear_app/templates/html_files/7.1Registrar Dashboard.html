@@ -978,7 +978,7 @@ Adviser:
         border: 1px solid #000000;
     }
     
-    #addresssavechanges_btn_71,
+    #namesavechanges_btn_71,
     #emailsavechanges_btn_71,
     #passwordsavechanges_btn_71,
     #cancel_btn1_71,
@@ -991,7 +991,7 @@ Adviser:
         border-radius: 10px;
     }
     
-    #addresssavechanges_btn_71:hover,
+    #namesavechanges_btn_71:hover,
     #emailsavechanges_btn_71:hover,
     #passwordsavechanges_btn_71:hover,
     #cancel_btn1_71:hover,
@@ -1132,12 +1132,12 @@ Adviser:
         color: white;
         background-color: #d3324d;
     }
-    #passwordsavechanges_btn_71 {
+    #passwordsavechanges_sbtn_71 {
         border-radius: 10px;
         background-color: #c51d3a;
         color: white;
     }
-    #passwordsavechanges_btn_71:hover {
+    #passwordsavechanges_sbtn_71:hover {
         color: white;
         background-color: #d3324d;
     }
@@ -1346,13 +1346,15 @@ Adviser:
                         <div id="accordion">
                             <div>
 
-                                <!--ADRESS CARD-->
+
+                                <form method="POST" action="reg_updateName">
+                                    {% csrf_token %}
                                 <div class="card-header">
-                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_71">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_71">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex bd-highlight">
-                                                <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="address" id="address_lbl_71">
-                                                    Address: {{request.user.address}}</div>
+                                            <div class="d-flex justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;" id="uname_lbl_71">
+                                                     User Name: {{request.user.first_name}} {{request.user.middle_name}} {{request.user.last_name}} </div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;"
                                                  id="edit_btn_71"><button class="btn btn-secondary btn-sm" 
                                                  type="submit">Edit<i class="fa fa-edit"></i></div>
@@ -1360,23 +1362,31 @@ Adviser:
                                         </table>
                                     </a>
                                 </div>
-                                <form method = "POST" action="reg_updateAddress">
-                                    {% csrf_token %}
-                                    <div id="collapseTwo_71" class="collapse" data-parent="#accordion">
+                                
+                                    <div id="collapseOne_71" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <div class="form-inline">
-                                                <input type="address" hidden name="validator" value= {{request.user.id_number}}> 
-                                                <label for="name" class="my-1 mr-4" id="address_lbl_71">Address:</label>
-                                                <input type="address" id="address_box_71" name="address_box_071" value="{{ request.GET.address_box_071 }}" class="form-control 
-                                                 col-lg mr-1" placeholder="House No., Street, Subdivision, Brgy., Province" required>
-                                                <button class="btn btn-secondary btn-sm mr-1" name="submit3"
-                                                 id="addresssavechanges_btn_71" type="submit" >Save Changes</button><br>
+                                                <label for="name" class="my-1 mr-4">Name:</label>
+
+                                                <input type="text" oninput="this.value = this.value.toUpperCase()" 
+                                                id="fn_box_71" name="fn_box_071" value="{{ request.GET.fn_box_071 }}" class="form-control mr-1" placeholder="First Name" 
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || 
+                                                (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+                                                <input type="text" hidden name="validator" value= {{request.user.id_number}}> 
+                                                <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                                id="ln_box_71" name="ln_box_071" value="{{ request.GET.ln_box_071 }}" class="form-control mr-1" placeholder="Last Name" 
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                                                (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" required>
+                                                <!-- <input type="text" oninput="this.value = this.value.toUpperCase()"
+                                                 id="mn_box_71" name="mn_box_071" value="{{ request.GET.mn_box_071 }}" class="form-control  mr-1" placeholder="Middle Name"
+                                                  onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
+                                                   (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"> -->
+                                                <button class="btn btn-secondary btn-sm" name="submit2" id="namesavechanges_btn_71"
+                                                 type="submit">Save Changes</button><br>
                                                 </div><br>
                                             </div>
                                 </div>
                                 </form>
-
-
 
                                 <!--EMAIL CARD-->
                                 <div class="card-header">
@@ -1540,7 +1550,7 @@ Adviser:
                             </div>
                              <!--CHANGE PASSWORD MODAL FOOTER-->
                             <div class="modal-footer" id="account_footer_71">
-                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit5" id="passwordsavechanges_btn_71" >Save Changes</button>
+                                <button class="btn btn-secondary btn-sm "  type="submit" name="submit5" id="passwordsavechanges_sbtn_71" >Save Changes</button>
                             </div>
                         </div>
                     </form>    

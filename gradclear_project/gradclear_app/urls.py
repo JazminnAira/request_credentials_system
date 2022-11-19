@@ -124,6 +124,7 @@ urlpatterns = [
      path('faculty_updateContact', faculty_updateContact, name='faculty_updateContact'),
 
      # UPDATE REGISTRAR SETTINGS
+     path('reg_updateName', reg_updateName, name='reg_updateName'),
      path('reg_updateAddress', reg_updateAddress, name='reg_updateAddress'),
      path('reg_updateEmail', reg_updateEmail, name='reg_updateEmail'),
      path('reg_updatePassword', reg_updatePassword, name='reg_updatePassword'),

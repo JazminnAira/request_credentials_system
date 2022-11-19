@@ -456,7 +456,7 @@ Adviser:
         }
     }
     
-    .fa-ellipsis-v,
+    .fa-arrow-left,
     .fa-print,
     .fa-home {
         color: white;
@@ -468,6 +468,9 @@ Adviser:
         background-color: #d3324d;
     }
     #print_btn:hover {
+        background-color: #616161;
+    }
+    #back_btn:hover {
         background-color: #616161;
     }
 
@@ -504,6 +507,16 @@ Adviser:
             </a>
             {% endif %}
         </li>
+
+        <li>
+            {% if request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'registrar_dashboard_request_list' %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
+                <i class="fa fa-arrow-left" ></i>
+            </a>
+            {% endif%}
+          
+        </li>
+
 
     </ul>
 
