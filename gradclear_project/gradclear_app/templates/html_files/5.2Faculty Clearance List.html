@@ -545,7 +545,7 @@ Adviser:
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >X</button></div>
         <div class = "p-4" id="show_details">
-            <div class="bg-dark p-2"><h3 class = "text-white">APPROVE</h3></div>
+            <div class="bg-dark p-2"><h3 class = "text-white">APPROVE USING:</h3></div>
         </div>
         
         <input type="text" id="attach_signature_to" hidden>
@@ -575,19 +575,21 @@ Adviser:
                 <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE MANUALLY</button><br>
             </div>
         </div>
-
+        
         <div id="create_signature_area" class="p-1" hidden>
-            <div id = "esignature_display" class = "m-2 mt-3 p-1" align = "center">
+            <div id = "esignature_display" class = "m-2 mt-2 p-1" align="center">
             {% if e_signature %}
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR E-SIGNATURE</h4></div>
-                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-40 border border-dark rounded" >
+                <div class = "bg-dark p-2" align="left"><h4 class = "text-white">CURRENT E-SIGNATURE:</h4></div>
+                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             {% else %}
-                <div clas="p-2 border rounded">NO E-SIGNATURE SAVED</div>
+            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT E-SIGNATURE</h4></div>
+                <div clas="p-2 border rounded">NO CURRENT E-SIGNATURE</div>
             {% endif %}
             </div>
-            <br>
-            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">CREATE SIGNATURE HERE</h4></div>
+            <hr>
+        
+            <div class = "bg-dark p-2 mt-2"><h4 id = "new_signature_text" class = "text-white">CREATE SIGNATURE HERE</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
                 <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
@@ -597,11 +599,12 @@ Adviser:
         
         <div id = "upload_signature_display" class = "p-3" hidden>
         {% if uploaded_signature %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
+            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
             <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
             <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
         {% else %}
-            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
+            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
+            <div class="p-2 border rounded">NO CURRENT UPLOADED SIGNATURE</div>
         {% endif %}
         </div>
         <form method="POST" action ="update_clearance_signature/{{id}}" enctype="multipart/form-data">
@@ -609,7 +612,7 @@ Adviser:
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
             <input type="text" name ="id_num" value ="{{id}}" hidden>
             <div id ="upload_signature_area" class="p-2" hidden>
-                <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
+                <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white" id="uplaod_text">UPLOAD SIGNATURE HERE</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
                 <p><label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></p>
@@ -1054,10 +1057,14 @@ Adviser:
     //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
     if(document.getElementById('esign_checker').value == ""){
         document.getElementById('esign_attach_sig_btn').textContent = "CREATE E-LIVE SIGNATURE";
+    }else{
+        document.getElementById('new_signature_text').innerHTML = "CREATE NEW E-SIGNATURE"
     };
     
     if(document.getElementById('upload_checker').value == ""){
         document.getElementById('upload_attach_sig_btn').textContent = "ATTACH SIGNATURE";
+    }else{
+        document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
     function openfdb() {
