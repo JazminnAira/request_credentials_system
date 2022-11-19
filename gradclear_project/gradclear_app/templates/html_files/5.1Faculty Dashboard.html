@@ -664,9 +664,19 @@ Adviser:
         color: #000;
         width: max-content;
     }
-    table{
-       min-width: max-content;
+    #btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: #fff;
     }
+    #btn:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
+    }
+    /* table{
+       min-width: max-content;
+    } */
     thead{
         position: sticky;
         top: 0px;
@@ -739,7 +749,7 @@ Adviser:
                     <div class="modal-body" id="account-body_51">
 
                         <!--ACCOUNT TABLE MODAL-->
-                        <table class="table-responsive-sm table-responsive-md">
+                        <table class="table-responsive-sm table-responsive-lg">
                             <tr>
                                 <td><b>Name:</b> </td>
                                 <td>{{request.user.first_name}} {{request.user.last_name}}</td>
@@ -911,7 +921,7 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td><a href="display_gradform/{{ instance.id }}"><button type="button">View Form</button></a></td>
+                            <td><a href="display_gradform/{{ instance.id }}" id="btn"><button type="button" id="btn">View Form</button></a></td>
                             
                     </tbody>
                     {% endfor %}
@@ -923,12 +933,12 @@ Adviser:
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td><a href="display_clearform/{{ instance.id }}"><button type="button">View Form</button></a></td>
+                            <td><a href="display_clearform/{{ instance.id }}"id="btn"><button type="button" id="btn">View Form</button></a></td>
                             
                             {% if val == 'UNAPPROVED' %}
                             <script>h3_title.innerText = "Unapproved Students";</script>
                             <td><input type="text" name="id_from_table" hidden value={{instance.id}}>
-                                <button class="button"><a style="color: #fff;" href="update/{{ instance.id }}" >Approve</a></button></td>
+                                <button class="button" id="btn"><a style="color: #fff;" href="update/{{ instance.id }}" id="btn" >Approve</a></button></td>
                             
                             {% elif val == 'APPROVED' %}
                             <script>h3_title.innerText = "Approved Students";</script>

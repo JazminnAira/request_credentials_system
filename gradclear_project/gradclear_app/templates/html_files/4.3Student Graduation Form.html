@@ -578,10 +578,10 @@ Adviser:
            
             <div class="radio" onkeyup="isEmpty()" id="radio_43">
                 <label class="my-1 mr-4" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43"  oninput="enter_dayeve()">Day
+                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43" onchange="radio_boxes(this)">Day
                 </label>
                 <label class="my-1 mr-4" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43"  oninput="enter_dayeve()">Eve  
+                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43" onchange="radio_boxes(this)">Eve  
                 </label>
             </div>
             </div>
@@ -591,10 +591,10 @@ Adviser:
                 <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
                 
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43" oninput="enter_study() " onclick="getStdfor()"required>Semester
+                    <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43"  onchange="radio_boxes(this)" onclick="getStdfor()"required>Semester
                 </label>
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43" oninput="enter_study()" onclick="getStdfor()" required>  Summer    
+                    <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43"  onchange="radio_boxes(this)" onclick="getStdfor()" required>  Summer    
                 </label>
             </div>
             </div>
@@ -609,11 +609,11 @@ Adviser:
                     <label for="name" class="my-1 mr-3" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
 
                     <div>      
-                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" oninput="enter_name2()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required>
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="mn_box_430" id="mn_box_43" class="form-control " placeholder="Middle Name" onkeyup="isEmpty()" value="{{request.user.middle_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly>
-                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control mr-3" placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control mr-3" placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"  onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required autofocus>
 
                     </div>
@@ -658,153 +658,163 @@ Adviser:
             </thead>
             <tbody id="Add">
                 <tr>
-                    <td>{{form.subject1}}</td>
-                    <td>
-                        <div class="input-group">
+                    <td hidden><input type="checkbox" id="boxes" name="boxes" class="check" checked></td>
+                    <td oninput="row1(this)">{{form.subject1}}</td>
+                    <td >
+                        <div class="input-group" oninput="row1(this)">
                            
                         {{form.starttime1_1}}
                         {{form.endtime1_1}}
                         {{form.day1_1}}
                         </div>
                     </td>
-                    <td>{{form.room1}}</td>
-                    <td><select name="faculty1" class="form-control" >
+                    <td oninput="row1(this)">{{form.room1}}</td>
+                    <td><select id ="faculty1"  name="faculty1" class="form-control" onchange = "row1(this)">
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
             <tr>
-                <td>{{form.subject2}}</td>
+                <td hidden><input type="checkbox" id="boxes2" name="boxes" class="check" checked></td>
+                <td oninput="row2(this)">{{form.subject2}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row2(this)">
                        
                     {{form.starttime1_2}}
                     {{form.endtime1_2}}
                     {{form.day1_2}}
                     </div>
                 </td>
-                <td>{{form.room2}}</td>
-                <td><select name="faculty2" class="form-control" >
+                <td oninput="row2(this)">{{form.room2}}</td>
+                <td><select id ="faculty2" name="faculty2" class="form-control" onchange="row2(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject3}}</td>
+                <td hidden><input type="checkbox" id="boxes3" name="boxes" class="check" checked></td>
+                <td oninput="row3(this)">{{form.subject3}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row3(this)">
                        
                     {{form.starttime1_3}}
                     {{form.endtime1_3}}
                     {{form.day1_3}}
                     </div>
                 </td>
-                <td>{{form.room3}}</td>
-                <td><select name="faculty3" class="form-control" >
+                <td oninput="row3(this)">{{form.room3}}</td>
+                <td><select id ="faculty3" name="faculty3" class="form-control" onchange="row3(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject4}}</td>
+                <td hidden><input type="checkbox" id="boxes4" name="boxes" class="check" checked></td>
+                <td oninput="row4(this)">{{form.subject4}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row4(this)">
                     {{form.starttime1_4}}
                     {{form.endtime1_4}}
                     {{form.day1_4}}
                     </div>
                 </td>
-                <td>{{form.room4}}</td>
-                <td><select name="faculty4" class="form-control" >
+                <td oninput="row4(this)">{{form.room4}}</td>
+                <td><select id ="faculty4" name="faculty4" class="form-control" onchange="row4(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject5}}</td>
+                <td hidden><input type="checkbox" id="boxes5" name="boxes" class="check" checked></td>
+                <td oninput="row5(this)">{{form.subject5}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row5(this)">
                     {{form.starttime1_5}}
                     {{form.endtime1_5}}
                     {{form.day1_5}}
                     </div>
                 </td>
-                <td>{{form.room5}}</td>
-                <td><select name="faculty5" class="form-control" >
+                <td oninput="row5(this)">{{form.room5}}</td>
+                <td><select id ="faculty5" name="faculty5" class="form-control" onchange="row5(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject6}}</td>
+                <td hidden><input type="checkbox" id="boxes6" name="boxes" class="check" checked></td>
+                <td oninput="row6(this)">{{form.subject6}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row6(this)">
                     {{form.starttime1_6}}
                     {{form.endtime1_6}}
                     {{form.day1_6}}
                     </div>
                 </td>
-                <td>{{form.room6}}</td>
-                <td><select name="faculty6" class="form-control" >
+                <td oninput="row6(this)">{{form.room6}}</td>
+                <td><select name="faculty6" id ="faculty6" class="form-control" onchange="row6(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject7}}</td>
+                <td hidden><input type="checkbox" id="boxes7" name="boxes" class="check" checked></td>
+                <td oninput="row7(this)">{{form.subject7}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row7(this)">
                     {{form.starttime1_7}}
                     {{form.endtime1_7}}
                     {{form.day1_7}}
                     </div>
                 </td>
-                <td>{{form.room7}}</td>
-                <td><select name="faculty7" class="form-control" >
+                <td oninput="row7(this)">{{form.room7}}</td>
+                <td><select name="faculty7" id ="faculty7" class="form-control" onchange="row7(this)" disabled >
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject8}}</td>
+                <td hidden><input type="checkbox" id="boxes8" name="boxes" class="check" checked></td>
+                <td oninput="row8(this)">{{form.subject8}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row8(this)">
                     {{form.starttime1_8}}
                     {{form.endtime1_8}}
                     {{form.day1_8}}
                     </div>
                 </td>
-                <td>{{form.room8}}</td>
-                <td><select name="faculty8" class="form-control" >
+                <td oninput="row8(this)">{{form.room8}}</td>
+                <td><select name="faculty8" id ="faculty8" class="form-control" onchange="row8(this)" disabled >
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
-                <td>{{form.subject9}}</td>
+                <td hidden><input type="checkbox" id="boxes9" name="boxes" class="check" checked></td>
+                <td oninput="row9(this)" >{{form.subject9}}</td>
                 <td>
-                    <div class="input-group">
+                    <div class="input-group" oninput="row9(this)">
                     {{form.starttime1_9}}
                     {{form.endtime1_9}}
                     {{form.day1_9}}
                     </div>
                 </td>
-                <td>{{form.room9}}</td>
-                <td><select name="faculty9" class="form-control" >
+                <td oninput="row9(this)">{{form.room9}}</td>
+                <td><select name="faculty9" id ="faculty9" class="form-control" onchange="row9(this)" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select></td>
             </tr>
             <tr>
+                <td hidden><input type="checkbox" id="boxes10" name="boxes" class="check" checked></td>
                 <td>{{form.subject10}}</td>
                 <td>
                     <div class="input-group">
@@ -814,7 +824,7 @@ Adviser:
                     </div>
                 </td>
                 <td>{{form.room10}}</td>
-                <td><select name="faculty10" class="form-control" >
+                <td><select name="faculty10" id ="faculty10" class="form-control" disabled>
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
@@ -839,150 +849,160 @@ Adviser:
             </thead>
             <tbody>
                 <tr>
-                    <td>{{form.addsubject1}}</td>
+                    <td hidden><input type="checkbox" id="boxes11" name="boxes" class="check" checked></td>
+                    <td oninput="addrow1(this)">{{form.addsubject1}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow1(this)">
                         {{form.add_starttime1_1}}
                         {{form.add_endtime1_1}}
                         {{form.addday1_1}}
                         </div>
                     </td>
-                    <td>{{form.addroom1}}</td>
-                    <td><select name="addfaculty1" class="form-control" >
+                    <td oninput="addrow1(this)">{{form.addroom1}}</td>
+                    <td><select name="addfaculty1" id ="addfaculty1" class="form-control" oninput="addrow1(this)">
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject2}}</td>
+                    <td hidden><input type="checkbox" id="boxes12" name="boxes" class="check" checked></td>
+                    <td oninput="addrow2(this)">{{form.addsubject2}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow2(this)">
                         {{form.add_starttime1_2}}
                         {{form.add_endtime1_2}}
                         {{form.addday1_2}}
                         </div>
                     </td>
-                    <td>{{form.addroom2}}</td>
-                    <td><select name="addfaculty2" class="form-control" >
+                    <td oninput="addrow2(this)">{{form.addroom2}}</td>
+                    <td><select name="addfaculty2" id ="addfaculty2" class="form-control" onchange="addrow2(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject3}}</td>
+                    <td hidden><input type="checkbox" id="boxes13" name="boxes" class="check" checked></td>
+                    <td oninput="addrow3(this)">{{form.addsubject3}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow3(this)">
                         {{form.add_starttime1_3}}
                         {{form.add_endtime1_3}}
                         {{form.addday1_3}}
                         </div>
                     </td>
-                    <td>{{form.addroom3}}</td>
-                    <td><select name="addfaculty3" class="form-control" >
+                    <td oninput="addrow3(this)">{{form.addroom3}}</td>
+                    <td><select name="addfaculty3" id ="addfaculty3" class="form-control" onchange="addrow3(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject4}}</td>
+                    <td hidden><input type="checkbox" id="boxes14" name="boxes" class="check" checked></td>
+                    <td oninput="addrow4(this)">{{form.addsubject4}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow4(this)">
                         {{form.add_starttime1_4}}
                         {{form.add_endtime1_4}}
                         {{form.addday1_4}}
                         </div>
                     </td>
-                    <td>{{form.addroom4}}</td>
-                    <td><select name="addfaculty4" class="form-control" >
+                    <td oninput="addrow4(this)">{{form.addroom4}}</td>
+                    <td><select name="addfaculty4" id ="addfaculty4" class="form-control" onchange="addrow4(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject5}}</td>
+                    <td hidden><input type="checkbox" id="boxes15" name="boxes" class="check" checked></td>
+                    <td oninput="addrow5(this)">{{form.addsubject5}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow5(this)">
                         {{form.add_starttime1_5}}
                         {{form.add_endtime1_5}}
                         {{form.addday1_5}}
                         </div>
                     </td>
-                    <td>{{form.addroom5}}</td>
-                    <td><select name="addfaculty5" class="form-control" >
+                    <td oninput="addrow5(this)">{{form.addroom5}}</td>
+                    <td><select name="addfaculty5" id ="addfaculty5" class="form-control" oninput="addrow5(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject6}}</td>
+                    <td hidden><input type="checkbox" id="boxes16" name="boxes" class="check" checked></td>
+                    <td oninput="addrow6(this)">{{form.addsubject6}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow6(this)">
                         {{form.add_starttime1_6}}
                         {{form.add_endtime1_6}}
                         {{form.addday1_6}}
                         </div>
                     </td>
-                    <td>{{form.addroom6}}</td>
-                    <td><select name="addfaculty6" class="form-control" >
+                    <td oninput="addrow6(this)">{{form.addroom6}}</td>
+                    <td><select name="addfaculty6" id ="addfaculty6" class="form-control" onchange="addrow6(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject7}}</td>
+                    <td hidden><input type="checkbox" id="boxes17" name="boxes" class="check" checked></td>
+                    <td oninput="addrow7(this)">{{form.addsubject7}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow7(this)">
                         {{form.add_starttime1_7}}
                         {{form.add_endtime1_7}}
                         {{form.addday1_7}}
                         </div>
                     </td>
-                    <td>{{form.addroom7}}</td>
-                    <td><select name="addfaculty7" class="form-control" >
+                    <td oninput="addrow7(this)">{{form.addroom7}}</td>
+                    <td><select name="addfaculty7" id ="addfaculty7" class="form-control" onchange="addrow7(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject8}}</td>
+                    <td hidden><input type="checkbox" id="boxes18" name="boxes" class="check" checked></td>
+                    <td oninput="addrow8(this)">{{form.addsubject8}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow8(this)">
                         {{form.add_starttime1_8}}
                         {{form.add_endtime1_8}}
                         {{form.addday1_8}}
                         </div>
                     </td>
-                    <td>{{form.addroom8}}</td>
-                    <td><select name="addfaculty8" class="form-control" >
+                    <td oninput="addrow8(this)">{{form.addroom8}}</td>
+                    <td><select name="addfaculty8" id ="addfaculty8" class="form-control" onchange="addrow8(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
-                    <td>{{form.addsubject9}}</td>
+                    <td hidden><input type="checkbox" id="boxes19" name="boxes" class="check" checked></td>
+                    <td oninput="addrow9(this)">{{form.addsubject9}}</td>
                     <td>
-                        <div class="input-group">
+                        <div class="input-group" oninput="addrow9(this)">
                         {{form.add_starttime1_9}}
                         {{form.add_endtime1_9}}
                         {{form.addday1_9}}
                         </div>
                     </td>
-                    <td>{{form.addroom9}}</td>
-                    <td><select name="addfaculty9" class="form-control" >
+                    <td oninput="addrow9(this)">{{form.addroom9}}</td>
+                    <td><select name="addfaculty9" id ="addfaculty9" class="form-control" onchange="addrow9(this)" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}</select></td>
                 </tr>
                 <tr>
+                    <td hidden><input type="checkbox" id="boxes20" name="boxes" class="check" checked></td>
                     <td>{{form.addsubject10}}</td>
                     <td>
                         <div class="input-group">
@@ -992,7 +1012,7 @@ Adviser:
                         </div>
                     </td>
                     <td>{{form.addroom10}}</td>
-                    <td><select name="addfaculty10" class="form-control" >
+                    <td><select name="addfaculty10" id ="addfaculty10" class="form-control" disabled>
                         <option value="1" selected>--SELECT--</option>
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
@@ -1006,16 +1026,16 @@ Adviser:
               <div class="form-inline">
                 <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
 
-                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
+                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="radio_boxes(this)"  placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
 
 
                 <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" required>Yes
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43" onchange="radio_boxes(this)" onclick="EnableDisableEnrolled();" required>Yes
                     
                 </label>
 
                 <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" required>No
+                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"  onchange="radio_boxes(this)" onclick="EnableDisableDeadline();" required>No
                 </label>
         </div>
 
@@ -1024,7 +1044,7 @@ Adviser:
            <!--DEADLINE BOX-->
             <div class="form-inline">
                 <label for="name" class="col-form-label my-1 ">If no, file your application papers. Deadline: </label>
-                <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control my-1 mr-4" oninput="enter_deadline()" disabled required>
+                <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control my-1 mr-4" oninput="radio_boxes(this)" disabled required>
             </div><br>
 
 
@@ -1059,7 +1079,7 @@ Adviser:
             <div style = "display: flex; justify-content:flex-end">
                 <!-- <a href="display_gradform/{{ instance.id }}" class="btn btn-secondary " type="submit"
                 id="submit_btn_43" role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" disabled>Submit</a> -->
-                <button class="btn btn-secondary " id="submit_btn_43"  type="submit" disabled>Submit</button>
+                <button type ="button" class="btn btn-secondary " id="submit_btn_43" name="submit_btn_43" onclick="submit_form(this)" disabled>Submit</button>
             </div>
 
 
@@ -1221,8 +1241,6 @@ Adviser:
 
 <script>
 
-submit_btn_43
-
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }
@@ -1300,46 +1318,6 @@ submit_btn_43
     document.getElementById("enrolledthsisem_box_43").required = false;
     document.getElementById("deadline_box_43").required = false;
 
-    // CHECK EMPTY AND REQUIRED INPUTBOXES
-
-    // Day & Eve Check 
-    function dayeve_check() {
-        if (document.getElementById("day_radio_43").checked || document.getElementById("eve_radio_43").checked) {
-            return true;
-        } else {
-
-            var dayeve = "*This field is required.";
-            document.getElementById("dayeve_error").style.color = "red";
-            document.getElementById("dayeve_error").style.fontSize = "13px";
-
-            document.getElementById("dayeve_error").innerHTML = dayeve;
-        }
-    }
-
-    // Name Check 
-    function name_check() {
-        var last = document.getElementById("ln_box_43").value;
-        var first = document.getElementById("fn_box_43").value;
-
-        if (last && first != "") {
-            return true;
-        } else if (last == "" && first != "") {
-            document.getElementById("ln_box_43").style.borderColor = "red";
-
-
-        } else if (last != "" && first == "") {
-            document.getElementById("fn_box_43").style.borderColor = "red";
-
-        } else {
-            var name = "*This field is required";
-
-
-            document.getElementById("ln_box_43").style.borderColor = "red";
-            document.getElementById("fn_box_43").style.borderColor = "red";
-
-        }
-    }
-
     // Course Check 
     function course_check() {
         var course_input = document.getElementById("course_drp1_43").value;
@@ -1350,90 +1328,6 @@ submit_btn_43
     }
     course_check();
 
-    function course_checkbtn() {
-        var c_input = document.getElementById("course_drp1_43").value;
-        if (c_input == "sel_course") {
-
-            document.getElementById("course_drp1_43").style.borderColor = "red";
-
-        } else {
-            enter_course();
-        }
-    }
-
-    // Study Load Check
-    function study_check() {
-        if (document.getElementById("semester_radio_43").checked || document.getElementById("summer_radio_43").checked) {
-            return true;
-        } else {
-            var study = "*This field is required.";
-            document.getElementById("study_error").style.color = "red";
-            document.getElementById("study_error").style.fontSize = "13px";
-
-            document.getElementById("study_error").innerHTML = study;
-        }
-    }
-
-    // Enrolled Check
-    function enroll_check() {
-        if (document.getElementById("yes_radio_43").checked) {
-
-            document.getElementById("enrolledthsisem_box_43").required = true;
-
-            var check_enroll = document.getElementById("enrolledthsisem_box_43").value;
-            if (check_enroll == "") {
-
-                document.getElementById("enrolledthsisem_box_43").style.borderColor = "red";
-
-            } else {
-                return submitForm();
-            }
-
-        } else if (document.getElementById("no_radio_43").checked) {
-            document.getElementById("deadline_box_43").required = true;
-            var ded = document.getElementById("deadline_box_43").value;
-
-            if (!ded) {
-
-                document.getElementById("deadline_box_43").style.borderColor = "red";
-
-            } else {
-                return submitForm();
-            }
-        } else {
-            alert("Input Fields are Incomplete!")
-        }
-    }
-
-    function gradform_check() {
-        dayeve_check();
-        name_check();
-        course_checkbtn();
-        study_check();
-        enroll_check();
-        event.preventDefault();
-    }
-
-    // DISABLE ERRORS IN REQUIRED INPUTS
-
-    // Day eve Dissable Error
-    function enter_dayeve() {
-        if (document.getElementById('day_radio_43').checked || document.getElementById('eve_radio_43').checked) {
-            var check_success = "";
-            document.getElementById("dayeve_error").innerHTML = check_success;
-        }
-    }
-
-    // Name Dissable Error
-    function enter_name1() {
-        document.getElementById("ln_box_43").style.removeProperty('border');
-
-    }
-
-    function enter_name2() {
-        document.getElementById("fn_box_43").style.removeProperty('border');
-
-    }
 
     // course Dissbale error
     function enter_course() {
@@ -1443,25 +1337,6 @@ submit_btn_43
             document.getElementById("course_drp1_43").style.removeProperty('border');
 
         }
-    }
-
-    // Study load Dissable Error
-    function enter_study() {
-        if (document.getElementById('semester_radio_43').checked || document.getElementById('summer_radio_43').checked) {
-
-        }
-    }
-
-    // Enroll Dissable Error
-    function enter_enroll() {
-        document.getElementById("enrolledthsisem_box_43").style.removeProperty('border');
-
-    }
-
-    function enter_deadline() {
-        document.getElementById("deadline_box_43").style.removeProperty('border');
-
-
     }
 
     // ONLY NUMBERS IN INPUT BOX JS
@@ -1641,9 +1516,9 @@ submit_btn_43
 
         if (!enrolledthsisem_box.disabled) {
             enrolledthsisem_box.focus();
-
-        }
-    }
+            document.getElementById("deadline_box_43").disabled =true;
+        };
+    };
 
     function EnableDisableDeadline() {
 
@@ -1653,22 +1528,23 @@ submit_btn_43
 
         if (!deadline_box.disabled) {
             deadline_box.focus();
+            document.getElementById("enrolledthsisem_box_43").disabled=true;
 
-        }
-    }
+        };
+    };
 
-    function getStdfor() {
-        var ele = document.getElementsByName('stdfor_option');
-        var flag = 0;
-        for (var i = 0; i < ele.length; i++) {
-            if (ele[i].checked)
-                flag = 1;
-
-        }
-        if (flag == 1)
-            document.getElementById('submit_btn_43').disabled = false;
-    }
-
+    //ABLE SUBMIT BUTTON WHEN CHOOSING SEMMESTER AND SUMMER
+    //function getStdfor() {
+    //    var ele = document.getElementsByName('stdfor_option');
+    //    var flag = 0;
+    //    for (var i = 0; i < ele.length; i++) {
+    //        if (ele[i].checked)
+    //            flag = 1;
+    //
+    //    }
+    //    if (flag == 1)
+    //        document.getElementById('submit_btn_43').disabled = false;
+    //}
    
     function getCourse() {
 
@@ -1683,9 +1559,7 @@ submit_btn_43
                 $('#submit_btn_43').prop("disabled", false);
             }
         })
-
     }
-
 
     function getDay() {
         $("#day_box1_43").on("change", function() {
@@ -1701,7 +1575,6 @@ submit_btn_43
 
     }
 
-
     function getDay1() {
         $("#day2_box1_43").on("change", function() {
             var selVal = $(this).val();
@@ -1716,7 +1589,19 @@ submit_btn_43
 
     }
 
-
+    //Check RADIO BOXES
+    function radio_boxes(elem){
+        var checkboxes = document.querySelectorAll('input[type="radio"]:checked');
+        if(checkboxes.length == 3){
+            if(document.getElementById('deadline_box_43').value != "" || document.getElementById('enrolledthsisem_box_43').value != ""){
+                document.getElementById('submit_btn_43').disabled = false;
+            }else{
+                document.getElementById('submit_btn_43').disabled = true;
+            }
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+        };
+    };
 
     //Add Subject 
     function addRow() {
@@ -2014,4 +1899,661 @@ submit_btn_43
         });
 
     });
+
+    //RADIO BOXES ENABLING SUBMIT 
+    
+
+    //DISABLE ROWS WHEN BEFORE ROW DOESNT MEET THE REQUIRED Fields
+    function row1(elem){
+        if (document.getElementById('id_subject1').value !="" && document.getElementById('id_starttime1_1').value !="" && document.getElementById('id_endtime1_1').value !="" && document.getElementById('id_day1_1').value !="" && document.getElementById('faculty1').value != "1"){
+            document.getElementById('id_subject2').disabled = false;
+            document.getElementById('id_starttime1_2').disabled = false;
+            document.getElementById('id_endtime1_2').disabled = false;
+            document.getElementById('id_day1_2').disabled = false;
+            document.getElementById('id_room2').disabled = false;
+            document.getElementById('faculty2').disabled = false;
+            
+            document.getElementById('boxes').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject1').value =="" && document.getElementById('id_day1_1').value =="" && document.getElementById('faculty1').value == "1"){
+            document.getElementById('boxes').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject2').disabled = true;
+            document.getElementById('id_starttime1_2').disabled = true;
+            document.getElementById('id_endtime1_2').disabled = true;
+            document.getElementById('id_day1_2').disabled = true;
+            document.getElementById('id_room2').disabled = true;
+            document.getElementById('faculty2').disabled = true;
+
+            document.getElementById('boxes').checked = false;
+            check_rows();
+        };
+    };
+
+    function row2(elem){
+        if (document.getElementById('id_subject2').value !="" && document.getElementById('id_starttime1_2').value !="" && document.getElementById('id_endtime1_2').value !="" && document.getElementById('id_day1_2').value !="" && document.getElementById('faculty2').value != "1"){
+            document.getElementById('id_subject3').disabled = false;
+            document.getElementById('id_starttime1_3').disabled = false;
+            document.getElementById('id_endtime1_3').disabled = false;
+            document.getElementById('id_day1_3').disabled = false;
+            document.getElementById('id_room3').disabled = false;
+            document.getElementById('faculty3').disabled = false;
+            
+            document.getElementById('boxes2').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject2').value =="" && document.getElementById('id_day1_2').value =="" && document.getElementById('faculty2').value == "1"){
+            document.getElementById('boxes2').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject3').disabled = true;
+            document.getElementById('id_starttime1_3').disabled = true;
+            document.getElementById('id_endtime1_3').disabled = true;
+            document.getElementById('id_day1_3').disabled = true;
+            document.getElementById('id_room3').disabled = true;
+            document.getElementById('faculty3').disabled = true; 
+
+            document.getElementById('boxes2').checked = false;
+            check_rows();
+        };
+    };
+
+    function row3(elem){
+        if (document.getElementById('id_subject3').value !="" && document.getElementById('id_starttime1_3').value !="" && document.getElementById('id_endtime1_3').value !="" && document.getElementById('id_day1_3').value !="" && document.getElementById('faculty3').value != "1"){
+            document.getElementById('id_subject4').disabled = false;
+            document.getElementById('id_starttime1_4').disabled = false;
+            document.getElementById('id_endtime1_4').disabled = false;
+            document.getElementById('id_day1_4').disabled = false;
+            document.getElementById('id_room4').disabled = false;
+            document.getElementById('faculty4').disabled = false;
+            
+            document.getElementById('boxes3').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject3').value =="" && document.getElementById('id_day1_3').value =="" && document.getElementById('faculty3').value == "1"){
+            document.getElementById('boxes3').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject4').disabled = true;
+            document.getElementById('id_starttime1_4').disabled = true;
+            document.getElementById('id_endtime1_4').disabled = true;
+            document.getElementById('id_day1_4').disabled = true;
+            document.getElementById('id_room4').disabled = true;
+            document.getElementById('faculty4').disabled = true; 
+
+            document.getElementById('boxes3').checked = false;
+            check_rows();
+        };
+    };
+
+    function row4(elem){
+        if (document.getElementById('id_subject4').value !="" && document.getElementById('id_starttime1_4').value !="" && document.getElementById('id_endtime1_4').value !="" && document.getElementById('id_day1_4').value !="" && document.getElementById('faculty4').value != "1"){
+            document.getElementById('id_subject5').disabled = false;
+            document.getElementById('id_starttime1_5').disabled = false;
+            document.getElementById('id_endtime1_5').disabled = false;
+            document.getElementById('id_day1_5').disabled = false;
+            document.getElementById('id_room5').disabled = false;
+            document.getElementById('faculty5').disabled = false;
+
+            document.getElementById('boxes4').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject4').value =="" && document.getElementById('id_day1_4').value =="" && document.getElementById('faculty4').value == "1"){
+            document.getElementById('boxes4').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject5').disabled = true;
+            document.getElementById('id_starttime1_5').disabled = true;
+            document.getElementById('id_endtime1_5').disabled = true;
+            document.getElementById('id_day1_5').disabled = true;
+            document.getElementById('id_room5').disabled = true;
+            document.getElementById('faculty5').disabled = true; 
+
+            document.getElementById('boxes4').checked = false;
+            check_rows();
+        };
+    };
+
+    function row5(elem){
+        if (document.getElementById('id_subject5').value !="" && document.getElementById('id_starttime1_5').value !="" && document.getElementById('id_endtime1_5').value !="" && document.getElementById('id_day1_5').value !="" && document.getElementById('faculty5').value != "1"){
+            document.getElementById('id_subject6').disabled = false;
+            document.getElementById('id_starttime1_6').disabled = false;
+            document.getElementById('id_endtime1_6').disabled = false;
+            document.getElementById('id_day1_6').disabled = false;
+            document.getElementById('id_room6').disabled = false;
+            document.getElementById('faculty6').disabled = false;
+            
+            document.getElementById('boxes5').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject5').value =="" && document.getElementById('id_day1_5').value =="" && document.getElementById('faculty5').value == "1"){
+            document.getElementById('boxes5').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject6').disabled = true;
+            document.getElementById('id_starttime1_6').disabled = true;
+            document.getElementById('id_endtime1_6').disabled = true;
+            document.getElementById('id_day1_6').disabled = true;
+            document.getElementById('id_room6').disabled = true;
+            document.getElementById('faculty6').disabled = true; 
+            document.getElementById('boxes5').checked = false;
+            check_rows();
+        };
+    };
+
+    function row6(elem){
+        if (document.getElementById('id_subject6').value !="" && document.getElementById('id_starttime1_6').value !="" && document.getElementById('id_endtime1_6').value !="" && document.getElementById('id_day1_6').value !="" && document.getElementById('faculty6').value != "1"){
+            document.getElementById('id_subject7').disabled = false;
+            document.getElementById('id_starttime1_7').disabled = false;
+            document.getElementById('id_endtime1_7').disabled = false;
+            document.getElementById('id_day1_7').disabled = false;
+            document.getElementById('id_room7').disabled = false;
+            document.getElementById('faculty7').disabled = false;
+            
+            document.getElementById('boxes6').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject6').value =="" && document.getElementById('id_day1_6').value =="" && document.getElementById('faculty6').value == "1"){
+            document.getElementById('boxes6').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject7').disabled = true;
+            document.getElementById('id_starttime1_7').disabled = true;
+            document.getElementById('id_endtime1_7').disabled = true;
+            document.getElementById('id_day1_7').disabled = true;
+            document.getElementById('id_room7').disabled = true;
+            document.getElementById('faculty7').disabled = true; 
+            document.getElementById('boxes6').checked = false;
+            check_rows();
+        };
+    };
+
+    function row7(elem){
+        if (document.getElementById('id_subject7').value !="" && document.getElementById('id_starttime1_7').value !="" && document.getElementById('id_endtime1_7').value !="" && document.getElementById('id_day1_7').value !="" && document.getElementById('faculty7').value != "1"){
+            document.getElementById('id_subject8').disabled = false;
+            document.getElementById('id_starttime1_8').disabled = false;
+            document.getElementById('id_endtime1_8').disabled = false;
+            document.getElementById('id_day1_8').disabled = false;
+            document.getElementById('id_room8').disabled = false;
+            document.getElementById('faculty8').disabled = false;
+            
+            document.getElementById('boxes7').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject7').value =="" && document.getElementById('id_day1_7').value =="" && document.getElementById('faculty7').value == "1"){
+            document.getElementById('boxes7').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject8').disabled = true;
+            document.getElementById('id_starttime1_8').disabled = true;
+            document.getElementById('id_endtime1_8').disabled = true;
+            document.getElementById('id_day1_8').disabled = true;
+            document.getElementById('id_room8').disabled = true;
+            document.getElementById('faculty8').disabled = true; 
+            document.getElementById('boxes7').checked = false;
+            check_rows();
+        };
+    };
+    
+    function row8(elem){
+        if (document.getElementById('id_subject8').value !="" && document.getElementById('id_starttime1_8').value !="" && document.getElementById('id_endtime1_8').value !="" && document.getElementById('id_day1_8').value !="" && document.getElementById('faculty8').value != "1"){
+            document.getElementById('id_subject9').disabled = false;
+            document.getElementById('id_starttime1_9').disabled = false;
+            document.getElementById('id_endtime1_9').disabled = false;
+            document.getElementById('id_day1_9').disabled = false;
+            document.getElementById('id_room9').disabled = false;
+            document.getElementById('faculty9').disabled = false;
+            
+            document.getElementById('boxes8').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject8').value =="" && document.getElementById('id_day1_8').value =="" && document.getElementById('faculty8').value == "1"){
+            document.getElementById('boxes8').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject9').disabled = true;
+            document.getElementById('id_starttime1_9').disabled = true;
+            document.getElementById('id_endtime1_9').disabled = true;
+            document.getElementById('id_day1_9').disabled = true;
+            document.getElementById('id_room9').disabled = true;
+            document.getElementById('faculty9').disabled = true; 
+            document.getElementById('boxes8').checked = false;
+            check_rows();
+        };
+    };
+
+    function row9(elem){
+        if (document.getElementById('id_subject9').value !="" && document.getElementById('id_starttime1_9').value !="" && document.getElementById('id_endtime1_9').value !="" && document.getElementById('id_day1_9').value !="" && document.getElementById('faculty9').value != "1"){
+            document.getElementById('id_subject10').disabled = false;
+            document.getElementById('id_starttime1_10').disabled = false;
+            document.getElementById('id_endtime1_10').disabled = false;
+            document.getElementById('id_day1_10').disabled = false;
+            document.getElementById('id_room10').disabled = false;
+            document.getElementById('faculty10').disabled = false;
+            
+            document.getElementById('boxes9').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject9').value =="" && document.getElementById('id_day1_9').value =="" && document.getElementById('faculty9').value == "1"){
+            document.getElementById('boxes9').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+
+            document.getElementById('id_subject10').disabled = true;
+            document.getElementById('id_starttime1_10').disabled = true;
+            document.getElementById('id_endtime1_10').disabled = true;
+            document.getElementById('id_day1_10').disabled = true;
+            document.getElementById('id_room10').disabled = true;
+            document.getElementById('faculty10').disabled = true; 
+            document.getElementById('boxes9').checked = false;
+            check_rows();
+        };
+    };
+
+    function row10(elem){
+        if (document.getElementById('id_subject10').value !="" && document.getElementById('id_starttime1_10').value !="" && document.getElementById('id_endtime1_10').value !="" && document.getElementById('id_day1_10').value !="" && document.getElementById('faculty10').value != "1"){
+            document.getElementById('boxes10').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_subject10').value =="" && document.getElementById('id_day1_10').value =="" && document.getElementById('faculty10').value == "1"){
+            document.getElementById('boxes10').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes10').checked = false;
+            check_rows();
+        };
+    };
+
+    function addrow1(elem){
+        if (document.getElementById('id_addsubject1').value !="" && document.getElementById('id_add_starttime1_1').value !="" && document.getElementById('id_add_endtime1_1').value !="" && document.getElementById('id_addday1_1').value !="" && document.getElementById('addfaculty1').value != "1"){
+            document.getElementById('id_addsubject2').disabled = false;
+            document.getElementById('id_add_starttime1_2').disabled = false;
+            document.getElementById('id_add_endtime1_2').disabled = false;
+            document.getElementById('id_addday1_2').disabled = false;
+            document.getElementById('id_addroom2').disabled = false;
+            document.getElementById('addfaculty2').disabled = false;
+            
+            document.getElementById('boxes11').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject1').value =="" && document.getElementById('id_addday1_1').value =="" && document.getElementById('addfaculty1').value == "1"){
+            document.getElementById('boxes11').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject2').disabled = true;
+            document.getElementById('id_add_starttime1_2').disabled = true;
+            document.getElementById('id_add_endtime1_2').disabled = true;
+            document.getElementById('id_addday1_2').disabled = true;
+            document.getElementById('id_addroom2').disabled = true;
+            document.getElementById('addfaculty2').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes11').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow2(elem){
+        if (document.getElementById('id_addsubject2').value !="" && document.getElementById('id_add_starttime1_2').value !="" && document.getElementById('id_add_endtime1_2').value !="" && document.getElementById('id_addday1_2').value !="" && document.getElementById('addfaculty2').value != "1"){
+            document.getElementById('id_addsubject3').disabled = false;
+            document.getElementById('id_add_starttime1_3').disabled = false;
+            document.getElementById('id_add_endtime1_3').disabled = false;
+            document.getElementById('id_addday1_3').disabled = false;
+            document.getElementById('id_addroom3').disabled = false;
+            document.getElementById('addfaculty3').disabled = false;
+            
+            document.getElementById('boxes12').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject2').value =="" && document.getElementById('id_addday1_2').value =="" && document.getElementById('addfaculty2').value == "1"){
+            document.getElementById('boxes12').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject3').disabled = true;
+            document.getElementById('id_add_starttime1_3').disabled = true;
+            document.getElementById('id_add_endtime1_3').disabled = true;
+            document.getElementById('id_addday1_3').disabled = true;
+            document.getElementById('id_addroom3').disabled = true;
+            document.getElementById('addfaculty3').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes12').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow3(elem){
+        if (document.getElementById('id_addsubject3').value !="" && document.getElementById('id_add_starttime1_3').value !="" && document.getElementById('id_add_endtime1_3').value !="" && document.getElementById('id_addday1_3').value !="" && document.getElementById('addfaculty3').value != "1"){
+            document.getElementById('id_addsubject4').disabled = false;
+            document.getElementById('id_add_starttime1_4').disabled = false;
+            document.getElementById('id_add_endtime1_4').disabled = false;
+            document.getElementById('id_addday1_4').disabled = false;
+            document.getElementById('id_addroom4').disabled = false;
+            document.getElementById('addfaculty4').disabled = false;
+            
+            document.getElementById('boxes13').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject3').value =="" && document.getElementById('id_addday1_3').value =="" && document.getElementById('addfaculty3').value == "1"){
+            document.getElementById('boxes13').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject4').disabled = true;
+            document.getElementById('id_add_starttime1_4').disabled = true;
+            document.getElementById('id_add_endtime1_4').disabled = true;
+            document.getElementById('id_addday1_4').disabled = true;
+            document.getElementById('id_addroom4').disabled = true;
+            document.getElementById('addfaculty4').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes13').checked = false;
+            check_rows();
+        };
+    };
+
+    function addrow4(elem){
+        if (document.getElementById('id_addsubject4').value !="" && document.getElementById('id_add_starttime1_4').value !="" && document.getElementById('id_add_endtime1_4').value !="" && document.getElementById('id_addday1_4').value !="" && document.getElementById('addfaculty4').value != "1"){
+            document.getElementById('id_addsubject5').disabled = false;
+            document.getElementById('id_add_starttime1_5').disabled = false;
+            document.getElementById('id_add_endtime1_5').disabled = false;
+            document.getElementById('id_addday1_5').disabled = false;
+            document.getElementById('id_addroom5').disabled = false;
+            document.getElementById('addfaculty5').disabled = false;
+            
+            document.getElementById('boxes14').checked = true; 
+            check_rows();
+        }else if(document.getElementById('id_addsubject4').value =="" && document.getElementById('id_addday1_4').value =="" && document.getElementById('addfaculty4').value == "1"){
+            document.getElementById('boxes14').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject5').disabled = true;
+            document.getElementById('id_add_starttime1_5').disabled = true;
+            document.getElementById('id_add_endtime1_5').disabled = true;
+            document.getElementById('id_addday1_5').disabled = true;
+            document.getElementById('id_addroom5').disabled = true;
+            document.getElementById('addfaculty5').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes14').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow5(elem){
+        if (document.getElementById('id_addsubject5').value !="" && document.getElementById('id_add_starttime1_5').value !="" && document.getElementById('id_add_endtime1_5').value !="" && document.getElementById('id_addday1_5').value !="" && document.getElementById('addfaculty5').value != "1"){
+            document.getElementById('id_addsubject6').disabled = false;
+            document.getElementById('id_add_starttime1_6').disabled = false;
+            document.getElementById('id_add_endtime1_6').disabled = false;
+            document.getElementById('id_addday1_6').disabled = false;
+            document.getElementById('id_addroom6').disabled = false;
+            document.getElementById('addfaculty6').disabled = false;
+            
+            document.getElementById('boxes15').checked = true; 
+            check_rows();
+            
+        }else if(document.getElementById('id_addsubject5').value =="" && document.getElementById('id_addday1_5').value =="" && document.getElementById('addfaculty5').value == "1"){
+            document.getElementById('boxes15').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject6').disabled = true;
+            document.getElementById('id_add_starttime1_6').disabled = true;
+            document.getElementById('id_add_endtime1_6').disabled = true;
+            document.getElementById('id_addday1_6').disabled = true;
+            document.getElementById('id_addroom6').disabled = true;
+            document.getElementById('addfaculty6').disabled = true; 
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes15').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow6(elem){
+        if (document.getElementById('id_addsubject6').value !="" && document.getElementById('id_add_starttime1_6').value !="" && document.getElementById('id_add_endtime1_6').value !="" && document.getElementById('id_addday1_6').value !="" && document.getElementById('addfaculty6').value != "1"){
+            document.getElementById('id_addsubject7').disabled = false;
+            document.getElementById('id_add_starttime1_7').disabled = false;
+            document.getElementById('id_add_endtime1_7').disabled = false;
+            document.getElementById('id_addday1_7').disabled = false;
+            document.getElementById('id_addroom7').disabled = false;
+            document.getElementById('addfaculty7').disabled = false;
+            
+            document.getElementById('boxes16').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject6').value =="" && document.getElementById('id_addday1_6').value =="" && document.getElementById('addfaculty6').value == "1"){
+            document.getElementById('boxes16').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject7').disabled = true;
+            document.getElementById('id_add_starttime1_7').disabled = true;
+            document.getElementById('id_add_endtime1_7').disabled = true;
+            document.getElementById('id_addday1_7').disabled = true;
+            document.getElementById('id_addroom7').disabled = true;
+            document.getElementById('addfaculty7').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes16').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow7(elem){
+        if (document.getElementById('id_addsubject7').value !="" && document.getElementById('id_add_starttime1_7').value !="" && document.getElementById('id_add_endtime1_7').value !="" && document.getElementById('id_addday1_7').value !="" && document.getElementById('addfaculty7').value != "1"){
+            document.getElementById('id_addsubject8').disabled = false;
+            document.getElementById('id_add_starttime1_8').disabled = false;
+            document.getElementById('id_add_endtime1_8').disabled = false;
+            document.getElementById('id_addday1_8').disabled = false;
+            document.getElementById('id_addroom8').disabled = false;
+            document.getElementById('addfaculty8').disabled = false;
+            
+            document.getElementById('boxes17').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject7').value =="" && document.getElementById('id_addday1_7').value =="" && document.getElementById('addfaculty7').value == "1"){
+            document.getElementById('boxes17').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject8').disabled = true;
+            document.getElementById('id_add_starttime1_8').disabled = true;
+            document.getElementById('id_add_endtime1_8').disabled = true;
+            document.getElementById('id_addday1_8').disabled = true;
+            document.getElementById('id_addroom8').disabled = true;
+            document.getElementById('addfaculty8').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes17').checked = false;  
+            check_rows();
+        };
+    };
+
+    function addrow8(elem){
+        if (document.getElementById('id_addsubject8').value !="" && document.getElementById('id_add_starttime1_8').value !="" && document.getElementById('id_add_endtime1_8').value !="" && document.getElementById('id_addday1_8').value !="" && document.getElementById('addfaculty8').value != "1"){
+            document.getElementById('id_addsubject9').disabled = false;
+            document.getElementById('id_add_starttime1_9').disabled = false;
+            document.getElementById('id_add_endtime1_9').disabled = false;
+            document.getElementById('id_addday1_9').disabled = false;
+            document.getElementById('id_addroom9').disabled = false;
+            document.getElementById('addfaculty9').disabled = false;
+            
+            document.getElementById('boxes18').checked = true;
+            check_rows();
+        }else if(document.getElementById('id_addsubject8').value =="" && document.getElementById('id_addday1_8').value =="" && document.getElementById('addfaculty8').value == "1"){
+            document.getElementById('boxes18').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject9').disabled = true;
+            document.getElementById('id_add_starttime1_9').disabled = true;
+            document.getElementById('id_add_endtime1_9').disabled = true;
+            document.getElementById('id_addday1_9').disabled = true;
+            document.getElementById('id_addroom9').disabled = true;
+            document.getElementById('addfaculty9').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes18').checked = false; 
+            check_rows(); 
+        };
+    };
+
+    function addrow9(elem){
+        if (document.getElementById('id_addsubject9').value !="" && document.getElementById('id_add_starttime1_9').value !="" && document.getElementById('id_add_endtime1_9').value !="" && document.getElementById('id_addday1_9').value !="" && document.getElementById('addfaculty9').value != "1"){
+            document.getElementById('id_addsubject10').disabled = false;
+            document.getElementById('id_add_starttime1_10').disabled = false;
+            document.getElementById('id_add_endtime1_10').disabled = false;
+            document.getElementById('id_addday1_10').disabled = false;
+            document.getElementById('id_addroom10').disabled = false;
+            document.getElementById('addfaculty10').disabled = false;
+            
+            document.getElementById('boxes19').checked = true; 
+            check_rows();
+        }else if(document.getElementById('id_addsubject9').value =="" && document.getElementById('id_addday1_9').value =="" && document.getElementById('addfaculty9').value == "1"){
+            document.getElementById('boxes19').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('id_addsubject10').disabled = true;
+            document.getElementById('id_add_starttime1_10').disabled = true;
+            document.getElementById('id_add_endtime1_10').disabled = true;
+            document.getElementById('id_addday1_10').disabled = true;
+            document.getElementById('id_addroom10').disabled = true;
+            document.getElementById('addfaculty10').disabled = true;
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes19').checked = false; 
+            check_rows();
+        };
+    };
+
+    function addrow10(elem){
+        if (document.getElementById('id_addsubject10').value !="" && document.getElementById('id_add_starttime1_10').value !="" && document.getElementById('id_add_endtime1_10').value !="" && document.getElementById('id_addday1_10').value !="" && document.getElementById('addfaculty10').value != "1"){
+            document.getElementById('boxes20').checked = true; 
+            check_rows();
+        }else if(document.getElementById('id_addsubject10').value =="" && document.getElementById('id_addday1_10').value =="" && document.getElementById('addfaculty10').value == "1"){
+            document.getElementById('boxes20').checked = true;
+            check_rows();
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+            document.getElementById('boxes20').checked = false; 
+            check_rows();
+        };
+    };
+
+    function check_rows(){
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        if(checkboxes.length == 20){
+            document.getElementById('submit_btn_43').disabled = false;
+        }else{
+            document.getElementById('submit_btn_43').disabled = true;
+        };
+    };
+
+    //ENABLE SUBMIT AND OPEN TO FETCH DATA
+    function submit_form(elem){
+        document.getElementById('id_subject2').disabled = false;
+        document.getElementById('id_starttime1_2').disabled = false;
+        document.getElementById('id_endtime1_2').disabled = false;
+        document.getElementById('id_day1_2').disabled = false;
+        document.getElementById('id_room2').disabled = false;
+        document.getElementById('faculty2').disabled = false;
+        document.getElementById('id_subject3').disabled = false;
+        document.getElementById('id_starttime1_3').disabled = false;
+        document.getElementById('id_endtime1_3').disabled = false;
+        document.getElementById('id_day1_3').disabled = false;
+        document.getElementById('id_room3').disabled = false;
+        document.getElementById('faculty3').disabled = false;
+        document.getElementById('id_subject4').disabled = false;
+        document.getElementById('id_starttime1_4').disabled = false;
+        document.getElementById('id_endtime1_4').disabled = false;
+        document.getElementById('id_day1_4').disabled = false;
+        document.getElementById('id_room4').disabled = false;
+        document.getElementById('faculty4').disabled = false;
+        document.getElementById('id_subject5').disabled = false;
+        document.getElementById('id_starttime1_5').disabled = false;
+        document.getElementById('id_endtime1_5').disabled = false;
+        document.getElementById('id_day1_5').disabled = false;
+        document.getElementById('id_room5').disabled = false;
+        document.getElementById('faculty5').disabled = false;
+        document.getElementById('id_subject6').disabled = false;
+        document.getElementById('id_starttime1_6').disabled = false;
+        document.getElementById('id_endtime1_6').disabled = false;
+        document.getElementById('id_day1_6').disabled = false;
+        document.getElementById('id_room6').disabled = false;
+        document.getElementById('faculty6').disabled = false;
+        document.getElementById('id_subject7').disabled = false;
+        document.getElementById('id_starttime1_7').disabled = false;
+        document.getElementById('id_endtime1_7').disabled = false;
+        document.getElementById('id_day1_7').disabled = false;
+        document.getElementById('id_room7').disabled = false;
+        document.getElementById('faculty7').disabled = false;
+        document.getElementById('id_subject8').disabled = false;
+        document.getElementById('id_starttime1_8').disabled = false;
+        document.getElementById('id_endtime1_8').disabled = false;
+        document.getElementById('id_day1_8').disabled = false;
+        document.getElementById('id_room8').disabled = false;
+        document.getElementById('faculty8').disabled = false;
+        document.getElementById('id_subject9').disabled = false;
+        document.getElementById('id_starttime1_9').disabled = false;
+        document.getElementById('id_endtime1_9').disabled = false;
+        document.getElementById('id_day1_9').disabled = false;
+        document.getElementById('id_room9').disabled = false;
+        document.getElementById('faculty9').disabled = false;
+        document.getElementById('id_subject10').disabled = false;
+        document.getElementById('id_starttime1_10').disabled = false;
+        document.getElementById('id_endtime1_10').disabled = false;
+        document.getElementById('id_day1_10').disabled = false;
+        document.getElementById('id_room10').disabled = false;
+        document.getElementById('faculty10').disabled = false;
+        document.getElementById('id_addsubject2').disabled = false;
+        document.getElementById('id_add_starttime1_2').disabled = false;
+        document.getElementById('id_add_endtime1_2').disabled = false;
+        document.getElementById('id_addday1_2').disabled = false;
+        document.getElementById('id_addroom2').disabled = false;
+        document.getElementById('addfaculty2').disabled = false;
+        document.getElementById('id_addsubject3').disabled = false;
+        document.getElementById('id_add_starttime1_3').disabled = false;
+        document.getElementById('id_add_endtime1_3').disabled = false;
+        document.getElementById('id_addday1_3').disabled = false;
+        document.getElementById('id_addroom3').disabled = false;
+        document.getElementById('addfaculty3').disabled = false;
+        document.getElementById('id_addsubject4').disabled = false;
+        document.getElementById('id_add_starttime1_4').disabled = false;
+        document.getElementById('id_add_endtime1_4').disabled = false;
+        document.getElementById('id_addday1_4').disabled = false;
+        document.getElementById('id_addroom4').disabled = false;
+        document.getElementById('addfaculty4').disabled = false;
+        document.getElementById('id_addsubject5').disabled = false;
+        document.getElementById('id_add_starttime1_5').disabled = false;
+        document.getElementById('id_add_endtime1_5').disabled = false;
+        document.getElementById('id_addday1_5').disabled = false;
+        document.getElementById('id_addroom5').disabled = false;
+        document.getElementById('addfaculty5').disabled = false;
+        document.getElementById('id_addsubject6').disabled = false;
+        document.getElementById('id_add_starttime1_6').disabled = false;
+        document.getElementById('id_add_endtime1_6').disabled = false;
+        document.getElementById('id_addday1_6').disabled = false;
+        document.getElementById('id_addroom6').disabled = false;
+        document.getElementById('addfaculty6').disabled = false;
+        document.getElementById('id_addsubject7').disabled = false;
+        document.getElementById('id_add_starttime1_7').disabled = false;
+        document.getElementById('id_add_endtime1_7').disabled = false;
+        document.getElementById('id_addday1_7').disabled = false;
+        document.getElementById('id_addroom7').disabled = false;
+        document.getElementById('addfaculty7').disabled = false;
+        document.getElementById('id_addsubject8').disabled = false;
+        document.getElementById('id_add_starttime1_8').disabled = false;
+        document.getElementById('id_add_endtime1_8').disabled = false;
+        document.getElementById('id_addday1_8').disabled = false;
+        document.getElementById('id_addroom8').disabled = false;
+        document.getElementById('addfaculty8').disabled = false;
+        document.getElementById('id_addsubject9').disabled = false;
+        document.getElementById('id_add_starttime1_9').disabled = false;
+        document.getElementById('id_add_endtime1_9').disabled = false;
+        document.getElementById('id_addday1_9').disabled = false;
+        document.getElementById('id_addroom9').disabled = false;
+        document.getElementById('addfaculty9').disabled = false;
+        document.getElementById('id_addsubject10').disabled = false;
+        document.getElementById('id_add_starttime1_10').disabled = false;
+        document.getElementById('id_add_endtime1_10').disabled = false;
+        document.getElementById('id_addday1_10').disabled = false;
+        document.getElementById('id_addroom10').disabled = false;
+        document.getElementById('addfaculty10').disabled = false;
+
+        var form = document.getElementById('grad_form');
+        form.submit();
+    }
+
 </script>

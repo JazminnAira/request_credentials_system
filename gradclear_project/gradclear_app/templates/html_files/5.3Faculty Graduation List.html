@@ -497,6 +497,17 @@ Adviser:
         min-width: 238px;
         
     }
+    .div1 th:nth-child(4),
+    .div1 td:nth-child(4),
+    .div1 th:nth-child(5),
+    .div1 td:nth-child(5),
+    .div1 th:nth-child(6),
+    .div1 td:nth-child(6),
+    .div1 th:nth-child(7),
+    .div1 td:nth-child(7) {
+       
+        width: 100px;
+        min-width: 100px;}
 /* 
     .div1 th:nth-child(4),
     .div1 td:nth-child(4) {
@@ -541,6 +552,48 @@ Adviser:
     .div1 th:nth-child(1),
     .div1 th:nth-child(3){
         z-index: 2;
+    }
+     /* table{
+       min-width: max-content;
+    } */
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 10px;
+    }
+
+    .table-wrapper{
+        max-height: 300px;
+        overflow-y: scroll;
+
+    }
+   .outer-wrapper{
+    border-radius: 5px;
+   
+   }
+
+   html {
+    font-size: 1rem;
+    }
+  
+    @include media-breakpoint-up(sm) {
+        html {
+            font-size: 1.2rem;
+        }
+    }
+  
+    @include media-breakpoint-up(md) {
+        html {
+            6font-size: 1.4rem;
+        }
+    }
+  
+    @include media-breakpoint-up(lg) {
+        html {
+            font-size: 1.6rem;
+        }
     }
 
 </style>
@@ -641,7 +694,7 @@ Adviser:
         
     </script> -->
     <div class="border pt-2 signature_section" id ="signature_section">
-        <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >x</button></div>
+        <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >X</button></div>
         <div class = "p-4" id="show_details">
             <div class="bg-dark p-2"><h3 class = "text-white">APPROVE</h3></div>
         </div>
@@ -655,16 +708,23 @@ Adviser:
         <div class= "mx-auto" align="center" id="button_area">
             <br>
             <!--ATTACH ESIGN BUTTON-->
-            <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger col-8 text-white border border-dark">ATTACH E-SIGNATURE</button>
-            <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary text-white center-block col-2" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
+            <div class="btn-group col-sm-10 col-md-10 col-xl-10">
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">LIVE SIGNATURE</button>
+                <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
+            </div>
+            <br>
             <br>
             <!--ATTACH UPLOADED BUTTON-->
-            <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark col-8 text-white border border-white">ATTACH UPLOADED SIGNATURE</button>
-            <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-dark pt-3 pb-3 bg-secondary text-white center-block col-2" title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
+            <div class ="btn-group col-sm-10 col-md-10 col-xl-10 ">
+                <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark text-white border p-3 border-white">UPLOADED SIGNATURE</button>
+                <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-darK col-3 bg-secondary p-3 text-white center-block " title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
+            </div>  
             <br>
             <br>
             <!--APPROVE ONLY-->
-            <button type = "button" id = "approve_sig_btn" class ="btn btn-lg col-10 bg-light text-dark border border-dark">APPROVE</button><br>
+            <div class="btn-group col-sm-10 col-md-10 col-xl-10">
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE</button><br>
+            </div>
         </div>
 
         <div id="create_signature_area" class="p-1" hidden>
@@ -686,6 +746,16 @@ Adviser:
             </div>
         </div>
         
+        <div id = "upload_signature_display" class = "p-3" hidden>
+        {% if uploaded_signature %}
+            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
+            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
+            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
+        {% else %}
+            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
+        {% endif %}
+        </div>
+        
         <form method="POST" action ="update_grad_signature/{{id}}" enctype="multipart/form-data">
             {% csrf_token %}
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
@@ -701,20 +771,14 @@ Adviser:
                 <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
             </div>
         </form>
-        <div id = "upload_signature_display" class = "p-3" hidden>
-        {% if uploaded_signature %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
-            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
-        {% else %}
-            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
-        {% endif %}
-        </div>
+        
     </div>
 
     <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
             {% csrf_token %}
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
             <div style="overflow-x:auto;" class="div1">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_53">
                     <thead style="height: 70px;">
@@ -1021,10 +1085,13 @@ Adviser:
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
                                 {% endif %}
                         </tr>
+
+                        
                     </tbody>
                     {% endfor %}
                 </table>
-                
+            </div>
+            </div>
             </div>    
         </form>
         <form method="POST" action="faculty_dashboard_graduation_list_all" hidden >
@@ -1034,7 +1101,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" name="approve_all" style="margin-top:30px;margin-left: 25px; display: none;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" name="approve_all" style="margin-top:30px;margin-left: 25px;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
     
     </div>
         <p class="text-center text-bold" id="p6_53"></p>
@@ -1055,39 +1122,56 @@ Adviser:
 
 
 <script>
-    // DISABLE APPROVE BUTTONS WHEN CHECKBOX CHECKED
-    buttons =document.getElementsByClassName('apprv')
-    
-    $('#boxes').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // DISABLE APPROVE ALL BUTTON WHEN CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").prop("disabled", true);
+            
+        else
+            $("button[name='approve_all']").removeAttr("disabled");
+            
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
-    $('#all_check').change(function() {
-    if ( this.checked ) {
-    
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = true;
-        buttons[i].style.opacity = '0.5';}
-        $(".approve_all").show();
-    }
-    else {
-        for(var i=0; i<buttons.length; i++){
-        buttons[i].disabled = false;
-        buttons[i].style.opacity = '1';}
-        $(".approve_all").hide();
-    };
+    // LOW OPACITY OF APPROVE ALL WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[name='approve_all']").css('opacity', '0.5');
+        else
+            $("button[name='approve_all']").css('opacity', '1');
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // DISABLE SINGLE APPROVE BUTTONS IF CHECKBOXES CHECKED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").prop("disabled", false);
+            
+        else
+        $("button[class='button user_id apprv']").prop("disabled", true);
+            
+    });
+    $("input[type='checkbox']").trigger('change');
+    });
+
+    // LOW OPACITY OF SINGLE APPROVE BTN WHEN DISABLED
+    $(function(){
+    $("input[type='checkbox']").change(function(){
+        var len = $("input[type='checkbox']:checked").length;
+        if(len == 0)
+            $("button[class='button user_id apprv']").css('opacity', '1');
+        else
+            $("button[class='button user_id apprv']").css('opacity', '0.5');
+    });
+    $("input[type='checkbox']").trigger('change');
     });
 
 
@@ -1348,7 +1432,6 @@ Adviser:
         }
     });
 
-
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
@@ -1360,6 +1443,15 @@ Adviser:
         document.getElementById("upload_signature_display").hidden = true;
         
     });
+
+    //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
+    if(document.getElementById('esign_checker').value == ""){
+        document.getElementById('esign_attach_sig_btn').textContent = "DRAW E-LIVE SIGNATURE";
+    };
+    
+    if(document.getElementById('upload_checker').value == ""){
+        document.getElementById('upload_attach_sig_btn').textContent = "UPLOAD SIGNATURE";
+    };
 
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");

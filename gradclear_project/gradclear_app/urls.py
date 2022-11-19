@@ -24,6 +24,10 @@ urlpatterns = [
      path('clearance_view', clearance_view, name='clearance_view'),
      path('graduation_view', graduation_view, name='graduation_view'),
 
+      # FORMS BACK FOR REGISTRAR
+     path('reggrad_back/<int:id>', reggrad_back, name='reggrad_back'),
+     path('regclear_back/<int:id>', regclear_back, name='regclear_back'),
+
      # FORMS
      path('clearance_form/<str:type>/<str:req>', clearance_form, name='clearance_form'),
      path('graduation_form', graduation_form, name='graduation_form'),

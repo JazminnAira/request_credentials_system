@@ -1552,9 +1552,12 @@ Adviser:
     {% endif %}
 
     <!--MAIN-->
+   
     <div class="container-fluid" >
         <div class="row" style="padding-right: 0px;">
-            <div class="col-12" style="padding-right: 10px; background-color: transparent; height: 24px; text-align: right;">
+        <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
+            text-align: right;">
+                <!--DATE INDICATOR JS-->
                 <p id="date_text_lbl_71"></p>
             </div>
         </div>
@@ -2565,7 +2568,6 @@ Adviser:
 // COLLAPSIBLE SIDEBAR
 function toggleSidebar() {
   if (mini) {
-    console.log("opening sidebar");
     document.getElementById("sidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
     document.getElementById("logo_71").style.marginLeft = "90px";
