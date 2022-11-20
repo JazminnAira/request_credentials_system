@@ -337,7 +337,7 @@ def graduation_print(request, id):
         fac2_sig_upload= fac2.uploaded_signature
         str_upload2 = str(fac2_sig_upload)
         fac2_sig_esign = fac2.e_signature
-        str_esig2n = str(fac2_sig_esign)
+        str_esign2 = str(fac2_sig_esign)
         p.drawString(380, 625,f'{content.faculty2}')
 
         if stat_sig2 == "ESIGN":
