@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='clearance_form_table',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('student_id', models.CharField(max_length=20, verbose_name='Student Id')),
+                ('student_id', models.CharField(max_length=100, verbose_name='Student Id')),
                 ('name', models.CharField(max_length=100, verbose_name='Student Name')),
                 ('present_address', models.CharField(max_length=100, verbose_name='Present Address')),
                 ('course', models.CharField(default='NONE', max_length=100, null=True, verbose_name='Student Course')),
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
             name='graduation_form_table',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('student_id', models.CharField(max_length=20, verbose_name='Student Id')),
+                ('student_id', models.CharField(max_length=100, verbose_name='Student Id')),
                 ('name', models.CharField(max_length=100, verbose_name='Student Name')),
                 ('course', models.CharField(default='NONE', max_length=100, null=True, verbose_name='Student Course')),
                 ('purpose_of_request', models.CharField(default='Graduation Form', max_length=100, null=True, verbose_name='Purpose of Request')),
@@ -281,8 +281,8 @@ class Migration(migrations.Migration):
                 ('uploaded_signature', models.ImageField(blank=True, upload_to='uploaded signatures/')),
                 ('uploaded_signature_timesaved', models.DateTimeField(auto_now_add=True)),
                 ('no_signature', models.CharField(default='*Approve with Live Signature Required*', max_length=100, verbose_name='Approve')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
+                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
+                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
             options={
                 'verbose_name': 'user',

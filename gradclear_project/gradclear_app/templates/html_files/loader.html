@@ -1,0 +1,44 @@
+{% load static%}
+
+<script>
+    function showLoadingModal(){
+        loadingModal = document.getElementById('loadingModal')
+        loadingModal.style.display = 'block';
+    }
+
+    //For forms: add the class "show-loading-after-submit" to any form you want to show the loader
+    var formsToDelay = document.getElementsByClassName('show-loading-after-submit');
+    for (var i = 0; i < formsToDelay.length; i++) {
+        formsToDelay[i].addEventListener('submit', showLoadingModal);
+    }
+
+    //For urls: add the class "show-loading-after-click" to any url (a element) you want to show the loader
+    function showLoaderOnUrlClick(url) {
+        showLoadingModal()
+      window.location=url
+  }
+
+    // Not used
+    function showLoader(){
+        bodyEl = document.getElementsByTagName('body')
+        bodyEl.append("<div><div id='loadingModal' class='modal' style='visibility:visible; opacity: 1; display: none;'><div class='modal__inner p3 center' style='height:600px;'><h3>Please wait...</h3><p>Your request is processing. This might take a few moments.</p><img src=\"{% static 'img/wait.gif' %}\"></div></div></div>");
+    }
+</script>
+
+
+<div>
+    <div id="loadingModal" class="modal" style="visibility:visible; opacity: 1; display: none;">
+        <div class="modal__inner p3 center" style="height:600px;">
+            <h3>Please wait...</h3>
+            <p>
+                Your request is processing. This might take a few moments.
+            </p>
+            <img src="{% static 'img/wait.gif' %}">
+        </div>
+      </div>
+</div>
+
+
+
+<!-- {% include 'html_files/loader.html' %} -->
+<!-- show-loading-after-click CLASS YAN NA ILALAGAY SA A-->

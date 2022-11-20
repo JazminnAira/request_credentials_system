@@ -701,6 +701,35 @@ Adviser:
             }
          });
     </script>
+    {% elif user == "STAFF" %}
+    <script>
+        document.getElementById("id_id_number").placeholder = "00-000";
+        document.getElementById("id_id_number").maxLength=6;
+
+
+        $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+            let fn_box = document.getElementById("id_first_name").value;
+            let ln_box = document.getElementById("id_last_name").value;
+            let gender_box = document.getElementById("id_gender").value;
+            let bday_box = document.getElementById("id_birthday").value;
+            let id_num_box = document.getElementById("id_id_number").value;
+            let cp_box = document.getElementById("id_contact_number").value;
+            let email_box = document.getElementById("id_email").value;
+            let pass1_box = document.getElementById("id_password1").value;
+            let pass2_box = document.getElementById("id_password2").value;
+            if (fn_box != "" && ln_box != "" && gender_box != "" && bday_box != "" 
+                && cp_box != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box 
+                && bday_val.length == 8 && cp_val.length == 13 && id_val.length == 6){    
+                
+                    document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            }
+         });
+    </script>
+
     {% else %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-000";

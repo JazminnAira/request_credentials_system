@@ -31,6 +31,16 @@ Adviser:
 
     <title>Graduation Form List</title>
 
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function() {
+            null
+        };
+    </script>
+
 </head>
 
 <style>
@@ -541,7 +551,7 @@ Adviser:
     .div1 td:nth-child(1),
     .div1 td:nth-child(3) {
         background: #ccc;
-        z-index: 9999;
+        z-index: 999;
     }
 
     /* 
