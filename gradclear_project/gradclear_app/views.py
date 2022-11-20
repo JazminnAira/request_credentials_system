@@ -2057,7 +2057,7 @@ def clearance_form(request, type, req):
             highschool_graduated_date = request.POST.get('iydfiled_box_420')
             terms = request.POST.get('notit_box_420')
             amount = request.POST.get('amountp_box_420')
-            or_number = request.POST.get('receiptnum_box_42')
+            or_number = request.POST.get('or_number')
             last_request = request.POST.get('requested_option_420')
             last_request_date = request.POST.get('dbrtime_box_420')
             last_term = request.POST.get('lasterm_box_420')
@@ -6528,6 +6528,10 @@ def request_official_update(request, id):
     request_form_table.objects.filter(id=id).update(official_receipt=form_change)
     or_number = request.POST.get('or_number')
     request_form_table.objects.filter(id=id).update(or_num=or_number)
+    get_name = request_form_table.objects.filter(id=id).values_list('name', flat=True).distinct()
+    get_request = request_form_table.objects.filter(id=id).values_list('request', flat=True).distinct()
+    if get_name:
+        clearance_form_table.objects.filter(name=get_name[0],purpose_of_request=get_request[0]).update(or_num=or_number)
     return redirect(registrar_dashboard_request_list)
 
 @login_required(login_url='/')

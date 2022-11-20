@@ -512,7 +512,7 @@ Adviser:
                                 <th>Request</th>
                                 <th>Clearance</th>
                                 <th>Form 137-A</th>
-                                <th>Official Receipt</th>
+                                <th colspan="2">Official Receipt</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
                                 <th colspan="2">Appointment</th>
@@ -520,7 +520,7 @@ Adviser:
                             
                             </tr>
                             <tr class="no_data">
-                                <td colspan="10"><i class="fa fa-warning"></i> No Data</td>
+                                <td colspan="11"><i class="fa fa-warning"></i> No Data</td>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="11"><i class="fa fa-warning"></i> No result</td>
@@ -549,17 +549,28 @@ Adviser:
                                     <td>
                                         <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
-                                                <select onchange="this.form.submit()" name="or_select" id="changer"> 
-                                                    <option value="">{{instance.official_receipt}}</option>
-                                                    <option id="or" value="✔">✔</option>
-                                                    <option value="❌">❌</option>
-                                                </select>
-                                                {% if instance.official_receipt == "✔" %}
+                                            
+                                            <select onchange="this.form.submit()" name="or_select" id="changer" > 
+                                                <option value="{{instance.official_receipt}}">{{instance.official_receipt}}</option>
+                                                <option id="or" value="✔">✔</option>
+                                                <option value="❌">❌</option>
+                                            </select>
+                                            
+
+                                            <td>
+                                                {% if instance.official_receipt == "✔" and instance.or_num is None %}
+
                                                 <div class="form-group-row" id="course_input">
-                                                    <input id="or_number" name="or_number" placeholder="e.g 00001"  class="form-control-sm" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                    <input id="or_number" name="or_number" placeholder="O.R. No."   size="8" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% elif instance.official_receipt == "✔" and instance.or_num is not None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input id="or_number" hidden name="or_number" placeholder="O.R. No."  value="{{instance.or_num}}" size="8" oninput="enter_lterm()" onkeypress="isNumber(event)">
                                                 </div>
                                                 {% endif %}
-                                                <button type="submit" >Submit</button>
+                                    
+                                            </td>
+                                            
                                         </form> 
                                     </td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
