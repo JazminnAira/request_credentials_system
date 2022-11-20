@@ -172,7 +172,7 @@ def req_print(request,id):
         p.setFont("Helvetica", 9)
         p.drawString(440, 517, f"""{others}""")
         p.drawString(375, 157, f"""{others}""")
-        # temporary lang itong purpose_of_request_reason
+        
         
         
     
@@ -180,7 +180,9 @@ def req_print(request,id):
     clearance = content.clearance
     o_r = content.official_receipt
     
+    
     if o_r == "✔":
+        
         p.drawString(320, 130, '✔')
     else:
         p.drawString(300, 130, '')
@@ -232,7 +234,7 @@ def req_print(request,id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
+        response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
         return response
 
 @login_required(login_url='/')
@@ -1077,7 +1079,7 @@ def graduation_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
+        response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
 @login_required(login_url='/')
@@ -1114,16 +1116,23 @@ def clearance_print(request, id):
         p.setFont("Helvetica", 9)
         p.drawString(180, 629, f'{content.highschool_graduated}')
         
-    p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+    
         
     p.setFont("Helvetica", 10)
     amount_paid = content.amount_paid
+    last_term = content.last_term_in_tupc
+    num_term  = content.number_of_terms_in_tupc
+    prev_date = content.date_of_previously_requested_form
     if amount_paid != "0.00":
         p.drawString(400, 681, f'{content.amount_paid}')
-    p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
-    p.drawString(430, 530, f'{content.date_of_previously_requested_form}')
-
-    
+        p.drawString(429, 655, f'{content.or_num}')
+    if num_term is not None:
+        p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
+    if prev_date is not None:    
+        p.drawString(183, 555, f'{content.date_of_previously_requested_form}')
+    if last_term is not None:
+        p.drawString(430, 530, f'{content.last_term_in_tupc}')
+        p.drawString(430, 505, f'{content.purpose_of_request_reason}')
 
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
@@ -1588,7 +1597,7 @@ def clearance_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 
