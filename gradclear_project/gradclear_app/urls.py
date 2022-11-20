@@ -146,6 +146,9 @@ urlpatterns = [
      path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
      path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
      path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
+
+     # SEND EMAIL TO ALL
+     path('send_email_all', send_email_all, name='send_email_all'),
      
     ] 
  

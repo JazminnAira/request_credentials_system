@@ -4934,6 +4934,9 @@ def update_graduation(request, id, sub, sig):
 @login_required(login_url='/')
 def registrar_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+        gradtable=graduation_form_table.objects.all()
+        cleartable=clearance_form_table.objects.all()
+ 
         # CLEARANCE FORMS 
         all = clearance_form_table.objects.all() 
         cBSIE_ICT = clearance_form_table.objects.filter( 
@@ -5146,7 +5149,7 @@ def registrar_dashboard(request):
                    'gBET_CT': gBET_CT, 'gBET_MT': gBET_MT,'gBET_AT': gBET_AT, 'gBET_PPT': gBET_PPT, 
                    'gBSIE_HE': gBSIE_HE, 'gBTTE_CP': gBTTE_CP,'gBTTE_E': gBTTE_E, 'gBSCE': gBSCE, 
                    'gBSEE': gBSEE, 'gBSME': gBSME,'clearance_badge' : clearance_badge, 'graduation_badge':graduation_badge, 'request_badge': request_badge,
-                   })
+                   'gradtable':gradtable, 'cleartable':cleartable})
 
 @login_required(login_url='/')
 def name_list(request):
@@ -7275,7 +7278,8 @@ def school_year_update(request):
 
     return redirect(registrar_dashboard_student_list)
 
-def send_email_all():
+@login_required(login_url='/')
+def send_email_all(request):
     faculties=[]
     all_course_adviser = clearance_form_table.objects.values_list('course_adviser', flat=True).distinct()
     for course_adviser in all_course_adviser:
@@ -7329,6 +7333,7 @@ def send_email_all():
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
 
+    return redirect(registrar_dashboard)
 
 # while True:
 # dateSTR = datetime.now().strftime("%H:%M:%S")
