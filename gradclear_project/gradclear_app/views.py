@@ -1445,6 +1445,7 @@ def appointmentgrad(request, id, form):
                 student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
+           
 
             name_temp = graduation_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
@@ -1529,11 +1530,12 @@ def appointmentgrad(request, id, form):
 @login_required(login_url='/')
 def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
-        id=id).values_list('student_id', flat=True).distinct()
+    id=id).values_list('student_id', flat=True).distinct()
     email = user_table.objects.filter(
         student_id=email_temp[0]).values_list('email', flat=True).distinct()
-
     rec_email = email[0]
+    recipient_list = [rec_email, ]
+    
     name_temp = graduation_form_table.objects.filter(
     id=id).values_list('student_id', flat=True).distinct()
     print("name_temp",name_temp) 
