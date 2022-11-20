@@ -177,7 +177,7 @@ class user_table(AbstractUser):
  
 
 class clearance_form_table(models.Model):
-    student_id = models.CharField(max_length=20, verbose_name="Student Id")
+    student_id = models.CharField(max_length=100, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     present_address = models.CharField(max_length=100, verbose_name="Present Address")
     course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
@@ -268,7 +268,7 @@ class graduation_form_table(models.Model):
     ]
 
     
-    student_id = models.CharField(max_length=20, verbose_name="Student Id")
+    student_id = models.CharField(max_length=100, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     course = models.CharField(max_length=100, verbose_name="Student Course",null=True, default="NONE")
     purpose_of_request = models.CharField(max_length=100, verbose_name="Purpose of Request",
@@ -460,7 +460,7 @@ class graduation_form_table(models.Model):
         return self.student_id
 
 class request_form_table(models.Model):
-    student_id = models.CharField(max_length=20, verbose_name="Student Id")
+    student_id = models.CharField(max_length=100, verbose_name="Student Id")
     name = models.CharField(max_length=100, verbose_name="Student Name")
     name2 = models.CharField(max_length=100, verbose_name="2nd Format Student Name")
     address = models.CharField(max_length=100, verbose_name="Address")
