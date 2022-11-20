@@ -1594,10 +1594,15 @@ Adviser:
         var checkboxes = document.querySelectorAll('input[type="radio"]:checked');
         if(checkboxes.length == 3){
             if(document.getElementById('deadline_box_43').value != "" || document.getElementById('enrolledthsisem_box_43').value != ""){
-                document.getElementById('submit_btn_43').disabled = false;
+                var checkboxes2 = document.querySelectorAll('input[type="checkbox"]:checked');
+                if(checkboxes2.length == 20 ){
+                    document.getElementById('submit_btn_43').disabled = false; 
+                }else{
+                    document.getElementById('submit_btn_43').disabled = true;
+                };
             }else{
                 document.getElementById('submit_btn_43').disabled = true;
-            }
+            };
         }else{
             document.getElementById('submit_btn_43').disabled = true;
         };
@@ -2435,7 +2440,12 @@ Adviser:
     function check_rows(){
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         if(checkboxes.length == 20){
-            document.getElementById('submit_btn_43').disabled = false;
+            var checkboxes2 = document.querySelectorAll('input[type="radio"]:checked');
+            if(checkboxes2.length == 3){
+                document.getElementById('submit_btn_43').disabled = false;
+            }else{
+                document.getElementById('submit_btn_43').disabled = true;
+            };
         }else{
             document.getElementById('submit_btn_43').disabled = true;
         };

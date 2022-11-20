@@ -959,12 +959,14 @@ Adviser:
     <!--SEARCH BAR-->
     <div class="container-fluid" id="main2_41">
         
+        {% if claim_note == "UNCLAIMED" %}
         <div class = "border border-dark rounded-right p-2" id ="Note_section" style = "background: rgba(255,2555,255); padding-left: 5px; display: inline-block;">
             <small><b>NOTES ON CLAIMING REQUESTS:</b>
                 Prepare to print your <b>Request Form</b>, <b>Clearance Form</b> and <b>Official Receipt</b> 
                 depending on your request.
                 For full details, follow the instructions sent to your email.</small>
         </div>
+        {% endif %}
         
         <div class="row">
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">

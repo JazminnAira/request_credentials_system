@@ -1997,6 +1997,7 @@ def student_dashboard(request):
         st1 = clearance_form_table.objects.filter(student_id=student_id)
         
         check_form137_inrequest = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).values_list('form_137',flat=True).distinct()
+        check_request = request_form_table.objects.filter(Q(name=full_name)|Q(name=name2)).order_by('-time_requested').values_list('claim',flat=True).distinct()
         
         # document checker
         display =[]
@@ -2012,12 +2013,16 @@ def student_dashboard(request):
                     pass
         else:
             pass
+        if check_request:
+            claim_note = check_request[0]
+        else:
+            claim_note = "NONE"
   
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'graduating': graduating }
+    context = {'st': st, 'st1': st1, 'st0': st0, 'display':display, 'graduating': graduating, 'claim_note' : claim_note }
     return render(request, 'html_files/4.1Student Dashboard.html', context)
 
 
@@ -2087,8 +2092,7 @@ def clearance_form(request, type, req):
                 dit_signature = unapproved
                 doe_signature = approved
                 ded_signature = approved
-            #semester_term = clearance_form_table.objects.filter(name=fullname,purpose_of_request=purpose).order_by('-time_requested').values_list('last_term_in_tupc')
-             
+            
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
@@ -5518,7 +5522,7 @@ def display_clearform(request, id):
                 ieduc = str(faculty_approved[0])
                 fac_name_get = ieduc.split('_',1)[0]
                 str_fac_name = str(fac_name_get)
-                print("heyyyyy",str_fac_name)
+                print(str_fac_name)
                 
                 if faculty_approved[0].__contains__('ESIGN'):
                     ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
@@ -5645,6 +5649,36 @@ def display_clearform(request, id):
 def display_gradform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "FACULTY" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         graduation = graduation_form_table.objects.filter(id=id).values()
+        
+        #SIT 
+        check_status = graduation_form_table.objects.filter(id=id,sitsignature__icontains = 'UNAPPROVED')
+        check_signature = graduation_form_table.objects.filter(id=id,sitsignature = 'NO_APPROVED')
+        if check_status:
+            sit = "UNAPPROVED"
+            sit_type = ""
+        elif check_signature:
+            sit = "NONE"
+            sit_type = ""
+        else:
+            faculty_approved = graduation_form_table.objects.filter(id=id).values_list('sitsignature', flat=True).distinct()
+            sub_sig = str(faculty_approved[0])
+            fac_name_get = sub_sig.split('_',1)[0]
+            str_fac_name = str(fac_name_get)
+            print(str_fac_name)
+            
+            if faculty_approved[0].__contains__('ESIGN'):
+                faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                sit = faculty1_sig[0]
+                sit_type = "ESIGN"
+                
+            elif faculty_approved[0].__contains__('UPLOAD'):
+                faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                sit = faculty1_sig[0]
+                sit_type = "UPLOAD"
+            else:
+                faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
+                sit = faculty1_sig[0]
+                sit_type = "APPROVE"
         
         #SUBJECT #1
         check_status = graduation_form_table.objects.filter(id=id,signature1__icontains = 'UNAPPROVED')
@@ -6294,7 +6328,9 @@ def display_gradform(request, id):
         'signature_type17' : signature_type17,
         'signature_type18' : signature_type18,
         'signature_type19' : signature_type19,
-        'signature_type20' : signature_type20
+        'signature_type20' : signature_type20,
+        'sit' : sit,
+        'sit_type' : sit_type
         }
     print('running')
     return render(request, 'html_files/graduation_form_display.html', context)
