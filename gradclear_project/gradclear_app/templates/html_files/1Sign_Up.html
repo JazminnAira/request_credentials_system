@@ -371,6 +371,9 @@ Adviser:
     .add-border-red{
         border: 2px solid #E2788A !important;
     }
+    #sub_error_01 {
+        color: white;
+    }
 
     canvas #signature-pad {
         background: #fff;
@@ -515,7 +518,7 @@ Adviser:
                                 {% elif user == "OLD STUDENT" %}
                                     <!--COURSE GRADUATED DROPDOWN BOX-->
                                     <div class="form-group" id="course_graduated_input">
-                                        <label for="course_graduated">Course Graduated:</label><label id="Scourse_graduated_aste01" style="color:red;">*</label>
+                                        <label for="course_graduated">Course:</label><label id="Scourse_graduated_aste01" style="color:red;">*</label>
                                         {{form.course_graduated}}
                                         <p id="sc_error_01"></p>
                                     </div>
@@ -592,14 +595,17 @@ Adviser:
 
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
+                                
                 
                                 <!--SIGNUP BUTTON-->
                                 {% if user == "ALUMNUS"%}
                                 <a><button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
-                                    id="Ssubmit_btn_01" onclick="get_id()">Sign Up</button></a>
+                                    id="Ssubmit_btn_01" disabled onclick="get_id()" >Sign Up</button></a>
+                                    
                                 {% else %}
                                 <a><button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
-                                    id="Ssubmit_btn_01">Sign Up</button></a>
+                                    id="Ssubmit_btn_01" disabled>Sign Up</button></a>
+                                    
                                 {% endif %}
                             </div>
                         </form>
@@ -610,20 +616,120 @@ Adviser:
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000";
         document.getElementById("id_id_number").maxLength=7;
+
+        $("input").change(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+
+            let fn_box = document.getElementById("id_first_name").value;
+            let ln_box = document.getElementById("id_last_name").value;
+            let add_box = document.getElementById("id_address").value;
+            let gender_box = document.getElementById("id_gender").value;
+            let bday_box = document.getElementById("id_birthday").value;
+            let id_num_box = document.getElementById("id_id_number").value;
+            let course_box = document.getElementById("id_course").value;
+            let year_box = document.getElementById("id_year_and_section").value;
+            let cp_box = document.getElementById("id_contact_number").value;
+            let email_box = document.getElementById("id_email").value;
+            let pass1_box = document.getElementById("id_password1").value;
+            let pass2_box = document.getElementById("id_password2").value;
+            let pic_box = document.getElementById("id_profile_picture").value;
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
+                && course_box != "" && year_box != "" && cp_box != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 7 && bday_val.length == 8 && cp_val.length == 13   ){    
+                document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            }
+         });
     </script>
     {% elif user == "OLD STUDENT" %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000";
         document.getElementById("id_id_number").maxLength=7;
+
+        $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+            let fn_box = document.getElementById("id_first_name").value;
+            let ln_box = document.getElementById("id_last_name").value;
+            let add_box = document.getElementById("id_address").value;
+            let gender_box = document.getElementById("id_gender").value;
+            let bday_box = document.getElementById("id_birthday").value;
+            let id_num_box = document.getElementById("id_id_number").value;
+            let course_grad = document.getElementById("id_course_graduated").value;
+            let cp_box = document.getElementById("id_contact_number").value;
+            let email_box = document.getElementById("id_email").value;
+            let pass1_box = document.getElementById("id_password1").value;
+            let pass2_box = document.getElementById("id_password2").value;
+            let pic_box = document.getElementById("id_profile_picture").value;
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" && id_num_box != "" 
+                && cp_box != "" && course_grad != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 7 && bday_val.length == 8 && cp_val.length == 13){    
+                document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            }
+         });
     </script>
     {% elif user == "ALUMNUS" %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000-00-000000";
+
+
+        $("input").keyup(function(){
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+            let fn_box = document.getElementById("id_first_name").value;
+            let ln_box = document.getElementById("id_last_name").value;
+            let add_box = document.getElementById("id_address").value;
+            let gender_box = document.getElementById("id_gender").value;
+            let bday_box = document.getElementById("id_birthday").value;
+            let course_grad = document.getElementById("id_course_graduated").value;
+            let year_grad = document.getElementById("id_year_graduated").value;
+            let cp_box = document.getElementById("id_contact_number").value;
+            let email_box = document.getElementById("id_email").value;
+            let pass1_box = document.getElementById("id_password1").value;
+            let pass2_box = document.getElementById("id_password2").value;
+            let pic_box = document.getElementById("id_profile_picture").value;
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
+                && cp_box != "" && course_grad != ""  && year_grad != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && bday_val.length == 8 && cp_val.length == 13   ){    
+                
+                    document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            }
+         });
     </script>
     {% else %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-000";
         document.getElementById("id_id_number").maxLength=6;
+        
+        $("input").keyup(function(){
+            var id_val = document.getElementById('id_id_number').value;
+            var bday_val = document.getElementById('id_birthday').value;
+            var cp_val = document.getElementById('id_contact_number').value;
+
+
+            let fn_box = document.getElementById("id_first_name").value;
+            let ln_box = document.getElementById("id_last_name").value;
+            let add_box = document.getElementById("id_address").value;
+            let gender_box = document.getElementById("id_gender").value;
+            let bday_box = document.getElementById("id_birthday").value;
+            let id_number = document.getElementById("id_id_number").value;
+            let dep_box = document.getElementById("id_department").value;
+            let cp_box = document.getElementById("id_contact_number").value;
+            let email_box = document.getElementById("id_email").value;
+            let pass1_box = document.getElementById("id_password1").value;
+            let pass2_box = document.getElementById("id_password2").value;
+            let pic_box = document.getElementById("id_profile_picture").value;
+            if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
+                && cp_box != "" && id_number != ""  && dep_box != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
+                && id_val.length == 6 && bday_val.length == 8 && cp_val.length == 13   ){    
+                document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
+            }
+         });
     </script>
     {% endif %}
     
@@ -632,6 +738,9 @@ Adviser:
 
 
 <script>
+     
+
+     
     function get_id() {
     document.getElementById("id_id_number").value = "00-000";
     }
@@ -648,7 +757,7 @@ Adviser:
 
 
     //Auto Capitalize
-    $("#id_last_name, #id_middle_name, #id_first_name,#id_username").on('input', function(evt) {
+    $("#id_last_name, #id_middle_name, #id_first_name,#id_username, #id_address").on('input', function(evt) {
         var input = $(this);
         var start = input[0].selectionStart;
         $(this).val(function (_, val) {

@@ -573,13 +573,8 @@ Adviser:
 
 <body>
     {% for i in graduation %}
- 
-   
 
     <ul>
-       
-        
-    
 
         <li>
             {% if i.approval_status ==  'APPROVED' %}
@@ -1159,8 +1154,21 @@ Adviser:
 
                <!--SIT INSTRUCTOR BOX-->
                <div class="form-inline">
-                    <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:</label>
-                    <input type="text" oninput="this.value = this.value.toUpperCase()" id="noIns_box_43" name="instructor_name" value="{{i.instructor_name}}" disabled class="form-control mx-sm-3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
+                    <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:
+                    <div align="center">
+                        {% if sit_type == "APPROVE" %}
+                            <label class="text-dark">{{sit}}</label>
+                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                        {% elif sit == "UNAPPROVED" %}
+                            <label class="text-dark">UNAPPROVED</label>
+                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                        {% elif sit == "NONE" %}
+                            <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
+                        {% else %}
+                            <img src="/Media/{{sit}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                        {% endif %}
+                    </div></label>
                </div>
 
 
@@ -1318,13 +1326,9 @@ Adviser:
 
 </html>
 
-
-
 <script>
 
-
-
-
+    
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }

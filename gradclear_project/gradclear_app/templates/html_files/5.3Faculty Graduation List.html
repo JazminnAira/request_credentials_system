@@ -595,7 +595,66 @@ Adviser:
             font-size: 1.6rem;
         }
     }
+    
+    #esign_attach_sig_btn{
+        background-color : #c51d3a;
+        color : white;
+    }
 
+    #esign_attach_sig_btn:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #upload_attach_sig_btn{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
+    }
+
+    #upload_attach_sig_btn:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: black;
+    }
+
+    #approve_sig_btn{
+        background-color: #dedede;
+        color: black;
+    }
+
+    #approve_sig_btn:hover{
+        background-color: #dedede;
+        color: white;
+    }
+
+    .closebtn:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #open_signature:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #cancel_create:hover , #cancel_upload:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    .btn_save{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
+    }
+
+    .btn_save:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: whi;
+    }
+    
 </style>
 
 
@@ -694,9 +753,9 @@ Adviser:
         
     </script> -->
     <div class="border pt-2 signature_section" id ="signature_section">
-        <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >X</button></div>
+        <div align="right"><button type ="button" class="closebtn btn-lg" id ="close_signature" >X</button></div>
         <div class = "p-4" id="show_details">
-            <div class="bg-dark p-2"><h3 class = "text-white">APPROVE</h3></div>
+            <div class="bg-dark p-2"><h3 class = "text-white">APPROVE USING:</h3></div>
         </div>
         
         <input type="text" id="attach_signature_to" hidden>
@@ -709,36 +768,38 @@ Adviser:
             <br>
             <!--ATTACH ESIGN BUTTON-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg bg-danger text-white border p-3 border-dark">LIVE SIGNATURE</button>
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg border p-3 border-dark">E-SIGNATURE</button>
                 <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
             </div>
             <br>
             <br>
             <!--ATTACH UPLOADED BUTTON-->
             <div class ="btn-group col-sm-10 col-md-10 col-xl-10 ">
-                <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg bg-dark text-white border p-3 border-white">UPLOADED SIGNATURE</button>
+                <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg border p-3">UPLOADED SIGNATURE</button>
                 <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-darK col-3 bg-secondary p-3 text-white center-block " title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
             </div>  
             <br>
             <br>
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg bg-light text-dark p-3 border border-dark">APPROVE</button><br>
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 border border-dark">APPROVE MANUALLY</button><br>
             </div>
         </div>
-
+        
         <div id="create_signature_area" class="p-1" hidden>
-            <div id = "esignature_display" class = "m-2 mt-3 p-1" align = "center">
+            <div id = "esignature_display" class = "m-2 mt-2 p-1" align="center">
             {% if e_signature %}
-                <div class = "bg-dark p-2"><h4 class = "text-white">YOUR E-SIGNATURE</h4></div>
-                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-40 border border-dark rounded" >
+                <div class = "bg-dark p-2" align="left"><h4 class = "text-white">CURRENT E-SIGNATURE:</h4></div>
+                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             {% else %}
-                <div clas="p-2 border rounded">NO LIVE E-SIGNATURE SAVED</div>
+            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT E-SIGNATURE</h4></div>
+                <div clas="p-2 border rounded">NO CURRENT E-SIGNATURE</div>
             {% endif %}
             </div>
-            <br>
-            <div class = "bg-dark p-2 mt-2"><h4 class = "text-white">DRAW SIGNATURE HERE</h4></div>
+            <hr>
+        
+            <div class = "bg-dark p-2 mt-2"><h4 id = "new_signature_text" class = "text-white">CREATE SIGNATURE HERE:</h4></div>
             <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
                 <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
                 <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
@@ -746,14 +807,18 @@ Adviser:
             </div>
         </div>
         
-        <div id = "upload_signature_display" class = "p-3" hidden>
+        <div id = "upload_signature_display" class = "p-3" align="center" hidden>
         {% if uploaded_signature %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">YOUR UPLOADED SIGNATURE</h4></div>
-            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
+            <div class = "bg-dark p-2"><h4 class = "text-white" align="left">CURRENT UPLOADED SIGNATURE:</h4></div>
+            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-75 border border-dark rounded" >
+            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>  
+           
         {% else %}
-            <div class="p-2 border rounded">NO UPLOADED SIGNATURE SAVED</div>
+            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
+            <div class="p-2 border rounded">NO CURRENT UPLOADED SIGNATURE</div>
+            
         {% endif %}
+        
         </div>
         
         <form method="POST" action ="update_grad_signature/{{id}}" enctype="multipart/form-data">
@@ -761,17 +826,18 @@ Adviser:
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
             <input type="text" name ="id_num" value ="{{id}}" hidden>
             <div id ="upload_signature_area" class="p-2" hidden>
-                <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white">UPLOAD SIGNATURE HERE</h4></div>
+                <hr>
+                <div class = "bg-dark p-2 mb-2 mt-1"><h4 class = "text-white" id ="upload_text">UPLOAD SIGNATURE HERE:</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
                 <p><label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></label></p>
                 <button type="button" id="cancel_upload" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
             </div>
             <div id="submit_signature" class="m-3" align="center" hidden>
-                <button type="submit" class="btn btn-dark col-8 text-white btn-lg border border-dark">Save Signature</button>
+                <button type="submit" class="btn col-8 btn-lg border border-dark btn_save">Save Signature</button>
             </div>
         </form>
-        
+
     </div>
 
     <div class ="table_list" id = "table_list">
@@ -1432,6 +1498,7 @@ Adviser:
         }
     });
 
+
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
@@ -1446,11 +1513,15 @@ Adviser:
 
     //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
     if(document.getElementById('esign_checker').value == ""){
-        document.getElementById('esign_attach_sig_btn').textContent = "DRAW E-LIVE SIGNATURE";
+        document.getElementById('esign_attach_sig_btn').textContent = "CREATE E-LIVE SIGNATURE";
+    }else{
+        document.getElementById('new_signature_text').innerHTML = "CREATE NEW E-SIGNATURE"
     };
     
     if(document.getElementById('upload_checker').value == ""){
-        document.getElementById('upload_attach_sig_btn').textContent = "UPLOAD SIGNATURE";
+        document.getElementById('upload_attach_sig_btn').textContent = "ATTACH SIGNATURE";
+    }else{
+        document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
     function openfdb() {

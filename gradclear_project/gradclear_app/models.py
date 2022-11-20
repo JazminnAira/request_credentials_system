@@ -207,6 +207,7 @@ class clearance_form_table(models.Model):
         max_length=100, verbose_name="Purpose of Request Reason", default="NONE", null=True)
     semester_enrolled = models.CharField(
         max_length=100, verbose_name="Semester Enrolled in TUPC", default="NONE", null=True)
+    or_num = models.CharField(max_length=50, blank=True ,null=True)
 
     approval_status = models.CharField(max_length=15,
         verbose_name="Approval Status", default="0")
@@ -460,7 +461,11 @@ class graduation_form_table(models.Model):
         return self.student_id
 
 class request_form_table(models.Model):
+<<<<<<< HEAD
     student_id = models.CharField(max_length=100, verbose_name="Student Id")
+=======
+    student_id = models.CharField(max_length=50, verbose_name="Student Id")
+>>>>>>> 11164e24cd58655526734ef0cb8b3ae292617059
     name = models.CharField(max_length=100, verbose_name="Student Name")
     name2 = models.CharField(max_length=100, verbose_name="2nd Format Student Name")
     address = models.CharField(max_length=100, verbose_name="Address")
@@ -482,6 +487,7 @@ class request_form_table(models.Model):
         verbose_name="Approval Status", default="UNAPPROVED")
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
+    or_num = models.CharField(max_length=50, blank=True ,null=True)
     
     time_requested = models.DateTimeField(auto_now_add=True)
 
