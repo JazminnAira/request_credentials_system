@@ -3300,9 +3300,16 @@ def faculty_dashboard_clearance_list_all(request):
                 clearance_form_table.objects.filter(
                     id=int(i)).update(approval_status="APPROVED")
                 
-                name = name_temp[0]
-                request_form_table.objects.filter(
-                    name=name).update(clearance="✔")
+                for get_i in id_list:
+                    getting_names = clearance_form_table.objects.filter(id=int(get_i)).values_list('name', flat=True).distinct()
+                    get_requested = clearance_form_table.objects.filter(id=int(get_i)).values_list('purpose_of_request', flat=True).distinct()
+                    for get_names in getting_names:
+                        for req in get_requested:
+                            if req == "Certification":
+                                request_form_table.objects.filter(name=str(get_names), request__contains="Certification").update(clearance="✔")
+                            else:
+                                request_form_table.objects.filter(name=str(get_names), request=str(req)).update(clearance="✔")
+                        
                 
 
             messages.success(request, "Form Approved.")

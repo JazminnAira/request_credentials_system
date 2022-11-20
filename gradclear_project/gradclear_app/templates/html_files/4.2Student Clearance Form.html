@@ -724,7 +724,7 @@ Adviser:
                 <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
                 <div class="col-sm-9">
                     <select id = "sem_term" name = "sem_term" class = "form-control">
-                        <option value = "" select>--SELECT--</option>
+                        <option value = "" disabled select>--SELECT--</option>
                         <option value ="1">1st SEMESTER</option>
                         <option value ="2">2nd SEMESTER</option>
                     </select>
@@ -738,7 +738,7 @@ Adviser:
                     <form method="POST" action="clearance_form">
                     {% csrf_token %}
                     <select id="course_adviser_42" name="course_adviser_420" class="form-control" required >
-                        <option value="1" selected="true">--SELECT--</option>
+                        <option value="1" disabled selected="true">--SELECT--</option>
                         
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
@@ -1898,12 +1898,11 @@ Adviser:
         document.getElementById("clear_form").reset();
     }
 
-    if (document.getElementById('apply_grad_determiner').value == "0"){
-        document.getElementById('ApplicationforGraduation_check_42').disabled = true;
-    }else if (document.getElementById('apply_grad_determiner').value == "APPROVED"){
-        document.getElementById('ApplicationforGraduation_check_42').disabled = true;
+    //DISABLE HOME BUTTON FROM REQUEST
+    if (document.getElementById('amount_pay').value == "ApplyForGraduation"){
+        document.getElementById('home_btn').hidden = false;
     }else{
-        document.getElementById('ApplicationforGraduation_check_42').disabled = false;
+        document.getElementById('home_btn').hidden = true;
     }
 
     HonorableDismissal_check_42.addEventListener("change", function(){
