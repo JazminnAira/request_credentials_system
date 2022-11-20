@@ -178,7 +178,13 @@ def req_print(request,id):
     
     f137 = content.form_137
     clearance = content.clearance
+    o_r = content.official_receipt
     
+    if o_r == "✔":
+        p.drawString(320, 130, '✔')
+    else:
+        p.drawString(300, 130, '')
+        
     
     if clearance == "✔":
         p.drawString(230, 130, '✔')
@@ -202,7 +208,6 @@ def req_print(request,id):
     for line in lines:
         textob.textLine(line)
 
-    #p.drawString(300, 755, f'{request.user.middle_name[0:1]}')
 
     p.drawText(textob)
     p.showPage()
@@ -227,7 +232,7 @@ def req_print(request,id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
         return response
 
 @login_required(login_url='/')
@@ -265,8 +270,6 @@ def graduation_print(request, id):
     stat = fac.uploaded_signature
     
     
-    
-    print(stat)
     if len(sub1) == 0:
         p.drawString(33, 640, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
     else:
@@ -290,491 +293,491 @@ def graduation_print(request, id):
             p.drawImage(im,500, 640, height = 15, width = 80 , mask='auto')
             p.drawString(380, 638,f'{content.faculty1}')
                
-        p.setFont("Helvetica", 7)
-        sub2 = content.subject2
+        # p.setFont("Helvetica", 7)
+        # sub2 = content.subject2
 
-        if len(sub2) == 0:
-            p.drawString(33, 625, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #     if len(sub2) == 0:
+    #         p.drawString(33, 625, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
-        else:
-            p.drawString(33, 625, f'{content.subject2}')
-            p.setFont("Helvetica", 7)
-            p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
-            p.drawString(279, 625, f'{content.room2}')
-            p.drawString(323, 625, f'{content.day1_2}')
-            sig2 = content.signature2
-            faculty2 = content.faculty2
-            fac2 = user_table.objects.get(full_name = faculty2)
-            stat = fac2.uploaded_signature
-            if sig2 == "NO_APPROVED":
-                p.drawString(380, 625, 'Unapproved')
-            elif stat == "DECLINE":
-                p.drawString(380, 625,f'{content.faculty2}' )
-            else:
-                sig1trig = content.signature2
-                im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                p.drawString(380, 625,f'{content.faculty2}' )
-                p.drawImage(im,500, 625, height = 15, width = 80 , mask='auto')
+    #     else:
+    #         p.drawString(33, 625, f'{content.subject2}')
+    #         p.setFont("Helvetica", 7)
+    #         p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
+    #         p.drawString(279, 625, f'{content.room2}')
+    #         p.drawString(323, 625, f'{content.day1_2}')
+    #         sig2 = content.signature2
+    #         faculty2 = content.faculty2
+    #         fac2 = user_table.objects.get(full_name = faculty2)
+    #         stat = fac2.uploaded_signature
+    #         if sig2 == "NO_APPROVED":
+    #             p.drawString(380, 625, 'Unapproved')
+    #         elif stat == "DECLINE":
+    #             p.drawString(380, 625,f'{content.faculty2}' )
+    #         else:
+    #             sig1trig = content.signature2
+    #             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #             p.drawString(380, 625,f'{content.faculty2}' )
+    #             p.drawImage(im,500, 625, height = 15, width = 80 , mask='auto')
 
       
-            p.setFont("Helvetica", 7)
-            sub3 = content.subject3
-            print(sub3)
-            if len(sub3) == 0:
-                p.drawString(33, 611, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-            else:
-                p.drawString(33, 611, f'{content.subject3}')
-                p.setFont("Helvetica", 7)
-                p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
-                p.drawString(279, 611, f'{content.room3}')
-                p.drawString(323, 611, f'{content.day1_3}')
-                sig3 = content.signature3
-                faculty3 = content.faculty3
-                fac3 = user_table.objects.get(full_name = faculty3)
-                stat = fac3.uploaded_signature
-                if sig3 == "NO_APPROVED":
-                    p.drawString(380, 611, 'Unapproved')
-                elif stat == "DECLINE":
-                    p.drawString(380, 611,f'{content.faculty3}' )
-                else:
-                    sig1trig = content.signature3
-                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                    p.drawString(380, 611,f'{content.faculty3}' )
-                    p.drawImage(im,500, 609, height = 15, width = 80 , mask='auto')
+    #         p.setFont("Helvetica", 7)
+    #         sub3 = content.subject3
+    #         print(sub3)
+    #         if len(sub3) == 0:
+    #             p.drawString(33, 611, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #         else:
+    #             p.drawString(33, 611, f'{content.subject3}')
+    #             p.setFont("Helvetica", 7)
+    #             p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
+    #             p.drawString(279, 611, f'{content.room3}')
+    #             p.drawString(323, 611, f'{content.day1_3}')
+    #             sig3 = content.signature3
+    #             faculty3 = content.faculty3
+    #             fac3 = user_table.objects.get(full_name = faculty3)
+    #             stat = fac3.uploaded_signature
+    #             if sig3 == "NO_APPROVED":
+    #                 p.drawString(380, 611, 'Unapproved')
+    #             elif stat == "DECLINE":
+    #                 p.drawString(380, 611,f'{content.faculty3}' )
+    #             else:
+    #                 sig1trig = content.signature3
+    #                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                 p.drawString(380, 611,f'{content.faculty3}' )
+    #                 p.drawImage(im,500, 609, height = 15, width = 80 , mask='auto')
     
-                    p.setFont("Helvetica", 7)
-                    sub4 = content.subject4
-                    if len(sub4) == 0:
-                        p.drawString(33, 597,'----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                 p.setFont("Helvetica", 7)
+    #                 sub4 = content.subject4
+    #                 if len(sub4) == 0:
+    #                     p.drawString(33, 597,'----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
 
-                    else:
-                        p.drawString(33, 597, f'{content.subject4}')
-                        p.setFont("Helvetica", 7)
-                        p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
-                        p.drawString(279, 597, f'{content.room4}')
-                        p.drawString(323, 597, f'{content.day1_4}')
-                        sig4 = content.signature4
-                        faculty = content.faculty4
-                        fac = user_table.objects.get(full_name = faculty)
-                        stat = fac.uploaded_signature
-                        if sig4 == "NO_APPROVED":
-                            p.drawString(380, 597, 'Unapproved')
-                        elif stat == "DECLINE":
-                                p.drawString(380, 597,f'{content.faculty4}' )
-                        else:
-                            sig1trig = content.signature4
-                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                            p.drawString(380, 597,f'{content.faculty4}' )
-                            p.drawImage(im,500, 597, height = 15, width = 80 , mask='auto')
+    #                 else:
+    #                     p.drawString(33, 597, f'{content.subject4}')
+    #                     p.setFont("Helvetica", 7)
+    #                     p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
+    #                     p.drawString(279, 597, f'{content.room4}')
+    #                     p.drawString(323, 597, f'{content.day1_4}')
+    #                     sig4 = content.signature4
+    #                     faculty = content.faculty4
+    #                     fac = user_table.objects.get(full_name = faculty)
+    #                     stat = fac.uploaded_signature
+    #                     if sig4 == "NO_APPROVED":
+    #                         p.drawString(380, 597, 'Unapproved')
+    #                     elif stat == "DECLINE":
+    #                             p.drawString(380, 597,f'{content.faculty4}' )
+    #                     else:
+    #                         sig1trig = content.signature4
+    #                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                         p.drawString(380, 597,f'{content.faculty4}' )
+    #                         p.drawImage(im,500, 597, height = 15, width = 80 , mask='auto')
 
-                            p.setFont("Helvetica", 7)
-                            sub5 = content.subject5
-                            if len(sub5) == 0:
-                                p.drawString(33, 584, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                            else:
-                                p.drawString(33, 584, f'{content.subject5}')
-                                p.setFont("Helvetica", 7)
-                                p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
-                                p.drawString(279, 584, f'{content.room5}')
-                                p.drawString(323, 584, f'{content.day1_5}')
-                                sig5 = content.signature5
-                                faculty = content.faculty5
-                                fac = user_table.objects.get(full_name = faculty)
-                                stat = fac.uploaded_signature
-                                if sig5 == "NO_APPROVED":
-                                    p.drawString(380, 584, 'Unapproved')
-                                elif stat == "DECLINE":
-                                    p.drawString(380, 584,f'{content.faculty5}' )
-                                else:
-                                    sig1trig = content.signature5
-                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                    p.drawString(380, 584,f'{content.faculty5}' )
-                                    p.drawImage(im,500, 584, height = 15, width = 80 , mask='auto')
+    #                         p.setFont("Helvetica", 7)
+    #                         sub5 = content.subject5
+    #                         if len(sub5) == 0:
+    #                             p.drawString(33, 584, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                         else:
+    #                             p.drawString(33, 584, f'{content.subject5}')
+    #                             p.setFont("Helvetica", 7)
+    #                             p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
+    #                             p.drawString(279, 584, f'{content.room5}')
+    #                             p.drawString(323, 584, f'{content.day1_5}')
+    #                             sig5 = content.signature5
+    #                             faculty = content.faculty5
+    #                             fac = user_table.objects.get(full_name = faculty)
+    #                             stat = fac.uploaded_signature
+    #                             if sig5 == "NO_APPROVED":
+    #                                 p.drawString(380, 584, 'Unapproved')
+    #                             elif stat == "DECLINE":
+    #                                 p.drawString(380, 584,f'{content.faculty5}' )
+    #                             else:
+    #                                 sig1trig = content.signature5
+    #                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                 p.drawString(380, 584,f'{content.faculty5}' )
+    #                                 p.drawImage(im,500, 584, height = 15, width = 80 , mask='auto')
 
-                                    p.setFont("Helvetica", 7)
-                                    sub6 = content.subject6
-                                    print(sub6)
-                                    if len(sub6) == 0:
-                                        p.drawString(39, 570, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                    else:
-                                        p.drawString(33, 570, f'{content.subject6}')
-                                        p.setFont("Helvetica", 7)
-                                        p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
-                                        p.drawString(279, 570, f'{content.room6}')
-                                        p.drawString(323, 570, f'{content.day1_6}')
-                                        sig6 = content.signature6
-                                        faculty = content.faculty6
-                                        fac = user_table.objects.get(full_name = faculty)
-                                        stat = fac.uploaded_signature
-                                        if sig6 == "NO_APPROVED":
-                                            p.drawString(380, 570, 'Unapproved')
-                                        elif stat == "DECLINE":
-                                                p.drawString(380, 570,f'{content.faculty6}' )
-                                        else:
-                                            sig1trig = content.signature6
-                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                            p.drawString(380, 570,f'{content.faculty6}' )
-                                            p.drawImage(im,500, 570, height = 15, width = 80 , mask='auto')
+    #                                 p.setFont("Helvetica", 7)
+    #                                 sub6 = content.subject6
+    #                                 print(sub6)
+    #                                 if len(sub6) == 0:
+    #                                     p.drawString(39, 570, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                 else:
+    #                                     p.drawString(33, 570, f'{content.subject6}')
+    #                                     p.setFont("Helvetica", 7)
+    #                                     p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
+    #                                     p.drawString(279, 570, f'{content.room6}')
+    #                                     p.drawString(323, 570, f'{content.day1_6}')
+    #                                     sig6 = content.signature6
+    #                                     faculty = content.faculty6
+    #                                     fac = user_table.objects.get(full_name = faculty)
+    #                                     stat = fac.uploaded_signature
+    #                                     if sig6 == "NO_APPROVED":
+    #                                         p.drawString(380, 570, 'Unapproved')
+    #                                     elif stat == "DECLINE":
+    #                                             p.drawString(380, 570,f'{content.faculty6}' )
+    #                                     else:
+    #                                         sig1trig = content.signature6
+    #                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                         p.drawString(380, 570,f'{content.faculty6}' )
+    #                                         p.drawImage(im,500, 570, height = 15, width = 80 , mask='auto')
             
             
-                                            p.setFont("Helvetica", 7)
-                                            sub7 = content.subject7
-                                            if len(sub7) == 0: 
-                                                p.drawString(33, 555, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                         p.setFont("Helvetica", 7)
+    #                                         sub7 = content.subject7
+    #                                         if len(sub7) == 0: 
+    #                                             p.drawString(33, 555, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
-                                            else:
-                                                p.drawString(33, 555, f'{content.subject7}')
-                                                p.setFont("Helvetica", 7)
-                                                p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
-                                                p.drawString(279, 555, f'{content.room7}')
-                                                p.drawString(323, 555, f'{content.day1_7}')
-                                                sig7 = content.signature7
-                                                faculty = content.faculty7
-                                                fac = user_table.objects.get(full_name = faculty)
-                                                stat = fac.uploaded_signature
-                                                if sig7 == "NO_APPROVED":
-                                                    p.drawString(380, 555, 'Unapproved')
-                                                elif stat == "DECLINE":
-                                                        p.drawString(380, 555,f'{content.faculty7}' )    
-                                                else:
-                                                    sig1trig = content.signature7
-                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                    p.drawString(380, 555,f'{content.faculty7}' )
-                                                    p.drawImage(im,500, 555, height = 15, width = 80 , mask='auto')
+    #                                         else:
+    #                                             p.drawString(33, 555, f'{content.subject7}')
+    #                                             p.setFont("Helvetica", 7)
+    #                                             p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
+    #                                             p.drawString(279, 555, f'{content.room7}')
+    #                                             p.drawString(323, 555, f'{content.day1_7}')
+    #                                             sig7 = content.signature7
+    #                                             faculty = content.faculty7
+    #                                             fac = user_table.objects.get(full_name = faculty)
+    #                                             stat = fac.uploaded_signature
+    #                                             if sig7 == "NO_APPROVED":
+    #                                                 p.drawString(380, 555, 'Unapproved')
+    #                                             elif stat == "DECLINE":
+    #                                                     p.drawString(380, 555,f'{content.faculty7}' )    
+    #                                             else:
+    #                                                 sig1trig = content.signature7
+    #                                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                 p.drawString(380, 555,f'{content.faculty7}' )
+    #                                                 p.drawImage(im,500, 555, height = 15, width = 80 , mask='auto')
                 
 
-                                                    p.setFont("Helvetica", 7)
-                                                    sub8 = content.subject8
-                                                    if len(sub8) == 0: 
+    #                                                 p.setFont("Helvetica", 7)
+    #                                                 sub8 = content.subject8
+    #                                                 if len(sub8) == 0: 
                                                                                                                       
-                                                        p.drawString(33, 542, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                                    else:
-                                                        p.drawString(33, 542, f'{content.subject8}')
-                                                        p.setFont("Helvetica", 7)
-                                                        p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
-                                                        p.drawString(279, 542, f'{content.room8}')
-                                                        p.drawString(323, 542, f'{content.day1_8}')
-                                                        sig8 = content.signature8
-                                                        faculty = content.faculty8
-                                                        fac = user_table.objects.get(full_name = faculty)
-                                                        stat = fac.uploaded_signature
-                                                        if sig8 == "NO_APPROVED":
-                                                            p.drawString(380, 542, 'Unapproved')
-                                                        elif stat == "DECLINE":
-                                                                p.drawString(380, 542,f'{content.faculty8}' )
-                                                        else:
-                                                            sig1trig = content.signature8
-                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                            p.drawString(380, 542,f'{content.faculty8}' )
-                                                            p.drawImage(im,500, 542, height = 15, width = 80 , mask='auto')
+    #                                                     p.drawString(33, 542, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                 else:
+    #                                                     p.drawString(33, 542, f'{content.subject8}')
+    #                                                     p.setFont("Helvetica", 7)
+    #                                                     p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
+    #                                                     p.drawString(279, 542, f'{content.room8}')
+    #                                                     p.drawString(323, 542, f'{content.day1_8}')
+    #                                                     sig8 = content.signature8
+    #                                                     faculty = content.faculty8
+    #                                                     fac = user_table.objects.get(full_name = faculty)
+    #                                                     stat = fac.uploaded_signature
+    #                                                     if sig8 == "NO_APPROVED":
+    #                                                         p.drawString(380, 542, 'Unapproved')
+    #                                                     elif stat == "DECLINE":
+    #                                                             p.drawString(380, 542,f'{content.faculty8}' )
+    #                                                     else:
+    #                                                         sig1trig = content.signature8
+    #                                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                         p.drawString(380, 542,f'{content.faculty8}' )
+    #                                                         p.drawImage(im,500, 542, height = 15, width = 80 , mask='auto')
                                                             
                                                             
-                                                            p.setFont("Helvetica", 7)
-                                                            sub9 = content.subject9
-                                                            if len(sub9) == 0:
-                                                                p.drawString(33, 529, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                                            else:
-                                                                p.drawString(33, 529, f'{content.subject9}')
-                                                                p.setFont("Helvetica", 7)
-                                                                p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
-                                                                p.drawString(279, 529, f'{content.room9}')
-                                                                p.drawString(323, 529, f'{content.day1_9}')
-                                                                sig9 = content.signature9
-                                                                faculty = content.faculty9
-                                                                fac = user_table.objects.get(full_name = faculty)
-                                                                stat = fac.uploaded_signature
-                                                                if sig9 == "NO_APPROVED":
-                                                                    p.drawString(380, 529, 'Unapproved')
-                                                                elif stat == "DECLINE":
-                                                                        p.drawString(380, 529,f'{content.faculty9}' )
-                                                                else:
-                                                                    sig1trig = content.signature9
-                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                                    p.drawString(380, 529,f'{content.faculty9}' )
-                                                                    p.drawImage(im,500, 529, height = 15, width = 80 , mask='auto')                    
+    #                                                         p.setFont("Helvetica", 7)
+    #                                                         sub9 = content.subject9
+    #                                                         if len(sub9) == 0:
+    #                                                             p.drawString(33, 529, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                         else:
+    #                                                             p.drawString(33, 529, f'{content.subject9}')
+    #                                                             p.setFont("Helvetica", 7)
+    #                                                             p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
+    #                                                             p.drawString(279, 529, f'{content.room9}')
+    #                                                             p.drawString(323, 529, f'{content.day1_9}')
+    #                                                             sig9 = content.signature9
+    #                                                             faculty = content.faculty9
+    #                                                             fac = user_table.objects.get(full_name = faculty)
+    #                                                             stat = fac.uploaded_signature
+    #                                                             if sig9 == "NO_APPROVED":
+    #                                                                 p.drawString(380, 529, 'Unapproved')
+    #                                                             elif stat == "DECLINE":
+    #                                                                     p.drawString(380, 529,f'{content.faculty9}' )
+    #                                                             else:
+    #                                                                 sig1trig = content.signature9
+    #                                                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                                 p.drawString(380, 529,f'{content.faculty9}' )
+    #                                                                 p.drawImage(im,500, 529, height = 15, width = 80 , mask='auto')                    
             
             
-                                                                    p.setFont("Helvetica", 7)
-                                                                    sub10 = content.subject10
-                                                                    if len(sub10) == 0:
-                                                                        p.drawString(33, 515, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                                 p.setFont("Helvetica", 7)
+    #                                                                 sub10 = content.subject10
+    #                                                                 if len(sub10) == 0:
+    #                                                                     p.drawString(33, 515, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                 
-                                                                    else:
-                                                                        p.drawString(33, 515, f'{content.subject10}')
-                                                                        p.setFont("Helvetica", 7)
-                                                                        p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
-                                                                        p.drawString(279, 515, f'{content.room10}')
-                                                                        p.drawString(323, 515, f'{content.day1_10}')
-                                                                        sig10 = content.signature10
-                                                                        faculty = content.faculty10
-                                                                        fac = user_table.objects.get(full_name = faculty)
-                                                                        stat = fac.uploaded_signature
-                                                                        if sig10 == "NO_APPROVED":
-                                                                            p.drawString(380, 515, 'Unapproved')
-                                                                        elif stat == "DECLINE":
-                                                                                p.drawString(380, 515,f'{content.faculty10}' )
-                                                                        else:
-                                                                            sig1trig = content.signature10
-                                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                                            p.drawString(380, 515,f'{content.faculty10}' )
-                                                                            p.drawImage(im,500, 515, height = 15, width = 80 , mask='auto')
-    #additional subj
+    #                                                                 else:
+    #                                                                     p.drawString(33, 515, f'{content.subject10}')
+    #                                                                     p.setFont("Helvetica", 7)
+    #                                                                     p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
+    #                                                                     p.drawString(279, 515, f'{content.room10}')
+    #                                                                     p.drawString(323, 515, f'{content.day1_10}')
+    #                                                                     sig10 = content.signature10
+    #                                                                     faculty = content.faculty10
+    #                                                                     fac = user_table.objects.get(full_name = faculty)
+    #                                                                     stat = fac.uploaded_signature
+    #                                                                     if sig10 == "NO_APPROVED":
+    #                                                                         p.drawString(380, 515, 'Unapproved')
+    #                                                                     elif stat == "DECLINE":
+    #                                                                             p.drawString(380, 515,f'{content.faculty10}' )
+    #                                                                     else:
+    #                                                                         sig1trig = content.signature10
+    #                                                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                                         p.drawString(380, 515,f'{content.faculty10}' )
+    #                                                                         p.drawImage(im,500, 515, height = 15, width = 80 , mask='auto')
+    # #additional subj
   
 
-    addsub1 = content.addsubject1
-    if len(addsub1) == 0:
-        p.drawString(33, 305, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    # addsub1 = content.addsubject1
+    # if len(addsub1) == 0:
+    #     p.drawString(33, 305, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
         
-    else:
-        p.drawString(33, 305, f'{content.addsubject1}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_endtime1_1}')
-        p.drawString(279, 305, f'{content.addroom1}')
-        p.drawString(323, 305, f'{content.addday1_1}')
-        addsig1 = content.addsignature1
-        faculty = content.addfaculty1
-        fac = user_table.objects.get(full_name = faculty)
-        stat = fac.uploaded_signature
-        if addsig1 == "NO_APPROVED":
-            p.drawString(380, 305, 'Unapproved')
-        elif stat == "DECLINE":
-                p.drawString(380, 305,f'{content.addfaculty1}' )
-        else:
-            sig1trig = content.addsignature1
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-            p.drawString(380, 305,f'{content.addfaculty1}' )
-            p.drawImage(im,500, 305, height = 15, width = 80 , mask='auto')
+    # else:
+    #     p.drawString(33, 305, f'{content.addsubject1}')
+    #     p.setFont("Helvetica", 7)
+    #     p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_endtime1_1}')
+    #     p.drawString(279, 305, f'{content.addroom1}')
+    #     p.drawString(323, 305, f'{content.addday1_1}')
+    #     addsig1 = content.addsignature1
+    #     faculty = content.addfaculty1
+    #     fac = user_table.objects.get(full_name = faculty)
+    #     stat = fac.uploaded_signature
+    #     if addsig1 == "NO_APPROVED":
+    #         p.drawString(380, 305, 'Unapproved')
+    #     elif stat == "DECLINE":
+    #             p.drawString(380, 305,f'{content.addfaculty1}' )
+    #     else:
+    #         sig1trig = content.addsignature1
+    #         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #         p.drawString(380, 305,f'{content.addfaculty1}' )
+    #         p.drawImage(im,500, 305, height = 15, width = 80 , mask='auto')
 
     
-            p.setFont("Helvetica", 7)
-            addsub2 = content.addsubject2
-            if len(addsub2) == 0:
-                p.drawString(33, 290, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-            else:
-                p.drawString(33, 290, f'{content.addsubject2}')
-                p.setFont("Helvetica", 7)
-                p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
-                p.drawString(279, 290, f'{content.addroom2}')
-                p.drawString(323, 290, f'{content.addday1_2}')
-                addsig2 = content.addsignature2
-                faculty = content.addfaculty2
-                fac = user_table.objects.get(full_name = faculty)
-                stat = fac.uploaded_signature
-                if addsig2 == "NO_APPROVED":
-                    p.drawString(380, 290, 'Unapproved')
-                elif stat == "DECLINE":
-                    p.drawString(380, 290,f'{content.addfaculty2}' )
-                else:
-                    sig1trig = content.addsignature2
-                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                    p.drawString(380, 290,f'{content.addfaculty2}' )
-                    p.drawImage(im,500, 290, height = 15, width = 80 , mask='auto')
+    #         p.setFont("Helvetica", 7)
+    #         addsub2 = content.addsubject2
+    #         if len(addsub2) == 0:
+    #             p.drawString(33, 290, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #         else:
+    #             p.drawString(33, 290, f'{content.addsubject2}')
+    #             p.setFont("Helvetica", 7)
+    #             p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
+    #             p.drawString(279, 290, f'{content.addroom2}')
+    #             p.drawString(323, 290, f'{content.addday1_2}')
+    #             addsig2 = content.addsignature2
+    #             faculty = content.addfaculty2
+    #             fac = user_table.objects.get(full_name = faculty)
+    #             stat = fac.uploaded_signature
+    #             if addsig2 == "NO_APPROVED":
+    #                 p.drawString(380, 290, 'Unapproved')
+    #             elif stat == "DECLINE":
+    #                 p.drawString(380, 290,f'{content.addfaculty2}' )
+    #             else:
+    #                 sig1trig = content.addsignature2
+    #                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                 p.drawString(380, 290,f'{content.addfaculty2}' )
+    #                 p.drawImage(im,500, 290, height = 15, width = 80 , mask='auto')
     
-                    p.setFont("Helvetica", 7)
-                    addsub3 = content.addsubject3
-                    if len(addsub3) == 0:
-                        p.drawString(33, 276, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                 p.setFont("Helvetica", 7)
+    #                 addsub3 = content.addsubject3
+    #                 if len(addsub3) == 0:
+    #                     p.drawString(33, 276, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                         
-                    else:
-                        p.drawString(33, 276, f'{content.addsubject3}')
-                        p.setFont("Helvetica", 7)
-                        p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
-                        p.drawString(279, 276, f'{content.addroom3}')
-                        p.drawString(323, 276, f'{content.addday1_3}')
-                        addsig3 = content.addsignature3
-                        faculty = content.addfaculty3
-                        fac = user_table.objects.get(full_name = faculty)
-                        stat = fac.uploaded_signature
-                        if addsig3 == "NO_APPROVED":
-                            p.drawString(380, 276, 'Unapproved')
-                        elif stat == "DECLINE":
-                            p.drawString(380, 276,f'{content.addfaculty3}' )
-                        else:
-                            sig1trig = content.addsignature3
-                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                            p.drawString(380, 276,f'{content.addfaculty3}' )
-                            p.drawImage(im,500, 276, height = 15, width = 80 , mask='auto')
+    #                 else:
+    #                     p.drawString(33, 276, f'{content.addsubject3}')
+    #                     p.setFont("Helvetica", 7)
+    #                     p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
+    #                     p.drawString(279, 276, f'{content.addroom3}')
+    #                     p.drawString(323, 276, f'{content.addday1_3}')
+    #                     addsig3 = content.addsignature3
+    #                     faculty = content.addfaculty3
+    #                     fac = user_table.objects.get(full_name = faculty)
+    #                     stat = fac.uploaded_signature
+    #                     if addsig3 == "NO_APPROVED":
+    #                         p.drawString(380, 276, 'Unapproved')
+    #                     elif stat == "DECLINE":
+    #                         p.drawString(380, 276,f'{content.addfaculty3}' )
+    #                     else:
+    #                         sig1trig = content.addsignature3
+    #                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                         p.drawString(380, 276,f'{content.addfaculty3}' )
+    #                         p.drawImage(im,500, 276, height = 15, width = 80 , mask='auto')
                             
             
 
-                            p.setFont("Helvetica", 7)
-                            addsub4 = content.addsubject4
-                            if len(addsub4) == 0:
-                                print ("empty")
-                                p.drawString(33, 262, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                         p.setFont("Helvetica", 7)
+    #                         addsub4 = content.addsubject4
+    #                         if len(addsub4) == 0:
+    #                             print ("empty")
+    #                             p.drawString(33, 262, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                                 
-                            else:
-                                p.drawString(33, 262, f'{content.addsubject4}')
-                                p.setFont("Helvetica", 7)
-                                p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
-                                p.drawString(279, 262, f'{content.addroom4}')
-                                p.drawString(323, 262, f'{content.addday1_4}')
-                                addsig4 = content.addsignature4
-                                faculty = content.addfaculty4
-                                fac = user_table.objects.get(full_name = faculty)
-                                stat = fac.uploaded_signature
-                                if addsig4 == "NO_APPROVED":
-                                    p.drawString(380, 262, 'Unapproved')
-                                elif stat == "DECLINE":
-                                    p.drawString(380, 262,f'{content.addfaculty4}' )
-                                else:
-                                    sig1trig = content.addsignature4
-                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                    p.drawString(380, 262,f'{content.addfaculty4}' )
-                                    p.drawImage(im,500, 262, height = 15, width = 80 , mask='auto')
+    #                         else:
+    #                             p.drawString(33, 262, f'{content.addsubject4}')
+    #                             p.setFont("Helvetica", 7)
+    #                             p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
+    #                             p.drawString(279, 262, f'{content.addroom4}')
+    #                             p.drawString(323, 262, f'{content.addday1_4}')
+    #                             addsig4 = content.addsignature4
+    #                             faculty = content.addfaculty4
+    #                             fac = user_table.objects.get(full_name = faculty)
+    #                             stat = fac.uploaded_signature
+    #                             if addsig4 == "NO_APPROVED":
+    #                                 p.drawString(380, 262, 'Unapproved')
+    #                             elif stat == "DECLINE":
+    #                                 p.drawString(380, 262,f'{content.addfaculty4}' )
+    #                             else:
+    #                                 sig1trig = content.addsignature4
+    #                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                 p.drawString(380, 262,f'{content.addfaculty4}' )
+    #                                 p.drawImage(im,500, 262, height = 15, width = 80 , mask='auto')
             
             
-                                    p.setFont("Helvetica", 7)
-                                    addsub5 = content.addsubject5
-                                    if len(addsub5) == 0:
-                                        p.drawString(33, 249, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                    else:
-                                        p.drawString(33, 249, f'{content.addsubject5}')
-                                        p.setFont("Helvetica", 7)
-                                        p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
-                                        p.drawString(279, 249, f'{content.addroom5}')
-                                        p.drawString(323, 249, f'{content.addday1_5}')
-                                        addsig5 = content.addsignature5
-                                        faculty = content.addfaculty5
-                                        fac = user_table.objects.get(full_name = faculty)
-                                        stat = fac.uploaded_signature
-                                        if addsig5 == "NO_APPROVED":
-                                            p.drawString(380, 249, 'Unapproved')
-                                        elif stat == "DECLINE":
-                                            p.drawString(380, 249,f'{content.addfaculty5}' )
-                                        else:
-                                            sig1trig = content.addsignature5
-                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                            p.drawString(380, 249,f'{content.addfaculty5}' )
-                                            p.drawImage(im,500, 249, height = 15, width = 80 , mask='auto')
+    #                                 p.setFont("Helvetica", 7)
+    #                                 addsub5 = content.addsubject5
+    #                                 if len(addsub5) == 0:
+    #                                     p.drawString(33, 249, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                 else:
+    #                                     p.drawString(33, 249, f'{content.addsubject5}')
+    #                                     p.setFont("Helvetica", 7)
+    #                                     p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
+    #                                     p.drawString(279, 249, f'{content.addroom5}')
+    #                                     p.drawString(323, 249, f'{content.addday1_5}')
+    #                                     addsig5 = content.addsignature5
+    #                                     faculty = content.addfaculty5
+    #                                     fac = user_table.objects.get(full_name = faculty)
+    #                                     stat = fac.uploaded_signature
+    #                                     if addsig5 == "NO_APPROVED":
+    #                                         p.drawString(380, 249, 'Unapproved')
+    #                                     elif stat == "DECLINE":
+    #                                         p.drawString(380, 249,f'{content.addfaculty5}' )
+    #                                     else:
+    #                                         sig1trig = content.addsignature5
+    #                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                         p.drawString(380, 249,f'{content.addfaculty5}' )
+    #                                         p.drawImage(im,500, 249, height = 15, width = 80 , mask='auto')
             
-                                            p.setFont("Helvetica", 7)
-                                            addsub6 = content.addsubject6
-                                            if len(addsub6) == 0:
-                                                p.drawString(33, 235, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                            else:
-                                                p.drawString(33, 235, f'{content.addsubject6}')
-                                                p.setFont("Helvetica", 7)
-                                                p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_endtime1_6}')
-                                                p.drawString(279, 235, f'{content.addroom6}')
-                                                p.drawString(323, 235, f'{content.addday1_6}')
-                                                addsig6 = content.addsignature6
-                                                faculty = content.addfaculty6
-                                                fac = user_table.objects.get(full_name = faculty)
-                                                stat = fac.uploaded_signature
-                                                if addsig6 == "NO_APPROVED":
-                                                    p.drawString(380, 235, 'Unapproved')
-                                                elif stat == "DECLINE":
-                                                    p.drawString(380, 235,f'{content.addfaculty6}' )
-                                                else:
-                                                    sig1trig = content.addsignature6
-                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                    p.drawString(380, 235,f'{content.addfaculty6}' )
-                                                    p.drawImage(im,500, 235, height = 15, width = 80 , mask='auto')
+    #                                         p.setFont("Helvetica", 7)
+    #                                         addsub6 = content.addsubject6
+    #                                         if len(addsub6) == 0:
+    #                                             p.drawString(33, 235, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                         else:
+    #                                             p.drawString(33, 235, f'{content.addsubject6}')
+    #                                             p.setFont("Helvetica", 7)
+    #                                             p.drawString(204, 235, f'{content.add_starttime1_6} - {content.add_endtime1_6}')
+    #                                             p.drawString(279, 235, f'{content.addroom6}')
+    #                                             p.drawString(323, 235, f'{content.addday1_6}')
+    #                                             addsig6 = content.addsignature6
+    #                                             faculty = content.addfaculty6
+    #                                             fac = user_table.objects.get(full_name = faculty)
+    #                                             stat = fac.uploaded_signature
+    #                                             if addsig6 == "NO_APPROVED":
+    #                                                 p.drawString(380, 235, 'Unapproved')
+    #                                             elif stat == "DECLINE":
+    #                                                 p.drawString(380, 235,f'{content.addfaculty6}' )
+    #                                             else:
+    #                                                 sig1trig = content.addsignature6
+    #                                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                 p.drawString(380, 235,f'{content.addfaculty6}' )
+    #                                                 p.drawImage(im,500, 235, height = 15, width = 80 , mask='auto')
                                                     
             
             
-                                                    p.setFont("Helvetica", 7)
-                                                    addsub7 = content.addsubject7
-                                                    if len(addsub7) == 0:
-                                                        p.drawString(33, 220, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
-                                                    else:
-                                                        p.drawString(33, 220, f'{content.addsubject7}')
-                                                        p.setFont("Helvetica", 7)
-                                                        p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_endtime1_7}')
-                                                        p.drawString(279, 220, f'{content.addroom7}')
-                                                        p.drawString(323, 220, f'{content.addday1_7}')
-                                                        addsig7 = content.addsignature7
-                                                        faculty = content.addfaculty7
-                                                        fac = user_table.objects.get(full_name = faculty)
-                                                        stat = fac.uploaded_signature
-                                                        if addsig7 == "NO_APPROVED":
-                                                            p.drawString(380, 220, 'Unapproved')
-                                                        elif stat == "DECLINE":
-                                                            p.drawString(380, 220,f'{content.addfaculty7}' )
-                                                        else:
-                                                            sig1trig = content.addsignature7
-                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                            p.drawString(380, 220,f'{content.addfaculty7}' )
-                                                            p.drawImage(im,500, 220, height = 15, width = 80 , mask='auto')
+    #                                                 p.setFont("Helvetica", 7)
+    #                                                 addsub7 = content.addsubject7
+    #                                                 if len(addsub7) == 0:
+    #                                                     p.drawString(33, 220, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                 else:
+    #                                                     p.drawString(33, 220, f'{content.addsubject7}')
+    #                                                     p.setFont("Helvetica", 7)
+    #                                                     p.drawString(204, 220, f'{content.add_starttime1_7} - {content.add_endtime1_7}')
+    #                                                     p.drawString(279, 220, f'{content.addroom7}')
+    #                                                     p.drawString(323, 220, f'{content.addday1_7}')
+    #                                                     addsig7 = content.addsignature7
+    #                                                     faculty = content.addfaculty7
+    #                                                     fac = user_table.objects.get(full_name = faculty)
+    #                                                     stat = fac.uploaded_signature
+    #                                                     if addsig7 == "NO_APPROVED":
+    #                                                         p.drawString(380, 220, 'Unapproved')
+    #                                                     elif stat == "DECLINE":
+    #                                                         p.drawString(380, 220,f'{content.addfaculty7}' )
+    #                                                     else:
+    #                                                         sig1trig = content.addsignature7
+    #                                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                         p.drawString(380, 220,f'{content.addfaculty7}' )
+    #                                                         p.drawImage(im,500, 220, height = 15, width = 80 , mask='auto')
             
             
-                                                            p.setFont("Helvetica", 7)
-                                                            addsub8 = content.addsubject8
-                                                            if len(addsub8) == 0:
-                                                                p.drawString(33, 207, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                         p.setFont("Helvetica", 7)
+    #                                                         addsub8 = content.addsubject8
+    #                                                         if len(addsub8) == 0:
+    #                                                             p.drawString(33, 207, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                                                                 
-                                                            else:
-                                                                p.drawString(33, 207, f'{content.addsubject8}')
-                                                                p.setFont("Helvetica", 7)
-                                                                p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_endtime1_8}')
-                                                                p.drawString(279, 207, f'{content.addroom8}')
-                                                                p.drawString(323, 207, f'{content.addday1_8}')
-                                                                addsig8 = content.addsignature8
-                                                                faculty = content.addfaculty8
-                                                                fac = user_table.objects.get(full_name = faculty)
-                                                                stat = fac.uploaded_signature
-                                                                if addsig8 == "NO_APPROVED":
-                                                                    p.drawString(380, 207, 'Unapproved')
-                                                                elif stat == "DECLINE":
-                                                                    p.drawString(380, 207,f'{content.addfaculty8}' )
-                                                                else:
-                                                                    sig1trig = content.addsignature8
-                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                                    p.drawString(380, 207,f'{content.addfaculty8}' )
-                                                                    p.drawImage(im,500, 207, height = 15, width = 80 , mask='auto')
+    #                                                         else:
+    #                                                             p.drawString(33, 207, f'{content.addsubject8}')
+    #                                                             p.setFont("Helvetica", 7)
+    #                                                             p.drawString(204, 207, f'{content.add_starttime1_8} - {content.add_endtime1_8}')
+    #                                                             p.drawString(279, 207, f'{content.addroom8}')
+    #                                                             p.drawString(323, 207, f'{content.addday1_8}')
+    #                                                             addsig8 = content.addsignature8
+    #                                                             faculty = content.addfaculty8
+    #                                                             fac = user_table.objects.get(full_name = faculty)
+    #                                                             stat = fac.uploaded_signature
+    #                                                             if addsig8 == "NO_APPROVED":
+    #                                                                 p.drawString(380, 207, 'Unapproved')
+    #                                                             elif stat == "DECLINE":
+    #                                                                 p.drawString(380, 207,f'{content.addfaculty8}' )
+    #                                                             else:
+    #                                                                 sig1trig = content.addsignature8
+    #                                                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                                 p.drawString(380, 207,f'{content.addfaculty8}' )
+    #                                                                 p.drawImage(im,500, 207, height = 15, width = 80 , mask='auto')
                                                                     
             
-                                                                    p.setFont("Helvetica", 7)
-                                                                    addsub9 = content.addsubject9
-                                                                    if len(addsub9) == 0:
-                                                                        p.drawString(33,193, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                                 p.setFont("Helvetica", 7)
+    #                                                                 addsub9 = content.addsubject9
+    #                                                                 if len(addsub9) == 0:
+    #                                                                     p.drawString(33,193, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                                                                         
-                                                                    else:
-                                                                        p.drawString(33, 193, f'{content.addsubject9}')
-                                                                        p.setFont("Helvetica", 7)
-                                                                        p.drawString(204,193, f'{content.add_starttime1_9} - {content.add_endtime1_9}')
-                                                                        p.drawString(279,193, f'{content.addroom9}')
-                                                                        p.drawString(323,193, f'{content.addday1_9}')
-                                                                        addsig9 = content.addsignature9
-                                                                        faculty = content.addfaculty9
-                                                                        fac = user_table.objects.get(full_name = faculty)
-                                                                        stat = fac.uploaded_signature
-                                                                        if addsig9 == "NO_APPROVED":
-                                                                            p.drawString(380,193, 'Unapproved')
-                                                                        elif stat == "DECLINE":
-                                                                            p.drawString(380, 193,f'{content.addfaculty9}' )
-                                                                        else:
-                                                                            sig1trig = content.addsignature9
-                                                                            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                                            p.drawString(380, 193,f'{content.addfaculty9}' )
-                                                                            p.drawImage(im,500, 193, height = 15, width = 80 , mask='auto')
+    #                                                                 else:
+    #                                                                     p.drawString(33, 193, f'{content.addsubject9}')
+    #                                                                     p.setFont("Helvetica", 7)
+    #                                                                     p.drawString(204,193, f'{content.add_starttime1_9} - {content.add_endtime1_9}')
+    #                                                                     p.drawString(279,193, f'{content.addroom9}')
+    #                                                                     p.drawString(323,193, f'{content.addday1_9}')
+    #                                                                     addsig9 = content.addsignature9
+    #                                                                     faculty = content.addfaculty9
+    #                                                                     fac = user_table.objects.get(full_name = faculty)
+    #                                                                     stat = fac.uploaded_signature
+    #                                                                     if addsig9 == "NO_APPROVED":
+    #                                                                         p.drawString(380,193, 'Unapproved')
+    #                                                                     elif stat == "DECLINE":
+    #                                                                         p.drawString(380, 193,f'{content.addfaculty9}' )
+    #                                                                     else:
+    #                                                                         sig1trig = content.addsignature9
+    #                                                                         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                                         p.drawString(380, 193,f'{content.addfaculty9}' )
+    #                                                                         p.drawImage(im,500, 193, height = 15, width = 80 , mask='auto')
             
             
-                                                                            p.setFont("Helvetica", 7)
-                                                                            addsub10 = content.addsubject10
-                                                                            if len(addsub10) == 0:
-                                                                                p.drawString(33, 180, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
+    #                                                                         p.setFont("Helvetica", 7)
+    #                                                                         addsub10 = content.addsubject10
+    #                                                                         if len(addsub10) == 0:
+    #                                                                             p.drawString(33, 180, '----------------------------------------------------------------------------------------------------------Nothing Follows----------------------------------------------------------------------------------------------------------')
                                                                                 
-                                                                            else:
-                                                                                p.drawString(33, 180, f'{content.addsubject10}')
-                                                                                p.setFont("Helvetica", 7)
-                                                                                p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_endtime1_10}')
-                                                                                p.drawString(279, 180, f'{content.addroom10}')
-                                                                                p.drawString(323, 180, f'{content.addday1_10}')
-                                                                                addsig10 = content.addsignature10
-                                                                                faculty = content.addfaculty10
-                                                                                fac = user_table.objects.get(full_name = faculty)
-                                                                                stat = fac.uploaded_signature
-                                                                                if addsig10 == "NO_APPROVED":
-                                                                                    p.drawString(380, 180, 'Unapproved')
-                                                                                elif stat == "DECLINE":
-                                                                                    p.drawString(380, 180,f'{content.addfaculty10}' )
-                                                                                else:
-                                                                                    sig1trig = content.addsignature10
-                                                                                    im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
-                                                                                    p.drawString(380, 180,f'{content.addfaculty10}' )
-                                                                                    p.drawImage(im,500, 180, height = 15, width = 80 , mask='auto')
+    #                                                                         else:
+    #                                                                             p.drawString(33, 180, f'{content.addsubject10}')
+    #                                                                             p.setFont("Helvetica", 7)
+    #                                                                             p.drawString(204, 180, f'{content.add_starttime1_10} - {content.add_endtime1_10}')
+    #                                                                             p.drawString(279, 180, f'{content.addroom10}')
+    #                                                                             p.drawString(323, 180, f'{content.addday1_10}')
+    #                                                                             addsig10 = content.addsignature10
+    #                                                                             faculty = content.addfaculty10
+    #                                                                             fac = user_table.objects.get(full_name = faculty)
+    #                                                                             stat = fac.uploaded_signature
+    #                                                                             if addsig10 == "NO_APPROVED":
+    #                                                                                 p.drawString(380, 180, 'Unapproved')
+    #                                                                             elif stat == "DECLINE":
+    #                                                                                 p.drawString(380, 180,f'{content.addfaculty10}' )
+    #                                                                             else:
+    #                                                                                 sig1trig = content.addsignature10
+    #                                                                                 im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\signatures\\"+sig1trig+".png"
+    #                                                                                 p.drawString(380, 180,f'{content.addfaculty10}' )
+    #                                                                                 p.drawImage(im,500, 180, height = 15, width = 80 , mask='auto')
 
     p.setFont("Helvetica", 7)
     p.drawString(235, 151, f'{content.unenrolled_application_deadline}')
@@ -823,7 +826,7 @@ def graduation_print(request, id):
 
     with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
 @login_required(login_url='/')
@@ -931,7 +934,7 @@ def clearance_print(request, id):
         p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
 
     else: 
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)      
         p.drawString(130, 290, f"""{acc_name}""")
         p.setFont("Helvetica", 4.5)
@@ -966,7 +969,7 @@ def clearance_print(request, id):
         p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
 
     else:
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)       
         p.drawString(147, 240, f"""{dla_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1001,7 +1004,7 @@ def clearance_print(request, id):
         p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
         p.drawString(170, 215, f"""{dms_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1035,7 +1038,7 @@ def clearance_print(request, id):
         p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
         p.drawString(120, 190, f"""{pe_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1074,7 +1077,7 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
-            p.setFont("Helvetica", 5.5)
+            p.setFont("Helvetica", 5)
             p.setFillColorRGB(0,0,0)    
             p.drawString(105, 113, f"""{itdept_name}""")
             p.setFont("Helvetica", 4.5)
@@ -1106,7 +1109,7 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
-            p.setFont("Helvetica", 5.5)
+            p.setFont("Helvetica", 5)
             p.setFillColorRGB(0,0,0)    
             p.drawString(105, 113, f"""{educdept_name}""")
             p.setFont("Helvetica", 4.5)
@@ -1138,7 +1141,7 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
 
         else:      
-            p.setFont("Helvetica", 5.5)
+            p.setFont("Helvetica", 5)
             p.setFillColorRGB(0,0,0) 
             p.drawString(105, 113, f"""{engdept_name}""")
             p.setFont("Helvetica", 4.5)
@@ -1170,7 +1173,7 @@ def clearance_print(request, id):
         p.drawImage(im ,435, 290, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
         p.drawString(435, 290, f"""{shop_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1199,7 +1202,7 @@ def clearance_print(request, id):
         p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
 
     else:    
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)   
         p.drawString(425, 265, f"""{lib_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1232,7 +1235,7 @@ def clearance_print(request, id):
         p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
 
     else:      
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0) 
         p.drawString(435, 240, f"""{guidance_name}""")
         p.setFont("Helvetica", 4.5)
@@ -1263,12 +1266,12 @@ def clearance_print(request, id):
         p.drawImage(im ,455, 215, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
-        p.drawString(435, 290, f"""{osa_name}""")
+        p.drawString(455, 215, f"""{osa_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(430, 260, "APPROVED *Required Live Signature")
+        p.drawString(320, 210, "APPROVED *Required Live Signature")
     
     
     
@@ -1299,7 +1302,7 @@ def clearance_print(request, id):
         p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5.5)
+        p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
         p.drawString(482, 190, f"""{adaa_name}""")
         p.setFillColorRGB(1,0,0)
