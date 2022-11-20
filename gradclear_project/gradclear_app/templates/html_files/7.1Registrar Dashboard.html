@@ -2578,16 +2578,18 @@ Adviser:
 // COLLAPSIBLE SIDEBAR
 function toggleSidebar() {
   if (mini) {
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("logo_71").style.marginLeft = "90px";
-    this.mini = false;
-  } else {
     console.log("closing sidebar");
     document.getElementById("sidebar").style.width = "70px";
     document.getElementById("main").style.marginLeft = "70px";
     document.getElementById("logo_71").style.marginLeft = "3px";
+    this.mini = false;
+  } else {
+    document.getElementById("sidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("logo_71").style.marginLeft = "90px";
     this.mini = true;
+
+    
   }
 }
 

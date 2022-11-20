@@ -461,11 +461,7 @@ class graduation_form_table(models.Model):
         return self.student_id
 
 class request_form_table(models.Model):
-<<<<<<< HEAD
-    student_id = models.CharField(max_length=100, verbose_name="Student Id")
-=======
     student_id = models.CharField(max_length=50, verbose_name="Student Id")
->>>>>>> 11164e24cd58655526734ef0cb8b3ae292617059
     name = models.CharField(max_length=100, verbose_name="Student Name")
     name2 = models.CharField(max_length=100, verbose_name="2nd Format Student Name")
     address = models.CharField(max_length=100, verbose_name="Address")
