@@ -601,10 +601,10 @@ Adviser:
         {% if uploaded_signature %}
             <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
             <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-100 border border-dark rounded" >
-            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>      
+            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>         
         {% else %}
             <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
-            <div class="p-2 border rounded">NO CURRENT UPLOADED SIGNATURE</div>
+            <div class="p-2 border rounded">NO CURRENT UPLOADED SIGNATURE</div
         {% endif %}
         </div>
         <form method="POST" action ="update_clearance_signature/{{id}}" enctype="multipart/form-data">
@@ -612,6 +612,7 @@ Adviser:
             <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
             <input type="text" name ="id_num" value ="{{id}}" hidden>
             <div id ="upload_signature_area" class="p-2" hidden>
+                <hr>
                 <div class = "bg-dark p-2 mb-2 mt-2"><h4 class = "text-white" id="uplaod_text">UPLOAD SIGNATURE HERE</h4></div>
                 <img id="preview" class="p-1 w-100 border">
                 <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
