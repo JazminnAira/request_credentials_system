@@ -590,35 +590,31 @@ Adviser:
             {% if i.current_status == "STUDENT" %}
             <div class="form-group row pl-3">
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
-                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
                 </div>
             </div>
             {% elif i.current_status == "OLD STUDENT" %}
             <div class="form-group row pl-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" checked disabled>
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" disabled>
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
-                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
                 </div>
             </div>
             {% else %}
@@ -650,7 +646,7 @@ Adviser:
                 </div>
                 {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" checked>
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
                 </div>
                 {% endif %}
@@ -773,6 +769,7 @@ Adviser:
 
             <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
             {% endfor %}
+
             <!--Admin display
             <div id = "admin_display" hidden>
                 <p><strong>Submitted Requirements:</strong></p>

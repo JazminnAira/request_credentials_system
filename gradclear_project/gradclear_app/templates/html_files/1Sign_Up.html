@@ -678,7 +678,6 @@ Adviser:
 
 
         $("input").keyup(function(){
-            var id_val = document.getElementById('id_id_number').value;
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
 
@@ -696,7 +695,7 @@ Adviser:
             let pic_box = document.getElementById("id_profile_picture").value;
             if (fn_box != "" && ln_box != "" && add_box != "" && gender_box != "" && bday_box != "" 
                 && cp_box != "" && course_grad != ""  && year_grad != "" && email_box != "" && pass1_box != "" && pass2_box == pass1_box && pic_box != ""
-                && id_val.length == 17 && bday_val.length == 8 && cp_val.length == 13   ){    
+                && bday_val.length == 8 && cp_val.length == 13   ){    
                 
                     document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }
