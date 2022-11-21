@@ -723,8 +723,8 @@ Adviser:
             <div class="form-group row">
                 <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
                 <div class="col-sm-9">
-                    <select id = "sem_term" name = "sem_term" class = "form-control">
-                        <option value = "" disabled select>--SELECT--</option>
+                    <select id = "sem_term" name = "sem_term" class = "form-control" onchange ="isEmpty()" required>
+                        <option value = "" selected="true">--SELECT--</option>
                         <option value ="1">1st SEMESTER</option>
                         <option value ="2">2nd SEMESTER</option>
                     </select>
@@ -737,8 +737,8 @@ Adviser:
                 <div class="col-sm-9">
                     <form method="POST" action="clearance_form">
                     {% csrf_token %}
-                    <select id="course_adviser_42" name="course_adviser_420" class="form-control" required >
-                        <option value="1" disabled selected="true">--SELECT--</option>
+                    <select id="course_adviser_42" name="course_adviser_420" class="form-control" onchange ="isEmpty()" required >
+                        <option value="1" selected="true">--SELECT--</option>
                         
                         {% for i in a %}
                         <option value="{{i}}">{{i}}</option>
@@ -1168,8 +1168,9 @@ Adviser:
     }else if (document.getElementById('amount_pay').value == "Certification"){
         document.getElementById('amountp_box_42').value = "100.00";
     }else{
-        docum6ent.getElementById('amountp_box_42').value = "0.00";
+        document.getElementById('amountp_box_42').value = "0.00";
     };
+    
 
     //Date filed
     $(document).ready( function() {
@@ -1748,10 +1749,14 @@ Adviser:
         let dait_box = document.getElementById("dait_box_42").value;
         let course_drp = document.getElementById("course_42").value;
         let hswg_box = document.getElementById("hswg_box_42").value;
+        let sem_box = document.getElementById("sem_term").value;
+        let course_adviser = document.getElementById("course_adviser_42").value;
        
 
-        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "") {
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && sem_box !="" && course_adviser!="1") {
             document.getElementById("submit_btn_42").removeAttribute("disabled");
+        }else{
+            document.getElementById('submit_btn_42').disabled=true;
         }
 
     }
