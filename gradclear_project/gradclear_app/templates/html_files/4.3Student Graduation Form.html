@@ -473,23 +473,6 @@ Adviser:
         margin-top: 18px;
     }
     
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
-    
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -545,22 +528,12 @@ Adviser:
 
 <body>
 
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
     <ul>
-        <!-- <li>
-            <a href="#" onclick="to_beprinted('print_graduate')" data-toggle="tooltip" data-placement="right" title="Print">
-                <i class="fa fa-print"></i>
-            </a>
-        </li> -->
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" >
                 <i class="fa fa-home"></i>
             </a>
         </li>
-
     </ul>
 
     <!--BACK TO TOP BUTTON-->
@@ -1071,35 +1044,16 @@ Adviser:
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
                     {% endfor %}</select>
-                <!-- <input type="text" oninput="this.value = this.value.toUpperCase()" id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"> -->
             </div>
 
 
             <!--SUBMIT BUTTON-->
             <div style = "display: flex; justify-content:flex-end">
-                <!-- <a href="display_gradform/{{ instance.id }}" class="btn btn-secondary " type="submit"
-                id="submit_btn_43" role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" disabled>Submit</a> -->
                 <button type ="button" class="btn btn-secondary " id="submit_btn_43" name="submit_btn_43" onclick="submit_form(this)" disabled>Submit</button>
             </div>
-
-
-            
-            <!--HOME BUTTON
-            <a onclick="opensdb()" class="float">
-                <i class='fa fa-home my-float'></i>
-            </a>
-
-            <div class="label-container">
-                <div class="label-text">Home</div>
-            </div>-->
         </form>
     </div>
-    <!--Print Area
-    <button type="button" onclick="to_beprinted('print_graduate')"> Print</button>-->
-    <!--Just for testing-->
 
-    <!--TO BE PRINTED FORMAT-->
-    <!--Note this is only to get and hidden-->
 
 
     <div id="print_graduate" hidden>
@@ -1244,48 +1198,6 @@ Adviser:
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }
-
-    // SUBMIT_CONFIRMATION MSGBOX_BANNER
-    // function submitForm(form) {
-    //     swal({
-    //             title: "Are you sure?",
-    //             text: "This form will be submitted",
-    //             icon: "warning",
-    //             buttons: true,
-    //             dangerMode: true,
-    //         })
-    //         .then(function(isOkay) {
-    //             if (isOkay) {
-    //                 alert("Successfully Submitted!");
-    //                 $('#status').modal('show');
-    //                 var btn = document.getElementById('submit_btn_43');
-    //                 btn.disabled = true;
-    //                 btn.innerText = 'Submitted'
-    //                 document.getElementById("addopen_43").style.display = "none";
-    //                 document.getElementById("addopen2_43").style.display = "none";
-    //                 document.getElementById("del_43").style.display = "none";
-    //                 document.getElementById("del2_43").style.display = "none";
-    //                 document.getElementById("day_radio_43").disabled = true;
-    //                 document.getElementById("eve_radio_43").disabled = true;
-    //                 document.getElementById("ln_box_43").disabled = true;
-    //                 document.getElementById("fn_box_43").disabled = true;
-    //                 document.getElementById("mn_box_43").disabled = true;
-    //                 document.getElementById("course_drp1_43").disabled = true;
-    //                 document.getElementById("semester_radio_43").disabled = true;
-    //                 document.getElementById("summer_radio_43").disabled = true;
-    //                 document.getElementById("enrolledthsisem_box_43").disabled = true;
-    //                 document.getElementById("yes_radio_43").disabled = true;
-    //                 document.getElementById("no_radio_43").disabled = true;
-    //                 document.getElementById("deadline_box_43").disabled = true;
-    //                 document.getElementById("potF_box_43").disabled = true;
-    //                 document.getElementById("potT_box_43").disabled = true;
-    //                 document.getElementById("noIns_box_43").disabled = true;
-
-
-    //             }
-    //         });
-    //     return false;
-    // }
 
     // SUBJECT ADDER_CONFIRMATION MSGBOX
     function addSubject(form) {
@@ -1532,19 +1444,6 @@ Adviser:
 
         };
     };
-
-    //ABLE SUBMIT BUTTON WHEN CHOOSING SEMMESTER AND SUMMER
-    //function getStdfor() {
-    //    var ele = document.getElementsByName('stdfor_option');
-    //    var flag = 0;
-    //    for (var i = 0; i < ele.length; i++) {
-    //        if (ele[i].checked)
-    //            flag = 1;
-    //
-    //    }
-    //    if (flag == 1)
-    //        document.getElementById('submit_btn_43').disabled = false;
-    //}
    
     function getCourse() {
 
