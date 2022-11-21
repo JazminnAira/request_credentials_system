@@ -337,7 +337,7 @@ def graduation_print(request, id):
         fac2_sig_upload= fac2.uploaded_signature
         str_upload2 = str(fac2_sig_upload)
         fac2_sig_esign = fac2.e_signature
-        str_esig2n = str(fac2_sig_esign)
+        str_esign2 = str(fac2_sig_esign)
         p.drawString(380, 625,f'{content.faculty2}')
 
         if stat_sig2 == "ESIGN":
@@ -2025,7 +2025,17 @@ def login_user(request):
             messages.error(request, ("Incorrect Username or Password"))
             return redirect('/')
     else:
-        return render(request, 'html_files/1Cover Page.html')
+        registrar_first = user_table.objects.filter(user_type="REGISTRAR").values_list('first_name', flat=True).distinct()
+        registrar_last = user_table.objects.filter(user_type="REGISTRAR").values_list('last_name', flat=True).distinct()
+        registrar_gender = user_table.objects.filter(user_type="REGISTRAR").values_list('gender', flat=True).distinct()
+        if registrar_first:
+            if registrar_gender[0] == "Male":
+                name_of_registrar = " MR. " + registrar_first[0] +" "+ registrar_last[0]
+            else:
+                name_of_registrar = " MRS/MS. " + registrar_first[0] +" " +registrar_last[0]
+        else:
+            name_of_registrar = "NO AVAILABLE REGISTRAR"
+        return render(request, 'html_files/1Cover Page.html',{'RegistrarName' : name_of_registrar})
 
 
 def logout_user(request):
