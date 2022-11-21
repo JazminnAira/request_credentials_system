@@ -1153,8 +1153,6 @@ Adviser:
         document.getElementById('others_box_42').value = split_data;
         document.getElementById('Others_check_42').value = "Others: " + split_data; 
         document.getElementById('amountp_box_42').value = "0.00";   
-    }else if (document.getElementById('amount_pay').value == "ApplyForGraduation"){
-        document.getElementById('amountp_box_42').value = "60.00";
     }else if (document.getElementById('amount_pay').value == "HonorableDismissal"){
         document.getElementById('amountp_box_42').value = "0.00";
     }else if (document.getElementById('amount_pay').value == "TrascriptOfRecords"){
@@ -1945,14 +1943,6 @@ Adviser:
     Diploma_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "150.00";
-        }else{
-            document.getElementById('amountp_box_42').value = "0.00";
-        }
-    });
-
-    ApplicationforGraduation_check_42.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amountp_box_42').value = "60.00";
         }else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
