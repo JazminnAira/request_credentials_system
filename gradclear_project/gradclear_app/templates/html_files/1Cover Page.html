@@ -28,6 +28,16 @@ Adviser:
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <title>TUPC Registrar</title>
+
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function() {
+            null
+        };
+    </script>
 </head>              
 
 <style>
