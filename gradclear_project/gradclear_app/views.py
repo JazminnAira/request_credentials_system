@@ -2087,8 +2087,10 @@ def oldstudent_registration(request):
             # middle = form.cleaned_data.get("middle_name")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = email
-            
-            form.instance.full_name =   last + ", " + first + " " + middle
+            if middle is None:
+                form.instance.full_name = last + ", " + first
+            else:      
+                form.instance.full_name =   last + ", " + first + " " + middle
            
             form.instance.user_type = "OLD STUDENT"
             form.save()
@@ -2123,7 +2125,10 @@ def faculty_registration(request):
             form.instance.username = username
             form.instance.user_type = "FACULTY"
             form.instance.designation = "---"
-            form.instance.full_name = last + ", " + first + " " + middle
+            if middle is None:
+                form.instance.full_name = last + ", " + first
+            else:
+                form.instance.full_name = last + ", " + first + " " + middle
 
             form.save()
             messages.success(
@@ -2170,7 +2175,10 @@ def alumnus_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "ALUMNUS"
-            form.instance.full_name = last + ", " + first + " " + middle
+            if middle is None:
+                form.instance.full_name = last + ", " + first
+            else:    
+                form.instance.full_name = last + ", " + first + " " + middle
         
             form.save()
             # subject = 'SIGNUP SUCCESS'
@@ -2205,7 +2213,10 @@ def staff_registration(request):
             form.instance.student_id = "TUPC-" + id_num
             form.instance.username = username
             form.instance.user_type = "STAFF"
-            form.instance.full_name = last + ", " + first + " " + middle
+            if middle is None:
+                form.instance.full_name = last + ", " + first
+            else:
+                form.instance.full_name = last + ", " + first + " " + middle
 
             form.save()
             messages.success(
@@ -7255,7 +7266,7 @@ def student_status_update(request,id):
     year_id = str(today)
     id_year = year_id[2:]
     if student_update == "ALUMNUS":
-        update_id = user_id+"-"+id_year+"-"+mbday+dbday+ybday
+        update_id = "TUPC-" + user_id+"-"+id_year+"-"+mbday+dbday+ybday
         user_table.objects.filter(id=id).update(id_number = update_id)
         user_table.objects.filter(id=id).update(student_id = update_id)
     
