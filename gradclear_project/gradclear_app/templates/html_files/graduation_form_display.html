@@ -495,23 +495,7 @@ Adviser:
         font-size: 24px;
         margin-top: 18px;
     }
-    
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
+
     
     @keyframes bot-to-top {
         0% {
@@ -1175,25 +1159,10 @@ Adviser:
 
 
              
-               <!--HOME BUTTON
-               <a onclick="opensdb()" class="float">
-                    <i class='fa fa-home my-float'></i>
-               </a>
-
-               <div class="label-container">
-                    <div class="label-text">Home</div>
-               </div>-->
+         zz
           </form>
     {% endfor %}
     </div>
-    <!--Print Area
-    <button type="button" onclick="to_beprinted('print_graduate')"> Print</button>-->
-    <!--Just for testing-->
-
-    <!--TO BE PRINTED FORMAT-->
-    <!--Note this is only to get and hidden-->
-
-
     <div id="print_graduate" hidden>
         <div>
             <!--Print Header-->
@@ -1334,49 +1303,6 @@ Adviser:
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }
-
-    // SUBMIT_CONFIRMATION MSGBOX_BANNER
-    // function submitForm(form) {
-    //     swal({
-    //             title: "Are you sure?",
-    //             text: "This form will be submitted",
-    //             icon: "warning",
-    //             buttons: true,
-    //             dangerMode: true,
-    //         })
-    //         .then(function(isOkay) {
-    //             if (isOkay) {
-    //                 alert("Successfully Submitted!");
-    //                 $('#status').modal('show');
-    //                 var btn = document.getElementById('submit_btn_43');
-    //                 btn.disabled = true;
-    //                 btn.innerText = 'Submitted'
-    //                 document.getElementById("addopen_43").style.display = "none";
-    //                 document.getElementById("addopen2_43").style.display = "none";
-    //                 document.getElementById("del_43").style.display = "none";
-    //                 document.getElementById("del2_43").style.display = "none";
-    //                 document.getElementById("day_radio_43").disabled = true;
-    //                 document.getElementById("eve_radio_43").disabled = true;
-    //                 document.getElementById("ln_box_43").disabled = true;
-    //                 document.getElementById("fn_box_43").disabled = true;
-    //                 document.getElementById("mn_box_43").disabled = true;
-    //                 document.getElementById("course_drp1_43").disabled = true;
-    //                 document.getElementById("semester_radio_43").disabled = true;
-    //                 document.getElementById("summer_radio_43").disabled = true;
-    //                 document.getElementById("enrolledthsisem_box_43").disabled = true;
-    //                 document.getElementById("yes_radio_43").disabled = true;
-    //                 document.getElementById("no_radio_43").disabled = true;
-    //                 document.getElementById("deadline_box_43").disabled = true;
-    //                 document.getElementById("potF_box_43").disabled = true;
-    //                 document.getElementById("potT_box_43").disabled = true;
-    //                 document.getElementById("noIns_box_43").disabled = true;
-
-
-    //             }
-    //         });
-    //     return false;
-    // }
-
     // SUBJECT ADDER_CONFIRMATION MSGBOX
     function addSubject(form) {
         swal({
@@ -2108,64 +2034,5 @@ Adviser:
         if (result == 'no') radioButtons.forEach(radioButton => radioButton.disabled = true)
         else radioButtons.forEach(radioButton => radioButton.disabled = false)
     });
-
-//     var numShown = 5; // Initial rows shown & index
-//     var numMore = 1;  // Increment
-
-//     var $table = $('#subj_tbl').find('tbody');  // tbody containing all the rows
-//     var numRows = $table.find('tr').length; // Total # rows
-
-//     $(function () {
-//         // Hide rows and add clickable div
-//         $table.find('tr:gt(' + (numShown - 1) + ')').hide().end()
-//             .after('<tbody id="more"><tr><td colspan="' +
-//                 $table.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
-//                 numMore + '</span> Subject</div</tbody></td></tr>');
-
-//         $('#more').click(function() {
-//             numShown = numShown + numMore;
-//             // no more "show more" if done
-//             if (numShown >= numRows) {
-//                 $('#more').remove();
-//             }
-//             // change rows remaining if less than increment
-//             if (numRows - numShown < numMore) {
-//                 $('#more span').html(numRows - numShown);
-//             }
-//             $table.find('tr:lt(' + numShown + ')').show();
-//         });
-
-//     });
-
-    
-
-//     var numShown1 = 3; // Initial rows shown & index
-//     var numMore1 = 1;  // Increment
-
-//     var $table1 = $('#addSubject_table_43').find('tbody');  // tbody containing all the rows
-//     var numRows1 = $table1.find('tr').length; // Total # rows
-
-//     $(function () {
-//         // Hide rows and add clickable div
-//         $table1.find('tr:gt(' + (numShown1 - 1) + ')').hide().end()
-//             .after('<tbody id="more1"><tr><td colspan="' +
-//                 $table1.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
-//                 numMore1 + '</span> Subject</div</tbody></td></tr>');
-
-//         $('#more1').click(function() {
-//             numShown1 = numShown1 + numMore1;
-//             // no more "show more" if done
-//             if (numShown1 >= numRows1) {
-//                 $('#more1').remove();
-//             }
-//             // change rows remaining if less than increment
-//             if (numRows1 - numShown1 < numMore1) {
-//                 $('#more1 span').html(numRows1 - numShown1);
-//             }
-//             $table1.find('tr:lt(' + numShown1 + ')').show();
-//         });
-
-//     });
-
 </script>
 

@@ -518,54 +518,19 @@ Adviser:
        
         width: 100px;
         min-width: 100px;}
-/* 
-    .div1 th:nth-child(4),
-    .div1 td:nth-child(4) {
-        position: sticky;
-        left: 278px;
-        width: 100px;
-        min-width: 100px;
-    }
 
-    .div1 th:nth-child(5),
-    .div1 td:nth-child(5) {
-        position: sticky;
-        left: 378px;
-        width: 160px;
-        min-width: 160px;
-    }
-
-    .div1 th:nth-child(6),
-    .div1 td:nth-child(6) {
-        position: sticky;
-        left: 538px;
-        width: 100px;
-        min-width: 100px;
-    }
-    */
-    /* 
-    .div1 td:nth-child(4),
-    .div1 td:nth-child(5),
-    .div1 td:nth-child(6)
-     */
     .div1 td:nth-child(1),
     .div1 td:nth-child(3) {
         background: #ccc;
         z-index: 999;
     }
 
-    /* 
-    .div1 th:nth-child(4),
-    .div1 th:nth-child(5),
-    .div1 th:nth-child(6)
-     */
+
     .div1 th:nth-child(1),
     .div1 th:nth-child(3){
         z-index: 2;
     }
-     /* table{
-       min-width: max-content;
-    } */
+
     thead{
         position: sticky;
         top: 0px;
@@ -678,10 +643,6 @@ Adviser:
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_53" name="search_box_053" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
-        <!--SEARCH BUTTON
-        <a><button onClick="return search()" type = "button" id="search_btn">Search</button></a>-->
-
-
     </div>
     
     <!--BACK TO TOP BUTTON-->
@@ -743,23 +704,10 @@ Adviser:
     <div class="div">{% include 'html_files/message.html'%}</div>
     <form method="POST" id="valdet">
         {% csrf_token %}
-        <!-- <div id="nav_bar_btns">
-            <a class="tab"  id="all_53" value="2" >All</a>
-            <a class="tab"  id="unapproveds_53" value="UNAPPROVED" >Unapproved Students</a>
-            <a class="tab"  id="approveds_53" value="APPROVED" >Approved Students</a>
-            
-        </div> -->
         <input type="text" hidden name="namedeterminer2" value="{{request.user.full_name}}">
         <input type="text" hidden name="valdeterminer" id="valdeterminer">
         <input type="text" hidden name="statusdeterminer" id="statdeterminer" value="">
     </form>
-   
-    <!-- <script>
-        $('#nav_bar_btns a').click(function(e) {
-        var target = $(e.target).attr("value")
-        $('input[name=valdeterminer]').val(target);
-        $('#valdet').submit()});
-
         
     </script> -->
     <div class="border pt-2 signature_section" id ="signature_section">
@@ -1764,28 +1712,6 @@ Adviser:
     $(this).closest("tr").addClass("highlight");
 });
 
-    // ALLOW TO VIEW FORM ON TABLE ROW CLICK
-    // function addRowHandlers() {
-    //     var table = document.getElementById("list_tbl_53");
-    //     var rows = table.getElementsByTagName("tr");
-    //     for (i = 0; i < rows.length; i++) {
-    //         var currentRow = table.rows[i];
-    //         var createClickHandler = 
-    //             function(row) 
-    //             {
-    //                 return function() { 
-    //                                 var cell = row.getElementsByTagName("td")[0];
-    //                                 var id = cell.innerHTML;
-    //                                 location.href = "display_gradform/" + id 
-    //                                 };
-    //             };
-
-    //         currentRow.onclick = createClickHandler(currentRow);
-    //     }
-    // }
-    // window.onload = addRowHandlers();
-
-    //signature
     var canvas = document.getElementById("signature-pad");
     function resizeCanvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);

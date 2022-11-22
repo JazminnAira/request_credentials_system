@@ -127,14 +127,6 @@ Adviser:
         margin: 5px 10px 5px 0;
     }
     
-    /* #course_pre,
-    #receiptnum_box_pre,
-    #ln_box_pre,
-    #fn_box_pre,
-    #mn_box_pre {
-        background-color: #e7dfe4;
-        border: 1px solid #ccc9c9;
-    } */
     #receiptnum_box_pre{
         background-color: #e7dfe4;
         border: 1px solid #ccc9c9;
@@ -415,23 +407,6 @@ Adviser:
         margin-top: 18px;
     }
     
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
-    
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -490,16 +465,7 @@ Adviser:
     {% load static %}
     {% include 'html_files/message.html'%}
 
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
     <ul>
-        <!-- <li>
-            <a href="#" onclick="to_beprinted('print_request')" data-toggle="tooltip" data-placement="right" title="Print">
-                <i class="fa fa-print"></i>
-            </a>
-        </li> -->
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
@@ -692,43 +658,7 @@ Adviser:
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
-
-            <!--Admin display
-            <div id = "admin_display" hidden>
-                <p><strong>Submitted Requirements:</strong></p>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="form137_A" name="form137_A" value="Form 137-A">
-                    <label class="form-check-label" for="inlineCheckbox2_pre">Form 137-A</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="clearance" name="clearance" value="Clearance">
-                    <label class="form-check-label" for="inlineCheckbox3_pre">Clearance</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="official_receipt" name="official_receipt" value="Official Receipt">
-                    <label class="form-check-label" for="inlineCheckbox4_pre">Official Receipt</label>
-                </div>
-                
-                <br>
-                <br>
-
-                <div class="form-group row">
-                    <label for="Date of Release" class="col-sm-2 col-form-label col-form-label-sm" id="date_of_release">Date of Release:</label>
-                    <div class="col-sm-9">
-                        <input class = "form-control" type="date" id="purpose_of_request" name="purpose_of_request">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="Purchase by" class="col-sm-2 col-form-label col-form-label-sm" id="purchase_by">Purchase by:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" id="purchase_by" name="purchase_by">
-                    </div>
-                </div>
-
-            </div>-->
             
-
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
                 <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>

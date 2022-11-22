@@ -401,23 +401,7 @@ Adviser:
         margin-top: 18px;
     }
     
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
-    
+ 
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -480,10 +464,6 @@ Adviser:
 <body>
     {% load static %}
     {% for i in reqs %}
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
     <ul>
         <li>
             {% if i.appointment == "NONE" %}
@@ -769,47 +749,6 @@ Adviser:
 
             <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
             {% endfor %}
-
-            <!--Admin display
-            <div id = "admin_display" hidden>
-                <p><strong>Submitted Requirements:</strong></p>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="form137_A" name="form137_A" value="Form 137-A">
-                    <label class="form-check-label" for="inlineCheckbox2_pre">Form 137-A</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="clearance" name="clearance" value="Clearance">
-                    <label class="form-check-label" for="inlineCheckbox3_pre">Clearance</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="official_receipt" name="official_receipt" value="Official Receipt">
-                    <label class="form-check-label" for="inlineCheckbox4_pre">Official Receipt</label>
-                </div>
-                
-                <br>
-                <br>
-
-                <div class="form-group row">
-                    <label for="Date of Release" class="col-sm-2 col-form-label col-form-label-sm" id="date_of_release">Date of Release:</label>
-                    <div class="col-sm-9">
-                        <input class = "form-control" type="date" id="purpose_of_request" name="purpose_of_request">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="Purchase by" class="col-sm-2 col-form-label col-form-label-sm" id="purchase_by">Purchase by:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" id="purchase_by" name="purchase_by">
-                    </div>
-                </div>
-
-            </div>-->
-            
-
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
-            
-
-            
         </form>
     </div>
     

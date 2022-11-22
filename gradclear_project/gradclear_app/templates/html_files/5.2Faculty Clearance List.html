@@ -235,11 +235,6 @@ Adviser:
         color: #c51d3a;
     }
     
-    /* .tab.tab-active {
-        background-color: #c51d3a;
-        color: white;
-    } */
-    
     .tab-content {
         padding: 6px 12px;
         min-height: 100px;
@@ -539,9 +534,6 @@ Adviser:
             </i> </a>
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_52" name="search_box_052" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
-
-        <!--SEARCH BUTTON
-        <a><button onClick="return search()" type = "button" id="search_btn">Search</button></a>-->
 
     </div>
     <div class="div">{% include 'html_files/message.html'%}</div>
@@ -1369,22 +1361,6 @@ Adviser:
     
 </script> 
 <script>
-
-// TABLE ROW SELECTOR
-//     $("#list_tbl_52 tr").click(function(){
-// $(this).addClass('selected').siblings().removeClass('selected');    
-// var value=$(this).find('td:first').html();
-// alert(value);    
-// });
-
-// $('.ok').on('click', function(e){
-// alert($("#list_tbl_52 tr.selected td:first").html());
-// });
-    // function approval() {
-    //     if (window.confirm('Approve this form?'))
-    //     document.getElementById("unapproveds_52").click();
-    // {   document.location.href = "{% url 'faculty_dashboard_clearance_list' %}";
-    // }}
     $("appr_btn").on("click", function () {
     $("tr").each(function () {
         $(this).removeClass("highlight");
