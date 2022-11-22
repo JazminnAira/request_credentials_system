@@ -1626,16 +1626,16 @@ def appointment(request, id, form):
             purpose_of_req =  purpose_of[0]
             purpose_of_request = purpose_of_req, 
 
-            gender_temp = user_table.objects.filter(
-            id=id).values_list('gender', flat=True).distinct()
+            gender_temp = clearance_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
             gender = user_table.objects.filter(
-                gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+                student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
             if gender_choice == "FEMALE":
                 gender_final = "Ms."
             else:
-                gender_final= "Mr."
+                gender_final= "Mr." 
             
             faculty_gender = request.user.gender
             gender_fac=""
@@ -1716,17 +1716,17 @@ def appointmentgrad(request, id, form):
                 student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
             last_name = name[0]
 
-            purpose = request_form_table.objects.filter(
-            id=id).values_list('request', flat=True).distinct()
-            purpose_of = request_form_table.objects.filter(
-                request=purpose[0]).values_list('request', flat=True).distinct()
+            purpose = graduation_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
+            purpose_of = graduation_form_table.objects.filter(
+                student_id=purpose[0]).values_list('purpose_of_request', flat=True).distinct()
             purpose_of_req =  purpose_of[0]
-            purpose_of_request = purpose_of_req, 
+            
 
-            gender_temp = user_table.objects.filter(
-            id=id).values_list('gender', flat=True).distinct()
+            gender_temp = graduation_form_table.objects.filter(
+            id=id).values_list('student_id', flat=True).distinct()
             gender = user_table.objects.filter(
-                gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+                student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
             if gender_choice == "FEMALE":
@@ -1799,31 +1799,26 @@ def reggrad_appointment(request, id):
     rec_email = email[0]
     recipient_list = [rec_email, ]
     
-    name_temp = graduation_form_table.objects.filter(
-    id=id).values_list('student_id', flat=True).distinct()
+    name_temp = graduation_form_table.objects.filter(id=id).values_list('student_id', flat=True).distinct()
     print("name_temp",name_temp) 
-    name = user_table.objects.filter(
-        student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
+    name = user_table.objects.filter(student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
-  
-
-    notification = "NOTIFIED"
-    grad_notif = request.POST.get('notification')
-    graduation_form_table.objects.filter(
-    id=id).update(grad_notif = notification)
-   
-
-    gender_temp = user_table.objects.filter(
-    id=id).values_list('gender', flat=True).distinct()
+    gender_temp = graduation_form_table.objects.filter(
+    id=id).values_list('student_id', flat=True).distinct()
     gender = user_table.objects.filter(
-        gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+        student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
     if gender_choice == "FEMALE":
         gender_final = "Ms."
     else:
         gender_final= "Mr."
+    
+    notification = "NOTIFIED"
+    grad_notif = request.POST.get('notification')
+    graduation_form_table.objects.filter(
+    id=id).update(grad_notif = notification)
     
 
     subject = 'Application for Graduation Form'
@@ -1860,21 +1855,21 @@ def regclear_appointment(request,id):
         student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
-    notification = "NOTIFIED"
-    clear_notif = request.POST.get('notification')
-    clearance_form_table.objects.filter(
-    id=id).update(clear_notif = notification)
-
-    gender_temp = user_table.objects.filter(
-    id=id).values_list('gender', flat=True).distinct()
+    gender_temp = clearance_form_table.objects.filter(
+    id=id).values_list('student_id', flat=True).distinct()
     gender = user_table.objects.filter(
-        gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+        student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
     if gender_choice == "FEMALE":
         gender_final = "Ms."
     else:
-        gender_final= "Mr."
+        gender_final= "Mr."  
+    
+    notification = "NOTIFIED"
+    clear_notif = request.POST.get('notification')
+    clearance_form_table.objects.filter(
+    id=id).update(clear_notif = notification)
     
 
     subject = 'Application for Clearance Form'
@@ -1906,21 +1901,21 @@ def request_appointment(request, id):
         rec_email = email[0]
         recipient_list = [rec_email, ]
 
-        gender_temp = user_table.objects.filter(id=id).values_list('gender', flat=True).distinct()
+        gender_temp = request_form_table.objects.filter(
+        id=id).values_list('student_id', flat=True).distinct()
         gender = user_table.objects.filter(
-            gender=gender_temp[0]).values_list('gender', flat=True).distinct()
+            student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
         gender_choice = gender[0]
         gender_final=""
         if gender_choice == "FEMALE":
             gender_final = "Ms."
         else:
-            gender_final= "Mr."
+            gender_final= "Mr."  
         
-
         purpose = request_form_table.objects.filter(
-        id=id).values_list('request', flat=True).distinct()
+        id=id).values_list('student_id', flat=True).distinct()
         purpose_of = request_form_table.objects.filter(
-            request=purpose[0]).values_list('request', flat=True).distinct()
+            student_id=purpose[0]).values_list('request', flat=True).distinct()
         purpose_of_req =  purpose_of[0]
         purpose_of_request = purpose_of_req, 
 
@@ -2030,13 +2025,13 @@ def login_user(request):
         registrar_gender = user_table.objects.filter(user_type="REGISTRAR").values_list('gender', flat=True).distinct()
         if registrar_first:
             if registrar_gender[0] == "Male":
-                name_of_registrar = " MR. " + registrar_first[0] +" "+ registrar_last[0]
+                name_of_registrar = " Mr. " + registrar_first[0] +" "+ registrar_last[0]
             else:
-                name_of_registrar = " MRS/MS. " + registrar_first[0] +" " +registrar_last[0]
+                name_of_registrar = " Ms. " + registrar_first[0] +" " +registrar_last[0]
         else:
-            name_of_registrar = "NO AVAILABLE REGISTRAR"
+            name_of_registrar = ""
         return render(request, 'html_files/1Cover Page.html',{'RegistrarName' : name_of_registrar})
-
+ 
 
 def logout_user(request):
     logout(request)

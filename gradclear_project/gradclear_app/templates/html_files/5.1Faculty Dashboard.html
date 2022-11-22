@@ -674,9 +674,7 @@ Adviser:
         background-color: #c51d3a;
         color: black;
     }
-    /* table{
-       min-width: max-content;
-    } */
+   
     thead{
         position: sticky;
         top: 0px;
@@ -734,11 +732,6 @@ Adviser:
                                 <input id="file" type="file" onchange="loadFile(event)" style="display: none;"/>
                                 <img src="{{request.user.profile_picture.url}}" id="output"  />   
                             </div>
-                            <!-- <script>
-                            var loadFile = function (event) {
-                            var image = document.getElementById("output");
-                            image.src = URL.createObjectURL(event.target.files[0]);};
-                            </script> -->
                         </div>
 
                         <!--MODAL CLOSE BUTTON-->
@@ -821,11 +814,6 @@ Adviser:
                         {% csrf_token %}
         
                             <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
-                            
-                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
-                            <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
-                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="old_pass_length(),ON_match()" required>
-                            </div><br>-->
                             <div class="input-group">
                             <label for="newpass_51" class="my-1 mr-5" id="newpass_lbl_51">New Password:</label>
                                 <input type="text" id="new_pass_51" name="new_pass_051" value="{{ request.GET.new_pass_051 }}" class="form-control"
@@ -879,12 +867,6 @@ Adviser:
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">
                 <input type="search" class="search" placeholder="Search" id="search_box_51" onkeyup="display_search()" onsearch="OnSearch (this)">
             </div>
-            
-            <!--SEARCH BUTTON
-            <div class="col-2 col-md-3 col-lg-4 col-xl-1" style="margin-top: 10px;">
-                <button onClick="return search()" type="button " id="search_btn">Search</button>
-            </div>-->
-
         </div>
         <div class="row">
 

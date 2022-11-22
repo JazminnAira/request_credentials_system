@@ -667,9 +667,9 @@ Adviser:
                 </div>
                 <br>
                 <br>
-
+            
             <!--LAST TERM OR SEMESTER ENROLLED-->
-            {% if request.user.user_type == "STUDENT" %}
+            {% if request.user.user_type == "STUDENT" and allow != "UNAPPROVED" %}
             <div class="form-group row" id="semester_notdisplay">
                 <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
                 <div class="col-sm-9">
@@ -840,7 +840,6 @@ Adviser:
         document.getElementById('Certification_check_pre').disabled = true;
         document.getElementById('Others_check_pre').disabled = true;
         document.getElementById('Evaluation').disabled = true;
-        document.getElementById('semester_notdisplay').hidden = true;
         document.getElementById('Re_evaluation').disabled = true;
         document.getElementById("purpose").disabled = true;
         document.getElementById('purpose').value = document.getElementById("display_pur_request").value
