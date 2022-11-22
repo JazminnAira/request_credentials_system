@@ -408,23 +408,6 @@ Adviser:
         margin-top: 18px;
     }
     
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
-    
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -494,10 +477,6 @@ Adviser:
 <body>
     
     {% for i in clearance %}
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
     <ul>
         <li>
         {% if i.approval_status ==  'APPROVED' %}
@@ -1059,20 +1038,6 @@ Adviser:
             </table>
         </div>
     </div>
-
-    <!--HOME BUTTON
-    <a href="4.1Student Dashboard.html" class="float ">
-        <i class='fa fa-home my-float'></i>
-    </a>
-
-    <div class="label-container ">
-        <div class="label-text ">Home</div>
-    </div>-->
-
-
-    <!--TO BE PRINTED FORMAT-->
-    <!--Note this is only to get and hidden-->
-
 
     <div id="print_clearance" hidden>
         <div>

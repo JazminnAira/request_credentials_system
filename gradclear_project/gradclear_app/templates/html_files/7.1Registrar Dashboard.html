@@ -916,9 +916,6 @@ Adviser:
         text-align: center;
         padding: 5px;
     }
-    /*#course_pbar_71 {
-        height: 30px;
-    }*/
     
     #grad-bar_71 {
         height: 30px;
@@ -1382,10 +1379,6 @@ Adviser:
                                                 id="ln_box_71" name="ln_box_071" value="{{ request.GET.ln_box_071 }}" class="form-control mr-1" placeholder="Last Name" 
                                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
                                                 (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" required>
-                                                <!-- <input type="text" oninput="this.value = this.value.toUpperCase()"
-                                                 id="mn_box_71" name="mn_box_071" value="{{ request.GET.mn_box_071 }}" class="form-control  mr-1" placeholder="Middle Name"
-                                                  onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                                                   (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"> -->
                                                 <button class="btn btn-secondary btn-sm" name="submit2" id="namesavechanges_btn_71"
                                                  type="submit">Save Changes</button><br>
                                                 </div><br>
@@ -1535,10 +1528,6 @@ Adviser:
         
                             <input type="text" hidden name="validator2" value= {{request.user.student_id}}> 
                             
-                            <!-- <label for="oldpass_41" class="my-1 mr-5" id="oldpass_lbl_41" style="padding-left: 4px;"> Old Password:</label>
-                            <input type="text" id="old_pass_41" name="old_pass_041" value="{{ request.GET.old_pass_041 }}" class="form-control col-sm-5 mr-1 "
-                                minlength="4" placeholder="*Minimum of 4 characters*" oninput="old_pass_length(),ON_match()" required>
-                            </div><br>-->
                             <div class="input-group">
                             <input type="text" hidden name="validator2" value= {{request.user.student_id}}>
                             <label for="newpass_71" class="my-1 mr-5" id="newpass_lbl_71">New Password:</label>
@@ -2014,58 +2003,6 @@ Adviser:
             </a>
         </div>
     </div>
-          
-
-        <!--ACCESS BAR-->
-        <!-- <div class="row">
-            <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;"> -->
-
-                <!--SEARCH BAR-->
-                <!-- <input type="search" class="search" placeholder="Search" id="search_box_71" name="search_box_071" onkeyup="display_search()" onsearch="OnSearch (this)">
-            </div>
-            <div class="col-2 col-md-3 col-lg-4 col-xl-1" style="margin-top: 10px;"> -->
-
-                <!--SEARCH BUTTON
-                <button onClick="return search()" type="button " id="search_btn_71">Search</button>-->
-            <!-- </div>
-
-        </div>
-        <div class="row"> -->
-
-            <!--MAIN TABLE-->
-            <!-- <div class="col-12" style="margin-top: 20px; padding-right: 30px;">
-                <table class="table results table-responsive-sm table-responsive-md table-hover table-sortable" id="list_tbl_71">
-                    <thead style="background-color: #c51d3a; color: white;height: 70px;">
-                            <tr>
-                                <th> # (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Student's Name (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Course(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>ID Number(<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th>Purpose of Request (<i class="fa fa-sort" aria-hidden="true"></i>)&nbsp;</th>
-                                <th id="Viewform"></th>                                                     
-    
-                            </tr>
-                            <tr class="warning no-result">
-                                <td colspan="6"><i class="fa fa-warning"></i> No result</td>
-                            </tr>
-                        </thead>
-    
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td>Jazminn Terencio</td>
-                                <td>BET-COET</td>
-                                <td>TUPC-12-2345</td>
-                                <td>Graduation Form</td>
-                                <td><button type="button" onclick="opengrad()">View Form</button></td>
-                                
-                            </tr>
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div> -->
-    <!-- <p class="text-center text-bold" id="p6_71"></p> -->
 </body>
 
 <footer>
@@ -2157,12 +2094,6 @@ Adviser:
         }
     }
 
-
-   
-
-    
-
-    
 
     function openrdbf() {
         window.location.replace("{% url 'registrar_dashboard' %}");

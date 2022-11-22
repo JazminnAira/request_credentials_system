@@ -428,15 +428,6 @@ Adviser:
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
-
-
-        
- 
-
-        
-        <!--SEARCH BUTTON
-        <a><button onClick="return search()" type = "button" id="search_btn_72">Search</button></a>-->
-
     </div>
 
     <!--BACK TO TOP BUTTON-->
@@ -447,12 +438,6 @@ Adviser:
     <!-- MAIN-->
     <h3 style="text-align:center;">List of Graduation Forms</h3>
     {% include 'html_files/message.html'%}
-    <!--TAB BAR-->
-    <!-- <div data-tabs="1" id="tabz_72">
-        <nav data-tab-container="1" class="tab-container ">
-            <a data-toggle="tab" data-tab="1" class="tab" id="unapproveds_72" value="1" >Unapproved Students</a>
-            <a data-toggle="tab" data-tab="1" class="tab" id="approveds_72" value="2" >Approved Students</a>
-        </nav> -->
 
         <!--UNAPPROVED TAB-->
         <form method="POST" id="valdet">
@@ -822,26 +807,4 @@ Adviser:
 
         document.getElementById("search_box_72").value = "";
     });
-
-    // // ALLOW TO VIEW FORM ON TABLE ROW CLICK
-    // function addRowHandlers() {
-    //     var table = document.getElementById("list_tbl_53");
-    //     var rows = table.getElementsByTagName("tr");
-    //     for (i = 0; i < rows.length; i++) {
-    //         var currentRow = table.rows[i];
-    //         var createClickHandler = 
-    //             function(row) 
-    //             {
-    //                 return function() { 
-    //                                         var cell = row.getElementsByTagName("td")[0];
-    //                                         var id = cell.innerHTML;
-    //                                         location.href = "display_gradform/" + id 
-    //                                 };
-    //             };
-
-    //         currentRow.onclick = createClickHandler(currentRow);
-    //     }
-    // }
-    // window.onload = addRowHandlers();
-    
 </script>
