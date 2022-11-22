@@ -403,23 +403,6 @@ Adviser:
         margin-top: 18px;
     }
     
-    /* a#menu-share+ul {
-        visibility: hidden;
-    }
-    
-    a#menu-share:hover+ul {
-        visibility: visible;
-        animation: scale-in 0.5s;
-    }
-    
-    a#menu-share i {
-        animation: rotate-in 0.5s;
-    }
-    
-    a#menu-share:hover>i {
-        animation: rotate-out 0.5s;
-    } */
-    
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -476,23 +459,12 @@ Adviser:
 
 <body>
     
-
-    <!--PRINT AND HOME BUTTON-->
-    <!-- <a href="#" class="float" id="menu-share" data-toggle="tooltip" data-placement="right" title="Show More">
-        <i class="fa fa-ellipsis-v"></i>
-    </a> -->
     <ul>
-        <!-- <li>
-            <a href="#" onclick="to_beprinted('print_clearance')" data-toggle="tooltip" data-placement="right" title="Print">
-                <i class="fa fa-print"></i>
-            </a>
-        </li> -->
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
         </li>
-
     </ul>
 
     <!--BACK TO TOP BUTTON-->
@@ -861,20 +833,6 @@ Adviser:
         </form>
     </div>
 
-    <!--HOME BUTTON
-    <a href="4.1Student Dashboard.html" class="float ">
-        <i class='fa fa-home my-float'></i>
-    </a>
-
-    <div class="label-container ">
-        <div class="label-text ">Home</div>
-    </div>-->
-
-
-    <!--TO BE PRINTED FORMAT-->
-    <!--Note this is only to get and hidden-->
-
-
     <div id="print_clearance" hidden>
         <div>
             <!--Print Header-->
@@ -1176,59 +1134,8 @@ Adviser:
         var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
         $('#dfiled_box_42').val(today);
     });
-    // CONFIRMATION MSGBOX_BANNER
-    // function submitForm(form) {
 
-    //     swal({
-    //         title: "Are you sure?",
-    //         text: "This form will be submitted",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-
-    //     .then(function(isOkay) {
-    //         if (isOkay) {
-    //             var btn = document.getElementById('submit_btn_42');
-    //             btn.disabled = true;
-    //             btn.innerText = 'Submitted'
-    //             document.getElementById("ln_box_42").disabled = true;
-    //             document.getElementById("fn_box_42").disabled = true;
-    //             document.getElementById("mn_box_42").disabled = true;
-    //             document.getElementById("dfiled_box_42").disabled = true;
-    //             document.getElementById("padd_box_42").disabled = true;
-    //             document.getElementById("dait_box_42").disabled = true;
-    //             document.getElementById("course_42").disabled = true;
-    //             document.getElementById("hswg_box_42").disabled = true;
-    //             document.getElementById("gradYes_radio_42").checked = true;
-    //             document.getElementById("gradNo_radio_42").checked = true;
-    //             document.getElementById("iydfiled_box_42").disabled = true;
-    //             document.getElementById("notit_box_42").disabled = true;
-    //             document.getElementById("amountp_box_42").disabled = true;
-    //             document.getElementById("receiptnum_box_42").value = '';
-    //             document.getElementById("reqYes_radio_42").checked = true;
-    //             document.getElementById("reqNo_radio_42").checked = true;
-    //             document.getElementById("dbrtime_box_42").disabled = true;
-    //             document.getElementById("lasterm_box_42").disabled = true;
-    //             document.getElementById("preq_box_42").disabled = true;
-    //             document.getElementById("HonorableDismissal_check_42").checked = false;
-    //             document.getElementById("Evaluation_check_42").checked = false;
-    //             document.getElementById("TranscriptofRecords_check_42").checked = false;
-    //             document.getElementById("ReEvaluation_check_42").checked = false;
-    //             document.getElementById("Diploma_check_42").checked = false;
-    //             document.getElementById("ApplicationforGraduation_check_42").checked = false;
-    //             document.getElementById("Certification_check_42").checked = false;
-    //             document.getElementById("others_box_42").checked = false;
-
-
-
-    //         }
-    //     });
-    //     return false;
-    // }
-
-    // BACK TO TOP FUNCTION
-
+    //Back Button
     var btn = $("#backtotop_btn_42");
 
     $(window).scroll(function() {
