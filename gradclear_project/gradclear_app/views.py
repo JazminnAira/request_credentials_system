@@ -7280,46 +7280,53 @@ def school_year_update(request):
 
 @login_required(login_url='/')
 def send_email_all(request):
+    date_today = datetime.now().date()
+    print(date_today)
     faculties=[]
-    all_course_adviser = clearance_form_table.objects.values_list('course_adviser', flat=True).distinct()
-    for course_adviser in all_course_adviser:
-        if course_adviser in faculties:
-            pass
-        else:
-            faculties.append(course_adviser)
-
-    all_dep_head = user_table.objects.filter(Q(department="HOCS") | Q(department="HDLA")
-        | Q(department="HDMS") | Q(department="HDPECS") | Q(department="HDIT") | 
-        Q(department="HDED") | Q(department="HDOE") | Q(department="HOCL") |
-        Q(department="HOGS") | Q(department="HOSA") | 
-        Q(department="HADAA") & Q(user_type="FACULTY")).values_list('full_name', flat=True).distinct()
-
-    for dephead in all_dep_head:
-        if dephead in faculties:
-            pass
-        else: 
-            faculties.append(dephead)  
-    
-    all_faculty_grad = graduation_form_table.objects.all().values_list('faculty1', 'faculty2',
-        'faculty3','faculty4','faculty5','faculty6','faculty7','faculty8','faculty9','faculty10',
-        'addfaculty1', 'addfaculty2','addfaculty3','addfaculty4','addfaculty5','addfaculty6','addfaculty7',
-        'addfaculty8','addfaculty9','addfaculty10', 'instructor_name').distinct()
-
-    for faculty in all_faculty_grad[0]:
-        if faculty != "NO FACULTY":
-            if faculty in faculties:
+    cleartable = clearance_form_table.objects.filter(time_requested__contains=date_today).all()
+    print("cleartable:",cleartable)
+    if cleartable:
+        all_course_adviser = clearance_form_table.objects.filter(time_requested__contains=date_today).values_list('course_adviser', flat=True).distinct()
+        for course_adviser in all_course_adviser:
+            if course_adviser in faculties:
                 pass
             else:
-                faculties.append(faculty)
-        else: 
-            pass
+                faculties.append(course_adviser)
+
+        all_dep_head = user_table.objects.filter(Q(department="HOCS") | Q(department="HDLA")
+            | Q(department="HDMS") | Q(department="HDPECS") | Q(department="HDIT") | 
+            Q(department="HDED") | Q(department="HDOE") | Q(department="HOCL") |
+            Q(department="HOGS") | Q(department="HOSA") | 
+            Q(department="HADAA") & Q(user_type="FACULTY")).values_list('full_name', flat=True).distinct()
+
+        for dephead in all_dep_head:
+            if dephead in faculties:
+                pass
+            else: 
+                faculties.append(dephead)  
+    
+    all_faculty_grad = list(graduation_form_table.objects.filter(time_requested__contains=date_today).all().values_list('faculty1', 'faculty2',
+        'faculty3','faculty4','faculty5','faculty6','faculty7','faculty8','faculty9','faculty10',
+        'addfaculty1', 'addfaculty2','addfaculty3','addfaculty4','addfaculty5','addfaculty6','addfaculty7',
+        'addfaculty8','addfaculty9','addfaculty10', 'instructor_name').distinct())
+    print("thisss",all_faculty_grad)
+    for i in all_faculty_grad:
+        print("i",i)
+        for faculty in i:
+            print(faculty)
+            if faculty != "NO FACULTY":
+                if faculty in faculties:
+                    pass
+                else:
+                    faculties.append(faculty)
+            else: 
+                pass
 
     recipient_list = []
     for recipient in faculties:
         email_found= user_table.objects.filter(full_name=recipient).values_list('username', flat=True).distinct()
-        recipient_list.append(email_found[0])
-
-    msg1="Greetings! This email is to inform you that an application form has been sent to your account. Please check the link for full details. Thank you!"   
+        for emails in email_found:
+            recipient_list.append(emails) 
 
     subject = 'Application Form Received'
     message1 = 'Greetings! This email is to inform you that an application form has been sent to your account. Please check the link for full details. Thank you!<br><br><br>'
@@ -7332,14 +7339,6 @@ def send_email_all(request):
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
-
-    return redirect(registrar_dashboard)
-
-# while True:
-# dateSTR = datetime.now().strftime("%H:%M:%S")
-# print(dateSTR)
-# if dateSTR == "11:05:00":
-# #do function
-#     print("running")
-# else:
-#     pass
+    messages.success(request, "Email Sent.")
+    
+    return redirect('registrar_dashboard')
