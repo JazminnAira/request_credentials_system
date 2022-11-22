@@ -1160,12 +1160,12 @@ Adviser:
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     {% endif %}
-    {% if gradtable and cleartable %}
+    
     <a href="{% url 'send_email_all' %}"><i class="fa fa-paper-plane material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" ></span></i><span class="icon-text">Send Mail</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;"></span></a><br>
-    {% elif gradtable != "" and cleartable != "" %}
-    <a href="{% url 'send_email_all' %}" style="pointer-events: none;"><i class="fa fa-paper-plane material-icons position-relative" style="margin-right: 24px; opacity: 0.5;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" ></span></i><span class="icon-text" style="opacity: 0.5;">Send Mail</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;"></span></a><br>
-    {% endif %}
+    
+    {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 19px;" href="" data-toggle="modal" data-target="#Settings_modal_71"><i class="fa fa-cogs material-icons"></i><span class="icon-text">Settings<span></a>
+    {% endif %}
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="logo_71" style="position: absolute;bottom: 10px;">
 
 </div>
@@ -1586,7 +1586,7 @@ Adviser:
             </div>
         </div>
     </div>
-
+    <div class="div">{% include 'html_files/message.html'%}</div>
     
     <hr style="border: 1px solid #424242; ">
     <!--COURSE CARDS-->
