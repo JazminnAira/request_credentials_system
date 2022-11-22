@@ -1619,13 +1619,6 @@ def appointment(request, id, form):
                 student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
             last_name = name[0]
 
-            purpose = request_form_table.objects.filter(
-            id=id).values_list('request', flat=True).distinct()
-            purpose_of = request_form_table.objects.filter(
-                request=purpose[0]).values_list('request', flat=True).distinct()
-            purpose_of_req =  purpose_of[0]
-            purpose_of_request = purpose_of_req, 
-
             gender_temp = clearance_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
             gender = user_table.objects.filter(
@@ -1657,7 +1650,7 @@ def appointment(request, id, form):
 
             message = message1 + message2 + message3 
 
-            purpose_req = request.POST.get('purpose_of_request')
+           
             date_appointment = request.POST.get('date_appointment')
             time_appointment = request.POST.get('time_appointment')
             additionalmessage = request.POST.get('additionalmessage')  
