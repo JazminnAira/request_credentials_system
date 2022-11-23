@@ -1793,7 +1793,6 @@ def reggrad_appointment(request, id):
     recipient_list = [rec_email, ]
     
     name_temp = graduation_form_table.objects.filter(id=id).values_list('student_id', flat=True).distinct()
-    print("name_temp",name_temp) 
     name = user_table.objects.filter(student_id=name_temp[0]).values_list('last_name', flat=True).distinct()
     last_name = name[0]
 
@@ -1816,8 +1815,8 @@ def reggrad_appointment(request, id):
 
     subject = 'Application for Graduation Form'
     message1 = 'Good day,   '+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
-    message2 = 'Your Application for Graduation Form has been approved and is now available for printing. Kindly visit this '+ '(link)'+' and follow the guidelines below.<br><br>'
-    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site' + '(link)'+'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
+    message2 = 'Your Application for Graduation Form has been approved and is now available for printing. Kindly visit '+ '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>'+' and follow the guidelines below.<br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to  ' + '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>'+'<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br><br>'
     message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
     message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
     message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
@@ -1867,8 +1866,8 @@ def regclear_appointment(request,id):
 
     subject = 'Application for Clearance Form'
     message1 = 'Good day,   '+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
-    message2 = 'Your Application for Clearance Form has been approved and is now available for printing. Kindly visit this' + '(link)' +' and follow the guidelines below.<br><br>'
-    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site'+ '(link)'+'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br>'
+    message2 = 'Your Application for Clearance Form has been approved and is now available for printing. Kindly visit ' + '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' +' and follow the guidelines below.<br><br>'
+    message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to '+ '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>'+'<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+'4. Arrive at the appointed date and time for claiming your request.<br>'+'5. Proceed to the Office of the University Registrar for the procedures.<br><br>'
     message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph<br><br><br><br>'
     message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
     message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
@@ -1929,9 +1928,9 @@ def request_appointment(request, id):
         subject = 'Claiming of '+ purpose_of_request[0] 
         message1 = "Good day, "+ gender_final + "<strong>" + name[0] + ",</strong><br><br>"
         message2 = 'Your request for  '+ "<strong>"+ purpose_of_request[0] +"</strong>"+  \
-            '   has been approved. Kindly visit the'+ '(link)' +' and follow the guidelines below for claiming your requested credentials.<br><br>'
-        message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to this site '+ '(link)' +'.<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+ '4. For credentials with payment required, please prepare the amount to pay.'+'5. Arrive at the appointed date and time for claiming your request.<br>'+'6. Proceed to the Office of the University Registrar for the procedures.<br><br>'
-        message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph'
+            '   has been approved. Kindly visit '+ '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' +' and follow the guidelines below for claiming your requested credentials.<br><br>'
+        message3 = "<strong>"+'GUIDELINES:'+"</strong><br>"+'1. Login to '+ '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' + '<br>'+'2. On your dashboard, view your request form from the table.<br>'+'3. Click the "Print" button to print the form. Please take note that the form should be printed in Legal Size Paper (8.5 x 14 inches).<br>'+ '4. For credentials with payment required, please prepare the amount to pay.<br>'+'5. Arrive at the appointed date and time for claiming your request.<br>'+'6. Proceed to the Office of the University Registrar for the procedures.<br><br>'
+        message4 =  'For other concerns, please contact the official email of TUPC Registrar:   '+ 'tupc_registrar@tup.edu.ph .'
         message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite'
         message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
 
@@ -4748,7 +4747,7 @@ def updateCourse(request):
 
 @login_required(login_url='/')
 def updatePassword(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
+    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         if request.method == "POST":
             new_password = request.POST.get('new_pass_041')
             confirm_password = request.POST.get('confirm_pass_041')
@@ -4774,7 +4773,6 @@ def updatePassword(request):
         return redirect('/')
 
     return render(request, 'html_files/4.1Student Dashboard.html')
-
 
 @login_required(login_url='/')
 def updateContact(request):
@@ -6364,6 +6362,8 @@ def request_official_update(request, id):
     request_form_table.objects.filter(id=id).update(official_receipt=form_change)
     or_number = request.POST.get('or_number')
     request_form_table.objects.filter(id=id).update(or_num=or_number)
+    or_date = request.POST.get('or_date')
+    request_form_table.objects.filter(id=id).update(or_date=or_date)
     get_name = request_form_table.objects.filter(id=id).values_list('name', flat=True).distinct()
     get_request = request_form_table.objects.filter(id=id).values_list('request', flat=True).distinct()
     if get_name:
@@ -6843,7 +6843,7 @@ def send_email_all(request):
             recipient_list.append(emails) 
 
     subject = 'Application Form Received'
-    message1 = 'Greetings! This email is to inform you that an application form has been sent to your account. Please check the link for full details. Thank you!<br><br><br>'
+    message1 = 'Greetings! This email is to inform you that an application form has been sent to your account. Please check ' + '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' + 'for full details. Thank you!<br><br><br>'
     message2 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
     message3 =  "<i>"+'***This is an automated message from the Office of the University Registrar, do not reply.<br><br>'+"</i>"
 

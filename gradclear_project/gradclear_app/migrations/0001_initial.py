@@ -242,6 +242,7 @@ class Migration(migrations.Migration):
                 ('approval_status', models.CharField(default='UNAPPROVED', max_length=15, verbose_name='Approval Status')),
                 ('appointment', models.CharField(default='NONE', max_length=100, null=True, verbose_name='Appointment')),
                 ('or_num', models.CharField(blank=True, max_length=50, null=True)),
+                ('or_date', models.CharField(blank=True, max_length=50, null=True, verbose_name='O.R Date')),
                 ('time_requested', models.DateTimeField(auto_now_add=True)),
             ],
         ),
