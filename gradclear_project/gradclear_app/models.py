@@ -484,6 +484,7 @@ class request_form_table(models.Model):
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     or_num = models.CharField(max_length=50, blank=True ,null=True)
+    or_date = models.CharField(max_length=50, blank=True ,null=True, verbose_name="O.R Date")
     
     time_requested = models.DateTimeField(auto_now_add=True)
 

@@ -506,7 +506,7 @@ Adviser:
                                 <th>Request</th>
                                 <th>Clearance</th>
                                 <th>Form 137-A</th>
-                                <th colspan="2">Official Receipt</th>
+                                <th colspan="3">Official Receipt</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
                                 <th colspan="2">Appointment</th>
@@ -550,6 +550,18 @@ Adviser:
                                                 <option value="❌">❌</option>
                                             </select>
                                             
+                                            <td style="padding-left: 0%;">
+                                                {% if instance.official_receipt == "✔" and instance.or_num is None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input type=date id="or_date" name="or_date" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% elif instance.official_receipt == "✔" and instance.or_num is not None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input  type=date id="or_date" hidden name="or_date" value="{{instance.or_date}}" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% endif %}
+                                    
+                                            </td>
 
                                             <td>
                                                 {% if instance.official_receipt == "✔" and instance.or_num is None %}
@@ -564,6 +576,8 @@ Adviser:
                                                 {% endif %}
                                     
                                             </td>
+
+                                            
                                             
                                         </form> 
                                     </td>
@@ -578,11 +592,15 @@ Adviser:
                                                     <option value="UNCLAIMED">UNCLAIMED</option>
                                                 </select>
                                                 {% else %}
+                                                {% if instance.claim ==  'UNCLAIMED' %}
                                                 <select onchange="this.form.submit()" name="claim_select" id="changer"> 
                                                     <option value="" >{{instance.claim}}</option>
                                                     <option value="CLAIMED">CLAIMED</option>
                                                     <option value="UNCLAIMED">UNCLAIMED</option>
                                                 </select>
+                                                {% else %}
+                                                {{instance.claim}}
+                                                {% endif %}
                                             {% endif %}
                                             </form> 
                                     </td>  
@@ -884,6 +902,9 @@ Adviser:
 
         document.getElementById("search_box_77").value = "";
     });
+
+    
+     
     
 </script>
 
