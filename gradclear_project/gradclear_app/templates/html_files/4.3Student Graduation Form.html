@@ -545,31 +545,18 @@ Adviser:
         <form method="POST" action="graduation_form" id="grad_form" >
             {% csrf_token %}
             <!--SECTION RADIO BOX-->
-            <!--STUDY LOAD FOR-->
-            <div class="form-row">
-            <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-           
-            <div class="radio" onkeyup="isEmpty()" id="radio_43">
-                <label class="my-1 mr-4" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43" onchange="radio_boxes(this)">Day
-                </label>
-                <label class="my-1 mr-4" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43" onchange="radio_boxes(this)">Eve  
-                </label>
-            </div>
-            </div>
             
             <div class="form-row">
-                <div class="radio"  onkeyup="isEmpty()" id="radio_43">
-                <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-                
-                <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="stdfor_option" value="SEMESTER" id="semester_radio_43"  onchange="radio_boxes(this)" onclick="getStdfor()"required>Semester
-                </label>
-                <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2"   type="radio" name="stdfor_option" value="SUMMER" id="summer_radio_43"  onchange="radio_boxes(this)" onclick="getStdfor()" required>  Summer    
-                </label>
-            </div>
+                <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+            
+                <div class="radio" onkeyup="isEmpty()" id="radio_43">
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option"  value="DAY" id="day_radio_43" onchange="radio_boxes(this)">Day
+                    </label>
+                    <label class="my-1 mr-4" class="form-control">
+                        <input class="my-1 mr-2" type="radio" name="shift_option" value="EVE" id="eve_radio_43" onchange="radio_boxes(this)">Eve  
+                    </label>
+                </div>
             </div>
             <div id="dayeve_error_43"></div>
             <hr>
@@ -617,6 +604,13 @@ Adviser:
                     </div>
                 </div>
             </div><br>
+            <!--STUDY LOAD FOR-->
+            <div class="form-group">
+                <div class= "form-inline">
+                    <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For: School Year:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+                    <input class="my-1 mr-2 form-control" type="text" name="stdfor_option" id="school_year" oninput="radio_boxes(this)" onkeypress="return isNumberKey(event);"required>
+                </div>
+            </div>
 
             <!--SUBJECT TABLE-->
             
@@ -996,28 +990,20 @@ Adviser:
             </table><br>
 
               <!--ENROLLED THIS SEM BOX-->
-              <div class="form-inline">
-                <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
-
-                <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" class="form-control mx-sm-2" oninput="radio_boxes(this)"  placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled required>
-
-
-                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43" onchange="radio_boxes(this)" onclick="EnableDisableEnrolled();" required>Yes
-                    
-                </label>
-
-                <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"  onchange="radio_boxes(this)" onclick="EnableDisableDeadline();" required>No
-                </label>
-        </div>
-
-          
+            <div class="form-inline">
+                <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
+                <select id = "sem_term" name = "sem_term" class = "form-control" onchange ="check_rows()" >
+                    <option value = "" selected="true">--SELECT--</option>
+                    <option value ="1st">1st SEMESTER</option>
+                    <option value ="2nd">2nd SEMESTER</option>
+                    <option value ="Midyear">MIDYEAR</option>
+                </select>
+            </div>
 
            <!--DEADLINE BOX-->
             <div class="form-inline">
                 <label for="name" class="col-form-label my-1 ">If no, file your application papers. Deadline: </label>
-                <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control my-1 mr-4" oninput="radio_boxes(this)" disabled required>
+                <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control my-1 mr-4" oninput="radio_boxes(this)" >
             </div><br>
 
 
@@ -1029,17 +1015,17 @@ Adviser:
             <!--PERIOD OF TRAINING BOX-->
             <div class="form-inline">
                 <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="potF_lbl_43">1. Period of Training From:</label>
-                <input type="date" id="potF_box_43" name="trainP_startdate"  class="form-control mx-sm-2">
+                <input type="date" id="potF_box_43" name="trainP_startdate"  class="form-control mx-sm-2" onchange="check_rows()">
 
                 <label for="To" id="potT_lbl_43"> To:</label>
-                <input type="date" id="potT_box_43" name="trainP_enddate" class="form-control mx-sm-3">
+                <input type="date" id="potT_box_43" name="trainP_enddate" class="form-control mx-sm-3" onchange="check_rows()">
 
             </div><br>
 
             <!--SIT INSTRUCTOR BOX-->
             <div class="form-inline">
                 <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:</label>
-                <select id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" >
+                <select id="noIns_box_43" name="instructor_name" class="form-control mx-sm-3" onchange="check_rows()">
                     <option value="1" selected>--SELECT--</option>
                     {% for i in a %}
                     <option value="{{i}}">{{i}}</option>
@@ -1227,9 +1213,6 @@ Adviser:
         }, "300");
     });
 
-    document.getElementById("enrolledthsisem_box_43").required = false;
-    document.getElementById("deadline_box_43").required = false;
-
     // Course Check 
     function course_check() {
         var course_input = document.getElementById("course_drp1_43").value;
@@ -1384,14 +1367,13 @@ Adviser:
     // DISABLE BTN WHEN FORM INCOMPLETE
 
     function isEmpty() {
-        let radio = document.getElementById("radio_43").value;
         let ln_box = document.getElementById("ln_box_43").value;
         let fn_box = document.getElementById("fn_box_43").value;
         let mn_box = document.getElementById("mn_box_43").value;
         let stdfor_radio = document.getElementsByName("stdfor_radio_43").value;
         let enrolled_option = document.getElementsByName("enrolled_option_43").value;
 
-        if (radio != "" && ln_box != "" && fn_box != "" && mn_box != "" && stdfor_radio != "" && enrolled_option != "") {
+        if ( ln_box != "" && fn_box != "" && mn_box != "" && stdfor_radio != "" && enrolled_option != "") {
             document.getElementById("submit_btn_43").removeAttribute("disabled");
 
         }
@@ -1420,30 +1402,6 @@ Adviser:
 
     }
 
-    function EnableDisableEnrolled() {
-
-        var yes_radio = document.getElementById("yes_radio_43");
-        var enrolledthsisem_box = document.getElementById("enrolledthsisem_box_43");
-        enrolledthsisem_box.disabled = yes_radio.checked ? false : true;
-
-        if (!enrolledthsisem_box.disabled) {
-            enrolledthsisem_box.focus();
-            document.getElementById("deadline_box_43").disabled =true;
-        };
-    };
-
-    function EnableDisableDeadline() {
-
-        var no_radio = document.getElementById("no_radio_43");
-        var deadline_box = document.getElementById("deadline_box_43");
-        deadline_box.disabled = no_radio.checked ? false : true;
-
-        if (!deadline_box.disabled) {
-            deadline_box.focus();
-            document.getElementById("enrolledthsisem_box_43").disabled=true;
-
-        };
-    };
    
     function getCourse() {
 
@@ -1491,11 +1449,19 @@ Adviser:
     //Check RADIO BOXES
     function radio_boxes(elem){
         var checkboxes = document.querySelectorAll('input[type="radio"]:checked');
-        if(checkboxes.length == 3){
-            if(document.getElementById('deadline_box_43').value != "" || document.getElementById('enrolledthsisem_box_43').value != ""){
+        if(checkboxes.length == 1){
+            if(document.getElementById('deadline_box_43').value || document.getElementById('sem_term').value != ""){
                 var checkboxes2 = document.querySelectorAll('input[type="checkbox"]:checked');
                 if(checkboxes2.length == 20 ){
-                    document.getElementById('submit_btn_43').disabled = false; 
+                    var sit = document.getElementById('noIns_box_43').value;
+                    var training_start = document.getElementById('potF_box_43').value;
+                    var training_end = document.getElementById('potT_box_43').value;
+                    var study_load = document.getElementById('school_year').value;
+                    if (sit != "" && training_start && training_end && study_load != ""){
+                        document.getElementById('submit_btn_43').disabled = false;
+                    }else{
+                        document.getElementById('submit_btn_43').disabled = true;
+                    }
                 }else{
                     document.getElementById('submit_btn_43').disabled = true;
                 };
@@ -2334,14 +2300,26 @@ Adviser:
             document.getElementById('boxes20').checked = false; 
             check_rows();
         };
-    };
+    };check_rows
 
     function check_rows(){
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         if(checkboxes.length == 20){
             var checkboxes2 = document.querySelectorAll('input[type="radio"]:checked');
-            if(checkboxes2.length == 3){
-                document.getElementById('submit_btn_43').disabled = false;
+            if(checkboxes2.length == 1){
+                if(document.getElementById('deadline_box_43').value || document.getElementById('sem_term').value != ""){
+                    var sit = document.getElementById('noIns_box_43').value;
+                    var training_start = document.getElementById('potF_box_43').value;
+                    var training_end = document.getElementById('potT_box_43').value;
+                    var study_load = document.getElementById('school_year').value;
+                    if (sit != "" && training_start && training_end && study_load !=""){
+                        document.getElementById('submit_btn_43').disabled = false;
+                    }else{
+                        document.getElementById('submit_btn_43').disabled = true;
+                    };
+                }else{
+                    document.getElementById('submit_btn_43').disabled = true;
+                };
             }else{
                 document.getElementById('submit_btn_43').disabled = true;
             };
@@ -2464,5 +2442,32 @@ Adviser:
         var form = document.getElementById('grad_form');
         form.submit();
     }
+
+    function isNumberKey(evt)
+    {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode != 45 && charCode > 31
+        && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+    }
+
+    sem_term.addEventListener("change", function() {
+        if(document.getElementById('sem_term').value != ""){
+            document.getElementById("deadline_box_43").disabled = true;
+        }else{
+            document.getElementById("deadline_box_43").disabled = false;
+        };
+    });
+
+    deadline_box_43.addEventListener("click", function() {
+        var deadline = document.getElementById('deadline_box_43');
+        if(!deadline.value){
+            document.getElementById("sem_term").disabled = true;
+        }else{
+            document.getElementById("sem_term").disabled = false;
+        };
+    });
 
 </script>

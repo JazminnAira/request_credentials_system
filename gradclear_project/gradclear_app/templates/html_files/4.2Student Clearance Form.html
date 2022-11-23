@@ -480,7 +480,6 @@ Adviser:
             <input type="text" name="id_420" value="{{request.user.id_number}}" hidden>
             <input type="text" name="stud_id_420" value="{{request.user.student_id}}" hidden>
             <input type ="text" id ="allow_apply" value ="{{allow}}" hidden>
-            <input type ="text" id ="apply_grad_determiner" value = "{{graduation_allow}}" hidden>
             <input type ="text" id ="amount_pay" value ="{{requested}}" hidden>
             <!--NAME BOX-->
             <div class="form-inline">
@@ -556,6 +555,7 @@ Adviser:
             </div>
 
             <!--TUPC GRADUATE BOX-->
+            {% if request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" %}
             <div class="form-group row">
                 <label for="dygt_42" class="col-sm-3 col-form-label col-form-label-sm" id="dygt_lbl_42">Did you graduate at TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
@@ -586,6 +586,7 @@ Adviser:
                     <p id="notit_error_42"></p>
                 </div>
             </div>
+            {% endif %}
             <hr><br>
 
             <!--AMOUNT BOX-->
@@ -699,6 +700,7 @@ Adviser:
                         <option value = "" selected="true">--SELECT--</option>
                         <option value ="1">1st SEMESTER</option>
                         <option value ="2">2nd SEMESTER</option>
+                        <option value ="Midyear">MIDYEAR</option>
                     </select>
                 </div>
             </div>
@@ -721,7 +723,6 @@ Adviser:
             <!--PURPOSE OF REQUEST CHECK BOXES-->
             
                 <h3><b>CLEARANCE REQUESTED FOR:<em>(Check items below)</em><span id="asteris_42" style="color:rgb(255, 196, 196);">*</span></b></h3>
-                {% if clearance_type == "RequestCredentials"%}
                 {% if requested == "HonorableDismissal" %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" value="Honorable Dismissal" checked>
@@ -731,17 +732,6 @@ Adviser:
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_42" name="purpose_request_420" value="Honorable Dismissal"disabled>
                     <label class="form-check-label" for="inlineCheckbox1_42">Honorable Dismissal</label>
-                </div>
-                {% endif %}
-                {% if requested == "Evaluation" %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" value="Evaluation" checked>
-                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
-                </div>
-                {% else %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" value="Evaluation" disabled>
-                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
                 </div>
                 {% endif %}
                 {% if requested == "TrascriptOfRecords" %}
@@ -755,18 +745,7 @@ Adviser:
                     <label class="form-check-label" for="inlineCheckbox3_42">Transcript of Records</label>
                 </div>
                 {% endif %}
-                
-                {% if requested == "Re-evaluation" %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" value="Re-Evaluation" checked>
-                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
-                </div>
-                {% else %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" value="Re-Evaluation" disabled>
-                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
-                </div>
-                {% endif %}
+            
                 {% if requested == "Diploma" %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Diploma_check_42" name="purpose_request_420" value="Diploma" checked>
@@ -800,21 +779,7 @@ Adviser:
                     <input class="form-check-input chk" type="checkbox" id="Others_check_42" name="purpose_request_420" value="" disabled>
                     <label for="others" id="others_lbl_42"><em>Others (please specify):</em></label>
                 </div>
-                {%endif%}   
-                {% else %}
-                    {% if with_graduation >= 4 %}
-                    <div class="form-check form-check-inline pb-3">
-                        <input class="form-check-input chk" type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation" checked>
-                        <label class="form-check-label" for="inlineCheckbox6_42">Application for Graduation</label>
-                    </div>
-                    {% else %}
-                    <div class="form-check form-check-inline" >
-                        <input class="form-check-input chk" disabled type="checkbox" id="ApplicationforGraduation_check_42" name="purpose_request_420" value="Application for Graduation" >
-                        <label class="form-check-label" for="inlineCheckbox6_42" style="opacity: 0.6;">Application for Graduation</label>
-                    </div>
-                    {% endif %}
-                {% endif %}
-
+                {%endif%}  
 
             <div class="note">
                 <p>Note:</p>
@@ -1117,10 +1082,6 @@ Adviser:
         document.getElementById('amountp_box_42').value = "100.00";
     }else if (document.getElementById('amount_pay').value == "Diploma"){
         document.getElementById('amountp_box_42').value = "150.00";
-    }else if (document.getElementById('amount_pay').value == "Evaluation"){
-        document.getElementById('amountp_box_42').value = "60.00";
-    }else if (document.getElementById('amount_pay').value == "Re-evaluation"){
-        document.getElementById('amountp_box_42').value = "0.00";
     }else if (document.getElementById('amount_pay').value == "Certification"){
         document.getElementById('amountp_box_42').value = "100.00";
     }else{
@@ -1366,9 +1327,7 @@ Adviser:
     // Request Check
     function req_check() {
         var a = document.getElementById('HonorableDismissal_check_42').checked;
-        var b = document.getElementById('Evaluation_check_42').checked;
         var c = document.getElementById('TranscriptofRecords_check_42').checked;
-        var d = document.getElementById('ReEvaluation_check_42').checked;
         var e = document.getElementById('Diploma_check_42').checked;
         var f = document.getElementById('ApplicationforGraduation_check_42').checked;
         var g = document.getElementById('Certification_check_42').checked;
@@ -1654,11 +1613,10 @@ Adviser:
         let dait_box = document.getElementById("dait_box_42").value;
         let course_drp = document.getElementById("course_42").value;
         let hswg_box = document.getElementById("hswg_box_42").value;
-        let sem_box = document.getElementById("sem_term").value;
         let course_adviser = document.getElementById("course_adviser_42").value;
        
 
-        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && sem_box !="" && course_adviser!="1") {
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1") {
             document.getElementById("submit_btn_42").removeAttribute("disabled");
         }else{
             document.getElementById('submit_btn_42').disabled=true;
@@ -1823,25 +1781,9 @@ Adviser:
         }
     });
 
-    Evaluation_check_42.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amountp_box_42').value = "60.00";
-        }else{
-            document.getElementById('amountp_box_42').value = "0.00";
-        }
-    });
-
     TranscriptofRecords_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "100.00";
-        }else{
-            document.getElementById('amountp_box_42').value = "0.00";
-        }
-    });
-
-    ReEvaluation_check_42.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amountp_box_42').value = "0.00";
         }else{
             document.getElementById('amountp_box_42').value = "0.00";
         }

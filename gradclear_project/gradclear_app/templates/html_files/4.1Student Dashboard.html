@@ -716,10 +716,11 @@ Adviser:
         <a  style="padding-left: 15px;" href="{% url 'graduation_view'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
     {% endif %}
-    {% if graduating >= 4 and request.user.user_type == "STUDENT" %}
-        <a style="padding-left: 21px;" href="{% url 'clearance_view'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
-        </i><span class="icon-text">Application for Graduation</span></a><br>
+    {% if clearance_stat == "UNAPPROVED" %}
+        <a style="padding-left: 21px;" href="display_clearform/{{clearance_id}}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
+        </i><span class="icon-text">Clearance</span></a><br>
     {% endif %}
+
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">

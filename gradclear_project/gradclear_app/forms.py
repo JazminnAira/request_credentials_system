@@ -34,13 +34,6 @@ class signup_form(UserCreationForm):
             'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'})
         }
 
-
-class Clearance_form_table(ModelForm):
-    class Meta(ModelForm):
-        model = clearance_form_table
-        fields = ['course_adviser_signature']
-
-
 class TimePickerInput(forms.TimeInput):
     input_type = 'time'
 

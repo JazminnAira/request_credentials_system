@@ -188,7 +188,7 @@ class clearance_form_table(models.Model):
     highschool_graduated = models.TextField(
         max_length=100, verbose_name="High School Graduated")
     tupc_graduate = models.CharField(
-        max_length=10, verbose_name="TUPC Graduate")
+        max_length=10, verbose_name="TUPC Graduate", null=True)
     year_graduated_in_tupc = models.CharField(max_length=20,
         verbose_name="Year Graduated", default="NONE", null=True)
     number_of_terms_in_tupc = models.IntegerField(
