@@ -21,7 +21,6 @@ from reportlab.lib.colors import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-import my_csv, csv,  io
 from textwrap import wrap
 from django.db import connection
 import base64
@@ -67,59 +66,64 @@ def req_print(request,id):
 
     lines = []
 
-    p.setFont("Helvetica", 7)
-    p.drawString(73, 238, f'{content.address}')
-    # List of Payments
+# Request Form
+    p.setFont("Helvetica", 8)
+    p.drawString(78, 775, f'{content.name2}')
+    p.drawString(400, 775, f'{content.date}')
+    p.drawString(520, 775, f'{content.control_number}')
+    p.drawString(445, 760, f'{content.contact_number}')
+    p.drawString(110, 635, f'{content.appointment}')
+    
+   
+#list of payments
+    p.setFont("Helvetica", 9)
+    p.drawString(78, 462, f'{content.name2}')
+    
+    p.drawString(450, 462, f'{content.date}')
+    
+
+
+#   Claim Stub
+    p.setFont("Helvetica", 9)
+    p.drawString(90, 233, f'{content.name2}')
+    p.drawString(410, 233, f'{content.date}')
+    p.drawString(530, 233, f'{content.control_number}')
+    p.drawString(439, 135, f'{content.appointment}')
+    
     p.setFont("Helvetica", 5)
+    p.drawString(70, 760, f'{content.address}')
+    # List of Payments
+    p.setFont("Helvetica", 6)
     course_get = content.course
     num = len(course_get.split())
     if num > 2:
         result =' '.join(course_get.split()[:2])
-        p.drawString(325, 837, f"""{result}""")
-        p.drawString(315, 588, f"""{result}""")
-        p.drawString(293, 255, f"""{result}""")
+        p.drawString(290, 779, f"""{result}""")
+        p.drawString(315, 467, f"""{result}""")
+        p.drawString(300, 237, f"""{result}""")
         result1 =' '.join(course_get.split()[2:])
-        p.drawString(325, 831, f"""{result1}""")
-        p.drawString(315, 583, f"""{result1}""")
-        p.drawString(293, 251, f"""{result1}""")
+        p.drawString(290, 775, f"""{result1}""")
+        p.drawString(315, 462, f"""{result1}""")
+        p.drawString(300, 232, f"""{result1}""")
     else:
-        p.drawString(325, 833, f'{content.course}')
-        p.drawString(315, 583, f'{content.course}')
-        p.drawString(293, 252, f'{content.course}')
-
-    p.setFont("Helvetica", 9)
-    p.drawString(88, 833, f'{content.name2}')
-    p.drawString(468, 833, f'{content.date}')
-    
-   
-#   Claim Stub
-    p.setFont("Helvetica", 9)
-    p.drawString(95, 583, f'{content.name2}')
-    p.drawString(439, 475, f'{content.appointment}')
-    p.drawString(430, 583, f'{content.date}')
-    
+        p.drawString(290, 775, f'{content.course}')
+        p.drawString(315, 462, f'{content.course}')
+        p.drawString(300, 232, f'{content.course}')
 
 
-# Request Form
-    p.setFont("Helvetica", 9)
-    p.drawString(80, 252, f'{content.name2}')
-    p.drawString(400, 252, f'{content.date}')
-    p.drawString(520, 252, f'{content.control_number}')
-    p.drawString(450, 238, f'{content.contact_number}')
-    p.drawString(103, 116, f'{content.appointment}')
-    
     p.setFont("Helvetica", 11)
     fname = content.name
     stats = user_table.objects.get(full_name = fname)
     u_type = stats.user_type
 
     if u_type == "STUDENT":
-        p.drawString(30, 225, '✔')
+        p.drawString(33, 750, '✔')
+        
     elif u_type =="OLD STUDENT":
-        p.drawString(195, 225, '✔')
+        p.drawString(187, 750, '✔')
     else:
-        p.drawString(327, 225, '✔')
-        p.drawString(460, 225, f'{stats.year_graduated}')
+        p.drawString(308, 750, '✔')
+        p.drawString(450, 748, f'{stats.year_graduated}')
 
     # purpose
     form_purpose = content.request
@@ -128,50 +132,47 @@ def req_print(request,id):
     cert = word_list[0]
     cert4 = ' '.join(form_purpose.split()[1:])
     others = ' '.join(form_purpose.split()[1:])
-    
-
+   
     if form_purpose == "Honorable Dismissal":
-        p.drawString(327, 528, '✔')
-        p.drawString(257, 171, '✔')
+        p.drawString(248, 695, '✔') 
+        p.drawString(255, 180, '✔') 
     elif form_purpose == "Verification":
-        p.drawString(266, 777, '✔')
+        p.drawString(275, 408, '✔') 
     elif form_purpose == "Subject Description":
-        p.drawString(266, 803, '✔')
-        p.drawString(327, 555, '✔')
-        p.drawString(257, 198, '✔')
+        p.drawString(282, 723, '✔') 
+        p.drawString(275, 435, '✔') 
+        p.drawString(255, 208, '✔') 
     elif form_purpose == "CAV":
-        p.drawString(47, 762, '✔')
-        p.drawString(60, 517, '✔')
-        p.drawString(30, 157, '✔')
+        p.drawString(30, 680, '✔') 
+        p.drawString(30, 395, '✔') 
+        p.drawString(40, 167,  '✔') 
     elif form_purpose == "Transcript of Records":
-        p.drawString(47, 803, '✔')
-        p.drawString(60, 555, '✔')
-        p.drawString(30, 198, '✔')
+        p.drawString(30, 723, '✔ ') 
+        p.drawString(30, 435, '✔  ') 
+        p.drawString(40, 207, '✔ ') 
     elif form_purpose == "Authentication/Verification":
-        p.drawString(264, 790, '✔')
-        p.drawString(327, 541, '✔')
-        p.drawString(257, 184, '✔')
+        p.drawString(248, 709, '✔') 
+        p.drawString(275, 420, '✔') 
+        p.drawString(255, 195, '✔') 
     elif form_purpose == "Diploma":
-        p.drawString(47, 777, '✔')
-        p.drawString(60, 528, '✔')
-        p.drawString(30, 171, '✔')
+        p.drawString(30, 695, '✔') 
+        p.drawString(30, 408, '✔') 
+        p.drawString(40, 180, '✔') 
     elif  cert == "Certification:":
-        p.drawString(47, 790, '✔')
-        p.drawString(60, 541, '✔')
-        p.drawString(30, 184, '✔')
+        p.drawString(30, 709, '✔') 
+        p.drawString(30, 420, '✔')  
+        p.drawString(40, 195,'✔') 
         p.setFont("Helvetica", 9)
-        p.drawString(128, 542, f"""{cert4}""")
-        p.drawString(100, 184, f"""{cert4}""")
-        # paayos pa 
-        # padadagdag additional info
+        p.drawString(105, 705, f"""{cert4}""")
+        p.drawString(125, 195, f"""{cert4}""") 
     else:
         p.setFont("Helvetica", 11)
         
-        p.drawString(327, 517, '✔')
-        p.drawString(257, 157, '✔')
+        p.drawString(248, 680, '✔') 
+        p.drawString(255, 167, '✔') 
         p.setFont("Helvetica", 9)
-        p.drawString(440, 517, f"""{others}""")
-        p.drawString(375, 157, f"""{others}""")
+        p.drawString(375, 680, f"""{others}""")
+        p.drawString(385, 170, f"""{others}""")
         
         
         
@@ -183,29 +184,29 @@ def req_print(request,id):
     
     if o_r == "✔":
         
-        p.drawString(320, 130, '✔')
+        p.drawString(130, 650, '✔')
     else:
         p.drawString(300, 130, '')
         
     
     if clearance == "✔":
-        p.drawString(230, 130, '✔')
+        p.drawString(210, 650, '✔')
     else:
-        p.drawString(230, 130, '')
+        p.drawString(210, 650, '')
         
         
     if f137 == "✔":
-        p.drawString(147, 130, '✔')
+        p.drawString(285, 650, '✔')
     else:
-        p.drawString(147, 130, '')
+        p.drawString(300, 650, '')
 
-    p.setFont("Helvetica", 9)
-    p.drawString(115, 143, f'{content.purpose_of_request_reason}')
+    p.setFont("Helvetica", 7)
+    p.drawString(115, 663, f'{content.purpose_of_request_reason}')
     
     
     reg = user_table.objects.get(user_type="REGISTRAR")
-    p.drawString(425, 450, f'{reg.full_name}')
-    p.drawString(285, 115, f'{reg.full_name}')
+    p.drawString(275, 635, f'{reg.full_name}')
+    p.drawString(425, 110, f'{reg.full_name}')
     
     for line in lines:
         textob.textLine(line)
@@ -251,45 +252,44 @@ def graduation_print(request, id):
     c_len = len(coursess.split())
 
     if c_len > 4:
-        p.setFont("Helvetica", 5)
+        p.setFont("Helvetica", 6)
         result =' '.join(coursess.split()[:3])
-        p.drawString(480, 755, f"""{result}""")
+        p.drawString(480, 765, f"""{result}""")
         result1 =' '.join(coursess.split()[3:])
-        p.drawString(480, 750, f"""{result1}""")
+        p.drawString(480, 758, f"""{result1}""")
     else: 
         p.setFont("Helvetica", 6)
-        p.drawString(480, 750, f'{content.course}')
+        p.drawString(480, 758, f'{content.course}')
         
         
+ 
     p.setFont("Helvetica", 11)
-    day_eve = content.shift
-    if day_eve == "DAY":
-        p.drawString(65, 805, '✔')
-    else:
-        p.drawString(65, 792, '✔')
-  
-    p.drawString(80, 755, f'{content.name}')
-    p.drawString(120, 710, f'{content.study_load}')
-    stat = content.status
-    if stat == "YES":
-        p.drawString(390, 670, '✔')
-    else:
-        p.drawString(490, 670, '✔')
-    p.drawString(220, 670, f'{content.enrolled_term}')
+    p.drawString(80, 757, f'{content.name}')
+    p.drawString(175, 720, f'{content.study_load}')
+
+    semester = content.enrolled_term
+    if semester == "1st":
+        p.drawString(360, 715, '✔' )
+    elif semester == "2nd": 
+        p.drawString(430, 715, '✔' )
+    else:       
+        p.drawString(525, 715, '✔' )
     
     #revised
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     p.setFillColorRGB(0,0,0)
     sub1 = content.subject1
    
     if len(sub1) == 0:
         p.drawstring(33, 640, "")
     else:
-        p.drawString(33, 640, f'{content.subject1}')
+        p.drawString(35, 630, f'{content.subject1}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 640, f'{content.starttime1_1} - {content.endtime1_1}')
-        p.drawString(279, 640, f'{content.room1}')
-        p.drawString(323, 640, f'{content.day1_1}')
+        p.drawString(125, 635, f'{content.starttime1_1} -')
+        p.drawString(125, 625, f'{content.endtime1_1}')
+        p.drawString(175, 630, f'{content.room1}')
+        
+        p.drawString(215, 630, f'{content.day1_1}')
         
         sig1 = content.signature1
         stat_sig1 =  sig1.split(' ')[-1]
@@ -299,24 +299,24 @@ def graduation_print(request, id):
         str_upload1 = str(fac1_sig_upload)
         fac1_sig_esign = fac1.e_signature
         str_esign1 = str(fac1_sig_esign)
-        p.drawString(380, 640,f'{content.faculty1}')
+        p.drawString(252, 625,f'{content.faculty1}')
+        
 
         if stat_sig1 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign1
-            p.drawImage(im,500, 640, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,252, 630, height = 15, width = 80 , mask='auto')
 
         elif stat_sig1 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload1
-            p.drawImage(im,500, 640, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,252, 630, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 638, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 625, "APPROVED *Required Live Signature")
             
             
             
                
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     sub2 = content.subject2
     p.setFillColorRGB(0,0,0)
 
@@ -325,11 +325,12 @@ def graduation_print(request, id):
         p.drawString(33, 625, "")
     
     else:
-        p.drawString(33, 625, f'{content.subject2}')
+        p.drawString(33, 610, f'{content.subject2}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 625, f'{content.starttime1_2} - {content.endtime1_2}')
-        p.drawString(279, 625, f'{content.room2}')
-        p.drawString(323, 625, f'{content.day1_2}')
+        p.drawString(125, 615, f'{content.starttime1_2} -') 
+        p.drawString(125, 605, f'{content.endtime1_2}')
+        p.drawString(175, 610, f'{content.room2}')
+        p.drawString(215, 610, f'{content.day1_2}')
         sig2 = content.signature2
         stat_sig2 =  sig2.split(' ')[-1]
         faculty2 = content.faculty2
@@ -338,23 +339,22 @@ def graduation_print(request, id):
         str_upload2 = str(fac2_sig_upload)
         fac2_sig_esign = fac2.e_signature
         str_esign2 = str(fac2_sig_esign)
-        p.drawString(380, 625,f'{content.faculty2}')
+        p.drawString(254, 602,f'{content.faculty2}')
 
         if stat_sig2 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign2
-            p.drawImage(im,500, 625, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 602, height = 15, width = 80 , mask='auto')
         elif stat_sig2 == "UPLOAD":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload2
-            p.drawImage(im,500, 625, height = 13, width = 80 , mask='auto')
+            p.drawImage(im,254, 602, height = 13, width = 80 , mask='auto')
             
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 638, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 605, "APPROVED *Required Live Signature")
                 
 
       
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     sub3 = content.subject3
     p.setFillColorRGB(0,0,0)
 
@@ -362,11 +362,12 @@ def graduation_print(request, id):
     if len(sub3) == 0:
         p.drawString(33, 611,  "")
     else:
-        p.drawString(33, 611, f'{content.subject3}')
+        p.drawString(35, 585, f'{content.subject3}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 611, f'{content.starttime1_3} - {content.endtime1_3}')
-        p.drawString(279, 611, f'{content.room3}')
-        p.drawString(323, 611, f'{content.day1_3}')
+        p.drawString(125, 590, f'{content.starttime1_3} -') 
+        p.drawString(125, 580, f'{content.endtime1_3}')
+        p.drawString(175, 585, f'{content.room3}')
+        p.drawString(215, 585, f'{content.day1_3}')
         sig3 = content.signature3
         stat_sig3 =  sig3.split(' ')[-1]
         faculty3 = content.faculty3
@@ -375,24 +376,24 @@ def graduation_print(request, id):
         str_upload3 = str(fac3_sig_upload)
         fac3_sig_esign = fac3.e_signature
         str_esign3 = str(fac3_sig_esign)
-        p.drawString(380, 611,f'{content.faculty3}')
+        p.drawString(254, 580,f'{content.faculty3}')
+        
 
         if stat_sig3 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign3
-            p.drawImage(im,500, 611, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 585, height = 15, width = 80 , mask='auto')
 
         elif stat_sig3 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload3
-            p.drawImage(im,500, 611, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 585, height = 15, width = 80 , mask='auto')
         else:
             
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 611, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 580, "APPROVED *Required Live Signature")
 
     
 
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     p.setFillColorRGB(0,0,0)
     sub4 = content.subject4
     
@@ -400,11 +401,12 @@ def graduation_print(request, id):
         p.drawString(33, 597,'')
 
     else:
-        p.drawString(33, 597, f'{content.subject4}')
+        p.drawString(33, 565, f'{content.subject4}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 597, f'{content.starttime1_4} - {content.endtime1_4}')
-        p.drawString(279, 597, f'{content.room4}')
-        p.drawString(323, 597, f'{content.day1_4}')
+        p.drawString(125, 570, f'{content.starttime1_4} -') 
+        p.drawString(125, 560, f'{content.endtime1_4}')
+        p.drawString(175, 565, f'{content.room4}')
+        p.drawString(215, 565, f'{content.day1_4}')
        
         sig4 = content.signature4
         stat_sig4 =  sig4.split(' ')[-1]
@@ -414,35 +416,35 @@ def graduation_print(request, id):
         str_upload4 = str(fac4_sig_upload)
         fac4_sig_esign = fac4.e_signature
         str_esign4 = str(fac4_sig_esign)
-        p.drawString(380, 597,f'{content.faculty4}' )
+        p.drawString(254, 560,f'{content.faculty4}' )
         
         if stat_sig4 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign4
-            p.drawImage(im,500, 597, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 560, height = 15, width = 80 , mask='auto')
 
         elif stat_sig4 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload4
-            p.drawImage(im,500, 597, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 560, height = 15, width = 80 , mask='auto')
         else:
             
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 597, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 560, "APPROVED *Required Live Signature")
 
 
 
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     p.setFillColorRGB(0,0,0)
     sub5 = content.subject5
     
     if len(sub5) == 0:
         p.drawString(33, 584, '')
     else:
-        p.drawString(33, 584, f'{content.subject5}')
+        p.drawString(33, 543, f'{content.subject5}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 584, f'{content.starttime1_5} - {content.endtime1_5}')
-        p.drawString(279, 584, f'{content.room5}')
-        p.drawString(323, 584, f'{content.day1_5}')
+        p.drawString(125, 548, f'{content.starttime1_5} -') 
+        p.drawString(125, 538, f'{content.endtime1_5}')
+        p.drawString(175, 543, f'{content.room5}')
+        p.drawString(215, 542, f'{content.day1_5}')
         
         sig5 = content.signature5
         faculty5 = content.faculty5
@@ -452,25 +454,24 @@ def graduation_print(request, id):
         str_upload5 = str(fac5_sig_upload)
         fac5_sig_esign = fac5.e_signature
         str_esign5 = str(fac5_sig_esign)
-        p.drawString(380, 584,f'{content.faculty5}')
+        p.drawString(254, 535,f'{content.faculty5}')
+        
         
         if stat_sig5 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign5
-            p.drawImage(im,500, 584, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 538, height = 15, width = 80 , mask='auto')
 
         elif stat_sig5 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload5
-            p.drawImage(im,500, 584, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 538, height = 15, width = 80 , mask='auto')
         else:
-            
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 584, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 535, "APPROVED *Required Live Signature")
 
         
 
 
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     p.setFillColorRGB(0,0,0)
     sub6 = content.subject6
     
@@ -478,11 +479,12 @@ def graduation_print(request, id):
     if len(sub6) == 0:
         p.drawString(39, 570, '')
     else:
-        p.drawString(33, 570, f'{content.subject6}')
+        p.drawString(33, 520, f'{content.subject6}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 570, f'{content.starttime1_6} - {content.endtime1_6}')
-        p.drawString(279, 570, f'{content.room6}')
-        p.drawString(323, 570, f'{content.day1_6}')
+        p.drawString(125, 525, f'{content.starttime1_6} -') 
+        p.drawString(125, 515, f'{content.endtime1_6}')
+        p.drawString(175, 520, f'{content.room6}')
+        p.drawString(215, 520, f'{content.day1_6}')
         
         sig6 = content.signature6
         stat_sig6 =  sig6.split(' ')[-1]
@@ -492,23 +494,24 @@ def graduation_print(request, id):
         str_upload6 = str(fac6_sig_upload)
         fac6_sig_esign = fac6.e_signature
         str_esign6 = str(fac6_sig_esign)
-        p.drawString(380, 570,f'{content.faculty6}' )
+        p.drawString(254, 512,f'{content.faculty6}' )
+        p.setFont("Helvetica", 5.5)
+        p.drawString(410, 512, "APPROVED *Required Live Signature")
         
         if stat_sig6 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign6
-            p.drawImage(im,500, 570, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 512, height = 15, width = 80 , mask='auto')
 
         elif stat_sig6 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload6
-            p.drawImage(im,500, 570, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 512, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 570, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 512, "APPROVED *Required Live Signature")
  
             
             
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     p.setFillColorRGB(0,0,0)
     sub7 = content.subject7
     
@@ -516,11 +519,12 @@ def graduation_print(request, id):
         p.drawString(33, 555,  '')
 
     else:
-        p.drawString(33, 555, f'{content.subject7}')
+        p.drawString(33, 495, f'{content.subject7}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 555, f'{content.starttime1_7} - {content.endtime1_7}')
-        p.drawString(279, 555, f'{content.room7}')
-        p.drawString(323, 555, f'{content.day1_7}')
+        p.drawString(125, 500, f'{content.starttime1_7} -') 
+        p.drawString(125, 490, f'{content.endtime1_7}')
+        p.drawString(175, 495, f'{content.room7}')
+        p.drawString(215, 495, f'{content.day1_7}')
         
         sig7 = content.signature7
         stat_sig7 =  sig7.split(' ')[-1]
@@ -530,23 +534,23 @@ def graduation_print(request, id):
         str_upload7 = str(fac7_sig_upload)
         fac7_sig_esign = fac7.e_signature
         str_esign7 = str(fac7_sig_esign)
-        p.drawString(380, 555,f'{content.faculty7}' )  
+        p.drawString(254, 490,f'{content.faculty7}' ) 
+        
         
         if stat_sig7 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign7
-            p.drawImage(im,500, 555, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 490, height = 15, width = 80 , mask='auto')
 
         elif stat_sig7 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload7
-            p.drawImage(im,500, 555, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 490, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 555, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 490, "APPROVED *Required Live Signature")
 
                 
 
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     sub8 = content.subject8
     p.setFillColorRGB(0,0,0)
     
@@ -554,11 +558,12 @@ def graduation_print(request, id):
                                                                         
         p.drawString(33, 542, '') 
     else:
-        p.drawString(33, 542, f'{content.subject8}')
+        p.drawString(33, 475, f'{content.subject8}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 542, f'{content.starttime1_8} - {content.endtime1_8}')
-        p.drawString(279, 542, f'{content.room8}')
-        p.drawString(323, 542, f'{content.day1_8}')
+        p.drawString(125, 480, f'{content.starttime1_8} - ' )
+        p.drawString(125, 470, f'{content.endtime1_8}')
+        p.drawString(175, 475, f'{content.room8}')
+        p.drawString(215, 475, f'{content.day1_8}')
         sig8 = content.signature8
         faculty8 = content.faculty8
         stat_sig8 =  sig8.split(' ')[-1]
@@ -567,34 +572,34 @@ def graduation_print(request, id):
         str_upload8 = str(fac8_sig_upload)
         fac8_sig_esign = fac8.e_signature
         str_esign8 = str(fac8_sig_esign)
-        p.drawString(380, 542,f'{content.faculty8}' )
+        p.drawString(254, 470,f'{content.faculty8}' )
         
         if stat_sig8 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign8
-            p.drawImage(im,500, 542, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 470, height = 15, width = 80 , mask='auto')
 
         elif stat_sig8 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload8
-            p.drawImage(im,500, 542, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 470, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 542, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 470, "APPROVED *Required Live Signature")
  
                                                             
                                                             
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     sub9 = content.subject9
     p.setFillColorRGB(0,0,0)
     
     if len(sub9) == 0:
         p.drawString(33, 529,  '')
     else:
-        p.drawString(33, 529, f'{content.subject9}')
+        p.drawString(33, 452, f'{content.subject9}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 529, f'{content.starttime1_9} - {content.endtime1_9}')
-        p.drawString(279, 529, f'{content.room9}')
-        p.drawString(323, 529, f'{content.day1_9}')
+        p.drawString(125, 457, f'{content.starttime1_9} - ')
+        p.drawString(125, 447, f'{content.endtime1_9}')
+        p.drawString(175, 452, f'{content.room9}')
+        p.drawString(215, 447, f'{content.day1_9}')
         
         sig9 = content.signature9
         stat_sig9 =  sig9.split(' ')[-1]
@@ -604,22 +609,21 @@ def graduation_print(request, id):
         str_upload9 = str(fac9_sig_upload)
         fac9_sig_esign = fac9.e_signature
         str_esign9 = str(fac9_sig_esign)
-        p.drawString(380, 529,f'{content.faculty9}' )
+        p.drawString(254, 447,f'{content.faculty9}' )
         
         if stat_sig9 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign9
-            p.drawImage(im,500, 529, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 447, height = 15, width = 80 , mask='auto')
 
         elif stat_sig1 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload9
-            p.drawImage(im,500, 529, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 447, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 529, "APPROVED *Required Live Signature")                   
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 447, "APPROVED *Required Live Signature")                   
             
             
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 9)
     sub10 = content.subject10
     p.setFillColorRGB(0,0,0)
     
@@ -627,11 +631,12 @@ def graduation_print(request, id):
         p.drawString(33, 515,  '')
 
     else:
-        p.drawString(33, 515, f'{content.subject10}')
+        p.drawString(33, 430, f'{content.subject10}')
         p.setFont("Helvetica", 7)
-        p.drawString(204, 515, f'{content.starttime1_10} - {content.endtime1_10}')
-        p.drawString(279, 515, f'{content.room10}')
-        p.drawString(323, 515, f'{content.day1_10}')
+        p.drawString(125, 435, f'{content.starttime1_10} -') 
+        p.drawString(125, 425, f'{content.endtime1_10}')
+        p.drawString(175, 430, f'{content.room10}')
+        p.drawString(215, 430, f'{content.day1_10}')
         sig10 = content.signature10
         stat_sig10 =  sig10.split(' ')[-1]
         faculty10 = content.faculty10
@@ -640,23 +645,22 @@ def graduation_print(request, id):
         str_upload10 = str(fac10_sig_upload)
         fac10_sig_esign = fac10.e_signature
         str_esign10 = str(fac10_sig_esign)
-        p.drawString(380, 515,f'{content.faculty10}')
+        p.drawString(254, 425,f'{content.faculty10}')
         
         if stat_sig10 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign10
-            p.drawImage(im,500, 515, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 425, height = 15, width = 80 , mask='auto')
 
         elif stat_sig10 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload10
-            p.drawImage(im,500, 515, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 425, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 515, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 425, "APPROVED *Required Live Signature")
 
-    # #additional subj
+    # # #additional subj
   
-    p.setFont("Helvetica", 7)
+    p.setFont("Helvetica", 8)
     p.setFillColorRGB(0,0,0)
     addsub1 = content.addsubject1
     
@@ -664,11 +668,12 @@ def graduation_print(request, id):
         p.drawString(33, 305, '') 
         
     else:
-        p.drawString(33, 305, f'{content.addsubject1}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 305, f'{content.add_starttime1_1} - {content.add_endtime1_1}')
-        p.drawString(279, 305, f'{content.addroom1}')
-        p.drawString(323, 305, f'{content.addday1_1}')
+        p.drawString(33, 255, f'{content.addsubject1}')
+        p.setFont("Helvetica", 5)
+        p.drawString(125, 260, f'{content.add_starttime1_1} -') 
+        p.drawString(125, 252, f'{content.add_endtime1_1}')
+        p.drawString(175, 255, f'{content.addroom1}')
+        p.drawString(215, 255, f'{content.addday1_1}')
         
         addsig1 = content.addsignature1
         stat_addsig1 =  addsig1.split(' ')[-1]
@@ -678,19 +683,18 @@ def graduation_print(request, id):
         add_str_upload1 = str(addfac1_sig_upload)
         addfac1_sig_esign = addfac1.e_signature
         add_str_esign1 = str(addfac1_sig_esign)
-        p.drawString(380, 305,f'{content.addfaculty1}')
+        p.drawString(254, 252,f'{content.addfaculty1}')
         
         if stat_addsig1 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign1
-            p.drawImage(im,500, 305, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 252, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig1 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload1
-            p.drawImage(im,500, 305, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 252, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 305, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 252, "APPROVED *Required Live Signature")
     
     
     p.setFont("Helvetica", 7)
@@ -700,11 +704,12 @@ def graduation_print(request, id):
     if len(addsub2) == 0:
         p.drawString(33, 290, '')
     else:
-        p.drawString(33, 290, f'{content.addsubject2}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 290, f'{content.add_starttime1_2} - {content.add_endtime1_2}')
-        p.drawString(279, 290, f'{content.addroom2}')
-        p.drawString(323, 290, f'{content.addday1_2}')
+        p.drawString(33, 242, f'{content.addsubject2}')
+        p.setFont("Helvetica", 5)
+        p.drawString(125, 245, f'{content.add_starttime1_2} -') 
+        p.drawString(125, 240, f'{content.add_endtime1_2}')
+        p.drawString(175, 242, f'{content.addroom2}')
+        p.drawString(215, 242, f'{content.addday1_2}')
         
         addsig2 = content.addsignature2
         stat_addsig2 =  addsig2.split(' ')[-1]
@@ -714,19 +719,18 @@ def graduation_print(request, id):
         add_str_upload2 = str(addfac2_sig_upload)
         addfac2_sig_esign = addfac2.e_signature
         add_str_esign2 = str(addfac2_sig_esign)
-        p.drawString(380, 290,f'{content.addfaculty2}' )
+        p.drawString(254, 240,f'{content.addfaculty2}' )
         
         if stat_addsig2 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign2
-            p.drawImage(im,500, 290, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 238, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig2 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload2
-            p.drawImage(im,500, 290, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 238, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 290, "APPROVED *Required Live Signature")    
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 238, "APPROVED *Required Live Signature")    
          
                     
     p.setFont("Helvetica", 7)
@@ -736,11 +740,12 @@ def graduation_print(request, id):
         p.drawString(33, 276, '')
         
     else:
-        p.drawString(33, 276, f'{content.addsubject3}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 276, f'{content.add_starttime1_3} - {content.add_endtime1_3}')
-        p.drawString(279, 276, f'{content.addroom3}')
-        p.drawString(323, 276, f'{content.addday1_3}')
+        p.drawString(33, 228, f'{content.addsubject3}')
+        p.setFont("Helvetica", 5)
+        p.drawString(125, 230, f'{content.add_starttime1_3} -') 
+        p.drawString(125, 224, f'{content.add_endtime1_3}')
+        p.drawString(175, 228, f'{content.addroom3}')
+        p.drawString(215, 228, f'{content.addday1_3}')
         
         addsig3 = content.addsignature3
         stat_addsig3 =  addsig3.split(' ')[-1]
@@ -750,19 +755,18 @@ def graduation_print(request, id):
         add_str_upload3 = str(addfac3_sig_upload)
         addfac3_sig_esign = addfac3.e_signature
         add_str_esign3 = str(addfac3_sig_esign)
-        p.drawString(380, 276,f'{content.addfaculty3}')
+        p.drawString(254, 224,f'{content.addfaculty3}')
         
         if stat_addsig3 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign3
-            p.drawImage(im,500, 276, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 224, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig3 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload3
-            p.drawImage(im,500, 276, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 224, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 276, "APPROVED *Required Live Signature")                            
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 224, "APPROVED *Required Live Signature")                            
             
 
     p.setFont("Helvetica", 7)
@@ -773,11 +777,12 @@ def graduation_print(request, id):
         p.drawString(33, 262,  '')
         
     else:
-        p.drawString(33, 262, f'{content.addsubject4}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 262, f'{content.add_starttime1_4} - {content.add_endtime1_4}')
-        p.drawString(279, 262, f'{content.addroom4}')
-        p.drawString(323, 262, f'{content.addday1_4}')
+        p.drawString(33, 213, f'{content.addsubject4}')
+        p.setFont("Helvetica", 5)
+        p.drawString(125, 216, f'{content.add_starttime1_4} -') 
+        p.drawString(125, 210, f'{content.add_endtime1_4}')
+        p.drawString(175, 213, f'{content.addroom4}')
+        p.drawString(215, 213, f'{content.addday1_4}')
         
         addsig4 = content.addsignature4
         stat_addsig4 =  addsig4.split(' ')[-1]
@@ -787,21 +792,18 @@ def graduation_print(request, id):
         add_str_upload4 = str(addfac4_sig_upload)
         addfac4_sig_esign = addfac4.e_signature
         add_str_esign4 = str(addfac4_sig_esign)
-        p.drawString(380, 262,f'{content.addfaculty4}')
+        p.drawString(254, 210,f'{content.addfaculty4}')
         
         if stat_addsig4 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign4
-            p.drawImage(im,500, 262, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 210, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig4 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload4
-            p.drawImage(im,500, 262, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 210, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 262, "APPROVED *Required Live Signature")
-            
-       
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 210, "APPROVED *Required Live Signature")
             
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0,0,0)
@@ -809,11 +811,12 @@ def graduation_print(request, id):
     if len(addsub5) == 0:
         p.drawString(33, 249,  '')
     else:
-        p.drawString(33, 249, f'{content.addsubject5}')
-        p.setFont("Helvetica", 7)
-        p.drawString(204, 249, f'{content.add_starttime1_5} - {content.add_endtime1_5}')
-        p.drawString(279, 249, f'{content.addroom5}')
-        p.drawString(323, 249, f'{content.addday1_5}')
+        p.drawString(33, 198, f'{content.addsubject5}')
+        p.setFont("Helvetica", 5)
+        p.drawString(125, 200, f'{content.add_starttime1_5} -') 
+        p.drawString(125, 195, f'{content.add_endtime1_5}')
+        p.drawString(175, 198, f'{content.addroom5}')
+        p.drawString(215, 198, f'{content.addday1_5}')
         
         addsig5 = content.addsignature5
         stat_addsig5 =  addsig5.split(' ')[-1]
@@ -823,28 +826,28 @@ def graduation_print(request, id):
         add_str_upload5 = str(addfac5_sig_upload)
         addfac5_sig_esign = addfac5.e_signature
         add_str_esign5 = str(addfac5_sig_esign)
-        p.drawString(380, 249,f'{content.addfaculty5}')
+        p.drawString(254, 196,f'{content.addfaculty5}')
         
         if stat_addsig5 == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign5
-            p.drawImage(im,500, 249, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 196, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig5 =="UPLOAD":  
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload5
-            p.drawImage(im,500, 249, height = 15, width = 80 , mask='auto')
+            p.drawImage(im,254, 196, height = 15, width = 80 , mask='auto')
         else:
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1,0,0)
-            p.drawString(500, 249, "APPROVED *Required Live Signature")
+            p.setFont("Helvetica", 5.5)
+            p.drawString(410, 196, "APPROVED *Required Live Signature")
+            
             
     p.setFont("Helvetica", 11)
     dline = content.unenrolled_application_deadline
     if dline is None:
-        p.drawString(235, 151, '')
+        p.drawString(235, 168, '')
     else:    
-        p.drawString(235, 151, f'{content.unenrolled_application_deadline}')
-    p.drawString(195, 73, f'{content.trainP_startdate}')
-    p.drawString(390, 73, f'{content.trainP_enddate}')
+        p.drawString(235, 168, f'{content.unenrolled_application_deadline}')
+    p.drawString(195, 90, f'{content.trainP_startdate}')
+    p.drawString(390, 90, f'{content.trainP_enddate}')
     
     
     p.setFont("Helvetica", 7)
@@ -856,21 +859,22 @@ def graduation_print(request, id):
     sit_str_upload1 = str(sit_upload)
     sit_esign = fac.e_signature
     sit_str_esign1 = str(sit_esign)
-    p.drawString(258, 58,f'{content.instructor_name}' )
+    p.drawString(255, 75,f'{content.instructor_name}' )
     
         
    
     if sit == "ESIGN":
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + sit_str_esign1
-        p.drawImage(im,408, 55, height = 15, width = 80 , mask='auto')
+        p.drawImage(im,408, 74, height = 15, width = 80 , mask='auto')
 
     elif sit =="UPLOAD":  
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ sit_str_upload1
-        p.drawImage(im,408, 58, height = 15, width = 80 , mask='auto')
+        p.drawImage(im,408, 74, height = 15, width = 80 , mask='auto')
     else:
-        p.drawString(258, 50, "APPROVED *Required Live Signature")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1,0,0)
+        p.setFont("Helvetica", 5.5)
+        p.drawString(258, 74, "APPROVED *Required Live Signature")
+        
+       
         
 
     for line in lines:
@@ -915,27 +919,28 @@ def clearance_print(request, id):
 
     lines = []
 
-    p.drawString(80, 755, f'{content.name}')
-    p.drawString(400, 755, f'{content.date_filed}')
     p.setFont("Helvetica", 9)
-    p.drawString(130, 710, f'{content.present_address}')
+    p.drawString(80, 733, f'{content.name}')
+    p.drawString(400, 733, f'{content.date_filed}')
+    p.setFont("Helvetica", 7)
+    p.drawString(130, 690, f'{content.present_address}')
     p.setFont("Helvetica", 10)
-    p.drawString(150, 681, f'{content.date_admitted_in_tup}')
-    p.drawString(120, 655, f'{content.course}')
-    # p.drawString(180, 629, f'{content.highschool_graduated}')
+    p.drawString(150, 663, f'{content.date_admitted_in_tup}')
+    p.drawString(120, 640, f'{content.course}')
+    
     
     hs_grad = content.highschool_graduated
     num=len(hs_grad.split())
     
     if num > 3:
-        p.setFont("Helvetica", 9)
+        p.setFont("Helvetica", 7)
         result =' '.join(hs_grad.split()[:3])
-        p.drawString(180, 629, f"""{result}""")
+        p.drawString(180, 610, f"""{result}""")
         result1 =' '.join(hs_grad.split()[3:])
-        p.drawString(43, 605, f"""{result1}""")
+        p.drawString(43, 587, f"""{result1}""")
     else: 
         p.setFont("Helvetica", 9)
-        p.drawString(180, 629, f'{content.highschool_graduated}')
+        p.drawString(180, 610, f'{content.highschool_graduated}')
         
     
         
@@ -944,51 +949,49 @@ def clearance_print(request, id):
     last_term = content.last_term_in_tupc
     num_term  = content.number_of_terms_in_tupc
     prev_date = content.date_of_previously_requested_form
+    
+   
     if amount_paid != "0.00":
-        p.drawString(400, 681, f'{content.amount_paid}')
-        p.drawString(429, 655, f'{content.or_num}')
+       
+        p.drawString(400, 663, f'{content.amount_paid}')
+        p.drawString(429, 639, f'{content.or_num}')
     if num_term is not None:
-        p.drawString(217, 530, f'{content.number_of_terms_in_tupc}')
+        p.drawString(175, 535, f'{content.number_of_terms_in_tupc}')
     if prev_date is not None:    
-        p.drawString(183, 555, f'{content.date_of_previously_requested_form}')
+        p.drawString(210, 510, f'{content.date_of_previously_requested_form}')
     if last_term is not None:
-        p.drawString(430, 530, f'{content.last_term_in_tupc}')
+        p.drawString(429, 530, f'{content.last_term_in_tupc}')
         p.drawString(430, 505, f'{content.purpose_of_request_reason}')
 
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
-        p.drawString(208, 582, '✔')
-        p.drawString(183, 555, f'{content.year_graduated_in_tupc}')
+        p.drawString(163, 561, '✔')
+        p.drawString(178, 535, f'{content.year_graduated_in_tupc}')
     else:
-        p.drawString(270, 582, '✔')
+        p.drawString(220, 561, '✔')
 
     prev_form = content.have_previously_requested_form
     if prev_form == "YES":
-        p.drawString(428, 611, '✔')
-        p.drawString(380, 560, f'{content.date_of_previously_requested_form}')
+        p.drawString(384, 590, '✔')
+        p.drawString(375, 540, f'{content.date_of_previously_requested_form}')
         
     else:
-        p.drawString(490, 611, '✔')
+        p.drawString(415, 592, '✔')
 
     # purpose
     form_purpose = content.purpose_of_request
 
     if form_purpose == "Honorable Dismissal":
-        p.drawString(45, 436, '✔')
-    elif form_purpose == "Evaluation":
-        p.drawString(298, 434, '✔')
+        p.drawString(37, 415, '✔')
     elif form_purpose == "Transcript of Records":
-        p.drawString(45, 412, '✔')
-    elif form_purpose == "Re-Evaluation":
-        p.drawString(298, 412, '✔')
+        p.drawString(37, 385, '✔')
     elif form_purpose == "Diploma":
-        p.drawString(45, 390, '✔')
-    elif form_purpose == "Application for Graduation":
-        p.drawString(298, 390, '✔')
+        p.drawString(208, 415, '✔')
     elif form_purpose == "Certification":
-        p.drawString(45, 370, '✔')
+        p.drawString(208, 383, '✔')
     else:
-        p.drawString(400, 370, f'{content.purpose_of_request}')
+        p.drawString(287, 415, '✔')
+        p.drawString(400, 415, f'{content.purpose_of_request}')
 
 
 # signature
@@ -1004,7 +1007,7 @@ def clearance_print(request, id):
     esign_acc_sign = accountant.e_signature
     str_esign_acc = str(esign_acc_sign)
     
-    
+
     if acc_stat == "ESIGN":
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_acc
         p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
@@ -1017,11 +1020,11 @@ def clearance_print(request, id):
     else: 
         p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)      
-        p.drawString(130, 290, f"""{acc_name}""")
+        p.drawString(100, 298, f"""{acc_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(53, 283, "APPROVED *Required Live Signature")
-        
+        p.drawString(53, 292, "APPROVED *Required Live Signature")
+            
     
     
     # Liberal arts
@@ -1037,6 +1040,7 @@ def clearance_print(request, id):
     str_upload_dla = str(upload_dla_sign)
     esign_dla_sign = liberal_arts.e_signature
     str_esign_dla = str(esign_dla_sign)
+    
     
     
     
@@ -1147,6 +1151,7 @@ def clearance_print(request, id):
         str_upload_itdept = str(upload_itdept_sign)
         esign_itdept_sign = itdept_dept.e_signature
         str_esign_itdept = str(esign_itdept_sign)
+        
 
         if itdept_stat == "ESIGN":
             im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_itdept
@@ -1244,6 +1249,7 @@ def clearance_print(request, id):
     
     
     
+    
     if shop_stat == "ESIGN":
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_shop
         p.drawImage(im,435, 290, height = 15, width = 80 , mask='auto')
@@ -1256,10 +1262,10 @@ def clearance_print(request, id):
     else:       
         p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)
-        p.drawString(435, 290, f"""{shop_name}""")
+        p.drawString(435, 300, f"""{shop_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(320, 285, "APPROVED *Required Live Signature")
+        p.drawString(320, 290, "APPROVED *Required Live Signature")
     
     # # library
     p.setFont("Helvetica", 7)
@@ -1274,6 +1280,7 @@ def clearance_print(request, id):
     esign_lib_sign = lib_ad.e_signature
     str_esign_lib = str(esign_lib_sign)
     
+    
     if lib_stat == "ESIGN":
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_lib
         p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
@@ -1285,7 +1292,7 @@ def clearance_print(request, id):
     else:    
         p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0)   
-        p.drawString(425, 265, f"""{lib_name}""")
+        p.drawString(425, 269, f"""{lib_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(325, 260, "APPROVED *Required Live Signature")
@@ -1306,6 +1313,7 @@ def clearance_print(request, id):
     esign_guidance_sign = guidance.e_signature
     str_esign_guidance = str(esign_guidance_sign)
     
+    
     if guidance_stat == "ESIGN":
         im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_guidance
         p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
@@ -1318,10 +1326,10 @@ def clearance_print(request, id):
     else:      
         p.setFont("Helvetica", 5)
         p.setFillColorRGB(0,0,0) 
-        p.drawString(435, 240, f"""{guidance_name}""")
+        p.drawString(435, 244, f"""{guidance_name}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
-        p.drawString(325, 234, "APPROVED *Required Live Signature")
+        p.drawString(325, 238, "APPROVED *Required Live Signature")
     
     # osa
     p.setFont("Helvetica", 7)
@@ -1335,6 +1343,7 @@ def clearance_print(request, id):
     str_upload_osa = str(upload_osa_sign)
     esign_osa_sign = osa.e_signature
     str_esign_osa = str(esign_osa_sign)
+    p.setFont("Helvetica", 5)
     
     
     if osa_stat == "ESIGN":
@@ -1420,7 +1429,6 @@ def clearance_print(request, id):
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
-
 
 @login_required(login_url='/')
 def appointment(request, id, form):
