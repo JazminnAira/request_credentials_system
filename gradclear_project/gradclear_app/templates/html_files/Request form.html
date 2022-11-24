@@ -610,14 +610,6 @@ Adviser:
                     <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation" name="purpose_request_pre" value="Evaluation">
-                    <label class="form-check-label" for="inlineCheckbox6_pre">Evaluation</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Re_evaluation" name="purpose_request_pre" value="Re-Evaluation">
-                    <label class="form-check-label" for="inlineCheckbox6_pre">Re-Evaluation</label>
-                </div>
-                <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="">
                     <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
                     <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
@@ -635,7 +627,7 @@ Adviser:
                 <br>
             
             <!--LAST TERM OR SEMESTER ENROLLED-->
-            {% if request.user.user_type == "STUDENT" and allow != "UNAPPROVED" %}
+            {% if request.user.user_type == "STUDENT" and allow != "UNCLAIMED" %}
             <div class="form-group row" id="semester_notdisplay">
                 <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
                 <div class="col-sm-9">
@@ -643,6 +635,7 @@ Adviser:
                         <option value = "" select>--SELECT--</option>
                         <option value ="1">1st SEMESTER</option>
                         <option value ="2">2nd SEMESTER</option>
+                        <option value ="Midyear">MIDYEAR</option>
                     </select>
                 </div>
             </div>
@@ -760,7 +753,7 @@ Adviser:
     year = document.getElementById("year_graduated_pre").value;
     document.getElementById("year_graduated_check_pre").value = "ALUMNI: " + year;
 
-    if (document.getElementById('allow_request').value == "UNAPPROVED"){
+    if (document.getElementById('allow_request').value == "UNCLAIMED"){
         document.getElementById('HonorableDismissal_check_pre').disabled = true;
         document.getElementById('authentication_verification').disabled = true;
         document.getElementById('TranscriptofRecords_check_pre').disabled = true;
@@ -769,8 +762,6 @@ Adviser:
         document.getElementById('cav').disabled = true;
         document.getElementById('Certification_check_pre').disabled = true;
         document.getElementById('Others_check_pre').disabled = true;
-        document.getElementById('Evaluation').disabled = true;
-        document.getElementById('Re_evaluation').disabled = true;
         document.getElementById("purpose").disabled = true;
         document.getElementById('purpose').value = document.getElementById("display_pur_request").value
         document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
@@ -784,8 +775,6 @@ Adviser:
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if (requested_data == "Authentication/Verification"){
@@ -795,8 +784,6 @@ Adviser:
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if(requested_data == "Transcript of Records"){
@@ -806,8 +793,6 @@ Adviser:
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if(requested_data == "Subject Description"){
@@ -817,8 +802,6 @@ Adviser:
             document.getElementById('TranscriptofRecords_check_pre').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if(requested_data == "Diploma"){
@@ -828,8 +811,6 @@ Adviser:
             document.getElementById('TranscriptofRecords_check_pre').disabled = true;
             document.getElementById('subject_description').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if(requested_data == "CAV"){
@@ -839,30 +820,6 @@ Adviser:
             document.getElementById('TranscriptofRecords_check_pre').disabled = true;
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Evaluation"){
-            document.getElementById('Evaluation').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Re-Evaluation"){
-            document.getElementById('Re_evaluation').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
             document.getElementById('Certification_check_pre').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
         }else if(requested_data == "Certification"){
@@ -873,8 +830,6 @@ Adviser:
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
             document.getElementById('certification_box').disabled = true;
             document.getElementById('certification_box').hidden = false;
@@ -890,8 +845,6 @@ Adviser:
             document.getElementById('subject_description').disabled = true;
             document.getElementById('Diploma_check_pre').disabled = true;
             document.getElementById('cav').disabled = true;
-            document.getElementById('Evaluation').disabled = true;
-            document.getElementById('Re_evaluation').disabled = true;
             document.getElementById('Others_check_pre').disabled = true;
             document.getElementById('others_box_pre').disabled = true;
             document.getElementById('others_box_pre').hidden = false;
@@ -910,8 +863,6 @@ Adviser:
         document.getElementById('Certification_check_pre').disabled = false;
         document.getElementById('Others_check_pre').disabled = false;
         document.getElementById("purpose").disabled = false;
-        document.getElementById('Evaluation').disabled = false;
-        document.getElementById('Re_evaluation').disabled = false;
         document.getElementById("submit_btn_pre").textContent ="Submit";
     }
 
@@ -924,8 +875,6 @@ Adviser:
         document.getElementById('TranscriptofRecords_check_pre').checked = false;
         document.getElementById('subject_description').checked = false;
         document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById('cav').checked = false;
         document.getElementById('Others_check_pre').checked = false;
     });
@@ -937,9 +886,6 @@ Adviser:
         document.getElementById('HonorableDismissal_check_pre').checked = false;
         document.getElementById('authentication_verification').checked = false;
         document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById('Diploma_check_pre').checked = false;
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
@@ -953,8 +899,6 @@ Adviser:
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
     });
@@ -967,8 +911,6 @@ Adviser:
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
     });
@@ -980,8 +922,6 @@ Adviser:
         document.getElementById('Diploma_check_pre').checked = false;
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById('Others_check_pre').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
@@ -995,8 +935,6 @@ Adviser:
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
     });
@@ -1009,8 +947,6 @@ Adviser:
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
     });
@@ -1023,8 +959,6 @@ Adviser:
         document.getElementById('Diploma_check_pre').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =true;
         document.getElementById('certification_box').hidden =true;
     });
@@ -1037,8 +971,6 @@ Adviser:
         document.getElementById('Diploma_check_pre').checked = false;
         document.getElementById('cav').checked = false;
         document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById('certification_box').hidden =false;
         document.getElementById("others_box_pre").hidden =true;
     });
@@ -1051,39 +983,10 @@ Adviser:
         document.getElementById('Diploma_check_pre').checked = false;
         document.getElementById('cav').checked = false;
         document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
         document.getElementById("others_box_pre").hidden =false;
         document.getElementById('certification_box').hidden =true;
     });
 
-    Evaluation.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Re_evaluation').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Re_evaluation.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('Evaluation').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
 
     Certification_check_pre.addEventListener("change", function(){
         if(this.checked){
@@ -1149,21 +1052,6 @@ Adviser:
         }
     });
 
-    Evaluation.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "60.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    Re_evaluation.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "0.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
     
         // ONLY NUMBERS IN INPUT BOX JS
     function isNumber(evt) {

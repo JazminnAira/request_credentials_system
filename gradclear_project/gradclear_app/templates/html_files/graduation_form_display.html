@@ -728,12 +728,20 @@ Adviser:
                          <td>{{i.room1}}</td>
                          <td>{{i.faculty1}}</td>
                          <td class ="text-center">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type1 == "APPROVE" %}
                                 <label class="text-dark">{{subject_1}}</label>
                             {% elif subject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
                                 <img src="/Media/{{subject_1}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                            {% else %}
+                            {% if subject_1 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <label class =" text-dark">APPROVED</label>
+                            {% endif %}
                             {% endif %}
                         </td>
                             
@@ -747,12 +755,20 @@ Adviser:
                          <td>{{i.room2}}</td>
                          <td>{{i.faculty2}}</td>
                          <td class ="text-center">
-                            {% if signature_type2 == "APPROVE" %}
-                                <label class="text-dark">{{subject_2}}</label>
-                            {% elif subject_2 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type2 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_2}}</label>
+                                {% elif subject_2 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_2 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -765,12 +781,20 @@ Adviser:
                          <td>{{i.room3}}</td>
                          <td>{{i.faculty3}}</td>
                          <td class ="text-center">
-                            {% if signature_type3 == "APPROVE" %}
-                                <label class="text-dark">{{subject_3}}</label>
-                            {% elif subject_3 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type3 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_3}}</label>
+                                {% elif subject_3 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_3}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_3}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_3 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -783,12 +807,20 @@ Adviser:
                          <td>{{i.room4}}</td>
                          <td>{{i.faculty4}}</td>
                          <td class ="text-center">
-                            {% if signature_type4 == "APPROVE" %}
-                                <label class="text-dark">{{subject_4}}</label>
-                            {% elif subject_4 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type4 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_4}}</label>
+                                {% elif subject_4 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_4 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -801,12 +833,20 @@ Adviser:
                          <td>{{i.room5}}</td>
                          <td>{{i.faculty5}}</td>
                          <td class ="text-center">
-                            {% if signature_type5 == "APPROVE" %}
-                                <label class="text-dark">{{subject_5}}</label>
-                            {% elif subject_5 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type5 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_5}}</label>
+                                {% elif subject_5 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_5}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_5}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_5 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -819,12 +859,20 @@ Adviser:
                          <td>{{i.room6}}</td>
                          <td>{{i.faculty6}}</td>
                          <td class ="text-center">
-                            {% if signature_type6 == "APPROVE" %}
-                                <label class="text-dark">{{subject_6}}</label>
-                            {% elif subject_6 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type6 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_6}}</label>
+                                {% elif subject_6 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_6 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -837,12 +885,20 @@ Adviser:
                          <td>{{i.room7}}</td>
                          <td>{{i.faculty7}}</td>
                          <td class ="text-center">
-                            {% if signature_type7 == "APPROVE" %}
-                                <label class="text-dark">{{subject_7}}</label>
-                            {% elif subject_7 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type7 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_7}}</label>
+                                {% elif subject_7 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_7 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -855,12 +911,20 @@ Adviser:
                          <td>{{i.room8}}</td>
                          <td>{{i.faculty8}}</td>
                          <td class ="text-center">
-                            {% if signature_type8 == "APPROVE" %}
-                                <label class="text-dark">{{subject_8}}</label>
-                            {% elif subject_8 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type8 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_8}}</label>
+                                {% elif subject_8 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_8 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -873,12 +937,20 @@ Adviser:
                          <td>{{i.room9}}</td>
                          <td>{{i.faculty9}}</td>
                          <td class ="text-center">
-                            {% if signature_type9 == "APPROVE" %}
-                                <label class="text-dark">{{subject_9}}</label>
-                            {% elif subject_9 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type9 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_9}}</label>
+                                {% elif subject_9 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_9 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -891,12 +963,20 @@ Adviser:
                          <td>{{i.room10}}</td>
                          <td>{{i.faculty10}}</td>
                          <td class ="text-center">
-                            {% if signature_type10 == "APPROVE" %}
-                                <label class="text-dark">{{subject_10}}</label>
-                            {% elif subject_10 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type10 == "APPROVE" %}
+                                    <label class="text-dark">{{subject_10}}</label>
+                                {% elif subject_10 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{subject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{subject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if subject_10 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                         </td>
                     {% endif %}
@@ -926,12 +1006,20 @@ Adviser:
                          <td>{{i.addroom1}}</td>
                          <td>{{i.addfaculty1}}</td>
                          <td class ="text-center">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type11 == "APPROVE" %}
                                 <label class="text-dark">{{addsubject_1}}</label>
                             {% elif addsubject_1 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
                                 <img src="/Media/{{addsubject_1}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                            {% else %}
+                            {% if addsubject_1 == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                            {% else %}
+                                <label class="text-dark">APPROVED</label>
+                            {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -943,12 +1031,20 @@ Adviser:
                          <td>{{i.addroom2}}</td>
                          <td>{{i.addfaculty2}}</td>
                          <td class ="text-center">
-                            {% if signature_type12 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_2}}</label>
-                            {% elif addsubject_2 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type12 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_2}}</label>
+                                {% elif addsubject_2 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_2}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_2 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -960,12 +1056,20 @@ Adviser:
                          <td>{{i.addroom3}}</td>
                          <td>{{i.addfaculty3}}</td>
                          <td class ="text-center">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type13 == "APPROVE" %}
                                 <label class="text-dark">{{addsubject_3}}</label>
                             {% elif addsubject_3 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
                                 <img src="/Media/{{addsubject_3}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                            {% else %}
+                                {% if addsubject_3 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -977,12 +1081,20 @@ Adviser:
                          <td>{{i.addroom4}}</td>
                          <td>{{i.addfaculty4}}</td>
                          <td class ="text-center">
-                            {% if signature_type14 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_4}}</label>
-                            {% elif addsubject_4 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type14 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_4}}</label>
+                                {% elif addsubject_4 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_4}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_4 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -994,12 +1106,20 @@ Adviser:
                          <td>{{i.addroom5}}</td>
                          <td>{{i.addfaculty5}}</td>
                          <td class ="text-center">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type15 == "APPROVE" %}
                                 <label class="text-dark">{{addsubject_5}}</label>
                             {% elif addsubject_5 == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
                             {% else %}
                                 <img src="/Media/{{addsubject_5}}" style ="height:50px; width:120px;" alt="APPROVED">
+                            {% endif %}
+                            {% else %}
+                                {% if addsubject_5 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1011,12 +1131,20 @@ Adviser:
                          <td>{{i.addroom6}}</td>
                          <td>{{i.addfaculty6}}</td>
                          <td class ="text-center">
-                            {% if signature_type16 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_6}}</label>
-                            {% elif addsubject_6 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type16 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_6}}</label>
+                                {% elif addsubject_6 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_6}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_6 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1028,12 +1156,20 @@ Adviser:
                          <td>{{i.addroom7}}</td>
                          <td>{{i.addfaculty7}}</td>
                          <td class ="text-center">
-                            {% if signature_type17 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_7}}</label>
-                            {% elif addsubject_7 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type17 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_7}}</label>
+                                {% elif addsubject_7 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_7}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_7 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1045,12 +1181,20 @@ Adviser:
                          <td>{{i.addroom8}}</td>
                          <td>{{i.addfaculty8}}</td>
                          <td class ="text-center">
-                            {% if signature_type18 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_8}}</label>
-                            {% elif addsubject_8 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type18 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_8}}</label>
+                                {% elif addsubject_8 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_8}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_8 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1062,12 +1206,20 @@ Adviser:
                          <td>{{i.addroom9}}</td>
                          <td>{{i.addfaculty9}}</td>
                          <td class ="text-center">
-                            {% if signature_type19 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_9}}</label>
-                            {% elif addsubject_9 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type19 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_9}}</label>
+                                {% elif addsubject_9 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_9}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_9 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1079,12 +1231,20 @@ Adviser:
                          <td>{{i.addroom10}}</td>
                          <td>{{i.addfaculty10}}</td>
                          <td class ="text-center">
-                            {% if signature_type20 == "APPROVE" %}
-                                <label class="text-dark">{{addsubject_10}}</label>
-                            {% elif addsubject_10 == "UNAPPROVED" %}
-                                <label class="text-dark">UNAPPROVED</label>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type20 == "APPROVE" %}
+                                    <label class="text-dark">{{addsubject_10}}</label>
+                                {% elif addsubject_10 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <img src="/Media/{{addsubject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% endif %}
                             {% else %}
-                                <img src="/Media/{{addsubject_10}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                {% if addsubject_10 == "UNAPPROVED" %}
+                                    <label class="text-dark">UNAPPROVED</label>
+                                {% else %}
+                                    <label class="text-dark">APPROVED</label>
+                                {% endif %}
                             {% endif %}
                          </td>
                     </tr>
@@ -1096,30 +1256,12 @@ Adviser:
                 <label for="Esum/Esem" id="Esum/Esem_lbl_43" class="my-1 mr-4"><b>A. Enrolled this Semester/Summer: </b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
 
                 <input type="text" id="enrolledthsisem_box_43" name="ersem_box_43" value = "{{i.enrolled_term}}" class="form-control mx-sm-2" oninput="enter_enroll()" placeholder="Semester /Summer" onkeypress="isNumber(event)" disabled>
-
-                {% if i.status == "YES" %}
-                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" checked disabled>Yes
-                </label>
-
-                <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" disabled>No
-                </label>
-                {% else %}
-                <label class="my-1 mr-2" id="yes_lbl_43" class="form-check-label">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="YES" id="yes_radio_43"   oninput="enter_deadline()"  onclick="EnableDisableEnrolled();" disabled>Yes
-                </label>
-
-                <label class="my-1 mr-2" class="form-control">
-                    <input class="my-1 mr-2" type="radio" name="enrolled_option" value="NO" id="no_radio_43"   oninput="enter_enroll()"  onclick="EnableDisableDeadline();" checked disabled>No
-                </label>
-                {% endif %}
                 </div>
 
                <!--DEADLINE BOX-->
                <div class="form-inline">
                     <label for="name" class="col-form-label my-1">If no, file your application papers. Deadline:</label>
-                    <input type="date" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled >
+                    <input type="text" id="deadline_box_43" name="deadline_box_43" value="{{i.unenrolled_application_deadline}}" disabled class="form-control my-1 mr-4" oninput="enter_deadline()" disabled >
                </div><br>
 
 
@@ -1142,24 +1284,33 @@ Adviser:
                <div class="form-inline">
                     <label for="name" class="col-sm-0 col-form-label col-form-label-mb" id="noIns_lbl_43">2. Name of Instructor Assigned on your SIT:
                     <div align="center">
-                        {% if sit_type == "APPROVE" %}
-                            <label class="text-dark">{{sit}}</label>
-                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
-                        {% elif sit == "UNAPPROVED" %}
-                            <label class="text-dark">UNAPPROVED</label>
-                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
-                        {% elif sit == "NONE" %}
-                            <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
+                        {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                            {% if sit_type == "APPROVE" %}
+                                <label class="text-dark">{{sit}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% elif sit == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% elif sit == "NONE" %}
+                                <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
+                            {% else %}
+                                <img src="/Media/{{sit}}" style ="height:50px; width:120px;" alt="APPROVED">
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% endif %}
                         {% else %}
-                            <img src="/Media/{{sit}}" style ="height:50px; width:120px;" alt="APPROVED">
-                            <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% if sit == "UNAPPROVED" %}
+                                <label class="text-dark">UNAPPROVED</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% elif sit == "NONE" %}
+                                <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
+                            {% else %}
+                                <label class ="text-dark"> APPROVED </label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                            {% endif %}
                         {% endif %}
                     </div></label>
                </div>
 
-
-             
-         zz
           </form>
     {% endfor %}
     </div>

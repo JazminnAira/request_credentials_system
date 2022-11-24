@@ -608,26 +608,26 @@ Adviser:
             <div class="form-group row">
                 <label for="dygt_42" class="col-sm-3 col-form-label col-form-label-sm" id="dygt_lbl_42">Did you graduate at TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
-                    {% if i.tupc_graduate == "NO" %}
+                    {% if i.tupc_graduate == "YES" %}
+                    <label class="radio-inline">
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" checked disabled>Yes
+                    </label>
+                    <label class="radio-inline">
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
+                    </label>
+                    {% else %}
                     <label class="radio-inline">
                     <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" disabled>Yes
                     </label>
                     <label class="radio-inline">
-                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" checked disabled>No
-                    </label>
-                    {% else %}
-                    <label class="radio-inline">
-                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()"checked disabled>Yes
-                    </label>
-                    <label class="radio-inline">
-                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
+                    <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()"checked disabled>No
                     </label>
                     {% endif %}
                     <p id="tupcans_error_42"></p>
                 </div>
             </div>
 
-            <!--HIGHSCHOOL GRADUATED DATE BOX-->
+            <!--TUPC GRADUATED DATE BOX-->
             <div class="form-group row">
                 <label for="iypitd_42" class="col-sm-2 col-form-label col-form-label-sm" id="dfiled_lbl3_42">If yes please indicate the date :</label>
                 <div class="col-sm-9">
@@ -743,17 +743,6 @@ Adviser:
                     <label class="form-check-label" for="inlineCheckbox1_42">Honorable Dismissal</label>
                 </div>
                 {% endif %}
-                {% if i.purpose_of_request == "Evaluation" %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation" checked >
-                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
-                </div>
-                {% else %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Evaluation_check_42" name="purpose_request_420" disabled value="Evaluation" >
-                    <label class="form-check-label" for="inlineCheckbox2_42">Evaluation</label>
-                </div>
-                {% endif %}
                 {% if i.purpose_of_request == "Transcript of Records" %}
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_42" name="purpose_request_420" disabled value="Transcript of Records" checked>
@@ -763,17 +752,6 @@ Adviser:
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_42" name="purpose_request_420" disabled value="Transcript of Records">
                     <label class="form-check-label" for="inlineCheckbox3_42">Transcript of Records</label>
-                </div>
-                {% endif %}
-                {% if i.purpose_of_request == "Re-Evaluation" %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" disabled value="Re-Evaluation" checked>
-                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
-                </div>
-                {% else %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="ReEvaluation_check_42" name="purpose_request_420" disabled value="Re-Evaluation">
-                    <label class="form-check-label" for="inlineCheckbox4_42">Re-Evaluation</label>
                 </div>
                 {% endif %}
                 {% if i.purpose_of_request == "Diploma" %}
@@ -844,36 +822,59 @@ Adviser:
                     <tr class="table-borderless">
                         <!--ACCOUNTANT-->
                         <th class="align-middle col-2"><label><b>Accountant:</b></label></th>
-                        <td class="align-middle col-4"> 
-                            {% if signature_type1 == "APPROVE" %}
-                                <label class="col-12 text-center">{{accountant}}</label>
-                                <br>
-                                <small class= "row">{{accountant_name}}</small>
-                            {% elif accountant == "UNAPPROVED" %}
-                                <label class = "col-12">UNAPPROVED</label>
-                            {% else %}
-                                <div class="text-center">
-                                    <img src ="/Media/{{accountant}}"  class = "responsive" alt="APPROVED">
+                        <td class="align-middle col-4">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %} 
+                                {% if signature_type1 == "APPROVE" %}
+                                    <label class="col-12 text-center">{{accountant}}</label>
                                     <br>
-                                    <small>{{accountant_name}}</small>
-                                </div>
+                                    <small class= "row">{{accountant_name}}</small>
+                                {% elif accountant == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <img src ="/Media/{{accountant}}"  class = "responsive" alt="APPROVED">
+                                        <br>
+                                        <small>{{accountant_name}}</small>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if accountant == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{accountant_name}}</small>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         </td>
                         <!--COURSE ADVISER-->
                         <th class="align-middle col-2"><label><b>Course/Shop Adviser:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if signature_type2 == "APPROVE" %}
-                                <label class = "col-12 text-center">{{course_adviser}}</label>
-                                <br>  
-                                <small>{{adviser_name}}</small>
-                            {% elif course_adviser == "UNAPPROVED" %}
-                                <label class = "col-12">UNAPPROVED</label>
-                            {% else %}
-                                <div class="text-center">
-                                    <img src ="/Media/{{course_adviser}}" class = "responsive" alt="APPROVED">
-                                    <br>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %} 
+                                {% if signature_type2 == "APPROVE" %}
+                                    <label class = "col-12 text-center">{{course_adviser}}</label>
+                                    <br>  
                                     <small>{{adviser_name}}</small>
-                                </div>
+                                {% elif course_adviser == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <img src ="/Media/{{course_adviser}}" class = "responsive" alt="APPROVED">
+                                        <br>
+                                        <small>{{adviser_name}}</small>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if course_adviser == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <br>
+                                        <small>{{adviser_name}}</small>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -881,36 +882,60 @@ Adviser:
                     <tr><!--LIBERAL ARTS-->
                         <th class="align-middle col-2"><label><b>Head of Liberal Arts:</b></label></th>
                         <td class="align-middle col-4"> 
-                            {% if signature_type3 == "APPROVE" %}
-                                <label class=" col-12 text-center">{{liberal_arts}}</label>
-                                <br>
-                                <small class= "row">{{liberal_artsName}}</small>
-                            {% elif liberal_arts == "UNAPPROVED" %}
-                                <label class = "col-12">UNAPPROVED</label>
-                            {% else %}
-                                <div class="text-center">
-                                    <img src ="/Media/{{liberal_arts}}"  class = "responsive" alt="APPROVED">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %} 
+                                {% if signature_type3 == "APPROVE" %}
+                                    <label class=" col-12 text-center">{{liberal_arts}}</label>
                                     <br>
-                                    <small>{{liberal_artsName}}</small>
-                                </div>
+                                    <small class= "row">{{liberal_artsName}}</small>
+                                {% elif liberal_arts == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <img src ="/Media/{{liberal_arts}}"  class = "responsive" alt="APPROVED">
+                                        <br>
+                                        <small>{{liberal_artsName}}</small>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if liberal_arts == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <br>
+                                        <small>{{liberal_artsName}}</small>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         </td>
 
                         <!--CAMPUS LIBRARIAN-->
                         <th class="align-middle col-2"><label><b>Campus Librarian:</b></label></th>
                         <td class="align-middle col-4">
-                            {% if signature_type4 == "APPROVE" %}
-                                <label class = "col-12 text-center">{{campus_library}}</label>
-                                <br>  
-                                <small>{{librarian_name}}</small>
-                            {% elif campus_library == "UNAPPROVED" %}
-                                <label class = "col-12">UNAPPROVED</label>
-                            {% else %}
-                                <div class="text-center">
-                                    <img src ="/Media/{{campus_library}}" class = "responsive" alt="APPROVED">
-                                    <br>
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                {% if signature_type4 == "APPROVE" %}
+                                    <label class = "col-12 text-center">{{campus_library}}</label>
+                                    <br>  
                                     <small>{{librarian_name}}</small>
-                                </div>
+                                {% elif campus_library == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <img src ="/Media/{{campus_library}}" class = "responsive" alt="APPROVED">
+                                        <br>
+                                        <small>{{librarian_name}}</small>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                {% if campus_library == "UNAPPROVED" %}
+                                    <label class = "col-12">UNAPPROVED</label>
+                                {% else %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <br>
+                                        <small>{{librarian_name}}</small>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -918,6 +943,7 @@ Adviser:
                     <tr><!--MATH AND SCIENCES-->
                         <th class="align-middle col-2"><label><b>Head of Math and Sciences:</b></label></th>
                         <td class="align-middle col-4"> 
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type5 == "APPROVE" %}
                                 <label class=" col-12 text-center">{{math_and_science}}</label>
                                 <br>
@@ -931,11 +957,23 @@ Adviser:
                                     <small>{{math_and_science_name}}</small>
                                 </div>
                             {% endif %}
+                            {% else %}
+                            {% if math_and_science == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class ="col-12 text-dark">APPROVED</label>
+                                    <br>
+                                    <small>{{math_and_science_name}}</small>
+                                </div>
+                            {% endif %}
+                            {% endif %}
                         </td>
 
                         <!--GUIDANCE COUNCELOR-->
                         <th class="align-middle col-2"><label><b>Guidance Councelor:</b></label></th>
                         <td class="align-middle col-4">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type6 == "APPROVE" %}
                                 <label class = "col-12 text-center">{{guidance}}</label>
                                 <br>  
@@ -949,12 +987,24 @@ Adviser:
                                     <small>{{guidance_councelor}}</small>
                                 </div>
                             {% endif %}
+                            {% else %}
+                            {% if guidance == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class ="col-12 text-dark">APPROVED</label>
+                                    <br>
+                                    <small>{{guidance_councelor}}</small>
+                                </div>
+                            {% endif %}
+                            {% endif %}
                         </td>
                     </tr>
 
                     <tr><!--DPECS-->
                         <th class="align-middle col-2"><label><b>Head of DPECS:</b></label></th>
                         <td class="align-middle col-4"> 
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type7 == "APPROVE" %}
                                 <label class="col-12 text-center">{{dpecs}}</label>
                                 <br>
@@ -968,11 +1018,23 @@ Adviser:
                                     <small>{{dpecs_name}}</small>
                                 </div>
                             {% endif %}
+                            {% else %}
+                            {% if dpecs == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class ="text-dark col-12">APPROVED</label>
+                                    <br>
+                                    <small>{{dpecs_name}}</small>
+                                </div>
+                            {% endif %}
+                            {% endif %}
                         </td>
 
                         <!--HEAD OF STUDENT AFFAIRS-->
                         <th class="align-middle col-2"><label><b>Head of Student Affairs:</b></label></th>
                         <td class="align-middle col-4">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type8 == "APPROVE" %}
                                 <label class = "col-12 text-center">{{osa}}</label>
                                 <br>  
@@ -986,6 +1048,17 @@ Adviser:
                                     <small>{{osa_name}}</small>
                                 </div>
                             {% endif %}
+                            {% else %}
+                            {% if osa == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                    <br>
+                                    <small>{{osa_name}}</small>
+                                </div>
+                            {% endif %}
+                            {% endif%}
                         </td>
                     </tr>
 
@@ -1001,6 +1074,7 @@ Adviser:
                                 Head of Industrial Technology/Industrial Education/Engineering:</b> 
                             {% endif %}</label></th>
                         <td class="align-middle col-4"> 
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type10 == "APPROVE" %}
                                 <label class="col-12 text-center">{{industrial}}</label>
                                 <br>
@@ -1014,11 +1088,23 @@ Adviser:
                                     <small>{{it_name}}</small>
                                 </div>
                             {% endif %}
+                            {% else %}
+                            {% if industrial == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class= " text-dark col-12">APPROVED</label>
+                                    <br>
+                                    <small>{{it_name}}</small>
+                                </div>
+                            {% endif %}
+                            {% endif %}
                         </td>
 
                         <!--ASST. DIR. FOR ACADEMIC AFFAIRS-->
                         <th class="align-middle col-2"><label><b>Asst. DIR. for Academic Affairs:</b></label></th>
                         <td class="align-middle col-4">
+                            {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type9 == "APPROVE" %}
                                 <label class = "col-12 text-center">{{adaa}}</label>
                                 <br>  
@@ -1031,6 +1117,21 @@ Adviser:
                                     <br>
                                     <small>{{adaa_name}}</small>
                                 </div>
+                            {% endif %}
+                            {% else %}
+                                {% if signature_type9 == "APPROVE" %}
+                                <label class = "col-12 text-center">{{adaa}}</label>
+                                <br>  
+                                <small>{{adaa_name}}</small>
+                            {% elif adaa == "UNAPPROVED" %}
+                                <label class = "col-12">UNAPPROVED</label>
+                            {% else %}
+                                <div class="text-center">
+                                    <label class =" text-dark col-12">APPROVED</label>
+                                    <br>
+                                    <small>{{adaa_name}}</small>
+                                </div>
+                            {% endif %}
                             {% endif %}
                         </td>
                     </tr>

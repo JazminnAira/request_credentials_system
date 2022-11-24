@@ -21,7 +21,6 @@ urlpatterns = [
      path('staff_signup', staff_registration, name='staff_signup'),
 
      # DETERMINER OF FILLING UP FORMS IN SIDEBAR
-     path('clearance_view', clearance_view, name='clearance_view'),
      path('graduation_view', graduation_view, name='graduation_view'),
 
       # FORMS BACK FOR REGISTRAR
@@ -29,7 +28,7 @@ urlpatterns = [
      path('regclear_back/<int:id>', regclear_back, name='regclear_back'),
 
      # FORMS
-     path('clearance_form/<str:type>/<str:req>', clearance_form, name='clearance_form'),
+     path('clearance_form/<str:req>', clearance_form, name='clearance_form'),
      path('graduation_form', graduation_form, name='graduation_form'),
      path('request_form', request_form, name="request_form"),
 

@@ -188,7 +188,7 @@ class clearance_form_table(models.Model):
     highschool_graduated = models.TextField(
         max_length=100, verbose_name="High School Graduated")
     tupc_graduate = models.CharField(
-        max_length=10, verbose_name="TUPC Graduate")
+        max_length=10, verbose_name="TUPC Graduate", null=True)
     year_graduated_in_tupc = models.CharField(max_length=20,
         verbose_name="Year Graduated", default="NONE", null=True)
     number_of_terms_in_tupc = models.IntegerField(
@@ -484,6 +484,7 @@ class request_form_table(models.Model):
     appointment = models.CharField(
         max_length=100, verbose_name="Appointment", default="NONE", null=True)
     or_num = models.CharField(max_length=50, blank=True ,null=True)
+    or_date = models.CharField(max_length=50, blank=True ,null=True, verbose_name="O.R Date")
     
     time_requested = models.DateTimeField(auto_now_add=True)
 
