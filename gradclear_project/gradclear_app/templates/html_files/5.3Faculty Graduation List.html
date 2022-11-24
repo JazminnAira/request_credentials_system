@@ -1044,70 +1044,6 @@ Adviser:
                                 <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
                                 {% endif %}
                                 
-                            {% if instance.addfaculty6 == request.user.full_name %}
-                                
-                                {% if instance.addsignature6 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), addsubject6(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">{{instance.addsubject6}}</button></td>
-                                {% elif instance.addsignature6 == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject6}}✔️</td>
-                                {% else %}
-                                <td>—</td>
-                                {% endif %}
-                                {% else %}
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
-                                {% endif %}
-                                
-                            {% if instance.addfaculty7 == request.user.full_name %}
-                                
-                                {% if instance.addsignature7 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), addsubject7(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">{{instance.addsubject7}}</button></td>
-                                {% elif instance.addsignature7 == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject7}}✔️</td>
-                                {% else %}
-                                <td>—</td>
-                                {% endif %}
-                                {% else %}
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
-                                {% endif %}
-                                
-                            {% if instance.addfaculty8 == request.user.full_name %}
-                                
-                                {% if instance.addsignature8 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), addsubject8(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">{{instance.addsubject8}}</button></td>
-                                {% elif instance.addsignature8 == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject8}}✔️</td>
-                                {% else %}
-                                <td>—</td>
-                                {% endif %}
-                                {% else %}
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
-                                {% endif %}
-                                
-                            {% if instance.addfaculty9 == request.user.full_name %}
-                                
-                                {% if instance.addsignature9 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), addsubject9(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">{{instance.addsubject9}}</button></td>
-                                {% elif instance.addsignature9 == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject9}}✔️</td>
-                                {% else %}
-                                <td>—</td>
-                                {% endif %}
-                                {% else %}
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
-                                {% endif %}
-                                
-                            {% if instance.addfaculty10 == request.user.full_name %}
-                                
-                                {% if instance.addsignature10 == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), addsubject10(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">{{instance.addsubject10}}</button></td>
-                                {% elif instance.addsignature10 == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.addsubject10}}✔️</td>
-                                {% else %}
-                                <td>—</td>
-                                {% endif %}
-                                {% else %}
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">—</td>
-                                {% endif %}
                         </tr>
 
                         
@@ -1370,26 +1306,6 @@ Adviser:
 
     function addsubject5(elem){
         document.getElementById('subject').value = "addsignature5";
-    };
-
-    function addsubject6(elem){
-        document.getElementById('subject').value = "addsignature6";
-    };
-
-    function addsubject7(elem){
-        document.getElementById('subject').value = "addsignature7";
-    };
-
-    function addsubject8(elem){
-        document.getElementById('subject').value = "addsignature8";
-    };
-
-    function addsubject9(elem){
-        document.getElementById('subject').value = "addsignature9";
-    };
-
-    function addsubject10(elem){
-        document.getElementById('subject').value = "addsignature10";
     };
 
     esign_attach_sig_btn.addEventListener("click", function() {

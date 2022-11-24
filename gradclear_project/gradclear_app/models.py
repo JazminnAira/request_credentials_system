@@ -386,41 +386,6 @@ class graduation_form_table(models.Model):
     add_starttime1_5 = models.TimeField(null=True, blank=True, default='00:00')
     add_endtime1_5 = models.TimeField( null=True, blank=True, default='00:00')
     addday1_5 = models.CharField(max_length=50,verbose_name="Add Day1_5", null=True, blank=True)
-
-    addsubject6 = models.CharField(max_length=50, verbose_name="Add Subject6", null=True, blank=True)
-    addroom6 = models.CharField(max_length=50, verbose_name="Add Room6", null=True, blank=True)
-    addfaculty6 = models.CharField(max_length=50, null=True, blank=True, choices=add_instructor)
-    add_starttime1_6 = models.TimeField(null=True, blank=True, default='00:00')
-    add_endtime1_6 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_6 = models.CharField(max_length=50, verbose_name="Add Day1_6", null=True, blank=True)
-
-    addsubject7 = models.CharField(max_length=50, verbose_name="Add Subject7", null=True, blank=True)
-    addroom7 = models.CharField(max_length=50, verbose_name="Add Room7", null=True, blank=True)
-    addfaculty7 = models.CharField(max_length=50, null=True, blank=True, choices=add_instructor)
-    add_starttime1_7 = models.TimeField(null=True, blank=True, default='00:00')
-    add_endtime1_7 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_7 = models.CharField(max_length=50, verbose_name="Add Day1_7", null=True, blank=True)
-
-    addsubject8 = models.CharField(max_length=50,verbose_name="Add Subject8", null=True, blank=True)
-    addroom8 = models.CharField(max_length=50,verbose_name="Add Room8", null=True, blank=True)
-    addfaculty8 = models.CharField(max_length=50, null=True, blank=True, choices=add_instructor)
-    add_starttime1_8 = models.TimeField(null=True, blank=True, default='00:00')
-    add_endtime1_8 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_8 = models.CharField(max_length=50, verbose_name="Add Day1_8", null=True, blank=True)
-
-    addsubject9 = models.CharField(max_length=50, verbose_name="Add Subject9", null=True, blank=True)
-    addroom9 = models.CharField(max_length=50, verbose_name="Add Room9", null=True, blank=True)
-    addfaculty9 = models.CharField(max_length=50, null=True, blank=True, choices=add_instructor)
-    add_starttime1_9 = models.TimeField(null=True, blank=True, default='00:00')
-    add_endtime1_9 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_9 = models.CharField(max_length=50, verbose_name="Add Day1_9", null=True, blank=True)
-
-    addsubject10 = models.CharField(max_length=50, verbose_name="Add Subject10", null=True, blank=True)
-    addroom10 = models.CharField(max_length=50, verbose_name="Add Room10", null=True, blank=True)
-    addfaculty10 = models.CharField(max_length=50, null=True, blank=True, choices=add_instructor)
-    add_starttime1_10 = models.TimeField(null=True, blank=True, default='00:00')
-    add_endtime1_10 = models.TimeField( null=True, blank=True, default='00:00')
-    addday1_10 = models.CharField(max_length=50, verbose_name="Add Day1_10", null=True, blank=True)
     
     trainP_startdate = models.CharField(max_length=30,verbose_name="Start", null=True, default="NONE")
     trainP_enddate = models.CharField(max_length=30,verbose_name="End", null=True, default="NONE")
@@ -444,11 +409,6 @@ class graduation_form_table(models.Model):
     addsignature3 = models.CharField(max_length=100)
     addsignature4 = models.CharField(max_length=100)
     addsignature5 = models.CharField(max_length=100)
-    addsignature6 = models.CharField(max_length=100)
-    addsignature7 = models.CharField(max_length=100)
-    addsignature8 = models.CharField(max_length=100)
-    addsignature9 = models.CharField(max_length=100)
-    addsignature10 = models.CharField(max_length=100)
 
     sitsignature = models.CharField(max_length=100)
     grad_notif = models.CharField(
