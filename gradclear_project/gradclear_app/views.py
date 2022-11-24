@@ -21,7 +21,6 @@ from reportlab.lib.colors import *
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse
-import my_csv, csv,  io
 from textwrap import wrap
 from django.db import connection
 import base64
