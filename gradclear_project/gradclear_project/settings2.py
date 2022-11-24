@@ -34,9 +34,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-66yny&_e3kz@(3nux544d*spq7e&@9hbqo7j&gd4d&qv!ry^gw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tupcaviteregistrar.site']
 
 
 # Application definition
@@ -90,10 +90,11 @@ WSGI_APPLICATION = 'gradclear_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gradclear_database',
-        'USER': 'root',
-        'PASSWORD': 'password',
+        'NAME': 'tupclget_gradclear_database',
+        'USER': 'tupclget_root',
+        'PASSWORD': 'chimkenflet2022',
         'HOST': 'localhost', 
+        'PORT': '3306',
         'OPTIONS': {"init_command": "SET foreign_key_checks = 0;",},
 
     }
@@ -133,13 +134,16 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 MEDIA_URL = '/Media/'
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'Media')
+MEDIA_ROOT = '/home/tupclget/public_html/Media'
+# STATIC_ROOT = 'gradclear_project/gradclear_app/static'
 
-STATIC_ROOT = 'gradclear_project/gradclear_app/static'
 # STATICFILES_DIRS = [os. path.join(BASE_DIR, 'static')]
 
+# deployment
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/tupclget/public_html/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
