@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
 import datetime
-from PIL import Image
 from distutils.command.upload import upload
 
 class user_table(AbstractUser):
