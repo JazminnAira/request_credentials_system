@@ -611,7 +611,7 @@ Adviser:
         document.getElementById("id_id_number").placeholder = "00-0000";
         document.getElementById("id_id_number").maxLength=7;
 
-        $("input").keyup(function(event){
+        $("input").on('keyup change', function(e) {
             var id_val = document.getElementById('id_id_number').value;
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
@@ -645,7 +645,7 @@ Adviser:
         document.getElementById("id_id_number").placeholder = "00-0000";
         document.getElementById("id_id_number").maxLength=7;
 
-        $("input").keyup(function(event){
+        $("input").on('keyup change', function(e) {
             var id_val = document.getElementById('id_id_number').value;
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
@@ -678,7 +678,7 @@ Adviser:
         document.getElementById("id_id_number").placeholder = "00-0000-00-000000";
 
 
-        $("input").keyup(function(event){
+        $("input").on('keyup change', function(e) {
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
 
@@ -712,7 +712,7 @@ Adviser:
         document.getElementById("id_id_number").maxLength=7;
 
 
-        $("input").keyup(function(event){
+        $("input").on('keyup change', function(e) {
             var id_val = document.getElementById('id_id_number').value;
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
@@ -743,7 +743,7 @@ Adviser:
         document.getElementById("id_id_number").placeholder = "00-000";
         document.getElementById("id_id_number").maxLength=6;
         
-        $("input").keyup(function(){
+        $("input").on('keyup change', function(e) {
             var id_val = document.getElementById('id_id_number').value;
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
