@@ -1,0 +1,1 @@
+from gradclear_project.wsgi import application
