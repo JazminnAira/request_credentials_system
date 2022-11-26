@@ -2106,7 +2106,6 @@ def student_dashboard(request):
         if check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
-                    print(check_form137_inrequest)
                     print('Missing FORM 137-A')
                     display.append("FORM 137-A")  
                 else:
@@ -5639,11 +5638,10 @@ def registrar_dashboard_student_list(request):
 @login_required(login_url='/')
 def registrar_dashboard_staff_list(request):
     # declaring template
-    template = "html_files/7.5Registrar Staff list.html"
     staff_data = user_table.objects.filter(Q(user_type='STAFF'))
         
     context = {'data':staff_data}
-    return render(request, template, context)
+    return render(request, 'html_files/7.5Registrar Staff List.html', context)
 
 #DELETE STUDENT/REQUESTER
 @login_required(login_url='/')
