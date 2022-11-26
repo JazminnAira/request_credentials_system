@@ -640,7 +640,7 @@ Adviser:
             <div id = "esignature_display" class = "m-2 mt-2 p-1" align="center">
             {% if e_signature %}
                 <div class = "bg-dark p-2" align="left"><h4 class = "text-white">CURRENT E-SIGNATURE:</h4></div>
-                <img src ="{{e_signature.url}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
+                <img src ="/Media/{{e_signature}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
             {% else %}
             <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT E-SIGNATURE</h4></div>
@@ -660,7 +660,7 @@ Adviser:
         <div id = "upload_signature_display" class = "p-3" align="center" hidden>
         {% if uploaded_signature %}
             <div class = "bg-dark p-2"><h4 class = "text-white" align="left">CURRENT UPLOADED SIGNATURE:</h4></div>
-            <img src ="{{uploaded_signature.url}}" id ="imgSaved" class="p-1 mt-3 w-75 border border-dark rounded" >
+            <img src ="/Media/{{uploaded_signature}}" id ="imgSaved" class="p-1 mt-3 w-75 border border-dark rounded" >
             <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>  
            
         {% else %}

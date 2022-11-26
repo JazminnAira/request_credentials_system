@@ -220,7 +220,7 @@ def req_print(request,id):
     buffer.seek(0)
     infos = PdfFileReader(buffer)
     clearance_pdf = PdfFileReader(open(
-        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Required_Forms.pdf', 'rb'))
+        r'../public_html/static/pdf/Required_Forms.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -229,11 +229,11 @@ def req_print(request,id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'wb')
+        r'../public_html/static/pdf/Request_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Request_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'../public_html/static/pdf/Request_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
         return response
@@ -303,11 +303,11 @@ def graduation_print(request, id):
         
 
         if stat_sig1 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign1
+            im = "../public_html/Media/" + str_esign1
             p.drawImage(im,252, 630, height = 15, width = 80 , mask='auto')
 
         elif stat_sig1 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload1
+            im = "../public_html/Media/"+ str_upload1
             p.drawImage(im,252, 630, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -342,10 +342,10 @@ def graduation_print(request, id):
         p.drawString(254, 602,f'{content.faculty2}')
 
         if stat_sig2 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign2
+            im = "../public_html/Media/" + str_esign2
             p.drawImage(im,254, 602, height = 15, width = 80 , mask='auto')
         elif stat_sig2 == "UPLOAD":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload2
+            im = "../public_html/Media/"+ str_upload2
             p.drawImage(im,254, 602, height = 13, width = 80 , mask='auto')
             
         else:
@@ -380,11 +380,11 @@ def graduation_print(request, id):
         
 
         if stat_sig3 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign3
+            im = "../public_html/Media/" + str_esign3
             p.drawImage(im,254, 585, height = 15, width = 80 , mask='auto')
 
         elif stat_sig3 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload3
+            im = "../public_html/Media/"+ str_upload3
             p.drawImage(im,254, 585, height = 15, width = 80 , mask='auto')
         else:
             
@@ -419,11 +419,11 @@ def graduation_print(request, id):
         p.drawString(254, 560,f'{content.faculty4}' )
         
         if stat_sig4 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign4
+            im = "../public_html/Media/" + str_esign4
             p.drawImage(im,254, 560, height = 15, width = 80 , mask='auto')
 
         elif stat_sig4 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload4
+            im = "../public_html/Media/"+ str_upload4
             p.drawImage(im,254, 560, height = 15, width = 80 , mask='auto')
         else:
             
@@ -458,11 +458,11 @@ def graduation_print(request, id):
         
         
         if stat_sig5 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign5
+            im = "../public_html/Media/" + str_esign5
             p.drawImage(im,254, 538, height = 15, width = 80 , mask='auto')
 
         elif stat_sig5 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload5
+            im = "../public_html/Media/"+ str_upload5
             p.drawImage(im,254, 538, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -499,11 +499,11 @@ def graduation_print(request, id):
         p.drawString(410, 512, "APPROVED *Required Live Signature")
         
         if stat_sig6 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign6
+            im = "../public_html/Media/" + str_esign6
             p.drawImage(im,254, 512, height = 15, width = 80 , mask='auto')
 
         elif stat_sig6 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload6
+            im = "../public_html/Media/"+ str_upload6
             p.drawImage(im,254, 512, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -538,11 +538,11 @@ def graduation_print(request, id):
         
         
         if stat_sig7 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign7
+            im = "../public_html/Media/" + str_esign7
             p.drawImage(im,254, 490, height = 15, width = 80 , mask='auto')
 
         elif stat_sig7 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload7
+            im = "../public_html/Media/"+ str_upload7
             p.drawImage(im,254, 490, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -575,11 +575,11 @@ def graduation_print(request, id):
         p.drawString(254, 470,f'{content.faculty8}' )
         
         if stat_sig8 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign8
+            im = "../public_html/Media/" + str_esign8
             p.drawImage(im,254, 470, height = 15, width = 80 , mask='auto')
 
         elif stat_sig8 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload8
+            im = "../public_html/Media/"+ str_upload8
             p.drawImage(im,254, 470, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -612,11 +612,11 @@ def graduation_print(request, id):
         p.drawString(254, 447,f'{content.faculty9}' )
         
         if stat_sig9 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign9
+            im = "../public_html/Media/" + str_esign9
             p.drawImage(im,254, 447, height = 15, width = 80 , mask='auto')
 
         elif stat_sig1 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload9
+            im = "../public_html/Media/"+ str_upload9
             p.drawImage(im,254, 447, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -648,11 +648,11 @@ def graduation_print(request, id):
         p.drawString(254, 425,f'{content.faculty10}')
         
         if stat_sig10 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + str_esign10
+            im = "../public_html/Media/" + str_esign10
             p.drawImage(im,254, 425, height = 15, width = 80 , mask='auto')
 
         elif stat_sig10 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ str_upload10
+            im = "../public_html/Media/"+ str_upload10
             p.drawImage(im,254, 425, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -686,11 +686,11 @@ def graduation_print(request, id):
         p.drawString(254, 252,f'{content.addfaculty1}')
         
         if stat_addsig1 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign1
+            im = "../public_html/Media/" + add_str_esign1
             p.drawImage(im,254, 252, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig1 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload1
+            im = "../public_html/Media/"+ add_str_upload1
             p.drawImage(im,254, 252, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -722,11 +722,11 @@ def graduation_print(request, id):
         p.drawString(254, 240,f'{content.addfaculty2}' )
         
         if stat_addsig2 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign2
+            im = "../public_html/Media/" + add_str_esign2
             p.drawImage(im,254, 238, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig2 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload2
+            im = "../public_html/Media/"+ add_str_upload2
             p.drawImage(im,254, 238, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -758,11 +758,11 @@ def graduation_print(request, id):
         p.drawString(254, 224,f'{content.addfaculty3}')
         
         if stat_addsig3 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign3
+            im = "../public_html/Media/" + add_str_esign3
             p.drawImage(im,254, 224, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig3 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload3
+            im = "../public_html/Media/"+ add_str_upload3
             p.drawImage(im,254, 224, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -795,11 +795,11 @@ def graduation_print(request, id):
         p.drawString(254, 210,f'{content.addfaculty4}')
         
         if stat_addsig4 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign4
+            im = "../public_html/Media/" + add_str_esign4
             p.drawImage(im,254, 210, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig4 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload4
+            im = "../public_html/Media/"+ add_str_upload4
             p.drawImage(im,254, 210, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -829,11 +829,11 @@ def graduation_print(request, id):
         p.drawString(254, 196,f'{content.addfaculty5}')
         
         if stat_addsig5 == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + add_str_esign5
+            im = "../public_html/Media/" + add_str_esign5
             p.drawImage(im,254, 196, height = 15, width = 80 , mask='auto')
 
         elif stat_addsig5 =="UPLOAD":  
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ add_str_upload5
+            im = "../public_html/Media/"+ add_str_upload5
             p.drawImage(im,254, 196, height = 15, width = 80 , mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
@@ -864,11 +864,11 @@ def graduation_print(request, id):
         
    
     if sit == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\" + sit_str_esign1
+        im = "../public_html/Media/" + sit_str_esign1
         p.drawImage(im,408, 74, height = 15, width = 80 , mask='auto')
 
     elif sit =="UPLOAD":  
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+ sit_str_upload1
+        im = "../public_html/Media/"+ sit_str_upload1
         p.drawImage(im,408, 74, height = 15, width = 80 , mask='auto')
     else:
         p.setFont("Helvetica", 5.5)
@@ -889,7 +889,7 @@ def graduation_print(request, id):
     # Merging 2 Pdfs
     buffer.seek(0)
     infos = PdfFileReader(buffer)
-    clearance_pdf = PdfFileReader(open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form.pdf', 'rb'))
+    clearance_pdf = PdfFileReader(open(r'../public_html/static/pdf/Graduation_form.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -898,11 +898,11 @@ def graduation_print(request, id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:/Users/Acer/request_credentials_system/gradclear_project/gradclear_app/static/pdf/Graduation_form_Generated.pdf', 'wb')
+        r'../public_html/static/pdf/Graduation_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'../public_html/static/pdf/Graduation_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
@@ -1009,12 +1009,12 @@ def clearance_print(request, id):
     
 
     if acc_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_acc
+        im = "../public_html/Media/"+str_esign_acc
         p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
 
     elif acc_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_acc
+        im = "../public_html/Media/"+str_upload_acc
         p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
 
     else: 
@@ -1045,12 +1045,12 @@ def clearance_print(request, id):
     
     
     if dla_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dla
+        im = "../public_html/Media/"+str_esign_dla
         p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
 
     elif dla_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dla
+        im = "../public_html/Media/"+str_upload_dla
         p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
 
     else:
@@ -1080,12 +1080,12 @@ def clearance_print(request, id):
     
     if dms_stat == "ESIGN":
 
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_dms
+        im = "../public_html/Media/"+str_esign_dms
         p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
 
     elif dms_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_dms
+        im = "../public_html/Media/"+str_upload_dms
         p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
 
     else:       
@@ -1114,12 +1114,12 @@ def clearance_print(request, id):
     
     
     if pe_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_pe
+        im = "../public_html/Media/"+str_esign_pe
         p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
 
     elif pe_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_pe
+        im = "../public_html/Media/"+str_upload_pe
         p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
 
     else:       
@@ -1154,12 +1154,12 @@ def clearance_print(request, id):
         
 
         if itdept_stat == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_itdept
+            im = "../public_html/Media/"+str_esign_itdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         elif itdept_stat == "UPLOAD":
             
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_itdept
+            im = "../public_html/Media/"+str_upload_itdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
@@ -1185,13 +1185,13 @@ def clearance_print(request, id):
         str_esign_educdept = str(esign_educdept_sign)
 
         if educdept_stat == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_educdept
+            im = "../public_html/Media/"+str_esign_educdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
             
 
         elif educdept_stat == "UPLOAD":
             
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_educdept
+            im = "../public_html/Media/"+str_upload_educdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
@@ -1217,13 +1217,13 @@ def clearance_print(request, id):
         str_esign_engdept = str(esign_engdept_sign)
 
         if engdept_stat == "ESIGN":
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_engdept
+            im = "../public_html/Media/"+str_esign_engdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
             
 
         elif engdept_stat == "UPLOAD":
             
-            im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_engdept
+            im = "../public_html/Media/"+str_upload_engdept
             p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
 
         else:      
@@ -1251,12 +1251,12 @@ def clearance_print(request, id):
     
     
     if shop_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_shop
+        im = "../public_html/Media/"+str_esign_shop
         p.drawImage(im,435, 290, height = 15, width = 80 , mask='auto')
 
     elif shop_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_shop
+        im = "../public_html/Media/"+str_upload_shop
         p.drawImage(im ,435, 290, height = 25, width = 80 , mask='auto')
 
     else:       
@@ -1282,11 +1282,11 @@ def clearance_print(request, id):
     
     
     if lib_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_lib
+        im = "../public_html/Media/"+str_esign_lib
         p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
 
     elif lib_stat == "UPLOAD":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_lib
+        im = "../public_html/Media/"+str_upload_lib
         p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
 
     else:    
@@ -1315,12 +1315,12 @@ def clearance_print(request, id):
     
     
     if guidance_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_guidance
+        im = "../public_html/Media/"+str_esign_guidance
         p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
 
     elif guidance_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_guidance
+        im = "../public_html/Media/"+str_upload_guidance
         p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
 
     else:      
@@ -1347,12 +1347,12 @@ def clearance_print(request, id):
     
     
     if osa_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_osa
+        im = "../public_html/Media/"+str_esign_osa
         p.drawImage(im ,455, 210, height = 25, width = 80 , mask='auto')
 
     elif osa_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_osa
+        im = "../public_html/Media/"+str_upload_osa
         p.drawImage(im ,455, 215, height = 25, width = 80 , mask='auto')
 
     else:       
@@ -1383,12 +1383,12 @@ def clearance_print(request, id):
     
     
     if adaa_stat == "ESIGN":
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_esign_adaa
+        im = "../public_html/Media/"+str_esign_adaa
         p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
 
     elif adaa_stat == "UPLOAD":
         
-        im = "C:\\Users\\Acer\\request_credentials_system\\gradclear_project\\Media\\"+str_upload_adaa
+        im = "../public_html/Media/"+str_upload_adaa
         p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
 
     else:       
@@ -1412,7 +1412,7 @@ def clearance_print(request, id):
     buffer.seek(0)
     infos = PdfFileReader(buffer)
     clearance_pdf = PdfFileReader(open(
-        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form.pdf', 'rb'))
+        r'../public_html/static/pdf/Clearance_form.pdf', 'rb'))
 
     info_page = clearance_pdf.getPage(0)
     info_page.mergePage(infos.getPage(0))
@@ -1421,11 +1421,11 @@ def clearance_print(request, id):
 
     output.addPage(info_page)
     to_merge = open(
-        r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'wb')
+        r'../public_html/static/pdf/Clearance_form_Generated.pdf', 'wb')
     output.write(to_merge)
     to_merge.close()
 
-    with open(r'C:\Users\Acer\request_credentials_system\gradclear_project\gradclear_app\static\pdf\Clearance_form_Generated.pdf', 'rb', ) as pdf:
+    with open(r'../public_html/static/pdf/Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
@@ -1978,6 +1978,7 @@ def alumnus_registration(request):
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
             year_graduated = form.cleaned_data.get("year_graduated")
+            id_num = form.cleaned_data.get("id_number")
             birthday = form.cleaned_data.get("birthday")
             birthdaym = birthday[:2]
             birthdayd = birthday[3:5]
@@ -2020,6 +2021,7 @@ def alumnus_registration(request):
         else:
             messages.error(
                 request, "There is an error with your form. Try again.")
+            messages.error(form.errors)
             print(form.errors) 
     img_object = form.instance
     user_identifier = "ALUMNUS"
@@ -5480,11 +5482,13 @@ def display_gradform(request, id):
 def registrar_dashboard_clearance_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         
-        if id == " ":
+        if id == "%20":
             all = clearance_form_table.objects.all()
             return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})
-        all = clearance_form_table.objects.filter(course=id).values()
-
+        else:    
+            string=id.replace('%20',' ')
+            all = clearance_form_table.objects.filter(course=string).values()
+            return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -5497,12 +5501,13 @@ def registrar_dashboard_clearance_list(request, id):
 def registrar_dashboard_graduation_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         
-        if id == " ":
+        if id == "%20":
             all = graduation_form_table.objects.all()
             all_list = graduation_form_table.objects.filter(approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
         else:
-            all =graduation_form_table.objects.filter(course=id)
+            string=id.replace('%20',' ')
+            all =graduation_form_table.objects.filter(course=string)
             all_list = graduation_form_table.objects.filter(course=id, approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
             
@@ -5899,15 +5904,15 @@ def update_clearance_signature(request, id):
         signature_timesaved = datetime.now()
         full_name = request.user.full_name
         
-        if create_signature =="":
+        if create_signature == "":
             if bool(uploaded_signature) == False:
                 messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
                 if recent_sig:
                     print(str(recent_sig))
-                    if os.path.exists("Media/" + str(recent_sig)):
-                        os.remove("Media/" + str(recent_sig))
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_sig))
                     else:
                         pass
                 else:
@@ -5930,8 +5935,8 @@ def update_clearance_signature(request, id):
             recent_sig = request.user.e_signature
             if recent_sig:
                     print(str(recent_sig))
-                    if os.path.exists("Media/" + str(recent_sig)):
-                        os.remove("Media/" + str(recent_sig))
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_sig))
                     else:
                         pass
             else:
@@ -5939,8 +5944,7 @@ def update_clearance_signature(request, id):
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
-            file_name = 'esignatures/' + full_name + '_APPROVED.png'
-
+            file_name = 'esignatures/' + full_name + str(datetime.now()) + '.png'
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
             
@@ -5959,21 +5963,21 @@ def update_grad_signature(request, id):
         signature_timesaved = datetime.now()
         full_name = request.user.full_name
         
-        if create_signature =="":
+        if create_signature == "":
             if bool(uploaded_signature) == False:
                 messages.error(request, "No New Signature Saved. Please Try Again.")
             else:
                 recent_sig = request.user.uploaded_signature
                 if recent_sig:
                     print(str(recent_sig))
-                    if os.path.exists("Media/" + str(recent_sig)):
-                        os.remove("Media/" + str(recent_sig))
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_sig))
                     else:
                         pass
                 else:
                     pass
                     
-                file_name ="uploaded signatures/"+ str(uploaded_signature)
+                file_name ="uploaded signatures/"+ str(datetime.now()) + str(uploaded_signature)
                         
                 fs = FileSystemStorage()
                         
@@ -5989,8 +5993,8 @@ def update_grad_signature(request, id):
             recent_sig = request.user.e_signature
             if recent_sig:
                 print(str(recent_sig))
-                if os.path.exists("Media/" + str(recent_sig)):
-                    os.remove("Media/" + str(recent_sig))
+                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
+                    os.remove('/home/tupclget/public_html/Media/' + str(recent_sig))
                 else:
                     pass
             else:
@@ -5998,8 +6002,9 @@ def update_grad_signature(request, id):
                     
             #save signature in the storage       
             image_decode = ContentFile(base64.b64decode(create_signature.replace('data:image/png;base64,','')))        
-            file_name = 'esignatures/' + full_name + '_APPROVED.png'
+            file_name = 'esignatures/' + full_name + str(datetime.now()) + '.png'
 
+            
             fs = FileSystemStorage()
             filename = fs.save(file_name, image_decode)
             
@@ -6116,8 +6121,8 @@ def student_status_update(request,id):
 
 @login_required(login_url='/')
 def school_year_update(request):
-    id_num = user_table.objects.filter( ~Q(year_and_section__startswith = "4") and Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
-    yands = user_table.objects.filter( ~Q(year_and_section__startswith = "4") and Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    id_num = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
+    yands = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
     
     for x,y in zip(yands,id_num):
         year_num = int(x[0]) + 1
@@ -6159,8 +6164,7 @@ def send_email_all(request):
     
     all_faculty_grad = list(graduation_form_table.objects.filter(time_requested__contains=date_today).all().values_list('faculty1', 'faculty2',
         'faculty3','faculty4','faculty5','faculty6','faculty7','faculty8','faculty9','faculty10',
-        'addfaculty1', 'addfaculty2','addfaculty3','addfaculty4','addfaculty5','addfaculty6','addfaculty7',
-        'addfaculty8','addfaculty9','addfaculty10', 'instructor_name').distinct())
+        'addfaculty1', 'addfaculty2','addfaculty3','addfaculty4','addfaculty5', 'instructor_name').distinct())
     print("thisss",all_faculty_grad)
     for i in all_faculty_grad:
         print("i",i)
@@ -6181,7 +6185,7 @@ def send_email_all(request):
             recipient_list.append(emails) 
 
     subject = 'Application Form Received'
-    message1 = 'Greetings! This email is to inform you that an application form has been sent to your account. Please check ' + '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' + 'for full details. Thank you!<br><br><br>'
+    message1 = 'Greetings! This email is to inform you that an application form has been sent to your account. Please check ' + '<a href="tupcaviteregistrar.site/">tupcaviteregistrar.site</a>' + ' for full details. Thank you!<br><br><br>'
     message2 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite<br><br><br>'
     message3 =  "<i>"+'***This is an automated message from the Office of the University Registrar, do not reply.<br><br>'+"</i>"
 
