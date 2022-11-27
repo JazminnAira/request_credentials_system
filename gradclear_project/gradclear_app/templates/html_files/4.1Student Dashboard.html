@@ -700,6 +700,41 @@ Adviser:
    
    }
 
+     /* RESPONSIVENESS */
+      @media screen and (max-width: 600px) {
+    #missing_document {
+        display: none;
+   
+
+    }
+    #missing {
+        width: 100%;
+        height: auto;
+        position: relative;
+       
+    }
+    /* #sidebar{
+        z-index: 9999;
+
+    } */
+
+}
+
+    @media screen and (max-width: 450px) {
+    #foot {
+        display: none;
+    }
+    #welcome{
+        font-size: 16px;
+    }
+    /* #Smodal_size {
+        width: 140px;
+        height: 100px;
+       
+    } */
+    
+}
+
 </style>
 
 
@@ -929,7 +964,7 @@ Adviser:
         <div class="row">
             <div class="col-8" style="height: 70px; margin-top: 100px;">
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
-                <h5 style="padding-left: 5px;">Welcome, {{request.user.first_name}}!</h5>
+                <h5 style="padding-left: 5px;" id="welcome">Welcome, {{request.user.first_name}}!</h5>
             </div>
             {% if display %}
             <div class = "col-3 bg-white border border-dark float-md-right ml-auto rounded-left mr-4 mt-2 p-2" id ="missing_document">
@@ -1051,7 +1086,7 @@ Adviser:
 </body>
 
 
-<footer>
+<footer id="foot">
     <div>
         <p>© Technological University of the Philippines-Cavite</p>
     </div>
