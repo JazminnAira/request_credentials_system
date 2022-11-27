@@ -52,7 +52,8 @@ import random
 #     time.sleep(1)
 #     pass
 
-
+def privacy_policy(request):
+    return render(request, 'html_files/privacy policy.html')
 @login_required(login_url='/')
 def req_print(request,id):
     buffer = BytesIO()

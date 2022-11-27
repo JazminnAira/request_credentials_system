@@ -12,6 +12,7 @@ urlpatterns = [
 
      # COVER
      path('cover', cover, name='cover'),
+     path('privacy_policy', privacy_policy, name='privacy_policy'),
 
      # USER SIGNUP
      path('alumnus_signup', alumnus_registration, name='alumnus_signup'),
