@@ -2872,8 +2872,9 @@ def faculty_dashboard_clearance_list_all(request):
                     id=int(i)).update(approval_status="APPROVED")
                 
                 name = name_temp[0]
+                requested= clearance_form_table.objects.filter(name=name).order_by('-time_requested').values_list('purpose_of_request', flat = True).distinct()
                 request_form_table.objects.filter(
-                    name=name).update(clearance="✔")
+                        name=name, request=requested[0]).update(clearance="✔")
                 
 
             messages.success(request, "Form Approved.")
@@ -3110,10 +3111,10 @@ def update_clearance(request, id, dep, sign):
         if approval_status_checker:
             clearance_form_table.objects.filter(
                         id=id).update(approval_status="APPROVED")
-            
             name = name_temp[0]
+            requested= clearance_form_table.objects.filter(name=name).order_by('-time_requested').values_list('purpose_of_request', flat = True).distinct()
             request_form_table.objects.filter(
-                        name=name).update(clearance="✔")
+                        name=name, request=requested[0]).update(clearance="✔")
             
         messages.success(request, "Form Approved.")
     else: 
