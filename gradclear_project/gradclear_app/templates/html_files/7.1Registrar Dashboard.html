@@ -1152,11 +1152,11 @@ Adviser:
     <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
-    {% if request.user.user_type == "REGISTRAR" %}
+    
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
-    {% endif %}
+    
     
     <a href="{% url 'send_email_all' %}"><i class="fa fa-paper-plane material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" ></span></i><span class="icon-text">Send Mail</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;"></span></a><br>
     
