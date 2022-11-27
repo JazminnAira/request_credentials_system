@@ -1185,9 +1185,10 @@ Adviser:
     <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
-    {% if request.user.user_type == "REGISTRAR" %}
+    
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
+    {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     {% endif %}
     
@@ -1389,7 +1390,7 @@ Adviser:
                                         <table class="table-responsive-sm">
                                             <div class="d-flex justify-content">
                                                 <div class="p-2 flex-fill " style="color: #000000;" id="uname_lbl_71">
-                                                     User Name: {{request.user.first_name}} {{request.user.middle_name}} {{request.user.last_name}} </div>
+                                                     User Name: {{request.user.first_name}} {{request.user.last_name}} </div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;"
                                                  id="edit_btn_71"><button class="btn btn-secondary btn-sm" 
                                                  type="submit">Edit<i class="fa fa-edit"></i></div>

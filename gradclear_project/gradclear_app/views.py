@@ -52,7 +52,8 @@ import random
 #     time.sleep(1)
 #     pass
 
-
+def privacy_policy(request):
+    return render(request, 'html_files/privacy policy.html')
 @login_required(login_url='/')
 def req_print(request,id):
     buffer = BytesIO()
@@ -1454,14 +1455,14 @@ def appointment(request, id, form):
                 student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
-            if gender_choice == "FEMALE":
+            if gender_choice == "Female":
                 gender_final = "Ms."
             else:
                 gender_final= "Mr." 
             
             faculty_gender = request.user.gender
             gender_fac=""
-            if faculty_gender == "FEMALE":
+            if faculty_gender == "Female":
                 gender_fac = "Ms."
             else:
                 gender_fac= "Mr."
@@ -1551,14 +1552,14 @@ def appointmentgrad(request, id, form):
                 student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
-            if gender_choice == "FEMALE":
+            if gender_choice == "Female":
                 gender_final = "Ms."
             else:
                 gender_final= "Mr."
             
             faculty_gender = request.user.gender
             gender_fac=""
-            if faculty_gender == "FEMALE":
+            if faculty_gender == "Female":
                 gender_fac = "Ms."
             else:
                 gender_fac= "Mr."
@@ -1631,7 +1632,7 @@ def reggrad_appointment(request, id):
         student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
-    if gender_choice == "FEMALE":
+    if gender_choice == "Female":
         gender_final = "Ms."
     else:
         gender_final= "Mr."
@@ -1682,7 +1683,7 @@ def regclear_appointment(request,id):
         student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
-    if gender_choice == "FEMALE":
+    if gender_choice == "Female":
         gender_final = "Ms."
     else:
         gender_final= "Mr."  
@@ -1728,7 +1729,7 @@ def request_appointment(request, id):
             student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
         gender_choice = gender[0]
         gender_final=""
-        if gender_choice == "FEMALE":
+        if gender_choice == "Female":
             gender_final = "Ms."
         else:
             gender_final= "Mr."  
@@ -1893,7 +1894,7 @@ def student_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again." )
+                request, form.errors )
             
     img_object = form.instance
     user_identifier = "STUDENT"
@@ -1931,7 +1932,7 @@ def oldstudent_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
     img_object = form.instance
     user_identifier = "OLD STUDENT"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
@@ -1965,7 +1966,7 @@ def faculty_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
     img_object = form.instance
     user_identifier = "FACULTY"
     context = {'form': form,'img_object': img_object, 'user': user_identifier}
@@ -2020,7 +2021,7 @@ def alumnus_registration(request):
            
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
             messages.error(form.errors)
             print(form.errors) 
     img_object = form.instance
@@ -2153,6 +2154,22 @@ def clearance_form(request, req):
         with_graduation = temp - sliced_id
         fullname = request.user.full_name
         print(with_graduation)
+        alumni_course_adviser = ""
+        
+        course = request.user.course_graduated
+        if course:
+            if course.startswith('BSIE-') or course.startswith('BTTE-'):
+                print("ded")
+                alumni_course_adviser = user_table.objects.filter(department="HDED").values_list('full_name', flat=True).distinct()           
+            elif course.startswith('BS-'):
+                print("doe")
+                alumni_course_adviser = user_table.objects.filter(department="HDOE").values_list('full_name', flat=True).distinct()            
+            else:
+                print("dit")
+                alumni_course_adviser = user_table.objects.filter(department="HDIT").values_list('full_name', flat=True).distinct()      
+            alumni_course_adviser = alumni_course_adviser[0]   
+        else:
+            pass
         
         user = request.user.user_type
         if request.method == "POST":
@@ -2185,24 +2202,31 @@ def clearance_form(request, req):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
-
+            
             unapproved = "UNAPPROVED"
             approved = "_APPROVED"
+            
             if course.startswith('BSIE-') or course.startswith('BTTE-'):
                 print("ded")
                 dit_signature = approved
                 doe_signature = approved
                 ded_signature = unapproved
+                     
+    
             elif course.startswith('BS-'):
                 print("doe")
                 dit_signature = approved
                 doe_signature = unapproved
                 ded_signature = approved
+                     
+    
             else:
                 print("dit")
                 dit_signature = unapproved
                 doe_signature = approved
                 ded_signature = approved
+                     
+    
             
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
@@ -2257,7 +2281,7 @@ def clearance_form(request, req):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'requested': requested, 'other_data' : other_data, 'year_then' : year_then, 'date_previous' : date_previous, 'purpose_then' : purpose_then})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'requested': requested, 'other_data' : other_data, 'year_then' : year_then, 'date_previous' : date_previous, 'purpose_then' : purpose_then, 'alumni_course_adviser': alumni_course_adviser})
 
         
 @login_required(login_url='/')
@@ -2645,7 +2669,7 @@ def faculty_dashboard(request):
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
                                                   Q(addsignature1=unapproved) | Q(addsignature2=unapproved) | Q(addsignature3=unapproved) |
-                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved)).order_by('-time_requested')
+                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(sitsignature=unapproved)).order_by('-time_requested')
         print(unapproved)
 
         if request.user.department == "HOCS":
@@ -2707,7 +2731,10 @@ def faculty_dashboard(request):
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
         
         with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name)  
-        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance })
+        depacc = request.user.department
+        if depacc.startswith('H'):
+            depacc= depacc[1:]
+        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance, 'depacc': depacc })
 
 
          
@@ -2725,9 +2752,12 @@ def faculty_dashboard_clearance_list_all(request):
         sig=""
         if request.method == "POST":
             sig = request.POST.get('sig')
-            ilist = request.POST.get('id_list')
+            templist = request.POST.get('id_list')
+            ilist = templist.split(',')
+            print("ilist", ilist)
             for i in ilist:
                 id_list.append(i)
+                print("this is i:", i)
             comma = ","
             while(comma in id_list):
                 id_list.remove(comma)
@@ -2846,8 +2876,9 @@ def faculty_dashboard_clearance_list_all(request):
                     id=int(i)).update(approval_status="APPROVED")
                 
                 name = name_temp[0]
+                requested= clearance_form_table.objects.filter(name=name).order_by('-time_requested').values_list('purpose_of_request', flat = True).distinct()
                 request_form_table.objects.filter(
-                    name=name).update(clearance="✔")
+                        name=name, request=requested[0]).update(clearance="✔")
                 
 
             messages.success(request, "Form Approved.")
@@ -3084,10 +3115,10 @@ def update_clearance(request, id, dep, sign):
         if approval_status_checker:
             clearance_form_table.objects.filter(
                         id=id).update(approval_status="APPROVED")
-            
             name = name_temp[0]
+            requested= clearance_form_table.objects.filter(name=name).order_by('-time_requested').values_list('purpose_of_request', flat = True).distinct()
             request_form_table.objects.filter(
-                        name=name).update(clearance="✔")
+                        name=name, request=requested[0]).update(clearance="✔")
             
         messages.success(request, "Form Approved.")
     else: 
@@ -3105,6 +3136,8 @@ def faculty_dashboard_graduation_list_all(request):
             if request.method == "POST":
                 sig = request.POST.get('sig')
                 ilist = request.POST.get('id_list')
+                templist = request.POST.get('id_list')
+                ilist = templist.split(',')
                 for i in ilist:
                     id_list.append(i)
                 comma = ","
@@ -5561,7 +5594,7 @@ def set_appointment(request, id):
 #FACULTY LIST
 @login_required(login_url='/')
 def registrar_dashboard_faculty_list(request):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
     
         all_faculty = user_table.objects.filter(user_type = "FACULTY")
         faculty_data = {
@@ -6113,7 +6146,8 @@ def student_status_update(request,id):
     id_year = year_id[2:]
     if student_update == "ALUMNUS":
         update_id = "TUPC-" + user_id+"-"+id_year+"-"+mbday+dbday+ybday
-        user_table.objects.filter(id=id).update(id_number = update_id)
+        update_idnum = user_id+"-"+id_year+"-"+mbday+dbday+ybday
+        user_table.objects.filter(id=id).update(id_number = update_idnum)
         user_table.objects.filter(id=id).update(student_id = update_id)
     
 
@@ -6121,17 +6155,23 @@ def student_status_update(request,id):
 
 @login_required(login_url='/')
 def school_year_update(request):
-    id_num = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
-    yands = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    id_num = user_table.objects.filter(~Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
+    yands = user_table.objects.filter(~Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    print("idNum:",id_num)
+    print("yands:", yands)
     
-    for x,y in zip(yands,id_num):
-        year_num = int(x[0]) + 1
+    for x in id_num:
+        year_num = user_table.objects.filter(id=x).values_list('year_and_section', flat=True).distinct()
+        
+        print("yearnum:", year_num)
+        year_num = year_num[0]
+        year_num = int(year_num[:1]) + 1
         if year_num == 2:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "2nd Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "2nd Year")
         elif year_num == 3:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "3rd Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "3rd Year")
         elif year_num == 4:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "4th Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "4th Year")
 
     return redirect(registrar_dashboard_student_list)
 
@@ -6195,6 +6235,9 @@ def send_email_all(request):
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
-    messages.success(request, "Email Sent.")
+    if not recipient_list :
+        messages.error(request, "No application forms to sign.")
+    else:
+        messages.success(request, "Email Sent.")
     
     return redirect('registrar_dashboard')
