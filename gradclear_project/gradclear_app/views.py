@@ -1894,7 +1894,7 @@ def student_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again." )
+                request, form.errors )
             
     img_object = form.instance
     user_identifier = "STUDENT"
@@ -1932,7 +1932,7 @@ def oldstudent_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
     img_object = form.instance
     user_identifier = "OLD STUDENT"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
@@ -1966,7 +1966,7 @@ def faculty_registration(request):
             return redirect('/')
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
     img_object = form.instance
     user_identifier = "FACULTY"
     context = {'form': form,'img_object': img_object, 'user': user_identifier}
@@ -2021,7 +2021,7 @@ def alumnus_registration(request):
            
         else:
             messages.error(
-                request, "There is an error with your form. Try again.")
+                request, form.errors)
             messages.error(form.errors)
             print(form.errors) 
     img_object = form.instance
