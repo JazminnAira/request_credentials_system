@@ -2707,7 +2707,10 @@ def faculty_dashboard(request):
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature = unapproved) | Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
         
         with_clearance = clearance_form_table.objects.filter(course_adviser=request.user.full_name)  
-        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance })
+        depacc = request.user.department
+        if depacc.startswith('H'):
+            depacc= depacc[1:]
+        return render(request, 'html_files/5.1Faculty Dashboard.html', {'st': st, 'st1':st1, 'with_clearance':with_clearance, 'depacc': depacc })
 
 
          
@@ -6200,6 +6203,9 @@ def send_email_all(request):
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
-    messages.success(request, "Email Sent.")
+    if not recipient_list :
+        messages.error(request, "No application forms to sign.")
+    else:
+        messages.success(request, "Email Sent.")
     
     return redirect('registrar_dashboard')
