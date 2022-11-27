@@ -5594,7 +5594,7 @@ def set_appointment(request, id):
 #FACULTY LIST
 @login_required(login_url='/')
 def registrar_dashboard_faculty_list(request):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
     
         all_faculty = user_table.objects.filter(user_type = "FACULTY")
         faculty_data = {
