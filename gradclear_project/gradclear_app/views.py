@@ -2153,6 +2153,19 @@ def clearance_form(request, req):
         with_graduation = temp - sliced_id
         fullname = request.user.full_name
         print(with_graduation)
+        alumni_course_adviser = ""
+        
+        course = request.user.course_graduated
+        if course.startswith('BSIE-') or course.startswith('BTTE-'):
+            print("ded")
+            alumni_course_adviser = user_table.objects.filter(department="HDED").values_list('full_name', flat=True).distinct()           
+        elif course.startswith('BS-'):
+            print("doe")
+            alumni_course_adviser = user_table.objects.filter(department="HDOE").values_list('full_name', flat=True).distinct()            
+        else:
+            print("dit")
+            alumni_course_adviser = user_table.objects.filter(department="HDIT").values_list('full_name', flat=True).distinct()      
+        alumni_course_adviser = alumni_course_adviser[0]   
         
         user = request.user.user_type
         if request.method == "POST":
@@ -2185,24 +2198,31 @@ def clearance_form(request, req):
             course_adviser_signature = request.POST.get('course_adviser_420') + "_UNAPPROVED"
             purpose_reason = request.POST.get('preq_box_420')
             purpose = request.POST.get('purpose_request_420')
-
+            
             unapproved = "UNAPPROVED"
             approved = "_APPROVED"
+            
             if course.startswith('BSIE-') or course.startswith('BTTE-'):
                 print("ded")
                 dit_signature = approved
                 doe_signature = approved
                 ded_signature = unapproved
+                     
+    
             elif course.startswith('BS-'):
                 print("doe")
                 dit_signature = approved
                 doe_signature = unapproved
                 ded_signature = approved
+                     
+    
             else:
                 print("dit")
                 dit_signature = unapproved
                 doe_signature = approved
                 ded_signature = approved
+                     
+    
             
             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
@@ -2257,7 +2277,7 @@ def clearance_form(request, req):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'requested': requested, 'other_data' : other_data, 'year_then' : year_then, 'date_previous' : date_previous, 'purpose_then' : purpose_then})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation':with_graduation, 'allow' : allow_request, 'requested': requested, 'other_data' : other_data, 'year_then' : year_then, 'date_previous' : date_previous, 'purpose_then' : purpose_then, 'alumni_course_adviser': alumni_course_adviser})
 
         
 @login_required(login_url='/')
