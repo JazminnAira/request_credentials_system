@@ -2157,16 +2157,19 @@ def clearance_form(request, req):
         alumni_course_adviser = ""
         
         course = request.user.course_graduated
-        if course.startswith('BSIE-') or course.startswith('BTTE-'):
-            print("ded")
-            alumni_course_adviser = user_table.objects.filter(department="HDED").values_list('full_name', flat=True).distinct()           
-        elif course.startswith('BS-'):
-            print("doe")
-            alumni_course_adviser = user_table.objects.filter(department="HDOE").values_list('full_name', flat=True).distinct()            
+        if course:
+            if course.startswith('BSIE-') or course.startswith('BTTE-'):
+                print("ded")
+                alumni_course_adviser = user_table.objects.filter(department="HDED").values_list('full_name', flat=True).distinct()           
+            elif course.startswith('BS-'):
+                print("doe")
+                alumni_course_adviser = user_table.objects.filter(department="HDOE").values_list('full_name', flat=True).distinct()            
+            else:
+                print("dit")
+                alumni_course_adviser = user_table.objects.filter(department="HDIT").values_list('full_name', flat=True).distinct()      
+            alumni_course_adviser = alumni_course_adviser[0]   
         else:
-            print("dit")
-            alumni_course_adviser = user_table.objects.filter(department="HDIT").values_list('full_name', flat=True).distinct()      
-        alumni_course_adviser = alumni_course_adviser[0]   
+            pass
         
         user = request.user.user_type
         if request.method == "POST":
@@ -6151,17 +6154,23 @@ def student_status_update(request,id):
 
 @login_required(login_url='/')
 def school_year_update(request):
-    id_num = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
-    yands = user_table.objects.filter( Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    id_num = user_table.objects.filter(~Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('id', flat=True).distinct()
+    yands = user_table.objects.filter(~Q(year_and_section__startswith = "4") , Q(user_type="STUDENT")).values_list('year_and_section', flat=True).distinct()
+    print("idNum:",id_num)
+    print("yands:", yands)
     
-    for x,y in zip(yands,id_num):
-        year_num = int(x[0]) + 1
+    for x in id_num:
+        year_num = user_table.objects.filter(id=x).values_list('year_and_section', flat=True).distinct()
+        
+        print("yearnum:", year_num)
+        year_num = year_num[0]
+        year_num = int(year_num[:1]) + 1
         if year_num == 2:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "2nd Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "2nd Year")
         elif year_num == 3:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "3rd Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "3rd Year")
         elif year_num == 4:
-            user_table.objects.filter(id=int(y)).update(year_and_section = "4th Year")
+            user_table.objects.filter(id=int(x)).update(year_and_section = "4th Year")
 
     return redirect(registrar_dashboard_student_list)
 
