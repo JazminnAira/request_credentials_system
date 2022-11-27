@@ -719,7 +719,7 @@ Adviser:
                         {% endfor %}</select>
                 </div>
             </div>
-            {% if request.user.user_type == "ALUMNUS" %}
+            {% if request.user.user_type == "ALUMNUS" or request.user.user_type  == "OLD STUDENT" %}
             <p style="color:#c51d3a">NOTE: If your Course Adviser is not on the list, choose <b>{{alumni_course_adviser}}</b> (Department Head)</p>
             {% endif %}
 
