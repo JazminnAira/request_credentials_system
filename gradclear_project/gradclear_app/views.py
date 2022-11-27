@@ -2665,7 +2665,7 @@ def faculty_dashboard(request):
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
                                                   Q(addsignature1=unapproved) | Q(addsignature2=unapproved) | Q(addsignature3=unapproved) |
-                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved)).order_by('-time_requested')
+                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(sitsignature=unapproved)).order_by('-time_requested')
         print(unapproved)
 
         if request.user.department == "HOCS":
