@@ -11,13 +11,11 @@ Adviser:
 
 <!DOCTYPE html>
 {% load static %}
-<html lang="eng">
-
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,10 +25,8 @@ Adviser:
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <title>Request Form</title>
-    {% load static %}
+    <title>Request Form List</title>
 
     <script type="text/javascript">
         function preventBack() {
@@ -41,26 +37,104 @@ Adviser:
             null
         };
     </script>
-    
+
 </head>
 
+
 <style>
-    .myDiv {
-        max-width: 900px;
-        width: 100%;
-        background: #e0e0e0;
-        border: 1px solid #000000;
-        margin: 20px auto;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 30px;
-        /* -webkit-print-color-adjust: exact; */
+    .table-icon {
+        background-color: #dedede;
+        color: #000;
+        align-content: center;
+    }
+
+    .table-i{
+        padding: 0%;
+    }
+
+    #unapproveds_77:hover, #approveds_77:hover{
+        background-color: #c51d3a;
+        color: #fff;
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
     }
     
-    #footer {
-        background: #424242;
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+
+    .results2 tr[visible='false'],
+    .no-result2 {
+        display: none;
     }
     
-    #backtotop_btn_pre {
+    .results2 tr[visible='true'] {
+        display: table-row;
+    }
+    
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+    
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+    
+    a {
+        font-style: italic;
+        color: #000;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    
+    #backtotop_btn_77 {
         display: inline-block;
         background-color: #E1A19D;
         width: 50px;
@@ -68,15 +142,15 @@ Adviser:
         text-align: center;
         border-radius: 4px;
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        transition: background-color .3s, opacity .5s, visibility .5s;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
         opacity: 0;
         visibility: hidden;
         z-index: 1000;
     }
     
-    #backtotop_btn_pre::after {
+    #backtotop_btn_77::after {
         content: "\f077";
         font-family: FontAwesome;
         font-weight: normal;
@@ -86,975 +160,584 @@ Adviser:
         color: #fff;
     }
     
-    #backtotop_btn_pre:hover {
+    #backtotop_btn_77:hover {
         cursor: pointer;
         background-color: #c51d3a;
     }
     
-    #backtotop_btn_pre:active {
+    #backtotop_btn_77:active {
         background-color: #555;
     }
     
-    #backtotop_btn_pre.show {
+    #backtotop_btn_77.show {
         opacity: 1;
         visibility: visible;
     }
     
-    @media print {
-        #backtotop_btn_pre {
-            display: none;
-        }
+    #list_tbl_77 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: auto;
+        width: 100%;
+        margin-bottom: 50px;
+        overflow-wrap: break-word;
     }
     
-    .note {
-        background-color: #e1a19d;
-        padding: 5px;
-        text-align: left;
-        font-size: 16px;
-    }
-    
-    h3 {
-        color: #ffff;
-        background-color: #c51d3a;
-        padding: 5px;
+    #list_tbl_77 td {
+        border-width: 1px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 2px 10px;
         text-align: center;
-        font-size: 16px;
+        vertical-align: middle;
+        overflow-wrap: break-word;
     }
     
-    label {
-        width: 240px;
+    #list_tbl2_77 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: auto;
+        width: 99%;
+    }
+    
+    #list_tbl2_77 td {
+        border-width: 1px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+    
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
         display: inline-block;
-        margin: 5px 10px 5px 0;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
     }
     
-    #receiptnum_box_pre{
-        background-color: #e7dfe4;
-        border: 1px solid #ccc9c9;
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+    
+    a :hover {
+        color: #fff;
+    }
+    
+    #dashboard_header_77 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+    
+    #search_box_77 {
+        width: 54%;
+        border-radius: 30px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_77 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_77:hover {
+        color: #c51d3a;
+    }
+    
+    #list_tbl_77 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_77 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_77 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_77 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_77 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_77 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #request_box_77 {
+        width: auto;
+        margin: 0 0 10px 5px;
+    }
+    
+    #schoolyear_box_77 {
+        margin: 0 0 10px 5px;
+    }
+    
+    #course_box_77 {
+        margin: 0 0 10px 5px;
+    }
+    
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    #list_tbl_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
     }
     
     button {
-        background-color: #424242;
         border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
     }
     
-    #button:hover {
-        background-color: #616161;
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+    
+    #clearance_header_77 {
+        background-color: #c51d3a;
     }
     
     .modal-body {
         background: #e0e0e0;
-        border: 1px solid #000000;
         box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 30px;
-    }
-    
-    .modal-footer {
-        background: #424242;
-    }
-    
-    .modal-header {
-        background-color: #c51d3a;
+        padding: 40px;
     }
     
     h6 {
         text-align: center;
         color: #ffff;
     }
-    
-    label {
-        width: 200px;
-        color: #757575;
-        margin-right: 10px;
-        font-size: 16px;
-    }
-    
-    p {
-        color: #757575;
-        font-size: 16px;
-    }
-    
-    #submit_btn_pre {
-        background-color: #424242;
-        border-radius: 10px;
-    }
-    
-    #submit_btn_pre:hover,
-    button:hover {
-        background-color: #616161;
-    }
-    
-    .input-icon {
-        position: relative;
-    }
-    
-    .input-icon>i {
-        position: absolute;
-        display: block;
-        transform: translate(0, -50%);
-        top: 50%;
-        pointer-events: none;
-        width: 25px;
-        text-align: center;
+
+    #dropdownMenuLink{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
         font-style: normal;
     }
-    
-    .input-icon>input {
-        padding-left: 25px;
-        padding-right: 0;
-    }
-    
-    a.float+div.label-container {
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s, opacity 0.5s ease;
-    }
-    
-    a.float:hover+div.label-container {
-        visibility: visible;
-        opacity: 1;
-    }
-    
-    a.float:hover {
-        color: #fff;
-    }
-    
-    .label-container {
-        position: fixed;
-        bottom: 30px;
-        left: 105px;
-        display: table;
-        visibility: hidden;
-    }
-    
-    .label-text {
-        color: #fff;
-        background: rgba(51, 51, 51, 0.5);
-        display: table-cell;
-        vertical-align: middle;
-        padding: 10px;
-        border-radius: 3px;
-    }
-    
-    .label-arrow {
-        display: table-cell;
-        vertical-align: middle;
-        color: #424242;
-        opacity: 0.5s;
-        right: 10;
-    }
-    
-    .float {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        bottom: 20px;
-        left: 40px;
-        background-color: #c51d3a;
-        color: #fff;
-        border-radius: 50px;
-        text-align: center;
-        box-shadow: 2px 2px 3px #dedede;
-    }
-    
-    .my-float:nth-child(1) {
-        background: #c51d3a;
-    }
-    
-    .my-float:after {
-        animation: shine 3s ease-in-out infinite;
-        animation-fill-mode: forwards;
-        content: "";
-        position: absolute;
-        top: -110%;
-        left: -210%;
-        width: 200%;
-        height: 200%;
-        opacity: 0;
-        transform: rotate(30deg);
-        background: rgba(255, 255, 255, 0.13);
-        background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0) 100%);
-    }
-    
-    .my-float:active:after {
-        opacity: 0;
-    }
-    
-    #print_table,
-    #print_tr {
-        border: 1px solid black;
-        text-align: center;
-        width: 100%;
-    }
-    
-    #print_td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 20%;
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
         padding-top: 1px;
         padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
     }
-    
-    #print_td2 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 80%;
-        padding-top: 1px;
-        padding-bottom: 1px;
+
+    #changer  {
+        background-color: #f5f0f6;
+        border:none;
     }
-    
-    #print_td3 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 20%;
-        padding: 3px;
-        font-style: bold;
+
+    #button_sorter,#button_sorter3,#button_sorter2   {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
     }
-    
-    #print_request {
-        align-content: center;
-        width: 100%;
-    }
-    
-    #print_td4 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 70%;
-        padding: 3px;
-        font-style: bold;
-    }
-    
-    #print_td5 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 10%;
-        padding: 3px;
-        font-style: bold;
-    }
-    
-    #print_td6 {
-        background-color: black;
-        border: 1px solid black;
-        border-collapse: collapse;
-        color: white;
-        -webkit-print-color-adjust: exact;
-    }
-    
-    @keyframes shine {
-        10% {
-            opacity: 1;
-            top: -30%;
-            left: -30%;
-            transition-property: left, top, opacity;
-            transition-duration: 0.3s, 0.3s, 0.3s;
-            transition-timing-function: ease;
-        }
-        100% {
-            opacity: 0;
-            top: -30%;
-            left: -30%;
-            transition-property: left, top, opacity;
-        }
-    }
-    
-    .my-float {
-        font-size: 24px;
-        margin-top: 18px;
-    }
-    
-    @media print {
-        .float,
-        #submit_btn_pre {
-            display: none;
-        }
-    }
-    
-    ul {
-        position: fixed;
-        left: 0px;
-        padding-bottom: 20px;
-        bottom: 50px;
-        z-index: 100;
-    }
-    
-    ul li {
-        list-style: none;
-        margin-bottom: 10px;
-    }
-    
-    ul li a {
-        background-color: #757575;
-        color: #FFF;
-        border-radius: 50px;
-        text-align: center;
-        box-shadow: 2px 2px 3px #999;
-        width: 60px;
-        height: 60px;
-        display: block;
-    }
-    
-    ul:hover {
-        visibility: visible!important;
-        opacity: 1!important;
-    }
-    
-    .my-float {
-        font-size: 24px;
-        margin-top: 18px;
-    }
-    
-    @keyframes bot-to-top {
-        0% {
-            bottom: -40px
-        }
-        50% {
-            bottom: 40px
-        }
-    }
-    
-    @keyframes scale-in {
-        from {
-            transform: scale(0);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes rotate-in {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
-    }
-    
-    @keyframes rotate-out {
-        from {
-            transform: rotate(360deg);
-        }
-        to {
-            transform: rotate(0deg);
-        }
-    }
-    
-    .fa-ellipsis-v,
-    .fa-print,
-    .fa-home {
-        color: white;
-        font-size: 30px;
-        padding-top: 15px;
-    }
-    #home_btn:hover {
-        color: white;
+    #button_sorter:hover,#button_sorter3:hover,#button_sorter2:hover  {
+        color: black;
         background-color: #d3324d;
     }
+    .dropdown-item:hover{
+        background-color:#c51d3a;
+        border:#ffff;
+        color: #ffff;
+        
+    }
+    .btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    #button_claim_and_unclaim{
+        padding: 2px 22px;
+    }
+    table{
+       min-width: max-content;
+    }
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+    thead,td{
+        padding: 5px;
+        overflow-wrap: break-word;
+    }
+
+    .table-wrapper{
+        max-height: 650px;
+        overflow-y: scroll;
+        
+
+    }
+   .outer-wrapper{
+    margin: 10px;
+   
+   }
+   
+   @media screen and (max-width : 400px){
+       #dropdownMenuLink{
+           display: none;
+       }
+   }
+  
 
 </style>
 
 
 <body>
-    
-    {% load static %}
-    {% include 'html_files/message.html'%}
+    <!--NAVIGATION BAR-->
+    <div class="container-fluid" id="dashboard_header_77">
+        <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
+        <a href="{% url 'registrar_dashboard_request_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
-    <ul>
-        <li>
-            <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
-                <i class="fa fa-home"></i>
-            </a>
-        </li>
+        
+        <!--SEARCH BAR-->
+        <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1()" onsearch="OnSearch (this)">
 
-    </ul>
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
+            Select
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/ALL">All</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/LATEST">LATEST</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/OLDEST">OLD</a>
+        </div>
+    </div>
 
     <!--BACK TO TOP BUTTON-->
-    <a id="backtotop_btn_pre"></a>
+    <a id="backtotop_btn_77"></a>
 
-    
-    <!--MAIN-->
-    <div class="myDiv" id="myDiv">
-        <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
-        <input type="text" id ="allow_request" value ="{{allow}}" hidden>
-        <input type="text" id ="latest_request" value ="{{latest_request}}" hidden>
-        <form method="POST" action="request_form">
-            {% csrf_token %}
-            <h3><b>REQUEST FORM</b></h3>
-            <input class="form-control" type ="text" id ="amount_paid" name ="amount_paid" hidden>
 
-            <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_pre" value="{{request.user.student_id}}" hidden>
+    <!-- MAIN-->
+    <!--TAB BAR-->
+        {% include 'html_files/message.html'%}
+        <div class = "col-12"  >
+            <h3 style="text-align:center;">List of Request Forms</h3>
+            <div id ="button_claim_and_unclaim" class="mt-3">
+                {% if sorter_type == "ALL" %}
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% elif sorter_type == "CLAIMED" %}
+                    <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% elif sorter_type == "UNCLAIMED" %}
+                    <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter3">Unclaimed</button>
+                {% else %}
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                {% endif %}
+            </div>
+            <div id="request_table"  class="tab-content" >
+                <div class="outer-wrapper">
+                    <div class="table-wrapper">
+                    <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_77">
+                        <thead>
+                            <tr>
+                                <th hidden>#</th>
+                                <th>Student's Name</th>
+                                <th>Request</th>
+                                <th>Clearance</th>
+                                <th>Form 137-A</th>
+                                <th colspan="3">Official Receipt</th>
+                                <th>Account Type</th>
+                                <th>Status</th>
+                                <th colspan="2">Appointment</th>
+                                <th></th>
+                            
+                            </tr>
+                            <tr class="no_data">
+                                <td colspan="11"><i class="fa fa-warning"></i> No Data</td>
+                            </tr>
+                            <tr class="warning no-result">
+                                <td colspan="11"><i class="fa fa-warning"></i> No result</td>
+                            </tr>
+                        </thead>
+                        
+                        {% for instance in data %}
+                            <tbody>
+                                <tr>
+                                    <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
+                                    <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
+                                
+                                    <td>{{instance.clearance}}</td>
+                                    <td>
+                                        <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
+                                        {% csrf_token %}
+                                            <select onchange="this.form.submit()" name="form137_select" id="changer"> 
+                                                    <option value="">{{instance.form_137}}</option>
+                                                    <option value="✔">✔</option>
+                                                    <option value="❌">❌</option>
+                                                </select>
+                                        </form> 
+                                    </td>
+                                    <td>
+                                        <form name="change_position" id="change" action="request_official_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                            
+                                            <select onchange="this.form.submit()" name="or_select" id="changer" > 
+                                                <option value="{{instance.official_receipt}}">{{instance.official_receipt}}</option>
+                                                <option id="or" value="✔">✔</option>
+                                                <option value="❌">❌</option>
+                                            </select>
+                                            
+                                            <td style="padding-left: 0%;">
+                                                {% if instance.official_receipt == "✔" and instance.or_num is None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input type=date id="or_date" name="or_date" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% elif instance.official_receipt == "✔" and instance.or_num is not None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input  type=date id="or_date" hidden name="or_date" value="{{instance.or_date}}" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% endif %}
+                                    
+                                            </td>
 
-            <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
-            <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
-            
-            <!--NAME BOX-->
-            <div class="form-inline">
-                <label for="name_pre" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_pre" style="padding-right:100px;">Full Name:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div>
-                    <input type="text" id="fn_box_pre" name="fn_box_pre" class="form-control " placeholder="First Name"  value="{{request.user.first_name}}"
-                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <input type="text" id="mn_box_pre" name="mn_box_pre" class="form-control " placeholder="Middle Name" value="{{request.user.middle_name}}"
-                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
-                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <p id="name_error_pre"></p>
-                </div>
-            </div><br>
+                                            <td>
+                                                {% if instance.official_receipt == "✔" and instance.or_num is None %}
 
-            <!--COURSE DROPDOWN BOX-->
-            {% if request.user.user_type == "STUDENT" %}
-            <div class="form-group row">
-                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
+                                                <div class="form-group-row" id="course_input">
+                                                    <input id="or_number" name="or_number" placeholder="O.R. No."   size="8" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% elif instance.official_receipt == "✔" and instance.or_num is not None %}
+                                                <div class="form-group-row" id="course_input">
+                                                    <input id="or_number" hidden name="or_number" placeholder="O.R. No."  value="{{instance.or_num}}" size="8" oninput="enter_lterm()" onkeypress="isNumber(event)">
+                                                </div>
+                                                {% endif %}
+                                    
+                                            </td>
+
+                                            
+                                            
+                                        </form> 
+                                    </td>
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
+                                    <td>
+                                        <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
+                                            {% csrf_token %}
+                                            {% if instance.appointment ==  'NONE' %}
+                                                <select onchange="this.form.submit()" name="claim_select" id="changer" style="opacity:0.5;" disabled > 
+                                                    <option value="" >{{instance.claim}}</option>
+                                                    <option value="CLAIMED">CLAIMED</option>
+                                                    <option value="UNCLAIMED">UNCLAIMED</option>
+                                                </select>
+                                                {% else %}
+                                                {% if instance.claim ==  'UNCLAIMED' %}
+                                                <select onchange="this.form.submit()" name="claim_select" id="changer"> 
+                                                    <option value="" >{{instance.claim}}</option>
+                                                    <option value="CLAIMED">CLAIMED</option>
+                                                    <option value="UNCLAIMED">UNCLAIMED</option>
+                                                </select>
+                                                {% else %}
+                                                {{instance.claim}}
+                                                {% endif %}
+                                            {% endif %}
+                                            </form> 
+                                    </td>  
+                                    <td >{{instance.appointment}}</td>
+                                    {% if instance.appointment == "NONE" %}
+                                    <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set</i></button></a>
+                                    </td>
+                                    {% else %}
+                                    <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set New</i></button></a>
+                                    </td>
+                                    {% endif%}
+                                    <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
+                                        role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
-            {% elif request.user.user_type == "ALUMNUS" %}
-            <div class="form-group row">
-                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
-                </div>
-            </div>
-            {% elif request.user.user_type == "OLD STUDENT" %}
-            <div class="form-group row">
-                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
-                </div>
-            </div>
-            {% endif %}
-            <!--DATE-->
-            <div class="form-group row">
-                <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" readonly>
-                </div>
-            </div>
+        </div>
 
-            <!--CONTROL NUMBER-->
-            <div class="form-group row">
-                <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
-                <div class="col-sm-9">
-                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="{{request.user.id}}" readonly>
-                </div>
-            </div>
-
-            <!--ADDRESS-->
-            <div class="form-group row">
-                <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{request.user.address}}" readonly required>
-                </div>
-            </div>
-
-            <!--CONTACT NUMBER-->
-            <div class="form-group row">
-                <label for="contactnum_pre" class="col-sm-2 col-form-label col-form-label-sm" id="contact_pre">Contact Number:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}" readonly>
-                </div>
-            </div>
-
-            <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
-            
-            <div class="form-group row pl-3">
-                <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
-                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
-                </div>
-                <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
-                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
-                </div>
-                <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
-                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
-                    <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                    (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
-                </div>
-            </div>
-
-            <!--PURPOSE OF REQUEST CHECK BOXES-->
-            
-                <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal">
-                    <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification">
-                    <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records">
-                    <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description">
-                    <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma">
-                    <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV">
-                    <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="">
-                    <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
-                    <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
-                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="{{request_cert}}"  hidden><br><br>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre">
-                    <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
-                    <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
-                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="{{request_other}}" hidden><br><br>
-                </div>
-                <br>
-                <br>
-            
-            <!--LAST TERM OR SEMESTER ENROLLED-->
-            {% if request.user.user_type == "STUDENT" and allow != "UNCLAIMED" %}
-            <div class="form-group row" id="semester_notdisplay">
-                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
-                <div class="col-sm-9">
-                    <select id = "sem_term" name = "sem_term" class = "form-control">
-                        <option value = "" select>--SELECT--</option>
-                        <option value ="1">1st SEMESTER</option>
-                        <option value ="2">2nd SEMESTER</option>
-                        <option value ="Midyear">MIDYEAR</option>
-                    </select>
-                </div>
-            </div>
-            {% endif %}
-
-            <!--PURPOSE OF REQUEST-->
-            
-            <div class="form-group row">
-                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
-                <div class="col-sm-9">
-                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" required>
-                    <input type ="text" id ="display_pur_request" value = "{{request_purpose}}" hidden>
-                    <p id="pureq_error_42"></p>
-                </div>
-            </div>
-            
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
-            <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
-            </p>
-
-        </form>
+        <p class="text-center text-bold" id="p6_77"></p>
     </div>
-    
+    </hr>
+
+    <p class="text-center text-bold" id="p6_77"></p>
 </body>
+
+
+<footer>
+    <div>
+        <p>© Technological University of the Philippines-Cavite</p>
+    </div>
+</footer>
+
 
 </html>
 
+
 <script>
+
+    // no data by default
+    document.getElementById('button_sorter').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/ALL"
+    };
+
+    document.getElementById('button_sorter2').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/CLAIMED"
+    };
+
+    document.getElementById('button_sorter3').onclick = function() {
+        location.href = "/registrar_dashboard_organize_request_list/UNCLAIMED"
+    };
+
+    function openrdb() {
+        window.location.replace("{% url 'registrar_dashboard' %}");
+    }
+
+
+    var dattable = document.getElementById("list_tbl_77");
+    var rowcount = dattable.tBodies[0].rows.length;
+
+    if (rowcount == '0') {
+        $('.no_data').show();
+        $('.no-result').hide();
+    } else {
+        $('.no_data').hide();
+        $('.no-result').hide();
+    }
+    // no data by default
+    var dattable2 = document.getElementById("list_tbl2_77");
+    var rowcount2 = dattable2.tBodies[0].rows.length;
+
+    if (rowcount2 == '0') {
+        $('.no_data2').show();
+        $('.no-result2').hide();
+    } else {
+        $('.no_data2').hide();
+        $('.no-result2').hide();
+    }
+
+    
    
-    var today = new Date();
-    
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
-    document.getElementById("date_pre").value = date;
-
-    function submitForm(form) {
-
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-
-        .then(function(isOkay) {
-            if (isOkay) {
-                var btn = document.getElementById('submit_button');
-                btn.disabled = true;
-                btn.innerText = 'Submitted'
-                document.getElementById("ln_box_pre").disabled = true;
-                document.getElementById("fn_box_pre").disabled = true;
-                document.getElementById("mn_box_pre").disabled = true;
-                document.getElementById("date_pre").disabled = true;
-                document.getElementById("add_box_pre").disabled = true;
-                document.getElementById("course_pre").disabled = true;
-                document.getElementById("control_pre").disabled = true;
-                document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose").disabled = true;
-                document.getElementById("certification_box").disabled = true;
-                document.getElementById("others_box_pre").disabled = true;
-                document.getElementById("year_graduated_pre").disabled = true;
+    // TAB JS
+    var items = document.querySelectorAll('#tabz_77');
+    for (var i = 0, len = items.length; i < len; i++) {
+        (function() {
+                var t, e = this,
+                    a = "[data-tab]",
+                    n = document.body,
+                    r = n.matchesSelector || n.webkitMatchesSelector || n.mozMatchesSelector || n.msMatchesSelector,
+                    o = function() {
+                        var a = e.querySelectorAll("[data-tab-content]") || [];
+                        for (t = 0; t < a.length; t++) a[t].style.display = "none"
+                    },
+                    i = function(n) {
+                        var r = e.querySelectorAll(a) || [];
+                        for (t = 0; t < r.length; t++) {
+                            var i = r[t],
+                                s = i.className.replace("tab-active", "").trim();
+                            i.className = s
+                        }
+                        o(), n.className += " tab-active";
+                        var l = n.getAttribute("href"),
+                            c = e.querySelector(l);
+                        c && (c.style.display = "")
+                    },
+                    s = e.querySelector(".tab-active" + a);
+                s = s || e.querySelector(a), s && i(s), e.addEventListener("click", function(t) {
+                    var e = t.target;
+                    r.call(e, a) && i(e)
+                })
             }
-        });
-        return false;
+            .bind(items[i]))();
     }
 
-    function isEmpty() {
-     
-        let purpose_req = document.getElementById("purpose").value;
-    
-        if (purpose_req != "") {
-            document.getElementById("submit_btn_pre").removeAttribute("disabled");
-        }
-    }
-    
-    //back to top function
-    var button = $("#backtotop_btn_pre");
-    
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 40) {
-            button.addClass("show");
-        } else {
-            button.removeClass("show");
-        }
-    });
-    
-    button.on("click", function(e) {
-        e.preventDefault();
-        $("html, body").animate({
-            scrollTop: 0
-        }, "50");
-    });
-
-    if (document.getElementById("user_stat").value == "STUDENT"){
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").checked = true;
-    }else if(document.getElementById("user_stat").value == "OLD STUDENT"){
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").checked = true;
-        document.getElementById("old_student_pre").disabled = true;
-    }else{
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").checked = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
+    // TO APPROVE STUDENT
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("list_tbl_77").deleteRow(i);
+        swal({
+            title: "Done",
+            text: "Application Approved!",
+            icon: "success",
+            button: "Ok",
+        })
     }
 
-    year = document.getElementById("year_graduated_pre").value;
-    document.getElementById("year_graduated_check_pre").value = "ALUMNI: " + year;
-
-    if (document.getElementById('allow_request').value == "UNCLAIMED"){
-        document.getElementById('HonorableDismissal_check_pre').disabled = true;
-        document.getElementById('authentication_verification').disabled = true;
-        document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-        document.getElementById('subject_description').disabled = true;
-        document.getElementById('Diploma_check_pre').disabled = true;
-        document.getElementById('cav').disabled = true;
-        document.getElementById('Certification_check_pre').disabled = true;
-        document.getElementById('Others_check_pre').disabled = true;
-        document.getElementById("purpose").disabled = true;
-        document.getElementById('purpose').value = document.getElementById("display_pur_request").value
-        document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
-
-        var requested_data = document.getElementById('latest_request').value;
-
-        if (requested_data == "Honorable Dismissal"){
-            document.getElementById('HonorableDismissal_check_pre').checked = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if (requested_data == "Authentication/Verification"){
-            document.getElementById('authentication_verification').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Transcript of Records"){
-            document.getElementById('TranscriptofRecords_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Subject Description"){
-            document.getElementById('subject_description').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Diploma"){
-            document.getElementById('Diploma_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "CAV"){
-            document.getElementById('cav').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Certification"){
-            document.getElementById('Certification_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-            document.getElementById('certification_box').disabled = true;
-            document.getElementById('certification_box').hidden = false;
-
-            var cert_data = document.getElementById('certification_box').value;
-            var split_cert = cert_data.split(':').pop();
-            document.getElementById('certification_box').value = split_cert;
-        }else{
-            document.getElementById('Others_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-            document.getElementById('others_box_pre').disabled = true;
-            document.getElementById('others_box_pre').hidden = false;
-
-            var ot_data = document.getElementById('others_box_pre').value;
-            var split_other = ot_data.split(':').pop();
-            document.getElementById('others_box_pre').value = split_other;
-        }
-    }else{
-        document.getElementById('HonorableDismissal_check_pre').disabled = false;
-        document.getElementById('authentication_verification').disabled = false;
-        document.getElementById('TranscriptofRecords_check_pre').disabled = false;
-        document.getElementById('subject_description').disabled = false;
-        document.getElementById('Diploma_check_pre').disabled = false;
-        document.getElementById('cav').disabled = false;
-        document.getElementById('Certification_check_pre').disabled = false;
-        document.getElementById('Others_check_pre').disabled = false;
-        document.getElementById("purpose").disabled = false;
-        document.getElementById("submit_btn_pre").textContent ="Submit";
-    }
-
-    certification_box.addEventListener("keyup", function() {
-        kind_of_cert = document.getElementById('certification_box').value;
-        document.getElementById('Certification_check_pre').value = 'Certification: ' + kind_of_cert;
-        document.getElementById('Certification_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-    });
-    
-    others_box_pre.addEventListener("keyup", function(){
-        others= document.getElementById("others_box_pre").value;
-        document.getElementById("Others_check_pre").value = "Others: " + others;
-        document.getElementById('Others_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-    });
-
-    HonorableDismissal_check_pre.addEventListener("click", function(){
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    authentication_verification.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    TranscriptofRecords_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    subject_description.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Diploma_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    cav.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Certification_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('certification_box').hidden =false;
-        document.getElementById("others_box_pre").hidden =true;
-    });
-
-    Others_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =false;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-
-    Certification_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    HonorableDismissal_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "0.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    authentication_verification.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    TranscriptofRecords_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    subject_description.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "70.00/Subject";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    Diploma_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "150.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    cav.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    Others_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "0.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    
-        // ONLY NUMBERS IN INPUT BOX JS
-    function isNumber(evt) {
+    // ONLY NUMBERS IN INPUT BOX JS
+     function isNumber(evt) {
         if (event.key.length === 1 && /\D/.test(event.key)) {
             event.preventDefault();
         }
@@ -1065,5 +748,169 @@ Adviser:
         })
     }
     $("span.numbers").digits();
+
+
+    //MULTIPLE SPACE REMOVER
+    $(function() {
+        var txt1 = $("#search_box_77");
+        var func = function() {
+            txt1.val(txt1.val().replace(/\s\s+/g, ' '));
+        }
+        txt1.keyup(func).blur(func);
+    });
+
+    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    $(function() {
+        $('body').on('keydown', '#search_box_77', function(e) {
+            if (e.which === 32 && e.target.selectionStart === 0) {
+                return false;
+            }
+        });
+    });
+
+    // SEARCH REQUEST LIST
+    function searching1() {
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var jobCount = $('.results tbody tr[visible="true"]').length;
+                $('.counter').text(jobCount + ' item');
+
+                if (jobCount == '0') {
+                    $('.no-result').show();
+                    $('.no_data').hide();
+                } else {
+                    $('.no-result').hide();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".search").keyup(function() {
+                var searchTerm = $(".search").val();
+                var listItem = $('.results2 tbody').children('tr');
+                var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+                $.extend($.expr[':'], {
+                    'containsi': function(elem, i, match, array) {
+                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                    }
+                });
+
+                $(".results2 tbody tr").not(":containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'false');
+                });
+
+                $(".results2 tbody tr:containsi('" + searchSplit + "')").each(function(e) {
+                    $(this).attr('visible', 'true');
+                });
+
+                var DocCount = $('.results2 tbody tr[visible="true"]').length;
+                $('.counter').text(DocCount + ' item');
+
+                if (DocCount == '0') {
+                    $('.no-result2').show();
+                    $('.no_data2').hide();
+                } else {
+                    $('.no-result2').hide();
+                }
+            });
+        });
+    }
+
+
+
+    // BACK TO TOP FUNCTION
+    var btn = $("#backtotop_btn_77");
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass("show");
+        } else {
+            btn.removeClass("show");
+        }
+    });
+
+    btn.on("click", function(e) {
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: 0
+        }, "300");
+    });
+
+    // SORTING 
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
+    
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; 
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
+    // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
+    function OnSearch(input) {
+        location.reload();
+    }
+
+    // PREVENT SCROLLING WHILE SWITCHING TABS
+    $('#tabz_77 a').click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+
+        var checked = $(this).find('input').prop('checked');
+        $(this).find('input').prop('checked', !checked);
+    });
+
+    // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
+    $(window).bind("pageshow", function() {
+
+        document.getElementById("search_box_77").value = "";
+    });
+
+    
+     
+    
 </script>
 
