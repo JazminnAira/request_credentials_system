@@ -2725,9 +2725,12 @@ def faculty_dashboard_clearance_list_all(request):
         sig=""
         if request.method == "POST":
             sig = request.POST.get('sig')
-            ilist = request.POST.get('id_list')
+            templist = request.POST.get('id_list')
+            ilist = templist.split(',')
+            print("ilist", ilist)
             for i in ilist:
                 id_list.append(i)
+                print("this is i:", i)
             comma = ","
             while(comma in id_list):
                 id_list.remove(comma)
@@ -3105,6 +3108,8 @@ def faculty_dashboard_graduation_list_all(request):
             if request.method == "POST":
                 sig = request.POST.get('sig')
                 ilist = request.POST.get('id_list')
+                templist = request.POST.get('id_list')
+                ilist = templist.split(',')
                 for i in ilist:
                     id_list.append(i)
                 comma = ","
