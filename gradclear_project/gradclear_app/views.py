@@ -1455,14 +1455,14 @@ def appointment(request, id, form):
                 student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
-            if gender_choice == "FEMALE":
+            if gender_choice == "Female":
                 gender_final = "Ms."
             else:
                 gender_final= "Mr." 
             
             faculty_gender = request.user.gender
             gender_fac=""
-            if faculty_gender == "FEMALE":
+            if faculty_gender == "Female":
                 gender_fac = "Ms."
             else:
                 gender_fac= "Mr."
@@ -1552,14 +1552,14 @@ def appointmentgrad(request, id, form):
                 student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
             gender_choice = gender[0]
             gender_final=""
-            if gender_choice == "FEMALE":
+            if gender_choice == "Female":
                 gender_final = "Ms."
             else:
                 gender_final= "Mr."
             
             faculty_gender = request.user.gender
             gender_fac=""
-            if faculty_gender == "FEMALE":
+            if faculty_gender == "Female":
                 gender_fac = "Ms."
             else:
                 gender_fac= "Mr."
@@ -1632,7 +1632,7 @@ def reggrad_appointment(request, id):
         student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
-    if gender_choice == "FEMALE":
+    if gender_choice == "Female":
         gender_final = "Ms."
     else:
         gender_final= "Mr."
@@ -1683,7 +1683,7 @@ def regclear_appointment(request,id):
         student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
     gender_choice = gender[0]
     gender_final=""
-    if gender_choice == "FEMALE":
+    if gender_choice == "Female":
         gender_final = "Ms."
     else:
         gender_final= "Mr."  
@@ -1729,7 +1729,7 @@ def request_appointment(request, id):
             student_id=gender_temp[0]).values_list('gender', flat=True).distinct()
         gender_choice = gender[0]
         gender_final=""
-        if gender_choice == "FEMALE":
+        if gender_choice == "Female":
             gender_final = "Ms."
         else:
             gender_final= "Mr."  
