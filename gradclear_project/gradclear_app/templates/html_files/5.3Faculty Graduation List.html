@@ -455,9 +455,56 @@ Adviser:
         padding: 16px;
     }
 
-    @media screen and (max-height: 450px) {
+    @media screen and (max-width: 700px) {
         .signature_section {padding-top: 15px;}
+
+
+        #footer_bottom{
+            display: none;
+        }
+
+        #footer_div{
+            width: 18em;
+            align: right;
+            display: none;
+        }
     }
+
+
+    @media screen and (min-width: 700px) {
+        .div1 th {
+            background-color: #c51d3a;
+            color: #ffff;
+            text-align: center;
+            padding: 5px;
+            width: 100%;
+            min-width: 100%;
+            position: sticky;
+            top: 0;
+        }
+
+        .div1 th:nth-child(1),
+        .div1 td:nth-child(1) {
+            position: sticky;
+            left: 0px;
+            width: 40px;
+            min-width: 40px; 
+        }
+
+
+        .div1 th:nth-child(3),
+        .div1 td:nth-child(3) {
+            position: sticky;
+            left: 40px;
+            width: 238px;
+            min-width: 238px;
+            
+        }
+    }
+
+
+
+
     .div1 {
     padding-top: 20px;
     width: 99%;
@@ -480,7 +527,6 @@ Adviser:
         padding: 5px;
         width: 100%;
         min-width: 100%;
-        position: sticky;
         top: 0;
     }
 
@@ -492,7 +538,6 @@ Adviser:
 
     .div1 th:nth-child(1),
     .div1 td:nth-child(1) {
-        position: sticky;
         left: 0px;
         width: 40px;
         min-width: 40px;
@@ -501,7 +546,6 @@ Adviser:
 
     .div1 th:nth-child(3),
     .div1 td:nth-child(3) {
-        position: sticky;
         left: 40px;
         width: 238px;
         min-width: 238px;
@@ -1071,8 +1115,8 @@ Adviser:
 </body>
 
 
-<footer>
-    <div>
+<footer id="footer_bottom">
+    <div id="footer_div">
         <p>© Technological University of the Philippines-Cavite</p>
     </div>
 </footer>
