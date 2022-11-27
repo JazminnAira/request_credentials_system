@@ -699,40 +699,47 @@ Adviser:
     border-radius: 5px;
    
    }
+   #missing_document_hide{
+    text-align: right;
+    visibility: hidden;
+   }
 
      /* RESPONSIVENESS */
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 700px) {
     #missing_document {
         display: none;
+    }
    
+    #AccountSettings_modal_41{
+        max-width: fit-content;
+        max-height: fit-content;
+    
+    }
+    #settings_modal_41{
+        max-width: fit-content;
+        max-height: fit-content;
 
     }
-    #missing {
-        width: 100%;
-        height: auto;
-        position: relative;
-       
+    #missing_document_hide{
+        visibility: visible;
+        text-align: right;
     }
-    /* #sidebar{
-        z-index: 9999;
-
-    } */
+    #welcome{
+        font-size: 18px;
+    }
 
 }
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 500px) {
     #foot {
         display: none;
     }
     #welcome{
         font-size: 16px;
     }
-    /* #Smodal_size {
-        width: 140px;
-        height: 100px;
-       
-    } */
-    
+    #date_today{
+        display: none;
+    }
 }
 
 </style>
@@ -948,11 +955,10 @@ Adviser:
     </div>
 
     <!--MAIN-->
-    <div class="container-fluid">
+    <div class="container-fluid" id="date_today">
         <div class="row" style="padding-right: 0px;">
             <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
             text-align: right;">
-
                 <!--DATE INDICATOR LABEL-->
                 <p id="date_text_lbl_41"></p>
 
@@ -961,6 +967,15 @@ Adviser:
     </div>
 
     <div class="container-fluid" id="main_41">
+        {% if display %}
+        <div id ="missing_document_hide">
+            <b id ="missing" style ="font-size: 12px;" class="mr-2 mt-2 p-2">Missing Documents:</b>
+            {% for requirements in display %}
+                <i class="fa fa-exclamation pl-4" style ="color :red; font-size: 12px;" id ="req_miss"><label class="text-dark" id="document1">{{requirements}}</label></i><br>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
         <div class="row">
             <div class="col-8" style="height: 70px; margin-top: 100px;">
                 <h1 style="margin-bottom: 0px;">Dashboard</h1>
@@ -992,7 +1007,7 @@ Adviser:
                 For full details, follow the instructions sent to your email.</small>
         </div>
         {% endif %}
-        
+       
         <div class="row">
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">
                 <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">

@@ -41,6 +41,10 @@ Adviser:
 </head>              
 
 <style>
+    body{
+        height: 100vh;
+    }
+
     #mid_div{
         background: rgba( 255, 255, 255, 0.35 );
         box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
@@ -435,6 +439,57 @@ Adviser:
         color: white;
         background-color: #616161;
     }
+
+    @media screen and (max-width: 700px){
+
+        #signup_login_container{
+            padding: 1em;
+            margin:0;
+            height: 90vh;
+            position: relative;
+        }
+
+        #mid_div{
+            width:100vw;
+        }
+
+        #title_cover{
+            font-size: 3em;
+        }
+
+        #subtitle_cover{
+            font-size: 2em;
+        }
+
+        li{
+            font-size: 0.7em;
+        }
+
+        #create_account{
+            display:none;
+        }
+
+        #studentsignup_btn_01, #oldstudentsignup_btn_01, #alumnussignup_btn_01, #facultysignup_btn_01{
+            height:65px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        #oldstudentsignup_btn_01{
+            padding-top: 0.9em;
+            padding-bottom: 0.9em;
+        }
+
+        #studentsignup_btn_01, #alumnussignup_btn_01, #facultysignup_btn_01{
+            padding-top: 1.3em;
+            padding-bottom: 1.3em;
+        }
+
+        #footer_bottom{
+            display: none;
+        }
+
+    }
 </style>
 
 
@@ -445,8 +500,8 @@ Adviser:
         <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li>
         <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li>    
         <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li>
-        <li style="float:right;"><a class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
         <li><a href="privacy_policy">Privacy Policy</a></li>
+        <li style="float:right;" id ="create_account"><a class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
     </ul>
 
     <!-- MESSAGE BANNER -->
@@ -455,7 +510,7 @@ Adviser:
     <!--PRE SIGNUP MODAL-->
     <div class="modal fade" id="PreSignUp_modal_01" tabindex="-1" >
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="width: 100%;">
+            <div class="modal-content" style="width:100vw;">
 
                 <!--PRE SIGNUP MODAL HEADER-->
                 <div class="modal-header">
@@ -467,29 +522,29 @@ Adviser:
                 </div>
                 
                 <!--PRE SIGNUP MODAL BODY-->
-                <div class="modal-body w-100 text-center">
+                <div class="modal-body text-center" >
                     <form action = "1Sign_Up.html" method="get">
 
                         <!--PRE SIGNUP MODAL STUDENT SIGN UP BUTTON-->
-                        <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark " 
+                        <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark" 
                          id="studentsignup_btn_01" style="width: max-content;" value = "STUDENT"
-                         onclick= "user_identifier()">Student
+                         onclick= "user_identifier()"><span>Student</span>
                         </a>
 
                         <a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border-dark " 
                          id="oldstudentsignup_btn_01"  value = "OLD STUDENT"
-                         onclick= "user_identifier()">Old Student
+                         onclick= "user_identifier()"><span>Old Student</span>
                         </a>
 
                         <a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark "
                          id="alumnussignup_btn_01" style="width: max-content;"value = "ALUMNUS"
-                         onclick= "user_identifier()"> Alumnus
+                         onclick= "user_identifier()"><span>Alumnus</span>
                         </a>
 
                         <!--PRE SIGNUP MODAL FACULTY SIGN UP BUTTON-->
                         <a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 border-dark "
                          id="facultysignup_btn_01" style="width: max-content;"value = "FACULTY"
-                         onclick= "user_identifier()">Faculty
+                         onclick= "user_identifier()"><span>Faculty</span>
                         </a>
                     </form>
 
@@ -503,11 +558,11 @@ Adviser:
     </div>
 
     <!--MAIN SCREEN-->
-    <div class="container p-sm-4 mt-5 container-1">
+    <div class="container p-sm-4 mt-5 container-1" id="signup_login_container">
         <div class="row container-fluid" id="mid_div" > 
             <div class="col-sm-7 ">
-                <h1  style="margin-top: 110px; color: #fff;"> Office of the Registrar</h1>
-                <h2 class=" text-white">TUP Cavite</h2>
+                <h1  style="margin-top: 110px; color: #fff;" id ="title_cover"> Office of the Registrar</h1>
+                <h2 class=" text-white" id ="subtitle_cover">TUP Cavite</h2>
             </div>
             
             <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;">
@@ -687,10 +742,9 @@ Adviser:
     </div>
 
 </body>
-
-<footer>
+<footer id="footer_bottom">
     
-    <div>
+    <div id="footer_div">
         
         <p style="color: white; border-color: none; text-align: center;">
             <div style="float: center; padding-right: 10px;">

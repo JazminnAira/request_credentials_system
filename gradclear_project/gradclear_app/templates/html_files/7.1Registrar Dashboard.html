@@ -672,7 +672,7 @@ Adviser:
         max-width: 500px;
         min-height: 370px;
         max-height: 700px;
-        width: auto;
+        width: 98vw;
     }
     
     #account_modal_footer_71 {
@@ -922,6 +922,7 @@ Adviser:
         color: white;
         padding-top: 10px;
         margin-left: -20px;
+
     }
     
     .modal-body {
@@ -1132,6 +1133,9 @@ Adviser:
     td{
         padding: 10px;
     }
+    #footer_bottom{
+            z-index: 1;
+        }
 
     @media screen and (max-width : 1020px){
         #not_carousel{
@@ -1156,6 +1160,10 @@ Adviser:
     @media screen and (max-width : 500px){
         #footer_bottom{
             display: none;
+        }
+        
+        #date_today{
+        display: none;
         }
         
         #footer_div{
@@ -1363,7 +1371,7 @@ Adviser:
     {% if request.user.user_type == "REGISTRAR" %}
     <!-- SETTINGS MODAL -->
     <div id="Settings_modal_71" class="modal fade" id="exampleModal_71" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" id = "setting_modal_size" style="max-width: 800px; min-width: 350px;" role="document">
+        <div class="modal-dialog" id = "setting_modal_size" style="max-width: 800px; min-width: 350px; width: 100vw;" role="document">
             <div class="modal-content">
 
                 <!--MODAL HEADER-->
@@ -1590,7 +1598,7 @@ Adviser:
 
     <!--MAIN-->
    
-    <div class="container-fluid" >
+    <div class="container-fluid"  id="date_today">
         <div class="row" style="padding-right: 0px;">
         <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
             text-align: right;">
