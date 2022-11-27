@@ -6146,7 +6146,8 @@ def student_status_update(request,id):
     id_year = year_id[2:]
     if student_update == "ALUMNUS":
         update_id = "TUPC-" + user_id+"-"+id_year+"-"+mbday+dbday+ybday
-        user_table.objects.filter(id=id).update(id_number = update_id)
+        update_idnum = user_id+"-"+id_year+"-"+mbday+dbday+ybday
+        user_table.objects.filter(id=id).update(id_number = update_idnum)
         user_table.objects.filter(id=id).update(student_id = update_id)
     
 
