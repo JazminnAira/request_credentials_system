@@ -31,16 +31,6 @@ Adviser:
 
     <title>Request Form</title>
     {% load static %}
-
-    <script type="text/javascript">
-        function preventBack() {
-            window.history.forward();
-        }
-        setTimeout("preventBack()", 0);
-        window.onunload = function() {
-            null
-        };
-    </script>
     
 </head>
 
@@ -127,7 +117,11 @@ Adviser:
         margin: 5px 10px 5px 0;
     }
     
-    #receiptnum_box_pre{
+    #course_pre,
+    #receiptnum_box_pre,
+    #ln_box_pre,
+    #fn_box_pre,
+    #mn_box_pre {
         background-color: #e7dfe4;
         border: 1px solid #ccc9c9;
     }
@@ -407,6 +401,7 @@ Adviser:
         margin-top: 18px;
     }
     
+ 
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -445,7 +440,7 @@ Adviser:
         }
     }
     
-    .fa-ellipsis-v,
+    .fa-arrow-left,
     .fa-print,
     .fa-home {
         color: white;
@@ -456,86 +451,94 @@ Adviser:
         color: white;
         background-color: #d3324d;
     }
+    #print_btn:hover {
+        background-color: #616161;
+    }
+    #back_btn:hover {
+        background-color: #616161;
+    }
 
 </style>
 
 
 <body>
-    
     {% load static %}
-    {% include 'html_files/message.html'%}
-
+    {% for i in reqs %}
     <ul>
         <li>
+            {% if i.appointment == "NONE" %}
+            <a class='button' title="Print Not Available" style="opacity:0.4;" disabled>
+                <i class="fa fa-print slash" style="opacity:0.5;"></i>    
+            
+                </a>
+            {% else %}
+                <a href="{% url 'req_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print" id="print_btn">
+                    <i class="fa fa-print"></i>
+                </a>
+            {% endif %}  
+            </li>
+        <li>
+            {% if request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" %}
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
             </a>
+            {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+            <a href="{% url 'registrar_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
+                <i class="fa fa-home"></i>
+            </a>
+            {% endif %}
         </li>
+
+        <li>
+            {% if request.user.user_type == "REGISTRAR" %}
+            <a href="{% url 'registrar_dashboard_request_list' %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
+                <i class="fa fa-arrow-left" ></i>
+            </a>
+            {% endif%}
+          
+        </li>
+
 
     </ul>
 
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_pre"></a>
 
-    
+
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
-        <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
-        <input type="text" id ="allow_request" value ="{{allow}}" hidden>
-        <input type="text" id ="latest_request" value ="{{latest_request}}" hidden>
         <form method="POST" action="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
-            <input class="form-control" type ="text" id ="amount_paid" name ="amount_paid" hidden>
 
-            <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
-            <input type="text" name="stud_id_pre" value="{{request.user.student_id}}" hidden>
+            <input type="text" name="id_pre" value="{{i.name}}" hidden>
 
             <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
             
             <!--NAME BOX-->
-            <div class="form-inline">
+            <div class="form-group row">
                 <label for="name_pre" class="col-sm-2 col-form-label col-form-label-sm" id="name_lbl_pre" style="padding-right:100px;">Full Name:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div>
-                    <input type="text" id="fn_box_pre" name="fn_box_pre" class="form-control " placeholder="First Name"  value="{{request.user.first_name}}"
-                        oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <input type="text" id="mn_box_pre" name="mn_box_pre" class="form-control " placeholder="Middle Name" value="{{request.user.middle_name}}"
-                    oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
-                    <input type="text" id="ln_box_pre" name="ln_box_pre" class="form-control " placeholder="Last Name" value="{{request.user.last_name}}"
-                     oninput="this.value = this.value.toUpperCase()" oninput="enter_name1()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly required>
-                    <p id="name_error_pre"></p>
+                <div class="col-sm-9">
+                    <input type="text" id="name_pre" name="name_pre" class="form-control" onkeyup="isEmpty()" value="{{i.name}}" readonly required>
                 </div>
-            </div><br>
+            </div>
 
             <!--COURSE DROPDOWN BOX-->
-            {% if request.user.user_type == "STUDENT" %}
             <div class="form-group row">
                 <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course}}" readonly required>
+                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{i.course}}" readonly required>
                 </div>
             </div>
-            {% elif request.user.user_type == "ALUMNUS" %}
-            <div class="form-group row">
-                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
-                </div>
-            </div>
-            {% elif request.user.user_type == "OLD STUDENT" %}
-            <div class="form-group row">
-                <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="course_pre" name="course_pre" class="form-control" onkeyup="isEmpty()" value="{{request.user.course_graduated}}" readonly required>
-                </div>
-            </div>
-            {% endif %}
+           
+            
+
             <!--DATE-->
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" readonly>
+                    <input type="text" id="date_pre" name="date_pre" class="form-control" oninput="isEmpty()" value="{{i.date}}"readonly>
                 </div>
             </div>
 
@@ -543,7 +546,7 @@ Adviser:
             <div class="form-group row">
                 <label for="control_num_pre" class="col-sm-2 col-form-label col-form-label-sm" id="control_num_lbl_pre">Control No.:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="{{request.user.id}}" readonly>
+                    <input type="text" id="control_pre" name="control_pre" class="form-control" value ="{{i.control_number}}" readonly>
                 </div>
             </div>
 
@@ -551,7 +554,7 @@ Adviser:
             <div class="form-group row">
                 <label for="add_pre" class="col-sm-2 col-form-label col-form-label-sm" id="add_lbl_pre">Address:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{request.user.address}}" readonly required>
+                    <input type="text" id="add_box_pre" name="add_box_pre" class="form-control" placeholder="House No., Street, Subdivision, Brgy., Province" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" value = "{{i.address}}" readonly required>
                 </div>
             </div>
 
@@ -559,514 +562,177 @@ Adviser:
             <div class="form-group row">
                 <label for="contactnum_pre" class="col-sm-2 col-form-label col-form-label-sm" id="contact_pre">Contact Number:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{request.user.contact_number}}" readonly>
+                    <input type="text" id="contact_pre" name="contact_pre" class="form-control" value = "{{i.contact_number}}" readonly>
                 </div>
             </div>
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
-            
+            {% if i.current_status == "STUDENT" %}
             <div class="form-group row pl-3">
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
                 </div>
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
                 </div>
                 <div class="form-check form-check-row">
-                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
+                </div>
+            </div>
+            {% elif i.current_status == "OLD STUDENT" %}
+            <div class="form-group row pl-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" checked disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
+                </div>
+            </div>
+            {% else %}
+            <div class="form-group row pl-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Currently Enrolled</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="old_student_pre" name="check_status_pre" value="OLD STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Old Student</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="year_graduated_check_pre" name="check_status_pre" value="ALUMNI" onchange= "choose_enrolled()" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Graduate(year graduated)</label>
                     <input class="form-control chk" type="text" value="{{request.user.year_graduated}}" id="year_graduated_pre" name="year_graduate" placeholder="xxxx-xxxxx" oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" readonly>
                 </div>
             </div>
+            {% endif %}
 
             <!--PURPOSE OF REQUEST CHECK BOXES-->
             
                 <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
+                {% if i.request == "Honorable Dismissal" %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification">
+                    <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal" disabled>
+                    <label class="form-check-label" for="inlineCheckbox1_pre">Honorable Dismissal</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Authentication/Verification" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records">
+                    <input class="form-check-input chk" type="checkbox" id="authentication_verification" name="purpose_request_pre" value="Authentication/Verification" disabled>
+                    <label class="form-check-label" for="inlineCheckbox2_pre">Authentication/Verification</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Transcript of Records" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description">
+                    <input class="form-check-input chk" type="checkbox" id="TranscriptofRecords_check_pre" name="purpose_request_pre" value="Transcript of Records" disabled>
+                    <label class="form-check-label" for="inlineCheckbox3_pre">Transcript of Records(TOR)</label>
+                </div>
+                {% endif %}
+                {% if i.request == "Subject Description" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma">
+                    <input class="form-check-input chk" type="checkbox" id="subject_description" name="purpose_request_pre" value="Subject Description" disabled>
+                    <label class="form-check-label" for="inlineCheckbox4_pre">Subject Description</label>
+                </div>
+                {% endif%}
+                {% if i.request == "Diploma" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV">
+                    <input class="form-check-input chk" type="checkbox" id="Diploma_check_pre" name="purpose_request_pre" value="Diploma" disabled>
+                    <label class="form-check-label" for="inlineCheckbox5_pre">Diploma</label>
+                </div>
+                {% endif%}
+                {% if i.request == "CAV" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="">
+                    <input class="form-check-input chk" type="checkbox" id="cav" name="purpose_request_pre" value="CAV" disabled>
+                    <label class="form-check-label" for="inlineCheckbox6_pre">CAV</label>
+                </div>
+                {% endif %}
+                {% if latest_req == "Certification" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="" checked disabled>
                     <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
                     <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="{{request_cert}}"  hidden><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value ="{{request_cert}}"><br><br>
                 </div>
+                {% else %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre">
+                    <input class="form-check-input chk" type="checkbox" id="Certification_check_pre" name="purpose_request_pre" value="" disabled>
+                    <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
+                </div>
+                {% endif %}
+                {% if latest_req == "Others" %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" checked disabled>
                     <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
                     <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="{{request_other}}" hidden><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value = "{{request_other}}"><br><br>
                 </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input chk" type="checkbox" id="Others_check_pre" name="purpose_request_pre" disabled>
+                    <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
+                </div>
+                {% endif %}
                 <br>
                 <br>
-            
-            <!--LAST TERM OR SEMESTER ENROLLED-->
-            {% if request.user.user_type == "STUDENT" and allow != "UNCLAIMED" %}
-            <div class="form-group row" id="semester_notdisplay">
-                <label for="sem_term_42" class="col-sm-2 col-form-label col-form-label-sm">Semester Currently Enrolled:</label>
-                <div class="col-sm-9">
-                    <select id = "sem_term" name = "sem_term" class = "form-control">
-                        <option value = "" select>--SELECT--</option>
-                        <option value ="1">1st SEMESTER</option>
-                        <option value ="2">2nd SEMESTER</option>
-                        <option value ="Midyear">MIDYEAR</option>
-                    </select>
-                </div>
-            </div>
-            {% endif %}
 
             <!--PURPOSE OF REQUEST-->
-            
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" oninput="this.value = this.value.toUpperCase()" required>
-                    <input type ="text" id ="display_pur_request" value = "{{request_purpose}}" hidden>
+                    <input type="text" id="purpose" name="purpose" class="form-control" onkeyup="isEmpty()" value="{{i.purpose_of_request_reason}}" oninput="this.value = this.value.toUpperCase()" disabled>
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
-            
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
-            <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
-            </p>
 
+            <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
+            {% endfor %}
         </form>
     </div>
     
 </body>
 
 </html>
-
-<script>
-   
-    var today = new Date();
-    
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
-    document.getElementById("date_pre").value = date;
-
-    function submitForm(form) {
-
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-
-        .then(function(isOkay) {
-            if (isOkay) {
-                var btn = document.getElementById('submit_button');
-                btn.disabled = true;
-                btn.innerText = 'Submitted'
-                document.getElementById("ln_box_pre").disabled = true;
-                document.getElementById("fn_box_pre").disabled = true;
-                document.getElementById("mn_box_pre").disabled = true;
-                document.getElementById("date_pre").disabled = true;
-                document.getElementById("add_box_pre").disabled = true;
-                document.getElementById("course_pre").disabled = true;
-                document.getElementById("control_pre").disabled = true;
-                document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose").disabled = true;
-                document.getElementById("certification_box").disabled = true;
-                document.getElementById("others_box_pre").disabled = true;
-                document.getElementById("year_graduated_pre").disabled = true;
-            }
-        });
-        return false;
-    }
-
-    function isEmpty() {
-     
-        let purpose_req = document.getElementById("purpose").value;
-    
-        if (purpose_req != "") {
-            document.getElementById("submit_btn_pre").removeAttribute("disabled");
-        }
-    }
-    
-    //back to top function
-    var button = $("#backtotop_btn_pre");
-    
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 40) {
-            button.addClass("show");
-        } else {
-            button.removeClass("show");
-        }
-    });
-    
-    button.on("click", function(e) {
-        e.preventDefault();
-        $("html, body").animate({
-            scrollTop: 0
-        }, "50");
-    });
-
-    if (document.getElementById("user_stat").value == "STUDENT"){
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").checked = true;
-    }else if(document.getElementById("user_stat").value == "OLD STUDENT"){
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-        document.getElementById("year_graduated_pre").disabled = true;
-        document.getElementById("old_student_pre").checked = true;
-        document.getElementById("old_student_pre").disabled = true;
-    }else{
-        document.getElementById("old_student_pre").disabled = true;
-        document.getElementById("currently_enrolled_pre").disabled = true;
-        document.getElementById("year_graduated_check_pre").checked = true;
-        document.getElementById("year_graduated_check_pre").disabled = true;
-    }
-
-    year = document.getElementById("year_graduated_pre").value;
-    document.getElementById("year_graduated_check_pre").value = "ALUMNI: " + year;
-
-    if (document.getElementById('allow_request').value == "UNCLAIMED"){
-        document.getElementById('HonorableDismissal_check_pre').disabled = true;
-        document.getElementById('authentication_verification').disabled = true;
-        document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-        document.getElementById('subject_description').disabled = true;
-        document.getElementById('Diploma_check_pre').disabled = true;
-        document.getElementById('cav').disabled = true;
-        document.getElementById('Certification_check_pre').disabled = true;
-        document.getElementById('Others_check_pre').disabled = true;
-        document.getElementById("purpose").disabled = true;
-        document.getElementById('purpose').value = document.getElementById("display_pur_request").value
-        document.getElementById("submit_btn_pre").textContent ="Previous Request Not Yet Approved";
-
-        var requested_data = document.getElementById('latest_request').value;
-
-        if (requested_data == "Honorable Dismissal"){
-            document.getElementById('HonorableDismissal_check_pre').checked = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if (requested_data == "Authentication/Verification"){
-            document.getElementById('authentication_verification').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Transcript of Records"){
-            document.getElementById('TranscriptofRecords_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Subject Description"){
-            document.getElementById('subject_description').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Diploma"){
-            document.getElementById('Diploma_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "CAV"){
-            document.getElementById('cav').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('Certification_check_pre').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-        }else if(requested_data == "Certification"){
-            document.getElementById('Certification_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-            document.getElementById('certification_box').disabled = true;
-            document.getElementById('certification_box').hidden = false;
-
-            var cert_data = document.getElementById('certification_box').value;
-            var split_cert = cert_data.split(':').pop();
-            document.getElementById('certification_box').value = split_cert;
-        }else{
-            document.getElementById('Others_check_pre').checked = true;
-            document.getElementById('HonorableDismissal_check_pre').disabled = true;
-            document.getElementById('authentication_verification').disabled = true;
-            document.getElementById('TranscriptofRecords_check_pre').disabled = true;
-            document.getElementById('subject_description').disabled = true;
-            document.getElementById('Diploma_check_pre').disabled = true;
-            document.getElementById('cav').disabled = true;
-            document.getElementById('Others_check_pre').disabled = true;
-            document.getElementById('others_box_pre').disabled = true;
-            document.getElementById('others_box_pre').hidden = false;
-
-            var ot_data = document.getElementById('others_box_pre').value;
-            var split_other = ot_data.split(':').pop();
-            document.getElementById('others_box_pre').value = split_other;
-        }
-    }else{
-        document.getElementById('HonorableDismissal_check_pre').disabled = false;
-        document.getElementById('authentication_verification').disabled = false;
-        document.getElementById('TranscriptofRecords_check_pre').disabled = false;
-        document.getElementById('subject_description').disabled = false;
-        document.getElementById('Diploma_check_pre').disabled = false;
-        document.getElementById('cav').disabled = false;
-        document.getElementById('Certification_check_pre').disabled = false;
-        document.getElementById('Others_check_pre').disabled = false;
-        document.getElementById("purpose").disabled = false;
-        document.getElementById("submit_btn_pre").textContent ="Submit";
-    }
-
-    certification_box.addEventListener("keyup", function() {
-        kind_of_cert = document.getElementById('certification_box').value;
-        document.getElementById('Certification_check_pre').value = 'Certification: ' + kind_of_cert;
-        document.getElementById('Certification_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-    });
-    
-    others_box_pre.addEventListener("keyup", function(){
-        others= document.getElementById("others_box_pre").value;
-        document.getElementById("Others_check_pre").value = "Others: " + others;
-        document.getElementById('Others_check_pre').checked = true;
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-    });
-
-    HonorableDismissal_check_pre.addEventListener("click", function(){
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    authentication_verification.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    TranscriptofRecords_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    subject_description.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Diploma_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    cav.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =true;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-    Certification_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Others_check_pre').checked = false;
-        document.getElementById('certification_box').hidden =false;
-        document.getElementById("others_box_pre").hidden =true;
-    });
-
-    Others_check_pre.addEventListener("click", function(){
-        document.getElementById('HonorableDismissal_check_pre').checked = false;
-        document.getElementById('authentication_verification').checked = false;
-        document.getElementById('TranscriptofRecords_check_pre').checked = false;
-        document.getElementById('subject_description').checked = false;
-        document.getElementById('Diploma_check_pre').checked = false;
-        document.getElementById('cav').checked = false;
-        document.getElementById('Certification_check_pre').checked = false;
-        document.getElementById("others_box_pre").hidden =false;
-        document.getElementById('certification_box').hidden =true;
-    });
-
-
-    Certification_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    HonorableDismissal_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "0.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    authentication_verification.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    TranscriptofRecords_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    subject_description.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "70.00/Subject";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    Diploma_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "150.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    cav.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "100.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    Others_check_pre.addEventListener("change", function(){
-        if(this.checked){
-            document.getElementById('amount_paid').value = "0.00";
-        }else{
-            document.getElementById('amount_paid').value = "0.00";
-        }
-    });
-
-    
-        // ONLY NUMBERS IN INPUT BOX JS
-    function isNumber(evt) {
-        if (event.key.length === 1 && /\D/.test(event.key)) {
-            event.preventDefault();
-        }
-    }
-    $.fn.digits = function() {
-        return this.each(function() {
-            $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
-        })
-    }
-    $("span.numbers").digits();
-</script>
-
 
 
 
