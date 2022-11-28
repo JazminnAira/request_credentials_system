@@ -6183,8 +6183,7 @@ def school_year_update(request):
 
     return redirect(registrar_dashboard_student_list)
 
-@login_required(login_url='/')
-def send_email_all(request):
+def send_email_all():
     date_today = datetime.now().date()
     print(date_today)
     faculties=[]
@@ -6243,9 +6242,5 @@ def send_email_all(request):
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
-    if not recipient_list :
-        messages.error(request, "No application forms to sign.")
-    else:
-        messages.success(request, "Email Sent.")
     
-    return redirect('registrar_dashboard')
+
