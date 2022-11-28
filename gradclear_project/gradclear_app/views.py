@@ -1007,7 +1007,9 @@ def clearance_print(request, id):
     str_upload_acc = str(upload_acc_sign)
     esign_acc_sign = accountant.e_signature
     str_esign_acc = str(esign_acc_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)      
+    p.drawString(125, 298, f"""{acc_name}""")
 
     if acc_stat == "ESIGN":
         im = "../public_html/Media/"+str_esign_acc
@@ -1019,9 +1021,7 @@ def clearance_print(request, id):
         p.drawImage(im ,130, 287, height = 25, width = 80 , mask='auto')
 
     else: 
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)      
-        p.drawString(100, 298, f"""{acc_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(53, 292, "APPROVED *Required Live Signature")
@@ -1041,7 +1041,9 @@ def clearance_print(request, id):
     str_upload_dla = str(upload_dla_sign)
     esign_dla_sign = liberal_arts.e_signature
     str_esign_dla = str(esign_dla_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)       
+    p.drawString(147, 243, f"""{dla_name}""")
     
     
     
@@ -1055,9 +1057,7 @@ def clearance_print(request, id):
         p.drawImage(im ,150, 240, height = 25, width = 80 , mask='auto')
 
     else:
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)       
-        p.drawString(147, 240, f"""{dla_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(75, 234, "APPROVED *Required Live Signature")
@@ -1075,7 +1075,9 @@ def clearance_print(request, id):
     str_upload_dms = str(upload_dms_sign)
     esign_dms_sign = mathsci.e_signature
     str_esign_dms = str(esign_dms_sign)
-
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)
+    p.drawString(170, 215, f"""{dms_name}""")
     
     
     
@@ -1090,9 +1092,7 @@ def clearance_print(request, id):
         p.drawImage(im ,170, 215, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)
-        p.drawString(170, 215, f"""{dms_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(75, 209, "APPROVED *Required Live Signature")
@@ -1112,8 +1112,10 @@ def clearance_print(request, id):
     str_esign_pe = str(esign_pe_sign)
     p.setFont("Helvetica", 4.5)
     p.setFillColorRGB(1,0,0)
-    
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)
+    p.drawString(120, 190, f"""{pe_name}""")
+
     if pe_stat == "ESIGN":
         im = "../public_html/Media/"+str_esign_pe
         p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
@@ -1124,9 +1126,7 @@ def clearance_print(request, id):
         p.drawImage(im ,120, 185, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)
-        p.drawString(120, 190, f"""{pe_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(75, 183, "APPROVED *Required Live Signature")
@@ -1152,7 +1152,9 @@ def clearance_print(request, id):
         str_upload_itdept = str(upload_itdept_sign)
         esign_itdept_sign = itdept_dept.e_signature
         str_esign_itdept = str(esign_itdept_sign)
-        
+        p.setFont("Helvetica", 5)
+        p.setFillColorRGB(0,0,0)    
+        p.drawString(105, 113, f"""{itdept_name}""")
 
         if itdept_stat == "ESIGN":
             im = "../public_html/Media/"+str_esign_itdept
@@ -1164,9 +1166,7 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
-            p.setFont("Helvetica", 5)
-            p.setFillColorRGB(0,0,0)    
-            p.drawString(105, 113, f"""{itdept_name}""")
+            
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
             p.drawString(75, 105, "APPROVED *Required Live Signature")
@@ -1184,7 +1184,10 @@ def clearance_print(request, id):
         str_upload_educdept = str(upload_educdept_sign)
         esign_educdept_sign = educdept_dept.e_signature
         str_esign_educdept = str(esign_educdept_sign)
-
+        p.setFont("Helvetica", 5)
+        p.setFillColorRGB(0,0,0)    
+        p.drawString(105, 113, f"""{educdept_name}""")
+        
         if educdept_stat == "ESIGN":
             im = "../public_html/Media/"+str_esign_educdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
@@ -1196,9 +1199,6 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
 
         else:   
-            p.setFont("Helvetica", 5)
-            p.setFillColorRGB(0,0,0)    
-            p.drawString(105, 113, f"""{educdept_name}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
             p.drawString(75, 105, "APPROVED *Required Live Signature")
@@ -1216,7 +1216,10 @@ def clearance_print(request, id):
         str_upload_engdept = str(upload_engdept_sign)
         esign_engdept_sign = engdept_dept.e_signature
         str_esign_engdept = str(esign_engdept_sign)
-
+        p.setFont("Helvetica", 5)
+        p.setFillColorRGB(0,0,0) 
+        p.drawString(105, 113, f"""{engdept_name}""")
+        
         if engdept_stat == "ESIGN":
             im = "../public_html/Media/"+str_esign_engdept
             p.drawImage(im ,120, 110, height = 25, width = 80 , mask='auto')
@@ -1228,9 +1231,7 @@ def clearance_print(request, id):
             p.drawImage(im ,120, 190, height = 25, width = 80 , mask='auto')
 
         else:      
-            p.setFont("Helvetica", 5)
-            p.setFillColorRGB(0,0,0) 
-            p.drawString(105, 113, f"""{engdept_name}""")
+            
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1,0,0)
             p.drawString(75, 105, "APPROVED *Required Live Signature")
@@ -1247,7 +1248,9 @@ def clearance_print(request, id):
     str_upload_shop = str(upload_shop_sign)
     esign_shop_sign = shop_ad.e_signature
     str_esign_shop = str(esign_shop_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)
+    p.drawString(435, 300, f"""{shop_name}""")
     
     
     
@@ -1261,9 +1264,7 @@ def clearance_print(request, id):
         p.drawImage(im ,435, 290, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)
-        p.drawString(435, 300, f"""{shop_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(320, 290, "APPROVED *Required Live Signature")
@@ -1280,7 +1281,9 @@ def clearance_print(request, id):
     str_upload_lib = str(upload_lib_sign)
     esign_lib_sign = lib_ad.e_signature
     str_esign_lib = str(esign_lib_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)   
+    p.drawString(425, 269, f"""{lib_name}""")
     
     if lib_stat == "ESIGN":
         im = "../public_html/Media/"+str_esign_lib
@@ -1291,9 +1294,7 @@ def clearance_print(request, id):
         p.drawImage(im,425, 265, height = 15, width = 80 , mask='auto')
 
     else:    
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)   
-        p.drawString(425, 269, f"""{lib_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(325, 260, "APPROVED *Required Live Signature")
@@ -1313,7 +1314,9 @@ def clearance_print(request, id):
     str_upload_guidance = str(upload_guidance_sign)
     esign_guidance_sign = guidance.e_signature
     str_esign_guidance = str(esign_guidance_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0) 
+    p.drawString(435, 244, f"""{guidance_name}""")
     
     if guidance_stat == "ESIGN":
         im = "../public_html/Media/"+str_esign_guidance
@@ -1325,9 +1328,7 @@ def clearance_print(request, id):
         p.drawImage(im ,435, 240, height = 25, width = 80 , mask='auto')
 
     else:      
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0) 
-        p.drawString(435, 244, f"""{guidance_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(325, 238, "APPROVED *Required Live Signature")
@@ -1345,8 +1346,10 @@ def clearance_print(request, id):
     esign_osa_sign = osa.e_signature
     str_esign_osa = str(esign_osa_sign)
     p.setFont("Helvetica", 5)
-    
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)
+    p.drawString(455, 217, f"""{osa_name}""")
+
     if osa_stat == "ESIGN":
         im = "../public_html/Media/"+str_esign_osa
         p.drawImage(im ,455, 210, height = 25, width = 80 , mask='auto')
@@ -1357,9 +1360,7 @@ def clearance_print(request, id):
         p.drawImage(im ,455, 215, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)
-        p.drawString(455, 215, f"""{osa_name}""")
+        
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1,0,0)
         p.drawString(320, 210, "APPROVED *Required Live Signature")
@@ -1380,7 +1381,9 @@ def clearance_print(request, id):
     str_upload_adaa = str(upload_adaa_sign)
     esign_adaa_sign = adaa.e_signature
     str_esign_adaa = str(esign_adaa_sign)
-    
+    p.setFont("Helvetica", 5)
+    p.setFillColorRGB(0,0,0)
+    p.drawString(482, 190, f"""{adaa_name}""")
     
     
     if adaa_stat == "ESIGN":
@@ -1393,9 +1396,7 @@ def clearance_print(request, id):
         p.drawImage(im ,482, 180, height = 25, width = 80 , mask='auto')
 
     else:       
-        p.setFont("Helvetica", 5)
-        p.setFillColorRGB(0,0,0)
-        p.drawString(482, 190, f"""{adaa_name}""")
+        
         p.setFillColorRGB(1,0,0)
         p.setFont("Helvetica", 4.5)  
         p.drawString(325, 185, "APPROVED *Required Live Signature")
@@ -1442,6 +1443,7 @@ def appointment(request, id, form):
                 student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
+            print("RECMAIL TOH",rec_email)
 
             name_temp = clearance_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
@@ -1722,6 +1724,8 @@ def request_appointment(request, id):
             student_id=email_temp[0]).values_list('email', flat=True).distinct()
         rec_email = email[0]
         recipient_list = [rec_email, ]
+        
+        
 
         gender_temp = request_form_table.objects.filter(
         id=id).values_list('student_id', flat=True).distinct()
@@ -1764,7 +1768,7 @@ def request_appointment(request, id):
         message5 =  "<strong>"+'Technological University of the Philippines-Cavite Campus'+"</strong><br>"+'CQT Avenue, Salawag, Dasmarinas, Cavite'
         message6 =  "<i>"+'***This is an automated message, do not reply.<br><br>'+"</i>"
 
-
+        
         message = message1 + message2 + message3 
 
         purpose_req = request.POST.get('purpose_of_request')
@@ -1803,6 +1807,10 @@ def request_appointment(request, id):
         '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
         msg.content_subtype = "html" 
+        
+        msg = EmailMessage(subject, message,'', email, recipient_list)
+        print("hi", recipient_list)
+        msg.content_subtype = "html"
         msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
@@ -5541,7 +5549,7 @@ def registrar_dashboard_graduation_list(request, id):
         else:
             string=id.replace('%20',' ')
             all =graduation_form_table.objects.filter(course=string)
-            all_list = graduation_form_table.objects.filter(course=id, approval_status="APPROVED")
+            all_list = graduation_form_table.objects.filter(course=string, approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list':all_list})
             
         return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
@@ -5596,7 +5604,7 @@ def set_appointment(request, id):
 def registrar_dashboard_faculty_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
     
-        all_faculty = user_table.objects.filter(user_type = "FACULTY")
+        all_faculty = user_table.objects.filter(user_type = "FACULTY", is_active=True)
         faculty_data = {
             'all':all_faculty,
         }
@@ -5613,7 +5621,9 @@ def registrar_dashboard_faculty_list(request):
 def faculty_list_remove(request, id):
     print("hey")
     delete_faculty = user_table.objects.get(id=id)
-    delete_faculty.delete()
+    # delete_faculty.delete()
+    delete_faculty.is_active = False
+    delete_faculty.save() 
     messages.success(request, "Faculty has been deleted.")
     
     return redirect (registrar_dashboard_faculty_list)
@@ -6179,8 +6189,7 @@ def school_year_update(request):
 
     return redirect(registrar_dashboard_student_list)
 
-@login_required(login_url='/')
-def send_email_all(request):
+def send_email_all():
     date_today = datetime.now().date()
     print(date_today)
     faculties=[]
@@ -6239,9 +6248,5 @@ def send_email_all(request):
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
-    if not recipient_list :
-        messages.error(request, "No application forms to sign.")
-    else:
-        messages.success(request, "Email Sent.")
     
-    return redirect('registrar_dashboard')
+
