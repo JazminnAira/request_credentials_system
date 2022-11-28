@@ -1513,7 +1513,7 @@ def appointment(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send(fail_silently=False)
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
     
             return redirect(faculty_dashboard_clearance_list) 
@@ -1609,7 +1609,7 @@ def appointmentgrad(request, id, form):
             '''''.format(data['message'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'], data ['message7'])
             msg = EmailMessage(subject, message,'', email, recipient_list,)
             msg.content_subtype = "html"
-            msg.send(fail_silently=False)
+            msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
             return redirect('faculty_dashboard_graduation_list')
         else:
@@ -1659,7 +1659,7 @@ def reggrad_appointment(request, id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send(fail_silently=False)
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_graduation_list/%20')
@@ -1710,7 +1710,7 @@ def regclear_appointment(request,id):
     recipient_list = [rec_email, ]
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send(fail_silently=False)
+    msg.send(fail_silently=True)
 
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_clearance_list/%20')
@@ -1805,11 +1805,13 @@ def request_appointment(request, id):
         \n\t\t{}\n<br>
         
         '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
+        msg = EmailMessage(subject, message,'', email, recipient_list,)
+        msg.content_subtype = "html" 
         
         msg = EmailMessage(subject, message,'', email, recipient_list)
         print("hi", recipient_list)
         msg.content_subtype = "html"
-        msg.send(fail_silently=False)
+        msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
         return redirect('registrar_dashboard_request_list')
@@ -5592,7 +5594,7 @@ def set_appointment(request, id):
             recipient_list = [rec_email, ]
             msg = EmailMessage(subject, message, email_from, recipient_list,)
             msg.content_subtype = "html"
-            msg.send(fail_silently=False)
+            msg.send(fail_silently=True)
             return redirect('faculty_dashboard_clearance_list')
     return render(request, 'html_files/appointment.html')
 
@@ -5602,7 +5604,7 @@ def set_appointment(request, id):
 def registrar_dashboard_faculty_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
     
-        all_faculty = user_table.objects.filter(user_type = "FACULTY")
+        all_faculty = user_table.objects.filter(user_type = "FACULTY", is_active=True)
         faculty_data = {
             'all':all_faculty,
         }
@@ -5619,7 +5621,9 @@ def registrar_dashboard_faculty_list(request):
 def faculty_list_remove(request, id):
     print("hey")
     delete_faculty = user_table.objects.get(id=id)
-    delete_faculty.delete()
+    # delete_faculty.delete()
+    delete_faculty.is_active = False
+    delete_faculty.save() 
     messages.success(request, "Faculty has been deleted.")
     
     return redirect (registrar_dashboard_faculty_list)
@@ -6134,6 +6138,7 @@ def delete_reqform(request, id):
 def student_status_update(request,id):
     student_update = request.POST.get('status_select')
     user_table.objects.filter(id=id).update(user_type = student_update)
+    
     getter = user_table.objects.get(id=id)
     today = date.today().year
     getter = user_table.objects.get(id=id)
@@ -6144,6 +6149,7 @@ def student_status_update(request,id):
     user_table.objects.filter(id=id).update(course = None)
     user_table.objects.filter(id=id).update(year_and_section = None)
     user_id = getter.id_number
+    user_id2 = getter.student_id
     userbday = getter.birthday
     mbday = userbday[:2]
     dbday = userbday[3:5]
@@ -6155,8 +6161,10 @@ def student_status_update(request,id):
         update_idnum = user_id+"-"+id_year+"-"+mbday+dbday+ybday
         user_table.objects.filter(id=id).update(id_number = update_idnum)
         user_table.objects.filter(id=id).update(student_id = update_id)
-    
-
+        clearance_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        graduation_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        request_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        
     return redirect(registrar_dashboard_student_list)
 
 @login_required(login_url='/')
@@ -6181,8 +6189,7 @@ def school_year_update(request):
 
     return redirect(registrar_dashboard_student_list)
 
-@login_required(login_url='/')
-def send_email_all(request):
+def send_email_all():
     date_today = datetime.now().date()
     print(date_today)
     faculties=[]
@@ -6240,10 +6247,6 @@ def send_email_all(request):
 
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
-    msg.send(fail_silently=False)
-    if not recipient_list :
-        messages.error(request, "No application forms to sign.")
-    else:
-        messages.success(request, "Email Sent.")
+    msg.send(fail_silently=True)
     
-    return redirect('registrar_dashboard')
+
