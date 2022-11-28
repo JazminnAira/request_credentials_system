@@ -1802,7 +1802,7 @@ def request_appointment(request, id):
         
         '''''.format(data['message'],data ['amount_paid'],data ['date_appointment'], data ['time_appointment'], data ['additionalmessage'], data ['message4'], data ['message5'], data ['message6'])
         msg = EmailMessage(subject, message,'', email, recipient_list,)
-        msg.content_subtype = "html"
+        msg.content_subtype = "html" 
         msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
@@ -6128,6 +6128,7 @@ def delete_reqform(request, id):
 def student_status_update(request,id):
     student_update = request.POST.get('status_select')
     user_table.objects.filter(id=id).update(user_type = student_update)
+    
     getter = user_table.objects.get(id=id)
     today = date.today().year
     getter = user_table.objects.get(id=id)
@@ -6138,10 +6139,11 @@ def student_status_update(request,id):
     user_table.objects.filter(id=id).update(course = None)
     user_table.objects.filter(id=id).update(year_and_section = None)
     user_id = getter.id_number
+    user_id2 = getter.student_id
     userbday = getter.birthday
     mbday = userbday[:2]
     dbday = userbday[3:5]
-    ybday=userbday[6:8]
+    ybday=userbday[6:]
     year_id = str(today)
     id_year = year_id[2:]
     if student_update == "ALUMNUS":
@@ -6149,8 +6151,10 @@ def student_status_update(request,id):
         update_idnum = user_id+"-"+id_year+"-"+mbday+dbday+ybday
         user_table.objects.filter(id=id).update(id_number = update_idnum)
         user_table.objects.filter(id=id).update(student_id = update_id)
-    
-
+        clearance_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        graduation_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        request_form_table.objects.filter(student_id=user_id2).update(student_id = update_id)
+        
     return redirect(registrar_dashboard_student_list)
 
 @login_required(login_url='/')
