@@ -724,6 +724,15 @@ Adviser:
         visibility: visible;
         text-align: right;
     }
+    #missing{
+        color: #c51d3a;
+        font-size: 16px;
+    }
+    #document1{
+        font-size: 15px;
+        text-decoration-line:underline;
+        text-decoration-color: #c51d3a;
+    }
     #welcome{
         font-size: 18px;
     }
@@ -739,6 +748,13 @@ Adviser:
     }
     #date_today{
         display: none;
+    }
+    }
+    @media screen and (max-width: 700px) {
+    #viewform_btn{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
     }
 }
 
@@ -1050,8 +1066,8 @@ Adviser:
                             <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% endif %}
                             <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                            <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
+                            <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-l btn-1"
+                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
 
                         </tr>
                         {% endfor %}
@@ -1067,7 +1083,7 @@ Adviser:
                             {% endif %}
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
+                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                             <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
                                 data-toggle="modal" data-target="#exampleModal_41">View</button></td> -->
                         </tr>
@@ -1084,7 +1100,7 @@ Adviser:
                             {% endif %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">View Form</a></td>
+                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
                         {% endfor %}
 

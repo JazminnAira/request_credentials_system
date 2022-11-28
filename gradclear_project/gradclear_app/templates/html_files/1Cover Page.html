@@ -442,25 +442,8 @@ Adviser:
 
     @media screen and (max-width: 700px){
 
-        #signup_login_container{
-            padding: 1em;
-            margin:0;
-            height: 90vh;
-            position: relative;
-        }
-
-        #mid_div{
-            width:100vw;
-        }
-
-        #title_cover{
-            font-size: 3em;
-        }
-
-        #subtitle_cover{
-            font-size: 2em;
-        }
-
+       
+        
         li{
             font-size: 0.7em;
         }
@@ -488,8 +471,42 @@ Adviser:
         #footer_bottom{
             display: none;
         }
-
     }
+    @media screen and (max-width: 450px){  
+        #mid_div{
+            background: rgba( 255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
+       
+        
+        border: 1px solid rgba( 255, 255, 255, 0.1 );
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-top: 10px;
+        }
+        #title_cover{
+            display: none;
+        }
+        #title_hide{
+            margin-top: 5px;
+        }
+
+        #subtitle_cover{
+            display: none;
+        }
+        #signlog_container{
+            margin-top: 10px;
+            display: flex;
+
+
+        }
+       
+        }
+
+      
+
+    
 </style>
 
 
@@ -558,14 +575,14 @@ Adviser:
     </div>
 
     <!--MAIN SCREEN-->
-    <div class="container p-sm-4 mt-5 container-1" id="signup_login_container">
+    <div class="container p-sm-4 mt-5 container-1" id="signup_login_container" >
         <div class="row container-fluid" id="mid_div" > 
-            <div class="col-sm-7 ">
+            <div class="col-sm-7 " id="title_hide">
                 <h1  style="margin-top: 110px; color: #fff;" id ="title_cover"> Office of the Registrar</h1>
                 <h2 class=" text-white" id ="subtitle_cover">TUP Cavite</h2>
             </div>
             
-            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;">
+            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;" id="signlog_container">
                 <form method="POST">
                     {% csrf_token %}
                     <div style="margin-bottom: 30px;">
