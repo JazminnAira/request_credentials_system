@@ -402,6 +402,17 @@ Adviser:
         font-size: 30px;
         padding-top: 15px;
     }
+    @media screen and (max-width: 700px) {
+   
+    #appointment_modal{
+        max-width: fit-content;
+        max-height: fit-content;
+    
+    }
+    #claiming_lbl{
+        font-size: medium;
+    }
+    }
 </style>
 
 
@@ -411,12 +422,12 @@ Adviser:
     {% include 'html_files/message.html'%}
     <section>
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
-         border-radius: 10px; width: 800px; height: max-content;" >
+         border-radius: 10px; width: 800px; height: max-content;" id="appointment_modal">
                     <div class="modal-header modal-1"  style="width: 100%;">
                         {% if request.user.user_type == "FACULTY" %}
-                        <h3 class="modal-title w-100 text-center">Appointment for Concerns</h3>
+                        <h3 class="modal-title w-100 text-center"  id="claiming_lbl">Appointment for Concerns</h3>
                         {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
-                        <h3 class="modal-title w-100 text-center">Appointment for Claiming Requested Credentials</h3>
+                        <h3 class="modal-title w-100 text-center" id="claiming_lbl">Appointment for Claiming Requested Credentials</h3>
                         {% endif %}
 
                          <!--MODAL CLOSE BUTTON-->
