@@ -574,7 +574,7 @@ Adviser:
             {% endif %}
         </li>
         <li>
-            {% if request.user.user_type == "STUDENT" %}
+            {% if request.user.user_type == "STUDENT" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "ALUMNUS" %}
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
                 <i class="fa fa-home"></i>
             </a>
@@ -726,7 +726,7 @@ Adviser:
                          <td>{{i.subject1}}</td>
                          <td>{{i.starttime1_1}} - {{i.endtime1_1}} {{i.day1_1}}</td>
                          <td>{{i.room1}}</td>
-                         <td>{{i.faculty1}}</td>
+                         <td>{{subject1_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type1 == "APPROVE" %}
@@ -753,7 +753,7 @@ Adviser:
                          <td>{{i.subject2}}</td>
                          <td>{{i.starttime1_2}} - {{i.endtime1_2}} {{i.day1_2}}</td>
                          <td>{{i.room2}}</td>
-                         <td>{{i.faculty2}}</td>
+                         <td>{{subject2_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type2 == "APPROVE" %}
@@ -779,7 +779,7 @@ Adviser:
                          <td>{{i.subject3}}</td>
                          <td>{{i.starttime1_3}} - {{i.endtime1_3}} {{i.day1_3}}</td>
                          <td>{{i.room3}}</td>
-                         <td>{{i.faculty3}}</td>
+                         <td>{{subject3_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type3 == "APPROVE" %}
@@ -805,7 +805,7 @@ Adviser:
                          <td>{{i.subject4}}</td>
                          <td>{{i.starttime1_4}} - {{i.endtime1_4}} {{i.day1_4}}</td>
                          <td>{{i.room4}}</td>
-                         <td>{{i.faculty4}}</td>
+                         <td>{{subject4_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type4 == "APPROVE" %}
@@ -831,7 +831,7 @@ Adviser:
                          <td>{{i.subject5}}</td>
                          <td>{{i.starttime1_5}} - {{i.endtime1_5}} {{i.day1_5}}</td>
                          <td>{{i.room5}}</td>
-                         <td>{{i.faculty5}}</td>
+                         <td>{{subject5_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type5 == "APPROVE" %}
@@ -857,7 +857,7 @@ Adviser:
                          <td>{{i.subject6}}</td>
                          <td>{{i.starttime1_6}} - {{i.endtime1_6}} {{i.day1_6}}</td>
                          <td>{{i.room6}}</td>
-                         <td>{{i.faculty6}}</td>
+                         <td>{{subject6_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type6 == "APPROVE" %}
@@ -883,7 +883,7 @@ Adviser:
                          <td>{{i.subject7}}</td>
                          <td>{{i.starttime1_7}} - {{i.endtime1_7}} {{i.day1_7}}</td>
                          <td>{{i.room7}}</td>
-                         <td>{{i.faculty7}}</td>
+                         <td>{{subject7_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type7 == "APPROVE" %}
@@ -909,7 +909,7 @@ Adviser:
                          <td>{{i.subject8}}</td>
                          <td>{{i.starttime1_8}} - {{i.endtime1_8}} {{i.day1_8}}</td>
                          <td>{{i.room8}}</td>
-                         <td>{{i.faculty8}}</td>
+                         <td>{{subject8_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type8 == "APPROVE" %}
@@ -935,7 +935,7 @@ Adviser:
                          <td>{{i.subject9}}</td>
                          <td>{{i.starttime1_9}} - {{i.endtime1_9}} {{i.day1_9}}</td>
                          <td>{{i.room9}}</td>
-                         <td>{{i.faculty9}}</td>
+                         <td>{{subject9_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type9 == "APPROVE" %}
@@ -961,7 +961,7 @@ Adviser:
                          <td>{{i.subject10}}</td>
                          <td>{{i.starttime1_10}} - {{i.endtime1_10}} {{i.day1_10}}</td>
                          <td>{{i.room10}}</td>
-                         <td>{{i.faculty10}}</td>
+                         <td>{{subject10_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type10 == "APPROVE" %}
@@ -1004,7 +1004,7 @@ Adviser:
                          <td>{{i.addsubject1}}</td>
                          <td>{{i.add_starttime1_1}} - {{i.add_endtime1_1}} {{i.addday1_1}}</td>
                          <td>{{i.addroom1}}</td>
-                         <td>{{i.addfaculty1}}</td>
+                         <td>{{addsubject1_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type11 == "APPROVE" %}
@@ -1029,7 +1029,7 @@ Adviser:
                          <td>{{i.addsubject2}}</td>
                          <td>{{i.add_starttime1_2}} - {{i.add_endtime1_2}} {{i.addday1_2}}</td>
                          <td>{{i.addroom2}}</td>
-                         <td>{{i.addfaculty2}}</td>
+                         <td>{{addsubject2_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type12 == "APPROVE" %}
@@ -1054,7 +1054,7 @@ Adviser:
                          <td>{{i.addsubject3}}</td>
                          <td>{{i.add_starttime1_3}} - {{i.add_endtime1_3}} {{i.addday1_3}}</td>
                          <td>{{i.addroom3}}</td>
-                         <td>{{i.addfaculty3}}</td>
+                         <td>{{addsubject3_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type13 == "APPROVE" %}
@@ -1079,7 +1079,7 @@ Adviser:
                          <td>{{i.addsubject4}}</td>
                          <td>{{i.add_starttime1_4}} - {{i.add_endtime1_4}} {{i.addday1_4}}</td>
                          <td>{{i.addroom4}}</td>
-                         <td>{{i.addfaculty4}}</td>
+                         <td>{{addsubject4_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                                 {% if signature_type14 == "APPROVE" %}
@@ -1104,7 +1104,7 @@ Adviser:
                          <td>{{i.addsubject5}}</td>
                          <td>{{i.add_starttime1_5}} - {{i.add_endtime1_5}} {{i.addday1_5}}</td>
                          <td>{{i.addroom5}}</td>
-                         <td>{{i.addfaculty5}}</td>
+                         <td>{{addsubject5_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if signature_type15 == "APPROVE" %}
@@ -1162,25 +1162,25 @@ Adviser:
                         {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                             {% if sit_type == "APPROVE" %}
                                 <label class="text-dark">{{sit}}</label>
-                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{sit_name}}</label>
                             {% elif sit == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
-                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{sit_name}}</label>
                             {% elif sit == "NONE" %}
                                 <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
                             {% else %}
                                 <img src = "/Media/{{sit}}" style ="height:50px; width:120px;" alt="APPROVED">
-                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{sit_name}}</label>
                             {% endif %}
                         {% else %}
                             {% if sit == "UNAPPROVED" %}
                                 <label class="text-dark">UNAPPROVED</label>
-                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{sit_name}}</label>
                             {% elif sit == "NONE" %}
                                 <label class="pl-3 text-dark">NO SIT INSTRUCTOR</label>
                             {% else %}
                                 <label class ="text-dark"> APPROVED </label>
-                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{i.instructor_name}}</label>
+                                <label class="label text-dark pl-3" id="noIns_box_43" name="instructor_name">{{sit_name}}</label>
                             {% endif %}
                         {% endif %}
                     </div></label>
