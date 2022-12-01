@@ -15,6 +15,10 @@ from django.db.models import Q
 from django.conf import settings
 from django.core.mail import send_mail, send_mass_mail, mail_admins, mail_managers, EmailMessage, EmailMultiAlternatives
 from django.core import mail
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import *
@@ -1835,6 +1839,12 @@ def request_appointment(request, id):
         msg = EmailMessage(subject, message,'', email, recipient_list)
         print("hi", recipient_list)
         msg.content_subtype = "html"
+        torletter1= request.POST.get('file_attach')
+        stor= str(torletter1)
+        if stor != "":
+            torletter = request.FILES['file_attach'] 
+            msg.attach(torletter.name, torletter.file.read(), torletter.content_type)
+        
         msg.send(fail_silently=True)
         messages.success(request, "Appointment Schedule Sent.")
         
