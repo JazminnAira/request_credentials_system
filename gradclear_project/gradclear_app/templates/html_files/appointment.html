@@ -448,7 +448,7 @@ Adviser:
                             <div class="modal-body ">
                                 <input type="hidden" name="usertype_001" id="usertype" value="">
         
-                                <form method="POST" action="" style="height:100%;" >
+                                <form method="POST" action="" enctype="multipart/form-data" style="height:100%;" >
                                     {% csrf_token %}
 
                                         <!--DATE OF APPOINTMENT-->
@@ -474,6 +474,12 @@ Adviser:
                                             <label for="cnum">Additional Message:</label>
                                             <input type="textarea" id="additionalmessage" name="additionalmessage" class="form-control input-field" 
                                             style="height: 150px; margin-bottom: 20px;" >
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="prof_pic">Attachment:</label>
+                                            <input type="file" name="file_attach" >
+                                            
                                         </div>
                                     
                                      

@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-66yny&_e3kz@(3nux544d*spq7e&@9hbqo7j&gd4d&qv!ry^gw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['tupcaviteregistrar.site']
 
@@ -157,8 +157,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tupcaviteregistrar@gmail.com'
-EMAIL_HOST_PASSWORD = 'quoctgatkmfyxgws'
+EMAIL_HOST_USER = 'tupc.registrar.office@gmail.com'
+EMAIL_HOST_PASSWORD = 'csvhjdbhjeenhmgq'
  
 # EMAIL_USE_SSL= False
 # EMAIL_TIMEOUT= None

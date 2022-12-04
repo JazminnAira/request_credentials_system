@@ -39,6 +39,9 @@ urlpatterns = [
      path('display_gradform/<int:id>', display_gradform, name='display_gradform'),
      path('registrar_dashboard_graduation_list/display_gradform/<str:id>', display_gradform,), 
      path('registrar_dashboard_clearance_list/display_clearform/<str:id>', display_clearform,), 
+     
+     #APPROVE BY REGISTRAR
+     path('approve_clearform/<int:id>', approve_clearform, name='approve_clearform'),
 
      # DELETE FORMS
      path('delete_gradform/<int:id>', delete_gradform, name='delete_gradform'),

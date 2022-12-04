@@ -800,8 +800,6 @@ Adviser:
 
             <br>
             
-
-            
         </form>
     {% endfor %}
 
@@ -817,6 +815,11 @@ Adviser:
                                     <label class="col-12 text-center">{{accountant}}</label>
                                     <br>
                                     <small class= "row">{{accountant_name}}</small>
+                                {% elif signature_type1 == "REG" %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{accountant_name}}</small>
+                                    </div>
                                 {% elif accountant == "UNAPPROVED" %}
                                     <label class = "col-12">UNAPPROVED</label>
                                 {% else %}
@@ -845,6 +848,11 @@ Adviser:
                                     <label class = "col-12 text-center">{{course_adviser}}</label>
                                     <br>  
                                     <small>{{adviser_name}}</small>
+                                {% elif signature_type2 == "REG" %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{adviser_name}}</small>
+                                    </div>
                                 {% elif course_adviser == "UNAPPROVED" %}
                                     <label class = "col-12">UNAPPROVED</label>
                                 {% else %}
@@ -876,6 +884,11 @@ Adviser:
                                     <label class=" col-12 text-center">{{liberal_arts}}</label>
                                     <br>
                                     <small class= "row">{{liberal_artsName}}</small>
+                                {% elif signature_type3 == "REG" %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{liberal_artsName}}</small>
+                                    </div>
                                 {% elif liberal_arts == "UNAPPROVED" %}
                                     <label class = "col-12">UNAPPROVED</label>
                                 {% else %}
@@ -906,6 +919,11 @@ Adviser:
                                     <label class = "col-12 text-center">{{campus_library}}</label>
                                     <br>  
                                     <small>{{librarian_name}}</small>
+                                {% elif signature_type4 == "REG" %}
+                                    <div class="text-center">
+                                        <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{librarian_name}}</small>
+                                    </div>
                                 {% elif campus_library == "UNAPPROVED" %}
                                     <label class = "col-12">UNAPPROVED</label>
                                 {% else %}
@@ -937,6 +955,11 @@ Adviser:
                                 <label class=" col-12 text-center">{{math_and_science}}</label>
                                 <br>
                                 <small class= "row">{{math_and_science_name}}</small>
+                            {% elif signature_type5 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                        <small>{{math_and_science_name}}</small>
+                                </div>
                             {% elif math_and_science == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
@@ -967,6 +990,11 @@ Adviser:
                                 <label class = "col-12 text-center">{{guidance}}</label>
                                 <br>  
                                 <small>{{guidance_councelor}}</small>
+                            {% elif signature_type6 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVE</label>
+                                    <small>{{guidance_councelor}}</small>
+                                </div>
                             {% elif guidance == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
@@ -998,6 +1026,11 @@ Adviser:
                                 <label class="col-12 text-center">{{dpecs}}</label>
                                 <br>
                                 <small class= "row">{{dpecs_name}}</small>
+                            {% elif signature_type7 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                    <small>{{dpecs_name}}</small>
+                                </div>
                             {% elif dpecs == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
@@ -1028,6 +1061,11 @@ Adviser:
                                 <label class = "col-12 text-center">{{osa}}</label>
                                 <br>  
                                 <small>{{osa_name}}</small>
+                            {% elif signature_type8 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                    <small>{{osa_name}}</small>
+                                </div>
                             {% elif osa == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
@@ -1068,6 +1106,11 @@ Adviser:
                                 <label class="col-12 text-center">{{industrial}}</label>
                                 <br>
                                 <small class= "row">{{it_name}}</small>
+                            {% elif signature_type10 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                    <small>{{it_name}}</small>
+                                </div>
                             {% elif industrial == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
@@ -1098,6 +1141,11 @@ Adviser:
                                 <label class = "col-12 text-center">{{adaa}}</label>
                                 <br>  
                                 <small>{{adaa_name}}</small>
+                            {% elif signature_type9 == "REG" %}
+                                <div class="text-center">
+                                    <label class="col-12 text-dark">APPROVED</label>
+                                    <small>{{adaa_name}}</small>
+                                </div>
                             {% elif adaa == "UNAPPROVED" %}
                                 <label class = "col-12">UNAPPROVED</label>
                             {% else %}
