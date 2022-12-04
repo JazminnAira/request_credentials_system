@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2023
+BET-COET 2021-2023
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -29,6 +29,7 @@ Adviser:
 
     <title>TUPC Registrar</title>
 
+    <!-- PREVENT GOING BACK TO PREVIOUS PAGES -->
     <script type="text/javascript">
         function preventBack() {
             window.history.forward();
@@ -64,6 +65,7 @@ Adviser:
     #person_01{
         float: center;
     }
+
     * {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
@@ -77,9 +79,9 @@ Adviser:
         margin: 0;
         min-height: 400px;
         margin-bottom: 100px;
-        clear: both;
-        
+        clear: both;  
     }
+
     .normal {
     background-color: #dedede;
     }
@@ -87,6 +89,7 @@ Adviser:
     .active {
     background-color: #747474;
     }
+
     h1 {
         font-size: 60px;
         margin-top: 80px;
@@ -387,44 +390,40 @@ Adviser:
         color: #c51d3a;
     }
     #navbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: transparent;
-    font-weight: bolder;
-    font-size: 20px;
-    text-align:center
-    
-    
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: transparent;
+        font-weight: bolder;
+        font-size: 20px;
+        text-align:center;
     }
 
     li {
-    display:inline-block
+        display:inline-block
     }
 
     li:last-child {
-    border-right: none;
-    
+        border-right: none;
     }
 
     li a {
-    display: block;
-    color: #c31d35;
-    text-align: center;
-    padding: 14px 55px;
-    text-decoration: none;
+        display: block;
+        color: #c31d35;
+        text-align: center;
+        padding: 14px 55px;
+        text-decoration: none;
     }
 
     li a:hover:not(.active) {
         color: white;
-        background-color: #d3324d;
-        
+        background-color: #d3324d; 
     }
+
     #navbar :hover:not(.active) {
         color: white;
-        background-color: #d3324d;
-        
+        background-color: #d3324d; 
     }
 
     .active {
@@ -435,17 +434,15 @@ Adviser:
         text-decoration: none;
         background-color: #424242;
     }
+
     .active:hover{
         color: white;
         background-color: #616161;
     }
 
- 
-
+    /* SCREEN RESPONSIVENESS */
     @media screen and (max-width: 600px){
-
        #signup_login_container{
-            
             margin:0;
             height: 90vh;
             position: relative;
@@ -479,13 +476,13 @@ Adviser:
             display: none;
         }
     }
+
     @media screen and (max-width: 450px){  
         #mid_div{
-        background: rgba( 255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
-        border: 1px solid rgba( 255, 255, 255, 0.1 );
-        width:100vw;
-        
+            background: rgba( 255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
+            border: 1px solid rgba( 255, 255, 255, 0.1 );
+            width:100vw;
         }
         #title_cover{
             display: none;
@@ -499,21 +496,26 @@ Adviser:
         }
         #signlog_container{
             margin-top: 10px;
-
-
-        }
-       
-        }
+        }   
+    }
 </style>
 
 <body>
+    <!-- NAVIGATION BAR -->
     <ul id="navbar">
+        <!-- SERVICES OFFERED -->
         <li><a href="" data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
+        <!-- HOW TO USE THE SYSTEM -->
         <li><a href="" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
+        <!-- TO GOOGLE MAPS -->
         <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li>
+        <!-- TO GOOGLE MAIL -->
         <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li>    
+        <!-- TO FACEBOOK PAGE -->
         <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li>
+        <!-- PRIVACY POLICY -->
         <!--<li><a href="privacy_policy">Privacy Policy</a></li>-->
+        <!-- CREATE AN ACCOUNT -->
         <li style="float:right;" id ="create_account"><a class="active" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
     </ul>
 
@@ -544,11 +546,13 @@ Adviser:
                          onclick= "user_identifier()"><span>Student</span>
                         </a>
 
+                        <!--PRE SIGNUP MODAL OLD STUDENT SIGN UP BUTTON-->
                         <a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border-dark " 
                          id="oldstudentsignup_btn_01"  value = "OLD STUDENT"
                          onclick= "user_identifier()"><span>Old Student</span>
                         </a>
 
+                        <!--PRE SIGNUP MODAL ALUMNI SIGN UP BUTTON-->
                         <a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark "
                          id="alumnussignup_btn_01" style="width: max-content;"value = "ALUMNUS"
                          onclick= "user_identifier()"><span>Alumnus</span>
@@ -560,7 +564,6 @@ Adviser:
                          onclick= "user_identifier()"><span>Faculty</span>
                         </a>
                     </form>
-
                 </div>
                 
                 <!--PRE SIGNUP MODAL FOOTER-->
@@ -574,7 +577,8 @@ Adviser:
     <div class="container p-sm-4 mt-5 container-1" id="signup_login_container">
         <div class="row container-fluid" id="mid_div" > 
             <div class="col-sm-7 " id="title_hide">
-                <h1  style="margin-top: 110px; color: #fff;" id ="title_cover"> Office of the Registrar</h1>
+                <!-- HEADINGS  -->
+                <h1  style="margin-top: 110px; color: #fff;" id ="title_cover"> Office of the Campus Registrar</h1>
                 <h2 class=" text-white" id ="subtitle_cover">TUP Cavite</h2>
             </div>
             
@@ -660,8 +664,6 @@ Adviser:
                     <div id="user_01" class="container-fluid">
                         <h5 style="text-indent: 50px;">1. Create an account based on your position </h5>
                         <h5 style="text-indent: 67px;">e.g. (Student, Alumnus, Old Student, Faculty)</h5>
-                        <!-- <h5 style="text-indent: 65px;"><i> - Alumnus</i></h5>
-                        <h5 style="text-indent: 65px;"><i> - Faculty</i></h5> -->
                         <h5 style="text-indent: 50px;">2. Login using your registered email and password after signing up.</h5>
                         <h5 style="text-indent: 50px;">3. From your dashboard, choose the form you you're applying for.</h5>
                         <h5 style="text-indent: 65px;"><i> - Graduation Form </i></h5>
@@ -685,12 +687,10 @@ Adviser:
                         <h5>* Present your printed request form and other requirements provided from the site before arriving at the date and time of your appointment.</h5>
                         <h5>* Proceed to the Office of the Campus Registrar for the next procedures.</h5>
                         <h5>* For credentials with payment required, an official receipt should be issued upon claiming.</h5>
-                        <h5>* The requesting of credentials is done one at a time. No pending request is required before requesting another document.</h5>
-                       
+                        <h5>* The requesting of credentials is done one at a time. No pending request is required before requesting another document.</h5>  
                     </div> <br><br>
                 </div>
                
-
                 <!-- HOW TO MODAL FOOTER-->
                 <div class="modal-footer modal-footer1">
                 </div>
@@ -718,7 +718,6 @@ Adviser:
                 <!--SERVICES MODAL BODY-->
                 <div class="modal-body" id="maincontent_01">
 
-                    
                     <!--OFFICER IN CHARGE LABEL-->
                     <div id="services_01" class="container-fluid">
                         <h3 id="officername_01" style="float: center;"><b> Services Offered:</b></h3>
@@ -741,13 +740,9 @@ Adviser:
                     <h3 id="officername_01" style="float: center;"><b>Campus Registrar:{{RegistrarName}}</b></h3>
                 </div>
                 <br><br>
-
-
                 </div>
 
-                
-
-                <!-- Services FOOTER-->
+                <!-- SERVICES FOOTER-->
                 <div class="modal-footer modal-footer1">
                 </div>
             </div>
@@ -756,21 +751,18 @@ Adviser:
 
 </body>
 <footer id="footer_bottom">
-    
     <div id="footer_div">
-        
         <p style="color: white; border-color: none; text-align: center;">
             <div style="float: center; padding-right: 10px;">
-                
-                  </span></a>&nbsp; &nbsp;<b> Copyright © All Rights Reserved 2022 </b>
-               
-                </div>
+                </span></a>&nbsp; &nbsp;<b> Copyright © All Rights Reserved 2022 </b>
+            </div>
         </p>
     </div>
 </footer>
 </html>
 
 <script>
+    // EMPTY COMMENT
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
     $(this)
         .find("input,textarea,select")

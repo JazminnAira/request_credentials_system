@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+# LIST DISPLAY ARE COLUMNS DISPLAYED ON ADMIN PAGE
 class user_table_admin(admin.ModelAdmin):
      list_display = ('username', 'full_name', 'id_number', 'user_type')
 
@@ -12,6 +13,7 @@ class graduation_form_table_admin(admin.ModelAdmin):
 class request_form_table_admin(admin.ModelAdmin):
      list_display = ('student_id','name','date','current_status', 'form_137','clearance','request','official_receipt','claim')
 
+# REGISTER TABLES FOR ADMIN PAGE
 admin.site.register(user_table, user_table_admin)
 admin.site.register(clearance_form_table, clearance_form_table_admin)
 admin.site.register(graduation_form_table, graduation_form_table_admin)

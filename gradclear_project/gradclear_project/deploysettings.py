@@ -1,3 +1,5 @@
+# THIS SETUP IS APPLICABLE VIA ONLINE ONLY, USE LOCAL __INIT__ IF NEEDED
+
 """
 Django settings for gradclear_project project.
 
@@ -34,6 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-66yny&_e3kz@(3nux544d*spq7e&@9hbqo7j&gd4d&qv!ry^gw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# SET TO FALSE FOR SECURITY PURPOSES
 DEBUG = False
 
 ALLOWED_HOSTS = ['tupcaviteregistrar.site']
@@ -178,6 +181,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True     # LOGOUT WHEN BROWSER IS CLOSED
 SESSION_COOKIE_AGE = 600                  # 10 MINS INACTIVITY, AUTO LOGOUT
 SESSION_SAVE_EVERY_REQUEST = True          # Will prevent from logging you out after 300 seconds
 
+# SET TO WEEKDAYS AT 3 AM IN THE MORNING BASED ON EST
+# BASED ON EST SINCE SERVER IS IN US
+# AUTOMATICALLY CONVERTED TO GMT 800, NO ITERATIONS REQUIRED
 CRONJOBS = [
     ('0 3 * * 1-5', 'gradclear_app.cron.my_scheduled_job')
 ]

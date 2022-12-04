@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2023
+BET-COET 2021-2023
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -30,6 +30,7 @@ Adviser:
 
     <title>Dashboard</title>
 
+    <!-- PREVENT GOING BACK TO PREVIOUS PAGES -->
     <script type="text/javascript">
         function preventBack() {
             window.history.forward();
@@ -45,32 +46,34 @@ Adviser:
 
 <style>
     .tooltip {
-  display: inline;
-  position: relative;
-}
-.tooltip:hover:after{
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: center;
-  justify-content: center;
-  background: #444;
-  border-radius: 8px;
-  color: #fff;
-  content: attr(title);
-  margin: -82px auto 0;
-  font-size: 16px;
-  padding: 13px;
-  width: 220px;
-}
-.tooltip:hover:before{
-  border: solid;
-  border-color: #444 transparent;
-  border-width: 12px 6px 0 6px;
-  content: "";
-  left: 45%;
-  bottom: 30px;
-  position: absolute;
-}
+        display: inline;
+        position: relative;
+    }
+
+    .tooltip:hover:after{
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        background: #444;
+        border-radius: 8px;
+        color: #fff;
+        content: attr(title);
+        margin: -82px auto 0;
+        font-size: 16px;
+        padding: 13px;
+        width: 220px;
+    }
+
+    .tooltip:hover:before{
+        border: solid;
+        border-color: #444 transparent;
+        border-width: 12px 6px 0 6px;
+        content: "";
+        left: 45%;
+        bottom: 30px;
+        position: absolute;
+    }
 
     .results tr[visible='false'],
     .no-result {
@@ -145,18 +148,17 @@ Adviser:
     }
     
     .sidebar {
-    height: 100%;
-    width: 70px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #424242;
-    transition: 0.4s;
-    overflow-x: hidden;
-    white-space: nowrap;
-    
-}
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #424242;
+        transition: 0.4s;
+        overflow-x: hidden;
+        white-space: nowrap;  
+    }
 
     .sidebar a {
         padding: 8px 8px 8px 15px;
@@ -187,15 +189,6 @@ Adviser:
     #main {
         margin-left:70px;
         transition: margin-left 0.4s;
-    }
-
-    @media screen and (max-height: 450px) {
-    .sidebar {
-        padding-top: 15px;
-    }
-    .sidebar a {
-        font-size: 18px;
-    }
     }
     
     .sidebar .active,
@@ -322,7 +315,7 @@ Adviser:
     
     #displink {
         color: black;
-        font-style: italic;w
+        font-style: italic;
     }
     
     #maincontent_41 {
@@ -582,7 +575,6 @@ Adviser:
     #addresssavechanges_btn_41,
     #emailsavechanges_btn_41,
     #coursesavechanges_btn_41,
-    
     #add_btn_41,
     #logout_btn_41 {
         background-color: #424242;
@@ -704,86 +696,103 @@ Adviser:
     visibility: hidden;
    }
 
-     /* RESPONSIVENESS */
-      @media screen and (max-width: 700px) {
-    #missing_document {
-        display: none;
-    }
-   
-    #AccountSettings_modal_41{
-        max-width: fit-content;
-        max-height: fit-content;
-    
-    }
-    #settings_modal_41{
-        max-width: fit-content;
-        max-height: fit-content;
-
-    }
-    #missing_document_hide{
-        visibility: visible;
-        text-align: right;
-    }
-    
-    #missing{
-        color: #c51d3a;
-        font-size: 16px;
-    }
-    #document1{
-        font-size: 15px;
-        text-decoration-line:underline;
-        text-decoration-color: #c51d3a;
-    }
-    #welcome{
-        font-size: 18px;
-    }
-
-}
-
-    @media screen and (max-width: 500px) {
-    #foot {
-        display: none;
-    }
-    #welcome{
-        font-size: 16px;
-    }
-    #date_today{
-        display: none;
-    }
+    /* SCREEN RESPONSIVENESS */
+    @media screen and (max-height: 450px) {
+        .sidebar {
+            padding-top: 15px;
+        }
+        .sidebar a {
+            font-size: 18px;
+        }
     }
     @media screen and (max-width: 700px) {
-    #viewform_btn{
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-    }
-}
+        #missing_document {
+            display: none;
+        }
+    
+        #AccountSettings_modal_41{
+            max-width: fit-content;
+            max-height: fit-content;
+        
+        }
+        #settings_modal_41{
+            max-width: fit-content;
+            max-height: fit-content;
 
+        }
+        #missing_document_hide{
+            visibility: visible;
+            text-align: right;
+        }
+        
+        #missing{
+            color: #c51d3a;
+            font-size: 16px;
+        }
+        #document1{
+            font-size: 15px;
+            text-decoration-line:underline;
+            text-decoration-color: #c51d3a;
+        }
+        #welcome{
+            font-size: 18px;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        #foot {
+            display: none;
+        }
+        #welcome{
+            font-size: 16px;
+        }
+        #date_today{
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        #viewform_btn{
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+}
 </style>
 
 
-<!--SIDEBAR-->
+<!-- SIDEBAR -->
 {% if request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" %}
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebaralumni()" onmouseout="toggleSidebaralumni()">
+
 {% else %}
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
 {% endif %}
+    <!-- TUP LOGO -->
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
+    
+    <!-- ACCOUNT MODAL -->
     <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
+    
+    <!-- GRADUATION FORM FOR GRADUATING STUDENTS -->
     {% if graduating >= 4 and request.user.user_type == "STUDENT" %}
         <a  style="padding-left: 15px;" href="{% url 'graduation_view'%}" data-toggle="tooltip" data-placement="right"><i class="fa fa-graduation-cap material-icons " style="margin-right: 23px;">    
         </i><span class="icon-text">Graduation Form</span></a><br>
     {% endif %}
+
+    <!-- DISPLAY CLEARANCE IF THERE IS PENDING APPLICATION -->
     {% if clearance_stat == "UNAPPROVED" %}
         <a style="padding-left: 21px;" href="display_clearform/{{clearance_id}}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
         </i><span class="icon-text">Clearance</span></a><br>
     {% endif %}
-
+    
+    <!-- REQUEST FORM -->
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
-    <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">
     
+    <!-- JADE LOGO -->
+    <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">  
    
 </div>
 
@@ -852,7 +861,6 @@ Adviser:
                             </tr>
                             {% endif %}
                             
-
                             <tr>
                                 <td><b>ID No.:</b></td>
                                 <td>{{request.user.id_number}}</td>
@@ -876,53 +884,9 @@ Adviser:
                         <!--LOGOUT BUTTON-->
                         <a href="{% url 'logout' %}" type="submit" class="btn btn-secondary" role="button" style="border-radius: 10px;" aria-pressed="true">Log Out</a>
                     </div>
-            </div>
+                </div>
             </div>
         </form>
-    </div>
-
-
-    <!-- STATUS MODAL-->
-    <div class="modal fade" id="exampleModal_41" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-
-                <!--MODAL HEADER-->
-                <div class="modal-header" id="graduation_header_41">
-                    <h6 class="modal-title" id="modal_header_lbl_41"><b>Approval Status</b></h6>
-
-                    <!--MODAL CLOSE BUTTON-->
-                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" data-placement="right" title="Close">×</button>
-                </div>
-
-                <!--MODAL BODY-->
-
-                <div class="modal-body">
-
-                        <!--SUBJECT TABLE MODAL-->
-                        <table class="table-responsive-sm" id="grad_modal_41"><br>
-                            {% if st %}
-                            <thead>
-                                <tr>
-                                    <th>Accountant</th>
-                                    <th>Guidance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for instance in st1 %}
-                                <tr>
-                                    <td>Accountant {{instance.accountant_signature}}</td>
-                                    <td>DPECS {{instance.math_and_sci_signature}} </td>
-                                </tr>
-                                
-                                {% endfor %}
-                            </tbody>
-                            {% endif %}
-                        </table><br><br>
-
-                </div>
-            </div>
-        </div>
     </div>
 
     <!--SETTINGS STATUS MODAL-->
@@ -959,30 +923,31 @@ Adviser:
                                 <p id="spm_error_41" style="color:red;"></p>
                                 <p id="spon_error_41" style="color:red;"></p>
                             </div>
+
                              <!--CHANGE PASSWORD MODAL FOOTER-->
                             <div class="modal-footer" id="account_footer_41">
                                 <button class="btn btn-secondary btn-sm "  type="submit" name="submit4" id="passwordsavechanges_btn_41" >Save Changes</button>
                             </div>
+
                         </div>
                     </form>    
-
                 </div>
             </div>
-        </div>
+</div>
     </div>
 
     <!--MAIN-->
     <div class="container-fluid" id="date_today">
         <div class="row" style="padding-right: 0px;">
-            <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;
-            text-align: right;">
-                <!--DATE INDICATOR LABEL-->
+            <div class="col-12" style="padding-right: 10px; background-color: #dedede; height: 24px;text-align: right;">
+                
+            <!--DATE INDICATOR LABEL-->
                 <p id="date_text_lbl_41"></p>
-
             </div>
         </div>
     </div>
 
+    <!-- MISSING DOCUMENTS BOX -->
     <div class="container-fluid" id="main_41">
         {% if display %}
         <div id ="missing_document_hide">
@@ -1046,7 +1011,6 @@ Adviser:
                             <th>Approval Status</th>
                             <th> Date & Time Requested</th>
                             <th></th>
-                            <!-- <th>Signatures</th> -->
                         </tr>
                         <tr class="no_data">
                             <td colspan="5"><i class="fa fa-warning"></i> No Data</td>
@@ -1056,6 +1020,7 @@ Adviser:
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- REQUEST FORMS  -->
                         {% for instance in st0 %}
                         <tr>
                             <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
@@ -1072,6 +1037,8 @@ Adviser:
 
                         </tr>
                         {% endfor %}
+
+                        <!-- GRADUATION FORMS -->
                         {% for instance in st %}
                         <tr>
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
@@ -1084,11 +1051,11 @@ Adviser:
                             {% endif %}
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
-                            <!-- <td><button type="button" class="btn btn-white border-light btn-xl btn-1" 
-                                data-toggle="modal" data-target="#exampleModal_41">View</button></td> -->
+                                role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
                         {% endfor %}
+
+                        <!-- CLEARANCE FORMS -->
                         {% for instance in st1 %}
                         <tr>
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
@@ -1101,7 +1068,7 @@ Adviser:
                             {% endif %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
-                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
+                                role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
                         {% endfor %}
 
@@ -1117,7 +1084,6 @@ Adviser:
     </div>
 </body>
 
-
 <footer id="foot">
     <div>
         <p>© Technological University of the Philippines-Cavite</p>
@@ -1128,11 +1094,13 @@ Adviser:
 </html>
 
 <script>
+    // EMPTY COMMENT
     $('#AccountSettings_modal_41').on('hidden.bs.modal', function () {
     // Load up a new modal...
     $('#ClearanceStatus_modal_41').modal('show')
     })
-    // no data by default
+
+    // NO DATA BY DEFAULT IN TABLES
     var dattable = document.getElementById("list_tbl_41");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -1149,7 +1117,7 @@ Adviser:
 
     document.getElementById('date_text_lbl_41').innerHTML = "<span><b>Today: </b></span>" + day.toDateString();
 
-    //determine missing document(not yet working)
+    //MISSING DOCUMENT DETERMINER
     docu1= document.getElementById('document1').length;
     docu2= document.getElementById('document2').length;
     docu3= document.getElementById('document3').length;
@@ -1157,17 +1125,14 @@ Adviser:
     if(docu1 == 0 && docu2 ==0 && docu3 ==0){
         document.getElementById('missing_document').style.visibility=hidden;
     }
-    //SETTING MODAL CLOSE
 
+    // RESET FORM ON CLOSING SETTINGS MODAL 
     function reset_close() {
         const inputFeilds = document.querySelectorAll("input");
         const validInputs = Array.from(inputFeilds).filter(input => input.value !== "");
         console.log(validInputs)
 
         if (validInputs != 0) {
-            // confirm("Your changes will not be saved once you close it.Continue");
-
-
             document.getElementById('address_box_41').value = '';
             document.getElementById('ea_box_41').value = '';
             document.getElementById('old_pass_41').value = '';
@@ -1192,7 +1157,7 @@ Adviser:
         $(".collapse").collapse('hide');
     });
 
-    //checkcpnum
+    //CHECKING CONTACT NUMBER
     function checkcpnum() {
         var st_cpnum = document.getElementById("cnum_box_41").value;
         var result = st_cpnum.substring(0, 2);
@@ -1245,6 +1210,7 @@ Adviser:
         }
     }
 
+    // DISPLAY SEARCHED ITEMS
     function display_search() {
         $(document).ready(function() {
             $(".search").keyup(function() {
@@ -1282,7 +1248,7 @@ Adviser:
         });
     }
 
-    // DISALLOW FIRST SPACES IN INPUT BOX JS
+    // DISALLOW FIRST SPACES IN INPUT BOX 
     $(function() {
         $('body').on('keydown', '#search_box_41', function(e) {
             if (e.which === 32 && e.target.selectionStart === 0) {
@@ -1380,7 +1346,6 @@ Adviser:
     });
 
     // SORTING 
-
     function sortTable(table, col, reverse) {
         var tb = table.tBodies[0], 
             tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
@@ -1413,6 +1378,7 @@ Adviser:
     }
     
     window.onload = function () {makeAllSortable();};
+    
     // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
     function OnSearch(input) {
         location.reload();
@@ -1420,10 +1386,10 @@ Adviser:
 
     // RESET SEARCH BAR WHEN BACK BUTTON PRESSED
     $(window).bind("pageshow", function() {
-
         document.getElementById("search_box_41").value = "";
     });
 
+    // PASSWORD FILTER ON CHANGE PASWORD
     function old_pass_length() {
         var Spassle = document.getElementById("old_pass_41").value;
         if (Spassle.length > 3) {
@@ -1500,7 +1466,7 @@ Adviser:
         }
     }
 
-    //Password Old and New Detector
+    // DETECT IF PASSWORD HAS BEEN ALREADY USED
     function ON_match() {
         var pass0 = document.getElementById("new_pass_41").value;
         var pass1 = document.getElementById("old_pass_41").value;
@@ -1552,7 +1518,7 @@ Adviser:
         }
     }
 
-    //NAME SETTING ENTER BUTTON
+    // NAME SETTING ENTER BUTTON
     var namelast_input = document.getElementById("address_box_41");
     namelast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -1561,9 +1527,7 @@ Adviser:
         }
     });
 
-
-
-    //EMAIL SETTING ENTER BUTTON
+    // EMAIL SETTING ENTER BUTTON
     var emaillast_input = document.getElementById("ea_box_41");
     emaillast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -1572,7 +1536,7 @@ Adviser:
         }
     });
 
-    //PASSWORD SETTING ENTER BUTTON
+    // PASSWORD SETTING ENTER BUTTON
     var passlast_input = document.getElementById("confirm_pass_41");
     passlast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -1581,7 +1545,7 @@ Adviser:
         }
     });
 
-    //CONTACT NUMBER SETTING ENTER BUTTON
+    // CONTACT NUMBER SETTING ENTER BUTTON
     var cnumlast_input = document.getElementById("cnum_box_41");
     cnumlast_input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -1589,7 +1553,8 @@ Adviser:
             document.getElementById("add_btn_41").click();
         }
     });
-    // COLLAPSIBLE SIDEBAR
+
+    // COLLAPSIBLE SIDEBAR FOR STUDENTS, OLD STUDENTS
     var mini = true;
 
     function toggleSidebar() {
@@ -1608,6 +1573,7 @@ Adviser:
     }
     }
 
+    // COLLAPSIBLE SIDEBAR FOR ALUMNI
     function toggleSidebaralumni() {
     if (mini) {
         document.getElementById("sidebar").style.width = "70px";
@@ -1623,7 +1589,4 @@ Adviser:
         
     }
     }
-    
-        
-
 </script>

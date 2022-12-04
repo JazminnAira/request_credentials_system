@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2023
+BET-COET 2021-2023
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -36,7 +36,7 @@ Adviser:
     .mt-4, .my-4 {
     margin-top: 0.7rem!important;
     margin-bottom: 0.7rem!important;
-}
+    }
 
     * {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -52,6 +52,7 @@ Adviser:
         min-height: 400px;
         clear: both;
     }
+
     .normal {
     background-color: #dedede;
     }
@@ -59,6 +60,7 @@ Adviser:
     .active {
     background-color: #747474;
     }
+
     h1 {
         font-size: 60px;
         margin-top: 80px;
@@ -379,32 +381,29 @@ Adviser:
     }
     
 
-     /* RESPONSIVENESS */
-     @media screen and (max-height: 1000px) {
-
-    #sign_up_body{
-        max-width: fit-content;
-        max-height: fit-content;
-    
+     /* SCREEN RESPONSIVENESS */
+    @media screen and (max-height: 1000px) {
+        #sign_up_body{
+            max-width: fit-content;
+            max-height: fit-content;
+        }
     }
-     }
-     @media screen and (max-width: 700px) {
-
-    #sign_up_body{
-        max-width: fit-content;
-        max-height: fit-content;
-    
+    @media screen and (max-width: 700px) {
+        #sign_up_body{
+            max-width: fit-content;
+            max-height: fit-content;
+        }
     }
-
-}
-
 </style>
 
 
 <body>
+    <!-- CHANGE BACKGROUND COLOR IF STAFF SIGNUP -->
     {% if user == "STAFF" %}
     <body style="background-image: linear-gradient(0deg, rgba(163, 163, 163, 0.55), rgba(168, 168, 168, 0.55)), url('/static/Media/bgdash.jpg')">
     {% endif %}
+
+    <!-- MESSAGE BANNER -->
     {% include 'html_files/message.html'%}
 
     <!--MAIN-->
@@ -412,21 +411,26 @@ Adviser:
         {% if user == "STAFF" %}
         <br>
         {% endif %}
+
+        <!-- MODAL STYLE BODY -->
         <div  id="sign_up_body" class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" >
                     <div class="modal-header modal-1"  style="width: 100%;">
                         <h3 class="modal-title w-100 text-center">Sign Up</h3>
 
-                         <!--MODAL CLOSE BUTTON-->
+                         <!--MODAL CLOSE BUTTON REDIRECT TO COVER-->
                         {% if user != "STAFF" %}
                         <button type="button" class="close_btn" data-placement="right" title="Close" 
                         onclick="window.location.assign('/')">X</button>
+                        
+                        <!-- MODAL CLOSE BUTTON REDIRECT TO STAFF LIST -->
                         {% else %}
                         <button type="button" class="close_btn" data-placement="right" title="Close" 
                         onclick="window.location.assign('/registrar_dashboard_staff_list')">X</button>
                         {% endif %}
                     </div>
                     
+                    <!-- FORM ORGANIZER DEPENDING ON USER TYPE -->
                     {% if user == "STUDENT" %}
                         <form id="stud_form_01" method="POST" action="student_signup" style="height:100%;" enctype="multipart/form-data">
                     {% elif user == "ALUMNUS" %}
@@ -438,6 +442,7 @@ Adviser:
                     {% else %}
                         <form id="stud_form_01" method="POST" action="staff_signup" style="height:100%;" enctype="multipart/form-data">
                     {% endif %}
+
                             {% csrf_token %}
                             <div class="modal-body ">
                                 <input type="hidden" name="usertype_001" id="usertype" value="">
@@ -460,8 +465,8 @@ Adviser:
                                     </div>
                                 </div>
                                 
-                                {% if user != "STAFF" %}
                                 <!--ADDRESS-->
+                                {% if user != "STAFF" %}
                                 <div class="form-group">
                                     <label for="address">Address:</label><label id="Sid_aste01" style="color:red;">*</label>
                                     {{form.address}}
@@ -475,6 +480,7 @@ Adviser:
                                     {{form.gender}}
                                     <p id="sc_error_01"></p>
                                 </div>
+
                                 <!-- BIRTHDAY -->
                                 <div class="form-group" id="course_input">
                                     <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
@@ -482,15 +488,16 @@ Adviser:
                                     <p id="sc_error_01"></p>
                                 </div>
                                 
-                                {% if user != "ALUMNUS" %}
+
                                 <!--ID NUMBER BOX-->
+                                {% if user != "ALUMNUS" %}
                                 <div class="form-group">
                                     <label for="idnum">ID Number:</label><label id="Sid_aste01" style="color:red;">*</label> (number only)
                                     {{form.id_number}}
                                     <p id="sid_error_01"></p>
                                 </div>
+
                                 {% elif user == "ALUMNUS" %}
-                                <!--ID NUMBER BOX-->
                                 <div class="form-group" hidden>
                                     <label for="idnum">ID Number: (number only)</label>
                                     {{form.id_number}}
@@ -574,7 +581,6 @@ Adviser:
                                     <p id="sp_error_01"></p>
                                 </div>
                                 
-        
                                 <!--CONFIRM PASSWORD BOX-->
                                 <div class="form-group">
                                     <label for="copassword">Confirm Password:</label><label id="Sconpass_aste01" style="color:red;">*</label>
@@ -599,32 +605,29 @@ Adviser:
                                     <p><b>Note:</b><p4> Attach a presentable picture of yours with a clean white background in <b>2x2 picture size </b>.
                                         <br>Filename format: NAME.jpg/png</p4></p>
                                     <p id="se_error_01"></p>
-                                     
                                 </div> 
                                 {% endif %}
-                                
                             </div>
                            
-
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
-                                
-                
-                                <!--SIGNUP BUTTON-->
+            
+                                <!--SIGNUP BUTTON FOR ALUMNUS-->
                                 {% if user == "ALUMNUS"%}
                                 <a><button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
                                     id="Ssubmit_btn_01" disabled onclick="get_id()" >Sign Up</button></a>
-                                    
+                                
+                                <!-- SIGNUP BUTTON FOR EVERYONE ELSE -->
                                 {% else %}
                                 <a><button type="submit" disabled class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
                                     id="Ssubmit_btn_01" >Sign Up</button></a>
-                                    
+            
                                 {% endif %}
                             </div>
-                        </form>
-        </div>
+                        </form></div>
     </section>
 
+    <!-- FORM FILTERS FOR STUDENT USER TYPE -->
     {% if user == "STUDENT" %}
     <script>
         
@@ -660,6 +663,8 @@ Adviser:
             }
          });
     </script>
+
+    <!-- FORM FILTERS FOR OLD STUDENT USER TYPE -->
     {% elif user == "OLD STUDENT" %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000";
@@ -693,11 +698,11 @@ Adviser:
             }
          });
     </script>
+
+    <!-- FORM FILTERS FOR ALUMNUS USER TYPE -->
     {% elif user == "ALUMNUS" %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000-00-000000";
-
-
         $("input").on('keyup change', function(e) {
             var bday_val = document.getElementById('id_birthday').value;
             var cp_val = document.getElementById('id_contact_number').value;
@@ -726,6 +731,8 @@ Adviser:
             }
          });
     </script>
+
+    <!-- FORM FILTERS FOR STAFF USER TYPE -->
     {% elif user == "STAFF" %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-0000";
@@ -758,6 +765,7 @@ Adviser:
          });
     </script>
 
+    <!-- FORM FILTERS FOR FACULTY USER TYPE -->
     {% else %}
     <script>
         document.getElementById("id_id_number").placeholder = "00-000";
@@ -792,19 +800,16 @@ Adviser:
          });
     </script>
     {% endif %}
-    
 </body>  
 </html>
 
-
 <script>
-     
-
-     
+    // CREATING TEMPORARY ID FOR ALUMNI BEFORE GENERATING ONE IN VIEWS.PY  
     function get_id() {
     document.getElementById("id_id_number").value = "99-9999-99-999999";
     }
 
+    // EMPTY COMMENT
     $('#Studentsignup_modal_01').on('hidden.bs.modal', function (e) {
     $(this)
     .find("input,textarea,select")
@@ -816,7 +821,7 @@ Adviser:
     });
 
 
-    //Auto Capitalize
+    //AUTO CAPITALIZATION
     $("#id_last_name, #id_middle_name, #id_first_name,#id_username, #id_address").on('input', function(evt) {
         var input = $(this);
         var start = input[0].selectionStart;
@@ -826,14 +831,14 @@ Adviser:
         input[0].selectionStart = input[0].selectionEnd = start;
       });
 
-    //Restrict multiple space
+    //RESTRICT MULTIPLE SPACES
     $('input').bind('DOMAttrModified textInput input keyup paste',function(){
         var sspace = $(this).val().replace(/ +/g, ' ');
            if ($(this).val() != sspace)
                $(this).val(sspace);
          });
 
-    //Restrict space on first input
+    //RESTRICT LEADING WHITESPACES
     $("input").on("keypress", function(e) {
         if (e.which === 32 && !this.value.length){
         e.preventDefault();
@@ -890,7 +895,7 @@ Adviser:
         })
     });
      
-    // Show Password
+    // SHOW AND HIDE PASSWORD
     document.getElementById('showPassword1').onclick = function() {
         if ( this.checked ) {
         document.getElementById('id_password1').type = "text";
@@ -906,6 +911,7 @@ Adviser:
         }
     };
 
+    // CONTACT NUMBER FORMATTER (PHILIPPINE FORMAT- (09XX-XXX-XXXX))
     $(document).ready(function(){
         $('#id_contact_number').keyup(function(){
             var mob = /^[1-9]{1}[0-9]{9}$/;
@@ -934,6 +940,7 @@ Adviser:
         });
     });
 
+    // ALLOW TEXT ONLY 
     $('#id_first_name, #id_last_name, #id_middle_name').keypress(function (e) {
         var regex = new RegExp("^[a-z A-Z]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -943,10 +950,6 @@ Adviser:
         e.preventDefault();
         return false;
     });
-
-
-    
-
 </script>
 
 

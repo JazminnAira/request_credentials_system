@@ -40,10 +40,13 @@ import os
 import time
 import random
 
+# NOTES: PATHS ARE ALL BASED FROM ONLINE DEPLOYMENT, CHANGE IT DEPENDING ON LOCAL COMPUTER PATH
+
+# RENDER PRIVACY POLICY FROM COVER PAGE
 def privacy_policy(request):
     return render(request, 'html_files/privacy policy.html')
 
-
+# PRINT REQUEST FORMS
 @login_required(login_url='/')
 def req_print(request, id):
     buffer = BytesIO()
@@ -82,6 +85,7 @@ def req_print(request, id):
 
     p.setFont("Helvetica", 5)
     p.drawString(70, 760, f'{content.address}')
+    
     # List of Payments
     p.setFont("Helvetica", 6)
     course_get = content.course
@@ -219,7 +223,7 @@ def req_print(request, id):
         response['Content-Disposition'] = 'attachment;filename=Required Form.pdf'
         return response
 
-
+# PRINT GRADUATION FORM
 @login_required(login_url='/')
 def graduation_print(request, id):
     buffer = BytesIO()
@@ -865,7 +869,7 @@ def graduation_print(request, id):
         response['Content-Disposition'] = 'attachment;filename=Graduation Form.pdf'
         return response
 
-
+# PRINT CLEARANCE FORM
 @login_required(login_url='/')
 def clearance_print(request, id):
     buffer = BytesIO()
@@ -1422,7 +1426,7 @@ def clearance_print(request, id):
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
-
+# FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (CLEARANCE ONLY)
 @login_required(login_url='/')
 def appointment(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -1463,7 +1467,6 @@ def appointment(request, id, form):
             subject = 'Application for Clearance Form '
             message1 = 'Good day, ' + "<strong>" + \
                 gender_final + name[0] + ",</strong><br><br>"
-            # message1 = 'Greetings from the  '+"<strong>"+'Registrar,'+"</strong><br><br>"
             message2 = 'Your Application for Clearance Form has pending concerns with  ' + \
                 "<strong>" + gender_fac + request.user.last_name + ".</strong><br><br>"
             message3 = '  An appointment for discussing the said concerns was scheduled. Please arrive at the set date and time of appointment. <br><br>'
@@ -1512,7 +1515,7 @@ def appointment(request, id, form):
         else:
             return render(request, 'html_files/appointment.html', {'gform': gform})
 
-
+# FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (GRADUATION ONLY)
 @login_required(login_url='/')
 def appointmentgrad(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -1605,7 +1608,7 @@ def appointmentgrad(request, id, form):
         else:
             return render(request, 'html_files/appointment.html', {'gform': gform})
 
-
+# FOR SETTING APPOINTMENTS FOR REGISTRAR'S SIDE (APPROVED GRADUATION ONLY)
 @login_required(login_url='/')
 def reggrad_appointment(request, id):
     email_temp = graduation_form_table.objects.filter(
@@ -1664,7 +1667,7 @@ def reggrad_appointment(request, id):
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_graduation_list/%20')
 
-
+# FOR SETTING APPOINTMENTS ON REGISTRAR'S SIDE (APPROVED CLEARANCE ONLY)
 @login_required(login_url='/')
 def regclear_appointment(request, id):
     email_temp = clearance_form_table.objects.filter(
@@ -1723,7 +1726,7 @@ def regclear_appointment(request, id):
     messages.success(request, "Email Sent.")
     return redirect('/registrar_dashboard_clearance_list/%20')
 
-
+# FOR SETTING APPOINTMENTS ON REGISTRAR'S SIDE (APPROVED REQUESTS ONLY)
 @login_required(login_url='/')
 def request_appointment(request, id):
     if request.method == 'POST':
@@ -1833,7 +1836,7 @@ def request_appointment(request, id):
     else:
         return render(request, 'html_files/appointment.html', {})
 
-
+# LOGIN ALL USERS IN COVER PAGE
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get('email_box_01')
@@ -1883,12 +1886,12 @@ def login_user(request):
             name_of_registrar = ""
         return render(request, 'html_files/1Cover Page.html', {'RegistrarName': name_of_registrar})
 
-
+#  LOGOUT ALL USERS FROM DASHBOARDS
 def logout_user(request):
     logout(request)
     return redirect('/')
 
-
+# SIGNUP FOR STUDENTS
 def student_registration(request):
     form = signup_form()
     if request.method == "POST":
@@ -1914,6 +1917,7 @@ def student_registration(request):
 
             form.save()
 
+            # AUTOMATICALLY EMAIL STUDENTS UPON SUCCESSFUL SIGNUP (REMOVED DUE TO EMAIL LIMITATIONS)
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -1931,7 +1935,7 @@ def student_registration(request):
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
-
+# SIGNUP FOR OLD STUDENTS/TRANSFEREES
 def oldstudent_registration(request):
     form = signup_form()
     print(form.errors)
@@ -1954,6 +1958,8 @@ def oldstudent_registration(request):
 
             form.instance.user_type = "OLD STUDENT"
             form.save()
+            
+            # AUTOMATICALLY EMAIL STUDENTS UPON SUCCESSFUL SIGNUP (REMOVED DUE TO EMAIL LIMITATIONS)
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -1970,7 +1976,7 @@ def oldstudent_registration(request):
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
-
+# SIGNUP FOR FACULTIES/ DEPARTMENT HEADS
 def faculty_registration(request):
     form = signup_form()
     if request.method == "POST":
@@ -2004,7 +2010,7 @@ def faculty_registration(request):
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
-
+# SIGNUP FOR ALUMNI
 def alumnus_registration(request):
     form = signup_form()
     if request.method == "POST":
@@ -2045,6 +2051,7 @@ def alumnus_registration(request):
                 form.instance.full_name = last + ", " + first + " " + middle
 
             form.save()
+            # AUTOMATICALLY EMAIL STUDENTS UPON SUCCESSFUL SIGNUP (REMOVED DUE TO EMAIL LIMITATIONS)
             # subject = 'SIGNUP SUCCESS'
             # message = f'Hi {first}, thank you for registering in TUPC Application for Clearance and Graduation Form.'
             # email_from = settings.EMAIL_HOST_USER
@@ -2064,7 +2071,7 @@ def alumnus_registration(request):
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
-
+# SIGNUP FOR STAFFS (AVAILABLE ON REGISTRAR'S SIDE)
 def staff_registration(request):
     form = signup_form()
     if request.method == "POST":
@@ -2098,11 +2105,11 @@ def staff_registration(request):
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
     return render(request, 'html_files/1Sign_Up.html', context)
 
-
+# RENDER COVER PAGE
 def cover(request):
     return render(request, 'html_files/1Cover Page.html')
 
-
+# DISPLAY STUDENT DASHBOARD
 @login_required(login_url='/')
 def student_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
@@ -2130,6 +2137,7 @@ def student_dashboard(request):
 
         print(student_id)
 
+        # FOR RENDERING TABLES ON DASHBOARD
         st0 = request_form_table.objects.filter(student_id=student_id)
         st = graduation_form_table.objects.filter(student_id=student_id)
         st1 = clearance_form_table.objects.filter(student_id=student_id)
@@ -2146,6 +2154,7 @@ def student_dashboard(request):
         display = []
         # Form137-A
 
+        # MISSING DOCUMENT CHECKER
         if check_form137_inrequest.exists():
             for i in check_form137_inrequest:
                 if i == '❌':
@@ -2182,8 +2191,12 @@ def student_dashboard(request):
 
 @login_required(login_url='/')
 def clearance_form(request, req):
+    
+    # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
+    
+    # FOR DISPLAYING (LASTNAME, FIRSTNAME) FORMAT IN DROPDOWNS
     # faculty_list_clear = []
     # for faculty in a:
     #     splitted=faculty.split()
@@ -2195,6 +2208,7 @@ def clearance_form(request, req):
 
     requested = req
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
+        
         # TO DETERMINE IF STUDENT HAS GRADUATION OR NONE
         todays_date = date.today()
         id_num = request.user.id_number
@@ -2206,6 +2220,7 @@ def clearance_form(request, req):
         print(with_graduation)
         alumni_course_adviser = ""
 
+        # DETERMINE WHICH DEPARTMENT EACH COURSE BELONGS
         course = request.user.course_graduated
         if course:
             if course.startswith('BSIE-') or course.startswith('BTTE-'):
@@ -2260,6 +2275,7 @@ def clearance_form(request, req):
             unapproved = "UNAPPROVED"
             approved = "_APPROVED"
 
+            # AUTOMATICALLY APPROVE IF COURSE IS NOT UNDER THIS DEPARTMENT
             if course.startswith('BSIE-') or course.startswith('BTTE-'):
                 print("ded")
                 dit_signature = approved
@@ -2290,6 +2306,7 @@ def clearance_form(request, req):
 
             return redirect('student_dashboard')
         else:
+            
             # CHECKER OF PREVIOUS CLEARANCE
             request_clearance = clearance_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('approval_status', flat=True).distinct()
@@ -2316,7 +2333,6 @@ def clearance_form(request, req):
                 other_data = ""
 
             # GETTING PREVIOUS CLEARANCE
-
             previous_term = clearance_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('date_filed', flat=True).distinct()
             previous_purpose = clearance_form_table.objects.filter(name=fullname).order_by(
@@ -2337,7 +2353,7 @@ def clearance_form(request, req):
 
     return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'year_then': year_then, 'date_previous': date_previous, 'purpose_then': purpose_then, 'alumni_course_adviser': alumni_course_adviser})
 
-
+# VIEW GRADUATION FORM
 @login_required(login_url='/')
 def graduation_view(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT":
@@ -2356,23 +2372,26 @@ def graduation_view(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-
+# RETURN TO GRADUATION LIST (CONNECTED TO BACK BUTTON)
 @login_required(login_url='/')
 def reggrad_back(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         return redirect('/registrar_dashboard_graduation_list/%20')
 
-
+# RETURN TO CLEARANCE LIST (CONNECTED TO BACK BUTTON)
 @login_required(login_url='/')
 def regclear_back(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
         return redirect('/registrar_dashboard_clearance_list/%20')
 
-
+# GRADUATION FORM
 @login_required(login_url='/')
 def graduation_form(request):
+    # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
+    
+    # FOR DISPLAYING (LASTNAME, FIRSTNAME) FORMAT IN DROPDOWNS
     # faculty_list_grad = []
     # for faculty in a:
     #     splitted=faculty.split()
@@ -2482,13 +2501,6 @@ def graduation_form(request):
             u1_10 = request.POST.get('starttime1_10')
             v1_10 = request.POST.get('endtime1_10')
             q1_10 = request.POST.get('day1_10')
-
-            # u2 = request.POST.get('starttime2')
-            # v2 = request.POST.get('endtime2')
-            # q2 = request.POST.get('day2')
-            # u3 = request.POST.get('starttime3')
-            # v3 = request.POST.get('endtime3')
-            # q3 = request.POST.get('day3')
 
             o1 = request.POST.get('addsubject1')
             p1 = request.POST.get('addroom1')
@@ -2661,9 +2673,7 @@ def graduation_form(request):
     form = Graduation_form_table(request.POST or None)
     return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a})
 
-
-@login_required(login_url='/')
-# alumnus not yet working
+# ALUMNUS DASHBOARD
 @login_required(login_url='/')
 def alumnus_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
@@ -2679,52 +2689,7 @@ def alumnus_dashboard(request):
         return redirect('/')
     return render(request, 'html_files/4.1Student Dashboard.html', {'st': st, 'st1': st1})
 
-
-# @login_required(login_url='/')
-# def clearance_form(request):
-#     context = {}
-#     if request.user.is_authenticated and request.user.user_type == "ALUMNUS":
-#         if request.method == "POST":
-#             form = clearance_form
-
-#             # id_number = request.user.id()
-#             student_id = request.POST.get('stud_id_420')
-#             last_name = request.POST.get('ln_box_420')
-#             first_name = request.POST.get('fn_box_420')
-#             middle_name = request.POST.get('mn_box_420')
-#             name = last_name + ", " + first_name + " " + middle_name
-#             present_address = request.POST.get('padd_box_420')
-#             course = request.POST.get('course_420')
-#             date_filed = request.POST.get('dfiled_box_420')
-#             date_admitted = request.POST.get('dait_box_420')
-#             highschool_graduated = request.POST.get('hswg_box_420')
-#             tupc_graduate = request.POST.get('grad_option_420')
-#             highschool_graduated_date = request.POST.get('iydfiled_box_420')
-#             terms = request.POST.get('notit_box_420')
-#             amount = request.POST.get('amountp_box_420')
-#             or_number = request.POST.get('receiptnum_box_42')
-#             last_request = request.POST.get('requested_option_420')
-#             last_request_date = request.POST.get('dbrtime_box_420')
-#             last_term = request.POST.get('lasterm_box_420')
-#             purpose_reason = request.POST.get('preq_box_420')
-#             purpose = request.POST.get('purpose_request_420')
-#             form = clearance_form_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
-#                                                        date_filed=date_filed, date_admitted_in_tup=date_admitted,
-#                                                        highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=highschool_graduated_date,
-#                                                        number_of_terms_in_tupc=terms, amount_paid=amount, have_previously_requested_form=last_request,
-#                                                        date_of_previously_requested_form=last_request_date, last_term_in_tupc=last_term,
-#                                                        purpose_of_request=purpose, purpose_of_request_reason=purpose_reason,)
-#             form.save()
-
-#             return redirect('alumnus_dashboard')
-#     else:
-#         messages.error(
-#             request, "You are trying to access an unauthorized page and is forced to logout.")
-#         return redirect('/')
-
-#     return render(request, 'html_files/4.2Student Clearance Form.html', context)
-
-
+# FACULTY DASHBOARD
 @login_required(login_url='/')
 def faculty_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -2737,6 +2702,7 @@ def faculty_dashboard(request):
                                                   Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(sitsignature=unapproved)).order_by('-time_requested')
         print(unapproved)
 
+        # CLEARANCE FORM IDENTIFIER FOR DEPARTMENT HEADS
         if request.user.department == "HOCS":
             st1 = clearance_form_table.objects.filter(
                 accountant_signature="UNAPPROVED").order_by('-time_requested')
@@ -2771,6 +2737,7 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(
                 academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
 
+        # CLEARANCE FORM IDENTIFIER FOR COURSE ADVISERS
         if clearance_form_table.objects.filter(course_adviser_signature=unapproved):
             st1 = clearance_form_table.objects.filter(
                 course_adviser_signature=unapproved).order_by('-time_requested')
@@ -2820,6 +2787,8 @@ def faculty_dashboard(request):
 
         with_clearance = clearance_form_table.objects.filter(
             course_adviser=request.user.full_name)
+        
+        # REMOVE "H" IN ACCOUNT SETTINGS IF DEPARTMENT HEAD
         depacc = request.user.department
         if depacc.startswith('H'):
             depacc = depacc[1:]
@@ -2830,7 +2799,7 @@ def faculty_dashboard(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-
+# APPROVE ALL FOR CLEARANCE LISTS
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list_all(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -2854,6 +2823,7 @@ def faculty_dashboard_clearance_list_all(request):
         name_temp = clearance_form_table.objects.filter(
             id=int(i)).values_list('name', flat=True).distinct()
 
+        # SIGNATURE COUNTER
         f_n = request.user.full_name
         cursor = connection.cursor()
         query = "SELECT approval_status from `gradclear_app_clearance_form_table` where id=%s"
@@ -2945,6 +2915,7 @@ def faculty_dashboard_clearance_list_all(request):
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
 
+            # DETECT IF SIGNATURES ARE COMPLETE, UPDATE APPROVAL STATUS
             approved_text = "_APPROVED"
             approval_status_checker = clearance_form_table.objects.filter(
                 Q(liberal_arts_signature__contains=approved_text) &
@@ -2976,7 +2947,7 @@ def faculty_dashboard_clearance_list_all(request):
         return redirect('/')
     return redirect('faculty_dashboard_clearance_list')
 
-
+# DISPLAY CLEARANCE LIST DEPENDING ON DEPARTMENT
 @login_required(login_url='/')
 def faculty_dashboard_clearance_list(request):
     esignature = request.user.e_signature
@@ -3001,7 +2972,6 @@ def faculty_dashboard_clearance_list(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
 
         if course_adv:
-
             st = clearance_form_table.objects.filter(
                 Q(course_adviser_signature=f_n_unapproved)).order_by('-time_requested')
 
@@ -3110,7 +3080,7 @@ def faculty_dashboard_clearance_list(request):
 
     return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep': dep, 'f_n_unapproved': f_n_unapproved, 'f_n_approved': f_n_approved, 'course_adv': course_adv, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime,  'id': id_Facultynumber})
 
-
+# SINGLE APPROVAL IN CLEARANCE LIST
 @login_required(login_url='/')
 def update_clearance(request, id, dep, sign):
     print(sign)
@@ -3126,6 +3096,7 @@ def update_clearance(request, id, dep, sign):
     print(rec_email)
     f_n_approved = request.user.full_name + "_APPROVED"
 
+    # SIGNATURE COUNTER
     cursor = connection.cursor()
     query = "SELECT approval_status from `gradclear_app_clearance_form_table` where id=%s"
     val = (id,)
@@ -3212,6 +3183,7 @@ def update_clearance(request, id, dep, sign):
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
 
+        # DETECT IF SIGNATURES ARE COMPLETE, UPDATE APPROVAL STATUS
         approved_text = "_APPROVED"
         approval_status_checker = clearance_form_table.objects.filter(
             Q(liberal_arts_signature__contains=approved_text) &
@@ -3242,11 +3214,12 @@ def update_clearance(request, id, dep, sign):
         return redirect('/')
     return redirect(faculty_dashboard_clearance_list)
 
-
+# APPROVE ALL FORMS IN GRADUATION LIST
 @login_required(login_url='/')
 def faculty_dashboard_graduation_list_all(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         if request.method == "POST":
+            # GET ALL ID'S AND PUT IN A LIST
             id_list = []
             sig = ""
             if request.method == "POST":
@@ -3260,7 +3233,7 @@ def faculty_dashboard_graduation_list_all(request):
                 while (comma in id_list):
                     id_list.remove(comma)
 
-            print("sadsa", id_list)
+            print("idlist:", id_list)
             for i in id_list:
                 name_temp = graduation_form_table.objects.filter(
                     id=int(i)).values_list('name', flat=True).distinct()
@@ -3272,7 +3245,8 @@ def faculty_dashboard_graduation_list_all(request):
                 rec_email = email[0]
                 print(rec_email)
                 f_n1 = request.user.full_name + '_UNAPPROVED'
-
+                
+                # SIGNATURE COUNTER FOR GRADUATION FORM
                 approval = request.user.full_name + "_APPROVED"
                 c1 = graduation_form_table.objects.filter(
                     id=int(i), signature1__contains="NO_APPROVED").count()
@@ -3309,6 +3283,8 @@ def faculty_dashboard_graduation_list_all(request):
 
                 signature_saved = request.user.full_name + "_APPROVED" + " " + sig
                 f_n = request.user.full_name
+                
+                # FOR SIT INSTRUCTOR
                 if graduation_form_table.objects.filter(
                         sitsignature__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3345,6 +3321,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 1
                 if graduation_form_table.objects.filter(
                         signature1__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3381,6 +3358,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 2
                 if graduation_form_table.objects.filter(
                         signature2__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3417,6 +3395,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 3
                 if graduation_form_table.objects.filter(
                         signature3__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3453,6 +3432,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 4
                 if graduation_form_table.objects.filter(
                         signature4__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3488,7 +3468,8 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
-
+                
+                # FOR FACULTY 5
                 if graduation_form_table.objects.filter(
                         signature5__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3525,6 +3506,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 6
                 if graduation_form_table.objects.filter(
                         signature6__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3561,6 +3543,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 7
                 if graduation_form_table.objects.filter(
                         signature7__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3597,6 +3580,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR FACULTY 8
                 if graduation_form_table.objects.filter(
                         signature8__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3632,7 +3616,8 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
-
+                
+                # FOR FACULTY 9
                 if graduation_form_table.objects.filter(
                         signature9__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3668,7 +3653,8 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
-
+                
+                # FOR FACULTY 10
                 if graduation_form_table.objects.filter(
                         signature10__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3705,6 +3691,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR ADD SUBJECT FACULTY 1 
                 if graduation_form_table.objects.filter(
                         addsignature1__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3741,6 +3728,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR ADD SUBJECT FACULTY 2
                 if graduation_form_table.objects.filter(
                         addsignature2__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3777,6 +3765,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR ADD SUBJECT FACULTY 3
                 if graduation_form_table.objects.filter(
                         addsignature3__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3813,6 +3802,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR ADD SUBJECT FACULTY 4
                 if graduation_form_table.objects.filter(
                         addsignature4__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3849,6 +3839,7 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
 
+                # FOR ADD SUBJECT FACULTY 5
                 if graduation_form_table.objects.filter(
                         addsignature5__contains=f_n1, id=int(i)):
                     graduation_form_table.objects.filter(
@@ -3899,6 +3890,7 @@ def faculty_dashboard_graduation_list_all(request):
 
                 messages.success(request, "Subject Approved.")
 
+                # DETECT IF SIGNATURES ARE COMPLETE, CHANGE APPROVAL STATUS
                 approval_status_checker_2 = graduation_form_table.objects.filter(id=int(i),
                                                                                  signature1__contains='_APPROVED',
                                                                                  signature2__contains='_APPROVED',
@@ -3930,7 +3922,7 @@ def faculty_dashboard_graduation_list_all(request):
 
     return redirect('faculty_dashboard_graduation_list')
 
-
+# DISPLAY FORMS IN GRADUATION LIST DEPENDING ON SUBJECTS
 @login_required(login_url='/')
 def faculty_dashboard_graduation_list(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -3976,7 +3968,7 @@ def faculty_dashboard_graduation_list(request):
 
     return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved, 'f_n_approved_esign': f_n_approved_esign, 'f_n_approved_upload': f_n_approved_upload, 'f_n_approved_approved': f_n_approved_approve, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime, 'id': id_Facultynumber})
 
-
+# SINGLE APPROVAL IN GRADUATION LIST
 @login_required(login_url='/')
 def update_graduation(request, id, sub, sig):
     print("starts here")
@@ -3995,6 +3987,7 @@ def update_graduation(request, id, sub, sig):
         f_n_approved = request.user.full_name + "_APPROVED"
         signature_saved = request.user.full_name + "_APPROVED" + " " + sig
 
+        # SIGNATURE COUNTER
         c1 = graduation_form_table.objects.filter(
             id=id, signature1__contains="NO_APPROVED").count()
         c2 = graduation_form_table.objects.filter(
@@ -4140,6 +4133,7 @@ def update_graduation(request, id, sub, sig):
 
         messages.success(request, "Subject Approved.")
 
+        # DETECT IF SIGNATURES ARE COMPLETE, CHANGE APPROVAL STATUS
         approval_status_checker_2 = graduation_form_table.objects.filter(id=id,
                                                                          signature1__contains='_APPROVED',
                                                                          signature2__contains='_APPROVED',
@@ -4170,7 +4164,7 @@ def update_graduation(request, id, sub, sig):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-
+# REGISTRAR DASHBOARD
 @login_required(login_url='/')
 def registrar_dashboard(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -4399,60 +4393,7 @@ def name_list(request):
     p = user_table.objects.filter(student_id=enteruser).values_list(
         to_edit, flat=True).distinct()
     va = p[0]
-
-
-@login_required(login_url='/')
-def updateAddress(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
-        print('here')
-        if request.method == "POST":
-            saddress = request.POST.get('address_box_041')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(address=saddress)
-            return redirect('/student_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-    print('running')
-    return render(request, 'html_files/4.1Student Dashboard.html')
-
-
-@login_required(login_url='/')
-def updateEmail(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
-        if request.method == "POST":
-            semail = request.POST.get('ea_box_041')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(email=semail)
-            return redirect('/student_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-
-    return render(request, 'html_files/4.1Student Dashboard.html')
-
-
-@login_required(login_url='/')
-def updateCourse(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
-        if request.method == "POST":
-            scourse = request.POST.get('course_drp_041')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(course=scourse)
-            return redirect('/student_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-
-    return render(request, 'html_files/4.1Student Dashboard.html')
-
-
+# UPDATE PASSWORD OF STUDENT USER
 @login_required(login_url='/')
 def updatePassword(request):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
@@ -4482,63 +4423,7 @@ def updatePassword(request):
 
     return render(request, 'html_files/4.1Student Dashboard.html')
 
-
-@login_required(login_url='/')
-def updateContact(request):
-    if request.user.is_authenticated and request.user.user_type == "STUDENT":
-        print('here')
-        if request.method == "POST":
-            scontact = request.POST.get('cnum_box_041')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(
-                contact_number=scontact)
-            return redirect('/student_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-    print('running')
-    return render(request, 'html_files/4.1Student Dashboard.html')
-
-
-@login_required(login_url='/')
-def faculty_updateAddress(request):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        print('here')
-        if request.method == "POST":
-            faddress = request.POST.get('address_box_051')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(address=faddress)
-            return redirect('/faculty_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-    print('running')
-    return render(request, 'html_files/5.1Faculty Dashboard.html')
-
-
-@login_required(login_url='/')
-def faculty_updateEmail(request):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        print('here')
-        if request.method == "POST":
-            femail = request.POST.get('ea_box_051')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(email=femail)
-            return redirect('/faculty_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-
-    print('running')
-    return render(request, 'html_files/5.1Faculty Dashboard.html')
-
-
+# UPDATE PASSWORD OF FACULTY USER
 @login_required(login_url='/')
 def faculty_updatePassword(request):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -4569,26 +4454,7 @@ def faculty_updatePassword(request):
 
     return render(request, 'html_files/5.1Faculty Dashboard.html')
 
-
-@login_required(login_url='/')
-def faculty_updateContact(request):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        print('here')
-        if request.method == "POST":
-            scontact = request.POST.get('cnum_box_051')
-            a = request.POST.get('validator')
-
-            user_table.objects.filter(id_number=a).update(
-                contact_number=scontact)
-            return redirect('/faculty_dashboard')
-    else:
-        messages.error(
-            request, "You are trying to access an unauthorized page and is forced to logout.")
-        return redirect('/')
-
-    return render(request, 'html_files/5.1Faculty Dashboard.html')
-
-
+# UPDATE NAME OF REGISTRAR
 @login_required(login_url='/')
 def reg_updateName(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -4608,7 +4474,7 @@ def reg_updateName(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# UPDATE ADDRESS OF REGISTRAR
 @login_required(login_url='/')
 def reg_updateAddress(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -4626,7 +4492,7 @@ def reg_updateAddress(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# UPDATE EMAIL OF REGISTRAR
 @login_required(login_url='/')
 def reg_updateEmail(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -4644,7 +4510,7 @@ def reg_updateEmail(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# UPDATE PASSWORD OF REGISTRAR
 @login_required(login_url='/')
 def reg_updatePassword(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -4675,7 +4541,7 @@ def reg_updatePassword(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# UPDATE PASSWORD OF STAFF
 def staff_updatePassword(request):
     if request.user.is_authenticated and request.user.user_type == "STAFF":
         print('here')
@@ -4705,7 +4571,7 @@ def staff_updatePassword(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# UPDATE CONTACT NUMBER OF REGISTRAR
 @login_required(login_url='/')
 def reg_updateContact(request):
 
@@ -4726,7 +4592,7 @@ def reg_updateContact(request):
     print('running')
     return render(request, 'html_files/7.1Registrar Dashboard.html')
 
-
+# CLEARANCE FORM DISPLAY
 @login_required(login_url='/')
 def display_clearform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "FACULTY" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -5472,7 +5338,7 @@ def display_clearform(request, id):
     print('running')
     return render(request, 'html_files/clearance_form_display.html', context)
 
-
+# GRADUATION FORM DISPLAY
 @login_required(login_url='/')
 def display_gradform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "FACULTY" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -6542,17 +6408,18 @@ def display_gradform(request, id):
     print('running')
     return render(request, 'html_files/graduation_form_display.html', context)
 
-
+# CLEARANCE LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_clearance_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
 
+        # DEFAULT/ GENERAL LIST
         if id == "%20":
-            all = clearance_form_table.objects.all()
+            all = clearance_form_table.objects.all().order_by('-time_requested')
             return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})
         else:
             string = id.replace('%20', ' ')
-            all = clearance_form_table.objects.filter(course=string).values()
+            all = clearance_form_table.objects.filter(course=string).order_by('-time_requested').values()
             return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})
     else:
         messages.error(
@@ -6561,19 +6428,19 @@ def registrar_dashboard_clearance_list(request, id):
 
     return render(request,  'html_files/7.2Registrar Clearance List.html', {'all': all})
 
-
+# GRADUATION LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_graduation_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
 
         if id == "%20":
-            all = graduation_form_table.objects.all()
+            all = graduation_form_table.objects.all().order_by('-time_requested')
             all_list = graduation_form_table.objects.filter(
                 approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list': all_list})
         else:
             string = id.replace('%20', ' ')
-            all = graduation_form_table.objects.filter(course=string)
+            all = graduation_form_table.objects.filter(course=string).order_by('-time_requested')
             all_list = graduation_form_table.objects.filter(
                 course=string, approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list': all_list})
@@ -6585,48 +6452,7 @@ def registrar_dashboard_graduation_list(request, id):
         return redirect('/')
     return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all})
 
-
-@login_required(login_url='/')
-def set_appointment(request, id):
-    if request.user.is_authenticated and request.user.user_type == "FACULTY":
-        date = ""
-        time = ""
-
-        if request.method == "POST":
-            print("1")
-            date = request.post.get('date_appointment')
-            time = request.post.get('time_appointment')
-            print("2")
-            name_temp = clearance_form_table.objects.filter(
-                id=id).values_list('name', flat=True).distinct()
-            name = user_table.objects.filter(full_name=name_temp[0]).values_list(
-                'first_name', flat=True).distinct()
-            email_temp = clearance_form_table.objects.filter(
-                id=id).values_list('student_id', flat=True).distinct()
-            email = user_table.objects.filter(
-                student_id=email_temp[0]).values_list('email', flat=True).distinct()
-
-            rec_email = email[0]
-            print(rec_email)
-            print(date)
-            subject = 'Appointment Request for Clearance Form'
-
-            message1 = 'Greetings,<br> <br>'
-            message2 = 'Mr./Ms. ' + "<strong>" + request.user.first_name + "</strong>" + \
-                ' would like to speak with you regarding with the clearance form you requested. An appointment with him/her has been set on the following date and time below.<br>'
-            message3 = '<br> <br>Appointment: ' + date + " ," + time + '<br>'
-            message4 = '<br> <br>Please be guided accordingly.'
-            message = message1 + message2 + message3 + message4
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [rec_email, ]
-            msg = EmailMessage(subject, message, email_from, recipient_list,)
-            msg.content_subtype = "html"
-            msg.send(fail_silently=True)
-            return redirect('faculty_dashboard_clearance_list')
-    return render(request, 'html_files/appointment.html')
-
-
-# FACULTY LIST
+# FACULTY LIST FOR REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_faculty_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -6644,9 +6470,7 @@ def registrar_dashboard_faculty_list(request):
         return redirect('/')
     # return render(request,  'html_files/7.4Registrar Faculty List.html', {'all': all_faculty})
 
-# DELETE FACULTY
-
-
+# CHANGE ACTIVE STATUS OF FACULTY INSTEAD OF DELETE (MIGHT AFFECT SAVED SIGNATURES IF DELETED)
 @login_required(login_url='/')
 def faculty_list_remove(request, id):
     print("hey")
@@ -6658,7 +6482,7 @@ def faculty_list_remove(request, id):
 
     return redirect(registrar_dashboard_faculty_list)
 
-
+# UPDATE DESIGNATION LIST FOR DEPARTMENT HEADS
 @login_required(login_url='/')
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
@@ -6712,9 +6536,7 @@ def faculty_designation_update(request, id):
 
     return redirect(registrar_dashboard_faculty_list)
 
-# STUDENT LIST
-
-
+# STUDENT LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_student_list(request):
     # declaring template
@@ -6725,9 +6547,7 @@ def registrar_dashboard_student_list(request):
     context = {'data': student_data}
     return render(request, template, context)
 
-# STAFF LIST
-
-
+# STAFF LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_staff_list(request):
     # declaring template
@@ -6736,9 +6556,7 @@ def registrar_dashboard_staff_list(request):
     context = {'data': staff_data}
     return render(request, 'html_files/7.5Registrar Staff List.html', context)
 
-# DELETE STUDENT/REQUESTER
-
-
+# DELETE STUDENT/REQUESTER ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def student_list_remove(request, id):
     print("hey")
@@ -6748,9 +6566,7 @@ def student_list_remove(request, id):
 
     return redirect(registrar_dashboard_student_list)
 
-# DELETE STAFF
-
-
+# DELETE STAFF ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def staff_list_remove(request, id):
     delete_staff = user_table.objects.get(id=id)
@@ -6761,8 +6577,6 @@ def staff_list_remove(request, id):
 
 # REQUEST LIST AND DOCUMENT CHECKER LIST
 # REQUEST LIST WITH ORGANIZER
-
-
 @login_required(login_url='/')
 def registrar_dashboard_organize_request_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -6789,9 +6603,7 @@ def registrar_dashboard_organize_request_list(request, id):
 
     return render(request, 'html_files/Request List.html', {'data': requests, 'sorter_type': sorter})
 
-# DEFAULT PAGE
-
-
+# REQUEST LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def registrar_dashboard_request_list(request):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -6803,7 +6615,7 @@ def registrar_dashboard_request_list(request):
 
     return render(request, 'html_files/Request List.html', {'data': requests})
 
-
+# UPDATE OR RECEIPT, OR NUMBER, OR DATE ON REQUEST FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def request_official_update(request, id):
     form_change = request.POST.get('or_select')
@@ -6822,22 +6634,20 @@ def request_official_update(request, id):
             name=get_name[0], purpose_of_request=get_request[0]).update(or_num=or_number)
     return redirect(registrar_dashboard_request_list)
 
-
+# UPDATE FORM 137 STATUS ON REQUEST FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def request_form137_update(request, id):
     form_change = request.POST.get('form137_select')
     request_form_table.objects.filter(id=id).update(form_137=form_change)
     return redirect(registrar_dashboard_request_list)
 
-
+# UPDATE CLAIM STATUS OF REQUEST FORM ON REGISTRAR'S SIDE
 def request_claim_update(request, id):
     form_change = request.POST.get('claim_select')
     request_form_table.objects.filter(id=id).update(claim=form_change)
     return redirect(registrar_dashboard_request_list)
 
 # REQUEST FORM
-
-
 @login_required(login_url='/')
 def request_form(request):
     context = {}
@@ -7015,9 +6825,7 @@ def request_form(request):
 
     return render(request, 'html_files/Request form.html', context)
 
-# UPDATE SIGNATURE
-
-
+# UPDATE SIGNATURE FOR CLEARANCE LIST ON FACULTY'S SIDE
 @login_required(login_url='/')
 def update_clearance_signature(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -7086,9 +6894,7 @@ def update_clearance_signature(request, id):
 
     return redirect(faculty_dashboard_clearance_list)
 
-# UPDATE SIGNATURE IN GRADUATION
-
-
+# UPDATE SIGNATURE FOR GRADUATION LIST IN FACULTY'S SIDE
 @login_required(login_url='/')
 def update_grad_signature(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
@@ -7158,7 +6964,7 @@ def update_grad_signature(request, id):
 
     return redirect(faculty_dashboard_graduation_list)
 
-
+# DISPLAY REQUEST FORM
 @login_required(login_url='/')
 def display_reqform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
@@ -7213,7 +7019,7 @@ def display_reqform(request, id):
     print('running')
     return render(request, 'html_files/Request_form_display.html', context)
 
-
+# DELETE GRADUATION FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def delete_gradform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -7222,7 +7028,7 @@ def delete_gradform(request, id):
         messages.success(request, "Form has been deleted.")
         return redirect('/registrar_dashboard_graduation_list/%20')
 
-
+# DELETE CLEARANCE FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def delete_clearform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -7231,7 +7037,7 @@ def delete_clearform(request, id):
         messages.success(request, "Form has been deleted.")
         return redirect('/registrar_dashboard_clearance_list/%20')
 
-
+# DELETE REQUEST FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def delete_reqform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
@@ -7240,7 +7046,8 @@ def delete_reqform(request, id):
         messages.success(request, "Form has been deleted.")
         return redirect('registrar_dashboard_request_list')
 
-
+# CONVERT STUDENT INTO ALUMNUS OR OLD STUDENT/TRANSFEREE
+# AUTO UPDATE ALL SCHOOL-RELATED INFOS
 @login_required(login_url='/')
 def student_status_update(request, id):
     student_update = request.POST.get('status_select')
@@ -7277,7 +7084,9 @@ def student_status_update(request, id):
 
     return redirect(registrar_dashboard_student_list)
 
-
+# DECLARE NEW SCHOOL YEAR ON STUDENTS LIST
+# APPLICABLE TO UNDERGRADUATE STUDENTS ONLY
+# STOPS AT 4TH YEAR
 @login_required(login_url='/')
 def school_year_update(request):
     id_num = user_table.objects.filter(~Q(year_and_section__startswith="4"), Q(
@@ -7306,7 +7115,9 @@ def school_year_update(request):
 
     return redirect(registrar_dashboard_student_list)
 
-
+# SEND EMAIL NOTIFICATIONS ON ALL SIGNATORIES WITH APPLICATION FORMS TO SIGN
+# SCHEDULED EVERY WEEKDAYS AT 4PM
+# CONNECTED TO SETTINGS.PY CRONJOBS AND CRON.PY
 def send_email_all():
     date_today = datetime.now().date()
     print(date_today)
@@ -7372,7 +7183,8 @@ def send_email_all():
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
 
-
+# APPROVE CLEARANCE FORMS ON REGISTRAR'S SIDE
+# FOR ALUMNI WITH EXISTING CLEARANCE RECORD IN THE OFFICE
 @login_required(login_url='/')
 def approve_clearform(request, id):
     registrar_name = user_table.objects.filter(
