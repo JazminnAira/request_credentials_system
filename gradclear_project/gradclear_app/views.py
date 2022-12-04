@@ -40,23 +40,6 @@ import os
 import time
 import random
 
-# try:
-#     reg = user_table.objects.get(first_name='SARAH JANE', last_name='VELOS')
-# except user_table.DoesNotExist:
-#     reg = user_table(first_name='SARAH JANE', last_name='VELOS',
-#     full_name='SARAH JANE VELOS', user_type='REGISTRAR', username='registrar_admin', id_number='11-1111')
-#     reg.save()
-
-# dateSTR = datetime.now().strftime("%H:%M:%S" )
-# if dateSTR == ("11:37:00"):
-#    #do function
-#     print(dateSTR)
-# else:
-#     # do something useful till this time
-#     time.sleep(1)
-#     pass
-
-
 def privacy_policy(request):
     return render(request, 'html_files/privacy policy.html')
 
