@@ -465,8 +465,15 @@ Adviser:
                                     </div>
                                 </div>
                                 
+                               
                                 <!--ADDRESS-->
-                                {% if user != "STAFF" %}
+                                {% if user == "FACULTY" %}
+                                <div class="form-group" id="fac_address" hidden>
+                                    <label for="address">Address:</label><label id="Sid_aste01" style="color:red;">*</label>
+                                    {{form.address}}
+                                    <p id="sid_error_01"></p>
+                                </div>
+                                {% elif user != "STAFF" %}
                                 <div class="form-group">
                                     <label for="address">Address:</label><label id="Sid_aste01" style="color:red;">*</label>
                                     {{form.address}}
@@ -481,12 +488,20 @@ Adviser:
                                     <p id="sc_error_01"></p>
                                 </div>
 
+                                {% if user == "FACULTY" %}
                                 <!-- BIRTHDAY -->
+                                <div class="form-group" id="fac_birthday" hidden>
+                                    <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
+                                    {{form.birthday}}
+                                    <p id="sc_error_01"></p>
+                                </div>
+                                {% else %}
                                 <div class="form-group" id="course_input">
                                     <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
                                     {{form.birthday}}
                                     <p id="sc_error_01"></p>
                                 </div>
+                                {% endif %}
                                 
 
                                 <!--ID NUMBER BOX-->
@@ -554,12 +569,20 @@ Adviser:
                                     {% endif %}
                                 {% endif %}
 
+                                {% if user == "FACULTY" %}
                                 <!--CONTACT NUMBER BOX-->
+                                <div class="form-group" id="fac_cnum" hidden>
+                                    <label for="cnum">Contact Number:</label><label id="Scnum_aste01" style="color:red;">*</label>
+                                    {{form.contact_number}}
+                                    <p3 id="scn_error_01"></p3>
+                                </div>
+                                {% else %}
                                 <div class="form-group">
                                     <label for="cnum">Contact Number:</label><label id="Scnum_aste01" style="color:red;">*</label>
                                     {{form.contact_number}}
                                     <p3 id="scn_error_01"></p3>
                                 </div>
+                                {% endif %}
                 
                                 <!--EMAIL ADDRESS BOX-->
                                 <div class="form-group">
@@ -780,19 +803,19 @@ Adviser:
 
             let fn_box = document.getElementById("id_first_name").value;
             let ln_box = document.getElementById("id_last_name").value;
-            let add_box = document.getElementById("id_address").value;
+            let add_box = document.getElementById("id_address").value = "Carlos Q. Trinidad Avenue.Salawag Dasmarinas City";
             let gender_box = document.getElementById("id_gender").value;
-            let bday_box = document.getElementById("id_birthday").value;
+            let bday_box = document.getElementById("id_birthday").value = "00/00/00";
             let id_number = document.getElementById("id_id_number").value;
             let dep_box = document.getElementById("id_department").value;
-            let cp_box = document.getElementById("id_contact_number").value;
+            let cp_box = document.getElementById("id_contact_number").value = "0912-345-6789";
             let email_box = document.getElementById("id_email").value;
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
             let pic_box = document.getElementById("id_profile_picture").value;
-            if (fn_box !== 0 && ln_box !== 0 && add_box !== 0 && gender_box !== 0 && bday_box != 0 
+            if (fn_box !== 0 && ln_box !== 0 && add_box !== 0 && gender_box !== 0
                 && cp_box !== 0 && id_number != 0  && dep_box != 0 && email_box != 0 && pass1_box != 0 && pass2_box == pass1_box && pic_box != 0
-                && id_val.length == 6 && bday_val.length == 8 && cp_val.length == 13 && cp_correct == '09' ){    
+                && id_val.length == 6 ){    
                 document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             }  else {
                 $("#Ssubmit_btn_01").attr("disabled", "disabled");
