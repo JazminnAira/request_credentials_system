@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2023
+BET-COET 2021-2023
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -483,7 +483,7 @@ Adviser:
         <input type="text" name="user_stat" id="user_stat" value="{{request.user.user_type}}" hidden>
         <input type="text" id ="allow_request" value ="{{allow}}" hidden>
         <input type="text" id ="latest_request" value ="{{latest_request}}" hidden>
-        <form method="POST" action="request_form">
+        <form method="POST" action="request_form" id="request_form">
             {% csrf_token %}
             <h3><b>REQUEST FORM</b></h3>
             <input class="form-control" type ="text" id ="amount_paid" name ="amount_paid" hidden>
@@ -654,10 +654,29 @@ Adviser:
             
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
-                <button class="btn btn-secondary" type="submit" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
+                <button class="btn btn-secondary" type="button" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
             </p>
 
         </form>
+        
+        <!--CONFIRMATION MODAL-->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #424242;">
+                        <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                        Once you submit, you will no longer be<br> able to change your answer for this attempt. <br><b>Are you sure?</b>
+                    </div>
+                    <div class="modal-footer" style="background-color:#c31d35">
+                        <button type="button" class="btn" id="modal-btn-yes" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                        <button type="button" class="btn" id="modal-btn-no" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
 </body>
@@ -672,37 +691,32 @@ Adviser:
 
     document.getElementById("date_pre").value = date;
 
-    function submitForm(form) {
-
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-
-        .then(function(isOkay) {
-            if (isOkay) {
-                var btn = document.getElementById('submit_button');
-                btn.disabled = true;
-                btn.innerText = 'Submitted'
-                document.getElementById("ln_box_pre").disabled = true;
-                document.getElementById("fn_box_pre").disabled = true;
-                document.getElementById("mn_box_pre").disabled = true;
-                document.getElementById("date_pre").disabled = true;
-                document.getElementById("add_box_pre").disabled = true;
-                document.getElementById("course_pre").disabled = true;
-                document.getElementById("control_pre").disabled = true;
-                document.getElementById("contact_pre").disabled = true;
-                document.getElementById("purpose").disabled = true;
-                document.getElementById("certification_box").disabled = true;
-                document.getElementById("others_box_pre").disabled = true;
-                document.getElementById("year_graduated_pre").disabled = true;
-            }
+    //Confirm Submit
+    var modalConfirm = function(callback){
+  
+        $("#submit_btn_pre").on("click", function(){
+          $("#mi-modal").modal('show');
         });
-        return false;
-    }
+      
+        $("#modal-btn-yes").on("click", function(){
+          callback(true);
+          $("#mi-modal").modal('hide');
+        });
+        
+        $("#modal-btn-no").on("click", function(){
+          callback(false);
+          $("#mi-modal").modal('hide');
+        });
+    };
+      
+    modalConfirm(function(confirm){
+        var request_form = document.getElementById('request_form')
+        if(confirm){
+            request_form.submit()
+        }else{
+            return false;
+        }
+    });
 
     function isEmpty() {
      

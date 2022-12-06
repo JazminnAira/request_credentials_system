@@ -1,5 +1,5 @@
 <!--
-BET-COET-3A 2021-2023
+BET-COET 2021-2023
 Programmers:
         Trisha Eunis Elicot
         Dana Grace Fulla
@@ -32,9 +32,9 @@ Adviser:
 
 <style>
     #more {
-    cursor: pointer;
-    background: #eee;
-}
+        cursor: pointer;
+        background: #eee;
+    }
     #backtotop_btn_43 {
         display: inline-block;
         background-color: #E1A19D;
@@ -950,9 +950,28 @@ Adviser:
 
             <!--SUBMIT BUTTON-->
             <div style = "display: flex; justify-content:flex-end">
-                <button type ="button" class="btn btn-secondary " id="submit_btn_43" name="submit_btn_43" onclick="submit_form(this)" disabled>Submit</button>
+                <button type ="button" class="btn btn-secondary " id="submit_btn_43" name="submit_btn_43" disabled>Submit</button>
             </div>
         </form>
+    </div>
+    
+    <!--CONFIRMATION MODAL-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you submit, you will no longer be<br> able to change your answer for this attempt. <br><b>Are you sure?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="modal-btn-yes" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="modal-btn-no" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -2087,9 +2106,35 @@ Adviser:
             document.getElementById('submit_btn_43').disabled = true;
         };
     };
+    
+    //Confirm Submit
+    var modalConfirm = function(callback){
+  
+        $("#submit_btn_43").on("click", function(){
+          $("#mi-modal").modal('show');
+        });
+      
+        $("#modal-btn-yes").on("click", function(){
+          callback(true);
+          $("#mi-modal").modal('hide');
+        });
+        
+        $("#modal-btn-no").on("click", function(){
+          callback(false);
+          $("#mi-modal").modal('hide');
+        });
+    };
+      
+    modalConfirm(function(confirm){
+        if(confirm){
+            submit_form()
+        }else{
+            return false;
+        }
+    });
 
     //ENABLE SUBMIT AND OPEN TO FETCH DATA
-    function submit_form(elem){
+    function submit_form(){
         document.getElementById('id_subject2').disabled = false;
         document.getElementById('id_starttime1_2').disabled = false;
         document.getElementById('id_endtime1_2').disabled = false;

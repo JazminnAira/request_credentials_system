@@ -102,9 +102,9 @@ urlpatterns = [
           request_official_update, name='request_official_update'),
      path('registrar_dashboard_organize_request_list/request_form137_update/<int:id>', 
           request_form137_update, name='request_form137_update'),
-   
      path('registrar_dashboard_organize_request_list/request_claim_update/<int:id>', 
           request_claim_update, name='request_claim_update'),
+     
      #  DOCUMENT CHECKER
      path('request_official_update/<int:id>', request_official_update, name='request_official_update'),
      path('request_form137_update/<int:id>', request_form137_update, name='request_form137_update'),
@@ -115,17 +115,11 @@ urlpatterns = [
      path('update_graduation/<int:id>/<str:sub>/<str:sig>', update_graduation, name='update_graduation'),
 
      # UPDATE STUDENT SETTINGS
-     path('updateAddress', updateAddress, name='updateAddress'),
-     path('updateEmail', updateEmail, name='updateEmail'),
      path('updatePassword', updatePassword, name='updatePassword'),
-     path('updateContact', updateContact, name='updateContact'),
-
+     
      # UPDATE FACULTY SETTINGS
-     path('faculty_updateAddress', faculty_updateAddress, name='faculty_updateAddress'),
-     path('faculty_updateEmail', faculty_updateEmail, name='faculty_updateEmail'),
-     path('faculty_updatePassword', faculty_updatePassword, name='faculty_updatePassword'),
-     path('faculty_updateContact', faculty_updateContact, name='faculty_updateContact'),
-
+    path('faculty_updatePassword', faculty_updatePassword, name='faculty_updatePassword'),
+    
      # UPDATE REGISTRAR SETTINGS
      path('reg_updateName', reg_updateName, name='reg_updateName'),
      path('reg_updateAddress', reg_updateAddress, name='reg_updateAddress'),
@@ -143,14 +137,13 @@ urlpatterns = [
      path('req_print/<int:id>', req_print, name='req_print'),
      
      # SET APPOINTMENTS
-     path('set_appointment/<int:id>', set_appointment, name='set_appointment'),
      path('appointment/<int:id>/<str:form>', appointment, name='appointment'),
      path('appointmentgrad/<int:id>/<str:form>', appointmentgrad, name='appointmentgrad'),
      path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
      path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
      path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
 
-     # SEND EMAIL TO ALL
+     # SEND EMAIL TO ALL SIGNATORIES
      path('send_email_all', send_email_all, name='send_email_all'),
      
     ] 
