@@ -1,3 +1,5 @@
+# THIS SETUP IS APPLICABLE VIA LOCAL ONLY, USE DEPLOY __INIT__ IF NEEDED
+
 """
 Django settings for gradclear_project project.
 
@@ -123,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
