@@ -2217,7 +2217,7 @@ def clearance_form(request, req):
         temp = int(current_year[2:5])
         with_graduation = temp - sliced_id
         fullname = request.user.full_name
-        print(with_graduation)
+        print("grad",with_graduation)
         alumni_course_adviser = ""
 
         # DETERMINE WHICH DEPARTMENT EACH COURSE BELONGS
@@ -2244,7 +2244,7 @@ def clearance_form(request, req):
             form = clearance_form
 
             student_id = request.POST.get('stud_id_420')
-            print(student_id)
+            print("tytyt",student_id)
             last_name = request.POST.get('ln_box_420')
             first_name = request.POST.get('fn_box_420')
             middle_name = request.POST.get('mn_box_420')
@@ -2306,13 +2306,12 @@ def clearance_form(request, req):
 
             return redirect('student_dashboard')
         else:
-            
             # CHECKER OF PREVIOUS CLEARANCE
-            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by(
-                '-time_requested').values_list('approval_status', flat=True).distinct()
+            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
             latest_others = request_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('request', flat=True).distinct()
-
+            print(fullname)
+            print(request_clearance)
             if request_clearance:
                 if request_clearance[0] == "APPROVED":
                     allow_request = request_clearance[0]
@@ -2328,9 +2327,21 @@ def clearance_form(request, req):
                 else:
                     allow_request = "UNAPPROVED"
                     other_data = ""
+    
             else:
-                allow_request = ""
-                other_data = ""
+                if latest_others:
+                    latest_data = latest_others[0]
+                    if latest_data.__contains__('Others'):
+                        requested = "Others"
+                        other_data = latest_others[0]
+                        allow_request = ""
+                    else:
+                        other_data = latest_others[0]
+                        allow_request = ""
+                else:
+                    other_data = ""
+                    allow_request = ""
+                
 
             # GETTING PREVIOUS CLEARANCE
             previous_term = clearance_form_table.objects.filter(name=fullname).order_by(

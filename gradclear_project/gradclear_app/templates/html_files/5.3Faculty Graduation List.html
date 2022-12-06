@@ -1111,6 +1111,25 @@ Adviser:
         <p class="text-center text-bold" id="p6_53"></p>
 
     </hr>
+    
+    <!--CONFIRMATION MODAL-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="modal-btn-yes" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="modal-btn-no" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
@@ -1352,56 +1371,136 @@ Adviser:
         document.getElementById('subject').value = "addsignature5";
     };
 
-    esign_attach_sig_btn.addEventListener("click", function() {
-        if (document.getElementById('esign_checker').value == ""){
-            document.getElementById("create_signature_area").hidden = false;
-            document.getElementById("upload_signature_area").hidden = true;
-            document.getElementById("signature_pad").width = 350;
-            document.getElementById("signature_pad").height = 200;
-            document.getElementById("submit_signature").hidden = false;
-            document.getElementById("button_area").hidden = true;
-            document.getElementById("show_details").hidden = true;
-        }else{
-            id_list = document.getElementById('id_list').value;
-            var id_user = document.getElementById('attach_signature_to').value;
-            var sub = document.getElementById('subject').value;
-            var sig = "ESIGN";
-            if (id_list.length != 0){
-                document.getElementById('id_list').value = id_list
-                document.getElementById('sig').value= sig
-                document.getElementById("submit_btn_all").click()
-            }  
-            else {
-                location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+    //Confirm Submit
+    var modalConfirm = function(callback){
+  
+        $("#esign_attach_sig_btn").on("click", function(){
+            if (document.getElementById('esign_checker').value == ""){
+                document.getElementById("create_signature_area").hidden = false;
+                document.getElementById("upload_signature_area").hidden = true;
+                document.getElementById("signature_pad").width = 350;
+                document.getElementById("signature_pad").height = 200;
+                document.getElementById("submit_signature").hidden = false;
+                document.getElementById("button_area").hidden = true;
+                document.getElementById("show_details").hidden = true;
+                
+            }else{
+                $("#mi-modal").modal('show');
             }
+        });
+      
+        $("#modal-btn-yes").on("click", function(){
+          callback(true);
+          $("#mi-modal").modal('hide');
+        });
+        
+        $("#modal-btn-no").on("click", function(){
+          callback(false);
+          $("#mi-modal").modal('hide');
+        });
+    };
+      
+    modalConfirm(function(confirm){
+        if(confirm){
+            esign_approved()
+        }else{
+            return false;
         }
     });
 
-    upload_attach_sig_btn.addEventListener("click", function() {
-        if (document.getElementById('upload_checker').value == ""){
-            document.getElementById("create_signature_area").hidden = true;
-            document.getElementById("upload_signature_area").hidden = false;
-            document.getElementById("submit_signature").hidden = false;
-            document.getElementById("button_area").hidden = true;
-            document.getElementById("show_details").hidden = true;
-            document.getElementById("upload_signature_display").hidden = false;
-        }else{
-            id_list = document.getElementById('id_list').value;
-            var id_user = document.getElementById('attach_signature_to').value;
-            var sub = document.getElementById('subject').value;
-            var sig = "UPLOAD";
-            if (id_list.length != 0){
-                document.getElementById('id_list').value = id_list
-                document.getElementById('sig').value= sig
-                document.getElementById("submit_btn_all").click()
-            }  
-            else {
-                location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+    function esign_approved(){
+        id_list = document.getElementById('id_list').value;
+        var id_user = document.getElementById('attach_signature_to').value;
+        var sub = document.getElementById('subject').value;
+        var sig = "ESIGN";
+        if (id_list.length != 0){
+            document.getElementById('id_list').value = id_list
+            document.getElementById('sig').value= sig
+            document.getElementById("submit_btn_all").click()
+        }  
+        else {
+            location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+        }
+    };
+
+    //Confirm Submit
+    var modalConfirm = function(callback){
+  
+        $("#upload_attach_sig_btn").on("click", function(){
+            if (document.getElementById('upload_checker').value == ""){
+                document.getElementById("create_signature_area").hidden = true;
+                document.getElementById("upload_signature_area").hidden = false;
+                document.getElementById("submit_signature").hidden = false;
+                document.getElementById("button_area").hidden = true;
+                document.getElementById("show_details").hidden = true;
+                document.getElementById("upload_signature_display").hidden = false;
+            }else{
+                $("#mi-modal").modal('show');
             }
+        });
+      
+        $("#modal-btn-yes").on("click", function(){
+          callback(true);
+          $("#mi-modal").modal('hide');
+        });
+        
+        $("#modal-btn-no").on("click", function(){
+          callback(false);
+          $("#mi-modal").modal('hide');
+        });
+    };
+      
+    modalConfirm(function(confirm){
+        if(confirm){
+            upload_approved()
+        }else{
+            return false;
         }
     });
 
-    approve_sig_btn.addEventListener("click", function() {
+    function upload_approved() {
+        id_list = document.getElementById('id_list').value;
+        var id_user = document.getElementById('attach_signature_to').value;
+        var sub = document.getElementById('subject').value;
+        var sig = "UPLOAD";
+        if (id_list.length != 0){
+            document.getElementById('id_list').value = id_list
+            document.getElementById('sig').value= sig
+            document.getElementById("submit_btn_all").click()
+        }  
+        else {
+            location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
+        }
+        
+    };
+
+    //Confirm Submit
+    var modalConfirm = function(callback){
+  
+        $("#approve_sig_btn").on("click", function(){
+          $("#mi-modal").modal('show');
+        });
+      
+        $("#modal-btn-yes").on("click", function(){
+          callback(true);
+          $("#mi-modal").modal('hide');
+        });
+        
+        $("#modal-btn-no").on("click", function(){
+          callback(false);
+          $("#mi-modal").modal('hide');
+        });
+    };
+      
+    modalConfirm(function(confirm){
+        if(confirm){
+            approve_only()
+        }else{
+            return false;
+        }
+    });
+
+    function approve_only() {
         id_list = document.getElementById('id_list').value;
         var id_user = document.getElementById('attach_signature_to').value;
         var sub = document.getElementById('subject').value;
@@ -1414,7 +1513,7 @@ Adviser:
         else {
             location.href = "update_graduation/"+id_user+"/"+sub+"/"+sig;
         }
-    });
+    };
 
 
     close_signature.addEventListener("click", function() {
