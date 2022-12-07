@@ -465,6 +465,7 @@ Adviser:
                                     </div>
                                 </div>
                                 
+                               
                                 <!--ADDRESS-->
                                 {% if user == "FACULTY" %}
                                 <div class="form-group" id="fac_address" hidden>
@@ -487,10 +488,15 @@ Adviser:
                                     <p id="sc_error_01"></p>
                                 </div>
 
-                                <!-- BIRTHDAY -->
-                                 {% if user == "FACULTY" %}
+                                {% if user == "FACULTY" %}
                                 <!-- BIRTHDAY -->
                                 <div class="form-group" id="fac_birthday" hidden>
+                                    <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
+                                    {{form.birthday}}
+                                    <p id="sc_error_01"></p>
+                                </div>
+                                {% elif user == "STAFF" %}
+                                <div class="form-group" id="staff_birthday" hidden>
                                     <label for="birthday">Birthday:</label><label id="Scourse_aste01" style="color:red;">*</label>
                                     {{form.birthday}}
                                     <p id="sc_error_01"></p>
@@ -572,6 +578,12 @@ Adviser:
                                 {% if user == "FACULTY" %}
                                 <!--CONTACT NUMBER BOX-->
                                 <div class="form-group" id="fac_cnum" hidden>
+                                    <label for="cnum">Contact Number:</label><label id="Scnum_aste01" style="color:red;">*</label>
+                                    {{form.contact_number}}
+                                    <p3 id="scn_error_01"></p3>
+                                </div>
+                                {% elif user == "STAFF" %}
+                                <div class="form-group" id="staff_cnum" hidden>
                                     <label for="cnum">Contact Number:</label><label id="Scnum_aste01" style="color:red;">*</label>
                                     {{form.contact_number}}
                                     <p3 id="scn_error_01"></p3>
@@ -871,15 +883,15 @@ Adviser:
             let fn_box = document.getElementById("id_first_name").value;
             let ln_box = document.getElementById("id_last_name").value;
             let gender_box = document.getElementById("id_gender").value;
-            let bday_box = document.getElementById("id_birthday").value;
+            let bday_box = document.getElementById("id_birthday").value = "00/00/00";
             let id_num_box = document.getElementById("id_id_number").value;
-            let cp_box = document.getElementById("id_contact_number").value;
+            let cp_box = document.getElementById("id_contact_number").value = "0912-345-6789";
             let email_box = document.getElementById("id_email").value;
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
-            if ((fn_box != 0 && ln_box != 0 && gender_box != 0 && bday_box != 0 
+            if ((fn_box != 0 && ln_box != 0 && gender_box != 0 
                 && cp_box != 0 && email_box != 0 && pass1_box != 0 && pass2_box == pass1_box 
-                && bday_val.length == 8 && cp_val.length == 13 && cp_correct == '09') && (id_val.length == 7) || (id_val.length == 6) ){    
+                ) && (id_val.length == 7) || (id_val.length == 6) ){    
                     document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             } else {
                 $("#Ssubmit_btn_01").attr("disabled", "disabled");
