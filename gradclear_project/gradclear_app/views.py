@@ -915,13 +915,13 @@ def clearance_print(request, id):
 
         p.drawString(400, 663, f'{content.amount_paid}')
         p.drawString(429, 639, f'{content.or_num}')
-    if num_term is not None:
-        p.drawString(175, 535, f'{content.number_of_terms_in_tupc}')
+        
     if prev_date is not None:
-        p.drawString(210, 510, f'{content.date_of_previously_requested_form}')
-    if last_term is not None:
-        p.drawString(429, 530, f'{content.last_term_in_tupc}')
-        p.drawString(430, 505, f'{content.purpose_of_request_reason}')
+        p.drawString(370, 540, f'{content.date_of_previously_requested_form}')
+        p.drawString(418, 510, f'{content.last_term_in_tupc}')
+    
+    p.drawString(428, 485, f'{content.purpose_of_request_reason}')
+    p.drawString(210, 510, f'{content.number_of_terms_in_tupc}')
 
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
@@ -933,7 +933,7 @@ def clearance_print(request, id):
     prev_form = content.have_previously_requested_form
     if prev_form == "YES":
         p.drawString(384, 590, '✔')
-        p.drawString(375, 540, f'{content.date_of_previously_requested_form}')
+        p.drawString(370, 540, f'{content.date_of_previously_requested_form}')
 
     else:
         p.drawString(415, 592, '✔')
