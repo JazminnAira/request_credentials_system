@@ -456,7 +456,7 @@ Adviser:
 </style>
 
 <body>
-    
+    <!--BACK TO TOP DASHBOARD-->
     <ul>
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
@@ -598,11 +598,7 @@ Adviser:
                 </div>
             </div>
 
-
-
-            
             <!--REQUESTED FORMS CHECK BOX-->
-            
             <div class="form-group row">
                 {% if date_previous %}
                 <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
@@ -665,8 +661,7 @@ Adviser:
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
-            
-
+        
             <!--SEMESTER ENROLLED-->
             {% if request.user.user_type == "STUDENT" %}
             <div class="form-group row">
@@ -682,6 +677,7 @@ Adviser:
             </div>
             {% endif %}
 
+            <!--SHOP ADVISER DROPDOWN-->
             <div class="form-group row">
                 <label for="course_adviser_42" class="col-sm-2 col-form-label col-form-label-sm" id="course_adviser_lbl_42">Course/ Shop Adviser:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
@@ -695,12 +691,12 @@ Adviser:
                         {% endfor %}</select>
                 </div>
             </div>
+            <!--SHOP ADVISER FOR ALUMNI-->
             {% if request.user.user_type == "ALUMNUS" or request.user.user_type  == "OLD STUDENT" %}
             <p style="color:#c51d3a">NOTE: If your Course Adviser is not on the list, choose <b>{{alumni_course_adviser}}</b> (Department Head)</p>
             {% endif %}
 
             <!--PURPOSE OF REQUEST CHECK BOXES-->
-            
                 <h3><b>CLEARANCE REQUESTED FOR:<em>(Check items below)</em><span id="asteris_42" style="color:rgb(255, 196, 196);">*</span></b></h3>
                 {% if requested == "HonorableDismissal" %}
                 <div class="form-check form-check-inline">
@@ -768,7 +764,7 @@ Adviser:
 
             <br>
  
-            <!--SUBMIT BUTTON onclick="forms_check()"-->
+            <!--SUBMIT BUTTON-->
             <p align="right">
                 <button class="btn btn-secondary" type="button" id="submit_btn_42" name="submit_btn_420" disabled>Submit</button>
             </p>
@@ -777,270 +773,7 @@ Adviser:
         </form>
     </div>
 
-    <div id="print_clearance" hidden>
-        <div>
-            <!--Print Header-->
-            <table id="print_table">
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td"><img src="{% static 'Media/tup_logo.png' %}" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
-                    <td colspan="2" id="print_td2">
-                        <p style="font-size :18px; font-style:bold; text-align: center;">TECHNOLOGIGAL UNIVERSITY OF THE PHILIPPINES<br> CAVITE CAMPUS</p>
-                        <p style="font-size :15px; text-align: center;">Carlos Q. Trinidad Avenue, Salawag, Dasmarinas City,Cavite, Philippines<br> Telefax: (046) 416-4920<br> Email: cavite@tup.edu.ph │ Website: www.tup.edu.ph</p>
-                    </td>
-                </tr>
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td3">OCR</td>
-                    <td id="print_td4">
-                        STUDENTS'CLEARANCE FORM
-                    </td>
-                    <td id="print_td4">
-                        Page 1/1
-                    </td>
-                </tr>
-            </table>
 
-            <!--Main Clearance PRINT-->
-            <div>
-                <p></p>
-                <table style="width:100%; border:1px solid black;">
-                    <tr class="col-sm-md-12 p-2">
-                        <td id="print_td6" colspan="2" class="p-3">
-                            PERSONAL INFORMATION
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            Name: <label class="pl-2" id="name_p42">Juan Dela Cruz</label>
-                        </td>
-                        <td style="width:40%;" class="pl-3">
-                            Date: <label class="pl-2" id="date_p42">Feb 20,2022</label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2" class="pl-3">
-                            Present Address: <label class="pl-2" id="add_p42">Dasmarinas Cavite</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            Date Admitted in TUPC:<label class="pl-2" id="datead_p42">Jan 20,2020</label>
-                        </td>
-                        <td rowspan="7" class="pl-3">
-                            <table style="border:3px solid black;width:100%;">
-                                <tr>
-                                    <td class="pl-3">
-                                        Amount Paid:<label class="pl-2" id="amount_p42">2k</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-3">
-                                        Official Receipt Number: <label class="pl-2" id="offrecpt_p42">2k</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-3">
-                                        Have You Requested for the checked items below <br> previously?<br>
-                                        <input type="checkbox" id="Reqyes_p42" value="Yes">
-                                        <label for="Reqyes_p42">Yes</label>
-                                        <br>
-                                        <input type="checkbox" id="Reqno_p42" value="No">
-                                        <label for="Reqno_p42">No</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-3">
-                                        If yes,please indicate the date before its respective<br> item(s):
-                                        <label class="pl-2" id="indate_p42">2k</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-3">
-                                        Last Term in TUPC:<label class="pl-2" id="lastterm_p42">2k</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pl-3">
-                                        Purpose of Request:<label class="pl-2" id="por_p42">2k</label>
-                                    </td>
-                                </tr>
-
-                            </table>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            Course & Major:<label class="pl-2" id="cmajor_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            HighSchool Were Graduated:<label class="pl-2" id="highgrad_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            Did You Graduate At TUPC?<br>
-                            <input type="checkbox" id="Gradyes_p" value="Yes">
-                            <label for="Gradyes_p"> Yes</label>
-
-                            <input type="checkbox" id="Gradno_p" value="No">
-                            <label for="Gradno_p">No</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            If yes, indicate the date:<label class="pl-2" id="indate1_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            Number of Terms in TUPC: Sem/Sum:<label class="pl-2" id="numsem_p42">2k</label>
-                        </td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-            <p></p>
-
-            <!--For Checking the requested Form-->
-            <div>
-                <table style="width:100%; border:1px solid black;">
-                    <tr class="col-sm-md-12">
-                        <td id="print_td6" colspan="2" class="p-3">
-                            CLEARANCE REQUESTED FOR: (Check items below)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            <input type="checkbox" id="Hon_dis" value="Honorable Dismissal">
-                            <label for="Hon_dis">Honorable Dismissal</label>
-                        </td>
-                        <td class="pl-3">
-                            <input type="checkbox" id="eval" value="Evaluation">
-                            <label for="eval">Honorable Evaluation</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            <input type="checkbox" id="trans_rec" value="Transript of Records">
-                            <label for="trans_rec">Transript of Records</label>
-                        </td>
-                        <td class="pl-3">
-                            <input type="checkbox" id="re_eval" value="Re-evaluation">
-                            <label for="re_eval">Re-evaluation</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            <input type="checkbox" id="dip" value="Diploma">
-                            <label for="dip">Diploma</label>
-                        </td>
-                        <td class="pl-3">
-                            <input type="checkbox" id="ap_grad" value="Application for Graduation">
-                            <label for="ap_grad">Application for Graduation</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            <input type="checkbox" id="cert" value="Certificate">
-                            <label for="cert">Certificate</label>
-                        </td>
-                        <td class="pl-3">
-                            <label>Others<em>(please specify)</em>:</label>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!--For signing -->
-            <p></p>
-            <div>
-                <table style="width:100%; border:1px solid black;">
-                    <tr class="col-sm-md-12">
-                        <td id="print_td6" colspan="2" class="p-3">
-                            THE ABOVE STUDENT IS CLEARED OF ALL MONEY AND PROPERTY ACCOUNTABILITIES IN MY OFFICE
-                            <br><em>(To be signed by the responsible officials concerned.)</em>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3">
-                            1. ACCOUNTANT: <label class="pl-2 pb-1" id="acct_p42">2k</label>
-                        </td>
-                        <td>
-                            3.COURSE/SHOP ADVISER:<label class="pl-2 pb-1" id="csadvider_p42">2k</label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="pl-4">
-                            2.DEPARTMENT HEADS
-                        </td>
-                        <td>
-                            4. CAMPUS LIBRARIAN:<label class="pl-2 pb-1" id="librarian_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-5">
-                            a. LIBERAL ARTS:<label class="pl-2 pb-1" id="libarts_p42">2k</label>
-                        </td>
-                        <td>
-                            5. GUIDANCE COUNSELOR:<label class="pl-2 pb-1" id="guidecoun_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-5">
-                            b. MATH & SCIENCES:<label class="pl-2 pb-1" id="math_p42">hi</label>
-                            <td>
-                                6. HEAD OF STUDENT AFFAIRS:<label class="pl-2 pb-1" id="headsa_p42">2k</label>
-                            </td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-5">
-                            c. DPECS:<label class="pl-2 pb-1" id="dpecs_p42">2k</label>
-                        </td>
-                        <td>
-                            7. ASST. DIR. FOR ACADEMIC AFFAIRS:<label class="pl-2 pb-1" id="asaffair_p42">2k</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-5">
-                            d. INDUSTRIAL TECHNOLOGY/ INDUSTRIAL<br> EDUCATION/ENGINEERING: <br>
-                            <em>(Please underline the appropriate department)</em> <br>
-                            <label class="pl-2 pb-1" id="indus_p42">2k</label>
-
-                        </td>
-                        <td rowspan="2">
-                            <table style="border:3px solid black; width:100%;">
-                                <tr>
-                                    <td class="pl-3">
-                                        Note:<br>
-                                        <label class="pl-2">
-                                            1.	This clearance form should be accomplished<br> within the semester it was initially requested.
-                                        </label><br>
-                                        <label class="pl-2">
-                                            2.	Not valid with alteration. 
-                                        </label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            &nbsp
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-        </div>
-    </div>
     
     <!--CONFIRMATION MODAL-->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
@@ -1066,7 +799,7 @@ Adviser:
 
 
 <script>
-    //Confirm Submit
+    //CONFIRM SUBMIT
     var modalConfirm = function(callback){
   
         $("#submit_btn_42").on("click", function(){
@@ -1088,11 +821,13 @@ Adviser:
         var clear_form = document.getElementById('clear_form')
         if(confirm){
             clear_form.submit()
-        }else{
+        }
+        else{
             return false;
         }
     });
 
+    //REQUESTED CREDENTIALS CORRESPONDING PRICES SETTER
     if (document.getElementById('amount_pay').value == "Others"){
         var o_data = document.getElementById('others_box_42').value;
         var split_data = o_data.split(': ').pop();
@@ -1111,20 +846,21 @@ Adviser:
         document.getElementById('amountp_box_42').value = "0.00";
     };
     
-    //Date filed
+    //DATE FILED
     $(document).ready( function() {
         var now = new Date();
         var today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
         $('#dfiled_box_42').val(today);
     });
 
-    //Back Button
+    //BACK BUTTON
     var btn = $("#backtotop_btn_42");
 
     $(window).scroll(function() {
         if ($(window).scrollTop() > 300) {
             btn.addClass("show");
-        } else {
+        } 
+        else {
             btn.removeClass("show");
         }
     });
@@ -1136,25 +872,28 @@ Adviser:
         }, "300");
     });
 
-    // EMPTY INPUTS CHECKER
-    // Name Check
+// EMPTY INPUTS CHECKER
+        // NAME
     function name_check() {
         var lname = document.getElementById("ln_box_42").value;
         var fname = document.getElementById('fn_box_42').value;
 
         if (lname && fname != "") {
             return true;
-        } else if (lname != "" && fname == "") {
+        } 
+        else if (lname != "" && fname == "") {
             var sign_error = document.getElementById("fn_box_42");
 
             sign_error.style.borderColor = "red";
 
-        } else if (lname == "" && fname != "") {
+        } 
+        else if (lname == "" && fname != "") {
             var sign_error1 = document.getElementById("ln_box_42");
 
             sign_error1.style.borderColor = "red";
 
-        } else {
+        } 
+        else {
             var sign_error01 = document.getElementById("ln_box_42");
             var sign_error012 = document.getElementById("fn_box_42");
 
@@ -1164,20 +903,21 @@ Adviser:
         }
     }
 
-    // Present Address Check
+    // PRESENT ADDRESS
     function present_add() {
         var present_input = document.getElementById("padd_box_42").value;
 
         if (present_input != "") {
             return true;
-        } else {
+        } 
+        else {
             var sign_error05 = document.getElementById("padd_box_42");
 
             sign_error05.style.borderColor = "red";
         }
     }
 
-    // Date Admitted Check
+    // DATE ADMITTED
     function dait_check() {
         var dait_input = document.getElementById("dait_box_42").value;
         if (!dait_input) {
@@ -1185,12 +925,13 @@ Adviser:
 
             sign_error6.style.borderColor = "red";
 
-        } else {
+        } 
+        else {
             return true;
         }
     }
 
-    // Course Check
+    // COURSE
     function course_check() {
         var course_input = document.getElementById("course_42");
         var selectedcourse = course_input.options[course_input.selectedIndex].value;
@@ -1199,25 +940,27 @@ Adviser:
             var sign_error08 = document.getElementById("course_42");
 
             sign_error08.style.borderColor = "red";
-        } else {
+        } 
+        else {
             return true;
         }
     }
 
-    // Where HS graduated Check
+    // HIGH SCHOOL GRADUATED
     function hswg_check() {
         var hswg_input = document.getElementById("hswg_box_42").value;
 
         if (hswg_input != "") {
             return true;
-        } else {
+        } 
+        else {
             var sign_error06 = document.getElementById("hswg_box_42");
 
             sign_error06.style.borderColor = "red";
         }
     }
 
-    // TUPC HS graduated Check
+    // TUPC HS GRADUATED
     function grad_check() {
         if (document.getElementById('gradYes_radio_42').checked) {
             var grad_input = document.getElementById("iydfiled_box_42").value;
@@ -1230,45 +973,43 @@ Adviser:
 
                 sign_error8.style.borderColor = "red";
                 sign_error11.style.borderColor = "red";
-
-            } else if (!grad_input && tupterms_input != "") {
+            } 
+            else if (!grad_input && tupterms_input != "") {
                 var sign_error8 = document.getElementById("iydfiled_box_42");
-
                 sign_error8.style.borderColor = "red";
-
-            } else if (grad_input && tupterms_input == "") {
+            } 
+            else if (grad_input && tupterms_input == "") {
                 var sign_error11 = document.getElementById("notit_box_42");
-
                 sign_error11.style.borderColor = "red";
-
-            } else {
+            } 
+            else {
                 return true;
             }
-
-        } else if (document.getElementById('gradNo_radio_42').checked) {
+        } 
+        else if (document.getElementById('gradNo_radio_42').checked) {
 
             return false;
 
-        } else {
+        } 
+        else {
             return false;
         }
     }
 
-    // Amount Check
+    // PRICE AMOUNT
     function amount_check() {
         var amount_input = document.getElementById("amountp_box_42").value;
 
         if (amount_input != "") {
             return true;
-
-        } else {
+        } 
+        else {
             var sign_error13 = document.getElementById("amountp_box_42");
-
             sign_error13.style.borderColor = "red";
         }
     }
 
-    // Past Requested Form Check
+    // REQUESTED IN THE PAST
     function pastrequest_check() {
         if (document.getElementById('reqYes_radio_42').checked) {
             var termreq_input = document.getElementById("lasterm_box_42").value;
@@ -1284,69 +1025,54 @@ Adviser:
                 sign_error17.style.borderColor = "red";
                 sign_error18.style.borderColor = "red";
                 sign_error26.style.borderColor = "red";
-
-            } else if (!dbrtime_input && termreq_input == "" && purreq_input != "") {
+            } 
+            else if (!dbrtime_input && termreq_input == "" && purreq_input != "") {
                 var sign_error21 = document.getElementById("dbrtime_box_42");
                 var sign_error28 = document.getElementById("lasterm_box_42");
-
                 sign_error21.style.borderColor = "red";
-
                 sign_error28.style.borderColor = "red";
-
-
-            } else if (!dbrtime_input && termreq_input != "" && purreq_input == "") {
+            } 
+            else if (!dbrtime_input && termreq_input != "" && purreq_input == "") {
                 var sign_error32 = document.getElementById("preq_box_42");
                 var sign_error34 = document.getElementById("dbrtime_box_42");
-
                 sign_error32.style.borderColor = "red";
-
                 sign_error34.style.borderColor = "red";
-
-            } else if (!dbrtime_input && termreq_input != "" && purreq_input != "") {
+            } 
+            else if (!dbrtime_input && termreq_input != "" && purreq_input != "") {
                 var sign_error30 = document.getElementById("dbrtime_box_42");
-
                 sign_error30.style.borderColor = "red";
-
-
-            } else if (dbrtime_input && termreq_input == "" && purreq_input == "") {
+            } 
+            else if (dbrtime_input && termreq_input == "" && purreq_input == "") {
                 var sign_error23 = document.getElementById("lasterm_box_42");
                 var sign_error28 = document.getElementById("preq_box_42");
-
                 sign_error23.style.borderColor = "red";
-
                 sign_error28.style.borderColor = "red";
-
-            } else if (dbrtime_input && termreq_input != "" && purreq_input == "") {
+            } 
+            else if (dbrtime_input && termreq_input != "" && purreq_input == "") {
                 var sign_error36 = document.getElementById("preq_box_42");
-
                 sign_error36.style.borderColor = "red";
-
-
-            } else if (dbrtime_input && termreq_input == "" && purreq_input != "") {
+            } 
+            else if (dbrtime_input && termreq_input == "" && purreq_input != "") {
                 var sign_error38 = document.getElementById("lasterm_box_42");
-
                 sign_error38.style.borderColor = "red";
-
-            } else {
+            } 
+            else {
                 return true;
             }
-
-        } else if (document.getElementById('reqNo_radio_42').checked) {
-
+        } 
+        else if (document.getElementById('reqNo_radio_42').checked) {
             return false;
-
-        } else {
+        } 
+        else {
             var sign_error25 = document.getElementById("req_error_42");
             var undefined_answer = "*Please answer this field"
-
             sign_error25.style.color = "red";
             sign_error25.style.fontSize = "13px";
-
             document.getElementById("req_error_42").innerHTML = undefined_answer;
         }
     }
 
-    // Request Check
+    // REQUESTED CREDENTIALS
     function req_check() {
         var a = document.getElementById('HonorableDismissal_check_42').checked;
         var c = document.getElementById('TranscriptofRecords_check_42').checked;
@@ -1367,7 +1093,7 @@ Adviser:
         }
     }
 
-    // Overall Check
+    // CHECK OF REQUIRED INPUT FIELDS
     function forms_check() {
         name_check();
         present_add();
@@ -1381,13 +1107,13 @@ Adviser:
         event.preventDefault()
     }
 
-    // DISABLE ERROR
-    // Last Name dissable error
+
+    // LAST NAME DISSABLE ERROR
     function enter_name1() {
         document.getElementById("ln_box_42").style.removeProperty('border');
     }
 
-    // First Name dissable error
+    // FIST NAME DISSABLE ERROR
     function enter_name2() {
         document.getElementById("fn_box_42").style.removeProperty('border');
     }
@@ -1396,12 +1122,12 @@ Adviser:
         document.getElementById("padd_box_42").style.removeProperty('border');
     }
 
-    // date admitted dissable error
+    //DATE ADDMITTED DISSABLE ERROR
     function enter_dait() {
         document.getElementById("dait_box_42").style.removeProperty('border');
     }
 
-    // course dissable error
+    //OURSE DISABLE ERROR
     function enter_course() {
         var selected_course = document.getElementById("course_42");
         var selectedcourse = selected_course.options[selected_course.selectedIndex].value;
@@ -1410,63 +1136,58 @@ Adviser:
         }
     }
 
-    // Where HS graduate dissable error
+    //HIGH SCHOOL GRADUATED DISSABLE ERROR
     function enter_hswg() {
         document.getElementById("hswg_box_42").style.removeProperty('border');
     }
 
-    // TUPC radio choices yes dissable error
+    //DID YOU GRADUATED AT TUPC DISSABL ERROR
     function enter_tupgradYes() {
         var check_success = "";
         document.getElementById("tupcans_error_42").innerHTML = check_success;
 
     }
-
-    //tupc radio choices no dissable error
     function enter_tupgradNo() {
         var check_success = "";
         document.getElementById("tupcans_error_42").innerHTML = check_success;
     }
 
-    // Date filled dissable error
+    // DATE FILED DISSABLE ERROR
     function enter_iydfilled() {
         document.getElementById("iydfiled_box_42").style.removeProperty('border');
     }
 
-    // Tupc terms dissable error
+    //NUMBER OF TERMS DISSABLE ERROR
     function enter_notit() {
         document.getElementById("notit_box_42").style.removeProperty('border');
     }
 
-    // amount dissable error
+    //AMOUNT PRICES DISSABLE ERROR
     function enter_amount() {
         document.getElementById("amountp_box_42").style.removeProperty('border');
     }
-    // recent request choices yes dissable error
+
+    //REQUESTED PREVIOUSLY DISSABLE ERROR
     function enter_lastreqYes() {
         var check_success = "";
         document.getElementById("req_error_42").innerHTML = check_success;
-
     }
-
-    // recent request choices no dissable error
     function enter_lastreqNo() {
         var check_success = "";
         document.getElementById("req_error_42").innerHTML = check_success;
-
     }
 
-    // date when requested dissable error
+    //DATE OF PREVIOUSLY REQUESTED DISSABLE ERROR
     function enter_dbrtime() {
         document.getElementById("dbrtime_box_42").style.removeProperty('border');
     }
 
-    // last term dissable error
+    //LASTE TERM IN TUPC DISSABLE ERROR
     function enter_lterm() {
         document.getElementById("lasterm_box_42").style.removeProperty('border');
     }
 
-    // purpose dissable error
+    //PURPOSE OF REQUEST DISSABLE ERROR
     function enter_purpose() {
         document.getElementById("preq_box_42").style.removeProperty('border');
     }
@@ -1537,7 +1258,6 @@ Adviser:
             }
         });
     });
-
     $(function() {
         $('body').on('keydown', '#fn_box_42', function(e) {
             if (e.which === 32 && e.target.selectionStart === 0) {
@@ -1545,7 +1265,6 @@ Adviser:
             }
         });
     });
-
     $(function() {
         $('body').on('keydown', '#mn_box_42', function(e) {
             if (e.which === 32 && e.target.selectionStart === 0) {
@@ -1553,7 +1272,6 @@ Adviser:
             }
         });
     });
-
     $(function() {
         $('body').on('keydown', '#padd_box_42', function(e) {
             if (e.which === 32 && e.target.selectionStart === 0) {
@@ -1641,14 +1359,13 @@ Adviser:
 
         if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1" && lastterm!= "" && purpose_request!="") {
             document.getElementById("submit_btn_42").removeAttribute("disabled");
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_42').disabled=true;
         }
-
     }
 
     //ENABLE AND DISABLE CHECKBOXES
-
     function EnableDisableTextBox() {
         var gradYes_radio = document.getElementById("gradYes_radio_42");
         var iydfiled_box = document.getElementById("iydfiled_box_42");
@@ -1658,7 +1375,6 @@ Adviser:
 
         if (!iydfiled_box.disabled && !notit_box.disabled) {
             iydfiled_box.focus();
-
         }
     }
 
@@ -1670,7 +1386,6 @@ Adviser:
 
         if (!dbrtime_box.disabled) {
             dbrtime_box.focus();
-
         }
     }
 
@@ -1686,7 +1401,8 @@ Adviser:
 
     // AMOUNT COMMA INSERTER
     function formatNumber(n) {
-        // format number 1000000 to 1,234,567
+
+        // FORMAT AMOUNT000000 to 1,234,567
         return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
 
@@ -1694,75 +1410,41 @@ Adviser:
 
         var input_val = input.val();
 
-        // don't validate empty input
+        //INVALIDATE EMPTY INPUT
         if (input_val === "") {
             return;
         }
-
-        // original length
         var original_len = input_val.length;
-
-        // initial caret position 
         var caret_pos = input.prop("selectionStart");
-
-        // check for decimal
         if (input_val.indexOf(".") >= 0) {
 
-            // get position of first decimal
-            // this prevents multiple decimals from
-            // being entered
             var decimal_pos = input_val.indexOf(".");
 
-            // split number by decimal point
             var left_ = input_val.substring(0, decimal_pos);
             var right_ = input_val.substring(decimal_pos);
 
-            // add commas to left  of number
             left_ = formatNumber(left_);
-
-            // validate right 
             right_ = formatNumber(right_);
-
-            // On blur make sure 2 numbers after decimal
             if (blur === "blur") {
                 right_ += "00";
             }
-
-            // Limit decimal to only 2 digits
             right_ = right_.substring(0, 2);
-
-            // join number by .
             input_val = left_ + "." + right_;
-
-        } else {
-            // no decimal entered
-            // add commas to number
-            // remove all non-digits
+        } 
+        else {
             input_val = formatNumber(input_val);
             input_val = input_val;
-
-            // final formatting
             if (blur === "blur") {
                 input_val += ".00";
             }
         }
-
-        // send updated string to input
         input.val(input_val);
 
-        // put caret back in the right position
         var updated_len = input_val.length;
         caret_pos = updated_len - original_len + caret_pos;
         input[0].setSelectionRange(caret_pos, caret_pos);
     }
 
-    function to_beprinted(el) {
-        var restorepage = document.body.innerHTML;
-        var printcontent = document.getElementById(el).innerHTML;
-        document.body.innerHTML = printcontent;
-        window.print();
-        document.body.innerHTML = restorepage;
-    }
 
     // INPUTBOX ENTER BTN LISTENER
     var input = document.getElementById("preq_box_42");
@@ -1787,22 +1469,25 @@ Adviser:
     //DISABLE HOME BUTTON FROM REQUEST
     if (document.getElementById('amount_pay').value == "ApplyForGraduation"){
         document.getElementById('home_btn').hidden = false;
-    }else{
+    }
+    else{
         document.getElementById('home_btn').hidden = true;
     }
 
+ // EMPTY COMMENT
     HonorableDismissal_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "0.00";
-        }else{
+        }
+        else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
     });
-
     TranscriptofRecords_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "100.00";
-        }else{
+        }
+        else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
     });
@@ -1810,7 +1495,8 @@ Adviser:
     Diploma_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "150.00";
-        }else{
+        }
+        else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
     });
@@ -1818,7 +1504,8 @@ Adviser:
     Certification_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "100.00";
-        }else{
+        }
+        else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
     });
@@ -1826,7 +1513,8 @@ Adviser:
     Others_check_42.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amountp_box_42').value = "0.00";
-        }else{
+        }
+        else{
             document.getElementById('amountp_box_42').value = "0.00";
         }
     });
