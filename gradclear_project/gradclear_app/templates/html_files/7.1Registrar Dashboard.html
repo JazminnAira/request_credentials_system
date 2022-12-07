@@ -1252,10 +1252,17 @@ Adviser:
                             <td>Administrator</td>
                         </tr>
 
+                        {% if request.user.user_type == "STAFF" %}
+                        <tr hidden>
+                            <td><b>Address:</b> </td>
+                            <td>{{request.user.address}}</td>
+                        </tr>
+                        {% else %}
                         <tr>
                             <td><b>Address:</b> </td>
                             <td>{{request.user.address}}</td>
                         </tr>
+                        {% endif %}
 
 
                         <tr>
@@ -1263,10 +1270,18 @@ Adviser:
                             <td>{{request.user.id_number}}</td>
                         </tr>
 
+                        {% if request.user.user_type == "STAFF" %}
+                        <tr hidden>
+                            <td><b>Contact No.:</b></td>
+                            <td>{{request.user.contact_number}}</td>
+                        </tr>
+                        {% else %}
                         <tr>
                             <td><b>Contact No.:</b></td>
                             <td>{{request.user.contact_number}}</td>
                         </tr>
+                        {% endif %}
+                        
                         <tr>
                             <td><b>Email Address:</b></td>
                             <td>{{request.user.email}}</td>
