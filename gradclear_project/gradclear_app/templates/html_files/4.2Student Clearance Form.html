@@ -498,7 +498,7 @@ Adviser:
             <div class="form-group row">
                 <label for="dfiled2_42" class="col-sm-2 col-form-label col-form-label-sm " id="dfiled_lbl2_42" >Date Filed:</label>
                 <div class="col-sm-9">
-                    <input type="date" id="dfiled_box_42" name="dfiled_box_420" class="form-control" readonly>
+                    <input type="text" id="dfiled_box_42" name="dfiled_box_420" class="form-control" readonly>
                 </div>
             </div>
 
@@ -648,44 +648,23 @@ Adviser:
 
 
             <!--LAST TERM BOX-->
-            {% if date_previous %}
             <div class="form-group row">
-                <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
+                <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="ex. 2020" onkeypress="isNumber(event)" value="{{year_then}}">
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="isEmpty()" placeholder="ex. 2020" onkeypress="isNumber(event)" >
                     <p id="lterm_error_42"></p>
                 </div>
             </div>
-            {% else %}
-            <div class="form-group row">
-                <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:</label>
-                <div class="col-sm-9">
-                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="enter_lterm()" placeholder="ex. 2020" onkeypress="isNumber(event)" >
-                    <p id="lterm_error_42"></p>
-                </div>
-            </div>
-            {% endif %}
 
-            {% if date_previous %}
             <!--PURPOSE OF REQUEST BOX-->
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" value="{{purpose_then}}" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                    <input type="text" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase(), isEmpty()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                         required>
                     <p id="pureq_error_42"></p>
                 </div>
             </div>
-            {% else %}
-            <div class="form-group row">
-                <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:<span id="asteris_42" style="color:red;">*</span></label>
-                <div class="col-sm-9">
-                    <input type="text" id="preq_box_42" name="preq_box_420" class="form-control" oninput="this.value = this.value.toUpperCase()" oninput="enter_purpose()" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
-                        required>
-                    <p id="pureq_error_42"></p>
-                </div>
-            </div>
-            {% endif %}
             
 
             <!--SEMESTER ENROLLED-->
@@ -1132,11 +1111,10 @@ Adviser:
         document.getElementById('amountp_box_42').value = "0.00";
     };
     
-
     //Date filed
     $(document).ready( function() {
         var now = new Date();
-        var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+        var today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
         $('#dfiled_box_42').val(today);
     });
 
@@ -1658,9 +1636,10 @@ Adviser:
         let course_drp = document.getElementById("course_42").value;
         let hswg_box = document.getElementById("hswg_box_42").value;
         let course_adviser = document.getElementById("course_adviser_42").value;
-       
+        let lastterm = document.getElementById("lasterm_box_42").value;
+        let purpose_request = document.getElementById("preq_box_42").value;
 
-        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1") {
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1" && lastterm!= "" && purpose_request!="") {
             document.getElementById("submit_btn_42").removeAttribute("disabled");
         }else{
             document.getElementById('submit_btn_42').disabled=true;
@@ -1686,16 +1665,11 @@ Adviser:
     function EnableDisableTextBox1() {
         var reqYes_radio = document.getElementById("reqYes_radio_42");
         var dbrtime_box = document.getElementById("dbrtime_box_42");
-        var lasterm_box = document.getElementById("lasterm_box_42");
-        var preq_box = document.getElementById("preq_box_42");
         
         dbrtime_box.disabled = reqYes_radio.checked ? false : true;
-        lasterm_box.disabled = reqYes_radio.checked ? false : true;
-        preq_box.disabled = reqYes_radio.checked ? false : true;
 
-        if (!dbrtime_box.disabled && !lasterm_box.disabled && !preq_box.disabled) {
+        if (!dbrtime_box.disabled) {
             dbrtime_box.focus();
-            
 
         }
     }

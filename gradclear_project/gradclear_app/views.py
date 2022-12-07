@@ -2346,23 +2346,17 @@ def clearance_form(request, req):
             # GETTING PREVIOUS CLEARANCE
             previous_term = clearance_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('date_filed', flat=True).distinct()
-            previous_purpose = clearance_form_table.objects.filter(name=fullname).order_by(
-                '-time_requested').values_list('purpose_of_request', flat=True).distinct()
 
             if previous_term:
-                year_then = str(previous_term[0].split('-', 1)[0])
                 date_previous = previous_term[0]
-                purpose_then = previous_purpose[0]
             else:
-                year_then = ""
                 date_previous = ""
-                purpose_then = ""
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'year_then': year_then, 'date_previous': date_previous, 'purpose_then': purpose_then, 'alumni_course_adviser': alumni_course_adviser})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
 
 # VIEW GRADUATION FORM
 @login_required(login_url='/')
@@ -6980,41 +6974,37 @@ def update_grad_signature(request, id):
 def display_reqform(request, id):
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         reqs = request_form_table.objects.filter(id=id).values()
-        certification_data = request_form_table.objects.filter(
-            id=id).values('request')
-        others_data = request_form_table.objects.filter(
-            id=id).values('request')
+        certification_data = request_form_table.objects.filter(id=id).values_list('request', flat=True).distinct()
+        others_data = request_form_table.objects.filter(id=id).values_list('request', flat=True).distinct()
         if certification_data:
             c = certification_data[0]
+            print(c)
             if c.__contains__('Certification'):
                 latest_req = "Certification"
-                cert_request = str(certification_data[0])
-                cert_request.rsplit(':', 1)[-1]
-                request_cert = str(cert_request)
-            else:
-                request_cert = ""
-                latest_req = ""
-        else:
-            request_cert = ""
-            latest_req = ""
-            request_other = ""
-
-        if others_data:
-            o = others_data[0]
-            if o.__contains__('Others'):
-                latest_req = "Others"
-                other_request = str(others_data[0])
-                other_request.rsplit(':', 1)[-1]
-                request_other = str(cert_request)
-            else:
+                request_cert = str(certification_data[0])
                 request_other = ""
-                latest_req = ""
-
+            else:
+                if others_data:
+                    o = others_data[0]
+                    print(o)
+                    if o.__contains__('Others'):
+                        latest_req = "Others"
+                        request_other = str(others_data[0])
+                        print(request_other)
+                        request_cert = ""
+                    else:
+                        request_other = ""
+                        latest_req = ""
+                        request_cert = ""
+                else:
+                    request_other = ""
+                    latest_req = ""
+                    request_cert = ""
         else:
-            request_other = ""
-            latest_req = ""
             request_cert = ""
-
+            latest_req = ""
+            request_other = ""
+            
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")

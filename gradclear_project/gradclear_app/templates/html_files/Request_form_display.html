@@ -691,7 +691,7 @@ Adviser:
                     <label class="form-check-label" for="inlineCheckbox7_pre">Certification</label>
                     <input class="form-control" type="text" id="certification_box" name="certification_box" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value ="{{request_cert}}"><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value ="{{request_cert}}" disabled><br><br>
                 </div>
                 {% else %}
                 <div class="form-check form-check-inline">
@@ -705,7 +705,7 @@ Adviser:
                     <label for="others" id="others_lbl_pre"><em>Others (please specify):</em></label>
                     <input class="form-control" type="text" id="others_box_pre" name="others_box_pre" class="col-sm-3 col-form-label col-form-label-sm" 
                     oninput="this.value = this.value.toUpperCase()" onkeypress="return (event.charCode > 64 && event.charCode < 91) ||
-                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value = "{{request_other}}"><br><br>
+                     (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value = "{{request_other}}" disabled><br><br>
                 </div>
                 {% else %}
                 <div class="form-check form-check-inline">
@@ -727,6 +727,8 @@ Adviser:
 
             <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
             {% endfor %}
+            
+            <input type="text" id="requested" value="{{latest_req}}" hidden>
         </form>
     </div>
     
@@ -734,6 +736,15 @@ Adviser:
 
 </html>
 
-
-
-
+<script>
+//Pop String for Certification and Others Request
+    if(document.getElementById("requested").value == "Certification"){
+        var cert_data = document.getElementById('certification_box').value;
+        var split_cert = cert_data.split(':').pop();
+        document.getElementById('certification_box').value = split_cert; 
+    }else{
+        var ot_data = document.getElementById('others_box_pre').value;
+        var split_other = ot_data.split(':').pop();
+        document.getElementById('others_box_pre').value = split_other; 
+    }
+</script>
