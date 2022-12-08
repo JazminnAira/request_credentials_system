@@ -429,9 +429,9 @@ Adviser:
     <!-- MAIN-->
     <h3 style="text-align:center;">List of Staffs</h3>
     <div class="div">{% include 'html_files/message.html'%}</div>
-    <!--TAB BAR-->
+    
     <div data-tabs="1" id="tabz_75">
-
+        <!-- MAIN TABLE-->
         <div id="tab1_75" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
                 <div class="table-wrapper">
@@ -451,7 +451,7 @@ Adviser:
                             <td colspan="4"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
-                    
+                    <!--STAFF'S RECORD-->
                     {% for instance in data %}
                     <tbody>
                         <tr>
@@ -491,7 +491,7 @@ Adviser:
 
 
 <script>
-    // no data by default
+    // SHOW NO DATA IF TAB;E IS EMPTY
     var dattable = document.getElementById("list_tbl_75");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -503,6 +503,7 @@ Adviser:
         $('.no-result').hide();
     }
 
+    //RETURN TO DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }

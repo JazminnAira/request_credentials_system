@@ -398,21 +398,6 @@ Adviser:
         padding: 16px;
     }
 
-
-    @media screen and (max-width: 500px) {
-        .signature_section {padding-top: 15px;}
-
-        #footer_bottom{
-            display: none;
-        }
-
-        #footer_div{
-            width: 18em;
-            align: right;
-            display: none;
-        }
-    }
-
     #btn,
     #open_signature,
     #approve_sig_btn {
@@ -531,6 +516,20 @@ Adviser:
         border-color: whi;
     }
 
+    /* SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 500px) {
+        .signature_section {padding-top: 15px;}
+
+        #footer_bottom{
+            display: none;
+        }
+
+        #footer_div{
+            width: 18em;
+            align: right;
+            display: none;
+        }
+    }
 </style>
 
 
@@ -550,9 +549,7 @@ Adviser:
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_52"></a>
 
-    
     <!--APPOINTMENT MODAL-->
-   
     <div class="modal fade" id="appointmentmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-confirm">
             <div class="modal-content">
@@ -599,7 +596,7 @@ Adviser:
                         <!--MODAL FOOTER-->
                         <div class="modal-footer">
             
-                            <!--SIGNUP BUTTON-->
+                            <!--SEND BUTTON-->
                             <button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
                             id="Ssubmit_btn_01" >Send</button>
                         </div>
@@ -648,6 +645,7 @@ Adviser:
         
         <div id="create_signature_area" class="p-1" hidden>
             <div id = "esignature_display" class = "m-2 mt-2 p-1" align="center">
+            <!-- CREATE ESIGNATURE-->
             {% if e_signature %}
                 <div class = "bg-dark p-2" align="left"><h4 class = "text-white">CURRENT E-SIGNATURE:</h4></div>
                 <img src ="/Media/{{e_signature}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
@@ -667,6 +665,7 @@ Adviser:
             </div>
         </div>
         
+        <!--UPLOAD SIGNATURE-->
         <div id = "upload_signature_display" class = "p-3" align="center" hidden>
         {% if uploaded_signature %}
             <div class = "bg-dark p-2"><h4 class = "text-white" align="left">CURRENT UPLOADED SIGNATURE:</h4></div>
@@ -699,6 +698,7 @@ Adviser:
         </form>
     </div>
 
+    <!--CLEARANCE LIST-->
     <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_clearance_list" id="table_main">
             {% csrf_token %}
@@ -740,7 +740,7 @@ Adviser:
                         <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
                         <td class="request"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
-                        
+                        <!--ACCOUNTANT-->
                         {% if dep == "HOCS" %}
                             <script>document.querySelector('#department_th').innerText = "OCS";</script>
                             {% if instance.accountant_signature == "UNAPPROVED" %}
@@ -748,6 +748,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'" >APPROVED</td>
                             {% endif %}
+                        <!--LIBERAL ARTS HEAD-->
                         {% elif dep == "HDLA" %}
                             <script>document.querySelector('#department_th').innerText = "DLA";</script>
                             {% if instance.liberal_arts_signature == "UNAPPROVED" %}
@@ -755,6 +756,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--MATH AND SCIENCE HEAD-->    
                         {% elif dep == "HDMS" %}
                             <script>document.querySelector('#department_th').innerText = "DMS";</script>
                             {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
@@ -762,6 +764,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--DPECS HEAD-->
                         {% elif dep == "HDPECS" %}
                             <script>document.querySelector('#department_th').innerText = "DPECS";</script>
                             {% if instance.pe_dept_signature == "UNAPPROVED" %}
@@ -769,6 +772,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--DED HEAD-->
                         {% elif dep == "HDED" %}
                             <script>document.querySelector('#department_th').innerText = "DED";</script>
                             {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
@@ -778,6 +782,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--DIT HEAD-->
                         {% elif dep == "HDIT" %} 
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
@@ -787,6 +792,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--DOE HEAD-->
                         {% elif dep == "HDOE" %}
                             <script>document.querySelector('#department_th').innerText = "DOE";</script>
                             {% if instance.eng_dept_signature == "UNAPPROVED" %}
@@ -796,6 +802,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--LIBRARIAN-->
                         {% elif dep == "HOCL" %}
                             <script>document.querySelector('#department_th').innerText = "OCL";</script>
                             {% if instance.library_signature == "UNAPPROVED" %}
@@ -803,6 +810,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--GUIDANCE-->
                         {% elif dep == "HOGS" %}
                             <script>document.querySelector('#department_th').innerText = "OGS";</script>
                             {% if instance.guidance_office_signature == "UNAPPROVED" %}
@@ -810,6 +818,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--OSA-->
                         {% elif dep == "HOSA" %}
                             <script>document.querySelector('#department_th').innerText = "OSA";</script>
                             {% if instance.osa_signature == "UNAPPROVED" %}
@@ -817,6 +826,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
                             {% endif %}
+                        <!--ADAA-->
                         {% elif dep == "HADAA" %}
                             <script>document.querySelector('#department_th').innerText = "ADAA";</script>
                             {% if instance.academic_affairs_signature == "UNAPPROVED" %}
@@ -827,6 +837,7 @@ Adviser:
                         {% else %}
                             <td></td>   
                         {% endif %}
+                        <!--COURSE ADVISER-->
                         {% if course_adv %} 
                             <script>document.querySelector('#course_adviser_th').innerText = "Course/Shop Adviser";</script>
                             {% if instance.course_adviser_signature == f_n_unapproved %}
@@ -897,22 +908,20 @@ Adviser:
 
 
 <script>
-  
-
-
-    // no data by default
+    // NO DATA IF EMPTY TABLE
     var dattable = document.getElementById("list_tbl_52");
     var rowcount = dattable.tBodies[0].rows.length;
 
     if (rowcount == '0') {
         $('.no_data').show();
         $('.no-result').hide();
-    } else {
+    } 
+    else {
         $('.no_data').hide();
         $('.no-result').hide();
     }
 
-    //signature
+    //SIGNATURE
     var canvas = document.getElementById("signature_pad");
     function resizeCanvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -945,7 +954,7 @@ Adviser:
         //imgConverted.src = dataURI;
     });
 
-    //show create signature are
+    //SHOW CREATE SIGNATURE AREA
     edit_esign_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
         document.getElementById("upload_signature_area").hidden = true;
@@ -990,12 +999,13 @@ Adviser:
         var image = document.getElementById('preview');
         image.src=URL.createObjectURL(event.target.files[0]);
     };
-    // close signature section when not needed
+    //CLOSE SIGNATURE AREA WHEN NOT NEEDED
     function close_boxes(elem){
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
     }
 
+    //EMPTY COMMENT
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
@@ -1069,7 +1079,7 @@ Adviser:
       
       document.querySelector('table').addEventListener('click', handleClick);
     
-    //Confirm Submit
+    //CONFIRM SUBMIT
     var modalConfirm = function(callback){
   
         $("#esign_attach_sig_btn").on("click", function(){
@@ -1106,6 +1116,7 @@ Adviser:
         }
     });
 
+    //EMPTY COMMENT
     function esign_approved(){
         id_list = document.getElementById('id_list').value;
         var id_user = document.getElementById('attach_signature_to').value;
@@ -1121,7 +1132,7 @@ Adviser:
         }
     };
 
-    //Confirm Submit
+    //CONFIRM SUBMIT FOR UPLOADED SIGANTURE
     var modalConfirm = function(callback){
   
         $("#upload_attach_sig_btn").on("click", function(){
@@ -1132,7 +1143,8 @@ Adviser:
                 document.getElementById("button_area").hidden = true;
                 document.getElementById("show_details").hidden = true;
                 document.getElementById("upload_signature_display").hidden = false;
-            }else{
+            }
+            else{
                 $("#mi-modal").modal('show');
             }
         });
@@ -1171,7 +1183,7 @@ Adviser:
         }
     };
     
-    //Confirm Submit
+    //CONFRIM SUBMIT FOR MANUAL SIGNING
     var modalConfirm = function(callback){
   
         $("#approve_sig_btn").on("click", function(){
@@ -1238,10 +1250,12 @@ Adviser:
         document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
+    //REDIRECT TO FACULTY DASHBOARD JS
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }
 
+    //PAGE REFRESH JS
     function openfdbc() {
         window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
     }
@@ -1408,16 +1422,16 @@ Adviser:
 
     function sortTable(table, col, reverse) {
         var tb = table.tBodies[0], 
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            tr = Array.prototype.slice.call(tb.rows, 0), 
             i;
         reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+        tr = tr.sort(function (a, b) { 
+            return reverse 
+                * (a.cells[col].textContent.trim() 
                     .localeCompare(b.cells[col].textContent.trim())
                    );
         });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); /
     }
     
     function makeSortable(table) {
@@ -1469,6 +1483,8 @@ Adviser:
     
 </script> 
 <script>
+
+    //EMPTY COMMENT
     $("appr_btn").on("click", function () {
     $("tr").each(function () {
         $(this).removeClass("highlight");

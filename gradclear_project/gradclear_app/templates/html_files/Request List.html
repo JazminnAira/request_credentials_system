@@ -443,7 +443,7 @@ Adviser:
     margin: 10px;
    
    }
-   
+   /* SCREEN RESPONSIVENESS */
     @media screen and (max-width : 400px){
         #dropdownMenuLink{
             display: none;
@@ -467,6 +467,7 @@ Adviser:
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
             Select
         </a>
+        <!--DROPODOWN TO FILTER OLD TO LATEST-->
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/ALL">All</a>
             <a class="dropdown-item" href="/registrar_dashboard_organize_request_list/LATEST">LATEST</a>
@@ -502,6 +503,7 @@ Adviser:
                     <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
                 {% endif %}
             </div>
+            <!--TABLE-->
             <div id="request_table"  class="tab-content" >
                 <div class="outer-wrapper">
                     <div class="table-wrapper">
@@ -650,7 +652,7 @@ Adviser:
 
 <script>
 
-    // no data by default
+    //TAB BUTTON
     document.getElementById('button_sorter').onclick = function() {
         location.href = "/registrar_dashboard_organize_request_list/ALL"
     };
@@ -663,11 +665,13 @@ Adviser:
         location.href = "/registrar_dashboard_organize_request_list/UNCLAIMED"
     };
 
+    //RETURN TO DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }
 
 
+    //DISPLAY NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_77");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -910,8 +914,6 @@ Adviser:
         document.getElementById("search_box_77").value = "";
     });
 
-    
-     
     
 </script>
 

@@ -463,8 +463,10 @@ Adviser:
 
 <body>
     {% load static %}
+    <!--GET DATA TO DISPLAY IN FORM-->
     {% for i in reqs %}
     <ul>
+        <!--PRINT BUTTON ACTIVATOR-->
         <li>
             {% if i.appointment == "NONE" %}
             <a class='button' title="Print Not Available" style="opacity:0.4;" disabled>
@@ -477,6 +479,7 @@ Adviser:
                 </a>
             {% endif %}  
             </li>
+        <!--REDIETING TO THE SPECIFIC DASHBOARD PER USER TYPE-->
         <li>
             {% if request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT" %}
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
@@ -513,7 +516,7 @@ Adviser:
 
             <input type="text" name="id_pre" value="{{i.name}}" hidden>
 
-            <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
+            <!--THIS IS TO DETERMIN USER TO ABLE TO SHOW THE CHECKING OF REQUIREMENTS EXCLUSIVE ONLY FOR THE ADMIN-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
             
             <!--NAME BOX-->
@@ -524,7 +527,7 @@ Adviser:
                 </div>
             </div>
 
-            <!--COURSE DROPDOWN BOX-->
+            <!--COURSE BOX-->
             <div class="form-group row">
                 <label for="course_pre" class="col-sm-2 col-form-label col-form-label-sm" id="course_lbl_pre">Course:<span id="asteris_pre" style="color:red;">*</span></label>
                 <div class="col-sm-9">
@@ -616,8 +619,7 @@ Adviser:
             </div>
             {% endif %}
 
-            <!--PURPOSE OF REQUEST CHECK BOXES-->
-            
+            <!--REQUESTED CREDENTIALS DISPLAY-->
                 <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
                 {% if i.request == "Honorable Dismissal" %}
                 <div class="form-check form-check-inline">
@@ -725,9 +727,11 @@ Adviser:
                 </div>
             </div>
 
+            <!--PRICE OF REQUESTED CREDENTIALS-->
             <h4 class ="text-dark p-3">AMOUNT : ₱{{i.amount}}</h4>
             {% endfor %}
-            
+
+            <!--IF PREVIOSLY REQUESTED-->
             <input type="text" id="requested" value="{{latest_req}}" hidden>
         </form>
     </div>
@@ -737,7 +741,7 @@ Adviser:
 </html>
 
 <script>
-//Pop String for Certification and Others Request
+//POP STRING FOR CERTIFICATION AND OTHERS IN THE TYPE OF CREDENTIALS REQUESTED
     if(document.getElementById("requested").value == "Certification"){
         var cert_data = document.getElementById('certification_box').value;
         var split_cert = cert_data.split(':').pop();

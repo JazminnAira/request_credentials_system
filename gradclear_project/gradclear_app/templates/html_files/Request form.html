@@ -466,6 +466,7 @@ Adviser:
     {% include 'html_files/message.html'%}
 
     <ul>
+        <!--RETURN TO STUDENT DASHBOARD-->
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" onclick="reset_form()">
                 <i class="fa fa-home"></i>
@@ -491,7 +492,7 @@ Adviser:
             <input type="text" name="id_pre" value="{{request.user.id_number}}" hidden>
             <input type="text" name="stud_id_pre" value="{{request.user.student_id}}" hidden>
 
-            <!--This is to determine user to able to show the check of requirements exclusive only for the admin-->
+            <!--THIS IS TO DETERMIN USER TO ABLE TO SHOW THE CHECKING OF REQUIREMNENTS EXCLUSIVELY ONLY FOR THE ADMIN-->
             <input type="text" id = "userType_pre" name="userType_pre" value="{{request.user.user_type}}" hidden>
             
             <!--NAME BOX-->
@@ -531,6 +532,7 @@ Adviser:
                 </div>
             </div>
             {% endif %}
+
             <!--DATE-->
             <div class="form-group row">
                 <label for="date_pre" class="col-sm-2 col-form-label col-form-label-sm" id="date_lbl_pre">Date:<span id="asteris_pre" style="color:red;">*</span></label>
@@ -564,7 +566,6 @@ Adviser:
             </div>
 
             <!--CHECK ENROLLED, OLD STUDENT , GRADUATE-->
-            
             <div class="form-group row pl-3">
                 <div class="form-check form-check-row">
                     <input class="form-check-input chk" type="checkbox" id="currently_enrolled_pre" name="check_status_pre" value="STUDENT" onchange= "choose_enrolled()" oninput ="choose_check()">
@@ -582,8 +583,7 @@ Adviser:
                 </div>
             </div>
 
-            <!--PURPOSE OF REQUEST CHECK BOXES-->
-            
+            <!--CREDENTIALS REQUESTED-->
                 <h3><b>REQUEST CREDENTIALS:<em>(Please Check)</em><span id="asteris_pre" style="color:rgb(255, 196, 196);">*</span></b></h3>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input chk" type="checkbox" id="HonorableDismissal_check_pre" name="purpose_request_pre" value="Honorable Dismissal">
@@ -642,7 +642,6 @@ Adviser:
             {% endif %}
 
             <!--PURPOSE OF REQUEST-->
-            
             <div class="form-group row">
                 <label for="preq_42" class="col-sm-2 col-form-label col-form-label-sm" id="preq_lbl_42">Purpose of Request:</label>
                 <div class="col-sm-9">
@@ -684,14 +683,12 @@ Adviser:
 </html>
 
 <script>
-   
+   //GET DATE OF REQUEST
     var today = new Date();
-    
     var date = today.getFullYear()+'-'+String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-
     document.getElementById("date_pre").value = date;
 
-    //Confirm Submit
+    //CONFIRM SUBMIT
     var modalConfirm = function(callback){
   
         $("#submit_btn_pre").on("click", function(){
@@ -718,8 +715,8 @@ Adviser:
         }
     });
 
+    //CHECK IF PURPOSE OF REQUEST IS EMPTY
     function isEmpty() {
-     
         let purpose_req = document.getElementById("purpose").value;
     
         if (purpose_req != "") {
@@ -727,7 +724,7 @@ Adviser:
         }
     }
     
-    //back to top function
+    //BACK TO TOP BUTTON
     var button = $("#backtotop_btn_pre");
     
     $(window).scroll(function() {
@@ -745,6 +742,8 @@ Adviser:
         }, "50");
     });
 
+
+    //EMPTY COMMENT
     if (document.getElementById("user_stat").value == "STUDENT"){
         document.getElementById("currently_enrolled_pre").disabled = true;
         document.getElementById("year_graduated_check_pre").disabled = true;
@@ -1001,7 +1000,7 @@ Adviser:
         document.getElementById('certification_box').hidden =true;
     });
 
-
+    //EMPTY COMMENT
     Certification_check_pre.addEventListener("change", function(){
         if(this.checked){
             document.getElementById('amount_paid').value = "100.00";
@@ -1067,7 +1066,7 @@ Adviser:
     });
 
     
-        // ONLY NUMBERS IN INPUT BOX JS
+    // ONLY NUMBERS IN INPUT BOX JS
     function isNumber(evt) {
         if (event.key.length === 1 && /\D/.test(event.key)) {
             event.preventDefault();

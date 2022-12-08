@@ -455,6 +455,7 @@ Adviser:
         <div id="tab1_72" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
                 <div class="table-wrapper">
+                    <!--MAIN TABLE-->
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_73">
                     <thead>
                         <tr>
@@ -504,6 +505,7 @@ Adviser:
                                 {% if instance.grad_notif ==  'NOTIFIED' %}
                                  Notification Sent.
                                 {% else %}
+                                <!--SEND EMAIL-->
                                 <a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Notify Student</button></a>
                                 {% endif %}
                             {% else %}
@@ -511,6 +513,7 @@ Adviser:
                             {% endif %}
                             </td>
                             {% if request.user.user_type == "REGISTRAR" %}
+                            <!--DELETE FORM-->
                             <td><a href="{% url 'delete_gradform' instance.id %}"><button type="button" class="table-icon" id="btn">Remove</button></a>
                             </td>
                             {% endif %}
@@ -529,6 +532,7 @@ Adviser:
     </hr>
 
     <p class="text-center text-bold" id="p6_72"></p>
+<!--GRADUATION COMPLETED FORMS PRINT SUMMARY-->
 
     <div id = "grad_list_print" hidden>
        
@@ -550,6 +554,7 @@ Adviser:
                     
             </thead>
             <tbody style =" text-align: center; font-size: 20px;">
+                <!--GET ONLY FULLY APPROVED FORMS-->
                 {% for instance in all_list %}
                     <tr>
                     <td>{{instance.name}}</td>
@@ -578,7 +583,7 @@ Adviser:
 
 
 <script>
-// no data by default
+// SHOW NO DATA IN TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_73");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -590,7 +595,7 @@ Adviser:
         $('.no-result').hide();
     }
 
-
+    //PRINT GARDUATION FORM SUMMARY
     function to_beprinted(el) {
         var restorepage = document.body.innerHTML;
         var printcontent = document.getElementById(el).innerHTML;
@@ -598,6 +603,8 @@ Adviser:
         window.print();
         document.body.innerHTML = restorepage;
     }
+
+    //RETURN TO DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }

@@ -420,7 +420,6 @@ Adviser:
     <!--TAB BAR-->
     <div data-tabs="1" id="tabz_74">
 
-        <!--UNAPPROVED TAB-->
         <form method="POST" id="valdet">
             {% csrf_token %}
             <input type="text" hidden name="approval_request" id="approval_request">
@@ -433,6 +432,7 @@ Adviser:
             $('#valdet').submit()});
         </script>
 
+        <!--MAIN TABLE-->
         <div id="tab1_74" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
                 <div class="table-wrapper">
@@ -459,7 +459,7 @@ Adviser:
                     {% for instance in all %}
                     
                     <tbody>
-
+                        <!--EMPTY COMMENT-->
                         <tr>
                             <td hidden>{{instance.id}}</td>
                             <td>{{instance.full_name}}</td>
@@ -532,7 +532,7 @@ Adviser:
 
 
 <script>
-    // no data by default
+    // SHOW NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_74");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -544,6 +544,7 @@ Adviser:
         $('.no-result').hide();
     }
 
+    //RETURN TO DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }

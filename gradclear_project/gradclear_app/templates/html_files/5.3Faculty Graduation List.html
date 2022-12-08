@@ -455,56 +455,6 @@ Adviser:
         padding: 16px;
     }
 
-    @media screen and (max-width: 700px) {
-        .signature_section {padding-top: 15px;}
-
-
-        #footer_bottom{
-            display: none;
-        }
-
-        #footer_div{
-            width: 18em;
-            align: right;
-            display: none;
-        }
-    }
-
-
-    @media screen and (min-width: 700px) {
-        .div1 th {
-            background-color: #c51d3a;
-            color: #ffff;
-            text-align: center;
-            padding: 5px;
-            width: 100%;
-            min-width: 100%;
-            position: sticky;
-            top: 0;
-        }
-
-        .div1 th:nth-child(1),
-        .div1 td:nth-child(1) {
-            position: sticky;
-            left: 0px;
-            width: 40px;
-            min-width: 40px; 
-        }
-
-
-        .div1 th:nth-child(3),
-        .div1 td:nth-child(3) {
-            position: sticky;
-            left: 40px;
-            width: 238px;
-            min-width: 238px;
-            
-        }
-    }
-
-
-
-
     .div1 {
     padding-top: 20px;
     width: 99%;
@@ -672,6 +622,54 @@ Adviser:
         background-color: #3b3b3b;
         color: #c9c9c9;
         border-color: whi;
+    }
+
+    /* SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 700px) {
+        .signature_section {padding-top: 15px;}
+
+
+        #footer_bottom{
+            display: none;
+        }
+
+        #footer_div{
+            width: 18em;
+            align: right;
+            display: none;
+        }
+    }
+
+
+    @media screen and (min-width: 700px) {
+        .div1 th {
+            background-color: #c51d3a;
+            color: #ffff;
+            text-align: center;
+            padding: 5px;
+            width: 100%;
+            min-width: 100%;
+            position: sticky;
+            top: 0;
+        }
+
+        .div1 th:nth-child(1),
+        .div1 td:nth-child(1) {
+            position: sticky;
+            left: 0px;
+            width: 40px;
+            min-width: 40px; 
+        }
+
+
+        .div1 th:nth-child(3),
+        .div1 td:nth-child(3) {
+            position: sticky;
+            left: 40px;
+            width: 238px;
+            min-width: 238px;
+            
+        }
     }
     
 </style>
@@ -842,6 +840,7 @@ Adviser:
 
     </div>
 
+    <!--MAIN TABLE-->
     <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
             {% csrf_token %}
@@ -1098,6 +1097,7 @@ Adviser:
             </div>
             </div>    
         </form>
+        <!--FACULTY APPROVE ALL FORMS-->
         <form method="POST" action="faculty_dashboard_graduation_list_all" hidden >
             {% csrf_token %}
             <input type="text" id="id_list" name="id_list" />
@@ -1198,7 +1198,7 @@ Adviser:
     });
 
 
-// no data by default
+    // DISPLAP NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_53");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -1210,7 +1210,7 @@ Adviser:
         $('.no-result').hide();
     }
 
-    //signature
+    //SIGANTURE
     var canvas = document.getElementById("signature_pad");
     function resizeCanvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -1243,7 +1243,7 @@ Adviser:
         //imgConverted.src = dataURI;
     });
 
-    //show create signature are
+    //SHOW CREATE SIGNATURE AREA
     edit_esign_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
         document.getElementById("upload_signature_area").hidden = true;
@@ -1288,12 +1288,13 @@ Adviser:
         image.src=URL.createObjectURL(event.target.files[0]);
     };
 
-    // close signature section when not needed
+    //CLOSE SIGNATURE SECTION WHEN NOT NEEDED
     function close_boxes(elem){
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
     };
 
+    //EMPTY COMMENT
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
@@ -1371,7 +1372,7 @@ Adviser:
         document.getElementById('subject').value = "addsignature5";
     };
 
-    //Confirm Submit
+    //CONFIRM APPROVE FOR ESIGNATURE
     var modalConfirm = function(callback){
   
         $("#esign_attach_sig_btn").on("click", function(){
@@ -1423,8 +1424,8 @@ Adviser:
         }
     };
 
-    //Confirm Submit
-    var modalConfirm = function(callback){
+    //CONFIRM APPROVE FOR UPLOADED SIGNATURE
+       var modalConfirm = function(callback){
   
         $("#upload_attach_sig_btn").on("click", function(){
             if (document.getElementById('upload_checker').value == ""){
@@ -1474,7 +1475,7 @@ Adviser:
         
     };
 
-    //Confirm Submit
+    //CONFIRM APPROVE FOR MANUAL SIGNATURE
     var modalConfirm = function(callback){
   
         $("#approve_sig_btn").on("click", function(){
@@ -1541,10 +1542,12 @@ Adviser:
         document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
+    //REDIRECT TO HOME JS
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }
 
+    //PAGE REFRESH JS
     function openfdbg() {
         window.location.replace("{% url 'faculty_dashboard_graduation_list' %}");
     }
@@ -1693,23 +1696,23 @@ Adviser:
     // SORTING 
     function sortTable(table, col, reverse) {
         var tb = table.tBodies[0], 
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            tr = Array.prototype.slice.call(tb.rows, 0), 
             i;
         reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+        tr = tr.sort(function (a, b) { 
+            return reverse 
+                * (a.cells[col].textContent.trim() 
                     .localeCompare(b.cells[col].textContent.trim())
                    );
         });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); 
     }
     
     function makeSortable(table) {
         var th = table.tHead, i;
         th && (th = th.rows[0]) && (th = th.cells);
         if (th) i = th.length;
-        else return; // if no thead then do nothing
+        else return; 
         while (--i >= 0) (function (i) {
             var dir = 1;
             th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
@@ -1805,7 +1808,7 @@ Adviser:
                 }
             }
         }
-    }
+    };
     
     
 </script>
