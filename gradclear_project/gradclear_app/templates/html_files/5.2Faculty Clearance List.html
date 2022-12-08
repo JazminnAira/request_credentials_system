@@ -711,7 +711,11 @@ Adviser:
             <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
                 <thead style="height: 70px;">
                     <tr>
-                        <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check" /></th>
+                        {% if st %}
+                        <th><input type="checkbox" class="check" onchange="checkAll(this)" name="chk[]" id="all_check" /></th>
+                        {% else%}
+                        <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check" disabled/></th>
+                        {% endif %}
                         <th hidden> # </th>
                         <th>Student's Name</th>
                         <th>Course</th>
@@ -904,8 +908,6 @@ Adviser:
 
 <script>
   
-
-
     // DISPLAY NO DATA WHEN TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_52");
     var rowcount = dattable.tBodies[0].rows.length;
@@ -1001,10 +1003,12 @@ Adviser:
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
     }
-
+    
+    //OPEN APPROVAL SIGNATURE SECTION
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
+        document.getElementById("table_list").style.opacity = "0.5";
         
         var array = []
         var checkboxes = document.querySelectorAll('input[name=boxes]:checked')
@@ -1013,6 +1017,18 @@ Adviser:
         array.push(checkboxes[i].value)
         }
         document.getElementById('id_list').value= array;
+        
+        //DISABLED  BURRONS AND CHECKBOXES WHEN APPROVE IN TABLE CLICKED
+        var button_approve = document.getElementsByClassName("user_id apprv");
+        for (var i = 0; i < button_approve.length; i++) {
+            button_approve[i].disabled = true;
+            button_approve[i].style.opacity = "0.5";
+        }
+
+        var checkboxes_approve = document.getElementsByClassName("check")
+        for(var index = 0; index < checkboxes_approve.length; index++){
+            checkboxes_approve[index].disabled = true;
+        }
     };
 
     function department1(elem){
@@ -1068,8 +1084,7 @@ Adviser:
           const name = row.querySelector('.name').textContent.trim();
           const request = row.querySelector('.request').textContent.trim();
           document.getElementById('attach_signature_to').value = id;
-          document.getElementById('name_approve').innerHTML = name;
-          document.getElementById('request_approve').innerHTML = request;
+          
         }
       };
       
@@ -1221,12 +1236,38 @@ Adviser:
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
+        document.getElementById("table_list").style.opacity = "1";
         document.getElementById("button_area").hidden = false;
         document.getElementById("show_details").hidden = false;
         document.getElementById("create_signature_area").hidden = true;
         document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
         document.getElementById("upload_signature_display").hidden = true;
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        if(checkboxes.length == 0){
+            var button_approve = document.getElementsByClassName("user_id apprv");
+            for (var i = 0; i < button_approve.length; i++) {
+                button_approve[i].disabled = false;
+                button_approve[i].style.opacity = "1";
+            }
+            
+            var checkboxes_approve = document.getElementsByClassName("check")
+            for(var index = 0; index < checkboxes_approve.length; index++){
+                checkboxes_approve[index].disabled = false;
+            }
+        }else{
+            var button_approve = document.getElementsByClassName("user_id approve_all");
+            for (var i = 0; i < button_approve.length; i++) {
+                button_approve[i].disabled = false;
+                button_approve[i].style.opacity = "1";
+            }
+            
+            var checkboxes_approve = document.getElementsByClassName("check")
+            for(var index = 0; index < checkboxes_approve.length; index++){
+                checkboxes_approve[index].disabled = false;
+            }
+        }
         
     });
 
