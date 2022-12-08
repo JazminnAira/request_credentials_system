@@ -7082,6 +7082,8 @@ def student_status_update(request, id):
             student_id=user_id2).update(student_id=update_id)
         request_form_table.objects.filter(
             student_id=user_id2).update(student_id=update_id)
+        request_form_table.objects.filter(
+            student_id=user_id2).update(user_type=student_update)
 
     return redirect(registrar_dashboard_student_list)
 
