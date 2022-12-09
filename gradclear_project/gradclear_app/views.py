@@ -295,7 +295,7 @@ def graduation_print(request, id):
             p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 625, "APPROVED *Required Live Signature")
+            p.drawString(410, 625, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     sub2 = content.subject2
@@ -331,7 +331,7 @@ def graduation_print(request, id):
 
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 605, "APPROVED *Required Live Signature")
+            p.drawString(410, 605, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     sub3 = content.subject3
@@ -367,7 +367,7 @@ def graduation_print(request, id):
         else:
 
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 580, "APPROVED *Required Live Signature")
+            p.drawString(410, 580, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     p.setFillColorRGB(0, 0, 0)
@@ -405,7 +405,7 @@ def graduation_print(request, id):
         else:
 
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 560, "APPROVED *Required Live Signature")
+            p.drawString(410, 560, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     p.setFillColorRGB(0, 0, 0)
@@ -441,7 +441,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 535, "APPROVED *Required Live Signature")
+            p.drawString(410, 535, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     p.setFillColorRGB(0, 0, 0)
@@ -478,7 +478,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 512, "APPROVED *Required Live Signature")
+            p.drawString(410, 512, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     p.setFillColorRGB(0, 0, 0)
@@ -515,7 +515,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 490, "APPROVED *Required Live Signature")
+            p.drawString(410, 490, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     sub8 = content.subject8
@@ -551,7 +551,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 470, "APPROVED *Required Live Signature")
+            p.drawString(410, 470, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     sub9 = content.subject9
@@ -587,7 +587,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 447, "APPROVED *Required Live Signature")
+            p.drawString(410, 447, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 9)
     sub10 = content.subject10
@@ -623,7 +623,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 425, "APPROVED *Required Live Signature")
+            p.drawString(410, 425, "Approved *Manual Signature Required")
 
     # # #additional subj
 
@@ -662,7 +662,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 252, "APPROVED *Required Live Signature")
+            p.drawString(410, 252, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
@@ -698,7 +698,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 238, "APPROVED *Required Live Signature")
+            p.drawString(410, 238, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
@@ -734,7 +734,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 224, "APPROVED *Required Live Signature")
+            p.drawString(410, 224, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
@@ -771,7 +771,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 210, "APPROVED *Required Live Signature")
+            p.drawString(410, 210, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
@@ -806,7 +806,7 @@ def graduation_print(request, id):
             p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
         else:
             p.setFont("Helvetica", 5.5)
-            p.drawString(410, 196, "APPROVED *Required Live Signature")
+            p.drawString(410, 196, "Approved *Manual Signature Required")
 
     p.setFont("Helvetica", 11)
     dline = content.unenrolled_application_deadline
@@ -838,7 +838,7 @@ def graduation_print(request, id):
         p.drawImage(im, 408, 74, height=15, width=80, mask='auto')
     else:
         p.setFont("Helvetica", 5.5)
-        p.drawString(258, 74, "APPROVED *Required Live Signature")
+        p.drawString(258, 74, "Approved *Manual Signature Required")
 
     for line in lines:
         textob.textLine(line)
@@ -989,7 +989,7 @@ def clearance_print(request, id):
         p.drawString(125, 298, f"""{accname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(53, 292, "APPROVED *Required Live Signature")
+        p.drawString(53, 292, "Approved *Manual Signature Required")
 
     # Liberal arts
 
@@ -1026,7 +1026,7 @@ def clearance_print(request, id):
         p.drawString(147, 243, f"""{dlaname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 234, "APPROVED *Required Live Signature")
+        p.drawString(75, 234, "Approved *Manual Signature Required")
 
     # # # math and sci
     p.setFont("Helvetica", 7)
@@ -1062,7 +1062,7 @@ def clearance_print(request, id):
         p.drawString(170, 215, f"""{dmsname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 209, "APPROVED *Required Live Signature")
+        p.drawString(75, 209, "Approved *Manual Signature Required")
 
     # # # dpecs
 
@@ -1100,7 +1100,7 @@ def clearance_print(request, id):
         p.drawString(120, 190, f"""{pename}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 183, "APPROVED *Required Live Signature")
+        p.drawString(75, 183, "Approved *Manual Signature Required")
 
     # # depts
     itdept_acc = content.it_dept_signature
@@ -1141,7 +1141,7 @@ def clearance_print(request, id):
             p.drawString(105, 113, f"""{itdeptname}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "APPROVED *Required Live Signature")
+            p.drawString(75, 105, "Approved *Manual Signature Required")
 
     elif educ_dept != "_APPROVED":
 
@@ -1178,7 +1178,7 @@ def clearance_print(request, id):
             p.drawString(105, 113, f"""{educdeptname}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "APPROVED *Required Live Signature")
+            p.drawString(75, 105, "Approved *Manual Signature Required")
 
     elif eng != "_APPROVED":
         p.setFont("Helvetica", 4.5)
@@ -1215,7 +1215,7 @@ def clearance_print(request, id):
             p.drawString(105, 113, f"""{engdeptname}""")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "APPROVED *Required Live Signature")
+            p.drawString(75, 105, "Approved *Manual Signature Required")
 
     # # shop
     p.setFont("Helvetica", 7)
@@ -1251,7 +1251,7 @@ def clearance_print(request, id):
         p.drawString(435, 300, f"""{shopname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(320, 290, "APPROVED *Required Live Signature")
+        p.drawString(320, 290, "Approved *Manual Signature Required")
 
     # # library
     p.setFont("Helvetica", 7)
@@ -1287,7 +1287,7 @@ def clearance_print(request, id):
         p.drawString(425, 269, f"""{libname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(325, 260, "APPROVED *Required Live Signature")
+        p.drawString(325, 260, "Approved *Manual Signature Required")
 
     # guidance
 
@@ -1323,7 +1323,7 @@ def clearance_print(request, id):
         p.drawString(435, 244, f"""{guidancename}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(325, 238, "APPROVED *Required Live Signature")
+        p.drawString(325, 238, "Approved *Manual Signature Required")
 
     # osa
     p.setFont("Helvetica", 7)
@@ -1359,7 +1359,7 @@ def clearance_print(request, id):
         p.drawString(455, 217, f"""{osaname}""")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(320, 210, "APPROVED *Required Live Signature")
+        p.drawString(320, 210, "Approved *Manual Signature Required")
 
     # adaa
 
@@ -1395,7 +1395,7 @@ def clearance_print(request, id):
         p.drawString(482, 190, f"""{adaaname}""")
         p.setFillColorRGB(1, 0, 0)
         p.setFont("Helvetica", 4.5)
-        p.drawString(325, 185, "APPROVED *Required Live Signature")
+        p.drawString(325, 185, "Approved *Manual Signature Required")
 
     for line in lines:
         textob.textLine(line)
@@ -7191,6 +7191,8 @@ def approve_clearform(request, id):
     registrar_name = user_table.objects.filter(
         user_type="REGISTRAR").values_list('full_name', flat=True).distinct()
     registrar_approval = registrar_name[0] + "_APPROVED REGISTRAR"
+    
+    student_name = clearance_form_table.objects.filter(id=id).values_list('name', flat=True).distinct()
 
     clearance_form_table.objects.filter(id=id).update(
         liberal_arts_signature=registrar_approval)
@@ -7232,5 +7234,8 @@ def approve_clearform(request, id):
 
     clearance_form_table.objects.filter(
         id=id).update(approval_status="APPROVED")
+    
+    request_form_table.objects.filter(name=student_name[0]).update(clearance="✔")
+    
 
     return redirect('/registrar_dashboard_clearance_list/%20')
