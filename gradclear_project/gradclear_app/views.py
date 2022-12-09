@@ -7053,6 +7053,7 @@ def delete_reqform(request, id):
 def student_status_update(request, id):
     student_update = request.POST.get('status_select')
     user_table.objects.filter(id=id).update(user_type=student_update)
+    
 
     getter = user_table.objects.get(id=id)
     today = date.today().year
@@ -7071,7 +7072,10 @@ def student_status_update(request, id):
     ybday = userbday[6:]
     year_id = str(today)
     id_year = year_id[2:]
+    
+    request_form_table.objects.filter(student_id=user_id2).update(current_status=student_update)
     if student_update == "ALUMNUS":
+        
         update_id = "TUPC-" + user_id+"-"+id_year+"-"+mbday+dbday+ybday
         update_idnum = user_id+"-"+id_year+"-"+mbday+dbday+ybday
         user_table.objects.filter(id=id).update(id_number=update_idnum)
@@ -7082,6 +7086,7 @@ def student_status_update(request, id):
             student_id=user_id2).update(student_id=update_id)
         request_form_table.objects.filter(
             student_id=user_id2).update(student_id=update_id)
+
 
     return redirect(registrar_dashboard_student_list)
 
