@@ -1116,7 +1116,7 @@ Adviser:
 
     </hr>
     
-    <!--CONFIRMATION MODAL-->
+    <!--CONFIRMATION MODAL FOR ESIGN-->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -1128,8 +1128,46 @@ Adviser:
                     Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
-                    <button type="button" class="btn" id="modal-btn-yes" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
-                    <button type="button" class="btn" id="modal-btn-no" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                    <button type="button" class="btn" id="yes_esign" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_esign" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CONFIRMATION FOR UPLOADED-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="yes_upload" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_upload" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CONFIRMATION FOR MANUALLY-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal3">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="yes_manually" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_manually" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
                 </div>
             </div>
         </div>
@@ -1389,7 +1427,7 @@ Adviser:
         document.getElementById('subject').value = "addsignature5";
     };
 
-    //CONFIRM APPROVE FOR ESIGNATURE
+   //CONFIRM APPROVE FOR ESIGNATURE
     var modalConfirm = function(callback){
   
         $("#esign_attach_sig_btn").on("click", function(){
@@ -1407,12 +1445,12 @@ Adviser:
             }
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_esign").on("click", function(){
           callback(true);
           $("#mi-modal").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_esign").on("click", function(){
           callback(false);
           $("#mi-modal").modal('hide');
         });
@@ -1453,18 +1491,18 @@ Adviser:
                 document.getElementById("show_details").hidden = true;
                 document.getElementById("upload_signature_display").hidden = false;
             }else{
-                $("#mi-modal").modal('show');
+                $("#mi-modal2").modal('show');
             }
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_upload").on("click", function(){
           callback(true);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal2").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_upload").on("click", function(){
           callback(false);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal2").modal('hide');
         });
     };
       
@@ -1496,17 +1534,17 @@ Adviser:
     var modalConfirm = function(callback){
   
         $("#approve_sig_btn").on("click", function(){
-          $("#mi-modal").modal('show');
+          $("#mi-modal3").modal('show');
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_manually").on("click", function(){
           callback(true);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal3").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_manually").on("click", function(){
           callback(false);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal3").modal('hide');
         });
     };
       

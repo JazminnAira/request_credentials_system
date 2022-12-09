@@ -922,7 +922,7 @@ def clearance_print(request, id):
     
     p.drawString(428, 485, f'{content.purpose_of_request_reason}')
     p.drawString(210, 510, f'{content.number_of_terms_in_tupc}')
-
+    
     tupc_grad = content.tupc_graduate
     if tupc_grad == "YES":
         p.drawString(163, 561, '✔')
@@ -2217,7 +2217,6 @@ def clearance_form(request, req):
         temp = int(current_year[2:5])
         with_graduation = temp - sliced_id
         fullname = request.user.full_name
-        print("grad",with_graduation)
         alumni_course_adviser = ""
 
         # DETERMINE WHICH DEPARTMENT EACH COURSE BELONGS
@@ -2244,7 +2243,7 @@ def clearance_form(request, req):
             form = clearance_form
 
             student_id = request.POST.get('stud_id_420')
-            print("tytyt",student_id)
+            print(student_id)
             last_name = request.POST.get('ln_box_420')
             first_name = request.POST.get('fn_box_420')
             middle_name = request.POST.get('mn_box_420')
@@ -2306,12 +2305,13 @@ def clearance_form(request, req):
 
             return redirect('student_dashboard')
         else:
+            
             # CHECKER OF PREVIOUS CLEARANCE
-            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by('-time_requested').values_list('approval_status', flat=True).distinct()
+            request_clearance = clearance_form_table.objects.filter(name=fullname).order_by(
+                '-time_requested').values_list('approval_status', flat=True).distinct()
             latest_others = request_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('request', flat=True).distinct()
-            print(fullname)
-            print(request_clearance)
+
             if request_clearance:
                 if request_clearance[0] == "APPROVED":
                     allow_request = request_clearance[0]
@@ -2327,7 +2327,6 @@ def clearance_form(request, req):
                 else:
                     allow_request = "UNAPPROVED"
                     other_data = ""
-    
             else:
                 if latest_others:
                     latest_data = latest_others[0]
@@ -2341,12 +2340,10 @@ def clearance_form(request, req):
                 else:
                     other_data = ""
                     allow_request = ""
-                
 
             # GETTING PREVIOUS CLEARANCE
             previous_term = clearance_form_table.objects.filter(name=fullname).order_by(
                 '-time_requested').values_list('date_filed', flat=True).distinct()
-
             if previous_term:
                 date_previous = previous_term[0]
             else:
@@ -5532,7 +5529,7 @@ def display_gradform(request, id):
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject2_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_2 = faculty1_sig[0]
+                subject_2 = faculty2_sig[0]
                 signature_type2 = "APPROVE"
 
         # SUBJECT #3
@@ -7004,7 +7001,7 @@ def display_reqform(request, id):
             request_cert = ""
             latest_req = ""
             request_other = ""
-            
+
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -7086,7 +7083,6 @@ def student_status_update(request, id):
             student_id=user_id2).update(student_id=update_id)
         request_form_table.objects.filter(
             student_id=user_id2).update(student_id=update_id)
-
 
     return redirect(registrar_dashboard_student_list)
 
@@ -7239,8 +7235,7 @@ def approve_clearform(request, id):
 
     clearance_form_table.objects.filter(
         id=id).update(approval_status="APPROVED")
-    
+        
     request_form_table.objects.filter(name=student_name[0]).update(clearance="✔")
-    
 
     return redirect('/registrar_dashboard_clearance_list/%20')
