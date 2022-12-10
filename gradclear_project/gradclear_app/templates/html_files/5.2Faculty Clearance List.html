@@ -979,16 +979,19 @@ Adviser:
 
     const save_signature = document.querySelector('#save_signature');
     const signature_pad = document.querySelector('#signature_pad');
-    const imgConverted = document.querySelector('#imgConverted');
 
     const ctx = signature_pad.getContext("2d");
 
-    signature_pad.addEventListener("click", function() {
+    signature_pad.addEventListener("touchend", function() {
         const dataURI = signature_pad.toDataURL("image/png");
-        
         console.log(dataURI);
         document.getElementById('image_encoded').value = dataURI;
-        //imgConverted.src = dataURI;
+    });
+
+    signature_pad.addEventListener("mouseup", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        console.log(dataURI);
+        document.getElementById('image_encoded').value = dataURI;
     });
 
     //SHOW CREATE SIGNATURE AREA
