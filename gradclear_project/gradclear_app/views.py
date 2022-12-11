@@ -2224,17 +2224,20 @@ def clearance_form(request, req):
         if course:
             if course.startswith('BSIE-') or course.startswith('BTTE-'):
                 print("ded")
-                alumni_course_adviser = user_table.objects.filter(
+                alumni_course_adviser_temp = user_table.objects.filter(
                     department="HDED").values_list('full_name', flat=True).distinct()
             elif course.startswith('BS-'):
                 print("doe")
-                alumni_course_adviser = user_table.objects.filter(
+                alumni_course_adviser_temp = user_table.objects.filter(
                     department="HDOE").values_list('full_name', flat=True).distinct()
             else:
                 print("dit")
-                alumni_course_adviser = user_table.objects.filter(
+                alumni_course_adviser_temp = user_table.objects.filter(
                     department="HDIT").values_list('full_name', flat=True).distinct()
-            alumni_course_adviser = alumni_course_adviser[0]
+            if alumni_course_adviser_temp:
+                alumni_course_adviser = alumni_course_adviser_temp[0]
+            else:
+                alumni_course_adviser = " "
         else:
             pass
 
