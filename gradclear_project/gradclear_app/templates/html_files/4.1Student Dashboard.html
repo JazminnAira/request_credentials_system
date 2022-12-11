@@ -699,13 +699,18 @@ Adviser:
     /* SCREEN RESPONSIVENESS */
     @media screen and (max-height: 450px) {
         .sidebar {
+            
             padding-top: 15px;
         }
         .sidebar a {
             font-size: 18px;
         }
+       
     }
     @media screen and (max-width: 700px) {
+        #dt{
+            display: none;
+        }
         #missing_document {
             display: none;
         }
@@ -749,6 +754,7 @@ Adviser:
         #date_today{
             display: none;
         }
+       
     }
 
     @media screen and (max-width: 700px) {
@@ -992,7 +998,7 @@ Adviser:
        
         <div class="row">
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">
-                <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">
+            <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">
             </div>
         </div>
 
@@ -1009,7 +1015,7 @@ Adviser:
                             <th>Form Type</th>
                             <th>Purpose of Request</th>
                             <th>Approval Status</th>
-                            <th> Date & Time Requested</th>
+                            <th id="dt"> Date & Time Requested</th>
                             <th></th>
                         </tr>
                         <tr class="no_data">
@@ -1031,7 +1037,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% endif %}
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                            <td id="dt" onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
 
@@ -1049,7 +1055,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                            <td id="dt" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
@@ -1066,7 +1072,7 @@ Adviser:
                             {% else %}
                             <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
+                            <td id="dt" onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
