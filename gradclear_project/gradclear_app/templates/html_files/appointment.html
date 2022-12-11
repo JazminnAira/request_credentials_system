@@ -424,6 +424,7 @@ Adviser:
         <div class="container p-sm-3 mt-4 container-1" style="background-color: #fff; float: center;
          border-radius: 10px; width: 800px; height: max-content;" id="appointment_modal">
                     <div class="modal-header modal-1"  style="width: 100%;">
+                        <!--APPOINTMENT HEADING DEPENDING ON USER TYPE-->
                         {% if request.user.user_type == "FACULTY" %}
                         <h3 class="modal-title w-100 text-center"  id="claiming_lbl">Appointment for Concerns</h3>
                         {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
@@ -451,14 +452,14 @@ Adviser:
                                 <form method="POST" action="" enctype="multipart/form-data" style="height:100%;" >
                                     {% csrf_token %}
 
-                                        <!--DATE OF APPOINTMENT-->
+                                        <!--SET DATE OF APPOINTMENT-->
                                         <div class="form-group">
                                             <label >Date of Appointment:</label>
                                             <input type="date" id="date" name="date_appointment" class="form-control input-field" 
                                             style="height: 50px; margin-bottom: 20px;" required>
                                         </div>
                         
-                                        <!--TIME OF APPOINTMENT-->
+                                        <!--SET TIME OF APPOINTMENT-->
                                         <div class="form-group" id="course_input">
                                             <label for="course">Time of Appointment:</label>
                                             <input type="time" id="time" onchange="ampm(this.value)" class="form-control input-field" 
@@ -476,6 +477,7 @@ Adviser:
                                             style="height: 150px; margin-bottom: 20px;" >
                                         </div>
                                         
+                                        <!--ATTACHMENT-->
                                         <div class="form-group">
                                             <label for="prof_pic">Attachment:</label>
                                             <input type="file" name="file_attach" >
@@ -486,7 +488,7 @@ Adviser:
                               
                             <!--MODAL FOOTER-->
                             <div class="modal-footer">
-                                <!--SIGNUP BUTTON-->
+                                <!--SEND BUTTON-->
                                 <button type="submit" class="btn btn-2 btn-lg" name="Ssubmit_btn_001" 
                                     id="Ssubmit_btn_01" onclick="reset_form()">Send</button>
                             </div>
@@ -529,7 +531,7 @@ Adviser:
 })
 
 
-    //Auto Capitalize
+    //AUTO CAPITALIZE
     $("#id_last_name, #id_middle_name, #id_first_name,#id_username").on('input', function(evt) {
         var input = $(this);
         var start = input[0].selectionStart;
@@ -539,20 +541,20 @@ Adviser:
         input[0].selectionStart = input[0].selectionEnd = start;
       });
 
-    //Restrict multiple space
+    //RESTRICT MULTIPLE SPACE
     $('input').bind('DOMAttrModified textInput input keyup paste',function(){
         var sspace = $(this).val().replace(/ +/g, ' ');
            if ($(this).val() != sspace)
                $(this).val(sspace);
          });
 
-    //Restrict space on first input
+    //RESTRICT SPACE ON FIRST CHARACTER INPUT
     $("input").on("keypress", function(e) {
         if (e.which === 32 && !this.value.length){
         e.preventDefault();
         }
     });
-
+     //ADD DASH FOR ID NUMBER FORMAT
     $(function () {
         $('#id_id_number').keydown(function (e) {
             var key = e.charCode || e.keyCode || 0;
@@ -567,6 +569,7 @@ Adviser:
         })
     });
 
+    //ADD DASH FOR CONTACT NUMBER FORMAT
     $(function () {
         $('#id_contact_number').keydown(function (e) {
             var key = e.charCode || e.keyCode || 0;
@@ -584,7 +587,7 @@ Adviser:
         })
     });
     
-    // Show Password
+    // SHOW PASSWORD
     document.getElementById('showPassword1').onclick = function() {
     if ( this.checked ) {
        document.getElementById('id_password1').type = "text";
@@ -610,78 +613,58 @@ $("input[data-type='currency']").on({
     });
 
     function formatNumber(n) {
-        // format number 1000000 to 1,234,567
         return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
 
+    //EMPTY COMMNENT
     function formatCurrency(input, blur) {
 
-var input_val = input.val();
+    var input_val = input.val();
 
-// don't validate empty input
-if (input_val === "") {
-    return;
-}
-
-// original length
-var original_len = input_val.length;
-
-// initial caret position 
-var caret_pos = input.prop("selectionStart");
-
-// check for decimal
-if (input_val.indexOf(".") >= 0) {
-
-    // get position of first decimal
-    // this prevents multiple decimals from
-    // being entered
-    var decimal_pos = input_val.indexOf(".");
-
-    // split number by decimal point
-    var left_ = input_val.substring(0, decimal_pos);
-    var right_ = input_val.substring(decimal_pos);
-
-    // add commas to left  of number
-    left_ = formatNumber(left_);
-
-    // validate right 
-    right_ = formatNumber(right_);
-
-    // On blur make sure 2 numbers after decimal
-    if (blur === "blur") {
-        right_ += "00";
+    // don't validate empty input
+    if (input_val === "") {
+        return;
     }
 
-    // Limit decimal to only 2 digits
-    right_ = right_.substring(0, 2);
+    var original_len = input_val.length;
 
-    // join number by .
-    input_val = left_ + "." + right_;
+    var caret_pos = input.prop("selectionStart");
 
-} else {
-    // no decimal entered
-    // add commas to number
-    // remove all non-digits
-    input_val = formatNumber(input_val);
-    input_val = input_val;
+    if (input_val.indexOf(".") >= 0) {
+        var decimal_pos = input_val.indexOf(".");
 
-    // final formatting
-    if (blur === "blur") {
-        input_val += ".00";
+        var left_ = input_val.substring(0, decimal_pos);
+        var right_ = input_val.substring(decimal_pos);
+
+        left_ = formatNumber(left_);
+ 
+        right_ = formatNumber(right_);
+
+        if (blur === "blur") {
+            right_ += "00";
+        }
+
+        right_ = right_.substring(0, 2);
+
+        input_val = left_ + "." + right_;
+
+    } else {
+        input_val = formatNumber(input_val);
+        input_val = input_val;
+        if (blur === "blur") {
+            input_val += ".00";
+        }
     }
-}
 
-// send updated string to input
-input.val(input_val);
+    input.val(input_val);
 
-// put caret back in the right position
-var updated_len = input_val.length;
-caret_pos = updated_len - original_len + caret_pos;
-input[0].setSelectionRange(caret_pos, caret_pos);
-}
+    var updated_len = input_val.length;
+    caret_pos = updated_len - original_len + caret_pos;
+    input[0].setSelectionRange(caret_pos, caret_pos);
+    }
 
-// Amount Check
-function amount_check() {
+    //AMOUNT OF PRICES
+    function amount_check() {
         var amount_input = document.getElementById("amount").value;
 
         if (amount_input != "") {
@@ -692,7 +675,7 @@ function amount_check() {
 
             sign_error13.style.borderColor = "red";
         }
-    }
+    };
 
 </script>
 

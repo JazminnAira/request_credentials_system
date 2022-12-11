@@ -438,7 +438,7 @@ Adviser:
     <h3 style="text-align:center;">List of Clearance Forms</h3>
     {% include 'html_files/message.html'%}
 
-        <!--UNAPPROVED TAB-->
+        
         <form method="POST" id="valdet">
             {% csrf_token %}
             <input type="text" hidden name="valdeterminer" id="valdeterminer">
@@ -450,7 +450,7 @@ Adviser:
             $('input[name=valdeterminer]').val(target);
             $('#valdet').submit()});
         </script>
-
+        <!--MAIN TABLE-->
         <div id="tab1_72" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
                 <div class="table-wrapper">
@@ -502,6 +502,7 @@ Adviser:
                             <td><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td>
+                            <!--APPOINTMENT STATUS-->
                             {% if instance.approval_status ==  'APPROVED' %}
                                 {% if instance.clear_notif ==  'NOTIFIED' %}
                                 Notification Sent.
@@ -517,9 +518,11 @@ Adviser:
                                 {% if instance.approval_status ==  'APPROVED' %}
                                 Approved
                                 {% else %}
+                                <!--APPROVED BY REGISTRAR-->
                                 <a href="{% url 'approve_clearform' instance.id %}"><button class="table-icon" id="btn" >Approve</button></a>
                                 {% endif %}
                             </td>
+                            <!--DELETE FORM-->
                             <td><a href="{% url 'delete_clearform' instance.id %}"><button class="table-icon" id="btn" >Remove</button></a>
                             </td>
                             {% endif %}
@@ -552,7 +555,7 @@ Adviser:
 <script>
 
 
-// no data by default
+// DISPLAY NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_72");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -564,6 +567,7 @@ Adviser:
         $('.no-result').hide();
     }
 
+    //RETURN TO REGISTRAR DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }
@@ -722,16 +726,16 @@ Adviser:
     // SORTING 
     function sortTable(table, col, reverse) {
         var tb = table.tBodies[0], 
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            tr = Array.prototype.slice.call(tb.rows, 0),
             i;
         reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+        tr = tr.sort(function (a, b) { 
+            return reverse 
+                * (a.cells[col].textContent.trim() 
                     .localeCompare(b.cells[col].textContent.trim())
                    );
         });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); 
     }
     
     function makeSortable(table) {

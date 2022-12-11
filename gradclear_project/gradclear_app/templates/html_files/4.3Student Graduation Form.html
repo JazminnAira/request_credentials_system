@@ -185,8 +185,6 @@ Adviser:
         width: 100%;
     }
     
-    
-    
     .modal-body {
         background: #e0e0e0;
         border: 1px solid #000000;
@@ -538,7 +536,7 @@ Adviser:
 
 
 <body>
-
+     <!--BACK TO DASHBOARD-->
     <ul>
         <li>
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" title="Home" id="home_btn" >
@@ -550,13 +548,12 @@ Adviser:
     <!--BACK TO TOP BUTTON-->
     <a id="backtotop_btn_43"></a>
 
-
     <!--MAIN-->
     <div class="myDiv" id="myDiv">
         <form method="POST" action="graduation_form" id="grad_form" >
             {% csrf_token %}
-            <!--SECTION RADIO BOX-->
-            
+
+            <!--SECTION FOR SHIFT-->
             <div class="form-row">
                 <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
             
@@ -571,14 +568,13 @@ Adviser:
             </div>
             <div id="dayeve_error_43"></div>
             <hr>
+
             <!--NAME BOX-->
             <div class="form-row">
                 <input type="text" hidden name="id_getter" value="{{request.user.student_id}}">
                 <input type="text" hidden name="course_getter" value="{{request.user.course}}">
-
                 <div class="form-inline">
                     <label for="name" class="my-1 mr-3" id="name_lbl_43"><b>Name:<span id="asteris_43" style="color:red;">*</span></b></label>
-
                     <div>      
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="fn_box_430" id="fn_box_43" class="form-control " placeholder="First Name" onkeyup="isEmpty()" value="{{request.user.first_name}}" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required>
@@ -586,11 +582,8 @@ Adviser:
                             readonly>
                         <input type="text" oninput="this.value = this.value.toUpperCase()" name="ln_box_430" id="ln_box_43" class="form-control mr-3" placeholder="Last Name" onkeyup="isEmpty()" value="{{request.user.last_name}}"  onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                             readonly required autofocus>
-
                     </div>
                 </div><br><br>
-
-
 
                 <!--COURSE DROPDOWN BOX-->
                 <div class="form-inline">
@@ -615,6 +608,7 @@ Adviser:
                     </div>
                 </div>
             </div><br>
+
             <!--STUDY LOAD FOR-->
             <div class="form-group">
                 <div class= "form-inline">
@@ -624,7 +618,6 @@ Adviser:
             </div>
 
             <!--SUBJECT TABLE-->
-            
             <table class="table-responsive-sm tablesorter" id="subj_tbl">
             <thead>
                 <tr>
@@ -811,8 +804,6 @@ Adviser:
             </tbody>
             </table><br><br>
 
-    
-
             <!--ADDITIONAL SUBJECTS TABLE-->
             <p1 style="color:#757575"><b>Additional Subjects:</b></p1>
             <br>
@@ -926,12 +917,11 @@ Adviser:
                 </select>
             </div>
 
-           <!--DEADLINE BOX-->
+           <!--DEADLINE OF APPLICATION BOX-->
             <div class="form-inline">
                 <label for="name" class="col-form-label my-1 ">If no, file your application papers. Deadline: </label>
                 <input type="date" id="deadline_box_43" name="deadline_box_43" class="form-control my-1 mr-4" oninput="radio_boxes(this)" >
             </div><br>
-
 
             <!--SUPERVISED INDUSTRIAL TRAINING BOX-->
             <p2 style="color: #757575;"> <b> B. Supervised Industrial Training: </b><em>(Optional)</em></p2><br>
@@ -985,147 +975,13 @@ Adviser:
         </div>
     </div>
 
-
-
-    <div id="print_graduate" hidden>
-        <div>
-            <!--Print Header-->
-            <table id="print_table">
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td"><img src="static/Media/tup_logo.png" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
-                    <td colspan="2" id="print_td2">
-                        <p style="font-size :18px; font-style:bold; text-align: center;">TECHNOLOGIGAL UNIVERSITY OF THE PHILIPPINES<br> CAVITE CAMPUS</p>
-                        <p style="font-size :15px; text-align: center;">Carlos Q. Trinidad Avenue, Salawag, Dasmarinas City,Cavite, Philippines<br> Telefax: (046) 416-4920<br> Email: cavite@tup.edu.ph │ Website: www.tup.edu.ph</p>
-                    </td>
-                </tr>
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td3">OCR</td>
-                    <td id="print_td4">
-                        APPLICATION FOR GRADUATION
-                    </td>
-                    <td id="print_td4">
-                        Page 1/1
-                    </td>
-                </tr>
-            </table>
-
-            <!--Main Clearance PRINT-->
-            <p></p>
-            <div>
-                <label class="pr-3" style="color:#000000">Day</label><input type="checkbox" value="day"><br>
-                <label class="pr-3" style="color:#000000">Eve</label><input type="checkbox" value="eve"><br>
-                <label style="color:#000000"><b>PRINT ALL ENTRIES CLEARLY</b></label>
-
-                <table id="print_tabl" class="table">
-                    <tr class="tr" id="print_tr2" style="text-align: center;">
-                        <td class="td" id="surname_p43" style="text-align: center;">Dela Cruz</td>
-                        <td class="td" id="firstname_p43" style="text-align: center;">Juan</td>
-                        <td class="td" id="middlename_p43" style="text-align: center;">Fernando</td>
-                        <td class="td" id="course_p43" style="text-align: center;">BET-COET-3A</td>
-                    </tr>
-                    <tr id="print_tr1" class="tr" style="text-align: center;">
-                        <td class="td" style="text-align: center;"><b>Surname</b></td>
-                        <td class="td" style="text-align: center;"><b>First Name</b></td>
-                        <td class="td" style="text-align: center;"><b>Middle Name</b></td>
-                        <td class="td" style="text-align: center;"><b>Course</b></td>
-                    </tr>
-                    <tr class="tr" style="text-align:center;">
-                        <td class="td" style="width: 15%;">Study Load For:</td>
-                        <td class="td" id="studyload" name="studyload_p43" style="text-align: center;">Summer</td>
-                    </tr>
-                    <tr style="text-align:center;" class="tr" style="text-align: center;">
-                        <td class="td">&nbsp;</td>
-                        <td class="td" style="border-top: 2px solid black; text-align:center;">Semester/Summer</td>
-                    </tr>
-                </table>
-                <table style="border:none;">
-                    <tr>
-                        <td style="border:none;width:27%;">
-                            A. Enrolled this Semester/Summer
-                        </td>
-                        <td id="enrolled" name="enrolled_p43" style="border:none;text-align:left;">2022</td>
-                        <td style="border:none;">
-                            Yes <input type="checkbox" value="yes_enrolled43"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No<input type="checkbox" value="no_enrolled43">
-                        </td>
-                    </tr>
-                </table>
-
-
-                <table style="border:2px solid black;" class="pb-3">
-                    <tr>
-                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
-                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
-                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
-                    </tr>
-                    <tr>
-                        <td>Subjects </td>
-                        <td>Time</td>
-                        <td>Room</td>
-                        <td>Days</td>
-                        <td>Instructor’s Name & Signature</td>
-                    </tr>
-                </table>
-
-                <!--Just for spacing-->
-                <p></p>
-
-                <table style="border:none;" class="pt-2">
-                    <tr class="pt-3">Additional Subjects<em>(Indicate if Day or Evening)</em></tr>
-                </table>
-
-                <table style="border:2px solid black;">
-                    <tr>
-                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
-                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
-                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
-                    </tr>
-                    <tr>
-                        <td>Subjects </td>
-                        <td>Time</td>
-                        <td>Room</td>
-                        <td>Days</td>
-                        <td>Instructor’s Name & Signature</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="td">
-                            If no, file your application papers<b> (Deadline:<label id ="deadline" name="dealine_p43" style ="color:#000000;">Jan 3,2022</label>)</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3 td">
-                            1. Period of Training From:
-                            <label id="frompreiod" name="fromperiod_traning_p43" style="color:#000000;">Jan 2022</label> To:
-                            <label id="topreiod" name="toperiod_traningp43" style="color:#000000;">Dec 2022</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3 td">
-                            2. Name of Instructor Assigned on your SIT:
-                            <label id="SIT_intructor" name="SIT_intructor_p43" style="color:#000000;">Prof Pedro</label>
-                        </td>
-                    </tr>
-
-                </table>
-            </div>
-
-
-        </div>
-        
-
-
 </body>
 
 </html>
 
 
 <script>
-
+    //RETURN TO DASHBOARD
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }
@@ -1197,7 +1053,6 @@ Adviser:
             }
         });
     });
-
 
     $(function() {
         $('body').on('keydown', '#sub_box_43', function(e) {
@@ -1284,12 +1139,8 @@ Adviser:
     });
 </script>
 
-
-
-
 <script>
     // DISABLE BTN WHEN FORM INCOMPLETE
-
     function isEmpty() {
         let ln_box = document.getElementById("ln_box_43").value;
         let fn_box = document.getElementById("fn_box_43").value;
@@ -1299,9 +1150,7 @@ Adviser:
 
         if ( ln_box != "" && fn_box != "" && mn_box != "" && stdfor_radio != "" && enrolled_option != "") {
             document.getElementById("submit_btn_43").removeAttribute("disabled");
-
         }
-
     }
 
     function isEmpty1() {
@@ -1310,9 +1159,7 @@ Adviser:
 
         if (sub_box != "" && room_box != "" && instructor_box != "") {
             document.getElementById("addsub_btn_43").removeAttribute("hidden");
-
         }
-
     }
 
     function isEmpty2() {
@@ -1321,15 +1168,11 @@ Adviser:
 
         if (sub2_box != "" && room2_box != "" && instructor2_box != "") {
             document.getElementById("addsub_btn3_43").removeAttribute("hidden");
-
         }
-
     }
 
-   
+    //EMPTY COMMENT
     function getCourse() {
-
-
         $("#course_drp1_43").on("change", function() {
             var selVal = $(this).val();
             $("h2").html(selVal);
@@ -1341,19 +1184,18 @@ Adviser:
             }
         })
     }
-
+    //EMPTY C
     function getDay() {
         $("#day_box1_43").on("change", function() {
             var selVal = $(this).val();
             $("h2").html(selVal);
-
             if (selVal == 0) {
                 $('#addsub_btn_43').prop("hidden", true);
-            } else {
+            } 
+            else {
                 $('#addsub_btn_43').prop("hidden", false);
             }
         })
-
     }
 
     function getDay1() {
@@ -1363,14 +1205,14 @@ Adviser:
 
             if (selVal == 0) {
                 $('#addsub_btn3_43').prop("hidden", true);
-            } else {
+            } 
+            else {
                 $('#addsub_btn3_43').prop("hidden", false);
             }
         })
-
     }
 
-    //Check RADIO BOXES
+    //CHECK RADIO BOXES
     function radio_boxes(elem){
         var checkboxes = document.querySelectorAll('input[type="radio"]:checked');
         if(checkboxes.length == 1){
@@ -1381,23 +1223,27 @@ Adviser:
                     var training_start = document.getElementById('potF_box_43').value;
                     var training_end = document.getElementById('potT_box_43').value;
                     var study_load = document.getElementById('school_year').value;
-                    if (sit != "" && training_start && training_end && study_load != ""){
+                    if (sit != "1" && training_start && training_end && study_load != ""){
                         document.getElementById('submit_btn_43').disabled = false;
-                    }else{
+                    }
+                    else{
                         document.getElementById('submit_btn_43').disabled = true;
                     }
-                }else{
+                }
+                else{
                     document.getElementById('submit_btn_43').disabled = true;
                 };
-            }else{
+            }
+            else{
                 document.getElementById('submit_btn_43').disabled = true;
             };
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
         };
     };
 
-    //Add Subject 
+    //ADD SUBJECT
     function addRow() {
         var addsub = document.getElementById('sub_box_43').value;
 
@@ -1444,7 +1290,8 @@ Adviser:
                     cell2.innerHTML = schedy1 + " " + stime1 + "-" + etime1 + "/" + schedy2 + " " + stime2 + "-" + etime2 + "/" + schedy3 + " " + stime3 + "-" + etime3;
                 }
             }
-        } else {
+        } 
+        else {
             alert("No Schedule Assigned")
         }
         cell3.innerHTML = room;
@@ -1490,7 +1337,7 @@ Adviser:
     }
 
 
-    //Delete Last in the Row Subject
+    //DELETE LAST ELEMENT IN THE ROW SUBJECT
     function delSub() {
         var tableTr = document.getElementById("subject_table_43").rows.length;
         if (tableTr > 1) {
@@ -1498,14 +1345,13 @@ Adviser:
         }
     }
 
-    //Hide Add and Delete Icon button
+    //HIDE AND DELETE ICON BUTTON
     function hide_adddel() {
         document.getElementById("addopen_43").style.display = "none";
         document.getElementById("del_43").style.display = "none";
     }
 
-
-    //ADD ANOTHER Subject 
+    //ADD ANOTHER SUBJECT
     function addRow2() {
         var addsub2 = document.getElementById('sub2_box_43').value;
 
@@ -1552,7 +1398,8 @@ Adviser:
                     cell2.innerHTML = schedy12 + " " + stime12 + "-" + etime12 + "/" + schedy22 + " " + stime22 + "-" + etime22 + "/" + schedy32 + " " + stime32 + "-" + etime32;
                 }
             }
-        } else {
+        } 
+        else {
             alert("No Schedule Assigned")
         }
         cell3.innerHTML = room2;
@@ -1597,11 +1444,9 @@ Adviser:
         document.getElementById("del2_43").style.display = "block";
 
         event.preventDefault();
-
     }
 
-
-    //Delete Last in the Row Subject
+    //DELETE LAST ROW IN THE ADDITIONAL SUBJECT TABLE
     function delSub2() {
         var tableTr = document.getElementById("addSubject_table_43").rows.length;
         if (tableTr > 1) {
@@ -1609,23 +1454,16 @@ Adviser:
         }
     }
 
-    //Hide Add and Delete Icon button
+    //HIDE AND DELETE ICON BUTTON
     function hide_adddel2() {
         document.getElementById("addopen2_43").style.display = "none";
         document.getElementById("del2_43").style.display = "none";
     }
 
-    //Printing function
-    function to_beprinted(el) {
-        var restorepage = document.body.innerHTML;
-        var printcontent = document.getElementById(el).innerHTML;
-        document.body.innerHTML = printcontent;
-        window.print();
-        document.body.innerHTML = restorepage;
-    }
 </script>
 
 <script>
+    // EMPTY COMMENT
     let select = document.querySelector('select');
     let radioButtons = document.querySelectorAll('input[type="radio"]');
 
@@ -1636,14 +1474,14 @@ Adviser:
         else radioButtons.forEach(radioButton => radioButton.disabled = false)
     });
 
-    var numShown = 5; // Initial rows shown & index
-    var numMore = 1;  // Increment
+    var numShown = 5; 
+    var numMore = 1;  
 
     var $table = $('#subj_tbl').find('tbody');  // tbody containing all the rows
     var numRows = $table.find('tr').length; // Total # rows
 
     $(function () {
-        // Hide rows and add clickable div
+        //HIDE ROWS AND ADD CLICKABLE DIV
         $table.find('tr:gt(' + (numShown - 1) + ')').hide().end()
             .after('<tbody id="more"><tr><td colspan="' +
                 $table.find('tr:first td').length + '"><div style="text-align: center;">Add <span>' +
@@ -1651,23 +1489,22 @@ Adviser:
 
         $('#more').click(function() {
             numShown = numShown + numMore;
-            // no more "show more" if done
+            //REMOVE "SHOW MORE" IF COMPLETE
             if (numShown >= numRows) {
                 $('#more').remove();
             }
-            // change rows remaining if less than increment
+            //CHANGE ROWS REMAINING IF LESS THAN INCREMENT
             if (numRows - numShown < numMore) {
                 $('#more span').html(numRows - numShown);
             }
             $table.find('tr:lt(' + numShown + ')').show();
-        });
-
+        })
     });
 
     
 
-    var numShown1 = 3; // Initial rows shown & index
-    var numMore1 = 1;  // Increment
+    var numShown1 = 3; 
+    var numMore1 = 1;  
 
     var $table1 = $('#addSubject_table_43').find('tbody');  // tbody containing all the rows
     var numRows1 = $table1.find('tr').length; // Total # rows
@@ -1681,11 +1518,11 @@ Adviser:
 
         $('#more1').click(function() {
             numShown1 = numShown1 + numMore1;
-            // no more "show more" if done
+            //HIDING "SHOW MORE" IF COMPLETE ADDITIONAL TABLE
             if (numShown1 >= numRows1) {
                 $('#more1').remove();
             }
-            // change rows remaining if less than increment
+            //CHANGE ROWS REMAINING IF LESS THAN INCREMENT ADDITIONAL TABLE
             if (numRows1 - numShown1 < numMore1) {
                 $('#more1 span').html(numRows1 - numShown1);
             }
@@ -1694,10 +1531,7 @@ Adviser:
 
     });
 
-    //RADIO BOXES ENABLING SUBMIT 
-    
-
-    //DISABLE ROWS WHEN BEFORE ROW DOESNT MEET THE REQUIRED Fields
+    //DISABLE ROWS WHEN BEFORE ROW DOESNT MEET THE REQUIRED FIELDS
     function row1(elem){
         if (document.getElementById('id_subject1').value !="" && document.getElementById('id_starttime1_1').value !="" && document.getElementById('id_endtime1_1').value !="" && document.getElementById('id_day1_1').value !="" && document.getElementById('faculty1').value != "1"){
             document.getElementById('id_subject2').disabled = false;
@@ -1709,10 +1543,12 @@ Adviser:
             
             document.getElementById('boxes').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject1').value =="" && document.getElementById('id_day1_1').value =="" && document.getElementById('faculty1').value == "1"){
+        }
+        else if(document.getElementById('id_subject1').value =="" && document.getElementById('id_day1_1').value =="" && document.getElementById('faculty1').value == "1"){
             document.getElementById('boxes').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject2').disabled = true;
@@ -1738,10 +1574,12 @@ Adviser:
             
             document.getElementById('boxes2').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject2').value =="" && document.getElementById('id_day1_2').value =="" && document.getElementById('faculty2').value == "1"){
+        }
+        else if(document.getElementById('id_subject2').value =="" && document.getElementById('id_day1_2').value =="" && document.getElementById('faculty2').value == "1"){
             document.getElementById('boxes2').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject3').disabled = true;
@@ -1767,10 +1605,12 @@ Adviser:
             
             document.getElementById('boxes3').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject3').value =="" && document.getElementById('id_day1_3').value =="" && document.getElementById('faculty3').value == "1"){
+        }
+        else if(document.getElementById('id_subject3').value =="" && document.getElementById('id_day1_3').value =="" && document.getElementById('faculty3').value == "1"){
             document.getElementById('boxes3').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject4').disabled = true;
@@ -1796,10 +1636,12 @@ Adviser:
 
             document.getElementById('boxes4').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject4').value =="" && document.getElementById('id_day1_4').value =="" && document.getElementById('faculty4').value == "1"){
+        }
+        else if(document.getElementById('id_subject4').value =="" && document.getElementById('id_day1_4').value =="" && document.getElementById('faculty4').value == "1"){
             document.getElementById('boxes4').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject5').disabled = true;
@@ -1825,10 +1667,12 @@ Adviser:
             
             document.getElementById('boxes5').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject5').value =="" && document.getElementById('id_day1_5').value =="" && document.getElementById('faculty5').value == "1"){
+        }
+        else if(document.getElementById('id_subject5').value =="" && document.getElementById('id_day1_5').value =="" && document.getElementById('faculty5').value == "1"){
             document.getElementById('boxes5').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject6').disabled = true;
@@ -1853,10 +1697,12 @@ Adviser:
             
             document.getElementById('boxes6').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject6').value =="" && document.getElementById('id_day1_6').value =="" && document.getElementById('faculty6').value == "1"){
+        }
+        else if(document.getElementById('id_subject6').value =="" && document.getElementById('id_day1_6').value =="" && document.getElementById('faculty6').value == "1"){
             document.getElementById('boxes6').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject7').disabled = true;
@@ -1881,10 +1727,12 @@ Adviser:
             
             document.getElementById('boxes7').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject7').value =="" && document.getElementById('id_day1_7').value =="" && document.getElementById('faculty7').value == "1"){
+        }
+        else if(document.getElementById('id_subject7').value =="" && document.getElementById('id_day1_7').value =="" && document.getElementById('faculty7').value == "1"){
             document.getElementById('boxes7').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject8').disabled = true;
@@ -1909,10 +1757,12 @@ Adviser:
             
             document.getElementById('boxes8').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject8').value =="" && document.getElementById('id_day1_8').value =="" && document.getElementById('faculty8').value == "1"){
+        }
+        else if(document.getElementById('id_subject8').value =="" && document.getElementById('id_day1_8').value =="" && document.getElementById('faculty8').value == "1"){
             document.getElementById('boxes8').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject9').disabled = true;
@@ -1937,10 +1787,12 @@ Adviser:
             
             document.getElementById('boxes9').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject9').value =="" && document.getElementById('id_day1_9').value =="" && document.getElementById('faculty9').value == "1"){
+        }
+        else if(document.getElementById('id_subject9').value =="" && document.getElementById('id_day1_9').value =="" && document.getElementById('faculty9').value == "1"){
             document.getElementById('boxes9').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
 
             document.getElementById('id_subject10').disabled = true;
@@ -1958,10 +1810,12 @@ Adviser:
         if (document.getElementById('id_subject10').value !="" && document.getElementById('id_starttime1_10').value !="" && document.getElementById('id_endtime1_10').value !="" && document.getElementById('id_day1_10').value !="" && document.getElementById('faculty10').value != "1"){
             document.getElementById('boxes10').checked = true;
             check_rows();
-        }else if(document.getElementById('id_subject10').value =="" && document.getElementById('id_day1_10').value =="" && document.getElementById('faculty10').value == "1"){
+        }
+        else if(document.getElementById('id_subject10').value =="" && document.getElementById('id_day1_10').value =="" && document.getElementById('faculty10').value == "1"){
             document.getElementById('boxes10').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
             document.getElementById('boxes10').checked = false;
             check_rows();
@@ -1979,10 +1833,12 @@ Adviser:
             
             document.getElementById('boxes11').checked = true;
             check_rows();
-        }else if(document.getElementById('id_addsubject1').value =="" && document.getElementById('id_addday1_1').value =="" && document.getElementById('addfaculty1').value == "1"){
+        }
+        else if(document.getElementById('id_addsubject1').value =="" && document.getElementById('id_addday1_1').value =="" && document.getElementById('addfaculty1').value == "1"){
             document.getElementById('boxes11').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('id_addsubject2').disabled = true;
             document.getElementById('id_add_starttime1_2').disabled = true;
             document.getElementById('id_add_endtime1_2').disabled = true;
@@ -2006,10 +1862,12 @@ Adviser:
             
             document.getElementById('boxes12').checked = true;
             check_rows();
-        }else if(document.getElementById('id_addsubject2').value =="" && document.getElementById('id_addday1_2').value =="" && document.getElementById('addfaculty2').value == "1"){
+        }
+        else if(document.getElementById('id_addsubject2').value =="" && document.getElementById('id_addday1_2').value =="" && document.getElementById('addfaculty2').value == "1"){
             document.getElementById('boxes12').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('id_addsubject3').disabled = true;
             document.getElementById('id_add_starttime1_3').disabled = true;
             document.getElementById('id_add_endtime1_3').disabled = true;
@@ -2033,10 +1891,12 @@ Adviser:
             
             document.getElementById('boxes13').checked = true;
             check_rows();
-        }else if(document.getElementById('id_addsubject3').value =="" && document.getElementById('id_addday1_3').value =="" && document.getElementById('addfaculty3').value == "1"){
+        }
+        else if(document.getElementById('id_addsubject3').value =="" && document.getElementById('id_addday1_3').value =="" && document.getElementById('addfaculty3').value == "1"){
             document.getElementById('boxes13').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('id_addsubject4').disabled = true;
             document.getElementById('id_add_starttime1_4').disabled = true;
             document.getElementById('id_add_endtime1_4').disabled = true;
@@ -2060,10 +1920,12 @@ Adviser:
             
             document.getElementById('boxes14').checked = true; 
             check_rows();
-        }else if(document.getElementById('id_addsubject4').value =="" && document.getElementById('id_addday1_4').value =="" && document.getElementById('addfaculty4').value == "1"){
+        }
+        else if(document.getElementById('id_addsubject4').value =="" && document.getElementById('id_addday1_4').value =="" && document.getElementById('addfaculty4').value == "1"){
             document.getElementById('boxes14').checked = true;
             check_rows();
-        }else{
+        }
+        else{
             document.getElementById('id_addsubject5').disabled = true;
             document.getElementById('id_add_starttime1_5').disabled = true;
             document.getElementById('id_add_endtime1_5').disabled = true;
@@ -2082,10 +1944,12 @@ Adviser:
             document.getElementById('boxes15').checked = true; 
             check_rows();
             
-        }else if(document.getElementById('id_addsubject5').value =="" && document.getElementById('id_addday1_5').value =="" && document.getElementById('addfaculty5').value == "1"){
+        }
+        else if(document.getElementById('id_addsubject5').value =="" && document.getElementById('id_addday1_5').value =="" && document.getElementById('addfaculty5').value == "1"){
             document.getElementById('boxes15').checked = true;
             check_rows();
-        }else{ 
+        }
+        else{ 
             document.getElementById('submit_btn_43').disabled = true;
             document.getElementById('boxes15').checked = false; 
             check_rows();
@@ -2102,23 +1966,27 @@ Adviser:
                     var training_start = document.getElementById('potF_box_43').value;
                     var training_end = document.getElementById('potT_box_43').value;
                     var study_load = document.getElementById('school_year').value;
-                    if (sit != "" && training_start && training_end && study_load !=""){
+                    if (sit != "1" && training_start && training_end && study_load !=""){
                         document.getElementById('submit_btn_43').disabled = false;
-                    }else{
+                    }
+                    else{
                         document.getElementById('submit_btn_43').disabled = true;
                     };
-                }else{
+                }
+                else{
                     document.getElementById('submit_btn_43').disabled = true;
                 };
-            }else{
+            }
+            else{
                 document.getElementById('submit_btn_43').disabled = true;
             };
-        }else{
+        }
+        else{
             document.getElementById('submit_btn_43').disabled = true;
         };
     };
     
-    //Confirm Submit
+    //ONFIRM SUBMIT
     var modalConfirm = function(callback){
   
         $("#submit_btn_43").on("click", function(){
@@ -2139,7 +2007,8 @@ Adviser:
     modalConfirm(function(confirm){
         if(confirm){
             submit_form()
-        }else{
+        }
+        else{
             return false;
         }
     });
@@ -2229,6 +2098,7 @@ Adviser:
         form.submit();
     }
 
+    // EMPTY COMMENT
     function isNumberKey(evt)
     {
     var charCode = (evt.which) ? evt.which : event.keyCode;

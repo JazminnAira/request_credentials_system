@@ -455,56 +455,6 @@ Adviser:
         padding: 16px;
     }
 
-    @media screen and (max-width: 700px) {
-        .signature_section {padding-top: 15px;}
-
-
-        #footer_bottom{
-            display: none;
-        }
-
-        #footer_div{
-            width: 18em;
-            align: right;
-            display: none;
-        }
-    }
-
-
-    @media screen and (min-width: 700px) {
-        .div1 th {
-            background-color: #c51d3a;
-            color: #ffff;
-            text-align: center;
-            padding: 5px;
-            width: 100%;
-            min-width: 100%;
-            position: sticky;
-            top: 0;
-        }
-
-        .div1 th:nth-child(1),
-        .div1 td:nth-child(1) {
-            position: sticky;
-            left: 0px;
-            width: 40px;
-            min-width: 40px; 
-        }
-
-
-        .div1 th:nth-child(3),
-        .div1 td:nth-child(3) {
-            position: sticky;
-            left: 40px;
-            width: 238px;
-            min-width: 238px;
-            
-        }
-    }
-
-
-
-
     .div1 {
     padding-top: 20px;
     width: 99%;
@@ -673,6 +623,54 @@ Adviser:
         color: #c9c9c9;
         border-color: whi;
     }
+
+    /* SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 700px) {
+        .signature_section {padding-top: 15px;}
+
+
+        #footer_bottom{
+            display: none;
+        }
+
+        #footer_div{
+            width: 18em;
+            align: right;
+            display: none;
+        }
+    }
+
+
+    @media screen and (min-width: 700px) {
+        .div1 th {
+            background-color: #c51d3a;
+            color: #ffff;
+            text-align: center;
+            padding: 5px;
+            width: 100%;
+            min-width: 100%;
+            position: sticky;
+            top: 0;
+        }
+
+        .div1 th:nth-child(1),
+        .div1 td:nth-child(1) {
+            position: sticky;
+            left: 0px;
+            width: 40px;
+            min-width: 40px; 
+        }
+
+
+        .div1 th:nth-child(3),
+        .div1 td:nth-child(3) {
+            position: sticky;
+            left: 40px;
+            width: 238px;
+            min-width: 238px;
+            
+        }
+    }
     
 </style>
 
@@ -784,7 +782,7 @@ Adviser:
             <br>
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 border border-dark">APPROVE MANUALLY</button><br>
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 border border-dark">MANUAL SIGNATURE</button><br>
             </div>
         </div>
         
@@ -842,6 +840,7 @@ Adviser:
 
     </div>
 
+    <!--MAIN TABLE-->
     <div class ="table_list" id = "table_list">
         <form method="POST" action="faculty_dashboard_graduation_list" id="table_main">
             {% csrf_token %}
@@ -851,7 +850,11 @@ Adviser:
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_53">
                     <thead style="height: 70px;">
                         <tr>
-                            <th><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check"/></th>
+                            {% if st %}
+                            <th><input type="checkbox" onchange="checkAll(this)" class="check" name="chk[]" id="all_check"/></th>
+                            {% else %}
+                            <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check" disabled/></th>
+                            {% endif %}
                             <th hidden> # </th>
                             <th>Student's Name</th>
                             <th>Course</th>
@@ -884,9 +887,9 @@ Adviser:
                             {% if instance.instructor_name == request.user.full_name %}
                                 
                                 {% if instance.sitsignature == f_n_unapproved %}
-                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), sitsubject(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">SIT Subject</button></td>
+                                <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), sitsubject(this), document.getElementById('attach_signature_to').value ='{{instance.id}}'">SIT</button></td>
                                 {% elif instance.sitsignature == f_n_approved_esign or f_n_approved_upload or f_n_approved_approve %} 
-                                <td onclick="window.location='display_gradform/{{ instance.id }}'">SIT Subject✔️</td>
+                                <td onclick="window.location='display_gradform/{{ instance.id }}'">SIT✔️</td>
                                 {% else %}
                                 <td>—</td>
                                 {% endif %}
@@ -1098,6 +1101,7 @@ Adviser:
             </div>
             </div>    
         </form>
+        <!--FACULTY APPROVE ALL FORMS-->
         <form method="POST" action="faculty_dashboard_graduation_list_all" hidden >
             {% csrf_token %}
             <input type="text" id="id_list" name="id_list" />
@@ -1112,7 +1116,7 @@ Adviser:
 
     </hr>
     
-    <!--CONFIRMATION MODAL-->
+    <!--CONFIRMATION MODAL FOR ESIGN-->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -1124,8 +1128,46 @@ Adviser:
                     Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
-                    <button type="button" class="btn" id="modal-btn-yes" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
-                    <button type="button" class="btn" id="modal-btn-no" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                    <button type="button" class="btn" id="yes_esign" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_esign" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CONFIRMATION FOR UPLOADED-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="yes_upload" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_upload" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--CONFIRMATION FOR MANUALLY-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal3">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #424242;">
+                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
+                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                </div>
+                <div class="modal-footer" style="background-color:#c31d35">
+                    <button type="button" class="btn" id="yes_manually" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
+                    <button type="button" class="btn" id="no_manually" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
                 </div>
             </div>
         </div>
@@ -1198,7 +1240,7 @@ Adviser:
     });
 
 
-// no data by default
+    // DISPLAP NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_53");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -1210,7 +1252,7 @@ Adviser:
         $('.no-result').hide();
     }
 
-    //signature
+    //SIGANTURE
     var canvas = document.getElementById("signature_pad");
     function resizeCanvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
@@ -1231,19 +1273,22 @@ Adviser:
 
     const save_signature = document.querySelector('#save_signature');
     const signature_pad = document.querySelector('#signature_pad');
-    const imgConverted = document.querySelector('#imgConverted');
 
     const ctx = signature_pad.getContext("2d");
 
-    signature_pad.addEventListener("click", function() {
+    signature_pad.addEventListener("touchend", function() {
         const dataURI = signature_pad.toDataURL("image/png");
-        
         console.log(dataURI);
         document.getElementById('image_encoded').value = dataURI;
-        //imgConverted.src = dataURI;
     });
 
-    //show create signature are
+    signature_pad.addEventListener("mouseup", function() {
+        const dataURI = signature_pad.toDataURL("image/png");
+        console.log(dataURI);
+        document.getElementById('image_encoded').value = dataURI;
+    });
+
+    //SHOW CREATE SIGNATURE AREA
     edit_esign_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
         document.getElementById("upload_signature_area").hidden = true;
@@ -1288,15 +1333,17 @@ Adviser:
         image.src=URL.createObjectURL(event.target.files[0]);
     };
 
-    // close signature section when not needed
+    //CLOSE SIGNATURE SECTION WHEN NOT NEEDED
     function close_boxes(elem){
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
     };
 
+    //EMPTY COMMENT
     function OpenSignature(elem){
         document.getElementById("signature_section").style.width = "400px";
         document.getElementById("table_list").style.marginRight = "400px";
+        document.getElementById("table_list").style.opacity = "0.5";
 
         var array = []
         var checkboxes = document.querySelectorAll('input[name=boxes]:checked')
@@ -1305,6 +1352,18 @@ Adviser:
         array.push(checkboxes[i].value)
         }
         document.getElementById('id_list').value= array;
+        
+        //DISABLED  BURRONS AND CHECKBOXES WHEN APPROVE IN TABLE CLICKED
+        var button_approve = document.getElementsByClassName("user_id apprv");
+        for (var i = 0; i < button_approve.length; i++) {
+            button_approve[i].disabled = true;
+            button_approve[i].style.opacity = "0.5";
+        }
+
+        var checkboxes_approve = document.getElementsByClassName("check")
+        for(var index = 0; index < checkboxes_approve.length; index++){
+            checkboxes_approve[index].disabled = true;
+        }
     };
     
     function sitsubject(elem){
@@ -1371,7 +1430,7 @@ Adviser:
         document.getElementById('subject').value = "addsignature5";
     };
 
-    //Confirm Submit
+   //CONFIRM APPROVE FOR ESIGNATURE
     var modalConfirm = function(callback){
   
         $("#esign_attach_sig_btn").on("click", function(){
@@ -1389,12 +1448,12 @@ Adviser:
             }
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_esign").on("click", function(){
           callback(true);
           $("#mi-modal").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_esign").on("click", function(){
           callback(false);
           $("#mi-modal").modal('hide');
         });
@@ -1423,8 +1482,8 @@ Adviser:
         }
     };
 
-    //Confirm Submit
-    var modalConfirm = function(callback){
+    //CONFIRM APPROVE FOR UPLOADED SIGNATURE
+       var modalConfirm = function(callback){
   
         $("#upload_attach_sig_btn").on("click", function(){
             if (document.getElementById('upload_checker').value == ""){
@@ -1435,18 +1494,18 @@ Adviser:
                 document.getElementById("show_details").hidden = true;
                 document.getElementById("upload_signature_display").hidden = false;
             }else{
-                $("#mi-modal").modal('show');
+                $("#mi-modal2").modal('show');
             }
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_upload").on("click", function(){
           callback(true);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal2").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_upload").on("click", function(){
           callback(false);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal2").modal('hide');
         });
     };
       
@@ -1474,21 +1533,21 @@ Adviser:
         
     };
 
-    //Confirm Submit
+    //CONFIRM APPROVE FOR MANUAL SIGNATURE
     var modalConfirm = function(callback){
   
         $("#approve_sig_btn").on("click", function(){
-          $("#mi-modal").modal('show');
+          $("#mi-modal3").modal('show');
         });
       
-        $("#modal-btn-yes").on("click", function(){
+        $("#yes_manually").on("click", function(){
           callback(true);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal3").modal('hide');
         });
         
-        $("#modal-btn-no").on("click", function(){
+        $("#no_manually").on("click", function(){
           callback(false);
-          $("#mi-modal").modal('hide');
+          $("#mi-modal3").modal('hide');
         });
     };
       
@@ -1519,12 +1578,38 @@ Adviser:
     close_signature.addEventListener("click", function() {
         document.getElementById("signature_section").style.width = "0";
         document.getElementById("table_list").style.marginRight= "0";
+        document.getElementById("table_list").style.opacity = "1";
         document.getElementById("button_area").hidden = false;
         document.getElementById("show_details").hidden = false;
         document.getElementById("create_signature_area").hidden = true;
         document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
         document.getElementById("upload_signature_display").hidden = true;
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        if(checkboxes.length == 0){
+            var button_approve = document.getElementsByClassName("user_id apprv");
+            for (var i = 0; i < button_approve.length; i++) {
+                button_approve[i].disabled = false;
+                button_approve[i].style.opacity = "1";
+            }
+            
+            var checkboxes_approve = document.getElementsByClassName("check")
+            for(var index = 0; index < checkboxes_approve.length; index++){
+                checkboxes_approve[index].disabled = false;
+            }
+        }else{
+            var button_approve = document.getElementsByClassName("user_id approve_all");
+            for (var i = 0; i < button_approve.length; i++) {
+                button_approve[i].disabled = false;
+                button_approve[i].style.opacity = "1";
+            }
+            
+            var checkboxes_approve = document.getElementsByClassName("check")
+            for(var index = 0; index < checkboxes_approve.length; index++){
+                checkboxes_approve[index].disabled = false;
+            }
+        }
         
     });
 
@@ -1541,10 +1626,12 @@ Adviser:
         document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
+    //REDIRECT TO HOME JS
     function openfdb() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }
 
+    //PAGE REFRESH JS
     function openfdbg() {
         window.location.replace("{% url 'faculty_dashboard_graduation_list' %}");
     }
@@ -1693,23 +1780,23 @@ Adviser:
     // SORTING 
     function sortTable(table, col, reverse) {
         var tb = table.tBodies[0], 
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            tr = Array.prototype.slice.call(tb.rows, 0), 
             i;
         reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+        tr = tr.sort(function (a, b) { 
+            return reverse 
+                * (a.cells[col].textContent.trim() 
                     .localeCompare(b.cells[col].textContent.trim())
                    );
         });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); 
     }
     
     function makeSortable(table) {
         var th = table.tHead, i;
         th && (th = th.rows[0]) && (th = th.cells);
         if (th) i = th.length;
-        else return; // if no thead then do nothing
+        else return; 
         while (--i >= 0) (function (i) {
             var dir = 1;
             th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
@@ -1805,7 +1892,7 @@ Adviser:
                 }
             }
         }
-    }
+    };
     
     
 </script>

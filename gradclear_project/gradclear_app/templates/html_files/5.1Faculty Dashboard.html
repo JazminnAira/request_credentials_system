@@ -127,7 +127,6 @@ Adviser:
         padding-left: 30px;
     }
     
-    
     .sidebar {
     height: 100%;
     width: 70px;
@@ -139,7 +138,7 @@ Adviser:
     transition: 0.4s;
     overflow-x: hidden;
     white-space: nowrap;
-}
+    }
 
     .sidebar a {
         padding: 8px 8px 8px 15px;
@@ -179,38 +178,6 @@ Adviser:
     #main {
         margin-left:70px;
         transition: margin-left 0.4s;
-    }
-
-    @media screen and (max-width: 500px) {
-
-        #h5id {
-            font-size: 20px;
-        }
-
-        #h1id {
-            font-size: 25px;
-        }
-        #footer_bottom{
-            display: none;
-        }
-
-        #footer_div{
-            width: 18em;
-            align: right;
-            display: none;
-        }
-        .sidebar {
-            padding-top: 25px;
-        }
-        .sidebar a {
-            font-size: 20px;
-        }
-    }
-
-    @media screen and (max-height: 884px) {
-        .sidebar a {
-            height: 5vh;
-        }
     }
     
     #logo_51 {
@@ -416,11 +383,6 @@ Adviser:
         background-color: #dedede;
         text-align: right;
         padding-right: 10px;
-    }
-     @media screen and (max-width: 500px) {
-    #date_today{
-        display: none;
-    }
     }
     
     @keyframes loading-1 {
@@ -713,14 +675,48 @@ Adviser:
     .table-wrapper{
         max-height: 450px;
         overflow-y: scroll;
-        
-
     }
    .outer-wrapper{
     border-radius: 5px;
    
    }
+    /* SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 500px) {
 
+        #h5id {
+            font-size: 20px;
+        }
+
+        #h1id {
+            font-size: 25px;
+        }
+        #footer_bottom{
+            display: none;
+        }
+
+        #footer_div{
+            width: 18em;
+            align: right;
+            display: none;
+        }
+        .sidebar {
+            padding-top: 25px;
+        }
+        .sidebar a {
+            font-size: 20px;
+        }
+    }
+
+    @media screen and (max-height: 884px) {
+        .sidebar a {
+            height: 5vh;
+        }
+    }
+     @media screen and (max-width: 500px) {
+    #date_today{
+        display: none;
+    }
+    }
     
 </style>
 
@@ -768,12 +764,11 @@ Adviser:
                     <!--MODAL BODY-->
                     <div class="modal-body" id="account-body_51">
 
-                        <!--ACCOUNT TABLE MODAL-->
+                        <!--ACCOUNT CONTEQ TABLE-->
                         <table class="table-responsive-sm table-responsive-lg">
                             <tr>
                                 <td><b>Name:</b> </td>
-                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>
-                                
+                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>   
                             </tr>
 
                             <tr>
@@ -911,7 +906,7 @@ Adviser:
                             <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
-                    
+                    <!-- GRADUATION FORMS -->
                     {% for instance in st %}
                     <tbody>
                         <tr>        
@@ -924,6 +919,7 @@ Adviser:
                             
                     </tbody>
                     {% endfor %}
+                    <!-- CLEARANCE FORMS -->
                     {% for instance in st1 %}
                     <tbody>
                         <tr>        
@@ -967,31 +963,27 @@ Adviser:
 
 
 <script>
-// no data by default
+//DISPLAY NO DATA ON TABLE
     var dattable = document.getElementById("list_tbl_51");
     var rowcount = dattable.tBodies[0].rows.length;
 
     if (rowcount == '0') {
         $('.no_data').show();
         $('.no-result').hide();
-    } else {
+    } 
+    else {
         $('.no_data').hide();
         $('.no-result').hide();
     }
 
-
-
     //SETTING MODAL CLOSE
-
     function reset_close() {
         const inputFeilds = document.querySelectorAll("input");
         const validInputs = Array.from(inputFeilds).filter(input => input.value !== "");
         console.log(validInputs)
 
         if (validInputs != 0) {
-            // confirm("Your changes will not be saved once you close it.Continue");
-
-        
+           
             document.getElementById('address_box_51').value = '';
             document.getElementById('ea_box_51').value = '';
             document.getElementById('oldpass_51').value = '';
@@ -1006,7 +998,8 @@ Adviser:
             document.getElementById("sp_error_51").innerHTML = "";
             document.getElementById("spm_error_51").innerHTML = "";
 
-        } else {
+        } 
+        else {
             return true;
         }
     }
@@ -1016,7 +1009,7 @@ Adviser:
         $(".collapse").collapse('hide');
     });
 
-    //checkcpnum
+    //CHECK CP NUMBER FORMAT
     function checkcpnum() {
         var st_cpnum = document.getElementById("cnum_box_51").value;
         var result = st_cpnum.substring(0, 2);
@@ -1030,7 +1023,7 @@ Adviser:
             document.getElementById("scn_error_51").innerHTML = "";
         }
     }
-
+  // CP NUMBER FORMAT NOTIFIER
     function checkcpnumnotif() {
         var st_cpnum = document.getElementById("cnum_box_51").value;
         var result = st_cpnum.substring(0, 2);
@@ -1044,14 +1037,17 @@ Adviser:
         }
     }
 
+    //RETURN TO DASHBOARD
     function openfdbg() {
         window.location.replace("{% url 'faculty_dashboard' %}");
     }
 
+    //REDIRECT TO FACULTY CLEARANCE LIST
     function openfdbc() {
         window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
     }
 
+    //REDIRECT WHEN LOG OUT
     function opencover() {
         window.location.replace("{% url 'cover' %}");
     }
@@ -1077,11 +1073,13 @@ Adviser:
                         document.getElementById("search_box_51").value = "";
                     }
                 });
-        } else {
+        } 
+        else {
             alert("Please enter a name to search.")
         }
     }
 
+    //DISPLAY SEARCHED RESULTS
     function display_search() {
         $(document).ready(function() {
             $(".search").keyup(function() {
@@ -1229,7 +1227,7 @@ Adviser:
         const tBody = table.tBodies[0];
         const rows = Array.from(tBody.querySelectorAll("tr"));
 
-        // Sort each row
+        //SORT EACH ROW
         const sortedRows = rows.sort((a, b) => {
             const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
             const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
@@ -1237,15 +1235,14 @@ Adviser:
             return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
         });
 
-        // Remove all existing TRs from the table
+        //REMOVE ALL EXISTING TR'S FROM THE TABLE
         while (tBody.firstChild) {
             tBody.removeChild(tBody.firstChild);
         }
 
-        // Re-add the newly sorted rows
+        //RE-ADD THE NEWLY SORTED ROWS
         tBody.append(...sortedRows);
 
-        // Remember how the column is currently sorted
         table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
         table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
         table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
@@ -1272,6 +1269,7 @@ Adviser:
         document.getElementById("search_box_51").value = "";
     });
 
+    //UPDATE PASSWORD
     function old_pass_length() {
         var Spassle = document.getElementById("old_pass_51").value;
         if (Spassle.length > 3) {
@@ -1280,12 +1278,12 @@ Adviser:
             var check_success = "";
             document.getElementById("sp_error_51").innerHTML = check_success;
             document.getElementById("spm_error_51").innerHTML = check_success;
-        } else {
+        }
+        else {
             document.getElementById("old_pass_51").style.borderColor = "red";
             document.getElementById("sp_error_51").innerHTML = "At least greater than 4 characters.";
         }
     }
-
     function new_pass_length() {
         var Spassle = document.getElementById("new_pass_51").value;
         if (Spassle.length > 3) {
@@ -1294,12 +1292,12 @@ Adviser:
             var check_success = "";
             document.getElementById("sp_error_51").innerHTML = check_success;
             document.getElementById("spm_error_51").innerHTML = check_success;
-        } else {
+        }
+        else {
             document.getElementById("new_pass_51").style.borderColor = "red";
             document.getElementById("sp_error_51").innerHTML = "At least greater than 4 characters.";
         }
     }
-
     function confirm_pass_length() {
         var Spassle = document.getElementById("confirm_pass_51").value;
         if (Spassle.length > 3) {
@@ -1308,12 +1306,12 @@ Adviser:
             var check_success = "";
             document.getElementById("sp_error_51").innerHTML = check_success;
             document.getElementById("spm_error_51").innerHTML = check_success;
-        } else {
+        } 
+        else {
             document.getElementById("confirm_pass_51").style.borderColor = "red";
             document.getElementById("sp_error_51").innerHTML = "At least greater than 4 characters.";
         }
     }
-
     function match_new_pass() {
         var pass1 = document.getElementById("new_pass_51").value;
         var pass2 = document.getElementById("confirm_pass_51").value;
@@ -1323,14 +1321,14 @@ Adviser:
             document.getElementById("confirm_pass_51").style.removeProperty('border');
 
             document.getElementById("spm_error_51").innerHTML = "";
-        } else {
+        } 
+        else {
             document.getElementById("new_pass_51").style.borderColor = "red";
             document.getElementById("confirm_pass_51").style.borderColor = "red";
 
             document.getElementById("spm_error_51").innerHTML = "New Password Doesn't Match.";
         }
     }
-
     function match_confirm_pass() {
         var pass1 = document.getElementById("new_pass_51").value;
         var pass2 = document.getElementById("confirm_pass_51").value;
@@ -1340,7 +1338,8 @@ Adviser:
             document.getElementById("confirm_pass_51").style.removeProperty('border');
 
             document.getElementById("spm_error_51").innerHTML = "";
-        } else {
+        }
+        else {
             document.getElementById("new_pass_51").style.borderColor = "red";
             document.getElementById("confirm_pass_51").style.borderColor = "red";
 
@@ -1348,24 +1347,23 @@ Adviser:
         }
     }
 
-    //Password Old and New Detector
+    //CHECK IF OLD AND NEW PASSWORD ARE SAME
     function new_old_pass_detect() {
         var pass0 = document.getElementById("new_pass_51").value;
         var pass1 = document.getElementById("old_pass_51").value;
-
         if (pass1 == pass0) {
             document.getElementById("old_pass_51").style.borderColor = "red";
             document.getElementById("new_pass_51").style.borderColor = "red";
 
             document.getElementById("spon_error_51").innerHTML = "Sorry, your new password cannot be the same as the old one.";
-        } else {
+        } 
+        else {
             document.getElementById("new_pass_51").style.removeProperty('border');
             document.getElementById("old_pass_51").style.removeProperty('border');
 
             document.getElementById("spon_error_51").innerHTML = "";
         }
     }
-
     function new_old_pass_detect1() {
         var pass0 = document.getElementById("new_pass_51").value;
         var pass1 = document.getElementById("old_pass_51").value;
@@ -1375,7 +1373,8 @@ Adviser:
             document.getElementById("new_pass_51").style.borderColor = "red";
 
             document.getElementById("spon_error_51").innerHTML = "Sorry, your new password cannot be the same as the old one.";
-        } else {
+        } 
+        else {
             document.getElementById("new_pass_51").style.removeProperty('border');
             document.getElementById("old_pass_51").style.removeProperty('border');
 
@@ -1391,8 +1390,6 @@ Adviser:
             document.getElementById("addresssavechanges_btn_51").click();
         }
     });
-
-
 
     //EMAIL SETTING ENTER BUTTON
     var emaillast_input = document.getElementById("ea_box_51");
@@ -1421,6 +1418,7 @@ Adviser:
         }
     });
 
+    //EMPTY COMMENT
     function opengrad() {
         window.location.replace("{% url 'graduation_form' %}");
     }
@@ -1428,18 +1426,18 @@ Adviser:
 // COLLAPSIBLE SIDEBAR
     var mini = true;
 
-function toggleSidebar() {
-  if (mini) {
-    document.getElementById("sidebar").style.width = "70px";
-    document.getElementById("main").style.marginLeft = "70px";
-    document.getElementById("left_logo_51").style.marginLeft = "3px";
-    this.mini = false;
-  } else {
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("left_logo_51").style.marginLeft = "90px";
-    this.mini = true;
-  }
-}
+    function toggleSidebar() {
+    if (mini) {
+        document.getElementById("sidebar").style.width = "70px";
+        document.getElementById("main").style.marginLeft = "70px";
+        document.getElementById("left_logo_51").style.marginLeft = "3px";
+        this.mini = false;
+    } else {
+        document.getElementById("sidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("left_logo_51").style.marginLeft = "90px";
+        this.mini = true;
+    }
+    };
 
 </script>

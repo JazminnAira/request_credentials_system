@@ -430,7 +430,7 @@ Adviser:
     <h3 style="text-align:center;">List of Students</h3>
     {% include 'html_files/message.html'%}
 
-    <!--TAB BAR-->
+    <!-- MAIN TABLE-->
     <div data-tabs="1" id="tabz_75">
         <div id="tab1_75" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
@@ -495,6 +495,7 @@ Adviser:
                             
                             {% if instance.user_type == "STUDENT" and instance.year_and_section == "4th Year"%} 
                             <td>
+                                <!--UPDATE STUDENT'S STATUS-->
                                 <form name="change_status" id="change" action="student_status_update/{{ instance.id }}" method=POST>
                                 {% csrf_token %}
                                     <select onchange="this.form.submit()" name="status_select" id="changer"> 
@@ -520,7 +521,7 @@ Adviser:
                             {% endif %}
 
 
-                            
+                            <!--DELETE STUDENT-->                            
                             <td><form method ="POST" action ="student_list_remove/{{instance.id}}">
                                 {% csrf_token %}
                                 <input type="text" name="id_from_table" value={{instance.id}} hidden>
@@ -553,7 +554,7 @@ Adviser:
 
 
 <script>
-    // no data by default
+    //DISPLAY NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_75");
     var rowcount = dattable.tBodies[0].rows.length;
 
@@ -565,6 +566,7 @@ Adviser:
         $('.no-result').hide();
     }
 
+    //RETURN TO DASHBOARD JS
     function openrdb() {
         window.location.replace("{% url 'registrar_dashboard' %}");
     }

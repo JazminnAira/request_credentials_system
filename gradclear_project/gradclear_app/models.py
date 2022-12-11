@@ -166,7 +166,7 @@ class user_table(AbstractUser):
     e_signature_timesaved = models.DateTimeField(auto_now_add=True)
     uploaded_signature = models.ImageField(upload_to='uploaded signatures/',blank=True)# PIP INSTALL PILLOW
     uploaded_signature_timesaved = models.DateTimeField(auto_now_add=True)
-    no_signature = models.CharField(max_length=100, verbose_name="Approve",default="*Approve with Live Signature Required*")
+    no_signature = models.CharField(max_length=100, verbose_name="Approve",default="Approved with Manual Signature Required")
 
     REQUIRED_FIELDS = ('email',)
     

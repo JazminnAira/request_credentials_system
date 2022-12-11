@@ -458,7 +458,7 @@ Adviser:
         .float,
         #backtotop_btn_43,
         #submit_btn_43 {
-            display: none;
+        display: none;
         }
     }
     
@@ -570,10 +570,11 @@ Adviser:
 
 
 <body>
+    <!--GET DATA-->
     {% for i in graduation %}
 
     <ul>
-
+        <!--PRINT BUTTON ACTIVATOR-->
         <li>
             {% if i.approval_status ==  'APPROVED' %}
                 <a href="{% url 'graduation_print' i.id %}" data-toggle="tooltip" data-placement="right" title="Print" id="print_btn">
@@ -585,6 +586,7 @@ Adviser:
                 </a>
             {% endif %}
         </li>
+        <!--REDIRECTING TO THE RESPECTIVE DASHBOARD PER USER TYPE-->
         <li>
             {% if request.user.user_type == "STUDENT" or request.user.user_type == "OLD STUDENT" or request.user.user_type == "ALUMNUS" %}
             <a href="{% url 'student_dashboard' %}" class="float" data-toggle="tooltip" data-placement="right" id="home_btn" title="Home">
@@ -614,10 +616,6 @@ Adviser:
             {% endif%}
           
         </li>
-
-      
-        
-       
     </ul>
 
     <!--BACK TO TOP BUTTON-->
@@ -629,7 +627,7 @@ Adviser:
           
           <form method="POST" action="graduation_form" id="grad_form" >
                {% csrf_token %}
-               <!--SECTION RADIO BOX-->
+               <!--SHIFT-->
                 <div class="form-row">
                 <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Shift:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
                 
@@ -653,7 +651,8 @@ Adviser:
                 </div>
                 {% endif %}
                 </div>
-                
+
+                <!--STUDY LOAD FOR-->
                 <div class="form-row">
                     <div class="radio"  onkeyup="isEmpty()" id="radio_43">
                     <label for="sum/sem" class="my-1 mr-2" id="stdfor_lbl_43"><b>Study Load For:</b><span>&nbsp;</span><span id="asteris_43" style="color:red;">*</span></label>
@@ -705,7 +704,7 @@ Adviser:
 
 
 
-                    <!--COURSE DROPDOWN BOX-->
+                    <!--COURSE BOX-->
                     <div class="form-inline">
                          <label for="course" class="my-1 mr-2" id="course_lbl_43"><b>Course:</b><span id="asteris_43" style="color:red;">*</span></label>
 
@@ -721,7 +720,6 @@ Adviser:
              
 
                <!--SUBJECT TABLE-->
-               
                <table class="table-responsive-sm tablesorter" id="subj_tbl">
                <thead>
                     <tr>
@@ -733,6 +731,7 @@ Adviser:
                     </tr>
                </thead>
                 <tbody id="Add">
+                    <!--CHECK IFREQUIRED FILEDS PER ROW ARE NOT EMPTY-->
                     {% if i.subject1 != "" %}
                     <tr>
                          <td>{{i.subject1}}</td>
@@ -1011,6 +1010,7 @@ Adviser:
                     </tr>
                </thead>
                <tbody>
+                    <!--CHECK IF REQUIRED FIELD PER ROW ARE NOT EMPTY-->
                     {% if i.addsubject1 != "" %}
                     <tr>
                          <td>{{i.addsubject1}}</td>
@@ -1201,134 +1201,7 @@ Adviser:
           </form>
     {% endfor %}
     </div>
-    <div id="print_graduate" hidden>
-        <div>
-            <!--Print Header-->
-            <table id="print_table">
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td"><img src="static/Media/tup_logo.png" width="100" height="100" id="logo_41" title="Technological University of the Philippines- Cavite"></td>
-                    <td colspan="2" id="print_td2">
-                        <p style="font-size :18px; font-style:bold; text-align: center;">TECHNOLOGIGAL UNIVERSITY OF THE PHILIPPINES<br> CAVITE CAMPUS</p>
-                        <p style="font-size :15px; text-align: center;">Carlos Q. Trinidad Avenue, Salawag, Dasmarinas City,Cavite, Philippines<br> Telefax: (046) 416-4920<br> Email: cavite@tup.edu.ph │ Website: www.tup.edu.ph</p>
-                    </td>
-                </tr>
-                <tr class="col-sm-md-12" id="print_tr">
-                    <td id="print_td3">OCR</td>
-                    <td id="print_td4">
-                        APPLICATION FOR GRADUATION
-                    </td>
-                    <td id="print_td4">
-                        Page 1/1
-                    </td>
-                </tr>
-            </table>
-
-            <!--Main Clearance PRINT-->
-            <p></p>
-            <div>
-                <label class="pr-3" style="color:#000000">Day</label><input type="checkbox" value="day"><br>
-                <label class="pr-3" style="color:#000000">Eve</label><input type="checkbox" value="eve"><br>
-                <label style="color:#000000"><b>PRINT ALL ENTRIES CLEARLY</b></label>
-
-                <table id="print_tabl" class="table">
-                    <tr class="tr" id="print_tr2" style="text-align: center;">
-                        <td class="td" id="surname_p43" style="text-align: center;">Dela Cruz</td>
-                        <td class="td" id="firstname_p43" style="text-align: center;">Juan</td>
-                        <td class="td" id="middlename_p43" style="text-align: center;">Fernando</td>
-                        <td class="td" id="course_p43" style="text-align: center;">BET-COET-3A</td>
-                    </tr>
-                    <tr id="print_tr1" class="tr" style="text-align: center;">
-                        <td class="td" style="text-align: center;"><b>Surname</b></td>
-                        <td class="td" style="text-align: center;"><b>First Name</b></td>
-                        <td class="td" style="text-align: center;"><b>Middle Name</b></td>
-                        <td class="td" style="text-align: center;"><b>Course</b></td>
-                    </tr>
-                    <tr class="tr" style="text-align:center;">
-                        <td class="td" style="width: 15%;">Study Load For:</td>
-                        <td class="td" id="studyload" name="studyload_p43" style="text-align: center;">Summer</td>
-                    </tr>
-                    <tr style="text-align:center;" class="tr" style="text-align: center;">
-                        <td class="td">&nbsp;</td>
-                        <td class="td" style="border-top: 2px solid black; text-align:center;">Semester/Summer</td>
-                    </tr>
-                </table>
-                <table style="border:none;">
-                    <tr>
-                        <td style="border:none;width:27%;">
-                            A. Enrolled this Semester/Summer
-                        </td>
-                        <td id="enrolled" name="enrolled_p43" style="border:none;text-align:left;">2022</td>
-                        <td style="border:none;">
-                            Yes <input type="checkbox" value="yes_enrolled43"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No<input type="checkbox" value="no_enrolled43">
-                        </td>
-                    </tr>
-                </table>
-
-
-                <table style="border:2px solid black;" class="pb-3">
-                    <tr>
-                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
-                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
-                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
-                    </tr>
-                    <tr>
-                        <td>Subjects</td>
-                        <td>Time</td>
-                        <td>Room</td>
-                        <td>Days</td>
-                        <td>Instructor’s Name & Signature</td>
-                    </tr>
-                </table>
-
-                <!--Just for spacing-->
-                <p></p>
-
-                <table style="border:none;" class="pt-2">
-                    <tr class="pt-3">Additional Subjects<em>(Indicate if Day or Evening)</em></tr>
-                </table>
-
-                <table style="border:2px solid black;">
-                    <tr>
-                        <th style="text-align: center;color:#000000;width:28%;">Subjects</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Time</th>
-                        <th style="text-align: center;color:#000000;width:10%;">Room</th>
-                        <th style="text-align: center;color:#000000;width:17%;">Days</th>
-                        <th style="text-align: center;color:#000000;width:28%;">Instructor’s Name & Signature</th>
-                    </tr>
-                    <tr>
-                        <td>Subjects</td>
-                        <td>Time</td>
-                        <td>Room</td>
-                        <td>Days</td>
-                        <td>Instructor’s Name & Signature</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="td">
-                            If no, file your application papers<b> (Deadline:<label id ="deadline" name="dealine_p43" style ="color:#000000;">Jan 3,2022</label>)</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3 td">
-                            1. Period of Training From:
-                            <label id="frompreiod" name="fromperiod_traning_p43" style="color:#000000;">Jan 2022</label> To:
-                            <label id="topreiod" name="toperiod_traningp43" style="color:#000000;">Dec 2022</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pl-3 td">
-                            2. Name of Instructor Assigned on your SIT:
-                            <label id="SIT_intructor" name="SIT_intructor_p43" style="color:#000000;">Prof Pedro</label>
-                        </td>
-                    </tr>
-
-                </table>
-            </div>
-    </div>
-
+    
 
 
 </body>
@@ -1337,7 +1210,7 @@ Adviser:
 
 <script>
 
-    
+    //REDIRET TO DASHBAORD JS
     function opensdb() {
         window.location.replace("{% url 'student_dashboard' %}");
     }
@@ -1369,12 +1242,10 @@ Adviser:
         }, "300");
     });
 
+    // CHECK EMPTY AND REQUIRED INPUTBOXES
     document.getElementById("enrolledthsisem_box_43").required = false;
     document.getElementById("deadline_box_43").required = false;
-
-    // CHECK EMPTY AND REQUIRED INPUTBOXES
-
-    // Day & Eve Check 
+    //SHIFT CHECK
     function dayeve_check() {
         if (document.getElementById("day_radio_43").checked || document.getElementById("eve_radio_43").checked) {
             return true;
@@ -1388,7 +1259,7 @@ Adviser:
         }
     }
 
-    // Name Check 
+    //NAME CHECK
     function name_check() {
         var last = document.getElementById("ln_box_43").value;
         var first = document.getElementById("fn_box_43").value;
@@ -1412,7 +1283,7 @@ Adviser:
         }
     }
 
-    // Course Check 
+    //COURSE CHECK
     function course_check() {
         var course_input = document.getElementById("course_drp1_43").value;
 
@@ -1433,7 +1304,7 @@ Adviser:
         }
     }
 
-    // Study Load Check
+    //STUDY LOAD CHECK
     function study_check() {
         if (document.getElementById("semester_radio_43").checked || document.getElementById("summer_radio_43").checked) {
             return true;
@@ -1446,7 +1317,7 @@ Adviser:
         }
     }
 
-    // Enrolled Check
+    //ENROLLED CHECK
     function enroll_check() {
         if (document.getElementById("yes_radio_43").checked) {
 
@@ -1488,7 +1359,7 @@ Adviser:
 
     // DISABLE ERRORS IN REQUIRED INPUTS
 
-    // Day eve Dissable Error
+    //SHIFT DISABLE ERROR
     function enter_dayeve() {
         if (document.getElementById('day_radio_43').checked || document.getElementById('eve_radio_43').checked) {
             var check_success = "";
@@ -1496,7 +1367,7 @@ Adviser:
         }
     }
 
-    // Name Dissable Error
+    //NAME DISABLE ERROR
     function enter_name1() {
         document.getElementById("ln_box_43").style.removeProperty('border');
 
@@ -1507,7 +1378,7 @@ Adviser:
 
     }
 
-    // course Dissbale error
+    //COURSE DISABLE ERROR
     function enter_course() {
         var course_input = document.getElementById("course_drp1_43");
         var selectedcourse = course_input.options[course_input.selectedIndex].value;
@@ -1517,14 +1388,14 @@ Adviser:
         }
     }
 
-    // Study load Dissable Error
+    //STUDY LOAD DISABLE ERROR
     function enter_study() {
         if (document.getElementById('semester_radio_43').checked || document.getElementById('summer_radio_43').checked) {
 
         }
     }
 
-    // Enroll Dissable Error
+    //ENROLLED THIS SEM DISABLE ERROR
     function enter_enroll() {
         document.getElementById("enrolledthsisem_box_43").style.removeProperty('border');
 
