@@ -7122,7 +7122,7 @@ def school_year_update(request):
 # CONNECTED TO SETTINGS.PY CRONJOBS AND CRON.PY
 def send_email_all():
     date_today = datetime.now().date()
-    print(date_today)
+    print("Date Today: ",date_today)
     faculties = []
     cleartable = clearance_form_table.objects.filter(
         time_requested__contains=date_today).all()
@@ -7152,9 +7152,7 @@ def send_email_all():
                                                                                                                         'addfaculty1', 'addfaculty2', 'addfaculty3', 'addfaculty4', 'addfaculty5', 'instructor_name').distinct())
 
     for i in all_faculty_grad:
-        print("i", i)
         for faculty in i:
-            print(faculty)
             if faculty != "NO FACULTY":
                 if faculty in faculties:
                     pass
@@ -7184,6 +7182,10 @@ def send_email_all():
     msg = EmailMessage(subject, message, email_from, recipient_list,)
     msg.content_subtype = "html"
     msg.send(fail_silently=True)
+    if recipient_list:
+        print("This is to inform you that email notifications has been sent to the signatories.")
+    else:
+        print("This is to inform you that no email notifications for signatories to send today. Thank you!")
 
 # APPROVE CLEARANCE FORMS ON REGISTRAR'S SIDE
 # FOR ALUMNI WITH EXISTING CLEARANCE RECORD IN THE OFFICE
