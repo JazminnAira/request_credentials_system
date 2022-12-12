@@ -889,9 +889,9 @@ Adviser:
             let email_box = document.getElementById("id_email").value;
             let pass1_box = document.getElementById("id_password1").value;
             let pass2_box = document.getElementById("id_password2").value;
-            if ((fn_box != 0 && ln_box != 0 && gender_box != 0 
+            if (fn_box != 0 && ln_box != 0 && gender_box != 0 
                 && cp_box != 0 && email_box != 0 && pass1_box != 0 && pass2_box == pass1_box 
-                ) && (id_val.length == 7) || (id_val.length == 6) ){    
+                 && pass2_box != 0 && id_val.length > 5) {    
                     document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             } else {
                 $("#Ssubmit_btn_01").attr("disabled", "disabled");
