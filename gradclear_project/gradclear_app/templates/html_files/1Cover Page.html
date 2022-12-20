@@ -43,7 +43,7 @@ Adviser:
 
 <style>
     body{
-        height: 100vh;
+        height: 85vh;
     }
 
     #mid_div{
@@ -439,10 +439,24 @@ Adviser:
         color: white;
         background-color: #616161;
     }
+    
+    #signlog_container{
+        margin-top: 80px;
+    }
 
     /* SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 690px){
+        #signup_login_container{
+            margin: 0;
+        }
+
+        #mid_div{
+            width: 97vw;
+        }
+    }
+    
     @media screen and (max-width: 600px){
-       #signup_login_container{
+        #signup_login_container{
             margin:0;
             height: 90vh;
             position: relative;
@@ -478,25 +492,50 @@ Adviser:
     }
 
     @media screen and (max-width: 450px){  
+        #signup_login_container{
+            margin-top: 0;
+        }
+        
         #mid_div{
             background: rgba( 255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
             border: 1px solid rgba( 255, 255, 255, 0.1 );
-            width:100vw;
+            width:97vw;
+            padding-top: 2px;
+            margin-top:10px;
         }
+        
         #title_cover{
-            display: none;
+            font-size: 44px;
+            margin-bottom: 2px;
+            margin-top: 5px;
+            padding-top:0;
         }
+        
         #title_hide{
             margin-top: 5px;
         }
 
         #subtitle_cover{
-            display: none;
+            font-size: 20px;
+            margin-bottom:2px;
         }
         #signlog_container{
-            margin-top: 10px;
+            padding-top: 2px;
+            margin-top: 5px;
         }   
+    }
+
+    @media screen and (max-height: 850px){
+        #navbar{
+            line-height: 10px;
+        }
+    }
+
+    @media screen and (max-height: 750px){
+        #navbar{
+            line-height: 5px;
+        }
     }
 </style>
 
@@ -578,11 +617,11 @@ Adviser:
         <div class="row container-fluid" id="mid_div" > 
             <div class="col-sm-7 " id="title_hide">
                 <!-- HEADINGS  -->
-                <h1  style="margin-top: 110px; color: #fff;" id ="title_cover"> Office of the <br>Campus <br> Registrar</h1>
+                <h1  style="color: #fff;" id ="title_cover"> Office of the <br>Campus <br> Registrar</h1>
                 <h2 class=" text-white" id ="subtitle_cover">TUP Cavite</h2>
             </div>
             
-            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px; margin-top: 80px;" id="signlog_container">
+            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px;" id="signlog_container">
                 <form method="POST">
                     {% csrf_token %}
                     <div style="margin-bottom: 30px;">

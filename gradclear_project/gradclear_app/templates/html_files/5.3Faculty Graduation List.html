@@ -438,7 +438,7 @@ Adviser:
  
 
     .signature_section{
-        height: 94%;
+        height: 94vh;
         width: 0;
         position: fixed;
         z-index: 1;
@@ -625,8 +625,11 @@ Adviser:
     }
 
     /* SCREEN RESPONSIVENESS */
-    @media screen and (max-width: 700px) {
-        .signature_section {padding-top: 15px;}
+    @media screen and (max-width: 500px) {
+        .signature_section {
+            padding-top: 15px;
+            
+        }
 
 
         #footer_bottom{
@@ -1278,12 +1281,14 @@ Adviser:
 
     signature_pad.addEventListener("touchend", function() {
         const dataURI = signature_pad.toDataURL("image/png");
+        
         console.log(dataURI);
         document.getElementById('image_encoded').value = dataURI;
     });
-
+    
     signature_pad.addEventListener("mouseup", function() {
         const dataURI = signature_pad.toDataURL("image/png");
+        
         console.log(dataURI);
         document.getElementById('image_encoded').value = dataURI;
     });
@@ -1341,8 +1346,13 @@ Adviser:
 
     //EMPTY COMMENT
     function OpenSignature(elem){
-        document.getElementById("signature_section").style.width = "400px";
-        document.getElementById("table_list").style.marginRight = "400px";
+        if (window.innerWidth < 500){
+            document.getElementById("signature_section").style.width = "100vw";
+            document.getElementById("table_list").style.marginRight = "100vw"; 
+        }else{
+            document.getElementById("signature_section").style.width = "400px";
+            document.getElementById("table_list").style.marginRight = "400px"; 
+        }
         document.getElementById("table_list").style.opacity = "0.5";
 
         var array = []
