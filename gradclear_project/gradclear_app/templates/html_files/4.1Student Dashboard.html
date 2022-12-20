@@ -705,17 +705,22 @@ Adviser:
         .sidebar a {
             font-size: 18px;
         }
-        .table-wrapper{
-        max-height: 300px;
-        overflow-y: scroll;
-
-    }
+        
        
     }
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 450px) {
+        
         #dt{
             display: none;
         }
+        #as{
+            display: none;
+        }
+        #ft{
+            display: none;
+        }
+    }
+    @media screen and (max-width: 700px) {
         #missing_document {
             display: none;
         }
@@ -1017,9 +1022,9 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden>Form No.</th>
-                            <th>Form Type</th>
-                            <th>Purpose of Request</th>
-                            <th>Approval Status</th>
+                            <th id="ft">Form Type</th>
+                            <th id="pr">Purpose of Request</th>
+                            <th id="as">Approval Status</th>
                             <th id="dt"> Date & Time Requested</th>
                             <th></th>
                         </tr>
@@ -1035,12 +1040,12 @@ Adviser:
                         {% for instance in st0 %}
                         <tr>
                             <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
+                            <td id="ft" onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
                             <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                             {% if instance.approval_status == "UNAPPROVED" %}
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(223, 71, 71);">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(223, 71, 71);">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
@@ -1053,12 +1058,12 @@ Adviser:
                         {% for instance in st %}
                         <tr>
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="ft" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="pr" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            <td id="as" onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
@@ -1070,12 +1075,12 @@ Adviser:
                         {% for instance in st1 %}
                         <tr>
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="ft" onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
+                            <td id="pr" onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            <td id="as" onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
