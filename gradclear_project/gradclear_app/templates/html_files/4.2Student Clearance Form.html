@@ -592,7 +592,7 @@ Adviser:
             <div class="form-group row">
                 <label for="notit_42" class="col-sm-2 col-form-label col-form-label-sm" id="notit_lbl_42">Number of Terms in TUPC: Sem./Sum.:</label>
                 <div class="col-sm-9">
-                    <input type="text" min="1" max="50" id="notit_box_42" name="notit_box_420" class="form-control" oninput="enter_notit()" onkeypress="isNumber(event)" required>
+                    <input type="text" min="1" max="50" id="notit_box_42" name="notit_box_420" class="form-control" oninput="enter_notit(),this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" onkeypress="isNumber(event)" required>
                     <p id="notit_error_42"></p>
                 </div>
             </div>
@@ -660,7 +660,7 @@ Adviser:
             <div class="form-group row">
                 <label for="lasterm_42" class="col-sm-2 col-form-label col-form-label-sm" id="lasterm_lbl_42">Last Term in TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="isEmpty()" placeholder="ex. 2020" onkeypress="isNumber(event)" >
+                    <input type="text" id="lasterm_box_42" name="lasterm_box_420" class="form-control" oninput="isEmpty(), this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" placeholder="ex. 2020" onkeypress="isNumber(event)" >
                     <p id="lterm_error_42"></p>
                 </div>
             </div>
@@ -1353,6 +1353,8 @@ Adviser:
         })
     }
     $("span.numbers").digits();
+
+
 </script>
 
 
