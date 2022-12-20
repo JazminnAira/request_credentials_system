@@ -7041,7 +7041,7 @@ def delete_clearform(request, id):
 # DELETE REQUEST FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def delete_reqform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" :
         delete_req = request_form_table.objects.get(id=id)
         delete_req.delete()
         messages.success(request, "Form has been deleted.")

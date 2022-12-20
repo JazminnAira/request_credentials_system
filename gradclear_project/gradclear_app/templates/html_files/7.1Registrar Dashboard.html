@@ -1637,425 +1637,874 @@ Adviser:
     
     <hr style="border: 1px solid #424242; ">
     <!--COURSE CARDS-->
-    <div class="container-fluid" id="carousel"> 
-        <div id="carouselExampleControls" class="carousel slide " data-interval="false">
-            <div class="carousel-inner">
+        <!--DISPLAY WHEN SCREEN IN XL UP SIZE-->
+    <div class="d-xl-block d-xxl-block d-md-none d-sm-none d-xs-none" id ="xL_sizedisplay">
+        <div class="container-fluid" id="carousel"> 
+            <div id="carouselExampleControls" class="carousel slide " data-interval="false">
+                <div class="carousel-inner">
 
-            <!-- FIRST PAGE -->
-            <div class="carousel-item active">
-                <div class="cards-wrapper">
-                <div class="card" >
-                  <div class="card-course-header" style="background-color: #0a216a;height: 50px;"></div>
+                <!-- FIRST PAGE -->
+                <div class="carousel-item active">
+                    <div class="cards-wrapper">
+                    <div class="card" >
+                    <div class="card-course-header" style="background-color: #0a216a;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BSIE-ICT</h5>
+                            <p class="card-text">BSIE Information & Communication Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Information and Communication Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_ICT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Information and Communication Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_ICT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-md-block">
+                    <div class="card-course-header" style="background-color: #757b75;height: 50px;"></div>
                     <div class="card-body">
-                        <h5 class="card-title">BSIE-ICT</h5>
-                        <p class="card-text">BSIE Information & Communication Technology</p>
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Information and Communication Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_ICT}}</a><br>
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Information and Communication Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_ICT}}</a>
+                        <h5 class="card-title">BSIE-IA</h5>
+                        <p class="card-text">BSIE Industrial Arts</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Industrial Arts' %}" >Clearance Forms:&nbsp; {{cBSIE_IA}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Industrial Arts' %}" >Graduation Forms:&nbsp; {{gBSIE_IA}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-md-block">
+                    <div class="card-course-header" style="background-color: #333333;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BGT-ART</h5>
+                        <p class="card-text">BGT Architecture Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BGT-Architecture Technology'%}" >Clearance Forms:&nbsp; {{cBGT_ART}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BGT-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBGT_ART}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-md-block">
+                        <div class="card-course-header" style="background-color: green;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-CT</h5>
+                        <p class="card-text">BET Civil Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Civil Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Civil Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #c57e7e;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-ET</h5>
+                        <p class="card-text">BET Electrical Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electrical Technology'%}" >Clearance Forms:&nbsp; {{cBET_ET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electrical Technology' %}" >Graduation Forms:&nbsp; {{gBET_ET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #8d6b6b;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-EsET</h5>
+                        <p class="card-text">BET Electronics Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_EsET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_EsET}}</a>
+                        </div>
                     </div>
                 </div>
-                <div class="card d-none d-md-block">
-                  <div class="card-course-header" style="background-color: #757b75;height: 50px;"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">BSIE-IA</h5>
-                    <p class="card-text">BSIE Industrial Arts</p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Industrial Arts' %}" >Clearance Forms:&nbsp; {{cBSIE_IA}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Industrial Arts' %}" >Graduation Forms:&nbsp; {{gBSIE_IA}}</a>
-                  </div>
                 </div>
-                <div class="card d-none d-md-block">
-                  <div class="card-course-header" style="background-color: #333333;height: 50px;"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">BGT-ART</h5>
-                    <p class="card-text">BGT Architecture Technology</p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BGT-Architecture Technology'%}" >Clearance Forms:&nbsp; {{cBGT_ART}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BGT-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBGT_ART}}</a>
-                  </div>
-                </div>
-                <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: green;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-CT</h5>
-                      <p class="card-text">BET Civil Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Civil Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Civil Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+
+                <!-- SECOND PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #7ec1c5;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-CoET</h5>
+                        <p class="card-text">BET Computer Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Computer Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_CoET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_CoET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #ae6889;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-MT</h5>
+                        <p class="card-text">BET Mechanical & Production Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #bb3775;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-PPT</h5>
+                        <p class="card-text">BET Powerplant Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #c74520;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-CET</h5>
+                        <p class="card-text">BT Civil Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Civil Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #c75b20;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-CoET</h5>
+                        <p class="card-text">BT Computer Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CoET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CoET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #829460;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-EET</h5>
+                        <p class="card-text">BT Electrical Engineering Technology </p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EET}}</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #c57e7e;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-ET</h5>
-                      <p class="card-text">BET Electrical Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electrical Technology'%}" >Clearance Forms:&nbsp; {{cBET_ET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electrical Technology' %}" >Graduation Forms:&nbsp; {{gBET_ET}}</a>
+
+                <!-- THIRD PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #f0d715;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-EsET</h5>
+                        <p class="card-text">BT Electronics Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EsET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EsET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #803622;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-MPET</h5>
+                        <p class="card-text">BT Mecahnical & Production Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_MPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_MPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #019267;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-PPET</h5>
+                        <p class="card-text">BT Powerplant Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_PPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_PPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #e31f41;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">MPET</h5>
+                        <p class="card-text">Mechanical & Production Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_MPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_MPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #000000;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">PPET</h5>
+                        <p class="card-text">Powerplant Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='Powerplant Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_PPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_PPET}}</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #8d6b6b;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-EsET</h5>
-                      <p class="card-text">BET Electronics Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_EsET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_EsET}}</a>
+    
+
+                <!-- FOURTH PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #E5D9B6;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-CT</h5>
+                        <p class="card-text">BET-Construction Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Construction Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Construction Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FFE15D;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-MT</h5>
+                        <p class="card-text">BET-Mechanical Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #EF9A53;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-AT</h5>
+                        <p class="card-text">BET-Automotive Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Automotive Technology' %}" >Clearance Forms:&nbsp; {{cBET_AT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Automotive Technology' %}" >Graduation Forms:&nbsp; {{gBET_AT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #863A6F;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-PPT</h5>
+                        <p class="card-text">BET-Power Plant Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Technologyy'%}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #DC3535;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BSIE-HE</h5>
+                        <p class="card-text">BSIE-Home Economics</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Home Economics'%}" >Clearance Forms:&nbsp; {{BSIE_HE}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Home Economics' %}" >Graduation Forms:&nbsp; {{BSIE_HE}}</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
-              </div>
+                </div>
+
+                <!-- CONTROLS (PREVIOUS AND NEXT) -->
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
             </div>
-
-            <!-- SECOND PAGE -->
-              <div class="carousel-item">
-                <div class="cards-wrapper">
-                  <div class="card">
-                    <div class="card-course-header" style="background-color: #7ec1c5;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-CoET</h5>
-                      <p class="card-text">BET Computer Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Computer Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_CoET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_CoET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #ae6889;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-MT</h5>
-                      <p class="card-text">BET Mechanical & Production Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #bb3775;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-PPT</h5>
-                      <p class="card-text">BET Powerplant Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #c74520;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-CET</h5>
-                      <p class="card-text">BT Civil Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Civil Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #c75b20;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-CoET</h5>
-                      <p class="card-text">BT Computer Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CoET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CoET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #829460;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-EET</h5>
-                      <p class="card-text">BT Electrical Engineering Technology </p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EET}}</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <!-- THIRD PAGE -->
-              <div class="carousel-item">
-                <div class="cards-wrapper">
-                  <div class="card">
-                    <div class="card-course-header" style="background-color: #f0d715;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-EsET</h5>
-                      <p class="card-text">BT Electronics Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EsET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EsET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #803622;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-MPET</h5>
-                      <p class="card-text">BT Mecahnical & Production Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_MPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_MPET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #019267;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-PPET</h5>
-                      <p class="card-text">BT Powerplant Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_PPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_PPET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #e31f41;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">MPET</h5>
-                      <p class="card-text">Mechanical & Production Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_MPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_MPET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #000000;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">PPET</h5>
-                      <p class="card-text">Powerplant Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='Powerplant Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_PPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_PPET}}</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-   
-
-             <!-- FOURTH PAGE -->
-             <div class="carousel-item">
-                <div class="cards-wrapper">
-                  <div class="card">
-                    <div class="card-course-header" style="background-color: #E5D9B6;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-CT</h5>
-                      <p class="card-text">BET-Construction Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Construction Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Construction Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #FFE15D;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-MT</h5>
-                      <p class="card-text">BET-Mechanical Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #EF9A53;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-AT</h5>
-                      <p class="card-text">BET-Automotive Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Automotive Technology' %}" >Clearance Forms:&nbsp; {{cBET_AT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Automotive Technology' %}" >Graduation Forms:&nbsp; {{gBET_AT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #863A6F;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BET-PPT</h5>
-                      <p class="card-text">BET-Power Plant Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Technologyy'%}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #DC3535;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BSIE-HE</h5>
-                      <p class="card-text">BSIE-Home Economics</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Home Economics'%}" >Clearance Forms:&nbsp; {{BSIE_HE}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Home Economics' %}" >Graduation Forms:&nbsp; {{BSIE_HE}}</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- CONTROLS (PREVIOUS AND NEXT) -->
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
         </div>
+    
 
-<!--SECOND ROW-->
+    <!--SECOND ROW-->
 
-    <!--COURSE CARDS-->
-    <div class="container-fluid" id="carousel">
-        <div id="carouselExampleControls1" class="carousel slide" data-interval="false">
-            <div class="carousel-inner">
+        <!--COURSE CARDS-->
+        <div class="container-fluid" id="carousel">
+            <div id="carouselExampleControls1" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
 
-            <!-- FIRST PAGE -->
+                <!-- FIRST PAGE -->
 
-              <div class="carousel-item active">
+                <div class="carousel-item active">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #5ecfe8;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BSIE-AET</h5>
+                            <p class="card-text">BSIE Automotive Engineering Technology </p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Automotive Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_AET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_AET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #F0FF42;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BSIE-MPET</h5>
+                        <p class="card-text">BSIE Mechanical & Producation Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_MPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_MPET}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #FFD372;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BTTE-ART</h5>
+                        <p class="card-text">BTTE Architecture Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Architecture Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_ART}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_ART}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #FF8787;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BTTE-AET</h5>
+                        <p class="card-text">BTTE Automotive Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_AET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_AET}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FD841F;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-CET</h5>
+                        <p class="card-text">BTTE Civil Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Civil Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_CET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #781C68;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-CoET</h5>
+                        <p class="card-text">BTTE Computer Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_CoET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CoET}}</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- SECOND PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #FCDDB0;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BTTE-EET</h5>
+                            <p class="card-text">BTTE Electrical Engineering Technology </p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #B3FFAE;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-EsET</h5>
+                        <p class="card-text">BET Electronics Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EsET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EsET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FF7D7D;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-MPET</h5>
+                        <p class="card-text">BTTE Mechanical & Production Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_MPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_MPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FFE1E1;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-PPET</h5>
+                        <p class="card-text">BTTE Powerplant Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_PPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_PPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #ADCF9F;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-AET</h5>
+                        <p class="card-text">BT Automotive Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_AET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_AET}}</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        
+            <!-- THIRD PAGE -->
+            <div class="carousel-item">
                 <div class="cards-wrapper">
                 <div class="card">
-                    <div class="card-course-header" style="background-color: #5ecfe8;height: 50px;"></div>
+                    <div class="card-course-header" style="background-color: #A9AF7E;height: 50px;"></div>
                     <div class="card-body">
-                        <h5 class="card-title">BSIE-AET</h5>
-                        <p class="card-text">BSIE Automotive Engineering Technology </p>
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Automotive Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_AET}}</a><br>
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_AET}}</a>
+                        <h5 class="card-title">BTTE-CP</h5>
+                        <p class="card-text">BTTE-Computer Programming </p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Programming' %}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Programming' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
                     </div>
                 </div>
                 <div class="card d-none d-md-block">
-                  <div class="card-course-header" style="background-color: #F0FF42;height: 50px;"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">BSIE-MPET</h5>
-                    <p class="card-text">BSIE Mechanical & Producation Engineering Technology</p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_MPET}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_MPET}}</a>
-                  </div>
-                </div>
-                <div class="card d-none d-md-block">
-                  <div class="card-course-header" style="background-color: #FFD372;height: 50px;"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">BTTE-ART</h5>
-                    <p class="card-text">BTTE Architecture Technology</p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Architecture Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_ART}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_ART}}</a>
-                  </div>
-                </div>
-                <div class="card d-none d-md-block">
-                  <div class="card-course-header" style="background-color: #FF8787;height: 50px;"></div>
-                  <div class="card-body">
-                    <h5 class="card-title">BTTE-AET</h5>
-                    <p class="card-text">BTTE Automotive Engineering Technology</p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_AET}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_AET}}</a>
-                  </div>
-                </div>
-                <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #FD841F;height: 50px;"></div>
+                    <div class="card-course-header" style="background-color: #F2E7D5;height: 50px;"></div>
                     <div class="card-body">
-                      <h5 class="card-title">BTTE-CET</h5>
-                      <p class="card-text">BTTE Civil Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Civil Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_CET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CET}}</a>
+                    <h5 class="card-title">BTTE-E</h5>
+                    <p class="card-text">BTTE-Electrical</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical' %}" >Clearance Forms:&nbsp; {{cBTTE_E}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical' %}" >Graduation Forms:&nbsp; {{gBTTE_E}}</a>
                     </div>
                 </div>
                 <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #781C68;height: 50px;"></div>
+                    <div class="card-course-header" style="background-color: #7743DB;height: 50px;"></div>
                     <div class="card-body">
-                      <h5 class="card-title">BTTE-CoET</h5>
-                      <p class="card-text">BTTE Computer Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_CoET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CoET}}</a>
+                    <h5 class="card-title">BSCE</h5>
+                    <p class="card-text">Bachelor of Science in Civil Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Civil Engineering'%}" >Clearance Forms:&nbsp; {{cBSCE}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Civil Engineering' %}" >Graduation Forms:&nbsp; {{gBSCE}}</a>
                     </div>
                 </div>
-              </div>
-              </div>
-
-            <!-- SECOND PAGE -->
-              <div class="carousel-item">
-                <div class="cards-wrapper">
-                <div class="card">
-                    <div class="card-course-header" style="background-color: #FCDDB0;height: 50px;"></div>
+                <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #DEF5E5;height: 50px;"></div>
                     <div class="card-body">
-                        <h5 class="card-title">BTTE-EET</h5>
-                        <p class="card-text">BTTE Electrical Engineering Technology </p>
-                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EET}}</a><br>
-                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EET}}</a>
+                    <h5 class="card-title">BSEE</h5>
+                    <p class="card-text">Bachelor of Science in Electrical Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Electrical Engineering' %}" >Clearance Forms:&nbsp; {{cBSEE}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Electrical Engineering' %}" >Graduation Forms:&nbsp; {{gBSEE}}</a>
                     </div>
                 </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #B3FFAE;height: 50px;"></div>
+                <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #FFACC7;height: 50px;"></div>
                     <div class="card-body">
-                      <h5 class="card-title">BTTE-EsET</h5>
-                      <p class="card-text">BET Electronics Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EsET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EsET}}</a>
+                    <h5 class="card-title">BSME</h5>
+                    <p class="card-text">Bachelor of Science in Mechanical Engineering</p>
+                    <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Mechanical Engineering'%}" >Clearance Forms:&nbsp; {{cBSME}}</a><br>
+                    <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Mechanical Engineering' %}" >Graduation Forms:&nbsp; {{gBSME}}</a>
                     </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #FF7D7D;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BTTE-MPET</h5>
-                      <p class="card-text">BTTE Mechanical & Production Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_MPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_MPET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #FFE1E1;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BTTE-PPET</h5>
-                      <p class="card-text">BTTE Powerplant Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_PPET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_PPET}}</a>
-                    </div>
-                  </div>
-                  <div class="card d-none d-md-block">
-                    <div class="card-course-header" style="background-color: #ADCF9F;height: 50px;"></div>
-                    <div class="card-body">
-                      <h5 class="card-title">BT-AET</h5>
-                      <p class="card-text">BT Automotive Engineering Technology</p>
-                      <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_AET}}</a><br>
-                      <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_AET}}</a>
-                    </div>
-                  </div>
+                </div>
                 </div>
             </div>
-     
-          <!-- THIRD PAGE -->
-          <div class="carousel-item">
-            <div class="cards-wrapper">
-            <div class="card">
-                <div class="card-course-header" style="background-color: #A9AF7E;height: 50px;"></div>
-                <div class="card-body">
-                    <h5 class="card-title">BTTE-CP</h5>
-                    <p class="card-text">BTTE-Computer Programming </p>
-                    <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Programming' %}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
-                    <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Programming' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
-                </div>
-            </div>
-            <div class="card d-none d-md-block">
-                <div class="card-course-header" style="background-color: #F2E7D5;height: 50px;"></div>
-                <div class="card-body">
-                  <h5 class="card-title">BTTE-E</h5>
-                  <p class="card-text">BTTE-Electrical</p>
-                  <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical' %}" >Clearance Forms:&nbsp; {{cBTTE_E}}</a><br>
-                  <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical' %}" >Graduation Forms:&nbsp; {{gBTTE_E}}</a>
-                </div>
-            </div>
-            <div class="card d-none d-md-block">
-                <div class="card-course-header" style="background-color: #7743DB;height: 50px;"></div>
-                <div class="card-body">
-                  <h5 class="card-title">BSCE</h5>
-                  <p class="card-text">Bachelor of Science in Civil Engineering</p>
-                  <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Civil Engineering'%}" >Clearance Forms:&nbsp; {{cBSCE}}</a><br>
-                  <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Civil Engineering' %}" >Graduation Forms:&nbsp; {{gBSCE}}</a>
-                </div>
-            </div>
-              <div class="card d-none d-md-block">
-                <div class="card-course-header" style="background-color: #DEF5E5;height: 50px;"></div>
-                <div class="card-body">
-                  <h5 class="card-title">BSEE</h5>
-                  <p class="card-text">Bachelor of Science in Electrical Engineering</p>
-                  <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Electrical Engineering' %}" >Clearance Forms:&nbsp; {{cBSEE}}</a><br>
-                  <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Electrical Engineering' %}" >Graduation Forms:&nbsp; {{gBSEE}}</a>
-                </div>
-              </div>
-              <div class="card d-none d-md-block">
-                <div class="card-course-header" style="background-color: #FFACC7;height: 50px;"></div>
-                <div class="card-body">
-                  <h5 class="card-title">BSME</h5>
-                  <p class="card-text">Bachelor of Science in Mechanical Engineering</p>
-                  <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Mechanical Engineering'%}" >Clearance Forms:&nbsp; {{cBSME}}</a><br>
-                  <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Mechanical Engineering' %}" >Graduation Forms:&nbsp; {{gBSME}}</a>
-                </div>
-              </div>
+        </div>
+                <!-- CONTROLS (PREVIOUS AND NEXT) -->
+                <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls1" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </div>
-            <!-- CONTROLS (PREVIOUS AND NEXT) -->
-            <a class="carousel-control-prev" href="#carouselExampleControls1" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls1" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
+
+    <!--DISPLAY WHEN SCREEN IN MD SIZE-->
+    <div class="d-xl-none d-xxl-none d-md-block d-sm-none d-xs-none" id ="md_sizedisplay">
+        <div class="container-fluid" id="carousel"> 
+            <div id="carouselExampleControlsmd" class="carousel slide " data-interval="false">
+                <div class="carousel-inner">
+
+                <!-- FIRST PAGE -->
+                <div class="carousel-item active">
+                    <div class="cards-wrapper">
+                    <div class="card" >
+                    <div class="card-course-header" style="background-color: #0a216a;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BSIE-ICT</h5>
+                            <p class="card-text">BSIE Information & Communication Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Information and Communication Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_ICT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Information and Communication Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_ICT}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-md-block">
+                    <div class="card-course-header" style="background-color: #757b75;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BSIE-IA</h5>
+                        <p class="card-text">BSIE Industrial Arts</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Industrial Arts' %}" >Clearance Forms:&nbsp; {{cBSIE_IA}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Industrial Arts' %}" >Graduation Forms:&nbsp; {{gBSIE_IA}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-md-block">
+                    <div class="card-course-header" style="background-color: #333333;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BGT-ART</h5>
+                        <p class="card-text">BGT Architecture Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BGT-Architecture Technology'%}" >Clearance Forms:&nbsp; {{cBGT_ART}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BGT-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBGT_ART}}</a>
+                    </div>
+                    </div>
+                    <div class="card d-md-block">
+                        <div class="card-course-header" style="background-color: green;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BET-CT</h5>
+                        <p class="card-text">BET Civil Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Civil Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Civil Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+                        </div>
+                    </div> 
+                    </div>
+                </div>
+
+                <!-- SECOND PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #c57e7e;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-ET</h5>
+                            <p class="card-text">BET Electrical Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electrical Technology'%}" >Clearance Forms:&nbsp; {{cBET_ET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electrical Technology' %}" >Graduation Forms:&nbsp; {{gBET_ET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #8d6b6b;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-EsET</h5>
+                            <p class="card-text">BET Electronics Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_EsET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_EsET}}</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-course-header" style="background-color: #7ec1c5;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-CoET</h5>
+                            <p class="card-text">BET Computer Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Computer Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_CoET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_CoET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #ae6889;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-MT</h5>
+                            <p class="card-text">BET Mechanical & Production Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THIRD PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #bb3775;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-PPT</h5>
+                            <p class="card-text">BET Powerplant Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #c74520;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-CET</h5>
+                            <p class="card-text">BT Civil Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Civil Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #c75b20;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-CoET</h5>
+                            <p class="card-text">BT Computer Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_CoET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_CoET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #829460;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-EET</h5>
+                            <p class="card-text">BT Electrical Engineering Technology </p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EET}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+
+                <!-- FOURTH PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card">
+                            <div class="card-course-header" style="background-color: #f0d715;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-EsET</h5>
+                            <p class="card-text">BT Electronics Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_EsET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_EsET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #803622;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-MPET</h5>
+                            <p class="card-text">BT Mecahnical & Production Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_MPET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_MPET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #019267;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BT-PPET</h5>
+                            <p class="card-text">BT Powerplant Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBT_PPET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_PPET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #e31f41;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">MPET</h5>
+                            <p class="card-text">Mechanical & Production Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_MPET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_MPET}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIFTH PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #000000;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">PPET</h5>
+                            <p class="card-text">Powerplant Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='Powerplant Engineering Technology'%}" >Clearance Forms:&nbsp; {{c_PPET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{g_PPET}}</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-course-header" style="background-color: #E5D9B6;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-CT</h5>
+                            <p class="card-text">BET-Construction Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Construction Technology' %}" >Clearance Forms:&nbsp; {{cBET_CT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Construction Technology' %}" >Graduation Forms:&nbsp; {{gBET_CT}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #FFE15D;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-MT</h5>
+                            <p class="card-text">BET-Mechanical Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Mechanical Technology'%}" >Clearance Forms:&nbsp; {{cBET_MT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Mechanical Technology' %}" >Graduation Forms:&nbsp; {{gBET_MT}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #EF9A53;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-AT</h5>
+                            <p class="card-text">BET-Automotive Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Automotive Technology' %}" >Clearance Forms:&nbsp; {{cBET_AT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Automotive Technology' %}" >Graduation Forms:&nbsp; {{gBET_AT}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIXTH PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #863A6F;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BET-PPT</h5>
+                            <p class="card-text">BET-Power Plant Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BET-Power Plant Technologyy'%}" >Clearance Forms:&nbsp; {{cBET_PPT}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BET-Power Plant Technology' %}" >Graduation Forms:&nbsp; {{gBET_PPT}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #DC3535;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BSIE-HE</h5>
+                            <p class="card-text">BSIE-Home Economics</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Home Economics'%}" >Clearance Forms:&nbsp; {{BSIE_HE}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Home Economics' %}" >Graduation Forms:&nbsp; {{BSIE_HE}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- CONTROLS (PREVIOUS AND NEXT) -->
+                <a class="carousel-control-prev" href="#carouselExampleControlsmd" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControlsmd" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    
+
+    <!--SECOND ROW-->
+
+        <!--COURSE CARDS-->
+        <div class="container-fluid" id="carousel">
+            <div id="carouselExampleControlsmd2" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+
+                <!-- FIRST PAGE -->
+
+                <div class="carousel-item active">
+                    <div class="cards-wrapper">
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #5ecfe8;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BSIE-AET</h5>
+                            <p class="card-text">BSIE Automotive Engineering Technology </p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Automotive Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_AET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_AET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #F0FF42;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BSIE-MPET</h5>
+                            <p class="card-text">BSIE Mechanical & Producation Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBSIE_MPET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BSIE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBSIE_MPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #FFD372;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BTTE-ART</h5>
+                            <p class="card-text">BTTE Architecture Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Architecture Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_ART}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Architecture Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_ART}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                    <div class="card-course-header" style="background-color: #FF8787;height: 50px;"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">BTTE-AET</h5>
+                        <p class="card-text">BTTE Automotive Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_AET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_AET}}</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- SECOND PAGE -->
+                <div class="carousel-item">
+                    <div class="cards-wrapper">
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #FD841F;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BTTE-CET</h5>
+                            <p class="card-text">BTTE Civil Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Civil Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_CET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Civil Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #781C68;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BTTE-CoET</h5>
+                            <p class="card-text">BTTE Computer Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_CoET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_CoET}}</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-course-header" style="background-color: #FCDDB0;height: 50px;"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">BTTE-EET</h5>
+                                <p class="card-text">BTTE Electrical Engineering Technology </p>
+                                <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EET}}</a><br>
+                                <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EET}}</a>
+                            </div>
+                        </div>
+                        <div class="card d-none d-md-block">
+                            <div class="card-course-header" style="background-color: #B3FFAE;height: 50px;"></div>
+                            <div class="card-body">
+                            <h5 class="card-title">BTTE-EsET</h5>
+                            <p class="card-text">BET Electronics Engineering Technology</p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electronics Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_EsET}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electronics Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_EsET}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+            <!-- THIRD PAGE -->
+            <div class="carousel-item">
+                <div class="cards-wrapper">
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FF7D7D;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-MPET</h5>
+                        <p class="card-text">BTTE Mechanical & Production Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Mechanical & Production Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBTTE_MPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Mechanical & Production Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_MPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FFE1E1;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-PPET</h5>
+                        <p class="card-text">BTTE Powerplant Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Powerplant Engineering Technology' %}" >Clearance Forms:&nbsp; {{cBTTE_PPET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Powerplant Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBTTE_PPET}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #ADCF9F;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BT-AET</h5>
+                        <p class="card-text">BT Automotive Engineering Technology</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BT-Automotive Engineering Technology'%}" >Clearance Forms:&nbsp; {{cBT_AET}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BT-Automotive Engineering Technology' %}" >Graduation Forms:&nbsp; {{gBT_AET}}</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-course-header" style="background-color: #A9AF7E;height: 50px;"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">BTTE-CP</h5>
+                            <p class="card-text">BTTE-Computer Programming </p>
+                            <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Computer Programming' %}" >Clearance Forms:&nbsp; {{cBTTE_CP}}</a><br>
+                            <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Computer Programming' %}" >Graduation Forms:&nbsp; {{gBTTE_CP}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOURTH PAGE -->
+            <div class="carousel-item">
+                <div class="cards-wrapper">
+                    
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #F2E7D5;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BTTE-E</h5>
+                        <p class="card-text">BTTE-Electrical</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BTTE-Electrical' %}" >Clearance Forms:&nbsp; {{cBTTE_E}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BTTE-Electrical' %}" >Graduation Forms:&nbsp; {{gBTTE_E}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #7743DB;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BSCE</h5>
+                        <p class="card-text">Bachelor of Science in Civil Engineering</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Civil Engineering'%}" >Clearance Forms:&nbsp; {{cBSCE}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Civil Engineering' %}" >Graduation Forms:&nbsp; {{gBSCE}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #DEF5E5;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BSEE</h5>
+                        <p class="card-text">Bachelor of Science in Electrical Engineering</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Electrical Engineering' %}" >Clearance Forms:&nbsp; {{cBSEE}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Electrical Engineering' %}" >Graduation Forms:&nbsp; {{gBSEE}}</a>
+                        </div>
+                    </div>
+                    <div class="card d-none d-md-block">
+                        <div class="card-course-header" style="background-color: #FFACC7;height: 50px;"></div>
+                        <div class="card-body">
+                        <h5 class="card-title">BSME</h5>
+                        <p class="card-text">Bachelor of Science in Mechanical Engineering</p>
+                        <a href="{% url 'registrar_dashboard_clearance_list' id='BS-Mechanical Engineering'%}" >Clearance Forms:&nbsp; {{cBSME}}</a><br>
+                        <a href="{% url 'registrar_dashboard_graduation_list' id='BS-Mechanical Engineering' %}" >Graduation Forms:&nbsp; {{gBSME}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <!-- CONTROLS (PREVIOUS AND NEXT) -->
+                <a class="carousel-control-prev" href="#carouselExampleControlsmd2" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControlsmd2" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
     </div>
 
