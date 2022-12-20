@@ -179,11 +179,11 @@ Adviser:
         background-color: #d3324d;
     }
     
-    table {
+    /* table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
-    }
+    } */
     
     .modal-body {
         background: #e0e0e0;
@@ -244,7 +244,8 @@ Adviser:
         width: 22%;
     }
     th.sched,
-    th.sched1 {40%;
+    th.sched1 {
+        width: 40%;
     }
     
     a.float+div.label-container {
@@ -529,6 +530,34 @@ Adviser:
         margin: 0px auto;
         box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
         padding: 30px;
+    }
+    }
+    @media screen and (max-width: 450px) {
+    table, td {
+        display: block;
+        width: 100%;
+    }
+    
+    th {
+        display: none;
+    }
+    #faculty1,
+    #faculty2,
+    #faculty3,
+    #faculty4,
+    #faculty5,
+    #faculty6,
+    #faculty7,
+    #faculty8,
+    #faculty9,
+    #faculty10,
+    #addfaculty1,
+    #addfaculty2,
+    #addfaculty3,
+    #addfaculty4,
+    #addfaculty5 {
+        background-color: #c51d3a;
+        color:#dedede
     }
     }
   
