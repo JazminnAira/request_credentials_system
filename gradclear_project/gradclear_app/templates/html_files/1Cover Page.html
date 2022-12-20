@@ -55,7 +55,7 @@ Adviser:
         border: 1px solid rgba( 255, 255, 255, 0.18 );
         padding-right: 40px;
         padding-bottom: 90px;
-        margin-top: 50px;
+        margin-top: 10vh;
     }
 
     #maincontent_01{
@@ -537,6 +537,17 @@ Adviser:
             line-height: 5px;
         }
     }
+
+    @media screen and (max-height: 670px){
+        #mid_div{
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+
+        body{
+            height: 83vh;
+        }
+    }
 </style>
 
 <body>
@@ -613,7 +624,7 @@ Adviser:
     </div>
 
     <!--MAIN SCREEN-->
-    <div class="container p-sm-4 mt-5 container-1" id="signup_login_container">
+    <div class="container mt-4 container-1" id="signup_login_container">
         <div class="row container-fluid" id="mid_div" > 
             <div class="col-sm-7 " id="title_hide">
                 <!-- HEADINGS  -->
