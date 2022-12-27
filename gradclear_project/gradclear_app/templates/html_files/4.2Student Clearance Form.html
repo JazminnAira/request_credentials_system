@@ -35,7 +35,133 @@ Adviser:
 </head>
 
 <style>
+    a.float+div.label-container {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s ease;
+    }
     
+    a.float:hover+div.label-container {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    a.float:hover {
+        color: #fff;
+    }
+
+    button {
+        background-color: #424242;
+        border-radius: 10px;
+    }
+
+    h3 {
+        color: #ffff;
+        background-color: #c51d3a;
+        padding: 5px;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    label {
+        width: 200px;
+        color: #757575;
+        margin-right: 10px;
+        font-size: 16px;
+        display: inline-block;
+        margin: 5px 10px 5px 0;
+    }
+    
+    p {
+        color: #757575;
+        font-size: 16px;
+    }
+
+    ul {
+        position: fixed;
+        left: 0px;
+        padding-bottom: 20px;
+        bottom: 50px;
+        z-index: 100;
+    }
+    
+    ul li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
+    
+    ul li a {
+        background-color: #757575;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #999;
+        width: 60px;
+        height: 60px;
+        display: block;
+    }
+    
+    ul:hover {
+        visibility: visible!important;
+        opacity: 1!important;
+    }
+
+    .fa-ellipsis-v,
+    .fa-print,
+    .fa-home {
+        color: white;
+        font-size: 30px;
+        padding-top: 15px;
+    }
+
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        left: 40px;
+        background-color: #c51d3a;
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 2px 2px 3px #dedede;
+    }
+
+    .input-icon {
+        position: relative;
+    }
+    
+    .input-icon>i {
+        position: absolute;
+        display: block;
+        transform: translate(0, -50%);
+        top: 50%;
+        pointer-events: none;
+        width: 25px;
+        text-align: center;
+        font-style: normal;
+    }
+    
+    .input-icon>input {
+        padding-left: 25px;
+        padding-right: 0;
+    }
+    
+    .modal-body {
+        background: #e0e0e0;
+        border: 1px solid #000000;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 30px;
+    }
+    
+    .modal-footer {
+        background: #424242;
+    }
+    
+    .modal-header {
+        background-color: #c51d3a;
+    }
+
     .myDiv {
         max-width: 900px;
         width: 100%;
@@ -46,9 +172,12 @@ Adviser:
         padding: 30px;
         /* -webkit-print-color-adjust: exact; */
     }
-    
-    #footer {
-        background: #424242;
+
+    .note {
+        background-color: #e1a19d;
+        padding: 5px;
+        text-align: left;
+        font-size: 16px;
     }
     
     #backtotop_btn_42 {
@@ -90,34 +219,11 @@ Adviser:
         opacity: 1;
         visibility: visible;
     }
-    
-    @media print {
-        #backtotop_btn_42 {
-            display: none;
-        }
+
+    #button:hover {
+        background-color: #616161;
     }
-    
-    .note {
-        background-color: #e1a19d;
-        padding: 5px;
-        text-align: left;
-        font-size: 16px;
-    }
-    
-    h3 {
-        color: #ffff;
-        background-color: #c51d3a;
-        padding: 5px;
-        text-align: center;
-        font-size: 16px;
-    }
-    
-    label {
-        width: 240px;
-        display: inline-block;
-        margin: 5px 10px 5px 0;
-    }
-    
+
     #course_42,
     #receiptnum_box_42,
     #ln_box_42,
@@ -127,48 +233,16 @@ Adviser:
         background-color: #e7dfe4;
         border: 1px solid #ccc9c9;
     }
-    
-    button {
-        background-color: #424242;
-        border-radius: 10px;
-    }
-    
-    #button:hover {
-        background-color: #616161;
-    }
-    
-    .modal-body {
-        background: #e0e0e0;
-        border: 1px solid #000000;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 30px;
-    }
-    
-    .modal-footer {
+
+    #footer {
         background: #424242;
     }
-    
-    .modal-header {
-        background-color: #c51d3a;
+
+    #home_btn:hover {
+        color: white;
+        background-color: #d3324d;
     }
-    
-    h6 {
-        text-align: center;
-        color: #ffff;
-    }
-    
-    label {
-        width: 200px;
-        color: #757575;
-        margin-right: 10px;
-        font-size: 16px;
-    }
-    
-    p {
-        color: #757575;
-        font-size: 16px;
-    }
-    
+
     #submit_btn_42 {
         background-color: #424242;
         border-radius: 10px;
@@ -177,167 +251,6 @@ Adviser:
     #submit_btn_42:hover,
     button:hover {
         background-color: #616161;
-    }
-    
-    .input-icon {
-        position: relative;
-    }
-    
-    .input-icon>i {
-        position: absolute;
-        display: block;
-        transform: translate(0, -50%);
-        top: 50%;
-        pointer-events: none;
-        width: 25px;
-        text-align: center;
-        font-style: normal;
-    }
-    
-    .input-icon>input {
-        padding-left: 25px;
-        padding-right: 0;
-    }
-    
-    a.float+div.label-container {
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 0s, opacity 0.5s ease;
-    }
-    
-    a.float:hover+div.label-container {
-        visibility: visible;
-        opacity: 1;
-    }
-    
-    a.float:hover {
-        color: #fff;
-    }
-    
-    .label-container {
-        position: fixed;
-        bottom: 30px;
-        left: 105px;
-        display: table;
-        visibility: hidden;
-    }
-    
-    .label-text {
-        color: #fff;
-        background: rgba(51, 51, 51, 0.5);
-        display: table-cell;
-        vertical-align: middle;
-        padding: 10px;
-        border-radius: 3px;
-    }
-    
-    .label-arrow {
-        display: table-cell;
-        vertical-align: middle;
-        color: #424242;
-        opacity: 0.5s;
-        right: 10;
-    }
-    
-    .float {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        bottom: 20px;
-        left: 40px;
-        background-color: #c51d3a;
-        color: #fff;
-        border-radius: 50px;
-        text-align: center;
-        box-shadow: 2px 2px 3px #dedede;
-    }
-    
-    .my-float:nth-child(1) {
-        background: #c51d3a;
-    }
-    
-    .my-float:after {
-        animation: shine 3s ease-in-out infinite;
-        animation-fill-mode: forwards;
-        content: "";
-        position: absolute;
-        top: -110%;
-        left: -210%;
-        width: 200%;
-        height: 200%;
-        opacity: 0;
-        transform: rotate(30deg);
-        background: rgba(255, 255, 255, 0.13);
-        background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0) 100%);
-    }
-    
-    .my-float:active:after {
-        opacity: 0;
-    }
-    
-    #print_table,
-    #print_tr {
-        border: 1px solid black;
-        text-align: center;
-        width: 100%;
-    }
-    
-    #print_td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 20%;
-        padding-top: 1px;
-        padding-bottom: 1px;
-    }
-    
-    #print_td2 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 80%;
-        padding-top: 1px;
-        padding-bottom: 1px;
-    }
-    
-    #print_td3 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 20%;
-        padding: 3px;
-        font-style: bold;
-    }
-    
-    #print_clearance {
-        align-content: center;
-        width: 100%;
-    }
-    
-    #print_td4 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 70%;
-        padding: 3px;
-        font-style: bold;
-    }
-    
-    #print_td5 {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-        width: 10%;
-        padding: 3px;
-        font-style: bold;
-    }
-    
-    #print_td6 {
-        background-color: black;
-        border: 1px solid black;
-        border-collapse: collapse;
-        color: white;
-        -webkit-print-color-adjust: exact;
     }
     
     @keyframes shine {
@@ -356,53 +269,7 @@ Adviser:
             transition-property: left, top, opacity;
         }
     }
-    
-    .my-float {
-        font-size: 24px;
-        margin-top: 18px;
-    }
-    
-    @media print {
-        .float,
-        #submit_btn_42 {
-            display: none;
-        }
-    }
-    
-    ul {
-        position: fixed;
-        left: 0px;
-        padding-bottom: 20px;
-        bottom: 50px;
-        z-index: 100;
-    }
-    
-    ul li {
-        list-style: none;
-        margin-bottom: 10px;
-    }
-    
-    ul li a {
-        background-color: #757575;
-        color: #FFF;
-        border-radius: 50px;
-        text-align: center;
-        box-shadow: 2px 2px 3px #999;
-        width: 60px;
-        height: 60px;
-        display: block;
-    }
-    
-    ul:hover {
-        visibility: visible!important;
-        opacity: 1!important;
-    }
-    
-    .my-float {
-        font-size: 24px;
-        margin-top: 18px;
-    }
-    
+
     @keyframes bot-to-top {
         0% {
             bottom: -40px
@@ -440,32 +307,31 @@ Adviser:
             transform: rotate(0deg);
         }
     }
+    @media print {
+        #backtotop_btn_42 {
+            display: none;
+        }
+    }
     
-    .fa-ellipsis-v,
-    .fa-print,
-    .fa-home {
-        color: white;
-        font-size: 30px;
-        padding-top: 15px;
+    @media print {
+        .float,
+        #submit_btn_42 {
+            display: none;
+        }
     }
-    #home_btn:hover {
-        color: white;
-        background-color: #d3324d;
-    }
-
+    
     @media screen and (max-width: 700px) {
-    .myDiv {
-        max-width: 900px;
-        width: 100%;
-        background: #e0e0e0;
-        border: 1px solid #000000;
-        margin: 0px auto;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 30px;
-        /* -webkit-print-color-adjust: exact; */
+        .myDiv {
+            max-width: 900px;
+            width: 100%;
+            background: #e0e0e0;
+            border: 1px solid #000000;
+            margin: 0px auto;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+            padding: 30px;
+            /* -webkit-print-color-adjust: exact; */
+        }
     }
-    }
-
 </style>
 
 <body>

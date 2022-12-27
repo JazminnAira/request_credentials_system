@@ -42,35 +42,20 @@ Adviser:
 </head>              
 
 <style>
-    body{
-        height: 85vh;
-    }
-
-    #mid_div{
-        background: rgba( 255, 255, 255, 0.35 );
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur( 4px );
-        -webkit-backdrop-filter: blur( 4px );
-        border-radius: 10px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
-        padding-right: 40px;
-        padding-bottom: 90px;
-        margin-top: 10vh;
-    }
-
-    #maincontent_01{
-        overflow-y: unset;
-    }
-
-    #person_01{
-        float: center;
-    }
-
     * {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
-    
-    body {
+
+    a {
+        color: black;
+    }
+
+    a:hover {
+        color: #c51d3a;
+    }
+
+    body{
+        height: 85vh;
         background-image:url("{% static 'Media/tup_bg.png' %}");
         background-repeat: no-repeat;
         background-position: center center;
@@ -82,112 +67,6 @@ Adviser:
         clear: both;  
     }
 
-    .normal {
-    background-color: #dedede;
-    }
-
-    .active {
-    background-color: #747474;
-    }
-
-    h1 {
-        font-size: 60px;
-        margin-top: 80px;
-    }
-    
-    .i2{
-        color: #fff;
-    }
-
-    .i2:hover{
-        color: #d3324d;
-        border: #d3324d;
-    
-    }
-
-    .img-fluid {
-        margin-top: 50px;
-        margin-bottom: 30px;
-    }
-    
-    .btn-1 {
-        margin: 0px 0px 0px 10px;
-        color: white;
-        background-color: #c51d3a;
-        border: #c51d3a;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        padding: 15px;
-        width: 19%;
-    }
-    
-    .btn-1:hover {
-        color: #dedede;
-        background-color: #d3324d;
-        border: #d3324d;
-    }
-    
-    .btn-2 {
-        color: #ffff;
-        background-color: #424242;
-        margin: 0px 0px 0px 10px;
-        border-radius: 10px;
-        border: #424242;
-    }
-    
-    .btn-2:hover {
-        color: #ffff;
-        background-color: #616161;
-        border: #616161;
-    }
-    
-    .btn-3 {
-        margin: 0px 0px 0px 15px;
-        color: black;
-        border-radius: 10px;
-        background-color: #dedede;
-        width: 25%;
-    }
-    
-    .btn-3:hover {
-        color: black;
-        background-color: #f5f0f6;
-    }
-    
-    .btn-4 {
-        color: white;
-        font-size: 20px;
-        padding: 0 50 0 0;
-    }
-    
-    .btn-4:hover {
-        color: #c51d3a;
-        text-decoration: underline;
-        transition: 0.5s;
-    }
-    
-    .btn-5 {
-        color: white;
-        background-color: #c51d3a;
-        width: 25%;
-    }
-    
-    .btn-5:hover {
-        color: white;
-        background-color: #d3324d;
-    }
-
-    .btn-6 {
-        color: white;
-        background-color: #424242;
-        width: 25%;
-    }
-    
-    .btn-6:hover {
-        color: white;
-        background-color: #616161;
-    }
-    
     footer {
         position: fixed;
         bottom: 0;
@@ -195,27 +74,12 @@ Adviser:
         text-align: center;
         color: white;
     }
-    
-    .modal-footer {
-        background-color: #c51d3a;
+
+    h1 {
+        font-size: 60px;
+        margin-top: 80px;
     }
-    
-    .modal-1 {
-        background-color: #424242;
-        color: white;
-    }
-    
-    .input-group-addon,
-    .input-group-addon:hover {
-        border: 1px;
-        padding: 5px;
-        background-color: #dedede;
-    }
-    
-    i {
-        color: black;
-    }
-    
+
     h6 {
         overflow: hidden;
         text-align: center;
@@ -242,162 +106,9 @@ Adviser:
         left: 0.5em;
         margin-right: -50%;
     }
-    
-    .icon {
-        padding: 10px;
-        min-width: 40px;
-    }
-    
-    .input-field {
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-    }
-    
-    .modal-body {
-        max-height: calc(500vh - 850px);
-        overflow-y: auto;
-    }
-    
-    .close_btn {
-        border: 0 none !important;
-        color: #fff7cc;
-        background-color: #424242;
-    }
-    
-    p {
-        border-color: red;
-        color: red;
-        font-size: 13px;
-    }
-    
-    #displink:hover {
-        color: #c51d3a;
-    }
-    
-    #displink {
+
+    i {
         color: black;
-        font-style: italic;
-    }
-    
-    #maincontent_01 {
-        background-color: #dedede;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        padding-top: 40px;
-        padding-left: 30px;
-        padding-right: 30px;
-        border: 1px solid;
-    }
-    
-    #des_01 {
-        display: inline;
-        text-align: center;
-        line-height: 25px;
-        font-size: 20px;
-        letter-spacing: -1px;
-    }
-    
-    #person_01 {
-        font-size: 20px;
-        padding-top: 40px;
-        padding: 40px 15px 0 15px;
-        margin: 0 54.5px 0 17.5px;
-    }
-    
-    #form_01 {
-        padding-top: 50px;
-        text-align: center;
-        padding: 50px 15px 0 15px;
-    }
-    
-    #officername_01 {
-        margin: 0 0 0 6px;
-        display: inline;
-        width: 6px;
-        padding: 0 0 0 3px;
-        font-size: 20px;
-        text-decoration: none;
-    }
-    
-    #nametitle_01 {
-        font-size: 25px;
-        display: inline;
-        overflow-wrap: break-word;
-    }
-    
-    #info_cir {
-        color: black;
-        text-shadow: none;
-    }
-    
-    .modal-footer1 {
-        background-color: #c51d3a;
-    }
-    
-    #main {
-        margin-left: 20px;
-        margin-right: 20px;
-        overflow-wrap: break-word;
-    }
-    
-    #title1_lbl {
-        background-color: #dedede;
-    }
-    
-    #location_lbl {
-        padding-top: 35px;
-        padding-bottom: 20px;
-    }
-    
-    #mail_lbl {
-        padding-top: 25px;
-        padding-bottom: 20px;
-    }
-    
-    #facebook_lbl {
-        padding-top: 25px;
-        padding-bottom: 80px;
-    }
-    
-    a {
-        color: black;
-    }
-    
-    #info_div {
-        padding-left: 50px;
-    }
-    
-    #contact_phonelogo {
-        color: black;
-        text-shadow: none;
-    }
-    
-    a:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-facebook-square:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-map-marker:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-envelope:hover {
-        color: #c51d3a;
-    }
-    #navbar {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: transparent;
-        font-weight: bolder;
-        font-size: 20px;
-        text-align:center;
     }
 
     li {
@@ -421,9 +132,8 @@ Adviser:
         background-color: #d3324d; 
     }
 
-    #navbar :hover:not(.active) {
-        color: white;
-        background-color: #d3324d; 
+    .active {
+        background-color: #747474;
     }
 
     .active {
@@ -440,28 +150,174 @@ Adviser:
         background-color: #616161;
     }
     
+    .btn-3 {
+        margin: 0px 0px 0px 15px;
+        color: black;
+        border-radius: 10px;
+        background-color: #dedede;
+        width: 25%;
+    }
+    
+    .btn-3:hover {
+        color: black;
+        background-color: #f5f0f6;
+    }
+    
+    .btn-5 {
+        color: white;
+        background-color: #c51d3a;
+        width: 25%;
+    }
+    
+    .btn-5:hover {
+        color: white;
+        background-color: #d3324d;
+    }
+
+    .btn-6 {
+        color: white;
+        background-color: #424242;
+        width: 25%;
+    }
+    
+    .btn-6:hover {
+        color: white;
+        background-color: #616161;
+    }
+
+    .fa-facebook-square:hover {
+        color: #c51d3a;
+    }
+
+    .fa-envelope:hover {
+        color: #c51d3a;
+    }
+    
+    .fa-map-marker:hover {
+        color: #c51d3a;
+    }
+    
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+    
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .modal-body {
+        max-height: calc(500vh - 850px);
+        overflow-y: auto;
+    }
+
+    .modal-footer1 {
+        background-color: #c51d3a;
+    }
+
+    .modal-footer {
+        background-color: #c51d3a;
+    }
+
+    #contact_phonelogo {
+        color: black;
+        text-shadow: none;
+    }
+
+    #des_01 {
+        display: inline;
+        text-align: center;
+        line-height: 25px;
+        font-size: 20px;
+        letter-spacing: -1px;
+    }
+
+    #info_cir {
+        color: black;
+        text-shadow: none;
+    }
+
+    #main {
+        margin-left: 20px;
+        margin-right: 20px;
+        overflow-wrap: break-word;
+    }
+
+    #maincontent_01{
+        overflow-y: unset;
+        background-color: #dedede;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        padding-top: 40px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border: 1px solid;
+    }
+
+    #mid_div{
+        background: rgba( 255, 255, 255, 0.35 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 4px );
+        -webkit-backdrop-filter: blur( 4px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        padding-right: 40px;
+        padding-bottom: 90px;
+        margin-top: 10vh;
+    }
+
+    #navbar {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: transparent;
+        font-weight: bolder;
+        font-size: 20px;
+        text-align:center;
+    }
+
+    #navbar :hover:not(.active) {
+        color: white;
+        background-color: #d3324d; 
+    }
+
+    #person_01{
+        float: center;
+        font-size: 20px;
+        padding-top: 40px;
+        padding: 40px 15px 0 15px;
+        margin: 0 54.5px 0 17.5px;
+    }
+    
+    #officername_01 {
+        margin: 0 0 0 6px;
+        display: inline;
+        width: 6px;
+        padding: 0 0 0 3px;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
     #signlog_container{
         margin-top: 80px;
     }
-
+    
     /* SCREEN RESPONSIVENESS */
     @media screen and (max-width: 690px){
-        #signup_login_container{
-            margin: 0;
-        }
-
         #mid_div{
             width: 97vw;
+        }
+        
+        #signup_login_container{
+            margin: 0;
         }
     }
     
     @media screen and (max-width: 600px){
-        #signup_login_container{
-            margin:0;
-            height: 90vh;
-            position: relative;
-        }
-        
         li{
             font-size: 0.7em;
         }
@@ -470,15 +326,25 @@ Adviser:
             display:none;
         }
 
+        #footer_bottom{
+            display: none;
+        }
+        
+        #oldstudentsignup_btn_01{
+            padding-top: 0.9em;
+            padding-bottom: 0.9em;
+        }
+
+        #signup_login_container{
+            margin:0;
+            height: 90vh;
+            position: relative;
+        }
+    
         #studentsignup_btn_01, #oldstudentsignup_btn_01, #alumnussignup_btn_01, #facultysignup_btn_01{
             height:65px;
             text-align: center;
             margin-top: 5px;
-        }
-
-        #oldstudentsignup_btn_01{
-            padding-top: 0.9em;
-            padding-bottom: 0.9em;
         }
 
         #studentsignup_btn_01, #alumnussignup_btn_01, #facultysignup_btn_01{
@@ -486,16 +352,9 @@ Adviser:
             padding-bottom: 1.3em;
         }
 
-        #footer_bottom{
-            display: none;
-        }
     }
 
     @media screen and (max-width: 450px){  
-        #signup_login_container{
-            margin-top: 0;
-        }
-        
         #mid_div{
             background: rgba( 255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
@@ -503,6 +362,20 @@ Adviser:
             width:97vw;
             padding-top: 2px;
             margin-top:10px;
+        }
+        
+        #subtitle_cover{
+            font-size: 20px;
+            margin-bottom:2px;
+        }
+
+        #signlog_container{
+            padding-top: 2px;
+            margin-top: 5px;
+        }  
+        
+        #signup_login_container{
+            margin-top: 0;
         }
         
         #title_cover{
@@ -515,15 +388,6 @@ Adviser:
         #title_hide{
             margin-top: 5px;
         }
-
-        #subtitle_cover{
-            font-size: 20px;
-            margin-bottom:2px;
-        }
-        #signlog_container{
-            padding-top: 2px;
-            margin-top: 5px;
-        }   
     }
 
     @media screen and (max-height: 850px){
@@ -537,15 +401,15 @@ Adviser:
             line-height: 5px;
         }
     }
-
+    
     @media screen and (max-height: 670px){
+        body{
+            height: 83vh;
+        }
+        
         #mid_div{
             margin-top: 20px;
             padding-bottom: 10px;
-        }
-
-        body{
-            height: 83vh;
         }
     }
 </style>

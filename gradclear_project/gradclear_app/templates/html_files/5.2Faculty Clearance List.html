@@ -45,6 +45,169 @@ Adviser:
 
 
 <style>
+    a {
+        font-style: italic;
+        color: #000;
+    }
+
+    a :hover {
+        color: #fff;
+    }
+
+    button {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
+    }
+    
+    button.list_tbl {
+        background-color: #c51d3a;
+    }
+
+    canvas #signature-pad {
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 40 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
+    }
+    
+    i {
+        padding-left: 10px;
+    }
+    
+    hr {
+        border-top: 2px solid black;
+    }
+    
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
+    }
+
+    html {
+        font-size: 1rem;
+    }
+
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    table{
+        min-width: max-content;
+    }
+
+    thead{
+         position: sticky;
+         top: 0px;
+    }
+
+    thead,td{
+         padding: 10px;
+    }
+
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+
+    .btn_save{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
+    }
+
+    .btn_save:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: whi;
+    }
+
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+
+    .closebtn:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    .highlight {
+        background-color:transparent;
+        animation: highlightRow 2s ease-in-out;
+    }
+
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+
+    .outer-wrapper{
+        margin: 20px;
+        border-radius: 5px;
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+
+    .signature_section{
+        height: 94vh;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+
     .table-icon {
         background-color: #dedede;
         color: #000;
@@ -55,25 +218,11 @@ Adviser:
         padding: 0%;
     }
 
-    #all_52:hover, #unapproveds_52:hover, #approveds_52:hover{
-        background-color: #c51d3a;
-        color: #fff;
+    .table_list {
+        transition: margin-right .5s;
+        padding: 16px;
     }
-    
-    .results tr[visible='false'],
-    .no-result {
-        display: none;
-    }
-    
-    .results tr[visible='true'] {
-        display: table-row;
-    }
-    
-    .counter {
-        padding: 8px;
-        color: #ccc;
-    }
-    
+
     .table-sortable th {
         cursor: pointer;
         table-layout: fixed;
@@ -95,6 +244,114 @@ Adviser:
     .table-sortable .th-sort-desc {
         background: rgba(0, 0, 0, 0.1);
     }
+
+    .table-wrapper{
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+
+    #approve_sig_btn{
+        background-color: #dedede;
+        color: black;
+    }
+
+    #approve_sig_btn:hover{
+        background-color: #dedede;
+        color: white;
+    }
+
+    #backtotop_btn_52 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+
+    #backtotop_btn_52::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_52:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_52:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_52.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #btn,
+    #open_signature,
+    #approve_sig_btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: #fff;
+    }
+    
+    #btn:hover,
+    #open_signature:hover,
+    #approve_sig_btn:hover {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: black;
+    }
+
+    #cancel_create:hover , #cancel_upload:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #dashboard_header_52 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+
+    #esign_attach_sig_btn{
+        background-color : #c51d3a;
+        color : white;
+    }
+
+    #esign_attach_sig_btn:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+    
+    #list_tbl_52 {
+        border-spacing: 0 5px;
+        width: 100%;
+        margin-bottom: 50px;
+        table-layout: auto; /* TO MAKE ROW FIT*/
+        border-collapse: separate;
+        margin-top: 20px;
+    }
+
+    #list_tbl_52 .absorbing-column {
+        width: 100%;
+        }
     
     #list_tbl_52 th.asc:after {
         display: inline;
@@ -120,86 +377,6 @@ Adviser:
         color: white;
     }
     
-    i {
-        padding-left: 10px;
-    }
-    
-    hr {
-        border-top: 2px solid black;
-    }
-    
-    h1 {
-        padding-left: 15px;
-        font-weight: bolder;
-    }
-    
-    a {
-        font-style: italic;
-        color: #000;
-    }
-    
-    p1 {
-        font-size: 30px;
-    }
-    
-    p2 {
-        font-size: 20px;
-        font-weight: bolder;
-    }
-    
-    #backtotop_btn_52 {
-        display: inline-block;
-        background-color: #E1A19D;
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        border-radius: 4px;
-        position: fixed;
-        bottom: 60px;
-        right: 10px;
-        transition: background-color .2s, opacity .2s, visibility .2s;
-        opacity: 0;
-        visibility: hidden;
-        z-index: 1000;
-    }
-    
-    #backtotop_btn_52::after {
-        content: "\f077";
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        font-size: 2em;
-        line-height: 50px;
-        color: #fff;
-    }
-    
-    #backtotop_btn_52:hover {
-        cursor: pointer;
-        background-color: #c51d3a;
-    }
-    
-    #backtotop_btn_52:active {
-        background-color: #555;
-    }
-    
-    #backtotop_btn_52.show {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    #list_tbl_52 {
-        
-        border-spacing: 0 5px;
-        width: 100%;
-        margin-bottom: 50px;
-        table-layout: auto; /* TO MAKE ROW FIT*/
-        border-collapse: separate;
-        margin-top: 20px;
-    }
-    #list_tbl_52 .absorbing-column {
-    width: 100%;
-    }
-    
     #list_tbl_52 td {
         border-width: 1px 0;
         border-color: black;
@@ -218,69 +395,9 @@ Adviser:
     }
     
     #list_tbl2_52 td {
-        border-width: 2px 0;}
-    
-    .tab {
-        text-decoration: none;
-        color: inherit;
-        padding: 7px 14px;
-        transition: opacity 0.3s;
-        display: inline-block;
-        border-radius: 3px;
-        margin-right: 10px;
-        margin-left: 20px;
-    }
-    
-    .tab:hover {
-        color: #c51d3a;
-    }
-    
-    .tab-content {
-        padding: 6px 12px;
-        min-height: 100px;
-        animation: fadeEffect 1s;
-        padding-bottom: 50px;
+        border-width: 2px 0;
     }
 
-    #table_main{
-        padding: 6px 15px;
-        min-height: 100px;
-        animation: fadeEffect 1s;
-        padding-bottom: 50px;
-    }
-    
-    a :hover {
-        color: #fff;
-    }
-    
-    #dashboard_header_52 {
-        padding-left: 50px;
-        padding-right: 50px;
-        padding: 0 50px 0 50px;
-        background-color: #636363;
-        padding-top: 5px;
-        text-align: center;
-    }
-    
-    #search_box_52 {
-        width: 54%;
-        border-radius: 30px;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin: 0 0 10px 6px;
-    }
-    
-    #search_btn_52 {
-        border-radius: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin: 0 0 10px 5px;
-    }
-    
-    #search_btn_52:hover {
-        color: #c51d3a;
-    }
-    
     #list_tbl_52 tbody tr:nth-child(even) {
         background-color: #dedede;
     }
@@ -309,139 +426,49 @@ Adviser:
         text-align: center;
     }
     
-    button {
-        border-radius: 10px;
-        background-color: #c51d3a;
-        color: white;
-    }
-    
-    button.list_tbl {
-        background-color: #c51d3a;
-    }
-    
-    #request_box_52 {
-        width: auto;
-        margin: 0 0 10px 5px;
-    }
-    
-    #schoolyear_box_52 {
-        margin: 0 0 10px 5px;
-    }
-    
-    #course_box_52 {
-        margin: 0 0 10px 5px;
-    }
-    
-    tr:hover td {
-        background-color: #636363;
-        color: #fff;
-    }
-    
-    footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        height: 40 px;
-        background: #424242;
-        color: white;
-        padding-top: 10px;
-    }
-    
-    #clearance_header_52,
-    #graduation_header_52 {
-        background-color: #c51d3a;
-    }
-    
-    .modal-body {
-        background: #e0e0e0;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 40px;
-    }
-    
-    h6 {
-        text-align: center;
-        color: #ffff;
-    }
-    .highlight {
-     background-color:transparent;
-    animation: highlightRow 2s ease-in-out;
-    }
-
-    @keyframes highlightRow {
-    0%  { background-color: red; }
-    100% { background-color: transparent; }
-    }
-
-    canvas #signature-pad {
-    background: #fff;
-    width: 100%;
-    height: 100%;
-    cursor: crosshair;
-    }
-
-    .signature_section{
-        height: 94vh;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        right: 0;
-        background-color: white;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-    }
-
-    .table_list {
-        transition: margin-right .5s;
-        padding: 16px;
-    }
-
-
- 
-
-    #btn,
-    #open_signature,
-    #approve_sig_btn {
-        border-radius: 10px;
-        background-color: #c51d3a;
-        color: #fff;
-    }
-    #btn:hover,
-    #open_signature:hover,
-    #approve_sig_btn:hover {
-        border-radius: 10px;
-        background-color: #c51d3a;
+    #open_signature:hover{
+        background-color : #d3324d;;
         color: black;
     }
-    table{
-       min-width: max-content;
+    
+    #search_box_52 {
+        width: 54%;
+        border-radius: 30px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
     }
-    thead{
-        position: sticky;
-        top: 0px;
+    
+    #search_btn_52 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
     }
-    thead,td{
-        padding: 10px;
+    
+    #search_btn_52:hover {
+        color: #c51d3a;
     }
 
-    .table-wrapper{
-        max-height: 600px;
-        overflow-y: scroll;
-        
-       
+    #table_main{
+        padding: 6px 15px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
     }
-   .outer-wrapper{
-    margin: 20px;
-    border-radius: 5px;
-   
-   }
 
-   html {
-    font-size: 1rem;
+    #upload_attach_sig_btn{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
     }
-  
+
+    #upload_attach_sig_btn:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: black;
+    }
+
     @include media-breakpoint-up(sm) {
         html {
             font-size: 1.2rem;
@@ -460,71 +487,15 @@ Adviser:
         }
     }
 
-    #esign_attach_sig_btn{
-        background-color : #c51d3a;
-        color : white;
+    @keyframes highlightRow {
+        0%  { background-color: red; }
+        100% { background-color: transparent; }
     }
 
-    #esign_attach_sig_btn:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #upload_attach_sig_btn{
-        background-color: #0f0d0d;
-        color: white;
-        border-color: white;
-    }
-
-    #upload_attach_sig_btn:hover{
-        background-color: #3b3b3b;
-        color: #c9c9c9;
-        border-color: black;
-    }
-
-    #approve_sig_btn{
-        background-color: #dedede;
-        color: black;
-    }
-
-    #approve_sig_btn:hover{
-        background-color: #dedede;
-        color: white;
-    }
-
-    .closebtn:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #open_signature:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #cancel_create:hover , #cancel_upload:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    .btn_save{
-        background-color: #0f0d0d;
-        color: white;
-        border-color: white;
-    }
-
-    .btn_save:hover{
-        background-color: #3b3b3b;
-        color: #c9c9c9;
-        border-color: whi;
-    }
-    
-    
     /* SCREEN RESPONSIVENESS */
     @media screen and (max-width: 500px) {
         .signature_section {
             padding-top: 15px;
-            
         }
 
         #footer_bottom{
@@ -537,9 +508,7 @@ Adviser:
             display: none;
         }
     }
-
 </style>
-
 
 <body>
     

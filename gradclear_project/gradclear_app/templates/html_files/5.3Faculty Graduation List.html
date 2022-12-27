@@ -44,296 +44,32 @@ Adviser:
 </head>
 
 <style>
-    .table-icon {
-        background-color: #dedede;
-        color: #000;
-        align-content: center;
-    }
-
-    .table-i{
-        padding: 0%;
-    }
-
-    #all_53:hover,#unapproveds_53:hover, #approveds_53:hover{
-        background-color: #c51d3a;
-        color: #fff;
-    }
-    
-    .results tr[visible='false'],
-    .no-result {
-        display: none;
-    }
-    
-    .results tr[visible='true'] {
-        display: table-row;
-    }
-    
-    .counter {
-        padding: 8px;
-        color: #ccc;
-    }
-    
-    .table-sortable th {
-        cursor: pointer;
-        table-layout: fixed;
-    }
-    
-    .table-sortable .th-sort-asc::after {
-        display: inline;
-        content: 'asc';
-        color: white;
-    }
-    
-    .table-sortable .th-sort-desc::after {
-        display: inline;
-        content: 'desc';
-        color: white;
-    }
-    
-    .table-sortable .th-sort-asc::after,
-    .table-sortable .th-sort-desc::after {
-        margin-left: 5px;
-    }
-    
-    .table-sortable .th-sort-asc,
-    .table-sortable .th-sort-desc {
-        background: rgba(0, 0, 0, 0.1);
-    }
-    
-    #list_tbl_53 th.asc:after {
-        display: inline;
-        content: 'asc';
-        color: white;
-    }
-    
-    #list_tbl_53 th.desc:after {
-        display: inline;
-        content: 'desc';
-        color: white;
-    }
-    
-    #list_tbl2_53 th.asc:after {
-        display: inline;
-        content: 'asc';
-        color: white;
-    }
-    
-    #list_tbl2_53 th.desc:after {
-        display: inline;
-        content: 'desc';
-        color: white;
-    }
-    
-    i {
-        padding-left: 10px;
-    }
-    
-    hr {
-        border-top: 2px solid black;
-    }
-    
-    h1 {
-        padding-left: 15px;
-        font-weight: bolder;
-    }
-    
     a {
         font-style: italic;
         color: #000;
     }
-    
-    p1 {
-        font-size: 30px;
-    }
-    
-    p2 {
-        font-size: 20px;
-        font-weight: bolder;
-    }
-    
-    #backtotop_btn_53 {
-        display: inline-block;
-        background-color: #E1A19D;
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        border-radius: 4px;
-        position: fixed;
-        bottom: 60px;
-        right: 10px;
-        transition: background-color .2s, opacity .2s, visibility .2s;
-        opacity: 0;
-        visibility: hidden;
-        z-index: 1000;
-    }
-    
-    #backtotop_btn_53::after {
-        content: "\f077";
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        font-size: 2em;
-        line-height: 50px;
-        color: #fff;
-    }
-    
-    #backtotop_btn_53:hover {
-        cursor: pointer;
-        background-color: #c51d3a;
-    }
-    
-    #backtotop_btn_53:active {
-        background-color: #555;
-    }
-    
-    #backtotop_btn_53.show {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    #list_tbl_53 td {
-        border-width: 1px 0;
-        border-color: black;
-        border-style: solid;
-        padding: 2px 10px;
-        text-align: center;
-        vertical-align: middle;
-        overflow-wrap: break-word;
-        
-        
-        
-    }
-    
-    #list_tbl_53 {
-        overflow-wrap: break-word;
-        white-space: nowrap;
-        border-spacing: 0 5px;
-        /* table-layout: fixed; */
-        width: 100%;
-        border-collapse: separate;
-        
-        
-    }
-    
-   
-    
-    #list_tbl2_53 {
-        border-collapse: separate;
-        border-spacing: 0 5px;
-        table-layout: fixed;
-        width: 99%;
-    }
-    
-    #list_tbl2_53 td {
-        border-width: 2px 0;
-        border-color: black;
-        border-style: solid;
-        padding: 5px 15px;
-        text-align: center;
-        vertical-align: middle;
-        overflow-wrap: break-word;
 
-    }
-    
-    .tab {
-        text-decoration: none;
-        color: inherit;
-        padding: 7px 14px;
-        transition: opacity 0.3s;
-        display: inline-block;
-        border-radius: 3px;
-        margin-right: 10px;
-        margin-left: 20px;
-    }
-    
-    .tab:hover {
-        color: #c51d3a;
-    }
-    
-    .tab-content {
-        padding: 6px 12px;
-        min-height: 100px;
-        animation: fadeEffect 1s;
-        padding-bottom: 50px;
-    }
-    
     a :hover {
         color: #fff;
     }
-    
-    #dashboard_header_53 {
-        padding-left: 50px;
-        padding-right: 50px;
-        padding: 0 50px 0 50px;
-        background-color: #636363;
-        padding-top: 5px;
-        text-align: center;
-    }
-    
-    #search_box_53 {
-        width: 54%;
-        border-radius: 30px;
-        padding-right: 15px;
-        margin: 0 0 10px 6px;
-    }
-    
-    #search_btn_53 {
+
+    button {
         border-radius: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin: 0 0 10px 5px;
-    }
-    
-    #search_btn_53:hover {
-        color: #c51d3a;
-    }
-    
-    #list_tbl_53 tbody tr:nth-child(even) {
-        background-color: #dedede;
-    }
-    
-    #list_tbl_53 tbody tr:nth-child(odd) {
-        background-color: #f5f0f6;
-    }
-    
-    #list_tbl_53 th {
         background-color: #c51d3a;
-        color: #ffff;
-        text-align: center;
+        color: white;
     }
     
-    #list_tbl2_53 tbody tr:nth-child(even) {
-        background-color: #dedede;
-    }
-    
-    #list_tbl2_53 tbody tr:nth-child(odd) {
-        background-color: #f5f0f6;
-    }
-    
-    #list_tbl2_53 th {
+    button.list_tbl {
         background-color: #c51d3a;
-        color: #ffff;
-        text-align: center;
     }
-    
-    #request_box_53 {
-        width: auto;
-        margin: 0 0 10px 5px;
+
+    canvas #signature-pad {
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
     }
-    
-    #schoolyear_box_53 {
-        margin: 0 0 10px 5px;
-    }
-    
-    #course_box_53 {
-        margin: 0 0 10px 5px;
-    }
-    
-    tr:hover td {
-        background-color: #636363;
-        color: #fff;
-    }
-    
+
     footer {
         position: fixed;
         bottom: 0;
@@ -344,124 +80,86 @@ Adviser:
         color: white;
         padding-top: 10px;
     }
-    
-    button {
-        border-radius: 10px;
-        background-color: #c51d3a;
-        color: white;
+
+    i {
+        padding-left: 10px;
     }
-    
-    button.list_tbl {
-        background-color: #c51d3a;
+
+    h1 {
+        padding-left: 15px;
+        font-weight: bolder;
     }
-    
-    #graduation_header_53 {
-        background-color: #c51d3a;
-    }
-    
-    .modal-body {
-        background: #e0e0e0;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 40px;
-    }
-    
-    #grad_modal_53 td,
-    #grad_modal_53 th {
-        border: 1px solid #000000;
-        text-align: left;
-        padding: 8px;
-    }
-    
-    #grad_modal1_53 td,
-    #grad_modal1_53 th {
-        border: 1px solid #000000;
-        text-align: left;
-        padding: 8px;
-    }
-    
-    #grad_modal_53 th,
-    #grad_modal1_53 th {
-        background-color: #c51d3a;
-        color: #ffff;
-    }
-    
-    #grad_modal_53 tr:nth-child(odd),
-    #grad_modal1_53 tr:nth-child(odd) {
-        background-color: #f5f0f6;
-    }
-    
-    #grad_modal_53 tr:nth-child(even),
-    #grad_modal1_53 tr:nth-child(even) {
-        background-color: #dedede;
-    }
-    
-    #grad_modal_53 tr:hover,
-    #grad_modal1_53 tr:hover {
-        background-color: #636363;
-        color: #ffff;
-    }
-    
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    
+
     h6 {
         text-align: center;
         color: #ffff;
     }
 
-    #table_main{
-        padding: 6px 15px;
-        min-height: 100px;
-        animation: fadeEffect 1s;
-        padding-bottom: 50px;
+    hr {
+        border-top: 2px solid black;
     }
 
-    .highlight {
-     background-color:transparent;
-    animation: highlightRow 2s ease-in-out;
+    html {
+        font-size: 1rem;
+    }
+    
+    p1 {
+        font-size: 30px;
+    }
+    
+    p2 {
+        font-size: 20px;
+        font-weight: bolder;
     }
 
-    @keyframes highlightRow {
-    0%  { background-color: red; }
-    100% { background-color: transparent; }
-    }
-
-    canvas #signature-pad {
-        background: #fff;
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
         width: 100%;
-        height: 100%;
-        cursor: crosshair;
-    }
- 
-
-    .signature_section{
-        height: 94vh;
-        width: 0;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        right: 0;
-        background-color: white;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
     }
 
-    .table_list {
-        transition: margin-right .5s;
-        padding: 16px;
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+
+    thead,td{
+        padding: 10px;
+    }
+
+    tr:hover td {
+        background-color: #636363;
+        color: #fff;
+    }
+
+    .btn_save{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
+    }
+
+    .btn_save:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: whi;
+    }
+
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+
+    .closebtn:hover{
+        background-color : #d3324d;;
+        color: black;
     }
 
     .div1 {
-    padding-top: 20px;
-    width: 99%;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-x:auto;
-    
+        padding-top: 20px;
+        width: 99%;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-x:auto;
     }
 
     .div1 table {
@@ -525,12 +223,106 @@ Adviser:
         z-index: 2;
     }
 
-    thead{
-        position: sticky;
-        top: 0px;
+    .highlight {
+        background-color:transparent;
+        animation: highlightRow 2s ease-in-out;
     }
-    thead,td{
-        padding: 10px;
+
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
+    }
+
+    .outer-wrapper{
+        border-radius: 5px;
+   
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+    
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+
+    .signature_section{
+        height: 94vh;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .tab {
+        text-decoration: none;
+        color: inherit;
+        padding: 7px 14px;
+        transition: opacity 0.3s;
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+    
+    .tab:hover {
+        color: #c51d3a;
+    }
+    
+    .tab-content {
+        padding: 6px 12px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+
+    .table-icon {
+        background-color: #dedede;
+        color: #000;
+        align-content: center;
+    }
+
+    .table-i{
+        padding: 0%;
+    }
+
+    .table_list {
+        transition: margin-right .5s;
+        padding: 16px;
+    }
+
+    .table-sortable th {
+        cursor: pointer;
+        table-layout: fixed;
+    }
+    
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
     }
 
     .table-wrapper{
@@ -538,15 +330,251 @@ Adviser:
         overflow-y: scroll;
 
     }
-   .outer-wrapper{
-    border-radius: 5px;
-   
-   }
 
-   html {
-    font-size: 1rem;
+    #approve_sig_btn{
+        background-color: #dedede;
+        color: black;
     }
-  
+
+    #approve_sig_btn:hover{
+        background-color: #dedede;
+        color: white;
+    }
+
+    #backtotop_btn_53 {
+        display: inline-block;
+        background-color: #E1A19D;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        transition: background-color .2s, opacity .2s, visibility .2s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+    }
+    
+    #backtotop_btn_53::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    
+    #backtotop_btn_53:hover {
+        cursor: pointer;
+        background-color: #c51d3a;
+    }
+    
+    #backtotop_btn_53:active {
+        background-color: #555;
+    }
+    
+    #backtotop_btn_53.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #cancel_create:hover , #cancel_upload:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #dashboard_header_53 {
+        padding-left: 50px;
+        padding-right: 50px;
+        padding: 0 50px 0 50px;
+        background-color: #636363;
+        padding-top: 5px;
+        text-align: center;
+    }
+
+    #esign_attach_sig_btn{
+        background-color : #c51d3a;
+        color : white;
+    }
+
+    #esign_attach_sig_btn:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+
+    #graduation_header_53 {
+        background-color: #c51d3a;
+    }
+
+    #grad_modal_53 td,
+    #grad_modal_53 th {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    #grad_modal1_53 td,
+    #grad_modal1_53 th {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    #grad_modal_53 th,
+    #grad_modal1_53 th {
+        background-color: #c51d3a;
+        color: #ffff;
+    }
+    
+    #grad_modal_53 tr:nth-child(odd),
+    #grad_modal1_53 tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #grad_modal_53 tr:nth-child(even),
+    #grad_modal1_53 tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #grad_modal_53 tr:hover,
+    #grad_modal1_53 tr:hover {
+        background-color: #636363;
+        color: #ffff;
+    }
+
+    #list_tbl_53 {
+        overflow-wrap: break-word;
+        white-space: nowrap;
+        border-spacing: 0 5px;
+        /* table-layout: fixed; */
+        width: 100%;
+        border-collapse: separate;
+    }
+    
+    #list_tbl_53 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_53 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_53 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_53 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+
+    #list_tbl_53 td {
+        border-width: 1px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 2px 10px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+
+    #list_tbl2_53 {
+        border-collapse: separate;
+        border-spacing: 0 5px;
+        table-layout: fixed;
+        width: 99%;
+    }
+    
+    #list_tbl2_53 td {
+        border-width: 2px 0;
+        border-color: black;
+        border-style: solid;
+        padding: 5px 15px;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+
+    #list_tbl_53 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl_53 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl_53 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+    
+    #list_tbl2_53 tbody tr:nth-child(even) {
+        background-color: #dedede;
+    }
+    
+    #list_tbl2_53 tbody tr:nth-child(odd) {
+        background-color: #f5f0f6;
+    }
+    
+    #list_tbl2_53 th {
+        background-color: #c51d3a;
+        color: #ffff;
+        text-align: center;
+    }
+
+    #open_signature:hover{
+        background-color : #d3324d;;
+        color: black;
+    }
+    
+    #search_box_53 {
+        width: 54%;
+        border-radius: 30px;
+        padding-right: 15px;
+        margin: 0 0 10px 6px;
+    }
+    
+    #search_btn_53 {
+        border-radius: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 0 0 10px 5px;
+    }
+    
+    #search_btn_53:hover {
+        color: #c51d3a;
+    }
+    
+    #table_main{
+        padding: 6px 15px;
+        min-height: 100px;
+        animation: fadeEffect 1s;
+        padding-bottom: 50px;
+    }
+
+    #upload_attach_sig_btn{
+        background-color: #0f0d0d;
+        color: white;
+        border-color: white;
+    }
+
+    #upload_attach_sig_btn:hover{
+        background-color: #3b3b3b;
+        color: #c9c9c9;
+        border-color: black;
+    }
+
     @include media-breakpoint-up(sm) {
         html {
             font-size: 1.2rem;
@@ -564,73 +592,17 @@ Adviser:
             font-size: 1.6rem;
         }
     }
+
+    @keyframes highlightRow {
+        0%  { background-color: red; }
+        100% { background-color: transparent; }
+    }
     
-    #esign_attach_sig_btn{
-        background-color : #c51d3a;
-        color : white;
-    }
-
-    #esign_attach_sig_btn:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #upload_attach_sig_btn{
-        background-color: #0f0d0d;
-        color: white;
-        border-color: white;
-    }
-
-    #upload_attach_sig_btn:hover{
-        background-color: #3b3b3b;
-        color: #c9c9c9;
-        border-color: black;
-    }
-
-    #approve_sig_btn{
-        background-color: #dedede;
-        color: black;
-    }
-
-    #approve_sig_btn:hover{
-        background-color: #dedede;
-        color: white;
-    }
-
-    .closebtn:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #open_signature:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    #cancel_create:hover , #cancel_upload:hover{
-        background-color : #d3324d;;
-        color: black;
-    }
-
-    .btn_save{
-        background-color: #0f0d0d;
-        color: white;
-        border-color: white;
-    }
-
-    .btn_save:hover{
-        background-color: #3b3b3b;
-        color: #c9c9c9;
-        border-color: whi;
-    }
-
     /* SCREEN RESPONSIVENESS */
     @media screen and (max-width: 500px) {
         .signature_section {
             padding-top: 15px;
-            
         }
-
 
         #footer_bottom{
             display: none;
@@ -642,7 +614,6 @@ Adviser:
             display: none;
         }
     }
-
 
     @media screen and (min-width: 700px) {
         .div1 th {
@@ -671,10 +642,8 @@ Adviser:
             left: 40px;
             width: 238px;
             min-width: 238px;
-            
         }
     }
-    
 </style>
 
 

@@ -33,15 +33,18 @@ Adviser:
 
 
 <style>
-    .mt-4, .my-4 {
-    margin-top: 0.7rem!important;
-    margin-bottom: 0.7rem!important;
-    }
-
     * {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
-    
+
+    a {
+        color: black;
+    }
+
+    a:hover {
+        color: #c51d3a;
+    }
+
     body {
         background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("{% static 'Media/tup_bg.png' %}");
         background-repeat: no-repeat;
@@ -53,101 +56,6 @@ Adviser:
         clear: both;
     }
 
-    .normal {
-    background-color: #dedede;
-    }
-
-    .active {
-    background-color: #747474;
-    }
-
-    h1 {
-        font-size: 60px;
-        margin-top: 80px;
-    }
-    
-    .i2{
-        color: #fff;
-    }
-
-    .i2:hover{
-        color: #d3324d;
-        border: #d3324d;
-    
-    }
-
-    .img-fluid {
-        margin-top: 50px;
-        margin-bottom: 30px;
-    }
-    
-    .btn-1 {
-        margin: 0px 0px 0px 10px;
-        color: white;
-        background-color: #c51d3a;
-        border: #c51d3a;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        padding: 15px;
-        width: 19%;
-    }
-    
-    .btn-1:hover {
-        color: #dedede;
-        background-color: #d3324d;
-        border: #d3324d;
-    }
-    
-    .btn-2 {
-        color: #ffff;
-        background-color: #424242;
-        margin: 0px 0px 0px 10px;
-        border-radius: 10px;
-        border: #424242;
-    }
-    
-    .btn-2:hover {
-        color: #ffff;
-        background-color: #616161;
-        border: #616161;
-    }
-    
-    .btn-3 {
-        margin: 0px 0px 0px 15px;
-        color: black;
-        border-radius: 10px;
-        background-color: #dedede;
-        width: 25%;
-    }
-    
-    .btn-3:hover {
-        color: black;
-        background-color: #f5f0f6;
-    }
-    
-    .btn-4 {
-        color: white;
-        font-size: 20px;
-        padding: 0 50 0 0;
-    }
-    
-    .btn-4:hover {
-        color: #c51d3a;
-        text-decoration: underline;
-        transition: 0.5s;
-    }
-    
-    .btn-5 {
-        color: white;
-        background-color: #c51d3a;
-        width: 25%;
-    }
-    
-    .btn-5:hover {
-        color: white;
-        background-color: #d3324d;
-    }
-    
     footer {
         position: fixed;
         bottom: 0;
@@ -156,24 +64,9 @@ Adviser:
         color: white;
     }
     
-    .modal-footer {
-        background-color: #c51d3a;
-    }
-    
-    .modal-1 {
-        background-color: #424242;
-        color: white;
-    }
-    
-    .input-group-addon,
-    .input-group-addon:hover {
-        border: 1px;
-        padding: 5px;
-        background-color: #dedede;
-    }
-    
-    i {
-        color: black;
+    h1 {
+        font-size: 60px;
+        margin-top: 80px;
     }
     
     h6 {
@@ -202,30 +95,11 @@ Adviser:
         left: 0.5em;
         margin-right: -50%;
     }
-    
-    .icon {
-        padding: 10px;
-        min-width: 40px;
+
+    i {
+        color: black;
     }
-    
-    .input-field {
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-    }
-    
-    .modal-body {
-        max-height: calc(100vh - 210px);
-        overflow-y: auto;
-        height: max-content;
-    }
-    
-    .close_btn {
-        border: 0 none !important;
-        color: #fff7cc;
-        background-color: #424242;
-    }
-    
+
     p {
         border-color: red;
         color: red;
@@ -242,146 +116,77 @@ Adviser:
         color: black;
         font-size: 13px;
     }
-    
-    #displink:hover {
-        color: #c51d3a;
-    }
-    
-    #displink {
-        color: black;
-        font-style: italic;
-    }
-    
-    #maincontent_01 {
-        background-color: #dedede;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        padding-top: 40px;
-        padding-left: 30px;
-        padding-right: 30px;
-        border: 1px solid;
-    }
-    
-    #des_01 {
-        display: inline;
-        text-align: center;
-        line-height: 25px;
-        font-size: 20px;
-        letter-spacing: -1px;
-    }
-    
-    #person_01 {
-        font-size: 20px;
-        padding-top: 40px;
-        padding: 40px 15px 0 15px;
-        margin: 0 54.5px 0 17.5px;
-    }
-    
-    #form_01 {
-        padding-top: 50px;
-        text-align: center;
-        padding: 50px 15px 0 15px;
-    }
-    
-    #officername_01 {
-        margin: 0 0 0 6px;
-        display: inline;
-        width: 6px;
-        padding: 0 0 0 3px;
-        font-size: 20px;
-        text-decoration: none;
-    }
-    
-    #nametitle_01 {
-        font-size: 25px;
-        display: inline;
-        overflow-wrap: break-word;
-    }
-    
-    #info_cir {
-        color: black;
-        text-shadow: none;
-    }
-    
-    .modal-footer1 {
-        background-color: #c51d3a;
-    }
-    
-    #main {
-        margin-left: 20px;
-        margin-right: 20px;
-        overflow-wrap: break-word;
-    }
-    
-    #title1_lbl {
-        background-color: #dedede;
-    }
-    
-    #location_lbl {
-        padding-top: 35px;
-        padding-bottom: 20px;
-    }
-    
-    #mail_lbl {
-        padding-top: 25px;
-        padding-bottom: 20px;
-    }
-    
-    #facebook_lbl {
-        padding-top: 25px;
-        padding-bottom: 80px;
-    }
-    
-    a {
-        color: black;
-    }
-    
-    #info_div {
-        padding-left: 50px;
-    }
-    
-    #contact_phonelogo {
-        color: black;
-        text-shadow: none;
-    }
-    
-    a:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-facebook-square:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-map-marker:hover {
-        color: #c51d3a;
-    }
-    
-    .fa-envelope:hover {
-        color: #c51d3a;
-    }
 
-    .add-border-green{
-        border: 2px solid #7DE278 !important;
+    .active {
+    background-color: #747474;
     }
     
     .add-border-red{
         border: 2px solid #E2788A !important;
     }
-    #sub_error_01 {
-        color: white;
-    }
-
-    canvas #signature-pad {
-        background: #fff;
-        width: 100%;
-        height: 100%;
-        cursor: crosshair;
+    
+    .btn-2 {
+        color: #ffff;
+        background-color: #424242;
+        margin: 0px 0px 0px 10px;
+        border-radius: 10px;
+        border: #424242;
     }
     
+    .btn-2:hover {
+        color: #ffff;
+        background-color: #616161;
+        border: #616161;
+    }
 
-     /* SCREEN RESPONSIVENESS */
+    .close_btn {
+        border: 0 none !important;
+        color: #fff7cc;
+        background-color: #424242;
+    }
+
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+    
+    .modal-body {
+        max-height: calc(100vh - 210px);
+        overflow-y: auto;
+        height: max-content;
+    }
+    
+    .modal-footer {
+        background-color: #c51d3a;
+    }
+
+    .modal-footer1 {
+        background-color: #c51d3a;
+    }
+    
+    .modal-1 {
+        background-color: #424242;
+        color: white;
+    }
+    
+    .mt-4, .my-4 {
+        margin-top: 0.7rem!important;
+        margin-bottom: 0.7rem!important;
+    }
+
+    #form_01 {
+        padding-top: 50px;
+        text-align: center;
+        padding: 50px 15px 0 15px;
+    }
+
+    #main {
+        margin-left: 20px;
+        margin-right: 20px;
+        overflow-wrap: break-word;
+    }
+
+    /* SCREEN RESPONSIVENESS */
     @media screen and (max-height: 1000px) {
         #sign_up_body{
             max-width: fit-content;
@@ -891,7 +696,7 @@ Adviser:
             let pass2_box = document.getElementById("id_password2").value;
             if (fn_box != 0 && ln_box != 0 && gender_box != 0 
                 && cp_box != 0 && email_box != 0 && pass1_box != 0 && pass2_box == pass1_box 
-                 && pass2_box != 0 && id_val.length > 5) {    
+                 && pass2_box != 0 && id_val.length > 5){    
                     document.getElementById("Ssubmit_btn_01").removeAttribute("disabled"); 
             } else {
                 $("#Ssubmit_btn_01").attr("disabled", "disabled");

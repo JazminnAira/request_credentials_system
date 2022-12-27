@@ -45,89 +45,6 @@ Adviser:
 
 
 <style>
-    .tooltip {
-        display: inline;
-        position: relative;
-    }
-
-    .tooltip:hover:after{
-        display: -webkit-flex;
-        display: flex;
-        -webkit-justify-content: center;
-        justify-content: center;
-        background: #444;
-        border-radius: 8px;
-        color: #fff;
-        content: attr(title);
-        margin: -82px auto 0;
-        font-size: 16px;
-        padding: 13px;
-        width: 220px;
-    }
-
-    .tooltip:hover:before{
-        border: solid;
-        border-color: #444 transparent;
-        border-width: 12px 6px 0 6px;
-        content: "";
-        left: 45%;
-        bottom: 30px;
-        position: absolute;
-    }
-
-    .results tr[visible='false'],
-    .no-result {
-        display: none;
-    }
-    
-    .results tr[visible='true'] {
-        display: table-row;
-    }
-    
-    .counter {
-        padding: 8px;
-        color: #ccc;
-    }
-    
-    .table-sortable th {
-        cursor: pointer;
-        table-layout: fixed;
-    }
-    
-    .table-sortable .th-sort-asc::after {
-        display: inline;
-        content: 'asc';
-        color: white;
-    }
-    
-    .table-sortable .th-sort-desc::after {
-        display: inline;
-        content: 'desc';
-        color: white;
-    }
-    
-    .table-sortable .th-sort-asc::after,
-    .table-sortable .th-sort-desc::after {
-        margin-left: 5px;
-    }
-    
-    .table-sortable .th-sort-asc,
-    .table-sortable .th-sort-desc {
-        background: rgba(0, 0, 0, 0.1);
-    }
-
-    #list_tbl_41 th.asc:after {
-        display: inline;
-        content: 'asc';
-        color: white;
-    }
-    
-    #list_tbl_41 th.desc:after {
-        display: inline;
-        content: 'desc';
-        color: white;
-    }
-    
     body {
         margin: 0;
         min-height: 400px;
@@ -138,37 +55,67 @@ Adviser:
         background-attachment: fixed;
         background-size: cover;
     }
-    
-    #main_41 {
-        padding-left: 10px;
-    }
-    
-    #main2_41 {
-        padding-left: 15px;
-    }
-    
-    .sidebar {
-        height: 100%;
-        width: 70px;
+
+    footer {
         position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #424242;
-        transition: 0.4s;
-        overflow-x: hidden;
-        white-space: nowrap;  
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        height: 50 px;
+        background: #424242;
+        color: white;
+        padding-top: 10px;
     }
 
-    .sidebar a {
-        padding: 8px 8px 8px 15px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #fff;
-        display: block;       
+    h2 {
+        text-align: center;
+        color: #000000;
     }
 
-    main .sidebar {
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    thead{
+        position: sticky;
+        top: 0px;
+    }
+
+    thead th {
+        background-color: #c51d3a;
+        color: white;
+        height: 70px;
+    }
+    
+    thead td {
+        text-align: center;
+        background-color: #dedede;
+        color: black;
+    }
+
+    thead,td{
+        padding: 10px;
+    }
+
+    .btn.list_tbl_41 {
+        background-color: #c51d3a;
+    }
+
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+
+    .label {
+        object-fit: cover;
+        cursor: pointer;
+        color: #000;
+        width: max-content;
+    }
+
+    .main .sidebar {
         position: absolute;
         right: 25px;
         font-size: 36px;
@@ -186,38 +133,12 @@ Adviser:
         font-size:35px;
     }
 
-    #main {
-        margin-left:70px;
-        transition: margin-left 0.4s;
+    .modal-body {
+        background: #e0e0e0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+        padding: 40px;
     }
-    
-    .sidebar .active,
-    .sidebar a:hover{
-        color: #fff;
-        background-color: #424242;
-        color: #c51d3a;
-        border-left: 5px solid #c51d3a;
-        }
-    
-    #logo_41 {
-        padding-left: 3px;
-        padding-top: 5px;
-        width: 65px;
-        height: 70px;
-    }
-    
-    #clearance_header_41,
-    #graduation_header_41 {
-        background-color: #c51d3a;
-    }
-    
-    #programmers-text_41 {
-        padding: 17px;
-        position: absolute;
-        color: #2f2f2d;
-        font-size: 11px;
-    }
-    
+
     .modal-confirm {
         color: #636363;
         width: 325px;
@@ -303,145 +224,67 @@ Adviser:
         background: #d3324d;
         outline: none;
     }
-    
-    .trigger-btn {
-        display: inline-block;
-        margin: 100px auto;
+
+    .modal-footer {
+        background: #c51d3a;
+    }
+
+    .outer-wrapper{
+        border-radius: 5px;
+   
+    }
+
+    .profile-pic {
+        color: transparent;
+        transition: all .3s ease;
+        transition: all .3s ease;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: -70px;
+        border-radius: 50%;
+        z-index: 9;
+        padding: 15px;
+    }
+
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
     }
     
-    #displink:hover {
-        color: #c51d3a;
+    .results tr[visible='true'] {
+        display: table-row;
     }
-    
-    #displink {
-        color: black;
-        font-style: italic;
-    }
-    
-    #maincontent_41 {
-        background-color: #dedede;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-    }
-    
-    #des_41 {
-        padding-left: 30px;
-        display: inline;
-        text-align: right;
-        line-height: 25px;
-        font-size: 20px;
-        letter-spacing: -1px;
-    }
-    
-    #person_41 {
-        font-size: 20px;
-        padding-top: 40px;
-        padding: 40px 15px 0 15px;
-        margin: 0 54.5px 0 17.5px;
-    }
-    
-    #form_41 {
-        padding-top: 50px;
-        text-align: center;
-        padding: 50px 15px 0 15px;
-    }
-    
-    #officername_41 {
-        margin: 0 0 0 6px;
-        display: inline;
-        width: 6px;
-        padding: 0 0 0 3px;
-        font-size: 20px;
-        text-decoration: none;
-    }
-    
-    #nametitle_41 {
-        font-size: 25px;
-        display: inline;
-        overflow-wrap: break-word;
-    }
-    
-    #account_body_41 {
-        background-color: #dedede;
-        border-radius: 10px 10px 0px 0px;
-    }
-    
-    #Smodal_size {
-        min-width: 240px;
-        max-width: 500px;
-        min-height: 370px;
-        max-height: 700px;
-        width: auto;
-    }
-    
-    #account_footer_41 {
+
+    .sidebar {
+        height: 100%;
+        width: 70px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
         background-color: #424242;
+        transition: 0.4s;
+        overflow-x: hidden;
+        white-space: nowrap;  
     }
-    
-    h6 {
-        text-align: center;
-        color: #ffff;
+
+    .sidebar a {
+        padding: 8px 8px 8px 15px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #fff;
+        display: block;       
     }
-    
-    .btn-3 {
-        margin: 0px 0px 0px 15px;
-        color: black;
-        border-radius: 10px;
-        background-color: #dedede;
-        width: 40%;
+
+    .sidebar .active,
+    .sidebar a:hover{
+        color: #fff;
+        background-color: #424242;
+        color: #c51d3a;
+        border-left: 5px solid #c51d3a;
     }
-    
-    .btn-3:hover {
-        background-color: #e7dfe4;
-    }
-    
-    #date_text_lbl_41 {
-        background-color: #dedede;
-        text-align: right;
-        padding-right: 10px;
-    }
-    #passwordsavechanges_btn_41,
-    .btn {
-        border-radius: 10px;
-        background-color: #c51d3a;
-        color: white;
-    }
-    #passwordsavechanges_btn_41:hover {
-        color: white;
-        background-color: #d3324d;
-    }
-    
-    .btn.list_tbl_41 {
-        background-color: #c51d3a;
-    }
-    
-    #search_box_41 {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 17px;
-        border-radius: 30px 30px 30px 30px;
-        border: 1px solid black;
-        height: 32px;
-        min-height: 32px;
-    }
-    
-    #search-btn {
-        height: 32px;
-        min-height: 32px;
-        width: 90px;
-        max-width: 90px;
-        border-radius: 10px 10px 10px 10px;
-        border: 1px outset #424242;
-        background-image: linear-gradient(#eceaea, #eceaea);
-        background-attachment: scroll;
-        background-size: auto;
-        padding-left: 10px;
-        line-height: normal;
-        margin: 0 7px 0 -26px;
-        color: black;
-    }
-    
+
     .table-hover td.fit,
     .table-hover thead.fit {
         white-space: nowrap;
@@ -462,26 +305,10 @@ Adviser:
     .table-hover thead {
         border: 1px solid black;
     }
-    
-    #list_tbl_41 th {
-        text-align: center;
-    }
-    
+
     .table-hover thead {
         background-color: #c51d3a;
         color: #ffff;
-    }
-    
-    thead th {
-        background-color: #c51d3a;
-        color: white;
-        height: 70px;
-    }
-    
-    thead td {
-        text-align: center;
-        background-color: #dedede;
-        color: black;
     }
     
     .table-hover tbody td,
@@ -499,78 +326,93 @@ Adviser:
     .table-hover tbody tr:nth-child(even) {
         background-color: #f5f0f6;
     }
-    
-    #clear_bar_41 {
-        height: 30px;
-    }
-    
-    #grad_bar_41 {
-        height: 30px;
-    }
-    
-    footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        height: 50 px;
-        background: #424242;
-        color: white;
-        padding-top: 10px;
-    }
-    
-    .modal-body {
-        background: #e0e0e0;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
-        padding: 40px;
-    }
-    
-    .modal-footer {
-        background: #c51d3a;
-    }
-    
-    h2 {
-        text-align: center;
-        color: #000000;
-    }
-    
-    .card-header {
-        border: 1px solid #000000;
-        background-color: #9e9e9e;
-        color: #000000;
+
+    .table-sortable th {
         cursor: pointer;
-        padding: 10px;
-        width: 100%;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
+        table-layout: fixed;
     }
     
-    .active{
-        background-color: #424242;
-        color: #c51d3a;
-        border-left: 5px solid #c51d3a;
+    .table-sortable .th-sort-asc::after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-desc::after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    .table-sortable .th-sort-asc::after,
+    .table-sortable .th-sort-desc::after {
+        margin-left: 5px;
+    }
+    
+    .table-sortable .th-sort-asc,
+    .table-sortable .th-sort-desc {
+        background: rgba(0, 0, 0, 0.1);
     }
 
-    .active,
-    .card-header:hover {
+    .table-wrapper{
+        max-height: 490px;
+        overflow-y: scroll;
+
+    }
+
+    .tooltip {
+        display: inline;
+        position: relative;
+    }
+
+    .tooltip:hover:after{
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        background: #444;
+        border-radius: 8px;
+        color: #fff;
+        content: attr(title);
+        margin: -82px auto 0;
+        font-size: 16px;
+        padding: 13px;
+        width: 220px;
+    }
+
+    .tooltip:hover:before{
+        border: solid;
+        border-color: #444 transparent;
+        border-width: 12px 6px 0 6px;
+        content: "";
+        left: 45%;
+        bottom: 30px;
+        position: absolute;
+    }
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+
+    #account_body_41 {
+        background-color: #dedede;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    #account_footer_41 {
+        background-color: #424242;
+    }
+
+    #addresssavechanges_btn_41:hover,
+    #emailsavechanges_btn_41:hover,
+    #coursesavechanges_btn_41:hover,
+    #add_btn_41:hover,
+    #logout_btn_41:hover,
+    #button:hover {
         background-color: #616161;
     }
-    
-    .card-body {
-        background-color: #f5f0f6;
-        width: 100%;
-    }
-    
-    .card-body button {
-        border: 1px solid #000000;
-    }
-    
-    #dropdown,
-    #yrsec_drp_41 {
-        background-color: #e7dfe4;
-    }
-    
+
     #button,
     #addresssavechanges_btn_41,
     #emailsavechanges_btn_41,
@@ -580,26 +422,17 @@ Adviser:
         background-color: #424242;
         border-radius: 10px;
     }
-    
-    #addresssavechanges_btn_41:hover,
-    #emailsavechanges_btn_41:hover,
-    #coursesavechanges_btn_41:hover,
-    #add_btn_41:hover,
-    #logout_btn_41:hover,
-    #button:hover {
-        background-color: #616161;
+
+    #date_text_lbl_41 {
+        background-color: #dedede;
+        text-align: right;
+        padding-right: 10px;
     }
-    
-    #search-btn:hover {
-        color: #c51d3a;
+
+    #file {
+        display: none;
     }
-    
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    
+
     #grad_modal_41 td,
     th {
         border: 1px solid #000000;
@@ -635,28 +468,48 @@ Adviser:
         background-color: #636363;
         color: #ffff;
     }
+
+    #list_tbl_41 th {
+        text-align: center;
+    }
     
-    .profile-pic {
-    color: transparent;
-    transition: all .3s ease;
-    transition: all .3s ease;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    top: -70px;
-    border-radius: 50%;
-    z-index: 9;
-    padding: 15px;}
-  
-    #file {
-        display: none;
+    #list_tbl_41 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_41 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #logo_41 {
+        padding-left: 3px;
+        padding-top: 5px;
+        width: 65px;
+        height: 70px;
     }
 
-    #label_for_file{
-        margin-left: -22px;
-        margin-top: 7px;
+    #main {
+        margin-left:70px;
+        transition: margin-left 0.4s;
     }
-  
+    
+    #main_41 {
+        padding-left: 10px;
+    }
+    
+    #main2_41 {
+        padding-left: 15px;
+    }
+
+    #missing_document_hide{
+        text-align: right;
+        visibility: hidden;
+    }
+
     #output {
         margin-top: -30px;
         margin-left: -30px;
@@ -667,69 +520,96 @@ Adviser:
         border-radius: 55px;
         z-index: 0;
     }
-    .-label {
-        object-fit: cover;
-        cursor: pointer;
-        color: #000;
-        width: max-content;
+
+    #passwordsavechanges_btn_41,
+    .btn {
+        border-radius: 10px;
+        background-color: #c51d3a;
+        color: white;
     }
-  
-    thead{
-        position: sticky;
-        top: 0px;
-    }
-    thead,td{
-        padding: 10px;
+    
+    #passwordsavechanges_btn_41:hover {
+        color: white;
+        background-color: #d3324d;
     }
 
-    .table-wrapper{
-        max-height: 490px;
-        overflow-y: scroll;
-
+    #search_box_41 {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 17px;
+        border-radius: 30px 30px 30px 30px;
+        border: 1px solid black;
+        height: 32px;
+        min-height: 32px;
     }
-   .outer-wrapper{
-    border-radius: 5px;
-   
-   }
-   #missing_document_hide{
-    text-align: right;
-    visibility: hidden;
-   }
+    
+    #search-btn {
+        height: 32px;
+        min-height: 32px;
+        width: 90px;
+        max-width: 90px;
+        border-radius: 10px 10px 10px 10px;
+        border: 1px outset #424242;
+        background-image: linear-gradient(#eceaea, #eceaea);
+        background-attachment: scroll;
+        background-size: auto;
+        padding-left: 10px;
+        line-height: normal;
+        margin: 0 7px 0 -26px;
+        color: black;
+    }
+
+    #search-btn:hover {
+        color: #c51d3a;
+    }
+    
+    #Smodal_size {
+        min-width: 240px;
+        max-width: 500px;
+        min-height: 370px;
+        max-height: 700px;
+        width: auto;
+    }
 
     /* SCREEN RESPONSIVENESS */
     @media screen and (max-height: 450px) {
         .sidebar {
-            
             padding-top: 15px;
         }
         .sidebar a {
             font-size: 18px;
         }
-        .table-wrapper{
-        max-height: 300px;
-        overflow-y: scroll;
+    }
+     @media screen and (max-width: 450px) {
+        #as{
+            display: none;
+        }
 
-    }
-       
-    }
-    @media screen and (max-width: 700px) {
         #dt{
             display: none;
         }
-        #missing_document {
+        
+        #ft{
             display: none;
         }
-    
+    }
+    @media screen and (max-width: 700px) {
         #AccountSettings_modal_41{
             max-width: fit-content;
             max-height: fit-content;
         
         }
-        #settings_modal_41{
-            max-width: fit-content;
-            max-height: fit-content;
 
+        #document1{
+            font-size: 15px;
+            text-decoration-line:underline;
+            text-decoration-color: #c51d3a;
         }
+
+        #missing_document {
+            display: none;
+        }
+
         #missing_document_hide{
             visibility: visible;
             text-align: right;
@@ -739,27 +619,29 @@ Adviser:
             color: #c51d3a;
             font-size: 16px;
         }
-        #document1{
-            font-size: 15px;
-            text-decoration-line:underline;
-            text-decoration-color: #c51d3a;
+        
+        #settings_modal_41{
+            max-width: fit-content;
+            max-height: fit-content;
         }
+
         #welcome{
             font-size: 18px;
         }
     }
 
     @media screen and (max-width: 500px) {
-        #foot {
-            display: none;
-        }
-        #welcome{
-            font-size: 16px;
-        }
         #date_today{
             display: none;
         }
-       
+        
+        #foot {
+            display: none;
+        }
+
+        #welcome{
+            font-size: 16px;
+        }
     }
 
     @media screen and (max-width: 700px) {
@@ -768,7 +650,7 @@ Adviser:
             align-items: center;
             font-size: 12px;
         }
-}
+    }
 </style>
 
 
@@ -1003,7 +885,7 @@ Adviser:
        
         <div class="row">
             <div class="col-8 col-sm-9 col-md-8 col-lg-7 col-xl-5" style="margin-top: 10px;">
-            <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">
+                <input type="search" class="search" placeholder="Search" id="search_box_41" name="search_box_041" onkeyup="display_search()" onsearch="OnSearch (this)">
             </div>
         </div>
 
@@ -1017,9 +899,9 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden>Form No.</th>
-                            <th>Form Type</th>
-                            <th>Purpose of Request</th>
-                            <th>Approval Status</th>
+                            <th id="ft">Form Type</th>
+                            <th id="pr">Purpose of Request</th>
+                            <th id="as">Approval Status</th>
                             <th id="dt"> Date & Time Requested</th>
                             <th></th>
                         </tr>
@@ -1035,12 +917,12 @@ Adviser:
                         {% for instance in st0 %}
                         <tr>
                             <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
+                            <td id="ft" onclick="window.location='display_reqform/{{ instance.id }}'">Request Form</td>
                             <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
                             {% if instance.approval_status == "UNAPPROVED" %}
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(223, 71, 71);">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(223, 71, 71);">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
@@ -1053,12 +935,12 @@ Adviser:
                         {% for instance in st %}
                         <tr>
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="ft" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="pr" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            <td id="as" onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
                             <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
@@ -1070,12 +952,12 @@ Adviser:
                         {% for instance in st1 %}
                         <tr>
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="ft" onclick="window.location='display_clearform/{{ instance.id }}'">Clearance Form</td>
+                            <td id="pr" onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             {% if instance.approval_status == "APPROVED"%}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
+                            <td id="as" onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
+                            <td id="as" onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
                             <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
