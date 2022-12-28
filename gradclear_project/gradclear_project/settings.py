@@ -1,4 +1,4 @@
-# THIS SETUP IS APPLICABLE VIA ONLINE ONLY, USE LOCAL __INIT__ IF NEEDED
+# THIS SETUP IS APPLICABLE VIA LOCAL ONLY, USE DEPLOY __INIT__ IF NEEDED
 
 """
 Django settings for gradclear_project project.
@@ -36,10 +36,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-66yny&_e3kz@(3nux544d*spq7e&@9hbqo7j&gd4d&qv!ry^gw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# SET TO FALSE FOR SECURITY PURPOSES
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['tupcaviteregistrar.site', 'www.tupcaviteregistrar.site']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,12 +92,12 @@ WSGI_APPLICATION = 'gradclear_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tupclget_gradclear_database',
-        'USER': 'tupclget_root',
-        'PASSWORD': 'chimkenflet2022',
+        'NAME': 'gradclear_database',
+        'USER': 'root',
+        'PASSWORD': 'password',
         'HOST': 'localhost', 
-        'PORT': '3306',
         'OPTIONS': {"init_command": "SET foreign_key_checks = 0;",},
+
     }
 }
 
@@ -130,22 +129,19 @@ TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/Media/'
-MEDIA_ROOT = '/home/tupclget/public_html/Media'
-# STATIC_ROOT = 'gradclear_project/gradclear_app/static'
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'Media')
 
+STATIC_ROOT = 'gradclear_project/gradclear_app/static'
 # STATICFILES_DIRS = [os. path.join(BASE_DIR, 'static')]
 
-# deployment
-STATIC_URL = '/static/'
-STATIC_ROOT = '/home/tupclget/public_html/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -159,8 +155,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tupc.registrar.office@gmail.com'
-EMAIL_HOST_PASSWORD = 'csvhjdbhjeenhmgq'
+EMAIL_HOST_USER = 'tupcaviteregistrar@gmail.com'
+EMAIL_HOST_PASSWORD = 'quoctgatkmfyxgws'
  
 # EMAIL_USE_SSL= False
 # EMAIL_TIMEOUT= None
@@ -180,9 +176,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True     # LOGOUT WHEN BROWSER IS CLOSED
 SESSION_COOKIE_AGE = 600                  # 10 MINS INACTIVITY, AUTO LOGOUT
 SESSION_SAVE_EVERY_REQUEST = True          # Will prevent from logging you out after 300 seconds
 
-# SET TO WEEKDAYS AT 3 AM IN THE MORNING BASED ON EST
-# BASED ON EST SINCE SERVER IS IN US
-# AUTOMATICALLY CONVERTED TO GMT 800, NO ITERATIONS REQUIRED
 CRONJOBS = [
     ('0 3 * * 1-5', 'gradclear_app.cron.my_scheduled_job')
 ]
