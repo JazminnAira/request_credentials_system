@@ -5754,7 +5754,7 @@ def display_gradform(request, id):
 
             if faculty_approved[0].__contains__('ESIGN'):
                 faculty6_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct
+                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
@@ -6092,7 +6092,7 @@ def display_gradform(request, id):
                 signature_type11 = "UPLOAD"
             else:
                 addfaculty1_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('no_signature', flat=True).distinct
+                    full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
@@ -7041,7 +7041,7 @@ def delete_clearform(request, id):
 # DELETE REQUEST FORM ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def delete_reqform(request, id):
-    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" :
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
         delete_req = request_form_table.objects.get(id=id)
         delete_req.delete()
         messages.success(request, "Form has been deleted.")
