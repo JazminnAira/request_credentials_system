@@ -4,10 +4,6 @@ A system focuses on monitoring, approving, and recording student request forms o
 
 # Getting Started
 ### Install Packages
-First, open the terminal in your desktop/computer:
-```
-Win + R
-```
 Following packages needed in the system:
 ```
 pip install pymysql
@@ -29,25 +25,28 @@ pip install crontab
 pip install django-crontab
 ```
 
+As the system use Python Programming Language and Django Framework platform.
+Documents may help to understant the system.
+* Visit https://www.python.org/ to view complete Python documentation.
+* Visit https://docs.djangoproject.com/en/4.1/ to view complete Django Documentation.
+
 # Online Deployment
 ### Recommended Web Host 
 The easiest to use web host to deploy the system is [Namecheap](https://www.namecheap.com/) an IT service management company.   
-In Namecheap the editing process of the system is same to how to edit the program in the local host.
+In Namecheap the editing process of the system is same to how to edit the program in the local host.  
+The services are great and the system is compatible.
 
 ## Authors
-Trisha Eunis N. Elicot
-* trishaeunis.elicot@gsfe.tupcavite.edu.ph  
+Trisha Eunis N. Elicot (trishaeunis.elicot@gsfe.tupcavite.edu.ph)
 
-Dana Grace G. Fulla 
-* danagrace.fulla@gsfe.tupcavite.edu.ph  
+Dana Grace G. Fulla (danagrace.fulla@gsfe.tupcavite.edu.ph)  
 
-Allora Blesse A. Lagura
-* allorablesse.lagura@gsfe.tupcavite.edu.ph  
+Allora Blesse A. Lagura (allorablesse.lagura@gsfe.tupcavite.edu.ph)
 
-Jazminn Aira B. Terencio 
-* jazminnaira.terencio@gsfe.tupcavite.edu.ph  
+Jazminn Aira B. Terencio (jazminnaira.terencio@gsfe.tupcavite.edu.ph)
 
 ## Acknowledgements
+Discuss kung isasama pa ito
 * Technological University of the Philippines - Cavite
 * [stackflow](https://stackoverflow.com/)
 
