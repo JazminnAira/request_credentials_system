@@ -31,7 +31,8 @@ pip install django-crontab
 
 # Online Deployment
 ### Recommended Web Host 
-The easiest to use web host to deploy the system is [Namecheap](https://www.namecheap.com/) an IT service management company. 
+The easiest to use web host to deploy the system is [Namecheap](https://www.namecheap.com/) an IT service management company.   
+In Namecheap the editing process of the system is same to how to edit the program in the local host.
 
 ## Authors
 Trisha Eunis N. Elicot
