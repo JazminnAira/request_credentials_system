@@ -8,8 +8,7 @@ First, open the terminal in your desktop/computer:
 ```
 Win + R
 ```
-
-Then type the following packages needed to be installed in your computer/desktop.
+Following packages needed in the system:
 ```
 pip install pymysql
 pip install reportlab
@@ -32,13 +31,12 @@ pip install django-crontab
 
 # Online Deployment
 ### Recommended Web Host 
-
 The easiest to use web host to deploy the system is [Namecheap](https://www.namecheap.com/) an IT service management company. 
 
 ## Authors
 Trisha Eunis N. Elicot
 * trishaeunis.elicot@gsfe.tupcavite.edu.ph  
-  
+
 Dana Grace G. Fulla 
 * danagrace.fulla@gsfe.tupcavite.edu.ph  
 
