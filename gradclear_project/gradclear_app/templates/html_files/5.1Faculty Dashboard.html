@@ -717,6 +717,18 @@ Adviser:
         display: none;
     }
     }
+    @media screen and (max-width: 450px) {
+        
+        #cs{
+            display: none;
+        }
+        #in{
+            display: none;
+        }
+        #Viewform{
+            display: none;
+        }
+    }
     
 </style>
 
@@ -892,9 +904,9 @@ Adviser:
                         <tr>
                             <th hidden> # </th>
                             <th>Student's Name</th>
-                            <th>Course</th>
-                            <th>ID Number</th>
-                            <th>Purpose of Request</th>
+                            <th id="cs">Course</th>
+                            <th id="in">ID Number</th>
+                            <th id="pr">Purpose of Request</th>
                             <th id="Viewform"> </th>  
                         </tr>
 
@@ -912,10 +924,10 @@ Adviser:
                         <tr>        
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
-                            <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td><a href="display_gradform/{{ instance.id }}" id="btn"><button type="button" id="btn">View Form</button></a></td>
+                            <td id="cs" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td id="in" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
+                            <td id="pr" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="Viewform"><a href="display_gradform/{{ instance.id }}" id="btn"><button type="button" id="btn">View Form</button></a></td>
                             
                     </tbody>
                     {% endfor %}
@@ -925,10 +937,10 @@ Adviser:
                         <tr>        
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
-                            <td><a href="display_clearform/{{ instance.id }}"id="btn"><button type="button" id="btn">View Form</button></a></td>
+                            <td id="cs" onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
+                            <td id="in" onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
+                            <td id="pr" onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                            <td id="Viewform"><a href="display_clearform/{{ instance.id }}"id="btn"><button type="button" id="btn">View Form</button></a></td>
                             
                             {% if val == 'UNAPPROVED' %}
                             <script>h3_title.innerText = "Unapproved Students";</script>

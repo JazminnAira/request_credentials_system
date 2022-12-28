@@ -713,7 +713,7 @@ Adviser:
         #dt{
             display: none;
         }
-        #as{
+        #Viewform{
             display: none;
         }
         #ft{
@@ -1026,7 +1026,7 @@ Adviser:
                             <th id="pr">Purpose of Request</th>
                             <th id="as">Approval Status</th>
                             <th id="dt"> Date & Time Requested</th>
-                            <th></th>
+                            <th id="Viewform"></th>
                         </tr>
                         <tr class="no_data">
                             <td colspan="5"><i class="fa fa-warning"></i> No Data</td>
@@ -1048,7 +1048,7 @@ Adviser:
                             <td id="as" onclick="window.location='display_reqform/{{ instance.id }}'" style="color: rgb(86, 199, 86)">{{instance.approval_status}}</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                            <td><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
+                            <td id="Viewform"><a href="display_reqform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                  role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
 
                         </tr>
@@ -1066,7 +1066,7 @@ Adviser:
                             <td id="as" onclick="window.location='display_gradform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.time_requested}}</td>
-                            <td><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
+                            <td id="Viewform"><a href="display_gradform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
                         {% endfor %}
@@ -1083,7 +1083,7 @@ Adviser:
                             <td id="as" onclick="window.location='display_clearform/{{ instance.id }}'" style="color: rgb(223, 71, 71);"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             <td id="dt" onclick="window.location='display_clearform/{{ instance.id }}'" >{{instance.time_requested}}</td>
-                            <td><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
+                            <td id="Viewform"><a href="display_clearform/{{ instance.id }}" class="btn btn-white border-light btn-xl btn-1"
                                 role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true" id="viewform_btn">View Form</a></td>
                         </tr>
                         {% endfor %}
