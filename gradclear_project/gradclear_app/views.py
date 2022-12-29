@@ -7107,7 +7107,7 @@ def update_clearance_signature(request, id):
                     uploaded_signature_timesaved=signature_timesaved)
 
                 messages.success(
-                    request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+                    request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
         else:
             # remove recent signature
             recent_sig = request.user.e_signature
@@ -7133,7 +7133,7 @@ def update_clearance_signature(request, id):
             user_table.objects.filter(id=id).update(
                 e_signature_timesaved=signature_timesaved)
             messages.success(
-                request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+                request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
 
     return redirect(faculty_dashboard_clearance_list)
 
@@ -7176,7 +7176,7 @@ def update_grad_signature(request, id):
                 user_table.objects.filter(id=id).update(
                     uploaded_signature_timesaved=signature_timesaved)
                 messages.success(
-                    request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+                    request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
         else:
             # remove recent signature
             recent_sig = request.user.e_signature
@@ -7203,7 +7203,7 @@ def update_grad_signature(request, id):
             user_table.objects.filter(id=id).update(
                 e_signature_timesaved=signature_timesaved)
             messages.success(
-                request, "Your Signature had been updated. It may take a few minutes to update accross the site.")
+                request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
 
     return redirect(faculty_dashboard_graduation_list)
 
