@@ -469,6 +469,10 @@ Adviser:
         display: table-row;
     }
 
+    .settings_row{
+        display: flex;
+    }
+
     .sidebar {
         height: 100%;
         width: 70px;
@@ -500,13 +504,6 @@ Adviser:
 
     .sidebar:hover a i .badge{
         display: none;
-    }
-
-    #sidebar a:hover{
-        color: #fff;
-        background-color: #424242;
-        color: #c51d3a;
-        border-left: 5px solid #c51d3a;
     }
 
     .table-hover td.fit,
@@ -700,6 +697,13 @@ Adviser:
         height: 32px;
         min-height: 32px;
     }
+
+    #sidebar a:hover{
+        color: #fff;
+        background-color: #424242;
+        color: #c51d3a;
+        border-left: 5px solid #c51d3a;
+    }
     
     @keyframes loading-1 {
         0% {
@@ -732,8 +736,9 @@ Adviser:
             -webkit-transform: rotate(135deg);
             transform: rotate(135deg)
         }
-    }   
+    } 
 
+    /* SCREEN RESPONSIVENESS */
     @media (min-width: 768px) {
         td{
             padding: 10px;
@@ -744,7 +749,6 @@ Adviser:
             }
         }
 
-    /* SCREEN RESPONSIVENESS */
     @media screen and (max-width : 1020px){
         #carousel{
             display: none;
@@ -766,6 +770,10 @@ Adviser:
     }
 
     @media screen and (max-width : 500px){
+        .settings_row{
+            display: block;
+        }
+        
         #date_today{
         display: none;
         }
@@ -995,7 +1003,7 @@ Adviser:
     {% if request.user.user_type == "REGISTRAR" %}
     <!-- SETTINGS MODAL -->
     <div id="Settings_modal_71" class="modal fade" id="exampleModal_71" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" id = "setting_modal_size" style="max-width: 800px; min-width: 350px; width: 100vw;" role="document">
+        <div class="modal-dialog" id = "setting_modal_size" style="max-width: 800px; min-width: 350px; width: 97vw;" role="document">
             <div class="modal-content">
 
                 <!--MODAL HEADER-->
@@ -1013,13 +1021,12 @@ Adviser:
                         <div id="accordion">
                             <div>
 
-
                                 <form method="POST" action="reg_updateName">
                                     {% csrf_token %}
                                 <div class="card-header">
                                     <a class="card-link" data-toggle="collapse" href="#collapseOne_71">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex justify-content">
+                                            <div class="settings_row justify-content">
                                                 <div class="p-2 flex-fill " style="color: #000000;" id="uname_lbl_71">
                                                      User Name: {{request.user.first_name}} {{request.user.last_name}} </div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;"
@@ -1055,7 +1062,7 @@ Adviser:
                                 <div class="card-header">
                                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_71">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex bd-highlight">
+                                            <div class="settings_row bd-highlight">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" type="email" id="uemail_lbl_71">
                                                     Email Address: {{request.user.email}}</div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;"
@@ -1087,7 +1094,7 @@ Adviser:
                                 <div class="card-header">
                                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour_71">
                                         <table class="table-responsive-sm">
-                                            <div class="d-flex bd-highlight">
+                                            <div class="settings_row bd-highlight">
                                                 <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="deptname_lbl_71">Password:</div>
                                                 <div class="d-flex justify-content-end" style="color: #000000;" 
                                                 id="edit_btn_71"><button class="btn btn-secondary btn-sm" 
@@ -1131,7 +1138,7 @@ Adviser:
                             <div class="card-header">
                                 <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive_71">
                                     <table class="table-responsive-sm">
-                                        <div class="d-flex bd-highlight">
+                                        <div class="settings_row bd-highlight">
                                             <div class="p-2 flex-fill bd-highlight" style="color: #000000;" id="cnumf_lbl_71"> 
                                                 Contact Number: {{request.user.contact_number}}</div>
                                             <div class="d-flex justify-content-end" style="color: #000000;" 

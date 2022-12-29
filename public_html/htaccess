@@ -1,13 +1,12 @@
-PassengerFriendlyErrorPages on
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
 PassengerAppRoot "/home/tupclget/request_credentials_system"
 PassengerBaseURI "/"
 PassengerPython "/home/tupclget/virtualenv/request_credentials_system/3.6/bin/python"
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+PassengerFriendlyErrorPages on
 # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
 <IfModule Litespeed>
 </IfModule>
 # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
-
 
 lsapi_phpini /home/tupclget/public_html/php.ini

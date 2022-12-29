@@ -37,9 +37,9 @@ SECRET_KEY = 'django-insecure-66yny&_e3kz@(3nux544d*spq7e&@9hbqo7j&gd4d&qv!ry^gw
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # SET TO FALSE FOR SECURITY PURPOSES
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['tupcaviteregistrar.site']
+ALLOWED_HOSTS = ['tupcaviteregistrar.site', 'www.tupcaviteregistrar.site']
 
 
 # Application definition

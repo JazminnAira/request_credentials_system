@@ -470,9 +470,7 @@ Adviser:
                             </td>
                             {% if request.user.user_type == "REGISTRAR" %}
                             <td>
-                                {% if instance.approval_status ==  'APPROVED' %}
-                                Approved
-                                {% else %}
+                                {% if instance.approval_status !=  'APPROVED' %}
                                 <!--APPROVED BY REGISTRAR-->
                                 <a href="{% url 'approve_clearform' instance.id %}"><button class="table-icon" id="btn" >Approve</button></a>
                                 {% endif %}
