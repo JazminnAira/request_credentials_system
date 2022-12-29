@@ -190,9 +190,6 @@ def req_print(request, id):
     p.setFont("Helvetica", 7)
     p.drawString(115, 663, f'{content.purpose_of_request_reason}')
 
-    reg = user_table.objects.get(user_type="REGISTRAR")
-    p.drawString(275, 635, f'{reg.full_name}')
-    p.drawString(425, 110, f'{reg.full_name}')
 
     for line in lines:
         textob.textLine(line)
@@ -1003,7 +1000,7 @@ def graduation_print(request, id):
         p.drawImage(im, 408, 74, height=15, width=80, mask='auto')
     else:
         p.setFont("Helvetica", 5.5)
-        p.drawString(258, 74, "Approved *Manual Signature Required")
+        p.drawString(258, 66, "Approved *Manual Signature Required")
 
     for line in lines:
         textob.textLine(line)
@@ -1063,7 +1060,7 @@ def clearance_print(request, id):
     if num > 3:
         p.setFont("Helvetica", 7)
         result = ' '.join(hs_grad.split()[:3])
-        p.drawString(180, 610, f"""{result}""")
+        p.drawString(180, 613, f"""{result}""")
         result1 = ' '.join(hs_grad.split()[3:])
         p.drawString(43, 587, f"""{result1}""")
     else:
@@ -1545,12 +1542,12 @@ def clearance_print(request, id):
     if adaa_stat == "ESIGN":
         p.drawString(482, 190, f"""{adaaname}""")
         im = "../public_html/Media/"+str_esign_adaa
-        p.drawImage(im, 482, 180, height=25, width=80, mask='auto')
+        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
 
     elif adaa_stat == "UPLOAD":
         p.drawString(482, 190, f"""{adaaname}""")
         im = "../public_html/Media/"+str_upload_adaa
-        p.drawImage(im, 482, 180, height=25, width=80, mask='auto')
+        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
 
     elif adaa_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
