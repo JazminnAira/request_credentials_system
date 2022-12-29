@@ -65,7 +65,7 @@ Adviser:
         background-attachment: fixed;
         background-size: cover;
         margin: 0;
-        min-height: 900px;
+        min-height: 800px;
         clear: both;
     }
     
@@ -172,12 +172,26 @@ Adviser:
         
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 500px) {
    
         #appointment_modal{
             max-width: fit-content;
             max-height: fit-content;
         }
+        body {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15.5px);
+        -webkit-backdrop-filter: blur(15.5px);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        margin: 0;
+        min-height: 600px;
+        clear: both;
+    }
 
         #claiming_lbl{
             font-size: medium;
@@ -253,7 +267,7 @@ Adviser:
                                             <input type="file" name="file_attach" >
                                             
                                         </div>
-                                    
+                                    </div>
                                      
                               
                             <!--MODAL FOOTER-->
@@ -265,7 +279,7 @@ Adviser:
 
                            
                         </form>
-                </div>
+                
         </div>
     </section>
 </body>
