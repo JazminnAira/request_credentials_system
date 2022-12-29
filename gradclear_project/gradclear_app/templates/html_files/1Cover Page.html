@@ -155,7 +155,7 @@ Adviser:
         color: black;
         border-radius: 10px;
         background-color: #dedede;
-        width: 25%;
+        width: max-content;
     }
     
     .btn-3:hover {
@@ -219,6 +219,10 @@ Adviser:
 
     .modal-footer {
         background-color: #c51d3a;
+    }
+
+    .open_nav{
+        display: none;
     }
 
     #contact_phonelogo {
@@ -285,6 +289,10 @@ Adviser:
         background-color: #d3324d; 
     }
 
+    #nav_space{
+        dislay: none;
+    }
+
     #person_01{
         float: center;
         font-size: 20px;
@@ -307,9 +315,9 @@ Adviser:
     }
     
     /* SCREEN RESPONSIVENESS */
-    @media screen and (max-width: 690px){
+    @media screen and (max-width: 768px){
         #mid_div{
-            width: 97vw;
+            width: 100vw;
         }
         
         #signup_login_container{
@@ -319,7 +327,7 @@ Adviser:
     
     @media screen and (max-width: 600px){
         li{
-            font-size: 0.7em;
+            font-size: 1em;
         }
 
         #create_account{
@@ -345,21 +353,93 @@ Adviser:
             height:65px;
             text-align: center;
             margin-top: 5px;
-        }
-
-        #studentsignup_btn_01, #alumnussignup_btn_01, #facultysignup_btn_01{
             padding-top: 1.3em;
             padding-bottom: 1.3em;
         }
 
     }
 
-    @media screen and (max-width: 450px){  
+    @media screen and (min-width: 576px){
+        #navbar{
+            display: block;
+        }
+    }
+
+    @media screen and (max-width: 576px){
+        .open_nav{
+            z-index: 1;
+            top:4vh;
+            position: relative;
+            cursor: pointer;
+            display: block;
+        }
+
+        .open_nav i {
+            font-size: 7vh;
+            color: #c51d3a;
+        }
+
+        .nav_buttons{
+            display: block;
+            background-color : none;
+        }
+        
+        #mid_div{
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+        #navbar{
+            display: none;
+            background-color: rgba(255,255,255,0.35);
+            backdrop-filter: blur( 4px );
+            -webkit-backdrop-filter: blur( 4px );
+        }
+
+        #nav_space{
+            height: 0;
+        }
+
+        #signlog_container{
+            padding-top: 0;
+            margin-top: 0;
+        } 
+
+        #signup_login_container{
+            margin-top: 0;
+        }
+
+        #subtitle_cover{
+            font-size: 25px;
+            margin-bottom:2px;
+        }
+
+        #title_cover{
+            font-size: 44px;
+            margin-bottom: 0;
+            padding-top:0;
+            margin-top: 5vh;
+        }
+    }
+
+    @media screen and (max-width: 455px){  
+        .btn-3{
+            width: 80vw;
+        }
+
+        .open_nav i {
+            font-size: 5vh;
+        }
+
+        .pre_button {
+            display : block;
+        }
+
         #mid_div{
             background: rgba( 255, 255, 255, 0.1);
             box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
             border: 1px solid rgba( 255, 255, 255, 0.1 );
-            width:97vw;
+            width:100vw;
             padding-top: 2px;
             margin-top:10px;
         }
@@ -379,9 +459,9 @@ Adviser:
         }
         
         #title_cover{
-            font-size: 44px;
+            font-size: 40px;
             margin-bottom: 2px;
-            margin-top: 5px;
+            margin-top: 10vh;
             padding-top:0;
         }
         
@@ -394,11 +474,23 @@ Adviser:
         #navbar{
             line-height: 10px;
         }
+
+        #signup_login_container{
+            margin-bottom: 0;
+        }
     }
 
     @media screen and (max-height: 750px){
         #navbar{
             line-height: 5px;
+        }
+
+        #title_cover{
+            margin-top: 3vh;
+        }
+
+        #title_hide{
+            position: relative;
         }
     }
     
@@ -411,22 +503,64 @@ Adviser:
             margin-top: 20px;
             padding-bottom: 10px;
         }
+
     }
+
+    @media screen and (max-width: 700px){
+        h5{
+            font-size: 15px;
+        }
+    }
+
+    @media screen and (max-width: 390px){
+        h5{
+            font-size: 13px;
+        }
+
+        #maincontent_01{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+    @media screen and (max-width: 301px){
+        h5{
+            font-size: 13px;
+        }
+
+        #maincontent_01{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #officername_01{
+            font-size: 15px;
+        }
+    }
+
 </style>
 
 <body>
     <!-- NAVIGATION BAR -->
     <ul id="navbar">
         <!-- SERVICES OFFERED -->
-        <li><a href="" data-toggle="modal" data-target="#Services_modal_01">Services</a></li>
+        <span class="nav_buttons">
+        <li><a href="" data-toggle="modal" data-target="#Services_modal_01">Services</a></li></span>
         <!-- HOW TO USE THE SYSTEM -->
-        <li><a href="" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li>
+        <span class="nav_buttons">
+        <li><a href="" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li></span>
         <!-- TO GOOGLE MAPS -->
-        <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li>
+        <span class="nav_buttons">
+        <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li></span>
         <!-- TO GOOGLE MAIL -->
-        <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li>    
+        <span class="nav_buttons">
+        <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li></span>
         <!-- TO FACEBOOK PAGE -->
-        <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li>
+        <span class="nav_buttons">
+        <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li></span>
+        <!--CLOSE NAVIGATION IN MOBILE DISPLAY-->
+        <span class="nav_buttons" id="collapse_navbar" style="display: none;">
+        <li><a>Close</a></li></span>
         <!-- PRIVACY POLICY -->
         <!--<li><a href="privacy_policy">Privacy Policy</a></li>-->
         <!-- CREATE AN ACCOUNT -->
@@ -455,28 +589,28 @@ Adviser:
                     <form action = "1Sign_Up.html" method="get">
 
                         <!--PRE SIGNUP MODAL STUDENT SIGN UP BUTTON-->
-                        <a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark" 
-                         id="studentsignup_btn_01" style="width: max-content;" value = "STUDENT"
+                        <span class="pre_button"><a href="{% url 'student_signup' %}" type="button" class="btn btn-3 border-dark" 
+                         id="studentsignup_btn_01" value = "STUDENT"
                          onclick= "user_identifier()"><span>Student</span>
-                        </a>
+                        </a></span>
 
                         <!--PRE SIGNUP MODAL OLD STUDENT SIGN UP BUTTON-->
-                        <a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border-dark " 
-                         id="oldstudentsignup_btn_01"  value = "OLD STUDENT"
+                        <span class="pre_button"><a href="{% url 'oldstudent_signup' %}" type="button" class="btn btn-3 border-dark " 
+                         id="oldstudentsignup_btn_01" value = "OLD STUDENT"
                          onclick= "user_identifier()"><span>Old Student</span>
-                        </a>
+                        </a></span>
 
                         <!--PRE SIGNUP MODAL ALUMNI SIGN UP BUTTON-->
-                        <a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark "
-                         id="alumnussignup_btn_01" style="width: max-content;"value = "ALUMNUS"
+                        <span class="pre_button"><a href="{% url 'alumnus_signup' %}" type="button" class="btn btn-3 border-dark "
+                         id="alumnussignup_btn_01" value = "ALUMNUS"
                          onclick= "user_identifier()"><span>Alumnus</span>
-                        </a>
+                        </a></span>
 
                         <!--PRE SIGNUP MODAL FACULTY SIGN UP BUTTON-->
-                        <a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 border-dark "
-                         id="facultysignup_btn_01" style="width: max-content;"value = "FACULTY"
+                        <span class="pre_button"><a href="{% url 'faculty_signup' %}" type="button" class="btn btn-3 border-dark "
+                         id="facultysignup_btn_01" value = "FACULTY"
                          onclick= "user_identifier()"><span>Faculty</span>
-                        </a>
+                        </a></span>
                     </form>
                 </div>
                 
@@ -488,15 +622,19 @@ Adviser:
     </div>
 
     <!--MAIN SCREEN-->
-    <div class="container mt-4 container-1" id="signup_login_container">
-        <div class="row container-fluid" id="mid_div" > 
+    <div class="container container-1" id="signup_login_container">
+        <p align = "right" id="nav_space">
+            <button type="button" class="btn open_nav" title ="Menu" id="menu_bar"><i class="fa fa-bars"></i></button>
+        </p>
+        <div class="row container-fluid" id="mid_div" >
+            
             <div class="col-sm-7 " id="title_hide">
                 <!-- HEADINGS  -->
                 <h1  style="color: #fff;" id ="title_cover"> Office of the <br>Campus <br> Registrar</h1>
                 <h2 class=" text-white" id ="subtitle_cover">TUP Cavite</h2>
             </div>
             
-            <div class="col-sm-5" style="background-color: #fff; float: right; border-radius: 10px;" id="signlog_container">
+            <div class="col-sm" style="background-color: #fff; float: right; border-radius: 10px;" id="signlog_container">
                 <form method="POST">
                     {% csrf_token %}
                     <div style="margin-bottom: 30px;">
@@ -753,6 +891,20 @@ Adviser:
 
     //  SET MESSAGE BANNER TO DISAPPEAR AFTER 20 SECONDS
     setInterval(function(){ $(".alert").fadeOut(); }, 20000);
+
+    //NAVIGATION OPEN AND CLOSE FUNCTION
+
+    menu_bar.addEventListener("click", function() {
+        document.getElementById("navbar").style.display = "block";
+        document.getElementById("menu_bar").style.display = "none";
+        document.getElementById("collapse_navbar").style.display = "block";
+    });
+
+    collapse_navbar.addEventListener("click", function() {
+        document.getElementById("navbar").style.display = "none";
+        document.getElementById("menu_bar").style.display = "block";
+        document.getElementById("collapse_navbar").style.display = "none";
+    });
 
 </script>
 
