@@ -332,12 +332,11 @@ Adviser:
             /* -webkit-print-color-adjust: exact; */
         }
     }
-
     @media screen and (max-width: 450px) {
-    #backtotop_btn_42 {
-            display: none;
+        #backtotop_btn_42 {
+                display: none;
+            }
         }
-    }
 </style>
 
 <body>
@@ -442,10 +441,10 @@ Adviser:
                 <label for="dygt_42" class="col-sm-3 col-form-label col-form-label-sm" id="dygt_lbl_42">Did you graduate at TUPC:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="grad_option_420" id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" >Yes
+                <input class="my-1 mr-2" type="radio" name="grad_option_420" id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox(), isEmpty()" oninput="enter_tupgradYes(), isEmpty()" >Yes
                 </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="grad_option_420" id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()">No
+                <input class="my-1 mr-2" type="radio" name="grad_option_420" id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox(), isEmpty()" oninput ="enter_tupgradNo(), isEmpty()">No
                 </label>
                     <p id="tupcans_error_42"></p>
                 </div>
@@ -489,20 +488,20 @@ Adviser:
                 <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" checked>Yes
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1(), isEmpty()" oninput="enter_lastreqYes(), isEmpty()" checked>Yes
                 </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1(), isEmpty()" oninput="enter_lastreqNo(), isEmpty()" disabled>No
                 </label>
                 </div>
                 {% else %}
                 <label for="request_42" class="col-sm-4 col-form-label col-form-label-sm" id="prevreq_42">Have you requested for the checked items below previously:<span id="asteris_42" style="color:red;">*</span></label>
                 <div>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" >Yes
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1(), isEmpty()" oninput="enter_lastreqYes(), isEmpty()" >Yes
                 </label>
                     <label class="radio-inline">
-                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" >No
+                <input class="my-1 mr-2" type="radio" name="requested_option_420" id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1(), isEmpty()" oninput="enter_lastreqNo(), isEmpty()" >No
                 </label>
                 </div>
                 {% endif %}
@@ -679,6 +678,62 @@ Adviser:
         </div>
     </div>
 </body>
+
+{% if request.user.user_type == "STUDENT" %}
+<script>
+    // DISABLE BTN WHEN FORM INCOMPLETE
+    function isEmpty() {
+        let ln_box = document.getElementById("ln_box_42").value;
+        let fn_box = document.getElementById("fn_box_42").value;
+        let padd_box = document.getElementById("padd_box_42").value;
+        let dait_box = document.getElementById("dait_box_42").value;
+        let course_drp = document.getElementById("course_42").value;
+        let hswg_box = document.getElementById("hswg_box_42").value;
+        let course_adviser = document.getElementById("course_adviser_42").value;
+        let lastterm = document.getElementById("lasterm_box_42").value;
+        let purpose_request = document.getElementById("preq_box_42").value;
+        let yes_req = document.getElementById("reqYes_radio_42").checked;
+        let no_req = document.getElementById("reqNo_radio_42").checked;
+
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1" && lastterm!= "" && purpose_request!="" && yes_req == true || no_req == true) {
+            document.getElementById("submit_btn_42").removeAttribute("disabled");
+        }
+        else{
+            document.getElementById('submit_btn_42').disabled=true;
+        }
+    }
+</script>
+{% else %}
+<script>
+    // DISABLE BTN WHEN FORM INCOMPLETE
+    function isEmpty() {
+        let ln_box = document.getElementById("ln_box_42").value;
+        let fn_box = document.getElementById("fn_box_42").value;
+        let padd_box = document.getElementById("padd_box_42").value;
+        let dait_box = document.getElementById("dait_box_42").value;
+        let course_drp = document.getElementById("course_42").value;
+        let hswg_box = document.getElementById("hswg_box_42").value;
+        let course_adviser = document.getElementById("course_adviser_42").value;
+        let lastterm = document.getElementById("lasterm_box_42").value;
+        let purpose_request = document.getElementById("preq_box_42").value;
+        let yes_req = document.getElementById("reqYes_radio_42").checked;
+        let no_req = document.getElementById("reqNo_radio_42").checked;
+        let yes_grad = document.getElementById("gradYes_radio_42").checked;
+        let no_grad = document.getElementById("gradNo_radio_42").checked;
+
+        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1" && lastterm!= "" && purpose_request!="" && yes_req == true || no_req == true) {
+            if (yes_grad == true || no_grad == true){
+                document.getElementById("submit_btn_42").removeAttribute("disabled");
+            }else{
+                document.getElementById('submit_btn_42').disabled=true;
+            }
+        }
+        else{
+            document.getElementById('submit_btn_42').disabled=true;
+        }
+    }
+</script>
+{% endif %}
 
 </html>
 
@@ -1225,33 +1280,11 @@ Adviser:
         })
     }
     $("span.numbers").digits();
-
-
 </script>
 
 
 
 <script>
-    // DISABLE BTN WHEN FORM INCOMPLETE
-    function isEmpty() {
-        let ln_box = document.getElementById("ln_box_42").value;
-        let fn_box = document.getElementById("fn_box_42").value;
-        let padd_box = document.getElementById("padd_box_42").value;
-        let dait_box = document.getElementById("dait_box_42").value;
-        let course_drp = document.getElementById("course_42").value;
-        let hswg_box = document.getElementById("hswg_box_42").value;
-        let course_adviser = document.getElementById("course_adviser_42").value;
-        let lastterm = document.getElementById("lasterm_box_42").value;
-        let purpose_request = document.getElementById("preq_box_42").value;
-
-        if (ln_box != "" && fn_box != "" && padd_box != "" && dait_box != "" && course_drp != "" && hswg_box != "" && course_adviser!="1" && lastterm!= "" && purpose_request!="") {
-            document.getElementById("submit_btn_42").removeAttribute("disabled");
-        }
-        else{
-            document.getElementById('submit_btn_42').disabled=true;
-        }
-    }
-
     //ENABLE AND DISABLE CHECKBOXES
     function EnableDisableTextBox() {
         var gradYes_radio = document.getElementById("gradYes_radio_42");

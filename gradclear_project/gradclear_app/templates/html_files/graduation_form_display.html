@@ -306,6 +306,7 @@ Adviser:
             padding: 30px;
         }
     }
+    
     @media screen and (max-width: 450px) {
         #backtotop_btn_43{
             display: none;
@@ -638,7 +639,11 @@ Adviser:
                     <tr>
                          <td>{{i.subject7}}</td>
                          <td>{{i.starttime1_7}} - {{i.endtime1_7}} {{i.day1_7}}</td>
-                         <td>{{i.room7}}</td>
+                         {% if i.room7 is None %}
+                            <td> </td>
+                         {% else %}
+                            <td>{{i.room7}}</td>
+                         {% endif %}
                          <td>{{subject7_name}}</td>
                          <td class ="text-center">
                             {% if request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}

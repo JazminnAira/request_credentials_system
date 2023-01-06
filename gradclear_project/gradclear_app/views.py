@@ -270,15 +270,19 @@ def graduation_print(request, id):
         p.drawString(125, 625, f'{content.endtime1_1}')
         
         room1 = content.room1
-        num1 = len(room1.split())
-        if num1 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room1.split()[:3])
-            p.drawString(166, 635, f"""{result}""")
-            result1 = ' '.join(room1.split()[3:])
-            p.drawString(166, 630, f"""{result1}""")
-        else:  
-            p.drawString(166, 630, f'{content.room1}')
+        
+        if room1 is None:
+            p.drawString(166, 630, '')
+        else:
+            num1 = len(room1.split())
+            if num1 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room1.split()[:3])
+                p.drawString(166, 635, f"""{result}""")
+                result1 = ' '.join(room1.split()[3:])
+                p.drawString(166, 630, f"""{result1}""")
+            else:  
+                p.drawString(166, 630, f'{content.room1}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 630, f'{content.day1_1}')
 
@@ -322,15 +326,18 @@ def graduation_print(request, id):
         p.drawString(125, 605, f'{content.endtime1_2}')
         
         room2 = content.room2
-        num2 = len(room2.split())
-        if num2 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room2.split()[:3])
-            p.drawString(166, 610, f"""{result}""")
-            result1 = ' '.join(room2.split()[3:])
-            p.drawString(166, 605, f"""{result1}""")
-        else:    
-            p.drawString(166, 610, f'{content.room2}')
+        if room2 is None:
+            p.drawString(166, 610, '')
+        else:
+            num2 = len(room2.split())
+            if num2 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room2.split()[:3])
+                p.drawString(166, 610, f"""{result}""")
+                result1 = ' '.join(room2.split()[3:])
+                p.drawString(166, 605, f"""{result1}""")
+            else:    
+                p.drawString(166, 610, f'{content.room2}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 610, f'{content.day1_2}')
         sig2 = content.signature2
@@ -372,15 +379,18 @@ def graduation_print(request, id):
         p.drawString(125, 580, f'{content.endtime1_3}')
         
         room3 = content.room3
-        num3 = len(room3.split())
-        if num3 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room3.split()[:3])
-            p.drawString(166, 590, f"""{result}""")
-            result1 = ' '.join(room3.split()[3:])
-            p.drawString(166, 585, f"""{result1}""")
+        if room3 is None:
+            p.drawString(166, 585, '')
         else:
-            p.drawString(166, 585, f'{content.room3}')
+            num3 = len(room3.split())
+            if num3 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room3.split()[:3])
+                p.drawString(166, 590, f"""{result}""")
+                result1 = ' '.join(room3.split()[3:])
+                p.drawString(166, 585, f"""{result1}""")
+            else:
+                p.drawString(166, 585, f'{content.room3}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 585, f'{content.day1_3}')
         sig3 = content.signature3
@@ -425,15 +435,18 @@ def graduation_print(request, id):
         
         
         room4 = content.room4
-        num4 = len(room4.split())
-        if num4 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room4.split()[:3])
-            p.drawString(166, 570, f"""{result}""")
-            result1 = ' '.join(room4.split()[3:])
-            p.drawString(166, 565, f"""{result1}""")
-        else:   
-            p.drawString(166, 565, f'{content.room4}')
+        if room4 is None:
+           p.drawString(166, 565, '') 
+        else:
+            num4 = len(room4.split())
+            if num4 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room4.split()[:3])
+                p.drawString(166, 570, f"""{result}""")
+                result1 = ' '.join(room4.split()[3:])
+                p.drawString(166, 565, f"""{result1}""")
+            else:   
+                p.drawString(166, 565, f'{content.room4}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 565, f'{content.day1_4}')
 
@@ -477,15 +490,18 @@ def graduation_print(request, id):
         p.drawString(125, 538, f'{content.endtime1_5}')
         
         room5 = content.room5
-        num5 = len(room5.split())
-        if num5 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room5.split()[:3])
-            p.drawString(166, 548, f"""{result}""")
-            result1 = ' '.join(room5.split()[3:])
-            p.drawString(166, 543, f"""{result1}""")
-        else: 
-            p.drawString(166, 543, f'{content.room5}')
+        if room5 is None:
+            p.drawString(166, 543,'')
+        else:
+            num5 = len(room5.split())
+            if num5 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room5.split()[:3])
+                p.drawString(166, 548, f"""{result}""")
+                result1 = ' '.join(room5.split()[3:])
+                p.drawString(166, 543, f"""{result1}""")
+            else: 
+                p.drawString(166, 543, f'{content.room5}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 542, f'{content.day1_5}')
 
@@ -530,15 +546,18 @@ def graduation_print(request, id):
         p.drawString(125, 515, f'{content.endtime1_6}')
         
         room6 = content.room6
-        num6 = len(room6.split())
-        if num6 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room6.split()[:3])
-            p.drawString(166, 525, f"""{result}""")
-            result1 = ' '.join(room6.split()[3:])
-            p.drawString(166, 520, f"""{result1}""")
-        else:    
-            p.drawString(166, 520, f'{content.room6}')
+        if room6 is None:
+            p.drawString(166, 520, '')
+        else:
+            num6 = len(room6.split())
+            if num6 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room6.split()[:3])
+                p.drawString(166, 525, f"""{result}""")
+                result1 = ' '.join(room6.split()[3:])
+                p.drawString(166, 520, f"""{result1}""")
+            else:    
+                p.drawString(166, 520, f'{content.room6}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 520, f'{content.day1_6}')
 
@@ -582,15 +601,18 @@ def graduation_print(request, id):
         p.drawString(125, 490, f'{content.endtime1_7}')
         
         room7 = content.room7
-        num7 = len(room7.split())
-        if num7 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room7.split()[:3])
-            p.drawString(166, 500, f"""{result}""")
-            result1 = ' '.join(room7.split()[3:])
-            p.drawString(166, 495, f"""{result1}""")
-        else:    
-            p.drawString(166, 495, f'{content.room7}')
+        if room7 is None:
+            p.drawString(166, 495, '')
+        else:
+            num7 = len(room7.split())
+            if num7 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room7.split()[:3])
+                p.drawString(166, 500, f"""{result}""")
+                result1 = ' '.join(room7.split()[3:])
+                p.drawString(166, 495, f"""{result1}""")
+            else:    
+                p.drawString(166, 495, f'{content.room7}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 495, f'{content.day1_7}')
 
@@ -634,15 +656,18 @@ def graduation_print(request, id):
         p.drawString(125, 470, f'{content.endtime1_8}')
         
         room8 = content.room8
-        num8 = len(room8.split())
-        if num8 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room8.split()[:3])
-            p.drawString(166, 480, f"""{result}""")
-            result1 = ' '.join(room8.split()[3:])
-            p.drawString(166, 475, f"""{result1}""")
-        else:    
+        if room8 is None:
             p.drawString(166, 475, f'{content.room8}')
+        else:
+            num8 = len(room8.split())
+            if num8 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room8.split()[:3])
+                p.drawString(166, 480, f"""{result}""")
+                result1 = ' '.join(room8.split()[3:])
+                p.drawString(166, 475, f"""{result1}""")
+            else:    
+                p.drawString(166, 475, f'{content.room8}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 475, f'{content.day1_8}')
         sig8 = content.signature8
@@ -684,15 +709,18 @@ def graduation_print(request, id):
         p.drawString(125, 447, f'{content.endtime1_9}')
         
         room9 = content.room9
-        num9 = len(room9.split())
-        if num9 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room9.split()[:3])
-            p.drawString(166, 457, f"""{result}""")
-            result1 = ' '.join(room9.split()[3:])
-            p.drawString(166, 452, f"""{result1}""")
-        else:   
-            p.drawString(166, 452, f'{content.room9}')
+        if room9 is None:
+          p.drawString(166, 452, ' ')  
+        else:
+            num9 = len(room9.split())
+            if num9 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room9.split()[:3])
+                p.drawString(166, 457, f"""{result}""")
+                result1 = ' '.join(room9.split()[3:])
+                p.drawString(166, 452, f"""{result1}""")
+            else:   
+                p.drawString(166, 452, f'{content.room9}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 447, f'{content.day1_9}')
 
@@ -737,15 +765,18 @@ def graduation_print(request, id):
         p.drawString(125, 425, f'{content.endtime1_10}')
         
         room10 = content.room10
-        num10 = len(room10.split())
-        if num10 > 3:
-            p.setFont("Helvetica", 5)
-            result = ' '.join(room10.split()[:3])
-            p.drawString(166, 435, f"""{result}""")
-            result1 = ' '.join(room10.split()[3:])
-            p.drawString(166, 430, f"""{result1}""")
-        else:   
-            p.drawString(166, 430, f'{content.room10}')
+        if room10 is None:
+            p.drawString(166, 430,' ')
+        else:
+            num10 = len(room10.split())
+            if num10 > 3:
+                p.setFont("Helvetica", 5)
+                result = ' '.join(room10.split()[:3])
+                p.drawString(166, 435, f"""{result}""")
+                result1 = ' '.join(room10.split()[3:])
+                p.drawString(166, 430, f"""{result1}""")
+            else:   
+                p.drawString(166, 430, f'{content.room10}')
         p.setFont("Helvetica", 7)
         p.drawString(215, 430, f'{content.day1_10}')
         sig10 = content.signature10
@@ -790,15 +821,18 @@ def graduation_print(request, id):
         p.drawString(125, 252, f'{content.add_endtime1_1}')
         
         addroom1 = content.addroom1
-        addnum1 = len(addroom1.split())
-        if addnum1 > 3:
-            p.setFont("Helvetica", 4.5)
-            result = ' '.join(addroom1.split()[:3])
-            p.drawString(166, 260, f"""{result}""")
-            result1 = ' '.join(addroom1.split()[3:])
-            p.drawString(166, 255, f"""{result1}""")
-        else: 
-            p.drawString(166, 255, f'{content.addroom1}')
+        if addroom1 is None:
+            p.drawString(166, 255, '')
+        else:
+            addnum1 = len(addroom1.split())
+            if addnum1 > 3:
+                p.setFont("Helvetica", 4.5)
+                result = ' '.join(addroom1.split()[:3])
+                p.drawString(166, 260, f"""{result}""")
+                result1 = ' '.join(addroom1.split()[3:])
+                p.drawString(166, 255, f"""{result1}""")
+            else: 
+                p.drawString(166, 255, f'{content.addroom1}')
         p.setFont("Helvetica", 5)
         p.drawString(215, 255, f'{content.addday1_1}')
 
@@ -841,15 +875,18 @@ def graduation_print(request, id):
         p.drawString(125, 240, f'{content.add_endtime1_2}')
         
         addroom2 = content.addroom2
-        addnum2 = len(addroom2.split())
-        if addnum2 > 3:
-            p.setFont("Helvetica", 4.5)
-            result = ' '.join(addroom2.split()[:3])
-            p.drawString(166, 247, f"""{result}""")
-            result1 = ' '.join(addroom2.split()[3:])
-            p.drawString(166, 242, f"""{result1}""")
-        else: 
+        if addroom2 is None:
             p.drawString(166, 242, f'{content.addroom2}')
+        else:
+            addnum2 = len(addroom2.split())
+            if addnum2 > 3:
+                p.setFont("Helvetica", 4.5)
+                result = ' '.join(addroom2.split()[:3])
+                p.drawString(166, 247, f"""{result}""")
+                result1 = ' '.join(addroom2.split()[3:])
+                p.drawString(166, 242, f"""{result1}""")
+            else: 
+                p.drawString(166, 242, f'{content.addroom2}')
         p.setFont("Helvetica", 5)
         p.drawString(215, 242, f'{content.addday1_2}')
 
@@ -890,17 +927,21 @@ def graduation_print(request, id):
         p.setFont("Helvetica", 5)
         p.drawString(125, 230, f'{content.add_starttime1_3} -')
         p.drawString(125, 224, f'{content.add_endtime1_3}')
+    
         
         addroom3 = content.addroom3
-        addnum3 = len(addroom3.split())
-        if addnum3 > 3:
-            p.setFont("Helvetica", 4.5)
-            result = ' '.join(addroom3.split()[:3])
-            p.drawString(166, 233, f"""{result}""")
-            result1 = ' '.join(addroom3.split()[3:])
-            p.drawString(166, 228, f"""{result1}""")
-        else: 
-            p.drawString(166, 228, f'{content.addroom3}')
+        if addroom3 is None:
+            p.drawString(166, 228, '')
+        else:
+            addnum3 = len(addroom3.split())
+            if addnum3 > 3:
+                p.setFont("Helvetica", 4.5)
+                result = ' '.join(addroom3.split()[:3])
+                p.drawString(166, 233, f"""{result}""")
+                result1 = ' '.join(addroom3.split()[3:])
+                p.drawString(166, 228, f"""{result1}""")
+            else: 
+                p.drawString(166, 228, f'{content.addroom3}')
         p.setFont("Helvetica", 5)
         p.drawString(215, 228, f'{content.addday1_3}')
 
@@ -944,15 +985,18 @@ def graduation_print(request, id):
         p.drawString(125, 210, f'{content.add_endtime1_4}')
         
         addroom4 = content.addroom4
-        addnum4 = len(addroom4.split())
-        if addnum4 > 3:
-            p.setFont("Helvetica", 4.5)
-            result = ' '.join(addroom4.split()[:3])
-            p.drawString(166, 218, f"""{result}""")
-            result1 = ' '.join(addroom4.split()[3:])
-            p.drawString(166, 213, f"""{result1}""")
-        else: 
+        if addroom4 is None:
             p.drawString(166, 213, f'{content.addroom4}')
+        else:
+            addnum4 = len(addroom4.split())
+            if addnum4 > 3:
+                p.setFont("Helvetica", 4.5)
+                result = ' '.join(addroom4.split()[:3])
+                p.drawString(166, 218, f"""{result}""")
+                result1 = ' '.join(addroom4.split()[3:])
+                p.drawString(166, 213, f"""{result1}""")
+            else: 
+                p.drawString(166, 213, f'{content.addroom4}')
         p.setFont("Helvetica", 5)
         p.drawString(215, 213, f'{content.addday1_4}')
 
@@ -994,15 +1038,19 @@ def graduation_print(request, id):
         p.drawString(125, 195, f'{content.add_endtime1_5}')
         
         addroom5 = content.addroom5
-        addnum5 = len(addroom5.split())
-        if addnum5 > 3:
-            p.setFont("Helvetica", 4.5)
-            result = ' '.join(addroom5.split()[:3])
-            p.drawString(166, 203, f"""{result}""")
-            result1 = ' '.join(addroom5.split()[3:])
-            p.drawString(166, 198, f"""{result1}""")
-        else: 
-            p.drawString(166, 198, f'{content.addroom5}')
+        if addroom5 is None:
+            p.drawString(166, 198, ' ')
+        else:
+            
+            addnum5 = len(addroom5.split())
+            if addnum5 > 3:
+                p.setFont("Helvetica", 4.5)
+                result = ' '.join(addroom5.split()[:3])
+                p.drawString(166, 203, f"""{result}""")
+                result1 = ' '.join(addroom5.split()[3:])
+                p.drawString(166, 198, f"""{result1}""")
+            else: 
+                p.drawString(166, 198, f'{content.addroom5}')
         p.setFont("Helvetica", 5)
         p.drawString(215, 198, f'{content.addday1_5}')
 
