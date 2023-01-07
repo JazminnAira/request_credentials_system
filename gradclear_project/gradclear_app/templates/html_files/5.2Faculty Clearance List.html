@@ -250,12 +250,12 @@ Adviser:
         overflow-y: scroll;
     }
 
-    #approve_sig_btn{
+    #approve_sig_btn, #cancel_edit_digtal{
         background-color: #dedede;
         color: black;
     }
 
-    #approve_sig_btn:hover{
+    #approve_sig_btn:hover, #cancel_edit_digtal:hover{
         background-color: #dedede;
         color: white;
     }
@@ -328,12 +328,12 @@ Adviser:
         text-align: center;
     }
 
-    #esign_attach_sig_btn{
+    #esign_attach_sig_btn, #create_new_esign{
         background-color : #c51d3a;
         color : white;
     }
 
-    #esign_attach_sig_btn:hover{
+    #esign_attach_sig_btn:hover, #create_new_esign:hover{
         background-color : #d3324d;;
         color: black;
     }
@@ -603,75 +603,72 @@ Adviser:
             <br>
             <!--ATTACH ESIGN BUTTON-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg border p-3 border-dark">E-SIGNATURE</button>
-                <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Live E-signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
+                <button type = "button" id = "esign_attach_sig_btn" class ="btn btn-lg border p-3 border-dark">DIGITAL SIGNATURE</button>
+                <button type ="button" id="edit_esign_btn" class="btn btn-lg border-dark bg-secondary col-3 p-3 text-white center-block" title="Edit Digital Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button><br>
             </div>
-            <br>
-            <br>
-            <!--ATTACH UPLOADED BUTTON-->
-            <div class ="btn-group col-sm-10 col-md-10 col-xl-10 ">
-                <button type = "button" id = "upload_attach_sig_btn" class ="btn btn-lg border p-3">UPLOADED SIGNATURE</button>
-                <button type ="button" id="edit_uploaded_btn" class="btn btn-lg border-darK col-3 bg-secondary p-3 text-white center-block " title="Edit Uploaded Signature"><i class= "fa fa-edit" style ="font-size:25px;"></i></button>
-            </div>  
             <br>
             <br>
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
-                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 border border-dark">MANUAL SIGNATURE</button><br>
+                <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 bg-dark border text-white border-dark">PHYSICAL SIGNATURE</button><br>
             </div>
         </div>
         
         <div id="create_signature_area" class="p-1" hidden>
             <div id = "esignature_display" class = "m-2 mt-2 p-1" align="center">
-            {% if e_signature %}
                 <div class = "bg-dark p-2" align="left"><h4 class = "text-white">CURRENT E-SIGNATURE:</h4></div>
+            {% if esign_check %}
                 <img src ="/Media/{{e_signature}}" id ="imgSaved" class="p-1 mt-2 w-75 border border-dark rounded" >
                 <label class="lead">Recorded in: <b>{{esignature_datetime}}</b></label>
-            {% else %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT E-SIGNATURE</h4></div>
+            {% elif uploadsig_check %}
+                <img src ="/Media/{{uploaded_signature}}" id ="imgSaved" class="p-1 mt-3 w-75 border border-dark rounded" >
+                <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>
+            {%else%}
                 <div clas="p-2 border rounded">NO CURRENT E-SIGNATURE</div>
             {% endif %}
             </div>
             <hr>
-        
-            <div class = "bg-dark p-2 mt-2"><h4 id = "new_signature_text" class = "text-white">CREATE SIGNATURE HERE:</h4></div>
-            <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
-                <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
-                <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
-                <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
+
+            <!--CREATE NEW E-SIGNATURE-->
+            <div id="create_new_button" align="center" hidden>
+                <button type = "button" class = "btn btn-lg border-dark p-3 text-lg" id = "create_new_esign" style="width: 300px;">Create New E-signature</button>
+                <br>
+                <lable class= "label" style ="font-size:20px; padding-top:">OR</label>
             </div>
-        </div>
-        
-        <div id = "upload_signature_display" class = "p-3" align="center" hidden>
-        {% if uploaded_signature %}
-            <div class = "bg-dark p-2"><h4 class = "text-white" align="left">CURRENT UPLOADED SIGNATURE:</h4></div>
-            <img src ="/Media/{{uploaded_signature}}" id ="imgSaved" class="p-1 mt-3 w-75 border border-dark rounded" >
-            <label class="lead">Recorded in: <b>{{uploaded_datetime}}</b></label>  
-           
-        {% else %}
-            <div class = "bg-dark p-2"><h4 class = "text-white">CURRENT UPLOADED SIGNATURE:</h4></div>
-            <div class="p-2 border rounded">NO CURRENT UPLOADED SIGNATURE</div>
             
-        {% endif %}
-        
+            <div id="create_new_esignature" hidden>
+                <div class = "bg-dark p-2 mt-2"><h4 id = "new_signature_text" class = "text-white">CREATE SIGNATURE HERE:</h4></div>
+                <div class="wrapper border rounded m-2 mt-3 p-1" align = "center">
+                    <canvas name="signature" id="signature_pad" width="350" height="180" class="m-1"></canvas>
+                    <button type="button" id="clear" class = "btn-dark text-white col-3 p-1 m-1 btn-lg"><span> Clear </span></button> 
+                    <button type="button" id="cancel_create" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
+                </div>
+            </div>
+
+            <!--UPLOAD NEW E-SIGNATURE-->
+            <div id="upload_new_button" align="center" hidden>
+                <button type = "button" class = "btn btn-lg border-dark bg-dark text-white p-3 text-lg " id = "upload_new_esign" style="width: 300px;">Attach New Image of Signature</button>
+                <br>
+                <br>
+                <button type = "button" class = "btn btn-lg border-dark p-2 text-lg" id = "cancel_edit_digtal" style="width: 300px;">Cancel</button>
+            </div>
+
+            <form method="POST" action ="update_clearance_signature/{{id}}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
+                <input type="text" name ="id_num" value ="{{id}}" hidden>
+                <div id ="upload_signature_area" class="p-2" hidden>
+                    <div class = "bg-dark p-2 mb-2 mt-1"><h4 class = "text-white" id ="upload_text">UPLOAD SIGNATURE HERE:</h4></div>
+                    <img id="preview" class="p-1 w-100 border">
+                    <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
+                    <p><label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></label></p>
+                    <button type="button" id="cancel_upload" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
+                </div>
+                <div id="submit_signature" class="m-3" align="center" hidden>
+                    <button type="submit" class="btn col-8 btn-lg border border-dark btn_save">Save Signature</button>
+                </div>
+            </form>
         </div>
-        
-        <form method="POST" action ="update_clearance_signature/{{id}}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <textarea id ="image_encoded" name="image_encoded" hidden></textarea>
-            <input type="text" name ="id_num" value ="{{id}}" hidden>
-            <div id ="upload_signature_area" class="p-2" hidden>
-                <hr>
-                <div class = "bg-dark p-2 mb-2 mt-1"><h4 class = "text-white" id ="upload_text">UPLOAD SIGNATURE HERE:</h4></div>
-                <img id="preview" class="p-1 w-100 border">
-                <input id="uploaded_signature_new" type="file" accept="image/*" name= "new_upload_signature" onchange="loadFile(event)">
-                <p><label>Note: Please attach an image of your signature with clear and clean white background. Submit it with this file name format: (LASTNAME_FIRSTNAME_MIDDLENAME.jpg/png)<br> See example: <img src="static/Media/sample.png"></label></p>
-                <button type="button" id="cancel_upload" class = "col-3 p-1 m-1 btn-lg"><span> Cancel </span></button> 
-            </div>
-            <div id="submit_signature" class="m-3" align="center" hidden>
-                <button type="submit" class="btn col-8 btn-lg border border-dark btn_save">Save Signature</button>
-            </div>
-        </form>
     </div>
 
     <div class ="table_list" id = "table_list">
@@ -858,27 +855,8 @@ Adviser:
                     Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
-                    <button type="button" class="btn" id="yes_esign" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
-                    <button type="button" class="btn" id="no_esign" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--CONFIRMATION FOR UPLOADED-->
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal2">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #424242;">
-                    <h4 class="modal-title" id="myModalLabel" style="color: white; font-size: 20px;">Confirmation</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
-                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
-                </div>
-                <div class="modal-footer" style="background-color:#c31d35">
-                    <button type="button" class="btn" id="yes_upload" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
-                    <button type="button" class="btn" id="no_upload" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                    <button type="button" class="btn" id="yes_esign" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Continue</button>
+                    <button type="button" class="btn" id="no_esign" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">Cancel</button>
                 </div>
             </div>
         </div>
@@ -896,8 +874,8 @@ Adviser:
                     Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
-                    <button type="button" class="btn" id="yes_manually" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Yes</button>
-                    <button type="button" class="btn" id="no_manually" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">No</button>
+                    <button type="button" class="btn" id="yes_manually" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Continue</button>
+                    <button type="button" class="btn" id="no_manually" style="background-color: #e7dfe4; color: #c31d35; padding-left: 1vw; padding-right: 1vw;">Cancel</button>
                 </div>
             </div>
         </div>
@@ -970,31 +948,44 @@ Adviser:
     //SHOW CREATE SIGNATURE AREA
     edit_esign_btn.addEventListener("click", function() {
         document.getElementById("create_signature_area").hidden = false;
-        document.getElementById("upload_signature_area").hidden = true;
+        document.getElementById("button_area").hidden = true;
+        document.getElementById("show_details").hidden = true;
+        document.getElementById("create_new_button").hidden = false;
+        document.getElementById("upload_new_button").hidden = false;
+    });
+
+    create_new_esign.addEventListener("click", function() {
+        document.getElementById("create_new_esignature").hidden = false;
         document.getElementById("signature_pad").width = 350;
         document.getElementById("signature_pad").height = 200;
         document.getElementById("submit_signature").hidden = false;
         document.getElementById("button_area").hidden = true;
         document.getElementById("show_details").hidden = true;
+        document.getElementById("create_new_button").hidden = true;
+        document.getElementById("upload_new_button").hidden = true;
     });
 
-    edit_uploaded_btn.addEventListener("click", function() {
-        document.getElementById("create_signature_area").hidden = true;
+    upload_new_esign.addEventListener("click", function() {
+        document.getElementById("create_signature_area").hidden = false;
         document.getElementById("upload_signature_area").hidden = false;
         document.getElementById("submit_signature").hidden = false;
         document.getElementById("button_area").hidden = true;
         document.getElementById("show_details").hidden = true;
-        document.getElementById("upload_signature_display").hidden = false;
+        document.getElementById("create_new_button").hidden = true;
+        document.getElementById("upload_new_button").hidden = true;
     });
 
     cancel_create.addEventListener("click", function() {
-        document.getElementById("create_signature_area").hidden =true;
+        document.getElementById("create_signature_area").hidden =false;
         document.getElementById("submit_signature").hidden = true;
         document.getElementById("upload_signature_area").hidden = true;
         signaturePad.clear();
         document.getElementById('image_encoded').value = "";
-        document.getElementById("button_area").hidden = false;
-        document.getElementById("show_details").hidden = false;
+        document.getElementById("button_area").hidden = true;
+        document.getElementById("show_details").hidden = true;
+        document.getElementById("create_new_esignature").hidden = true;
+        document.getElementById("create_new_button").hidden = false;
+        document.getElementById("upload_new_button").hidden = false;
     });
 
     cancel_upload.addEventListener("click", function() {
@@ -1002,12 +993,25 @@ Adviser:
         document.getElementById("submit_signature").hidden = true;
         document.getElementById('uploaded_signature_new').value =null;
         document.getElementById('preview').src ="";
-        document.getElementById("upload_signature_display").hidden = true;
+        document.getElementById("button_area").hidden = true;
+        document.getElementById("show_details").hidden = true;
+        document.getElementById("create_signature_area").hidden =false;
+        document.getElementById("create_new_button").hidden = false;
+        document.getElementById("upload_new_button").hidden = false;
+    });
+
+    cancel_edit_digtal.addEventListener("click", function() {
+        document.getElementById("upload_signature_area").hidden = true;
+        document.getElementById("submit_signature").hidden = true;
+        document.getElementById('uploaded_signature_new').value =null;
+        document.getElementById('preview').src ="";
         document.getElementById("button_area").hidden = false;
         document.getElementById("show_details").hidden = false;
+        document.getElementById("create_signature_area").hidden =true;
+        document.getElementById("create_new_button").hidden = true;
+        document.getElementById("upload_new_button").hidden = true;
     });
     
-
     var loadFile = function(event) {
         var image = document.getElementById('preview');
         image.src=URL.createObjectURL(event.target.files[0]);
@@ -1113,15 +1117,12 @@ Adviser:
     var modalConfirm = function(callback){
   
         $("#esign_attach_sig_btn").on("click", function(){
-            if (document.getElementById('esign_checker').value == ""){
+            if (document.getElementById('esign_checker').value == "" && document.getElementById('upload_checker').value == ""){
                 document.getElementById("create_signature_area").hidden = false;
-                document.getElementById("upload_signature_area").hidden = true;
-                document.getElementById("signature_pad").width = 350;
-                document.getElementById("signature_pad").height = 200;
-                document.getElementById("submit_signature").hidden = false;
                 document.getElementById("button_area").hidden = true;
                 document.getElementById("show_details").hidden = true;
-                
+                document.getElementById("create_new_button").hidden = false;
+                document.getElementById("upload_new_button").hidden = false;
             }else{
                 $("#mi-modal").modal('show');
             }
@@ -1158,56 +1159,6 @@ Adviser:
         }  
         else {
             location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
-        }
-    };
-
-    //Confirm Submit CONFIRM SUBMIT IN UPLOADING
-    var modalConfirm = function(callback){
-  
-        $("#upload_attach_sig_btn").on("click", function(){
-            if (document.getElementById('upload_checker').value == ""){
-                document.getElementById("create_signature_area").hidden = true;
-                document.getElementById("upload_signature_area").hidden = false;
-                document.getElementById("submit_signature").hidden = false;
-                document.getElementById("button_area").hidden = true;
-                document.getElementById("show_details").hidden = true;
-                document.getElementById("upload_signature_display").hidden = false;
-            }else{
-                $("#mi-modal2").modal('show');
-            }
-        });
-      
-        $("#yes_upload").on("click", function(){
-          callback(true);
-          $("#mi-modal2").modal('hide');
-        });
-        
-        $("#no_upload").on("click", function(){
-          callback(false);
-          $("#mi-modal2").modal('hide');
-        });
-    };
-      
-    modalConfirm(function(confirm){
-        if(confirm){
-            upload_approved()
-        }else{
-            return false;
-        }
-    });
-
-    function upload_approved() {
-        id_list = document.getElementById('id_list').value;
-        var id_user = document.getElementById('attach_signature_to').value;
-        var dept = document.getElementById('department').value;
-        var sig = "UPLOAD";
-        if (id_list.length != 0){
-            document.getElementById('id_list').value = id_list
-            document.getElementById('sig').value= sig
-            document.getElementById("submit_btn_all").click()
-        }  
-        else {
-        location.href = "update_clearance/"+id_user+"/"+dept+"/"+sig;
         }
     };
      
@@ -1260,9 +1211,9 @@ Adviser:
         document.getElementById("button_area").hidden = false;
         document.getElementById("show_details").hidden = false;
         document.getElementById("create_signature_area").hidden = true;
+        document.getElementById("create_new_esignature").hidden = true;
         document.getElementById("upload_signature_area").hidden = true;
         document.getElementById("submit_signature").hidden = true;
-        document.getElementById("upload_signature_display").hidden = true;
         
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         if(checkboxes.length == 0){
@@ -1293,15 +1244,12 @@ Adviser:
 
     
     //CHANGE BUTTON TEXT ONCE SIGNATURE IS NONE
-    if(document.getElementById('esign_checker').value == ""){
-        document.getElementById('esign_attach_sig_btn').textContent = "CREATE E-LIVE SIGNATURE";
+    if(document.getElementById('esign_checker').value == "" && document.getElementById('upload_checker').value == ""){
+        document.getElementById('esign_attach_sig_btn').textContent = "CREATE OR ATTACH DIGITAL SIGNATURE";
+        document.getElementById('upload_new_esign').textContent = "Attach Image of Digital Signature";
+        document.getElementById('create_new_esign').textContent = "Create Digital Signature";
     }else{
-        document.getElementById('new_signature_text').innerHTML = "CREATE NEW E-SIGNATURE"
-    };
-    
-    if(document.getElementById('upload_checker').value == ""){
-        document.getElementById('upload_attach_sig_btn').textContent = "ATTACH SIGNATURE";
-    }else{
+        document.getElementById('new_signature_text').innerHTML = "CREATE NEW E-SIGNATURE";
         document.getElementById('upload_text').innerHTML = "UPLOAD NEW SIGANTURE";
     };
 
