@@ -179,16 +179,25 @@ Adviser:
         cursor: pointer;
         table-layout: fixed;
     }
+
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+    }
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content: "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content: "\25be";
         color: white;
     }
     
@@ -394,7 +403,6 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_72">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-        <a href="{% url 'registrar_dashboard_graduation_list' id=' '%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
         <a href="#" style ="font-size: 25px; margin: 0 0 10px 6px;" onclick="to_beprinted('grad_list_print')" data-toggle="tooltip" data-placement="right" title="Print">
             <i class="fa fa-print"></i>
         </a>
@@ -434,11 +442,11 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden> # </th>
-                            <th>Student's Name</th>
-                            <th>Course</th>
-                            <th>ID Number</th>
-                            <th>Date & Time Requested</th>  
-                            <th>Approval Status</th>
+                            <th class="sorting" title="Sort by Name">Student's Name</th>
+                            <th class="sorting" title="Sort by Course">Course</th>
+                            <th class="sorting" title="Sort by ID Number">ID Number</th>
+                            <th class="sorting" title="Sort by Date Requested">Date & Time Requested</th>  
+                            <th class="sorting" title="Sort by Approval Status">Approval Status</th>
                             <th>Notify</th>
                             {% if request.user.user_type == "REGISTRAR"%}
                             <th></th>
@@ -460,9 +468,9 @@ Adviser:
                         </tr>
                         {% endif %}
                     </thead>
-                    
-                    {% for instance in all %}
                     <tbody>
+                    {% for instance in all %}
+                    
                         <tr>
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
@@ -492,8 +500,9 @@ Adviser:
                             </td>
                             {% endif %}
                         </tr>
-                    </tbody>
                     {% endfor %}
+                    </tbody>
+                    
                 </table>
             </div>
         </div>
@@ -557,6 +566,44 @@ Adviser:
 
 
 <script>
+
+    //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
 // SHOW NO DATA IN TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_73");
     var rowcount = dattable.tBodies[0].rows.length;
@@ -737,39 +784,6 @@ Adviser:
         }, "300");
     });
 
-    // SORTING 
-    function sortTable(table, col, reverse) {
-        var tb = table.tBodies[0], 
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
-            i;
-        reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
-                    .localeCompare(b.cells[col].textContent.trim())
-                   );
-        });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
-    }
-    
-    function makeSortable(table) {
-        var th = table.tHead, i;
-        th && (th = th.rows[0]) && (th = th.cells);
-        if (th) i = th.length;
-        else return; 
-        while (--i >= 0) (function (i) {
-            var dir = 1;
-            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
-        }(i));
-    }
-    
-    function makeAllSortable(parent) {
-        parent = parent || document.body;
-        var t = parent.getElementsByTagName('table'), i = t.length;
-        while (--i >= 0) makeSortable(t[i]);
-    }
-    
-    window.onload = function () {makeAllSortable();};
 
     // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
     function OnSearch(input) {

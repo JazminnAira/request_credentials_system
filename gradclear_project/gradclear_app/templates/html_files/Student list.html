@@ -179,13 +179,13 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content:  "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content:  "\25be";
         color: white;
     }
     
@@ -202,6 +202,63 @@ Adviser:
     .table-wrapper{
         max-height: 550px;
         overflow-y: scroll;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    }
+
+    .dropdown-menu>li{	
+        position:relative;
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        /* Rules below not implemented in browsers yet */
+        -o-user-select: none;
+        user-select: none;
+        cursor:pointer;
+    }
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        display:none;
+        margin-top: -1px;
+        border-top-left-radius:0;
+        border-bottom-left-radius:0;
+        border-left-color:#fff;
+        box-shadow:none;
+    }
+    .right-caret:after,.left-caret:after
+    {	content:"";
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        display: inline-block;
+        height: 0;
+        vertical-align: middle;
+        width: 0;
+        margin-left:5px;
+    }
+    .right-caret:after
+    {	border-left: 5px solid #ffaf46;
+    }
+    .left-caret:after
+    {	border-right: 5px solid #ffaf46;
+    }
+
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
     }
 
     #backtotop_btn_75 {
@@ -256,6 +313,28 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+
+    #dropdownMenuLink{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+    
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
     }
 
     #list_tbl_75 {
@@ -369,13 +448,50 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_75">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-        <a href="{% url 'registrar_dashboard_student_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
         <a href="{% url 'school_year_update'%}" data-toggle="tooltip" data-placement="right" title="New School Year"><i class="fa fa-calendar-o" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
-        
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_75" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+
+
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
+            Sort by
+        </a>
+        <!--DROPODOWN TO FILTER-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="trigger right-caret dropdown-item">Year</a>
+                <ul class="dropdown-menu sub-menu"> 
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/All">All</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/4th">4th Year</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/3rd">3rd Year</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/2nd">2nd Year</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/1st">1st Year</a></li>
+                </ul>
+            </li>
+
+            <li><a class="trigger right-caret dropdown-item">Status</a>
+                <ul class="dropdown-menu sub-menu">
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/All">All</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/student">Student</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/old"> Old Student</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/alumni">Alumnus</a></li>
+
+                </ul>
+            </li>
+            <li><a class="trigger right-caret dropdown-item">Year Graduated</a>
+                <ul class="dropdown-menu sub-menu">
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/All">All</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/oldest">Oldest</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_student_list/latest">Latest</a></li>
+
+                </ul>
+            </li>
+            
+        </div>
+        
+
+        
 
     </div>
 
@@ -397,13 +513,13 @@ Adviser:
                         <tr>
                             <th hidden>#</th>
                             <th>Profile Picture</th>
-                            <th>Name</th>
-                            <th>ID Number</th>
-                            <th>Course</th>
-                            <th>Year Level</th>
-                            <th>Course Graduated</th>
-                            <th>Year Graduated</th>
-                            <th>Status</th>
+                            <th class="sorting" title="Sort by Name">Name</th>
+                            <th class="sorting" title="Sort by ID Number">ID Number</th>
+                            <th class="sorting" title="Sort by Course">Course</th>
+                            <th class="sorting" title="Sort by Year Level">Year Level</th>
+                            <th class="sorting" title="Sort by Course Graduated">Course Graduated</th>
+                            <th class="sorting" title="Sort by Year Graduated">Year Graduated</th>
+                            <th class="sorting" title="Sort by Application Status">Status</th>
                             <th></th>
                         </tr>
                         <tr class="no_data">
@@ -413,9 +529,9 @@ Adviser:
                             <td colspan="9"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
-                    
-                    {% for instance in data %}
                     <tbody>
+                    {% for instance in data %}
+                    
                         <tr>
                             <td hidden>{{instance.id}}</td>
                             <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
@@ -485,8 +601,9 @@ Adviser:
                                 <button type ="submit" class="submit">Remove</button>
                             </form></td>
                         </tr>
-                    </tbody>
+                    
                     {% endfor %}
+                    </tbody>
                 </table>
             </div>
             </div>
@@ -511,6 +628,63 @@ Adviser:
 
 
 <script>
+    //DROPDOWN WITHIN A DROPDOWN 
+    $(function(){
+        $(".dropdown-menu > li > a.trigger").on("click",function(e){
+            var current=$(this).next();
+            var grandparent=$(this).parent().parent();
+            if($(this).hasClass('left-caret')||$(this).hasClass('right-caret'))
+                $(this).toggleClass('right-caret left-caret');
+            grandparent.find('.left-caret').not(this).toggleClass('right-caret left-caret');
+            grandparent.find(".sub-menu:visible").not(current).hide();
+            current.toggle();
+            e.stopPropagation();
+        });
+        $(".dropdown-menu > li > a:not(.trigger)").on("click",function(){
+            var root=$(this).closest('.dropdown');
+            root.find('.left-caret').toggleClass('right-caret left-caret');
+            root.find('.sub-menu:visible').hide();
+        });
+    });
+
+    //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
+
     //DISPLAY NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_75");
     var rowcount = dattable.tBodies[0].rows.length;

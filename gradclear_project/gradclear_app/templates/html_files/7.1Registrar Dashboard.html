@@ -810,7 +810,7 @@ Adviser:
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
     
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list' id=' ' %}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     {% endif %}

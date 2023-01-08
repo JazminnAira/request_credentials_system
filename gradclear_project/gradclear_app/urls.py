@@ -68,7 +68,7 @@ urlpatterns = [
      # USER LISTS
      path('registrar_dashboard_faculty_list', registrar_dashboard_faculty_list,
           name="registrar_dashboard_faculty_list"),
-     path('registrar_dashboard_student_list', registrar_dashboard_student_list,
+     path('registrar_dashboard_student_list/<str:id>', registrar_dashboard_student_list,
           name="registrar_dashboard_student_list"),
      path('registrar_dashboard_staff_list', registrar_dashboard_staff_list,
           name="registrar_dashboard_staff_list"),
@@ -98,12 +98,17 @@ urlpatterns = [
      # LIST ORGANIZER
      path('registrar_dashboard_organize_request_list/<str:id>', registrar_dashboard_organize_request_list,
           name="registrar_dashboard_organize_request_list"),
+     path('registrar_dashboard_organize_clearance_list/<str:id>', registrar_dashboard_organize_clearance_list,
+          name="registrar_dashboard_organize_clearance_list"),
+     path('registrar_dashboard_organize_faculty_list/<str:id>', registrar_dashboard_organize_faculty_list,
+          name="registrar_dashboard_organize_faculty_list"),
      path('registrar_dashboard_organize_request_list/request_official_update/<int:id>',
           request_official_update, name='request_official_update'),
      path('registrar_dashboard_organize_request_list/request_form137_update/<int:id>', 
           request_form137_update, name='request_form137_update'),
      path('registrar_dashboard_organize_request_list/request_claim_update/<int:id>', 
           request_claim_update, name='request_claim_update'),
+     
      
      #  DOCUMENT CHECKER
      path('request_official_update/<int:id>', request_official_update, name='request_official_update'),

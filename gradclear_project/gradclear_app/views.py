@@ -6829,11 +6829,41 @@ def faculty_designation_update(request, id):
 
 # STUDENT LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
-def registrar_dashboard_student_list(request):
+def registrar_dashboard_student_list(request, id):
     # declaring template
     template = "html_files/Student list.html"
-    student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
-        user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
+    
+    
+    if id == "student":
+        student_data = user_table.objects.filter(
+            current_status="STUDENT").values()
+    elif id == "old":
+        student_data = user_table.objects.filter(
+            current_status="OLD STUDENT").values()
+    elif id == "alumni":
+        student_data = user_table.objects.filter(
+        current_status="ALMUNUS").values()
+    elif id == "4th":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="4").values()
+    elif id == "3rd":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="3").values()
+    elif id == "2nd":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="2").values()
+    elif id == "1st":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="1").values()
+    elif id =="oldest":
+        student_data = user_table.objects.filter(
+        year_graduated__isnull=False).order_by('year_graduated').values()
+    elif id =="latest":
+        student_data = user_table.objects.filter(
+        year_graduated__isnull=False).order_by('-year_graduated').values()
+    else:    
+        student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
+            user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
 
     context = {'data': student_data}
     return render(request, template, context)
@@ -6880,6 +6910,39 @@ def registrar_dashboard_organize_request_list(request, id):
         elif id == "UNCLAIMED":
             requests = request_form_table.objects.filter(
                 claim="UNCLAIMED").order_by('-time_requested').values()
+        elif id == "Honorable":
+            requests = request_form_table.objects.filter(
+                request="Honorable Dismissal").order_by('-time_requested').values()
+        elif id == "Subject":
+            requests = request_form_table.objects.filter(
+            request="Subject Description").order_by('-time_requested').values()
+        elif id == "Certification":
+            requests = request_form_table.objects.filter(
+                request__startswith = "Certification:").values()
+        elif id == "Authentication":
+            requests = request_form_table.objects.filter(
+            request="Authentication").order_by('-time_requested').values()
+        elif id == "Diploma":
+            requests = request_form_table.objects.filter(
+            request="Diploma").order_by('-time_requested').values()
+        elif id == "Transcript":
+            requests = request_form_table.objects.filter(
+            request="Transcript").order_by('-time_requested').values()
+        elif id == "CAV":
+            requests = request_form_table.objects.filter(
+            request="CAV").order_by('-time_requested').values()
+        elif id == "Others":
+            requests = request_form_table.objects.filter(
+                request__startswith="Others:").order_by('-time_requested').values()
+        elif id == "Student":
+            requests = request_form_table.objects.filter(
+                current_status="STUDENT").order_by('-time_requested').values()
+        elif id == "Old":
+            requests = request_form_table.objects.filter(
+                current_status="OLD STUDENT").order_by('-time_requested').values()
+        elif id == "Alumni":
+            requests = request_form_table.objects.filter(
+                current_status="ALMUNUS").order_by('-time_requested').values()
         elif id == "OLDEST":
             requests = request_form_table.objects.all().order_by('time_requested').values()
         elif id == "LATEST":
@@ -6893,6 +6956,97 @@ def registrar_dashboard_organize_request_list(request, id):
         return redirect('/')
 
     return render(request, 'html_files/Request List.html', {'data': requests, 'sorter_type': sorter})
+
+
+# CLEARANCE LIST AND DOCUMENT CHECKER LIST
+# CLEARANCE LIST WITH ORGANIZER
+@login_required(login_url='/')
+def registrar_dashboard_organize_clearance_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+
+        sorter = id
+
+        if id == "Honorable":
+            requests = clearance_form_table.objects.filter(
+                purpose_of_request="Honorable Dismissal").order_by('-time_requested').values()
+        elif id == "Subject":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Subject Description").order_by('-time_requested').values()
+        elif id == "Certification":
+            requests = clearance_form_table.objects.filter(
+                purpose_of_request__startswith = "Certification:").values()
+        elif id == "Authentication":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Authentication").order_by('-time_requested').values()
+        elif id == "Diploma":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Diploma").order_by('-time_requested').values()
+        elif id == "Transcript":
+            requests = clearance_form_table.objects.filter(
+            request="Transcript").order_by('-time_requested').values()
+        elif id == "CAV":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="CAV").order_by('-time_requested').values()
+        elif id == "Others":
+            requests = clearance_form_table.objects.filter(
+                porpose_of_request_trequest__startswith="Others:").order_by('-time_requested').values()
+        elif id == "approved":
+            requests = clearance_form_table.objects.filter(
+                approval_status="APPROVED").order_by('-time_requested').values()
+
+        else:
+            requests = clearance_form_table.objects.all().order_by('-time_requested').values()
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+
+    return render(request, 'html_files/7.2Registrar Clearance List.html', {'all': requests, 'sorter_type': sorter})
+
+# FACULTY LIST AND DOCUMENT CHECKER LIST
+# FACULTY LIST WITH ORGANIZER
+@login_required(login_url='/')
+def registrar_dashboard_organize_faculty_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+
+        sorter = id
+
+        if id == "OCL":
+            requests = user_table.objects.filter(department__contains="OCL").values()
+        elif id == "OCS":
+            requests = user_table.objects.filter(department__contains="OCS").values()
+        elif id == "OGS":
+            requests = user_table.objects.filter(department__contains="OGS").values()
+        elif id == "OSA":
+            requests = user_table.objects.filter(department__contains="OSA").values()
+        elif id == "ADAA":
+            requests = user_table.objects.filter(department__contains="ADAA").values()
+        elif id == "OES":
+            requests = user_table.objects.filter(department__contains="OES").values()
+        elif id == "DMS":
+            requests = user_table.objects.filter(department__contains="DMS").values()
+        elif id == "DPECS":
+            requests = user_table.objects.filter(department__contains="DPECS").values()
+        elif id == "DED":
+            requests = user_table.objects.filter(department__contains="DED").values()
+        elif id == "DIT":
+            requests = user_table.objects.filter(department__contains="DIT").values()
+        elif id == "DLA":
+            requests = user_table.objects.filter(department__contains="DLA").values()
+        elif id == "DOE":
+            requests = user_table.objects.filter(department__contains="DOE").values()
+        else:
+            requests = user_table.objects.filter(user_type="FACULTY") .values()
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+
+    return render(request, 'html_files/7.4Registrar Faculty List.html', {'all': requests, 'sorter_type': sorter})
+
+
 
 # REQUEST LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')

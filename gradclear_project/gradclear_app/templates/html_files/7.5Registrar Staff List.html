@@ -186,16 +186,26 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content: "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content: "\25be";
         color: white;
     }
     
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+
+    }
+
     .table-sortable .th-sort-asc::after,
     .table-sortable .th-sort-desc::after {
         margin-left: 5px;
@@ -376,7 +386,6 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_75">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
-        <a href="{% url 'registrar_dashboard_staff_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px;"></i></a>
         <a href="{% url 'staff_signup'%}" data-toggle="tooltip" data-placement="right" title="Add Staff"><i class="fa fa-user-plus" aria-hidden="true" style="font-size:25px;"></i></a>
 
         
@@ -403,9 +412,9 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden>#</th>
-                            <th>Name</th>
-                            <th>Email/Username</th>
-                            <th>Gender</th>
+                            <th class="sorting" title="Sort by Name">Name</th>
+                            <th class="sorting" title="Sort by Username">Email/Username</th>
+                            <th class="sorting" title="Sort by Gender">Gender</th>
                             <th></th>
                         </tr>
                         <tr class="no_data">
@@ -416,8 +425,8 @@ Adviser:
                         </tr>
                     </thead>
                     <!--STAFF'S RECORD-->
-                    {% for instance in data %}
                     <tbody>
+                    {% for instance in data %}
                         <tr>
                             <td hidden>{{instance.id}}</td>
                             <td>{{instance.full_name}}</td>
@@ -429,8 +438,8 @@ Adviser:
                                 <button type ="submit" class="submit">Remove</button>
                             </form></td>
                         </tr>
-                    </tbody>
                     {% endfor %}
+                    </tbody>
                 </table>
                 </div>
             </div>
@@ -455,6 +464,44 @@ Adviser:
 
 
 <script>
+    //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
+    
     // SHOW NO DATA IF TAB;E IS EMPTY
     var dattable = document.getElementById("list_tbl_75");
     var rowcount = dattable.tBodies[0].rows.length;
