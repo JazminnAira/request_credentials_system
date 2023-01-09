@@ -230,13 +230,13 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content: "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content: "\25be";
         color: white;
     }   
     
@@ -250,6 +250,15 @@ Adviser:
         overflow-y: scroll;
     }
 
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+    }
+    
     #approve_sig_btn, #cancel_edit_digtal{
         background-color: #dedede;
         color: black;
@@ -515,8 +524,7 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_52">
         <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" style="font-size:30px;"><i class="fa fa-home">
             </i> </a>
-        <a href="{% url 'faculty_dashboard_clearance_list' %}" id="home_button" data-toggle="tooltip" data-placement="right" title="Refresh" style="font-size:25px;"><i class="fa fa-refresh">
-            </i> </a>
+        
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_52" name="search_box_052" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
@@ -612,6 +620,23 @@ Adviser:
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
                 <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 bg-dark border text-white border-dark">PHYSICAL SIGNATURE</button><br>
             </div>
+            
+            <br><br><br><br><br>
+            <!-- NOTE ON ATTACHING SIGNATURES-->
+            <div style="border:1px solid #000; margin:0 5 0 5" class="container">
+            <p class="text-align:justify;">
+                
+                <center><b>NOTE:</b></center>
+                <br>
+                If you intend to digitally sign the following form/s, please read this carefully before signing:
+                <br><br>
+                By signing your name electronically on the form/s, you are agreeing that your
+                electronic signature is the legal equivalent of your handwritten signature and consenting
+                the system to use it to signify that you approve the form/s.
+                <br><br>
+                Rest assured that your signature will be securely stored and will not be used without your authorization.
+            </p>
+            </div>
         </div>
         
         <div id="create_signature_area" class="p-1" hidden>
@@ -633,7 +658,7 @@ Adviser:
             <div id="create_new_button" align="center" hidden>
                 <button type = "button" class = "btn btn-lg border-dark p-3 text-lg" id = "create_new_esign" style="width: 300px;">Create New E-signature</button>
                 <br>
-                <lable class= "label" style ="font-size:20px; padding-top:">OR</label>
+                <br>
             </div>
             
             <div id="create_new_esignature" hidden>
@@ -685,10 +710,10 @@ Adviser:
                         <th><input type="checkbox" onchange="checkAll(this)" name="chk[]" id="all_check" disabled/>&nbsp;All</th>
                         {% endif %}
                         <th hidden> # </th>
-                        <th>Student's Name</th>
-                        <th>Course</th>
-                        <th>ID Number</th>
-                        <th>Purpose of Request</th>
+                        <th class="sorting" title="Sort by Name">Student's Name</th>
+                        <th class="sorting" title="Sort by Course">Course</th>
+                        <th class="sorting" title="Sort by ID Number">ID Number</th>
+                        <th class="sorting" title="Sort by Requested Credentials">Purpose of Request</th>
                         <th>Appointment</th>
                         <th id="department_th"></th>
                         <th id="course_adviser_th"></th>
@@ -703,9 +728,9 @@ Adviser:
                         <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                     </tr>
                 </thead>
-                
-                {% for instance in st %}
                 <tbody>
+                {% for instance in st %}
+                
                     
                     <tr id="Add">    
                     <!--DETERMINING DEPARTMENT HEAD-->
@@ -818,9 +843,9 @@ Adviser:
                         {% endif %}
                           
                     </tr>
-                    
+                {% endfor %}    
                 </tbody>
-                {% endfor %}
+                
             </table>
             </div>
         </form>
@@ -852,7 +877,7 @@ Adviser:
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
-                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                    You are about to sign the selected form/s. This process cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
                     <button type="button" class="btn" id="yes_esign" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Continue</button>
@@ -871,7 +896,7 @@ Adviser:
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body" style=" text-align: center; padding: 20px; font-size: 18px;">
-                    Once you sign the forms, this cannot be undone.<br><b>Do you want to continue?</b>
+                    You are about to sign the selected form/s. This process cannot be undone.<br><b>Do you want to continue?</b>
                 </div>
                 <div class="modal-footer" style="background-color:#c31d35">
                     <button type="button" class="btn" id="yes_manually" style="background-color: #424242; color: white; padding-left: 1vw; padding-right: 1vw;">Continue</button>
@@ -894,6 +919,44 @@ Adviser:
 
 
 <script>
+
+        //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
   
     // DISPLAY NO DATA WHEN TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_52");
