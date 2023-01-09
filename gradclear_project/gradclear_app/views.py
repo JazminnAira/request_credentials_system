@@ -297,15 +297,18 @@ def graduation_print(request, id):
         f1 = fac1.first_name + " " + fac1.last_name
 
         if stat_sig1 == "ESIGN":
-            im = "../public_html/Media/" + str_esign1
-            p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
+            if  bool(fac1_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign1
+                p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
 
-        elif stat_sig1 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload1
-            p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
+            else: 
+                im = "../public_html/Media/" + str_upload1
+                p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
+            p.drawString(410, 625, "Signed:" +"f'{fac1.subject1_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 625, "Approved *Manual Signature Required")
+            p.drawString(410, 630, "Signed:" +"f'{fac1.subject1_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -351,15 +354,17 @@ def graduation_print(request, id):
         f2 = fac2.first_name + " " + fac2.last_name
 
         if stat_sig2 == "ESIGN":
-            im = "../public_html/Media/" + str_esign2
-            p.drawImage(im, 254, 602, height=15, width=80, mask='auto')
-        elif stat_sig2 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload2
-            p.drawImage(im, 254, 602, height=13, width=80, mask='auto')
-
+            if  bool(fac2_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign2
+                p.drawImage(im, 254, 602, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload2
+                p.drawImage(im, 254, 602, height=13, width=80, mask='auto')
+            p.drawString(410, 605, "Signed:" +"f'{fac2.subject2_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 605, "Approved *Manual Signature Required")
+            p.drawString(410, 610, "Signed:" +"f'{fac1.subject1_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -404,17 +409,19 @@ def graduation_print(request, id):
         f3 = fac3.first_name + " " + fac3.last_name
 
         if stat_sig3 == "ESIGN":
-            im = "../public_html/Media/" + str_esign3
-            p.drawImage(im, 254, 585, height=15, width=80, mask='auto')
+            if  bool(fac3_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign3
+                p.drawImage(im, 254, 585, height=15, width=80, mask='auto')
 
-        elif stat_sig3 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload3
-            p.drawImage(im, 254, 585, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload3
+                p.drawImage(im, 254, 585, height=15, width=80, mask='auto')
+            p.drawString(410, 580, "Signed:" +"f'{fac3.subject3_timestamp}")
         else:
 
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 580, "Approved *Manual Signature Required")
-            
+            p.drawString(410, 585, "Signed:" +"f'{fac3.subject3_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -462,17 +469,20 @@ def graduation_print(request, id):
         
 
         if stat_sig4 == "ESIGN":
-            im = "../public_html/Media/" + str_esign4
-            p.drawImage(im, 254, 560, height=15, width=80, mask='auto')
+            if  bool(fac4_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign4
+                p.drawImage(im, 254, 560, height=15, width=80, mask='auto')
 
-        elif stat_sig4 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload4
-            p.drawImage(im, 254, 560, height=15, width=80, mask='auto')
+            elif stat_sig4 == "UPLOAD":
+                im = "../public_html/Media/" + str_upload4
+                p.drawImage(im, 254, 560, height=15, width=80, mask='auto')
+            p.drawString(410, 560, "Signed:" +"f'{fac4.subject4_timestamp}")
         else:
 
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 560, "Approved *Manual Signature Required")
-            
+            p.drawString(410, 565, "Signed:" +"f'{fac4.subject4_timestamp}")
+        
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
         p.drawString(254, 560, f"""{f4}""")
@@ -517,15 +527,18 @@ def graduation_print(request, id):
         
 
         if stat_sig5 == "ESIGN":
-            im = "../public_html/Media/" + str_esign5
-            p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
+            if  bool(fac5_sig_upload) == False: 
+                im = "../public_html/Media/" + str_esign5
+                p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
 
-        elif stat_sig5 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload5
-            p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload5
+                p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
+            p.drawString(410, 535, "Signed:" +"f'{fac5.subject5_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 535, "Approved *Manual Signature Required")
+            p.drawString(410, 540, "Signed:" +"f'{fac5.subject5_timestamp}")
         
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -573,15 +586,19 @@ def graduation_print(request, id):
         
 
         if stat_sig6 == "ESIGN":
-            im = "../public_html/Media/" + str_esign6
-            p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
+            if  bool(fac1_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign6
+                p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
 
-        elif stat_sig6 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload6
-            p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload6
+                p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
+                
+            p.drawString(410, 512, "Signed:" +"f'{fac6.subject6_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 512, "Approved *Manual Signature Required")
+            p.drawString(410, 517, "Signed:" +"f'{fac6.subject6_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -628,15 +645,18 @@ def graduation_print(request, id):
         
 
         if stat_sig7 == "ESIGN":
-            im = "../public_html/Media/" + str_esign7
-            p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
+            if  bool(fac7_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign7
+                p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
 
-        elif stat_sig7 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload7
-            p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload7
+                p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
+            p.drawString(410, 490, "Signed:" +"f'{fac7.subject7_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 490, "Approved *Manual Signature Required")
+            p.drawString(410, 495, "Signed:" +"f'{fac7.subject7_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -682,15 +702,18 @@ def graduation_print(request, id):
         
 
         if stat_sig8 == "ESIGN":
-            im = "../public_html/Media/" + str_esign8
-            p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
+            if  bool(fac8_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign8
+                p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
 
-        elif stat_sig8 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload8
-            p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
+            elif stat_sig8 == "UPLOAD":
+                im = "../public_html/Media/" + str_upload8
+                p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
+            p.drawString(410, 470, "Signed:" +"f'{fac8.subject8_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 470, "Approved *Manual Signature Required")
+            p.drawString(410, 475, "Signed:" +"f'{fac8.subject8_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -736,15 +759,18 @@ def graduation_print(request, id):
         
 
         if stat_sig9 == "ESIGN":
-            im = "../public_html/Media/" + str_esign9
-            p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
+            if  bool(fac9_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign9
+                p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
 
-        elif stat_sig1 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload9
-            p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload9
+                p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
+            p.drawString(410, 447, "Signed:" +"f'{fac9.subject9_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 447, "Approved *Manual Signature Required")
+            p.drawString(410, 452, "Signed:" +"f'{fac9.subject9_timestamp}")
             
             
         p.setFont("Helvetica", 7)
@@ -791,15 +817,18 @@ def graduation_print(request, id):
         
 
         if stat_sig10 == "ESIGN":
-            im = "../public_html/Media/" + str_esign10
-            p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
+            if  bool(fac10_sig_upload) == False:
+                im = "../public_html/Media/" + str_esign10
+                p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
 
-        elif stat_sig10 == "UPLOAD":
-            im = "../public_html/Media/" + str_upload10
-            p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + str_upload10
+                p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
+            p.drawString(410, 425, "Signed:" +"f'{fac10.subject10_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 425, "Approved *Manual Signature Required")
+            p.drawString(410, 430, "Signed:" +"f'{fac10.subject10_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -848,15 +877,19 @@ def graduation_print(request, id):
         
 
         if stat_addsig1 == "ESIGN":
-            im = "../public_html/Media/" + add_str_esign1
-            p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
+            if  bool(addfac1_sig_upload) == False:
+                im = "../public_html/Media/" + add_str_esign1
+                p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
 
-        elif stat_addsig1 == "UPLOAD":
-            im = "../public_html/Media/" + add_str_upload1
-            p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + add_str_upload1
+                p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
+            p.drawString(410, 252, "Signed:" +"f'{addfac1.addsubject1_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 252, "Approved *Manual Signature Required")
+            p.drawString(410, 257, "Signed:" +"f'{addfac1.addsubject1_timestamp}")
+        
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -902,15 +935,18 @@ def graduation_print(request, id):
         
 
         if stat_addsig2 == "ESIGN":
-            im = "../public_html/Media/" + add_str_esign2
-            p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
+            if  bool(addfac2_sig_upload) == False:
+                im = "../public_html/Media/" + add_str_esign2
+                p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
 
-        elif stat_addsig2 == "UPLOAD":
-            im = "../public_html/Media/" + add_str_upload2
-            p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + add_str_upload2
+                p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
+            p.drawString(410, 238, "Signed:" +"f'{addfac2.addsubject2_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 238, "Approved *Manual Signature Required")
+            p.drawString(410, 243, "Signed:" +"f'{addfac2.addsubject2_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -957,15 +993,18 @@ def graduation_print(request, id):
         
 
         if stat_addsig3 == "ESIGN":
-            im = "../public_html/Media/" + add_str_esign3
-            p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
+            if  bool(addfac3_sig_upload) == False:
+                im = "../public_html/Media/" + add_str_esign3
+                p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
 
-        elif stat_addsig3 == "UPLOAD":
-            im = "../public_html/Media/" + add_str_upload3
-            p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + add_str_upload3
+                p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
+            p.drawString(410, 224, "Signed:" +"f'{addfac3.addsubject3_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 224, "Approved *Manual Signature Required")
+            p.drawString(410, 229, "Signed:" +"f'{addfac3.addsubject3_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1012,15 +1051,18 @@ def graduation_print(request, id):
         
 
         if stat_addsig4 == "ESIGN":
-            im = "../public_html/Media/" + add_str_esign4
-            p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
+            if  bool(addfac4_sig_upload) == False:
+                im = "../public_html/Media/" + add_str_esign4
+                p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
 
-        elif stat_addsig4 == "UPLOAD":
-            im = "../public_html/Media/" + add_str_upload4
-            p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + add_str_upload4
+                p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
+            p.drawString(410, 210, "Signed:" +"f'{addfac4.addsubject4_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 210, "Approved *Manual Signature Required")
+            p.drawString(410, 215, "Signed:" +"f'{addfac4.addsubject4_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1066,15 +1108,18 @@ def graduation_print(request, id):
         
 
         if stat_addsig5 == "ESIGN":
-            im = "../public_html/Media/" + add_str_esign5
-            p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
+            if  bool(addfac5_sig_upload) == False:
+                im = "../public_html/Media/" + add_str_esign5
+                p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
 
-        elif stat_addsig5 == "UPLOAD":
-            im = "../public_html/Media/" + add_str_upload5
-            p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
+            else:
+                im = "../public_html/Media/" + add_str_upload5
+                p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
+            p.drawString(410, 196, "Signed:" +"f'{addfac5.addsubject5_timestamp}")
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 196, "Approved *Manual Signature Required")
+            p.drawString(410, 201, "Signed:" +"f'{addfac5.addsubject5_timestamp}")
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1102,20 +1147,24 @@ def graduation_print(request, id):
     
 
     if sit == "ESIGN":
-        im = "../public_html/Media/" + sit_str_esign1
-        p.drawImage(im, 408, 74, height=15, width=80, mask='auto')
+        if  bool(sit_upload) == False:
+            im = "../public_html/Media/" + sit_str_esign1
+            p.drawImage(im, 350, 70, height=15, width=80, mask='auto')
 
-    elif sit == "UPLOAD":
-        im = "../public_html/Media/" + sit_str_upload1
-        p.drawImage(im, 408, 74, height=15, width=80, mask='auto')
+        else:
+            im = "../public_html/Media/" + sit_str_upload1
+            p.drawImage(im, 350, 70, height=15, width=80, mask='auto')
+        p.drawString(258, 66, "Signed:" +"f'{fac.sit_timestamp}")
+        
     else:
         p.setFont("Helvetica", 5.5)
         p.drawString(258, 66, "Approved *Manual Signature Required")
+        p.drawString(363, 66, "Signed:" +"f'{fac.sit_timestamp}")
         
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
     p.drawString(255, 75, f"""{sitins}""")
-
+    
     for line in lines:
         textob.textLine(line)
 
@@ -1247,27 +1296,28 @@ def clearance_print(request, id):
     accname = accountant.first_name + " " + accountant.last_name
 
     if acc_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_acc
-        p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
-        p.drawString(125, 298, f"""{accname}""")
-        
-    elif acc_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_acc
-        p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
-        p.drawString(125, 298, f"""{accname}""")
-
+        if  bool(upload_acc_sign) == False:
+            im = "../public_html/Media/"+str_esign_acc
+            p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
+            p.drawString(125, 298, f"""{acc_name}""")
+        else:
+            im = "../public_html/Media/"+str_upload_acc
+            p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
+            p.drawString(125, 298, f"""{accname}""")
+        p.drawString(115, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
     elif acc_stat == "REGISTRAR":
 
         p.setFont("Helvetica", 6)
         p.drawString(125, 298, "APPROVED")
-
+        p.drawString(125, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
     else:
         p.drawString(125, 298, f"""{accname}""")
+        p.drawString(160, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(53, 292, "Approved *Manual Signature Required")
         
-
+        
     # Liberal arts
 
     p.setFont("Helvetica", 7)
@@ -1286,21 +1336,25 @@ def clearance_print(request, id):
     dlaname = liberal_arts.first_name + " " + liberal_arts.last_name
 
     if dla_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_dla
-        p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
-        p.drawString(147, 243, f"""{dlaname}""")
+        if  bool(upload_acc_sign) == False:
+            im = "../public_html/Media/"+str_esign_dla
+            p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
+            p.drawString(147, 243, f"""{dlaname}""")
+            
 
-    elif dla_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_dla
-        p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
-        p.drawString(147, 243, f"""{dlaname}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_dla
+            p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
+            p.drawString(147, 243, f"""{dlaname}""")
+        p.drawString(147, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
     elif dla_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(147, 243, "APPROVED")
+        p.drawString(147, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
 
     else:
         p.drawString(147, 243, f"""{dlaname}""")
+        p.drawString(182, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 234, "Approved *Manual Signature Required")
@@ -1321,28 +1375,34 @@ def clearance_print(request, id):
     p.setFont("Helvetica", 6)
     p.setFillColorRGB(0, 0, 0)
     dmsname = mathsci.first_name + " " + mathsci.last_name
+   
 
     if dms_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_dms
-        p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
-        p.drawString(170, 215, f"""{dmsname}""")
-
-    elif dms_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_dms
-        p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
-        p.drawString(170, 215, f"""{dmsname}""")
+        if  bool(upload_dms_sign) == False:
+            im = "../public_html/Media/"+str_esign_dms
+            p.drawImage(im, 175, 215, height=25, width=80, mask='auto')
+            p.drawString(170, 215, f"""{dmsname}""")
+            
+        else: 
+            im = "../public_html/Media/"+str_upload_dms
+            p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
+            p.drawString(170, 215, f"""{dmsname}""")
+            
+        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
 
     elif dms_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(170, 215, "APPROVED")
+        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
 
     else:
         p.drawString(170, 215, f"""{dmsname}""")
+        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 209, "Approved *Manual Signature Required")
         
-
+        
     # # # dpecs
 
     pe_acc = content.pe_dept_signature
@@ -1360,23 +1420,27 @@ def clearance_print(request, id):
     p.setFont("Helvetica", 6)
     p.setFillColorRGB(0, 0, 0)
     pename = pe_dept.first_name + " " + pe_dept.last_name
+    
 
     if pe_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_pe
-        p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
-        p.drawString(120, 190, f"""{pename}""")
+        if  bool(upload_pe_sign) == False:
+            im = "../public_html/Media/"+str_esign_pe
+            p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
+            p.drawString(120, 190, f"""{pename}""")
 
-    elif pe_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_pe
-        p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
-        p.drawString(120, 190, f"""{pename}""")
-
+        else:
+            im = "../public_html/Media/"+str_upload_pe
+            p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
+            p.drawString(120, 190, f"""{pename}""")
+        p.drawString(120, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
     elif pe_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(120, 190, "APPROVED")
+        p.drawString(120, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
 
     else:
         p.drawString(120, 190, f"""{pename}""")
+        p.drawString(182, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 183, "Approved *Manual Signature Required")
@@ -1402,24 +1466,27 @@ def clearance_print(request, id):
         p.setFont("Helvetica", 6)
         p.setFillColorRGB(0, 0, 0)
         itdeptname = itdept_dept.first_name + " " + itdept_dept.last_name
-
+        
         if itdept_stat == "ESIGN":
-            im = "../public_html/Media/"+str_esign_itdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{itdeptname}""")
-
-
-        elif itdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_itdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{itdeptname}""")
-
+            if  bool(upload_itdept_sign) == False:
+                im = "../public_html/Media/"+str_esign_itdept
+                p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+                p.drawString(105, 113, f"""{itdeptname}""")
+                
+            else:
+                im = "../public_html/Media/"+str_upload_itdept
+                p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+                p.drawString(105, 113, f"""{itdeptname}""")
+            p.drawString(105, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
+              
         elif itdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
+            p.drawString(105, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
 
         else:
             p.drawString(105, 113, f"""{itdeptname}""")
+            p.drawString(182, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
@@ -1441,23 +1508,29 @@ def clearance_print(request, id):
         p.setFont("Helvetica", 6)
         p.setFillColorRGB(0, 0, 0)
         educdeptname = educdept_dept.first_name + " " + educdept_dept.last_name
+        
 
         if educdept_stat == "ESIGN":
-            p.drawString(105, 113, f"""{educdeptname}""")
-            im = "../public_html/Media/"+str_esign_educdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+            if  bool(upload_educdept_sign) == False:
+                p.drawString(105, 113, f"""{educdeptname}""")
+                im = "../public_html/Media/"+str_esign_educdept
+                p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+                
+            else:
+                im = "../public_html/Media/"+str_upload_educdept
+                p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+                p.drawString(105, 113, f"""{educdeptname}""")
+            p.drawString(120, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
 
-        elif educdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_educdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{educdeptname}""")
 
         elif educdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
+            p.drawString(120, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
 
         else:
             p.drawString(105, 113, f"""{educdeptname}""")
+            p.drawString(182, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
@@ -1480,24 +1553,30 @@ def clearance_print(request, id):
         engdeptname = engdept_dept.first_name + " " + engdept_dept.last_name
 
         if engdept_stat == "ESIGN":
-            p.drawString(105, 113, f"""{engdeptname}""")
-            im = "../public_html/Media/"+str_esign_engdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+            if  bool(upload_engdept_sign) == False:
+                p.drawString(105, 113, f"""{engdeptname}""")
+                im = "../public_html/Media/"+str_esign_engdept
+                p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+                
 
-        elif engdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_engdept
-            p.drawImage(im, 120, 190, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{engdeptname}""")
+            elif engdept_stat == "UPLOAD":
+                im = "../public_html/Media/"+str_upload_engdept
+                p.drawImage(im, 120, 190, height=25, width=80, mask='auto')
+                p.drawString(105, 113, f"""{engdeptname}""")
+            p.drawString(105, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
 
         elif engdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
+            p.drawString(105, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
 
         else:
             p.drawString(105, 113, f"""{engdeptname}""")
+            p.drawString(182, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
+            
 
     # # shop
     p.setFont("Helvetica", 7)
@@ -1514,26 +1593,30 @@ def clearance_print(request, id):
     p.setFont("Helvetica", 6)
     p.setFillColorRGB(0, 0, 0)
     shopname = shop_ad.first_name + " " + shop_ad.last_name
+    
 
     if shop_stat == "ESIGN":
-        p.drawString(435, 300, f"""{shopname}""")
-        im = "../public_html/Media/"+str_esign_shop
-        p.drawImage(im, 435, 290, height=15, width=80, mask='auto')
+        if  bool(upload_shop_sign) == False:
+            p.drawString(435, 300, f"""{shopname}""")
+            im = "../public_html/Media/"+str_esign_shop
+            p.drawImage(im, 435, 290, height=15, width=80, mask='auto')
 
-    elif shop_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_shop
-        p.drawImage(im, 435, 290, height=25, width=80, mask='auto')
-        p.drawString(435, 300, f"""{shopname}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_shop
+            p.drawImage(im, 435, 290, height=25, width=80, mask='auto')
+            p.drawString(435, 300, f"""{shopname}""")
+        p.drawString(435, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
     elif shop_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(435, 300, "APPROVED")
+        p.drawString(435, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
 
     else:
         p.drawString(435, 300, f"""{shopname}""")
+        p.drawString(427, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(320, 290, "Approved *Manual Signature Required")
+        p.drawString(325, 290, "Approved *Manual Signature Required")
 
     # # library
     p.setFont("Helvetica", 7)
@@ -1552,24 +1635,27 @@ def clearance_print(request, id):
     libname = lib_ad.first_name + " " + lib_ad.last_name
 
     if lib_stat == "ESIGN":
-        p.drawString(425, 269, f"""{libname}""")
-        im = "../public_html/Media/"+str_esign_lib
-        p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
+        if  bool(upload_lib_sign) == False:
+            p.drawString(425, 269, f"""{libname}""")
+            im = "../public_html/Media/"+str_esign_lib
+            p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
 
-    elif lib_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_lib
-        p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
-        p.drawString(425, 269, f"""{libname}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_lib
+            p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
+            p.drawString(425, 269, f"""{libname}""")
+        p.drawString(425, 258, "Signed:" +"f'{lib_ad.library_timestamp}") 
     elif lib_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(425, 265, "APPROVED")
+        p.drawString(425, 258, "Signed:" +"f'{lib_ad.library_timestamp}")
 
     else:
         p.drawString(425, 269, f"""{libname}""")
+        p.drawString(432, 260, "Signed:" +"f'{lib_ad.library_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
-        p.drawString(325, 260, "Approved *Manual Signature Required")
+        p.drawString(325, 263, "Approved *Manual Signature Required")
 
     # guidance
 
@@ -1586,23 +1672,27 @@ def clearance_print(request, id):
     p.setFont("Helvetica", 6)
     p.setFillColorRGB(0, 0, 0)
     guidancename = guidance.first_name + " " + guidance.last_name
+    
 
     if guidance_stat == "ESIGN":
-        p.drawString(435, 244, f"""{guidancename}""")
-        im = "../public_html/Media/"+str_esign_guidance
-        p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
+        if  bool(upload_guidance_sign) == False:
+            p.drawString(435, 244, f"""{guidancename}""")
+            im = "../public_html/Media/"+str_esign_guidance
+            p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
 
-    elif guidance_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_guidance
-        p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
-        p.drawString(435, 244, f"""{guidancename}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_guidance
+            p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
+            p.drawString(435, 244, f"""{guidancename}""")
+        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
     elif guidance_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(435, 244, "APPROVED")
+        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
 
     else:
         p.drawString(435, 244, f"""{guidancename}""")
+        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(325, 238, "Approved *Manual Signature Required")
@@ -1624,21 +1714,24 @@ def clearance_print(request, id):
     osaname = osa.first_name + " " + osa.last_name
 
     if osa_stat == "ESIGN":
-        p.drawString(455, 217, f"""{osaname}""")
-        im = "../public_html/Media/"+str_esign_osa
-        p.drawImage(im, 455, 210, height=25, width=80, mask='auto')
+        if  bool(upload_osa_sign) == False:
+            p.drawString(455, 217, f"""{osaname}""")
+            im = "../public_html/Media/"+str_esign_osa
+            p.drawImage(im, 455, 210, height=25, width=80, mask='auto')
 
-    elif osa_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_osa
-        p.drawImage(im, 455, 215, height=25, width=80, mask='auto')
-        p.drawString(455, 217, f"""{osaname}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_osa
+            p.drawImage(im, 455, 215, height=25, width=80, mask='auto')
+            p.drawString(455, 217, f"""{osaname}""")
+        p.drawString(455, 210, "Signed:" +"f'{osa.osa_timestamp}")
     elif osa_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(455, 217, "APPROVED")
+        p.drawString(455, 210, "Signed:" +"f'{osa.osa_timestamp}")
 
     else:
         p.drawString(455, 217, f"""{osaname}""")
+        p.drawString(432, 210, "Signed:" +"f'{osa.osa_timestamp}")
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(320, 210, "Approved *Manual Signature Required")
@@ -1658,23 +1751,50 @@ def clearance_print(request, id):
     p.setFont("Helvetica", 6)
     p.setFillColorRGB(0, 0, 0)
     adaaname = adaa.first_name + " " + adaa.last_name
+    
 
     if adaa_stat == "ESIGN":
-        p.drawString(482, 190, f"""{adaaname}""")
-        im = "../public_html/Media/"+str_esign_adaa
-        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+        if  bool(upload_adaa_sign) == False:
+            p.drawString(482, 190, f"""{adaaname}""")
+            im = "../public_html/Media/"+str_esign_adaa
+            p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
 
-    elif adaa_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_adaa
-        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
-        p.drawString(482, 190, f"""{adaaname}""")
-        
+        else:
+            im = "../public_html/Media/"+str_upload_adaa
+            p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+            p.drawString(482, 190, f"""{adaaname}""")
+        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
     elif adaa_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(482, 190, "APPROVED")
+        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
 
     else:
         p.drawString(482, 190, f"""{adaaname}""")
+        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+        p.setFillColorRGB(1, 0, 0)
+        p.setFont("Helvetica", 4.5)
+        p.drawString(325, 185, "Approved *Manual Signature Required")
+
+    if adaa_stat == "ESIGN":
+        if  bool(upload_adaa_sign) == False:
+            p.drawString(482, 190, f"""{adaaname}""")
+            im = "../public_html/Media/"+str_esign_adaa
+            p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+
+        else:
+            im = "../public_html/Media/"+str_upload_adaa
+            p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+            p.drawString(482, 190, f"""{adaaname}""")
+        p.drawString(482, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+    elif adaa_stat == "REGISTRAR":
+        p.setFont("Helvetica", 6)
+        p.drawString(482, 190, "APPROVED")
+        p.drawString(482, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+
+    else:
+        p.drawString(482, 190, f"""{adaaname}""")
+        p.drawString(432, 185, "Signed:" +"f'{adaa.academic_timestamp}")
         p.setFillColorRGB(1, 0, 0)
         p.setFont("Helvetica", 4.5)
         p.drawString(325, 185, "Approved *Manual Signature Required")
