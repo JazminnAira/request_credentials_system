@@ -337,19 +337,28 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: "\25b4";
+        content: 'asc';
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: "\25be";
+        content: 'desc';
         color: white;
     }
     
     .table-sortable .th-sort-asc::after,
     .table-sortable .th-sort-desc::after {
         margin-left: 5px;
+    }
+    
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
     }
     
     .table-sortable .th-sort-asc,
@@ -612,7 +621,6 @@ Adviser:
             display: none;
         }
     }
-    
 </style>
 
 
@@ -620,11 +628,11 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_51"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_51"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'faculty_dashboard_graduation_list'%}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
+    <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
 {% if request.user.department == "HOCS" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA" or request.user.department == "HOCL" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDED" or request.user.department == "HDIT" or request.user.department == "HDLA" or request.user.department == "HDOE"%}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0 %}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% elif with_clearance %}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% endif %}
     
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="left_logo_51" style="position: absolute;bottom: 10px;">
@@ -812,9 +820,9 @@ Adviser:
                             <td id="in" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.student_id}}</td>
                             <td id="pr" onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                             <td id="Viewform"><a href="display_gradform/{{ instance.id }}" id="btn"><button type="button" id="btn">View Form</button></a></td>
-                    {% endfor %}        
-                    
-                    
+                            
+                    </tbody>
+                    {% endfor %}
                     <!-- CLEARANCE FORMS -->
                     
                     {% for instance in st1 %}
@@ -861,43 +869,6 @@ Adviser:
 
 
 <script>
-     //SORTING
-     function sortTableByColumn(table, column, asc = true) {
-        const dirModifier = asc ? 1 : -1;
-        const tBody = table.tBodies[0];
-        const rows = Array.from(tBody.querySelectorAll("tr"));
-
-        // Sort each row
-        const sortedRows = rows.sort((a, b) => {
-            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-
-            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-        });
-
-        // Remove all existing TRs from the table
-        while (tBody.firstChild) {
-            tBody.removeChild(tBody.firstChild);
-        }
-
-        // Re-add the newly sorted rows
-        tBody.append(...sortedRows);
-
-        // Remember how the column is currently sorted
-        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
-        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
-    }
-
-    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
-        headerCell.addEventListener("click", () => {
-            const tableElement = headerCell.parentElement.parentElement.parentElement;
-            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-
-            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-        });
-    });
 //DISPLAY NO DATA ON TABLE
     var dattable = document.getElementById("list_tbl_51");
     var rowcount = dattable.tBodies[0].rows.length;
@@ -979,7 +950,7 @@ Adviser:
 
     //REDIRECT TO FACULTY CLEARANCE LIST
     function openfdbc() {
-        window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
+        window.location.replace("{% url 'faculty_dashboard_clearance_list' id=0 %}");
     }
 
     //REDIRECT WHEN LOG OUT

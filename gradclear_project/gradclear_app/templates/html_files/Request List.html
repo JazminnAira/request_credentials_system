@@ -17,7 +17,6 @@ Adviser:
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="{% static 'Media/tup_logo.png' %}">
@@ -132,6 +131,16 @@ Adviser:
         color: #ffff;
         
     }
+    
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    }
 
     .outer-wrapper{
         margin: 10px;
@@ -153,16 +162,6 @@ Adviser:
     
     .results2 tr[visible='true'] {
         display: table-row;
-    }
-
-    .dropdown-submenu {
-        position: relative;
-    }
-    
-    .dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: -1px;
     }
 
     .tab {
@@ -197,12 +196,11 @@ Adviser:
         padding: 0%;
     }
 
-
     .table-sortable th {
         cursor: pointer;
         table-layout: fixed;
     }
-
+    
     .sorting::after{
         display: inline;
         font-family:FontAwesome;
@@ -233,7 +231,7 @@ Adviser:
     .table-sortable .th-sort-desc {
         background: rgba(0, 0, 0, 0.1);
     }
-    
+
     .dropdown-menu>li{	
         position:relative;
         -webkit-user-select: none; /* Chrome/Safari */        
@@ -283,7 +281,6 @@ Adviser:
         content: 'desc';
         color: white;
     }
-
 
     #backtotop_btn_77 {
         display: inline-block;
@@ -442,6 +439,30 @@ Adviser:
         text-align: center;
     }
 
+    #list_tbl_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.asc:after {
+        display: inline;
+        content: 'asc';
+        color: white;
+    }
+    
+    #list_tbl2_77 th.desc:after {
+        display: inline;
+        content: 'desc';
+        color: white;
+    }
+
     #search_box_77 {
         width: 54%;
         border-radius: 30px;
@@ -483,7 +504,6 @@ Adviser:
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1()" onsearch="OnSearch (this)">
 
-
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
             Sort by
         </a>
@@ -514,6 +534,7 @@ Adviser:
 
                 </ul>
             </li>
+        
         </div>
     </div>
 
@@ -573,7 +594,7 @@ Adviser:
                         </thead>
                         <tbody>
                             {% for instance in data %}
-                        
+                            
                                 <tr>
                                     <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
@@ -667,7 +688,7 @@ Adviser:
                                         role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
                                     </td>
                                 </tr>
-                            {% endfor %}
+                            {% endfor %}    
                         </tbody>
                     </table>
                 </div>
@@ -693,7 +714,6 @@ Adviser:
 
 
 <script>
-
     //DROPDOWN WITHIN A DROPDOWN 
     $(function(){
         $(".dropdown-menu > li > a.trigger").on("click",function(e){
@@ -750,6 +770,7 @@ Adviser:
             sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
         });
     });
+
 
     //TAB BUTTON
     document.getElementById('button_sorter').onclick = function() {
@@ -959,6 +980,8 @@ Adviser:
         }, "300");
     });
 
+  
+
     // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
     function OnSearch(input) {
         location.reload();
@@ -979,7 +1002,6 @@ Adviser:
         document.getElementById("search_box_77").value = "";
     });
 
-   
-
+    
 </script>
 

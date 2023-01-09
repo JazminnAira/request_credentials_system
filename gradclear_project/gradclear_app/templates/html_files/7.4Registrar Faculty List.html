@@ -307,7 +307,7 @@ Adviser:
         padding-top: 5px;
         text-align: center;
     }
-
+    
     #dropdownMenuLink{
         background-color: #e7dfe4;
         color: black;
@@ -465,6 +465,7 @@ Adviser:
             <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DOE">Department of Engineering (DOE)</a>
         
         </div>
+        
     </div>
 
      <!--BACK TO TOP BUTTON-->
@@ -562,9 +563,9 @@ Adviser:
                             </td>
                         </tr>
                         
-                    {% endfor %}    
+                    {% endfor %}   
                     </tbody>
-                    
+                     
                 </table>
             </div>
         </div>
@@ -589,8 +590,7 @@ Adviser:
 
 
 <script>
-
-    //SORTING
+        //SORTING
     function sortTableByColumn(table, column, asc = true) {
         const dirModifier = asc ? 1 : -1;
         const tBody = table.tBodies[0];
@@ -798,7 +798,40 @@ Adviser:
         }, "300");
     });
 
+    // SORTING 
+    function sortTable(table, col, reverse) {
+        var tb = table.tBodies[0], 
+            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+            i;
+        reverse = -((+reverse) || -1);
+        tr = tr.sort(function (a, b) { // sort rows
+            return reverse // `-1 *` if want opposite order
+                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                    .localeCompare(b.cells[col].textContent.trim())
+                   );
+        });
+        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+    }
     
+    function makeSortable(table) {
+        var th = table.tHead, i;
+        th && (th = th.rows[0]) && (th = th.cells);
+        if (th) i = th.length;
+        else return; 
+        while (--i >= 0) (function (i) {
+            var dir = 1;
+            th[i].addEventListener('click', function () {sortTable(table, i, (dir = 1 - dir))});
+        }(i));
+    }
+    
+    function makeAllSortable(parent) {
+        parent = parent || document.body;
+        var t = parent.getElementsByTagName('table'), i = t.length;
+        while (--i >= 0) makeSortable(t[i]);
+    }
+    
+    window.onload = function () {makeAllSortable();};
+
     // REFRESH TABLE WHEN SEARCH X BUTTON PRESSED
     function OnSearch(input) {
         location.reload();

@@ -192,7 +192,7 @@ Adviser:
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: "\25be";
+        content: "\25b4";
         color: white;
     }
     
@@ -205,7 +205,7 @@ Adviser:
         margin-left:3px;
 
     }
-
+    
     .table-sortable .th-sort-asc::after,
     .table-sortable .th-sort-desc::after {
         margin-left: 5px;
@@ -427,6 +427,7 @@ Adviser:
                     <!--STAFF'S RECORD-->
                     <tbody>
                     {% for instance in data %}
+                    
                         <tr>
                             <td hidden>{{instance.id}}</td>
                             <td>{{instance.full_name}}</td>
@@ -438,8 +439,9 @@ Adviser:
                                 <button type ="submit" class="submit">Remove</button>
                             </form></td>
                         </tr>
-                    {% endfor %}
+                    {% endfor %}   
                     </tbody>
+                    
                 </table>
                 </div>
             </div>
@@ -464,7 +466,7 @@ Adviser:
 
 
 <script>
-    //SORTING
+     //SORTING
     function sortTableByColumn(table, column, asc = true) {
         const dirModifier = asc ? 1 : -1;
         const tBody = table.tBodies[0];
@@ -501,7 +503,7 @@ Adviser:
             sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
         });
     });
-    
+
     // SHOW NO DATA IF TAB;E IS EMPTY
     var dattable = document.getElementById("list_tbl_75");
     var rowcount = dattable.tBodies[0].rows.length;

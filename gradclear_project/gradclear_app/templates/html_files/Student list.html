@@ -179,13 +179,13 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content:  "\25b4";
+        content: "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content:  "\25be";
+        content: "\25be";
         color: white;
     }
     
@@ -203,7 +203,7 @@ Adviser:
         max-height: 550px;
         overflow-y: scroll;
     }
-
+    
     .dropdown-submenu {
         position: relative;
     }
@@ -314,7 +314,7 @@ Adviser:
         padding-top: 5px;
         text-align: center;
     }
-
+    
     #dropdownMenuLink{
         background-color: #e7dfe4;
         color: black;
@@ -450,18 +450,18 @@ Adviser:
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
         <a href="{% url 'school_year_update'%}" data-toggle="tooltip" data-placement="right" title="New School Year"><i class="fa fa-calendar-o" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
+        
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_75" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
-
-
+    
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
             Sort by
         </a>
         <!--DROPODOWN TO FILTER-->
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="trigger right-caret dropdown-item">Year</a>
-                <ul class="dropdown-menu sub-menu"> 
+                <ul class="dropdown-menu sub-menu">
                   <li><a class="dropdown-item" href="/registrar_dashboard_student_list/All">All</a></li>
                   <li><a class="dropdown-item" href="/registrar_dashboard_student_list/4th">4th Year</a></li>
                   <li><a class="dropdown-item" href="/registrar_dashboard_student_list/3rd">3rd Year</a></li>
@@ -490,9 +490,6 @@ Adviser:
             
         </div>
         
-
-        
-
     </div>
 
     <!--BACK TO TOP BUTTON-->
@@ -601,9 +598,9 @@ Adviser:
                                 <button type ="submit" class="submit">Remove</button>
                             </form></td>
                         </tr>
-                    
-                    {% endfor %}
+                    {% endfor %}   
                     </tbody>
+                    }
                 </table>
             </div>
             </div>
@@ -628,7 +625,7 @@ Adviser:
 
 
 <script>
-    //DROPDOWN WITHIN A DROPDOWN 
+     //DROPDOWN WITHIN A DROPDOWN 
     $(function(){
         $(".dropdown-menu > li > a.trigger").on("click",function(e){
             var current=$(this).next();

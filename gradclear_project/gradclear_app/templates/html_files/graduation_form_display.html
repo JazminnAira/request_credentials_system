@@ -91,7 +91,9 @@ Adviser:
     }
 
     th.sched,
-    th.sched1 {40%;}
+    th.sched1 {
+        width:40%;
+    }
 
     tr.tr {
         background-color: none;
@@ -356,7 +358,7 @@ Adviser:
                 <i class="fa fa-arrow-left" ></i>
             </a>
             {% elif request.user.user_type == "FACULTY" %}
-            <a href="{% url 'faculty_dashboard_graduation_list' %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
+            <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}" data-toggle="tooltip" data-placement="right" style="color: #dedede;" id="back_btn" title="Back">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </a>
             {% endif%}

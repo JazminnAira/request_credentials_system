@@ -340,7 +340,7 @@ Adviser:
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: "\25be;
+        content: "\25be";
         color: white;
     }
     
@@ -358,6 +358,16 @@ Adviser:
         max-height: 490px;
         overflow-y: scroll;
 
+    }
+    
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+        color: white;
     }
 
     .tooltip {
@@ -393,15 +403,6 @@ Adviser:
     .trigger-btn {
         display: inline-block;
         margin: 100px auto;
-    }
-
-    .sorting::after{
-        display: inline;
-        font-family:FontAwesome;
-        content:"\f0dc";
-        color: white;
-        font-size: 12px;
-        margin-left:3px
     }
 
     #account_body_41 {
@@ -996,7 +997,8 @@ Adviser:
 </html>
 
 <script>
-    //SORTING
+
+//SORTING
     function sortTableByColumn(table, column, asc = true) {
         const dirModifier = asc ? 1 : -1;
         const tBody = table.tBodies[0];
@@ -1033,7 +1035,6 @@ Adviser:
             sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
         });
     });
-
     // EMPTY COMMENT
     $('#AccountSettings_modal_41').on('hidden.bs.modal', function () {
     // Load up a new modal...

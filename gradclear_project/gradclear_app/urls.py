@@ -54,9 +54,9 @@ urlpatterns = [
      path('student_dashboard', student_dashboard, name='student_dashboard'),
 
      # FORM LISTS
-     path('faculty_dashboard_clearance_list', faculty_dashboard_clearance_list,
+     path('faculty_dashboard_clearance_list/<int:id>', faculty_dashboard_clearance_list,
           name='faculty_dashboard_clearance_list'),
-     path('faculty_dashboard_graduation_list', faculty_dashboard_graduation_list,
+     path('faculty_dashboard_graduation_list/<int:id>', faculty_dashboard_graduation_list,
           name='faculty_dashboard_graduation_list'),
      path('registrar_dashboard_request_list', registrar_dashboard_request_list, 
           name="registrar_dashboard_request_list"),
@@ -76,13 +76,20 @@ urlpatterns = [
      # FORM LISTS (WITH FUNCTION OF APPROVING ALL)
      path('faculty_dashboard_clearance_list_all', faculty_dashboard_clearance_list_all, 
           name='faculty_dashboard_clearance_list_all'),
+     path('faculty_dashboard_clearance_list/faculty_dashboard_clearance_list_all', faculty_dashboard_clearance_list_all, 
+          name='faculty_dashboard_clearance_list_all'),
      path('faculty_dashboard_graduation_list_all', faculty_dashboard_graduation_list_all, 
+          name='faculty_dashboard_graduation_list_all'),
+     path('faculty_dashboard_graduation_list/faculty_dashboard_graduation_list_all', faculty_dashboard_graduation_list_all, 
           name='faculty_dashboard_graduation_list_all'),
 
      # UPDATE SIGNATURE
      path('update_clearance_signature/<int:id>', update_clearance_signature , 
           name='update_clearance_signature'),
+     path('faculty_dashboard_clearance_list/update_clearance_signature/<int:id>', update_clearance_signature , 
+          name='update_clearance_signature'),
      path('update_grad_signature/<int:id>', update_grad_signature ,name='update_grad_signature'),
+     path('faculty_dashboard_graduation_list/update_grad_signature/<int:id>', update_grad_signature ,name='update_grad_signature'),
      
      # UPDATE STATUS
      path('faculty_designation_update/<int:id>', faculty_designation_update, 
@@ -92,6 +99,7 @@ urlpatterns = [
      
      # REMOVE USER
      path('faculty_list_remove/<int:id>', faculty_list_remove, name="faculty_list_remove"),
+     path('registrar_dashboard_student_list/student_list_remove/<int:id>', student_list_remove, name="student_list_remove"),
      path('student_list_remove/<int:id>', student_list_remove, name="student_list_remove"),
      path('staff_list_remove/<int:id>', staff_list_remove, name="staff_list_remove"),
 
@@ -109,7 +117,6 @@ urlpatterns = [
      path('registrar_dashboard_organize_request_list/request_claim_update/<int:id>', 
           request_claim_update, name='request_claim_update'),
      
-     
      #  DOCUMENT CHECKER
      path('request_official_update/<int:id>', request_official_update, name='request_official_update'),
      path('request_form137_update/<int:id>', request_form137_update, name='request_form137_update'),
@@ -117,7 +124,9 @@ urlpatterns = [
 
      # FORM APPROVAL
      path('update_clearance/<int:id>/<str:dep>/<str:sign>', update_clearance, name='update_clearance'),
+     path('faculty_dashboard_clearance_list/update_clearance/<int:id>/<str:dep>/<str:sign>', update_clearance, name='update_clearance'),
      path('update_graduation/<int:id>/<str:sub>/<str:sig>', update_graduation, name='update_graduation'),
+     path('faculty_dashboard_graduation_list/update_graduation/<int:id>/<str:sub>/<str:sig>', update_graduation, name='update_graduation'),
 
      # UPDATE STUDENT SETTINGS
      path('updatePassword', updatePassword, name='updatePassword'),
@@ -143,7 +152,9 @@ urlpatterns = [
      
      # SET APPOINTMENTS
      path('appointment/<int:id>/<str:form>', appointment, name='appointment'),
+     path('faculty_dashboard_clearance_list/appointment/<int:id>/<str:form>', appointment, name= 'appointment'),
      path('appointmentgrad/<int:id>/<str:form>', appointmentgrad, name='appointmentgrad'),
+     path('faculty_dashboard_graduation_list/appointmentgrad/<int:id>/<str:form>', appointmentgrad, name= 'appointmentgrad'),
      path('reggrad_appointment/<int:id>', reggrad_appointment, name='reggrad_appointment'),
      path('regclear_appointment/<int:id>', regclear_appointment, name='regclear_appointment'),
      path('request_appointment/<int:id>', request_appointment, name='request_appointment'),
