@@ -108,6 +108,63 @@ Adviser:
         color: #ccc;
     }
 
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    }
+
+    .dropdown-menu>li{	
+        position:relative;
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        /* Rules below not implemented in browsers yet */
+        -o-user-select: none;
+        user-select: none;
+        cursor:pointer;
+    }
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        display:none;
+        margin-top: -1px;
+        border-top-left-radius:0;
+        border-bottom-left-radius:0;
+        border-left-color:#fff;
+        box-shadow:none;
+    }
+    .right-caret:after,.left-caret:after
+    {	content:"";
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        display: inline-block;
+        height: 0;
+        vertical-align: middle;
+        width: 0;
+        margin-left:5px;
+    }
+    .right-caret:after
+    {	border-left: 5px solid #ffaf46;
+    }
+    .left-caret:after
+    {	border-right: 5px solid #ffaf46;
+    }
+
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+    }
+
     .modal-body {
         background: #e0e0e0;
         box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
@@ -172,13 +229,13 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content: '\25b4';
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content: '\25be';
         color: white;
     }
     
@@ -249,6 +306,28 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+    
+    #dropdownMenuLink{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+    
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
     }
 
     #list_tbl_74 {
@@ -362,11 +441,31 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_74">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-        <a href="{% url 'registrar_dashboard_faculty_list'%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_74" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
+            Department
+        </a>
+        <!--DROPODOWN TO FILTER OLD TO LATEST-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/ALL">All</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/OCS">Accountant (OCS)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/OGS">Guidance Office (OGS)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/OSA">Student Affairs (OSA)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/ADAA">Academic Affairs (ADAA)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/OES">Extension Services (OES)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/OCL">Library (OCL)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DMS">Math and Science Department (DMS)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DPECS">Department of Physical Education, Culture and Sports (DPECS)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DED">Industrial Eduaction Department (DED)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DIT">Industrial Technology Department (DIT)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DLA">Liberal Arts Department (DLA)</a>
+            <a class="dropdown-item" href="/registrar_dashboard_organize_faculty_list/DOE">Department of Engineering (DOE)</a>
+        
+        </div>
+        
     </div>
 
      <!--BACK TO TOP BUTTON-->
@@ -399,9 +498,9 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden> # </th>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>ID Number</th>
+                            <th class="sorting" title="Sort by Name">Name</th>
+                            <th class="sorting" title="Sort by Department">Department</th>
+                            <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th>Email</th>
                             <th>Designation</th>     
                             <th></th>
@@ -414,10 +513,10 @@ Adviser:
                             <td colspan="6"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
-                    
+                    <tbody>
                     {% for instance in all %}
                     
-                    <tbody>
+                    
                         <!--EMPTY COMMENT-->
                         <tr>
                             <td hidden>{{instance.id}}</td>
@@ -464,9 +563,9 @@ Adviser:
                             </td>
                         </tr>
                         
-                       
+                    {% endfor %}   
                     </tbody>
-                    {% endfor %} 
+                     
                 </table>
             </div>
         </div>
@@ -491,6 +590,43 @@ Adviser:
 
 
 <script>
+        //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting ").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
     // SHOW NO DATA IF TABLE IS EMPTY
     var dattable = document.getElementById("list_tbl_74");
     var rowcount = dattable.tBodies[0].rows.length;

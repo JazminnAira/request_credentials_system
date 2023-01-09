@@ -181,13 +181,13 @@ Adviser:
     
     .table-sortable .th-sort-asc::after {
         display: inline;
-        content: 'asc';
+        content: "\25b4";
         color: white;
     }
     
     .table-sortable .th-sort-desc::after {
         display: inline;
-        content: 'desc';
+        content: "\25be";
         color: white;
     }
     
@@ -204,6 +204,63 @@ Adviser:
     .table-wrapper{
         max-height: 550px;
         overflow-y: scroll;
+    }
+    
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    }
+
+    .dropdown-menu>li{	
+        position:relative;
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        /* Rules below not implemented in browsers yet */
+        -o-user-select: none;
+        user-select: none;
+        cursor:pointer;
+    }
+    .dropdown-menu .sub-menu {
+        left: 100%;
+        position: absolute;
+        top: 0;
+        display:none;
+        margin-top: -1px;
+        border-top-left-radius:0;
+        border-bottom-left-radius:0;
+        border-left-color:#fff;
+        box-shadow:none;
+    }
+    .right-caret:after,.left-caret:after
+    {	content:"";
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        display: inline-block;
+        height: 0;
+        vertical-align: middle;
+        width: 0;
+        margin-left:5px;
+    }
+    .right-caret:after
+    {	border-left: 5px solid #ffaf46;
+    }
+    .left-caret:after
+    {	border-right: 5px solid #ffaf46;
+    }
+
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
     }
 
     #backtotop_btn_72 {
@@ -265,6 +322,28 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+    
+    #dropdownMenuLink{
+        background-color: #e7dfe4;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+    }
+    
+    #dropdownMenuLink:hover{
+        background-color: #f5f0f6;
+        color: black;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
     }
 
     #list_tbl_72 {
@@ -378,12 +457,35 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_72">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-        <a href="{% url 'registrar_dashboard_clearance_list' id=' '%}" data-toggle="tooltip" data-placement="right" title="Refresh"><i class="fa fa-refresh" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
+        
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
+            Sort by
+        </a>
+        <!--DROPODOWN TO FILTER-->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/approved">APPROVED</a>
+            <li><a class="trigger right-caret dropdown-item">TYPE OF REQUEST</a>
+                <ul class="dropdown-menu sub-menu">
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/All">All</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Honorable">Honorable Dismissal</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Subject">Subject Description</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Certification">Certification</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Authentication">Authentication/Verification</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Diploma">Diploma</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Transcript">Transcript of Records</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/CAV">CAV</a></li>
+                  <li><a class="dropdown-item" href="/registrar_dashboard_organize_clearance_list/Others">Others</a></li>
+
+                </ul>
+            </li>
+            
+        </div>
+    
     </div>
 
     <!--BACK TO TOP BUTTON-->
@@ -413,12 +515,12 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden> # </th>
-                            <th>Student's Name</th>
-                            <th>Course</th>
-                            <th>ID Number</th>
-                            <th>Purpose of Request</th>
-                            <th>Date & Time Requested</th>
-                            <th>Approval Status</th>
+                            <th class="sorting" title="Sort by Name">Student's Name</th>
+                            <th class="sorting" title="Sort by Course">Course</th>
+                            <th class="sorting" title="Sort by ID Number">ID Number</th>
+                            <th class="sorting" title="Sort by Purpose of Request">Purpose of Request</th>
+                            <th class="sorting" title="Sort by Date Requested">Date & Time Requested</th>
+                            <th class="sorting" title="Sort by Approval Status">Approval Status</th>
                             <th>Notify</th>
                             {% if request.user.user_type == "REGISTRAR" %}
                             <th></th>
@@ -441,9 +543,9 @@ Adviser:
                         </tr>
                         {% endif %}
                     </thead>
-                    
-                    {% for instance in all %}
                     <tbody>
+                    {% for instance in all %}
+                    
                         <tr>
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
@@ -480,8 +582,9 @@ Adviser:
                             </td>
                             {% endif %}
                         </tr>
+                    {% endfor %}    
                     </tbody>
-                    {% endfor %}
+                    
                 </table>
             </div>
             </div>
@@ -506,6 +609,63 @@ Adviser:
 
 
 <script>
+
+//DROPDOWN WITHIN A DROPDOWN 
+    $(function(){
+        $(".dropdown-menu > li > a.trigger").on("click",function(e){
+            var current=$(this).next();
+            var grandparent=$(this).parent().parent();
+            if($(this).hasClass('left-caret')||$(this).hasClass('right-caret'))
+                $(this).toggleClass('right-caret left-caret');
+            grandparent.find('.left-caret').not(this).toggleClass('right-caret left-caret');
+            grandparent.find(".sub-menu:visible").not(current).hide();
+            current.toggle();
+            e.stopPropagation();
+        });
+        $(".dropdown-menu > li > a:not(.trigger)").on("click",function(){
+            var root=$(this).closest('.dropdown');
+            root.find('.left-caret').toggleClass('right-caret left-caret');
+            root.find('.sub-menu:visible').hide();
+        });
+    });
+
+    //SORTING
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
+
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".table-sortable .sorting").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
+    });
 
 
 // DISPLAY NO DATA IF TABLE IS EMPTY

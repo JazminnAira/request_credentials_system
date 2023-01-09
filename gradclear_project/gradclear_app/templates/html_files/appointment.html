@@ -178,7 +178,7 @@ Adviser:
             max-width: fit-content;
             max-height: fit-content;
         }
-
+        
         body {
         background: white;
         border-radius: 16px;
@@ -236,7 +236,27 @@ Adviser:
         
                                 <form method="POST" action="" enctype="multipart/form-data" style="height:100%;" >
                                     {% csrf_token %}
-
+                                        {% if gform == 'clearance' %}
+                                        <!-- PURPOSE OF REQUEST FOR CLEARANCE -->
+                                        <div class="form-group">
+                                            <label ><b>Requested Credential: {{purpose}}</b></label>
+                                        </div>
+                                        {% elif gform == 'graduation' %}
+                                        <!-- PURPOSE OF REQUEST FOR GRADUATION -->
+                                        <div class="form-group">
+                                            <label><b>Requested Credential: Graduation Form </b></label>
+                                        </div>
+                                        {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
+                                        <!-- PURPOSE OF REQUEST FOR REQUESTS-->
+                                        <div class="form-group">
+                                            <label><b>Requested Credential: {{purpose}}</b></label>
+                                        </div>
+                                        <!-- DATE AND TIME REQUESTED FOR REQUESTS-->
+                                        <div class="form-group">
+                                            <label style="color:#000"><b>Date Requested: {{daterequested}}</b></label>
+                                        </div>
+                                        {% endif %}
+                                        
                                         <!--SET DATE OF APPOINTMENT-->
                                         <div class="form-group">
                                             <label >Date of Appointment:</label>

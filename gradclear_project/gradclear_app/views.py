@@ -1247,14 +1247,16 @@ def clearance_print(request, id):
     accname = accountant.first_name + " " + accountant.last_name
 
     if acc_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_acc
-        p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
-        p.drawString(125, 298, f"""{accname}""")
-        
-    elif acc_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_acc
-        p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
-        p.drawString(125, 298, f"""{accname}""")
+        if  bool(upload_acc_sign) == False:
+            im = "../public_html/Media/"+str_esign_acc
+            p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
+            p.drawString(125, 298, f"""{acc_name}""")
+            p.drawString(53, 292, "Approved *Manual Signature Required")
+            p.drawString(160, 292, "Signed:" +"f'{accountant.accountant_timestamp}")
+        else:
+            im = "../public_html/Media/"+str_upload_acc
+            p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
+            p.drawString(125, 298, f"""{upload_acc_sign}""")
 
     elif acc_stat == "REGISTRAR":
 
@@ -1268,416 +1270,416 @@ def clearance_print(request, id):
         p.drawString(53, 292, "Approved *Manual Signature Required")
         
 
-    # Liberal arts
+    # # Liberal arts
 
-    p.setFont("Helvetica", 7)
-    sig_dla = content.liberal_arts_signature
-    dla_stat = sig_dla.split(' ')[-1]
-    dlas = sig_dla.rsplit(' ', 1)[0]
-    dla_name = dlas.split('_', 1)[0]
+    # p.setFont("Helvetica", 7)
+    # sig_dla = content.liberal_arts_signature
+    # dla_stat = sig_dla.split(' ')[-1]
+    # dlas = sig_dla.rsplit(' ', 1)[0]
+    # dla_name = dlas.split('_', 1)[0]
 
-    liberal_arts = user_table.objects.get(full_name=dla_name)
-    upload_dla_sign = liberal_arts.uploaded_signature
-    str_upload_dla = str(upload_dla_sign)
-    esign_dla_sign = liberal_arts.e_signature
-    str_esign_dla = str(esign_dla_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    dlaname = liberal_arts.first_name + " " + liberal_arts.last_name
+    # liberal_arts = user_table.objects.get(full_name=dla_name)
+    # upload_dla_sign = liberal_arts.uploaded_signature
+    # str_upload_dla = str(upload_dla_sign)
+    # esign_dla_sign = liberal_arts.e_signature
+    # str_esign_dla = str(esign_dla_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # dlaname = liberal_arts.first_name + " " + liberal_arts.last_name
 
-    if dla_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_dla
-        p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
-        p.drawString(147, 243, f"""{dlaname}""")
+    # if dla_stat == "ESIGN":
+    #     im = "../public_html/Media/"+str_esign_dla
+    #     p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
+    #     p.drawString(147, 243, f"""{dlaname}""")
 
-    elif dla_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_dla
-        p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
-        p.drawString(147, 243, f"""{dlaname}""")
+    # elif dla_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_dla
+    #     p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
+    #     p.drawString(147, 243, f"""{dlaname}""")
         
-    elif dla_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(147, 243, "APPROVED")
+    # elif dla_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(147, 243, "APPROVED")
 
-    else:
-        p.drawString(147, 243, f"""{dlaname}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 234, "Approved *Manual Signature Required")
-        
-
-    # # # math and sci
-    p.setFont("Helvetica", 7)
-    sig_dms = content.mathsci_dept_signature
-    dms_stat = sig_dms.split(' ')[-1]
-    dmss = sig_dms.rsplit(' ', 1)[0]
-    dms_name = dmss.split('_', 1)[0]
-
-    mathsci = user_table.objects.get(full_name=dms_name)
-    upload_dms_sign = mathsci.uploaded_signature
-    str_upload_dms = str(upload_dms_sign)
-    esign_dms_sign = mathsci.e_signature
-    str_esign_dms = str(esign_dms_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    dmsname = mathsci.first_name + " " + mathsci.last_name
-
-    if dms_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_dms
-        p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
-        p.drawString(170, 215, f"""{dmsname}""")
-
-    elif dms_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_dms
-        p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
-        p.drawString(170, 215, f"""{dmsname}""")
-
-    elif dms_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(170, 215, "APPROVED")
-
-    else:
-        p.drawString(170, 215, f"""{dmsname}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 209, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(147, 243, f"""{dlaname}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(75, 234, "Approved *Manual Signature Required")
         
 
-    # # # dpecs
+    # # # # math and sci
+    # p.setFont("Helvetica", 7)
+    # sig_dms = content.mathsci_dept_signature
+    # dms_stat = sig_dms.split(' ')[-1]
+    # dmss = sig_dms.rsplit(' ', 1)[0]
+    # dms_name = dmss.split('_', 1)[0]
 
-    pe_acc = content.pe_dept_signature
-    pe_stat = pe_acc.split(' ')[-1]
-    dpecs = pe_acc.rsplit(' ', 1)[0]
-    pe_name = dpecs.split('_', 1)[0]
+    # mathsci = user_table.objects.get(full_name=dms_name)
+    # upload_dms_sign = mathsci.uploaded_signature
+    # str_upload_dms = str(upload_dms_sign)
+    # esign_dms_sign = mathsci.e_signature
+    # str_esign_dms = str(esign_dms_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # dmsname = mathsci.first_name + " " + mathsci.last_name
 
-    pe_dept = user_table.objects.get(full_name=pe_name)
-    upload_pe_sign = pe_dept.uploaded_signature
-    str_upload_pe = str(upload_pe_sign)
-    esign_pe_sign = pe_dept.e_signature
-    str_esign_pe = str(esign_pe_sign)
-    p.setFont("Helvetica", 4.5)
-    p.setFillColorRGB(1, 0, 0)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    pename = pe_dept.first_name + " " + pe_dept.last_name
+    # if dms_stat == "ESIGN":
+    #     im = "../public_html/Media/"+str_esign_dms
+    #     p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
+    #     p.drawString(170, 215, f"""{dmsname}""")
 
-    if pe_stat == "ESIGN":
-        im = "../public_html/Media/"+str_esign_pe
-        p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
-        p.drawString(120, 190, f"""{pename}""")
+    # elif dms_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_dms
+    #     p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
+    #     p.drawString(170, 215, f"""{dmsname}""")
 
-    elif pe_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_pe
-        p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
-        p.drawString(120, 190, f"""{pename}""")
+    # elif dms_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(170, 215, "APPROVED")
 
-    elif pe_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(120, 190, "APPROVED")
-
-    else:
-        p.drawString(120, 190, f"""{pename}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(75, 183, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(170, 215, f"""{dmsname}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(75, 209, "Approved *Manual Signature Required")
         
 
-    # # depts
-    itdept_acc = content.it_dept_signature
-    educ_dept = content.ieduc_dept_signature
-    eng = content.eng_dept_signature
-    if itdept_acc != "_APPROVED":
+    # # # # dpecs
 
-        p.setFont("Helvetica", 7)
+    # pe_acc = content.pe_dept_signature
+    # pe_stat = pe_acc.split(' ')[-1]
+    # dpecs = pe_acc.rsplit(' ', 1)[0]
+    # pe_name = dpecs.split('_', 1)[0]
 
-        itdept_stat = itdept_acc.split(' ')[-1]
-        itdepartments = itdept_acc.rsplit(' ', 1)[0]
-        itdept_name = itdepartments.split('_', 1)[0]
+    # pe_dept = user_table.objects.get(full_name=pe_name)
+    # upload_pe_sign = pe_dept.uploaded_signature
+    # str_upload_pe = str(upload_pe_sign)
+    # esign_pe_sign = pe_dept.e_signature
+    # str_esign_pe = str(esign_pe_sign)
+    # p.setFont("Helvetica", 4.5)
+    # p.setFillColorRGB(1, 0, 0)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # pename = pe_dept.first_name + " " + pe_dept.last_name
 
-        itdept_dept = user_table.objects.get(full_name=itdept_name)
-        upload_itdept_sign = itdept_dept.uploaded_signature
-        str_upload_itdept = str(upload_itdept_sign)
-        esign_itdept_sign = itdept_dept.e_signature
-        str_esign_itdept = str(esign_itdept_sign)
-        p.setFont("Helvetica", 6)
-        p.setFillColorRGB(0, 0, 0)
-        itdeptname = itdept_dept.first_name + " " + itdept_dept.last_name
+    # if pe_stat == "ESIGN":
+    #     im = "../public_html/Media/"+str_esign_pe
+    #     p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
+    #     p.drawString(120, 190, f"""{pename}""")
 
-        if itdept_stat == "ESIGN":
-            im = "../public_html/Media/"+str_esign_itdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{itdeptname}""")
+    # elif pe_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_pe
+    #     p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
+    #     p.drawString(120, 190, f"""{pename}""")
+
+    # elif pe_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(120, 190, "APPROVED")
+
+    # else:
+    #     p.drawString(120, 190, f"""{pename}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(75, 183, "Approved *Manual Signature Required")
+        
+
+    # # # depts
+    # itdept_acc = content.it_dept_signature
+    # educ_dept = content.ieduc_dept_signature
+    # eng = content.eng_dept_signature
+    # if itdept_acc != "_APPROVED":
+
+    #     p.setFont("Helvetica", 7)
+
+    #     itdept_stat = itdept_acc.split(' ')[-1]
+    #     itdepartments = itdept_acc.rsplit(' ', 1)[0]
+    #     itdept_name = itdepartments.split('_', 1)[0]
+
+    #     itdept_dept = user_table.objects.get(full_name=itdept_name)
+    #     upload_itdept_sign = itdept_dept.uploaded_signature
+    #     str_upload_itdept = str(upload_itdept_sign)
+    #     esign_itdept_sign = itdept_dept.e_signature
+    #     str_esign_itdept = str(esign_itdept_sign)
+    #     p.setFont("Helvetica", 6)
+    #     p.setFillColorRGB(0, 0, 0)
+    #     itdeptname = itdept_dept.first_name + " " + itdept_dept.last_name
+
+    #     if itdept_stat == "ESIGN":
+    #         im = "../public_html/Media/"+str_esign_itdept
+    #         p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+    #         p.drawString(105, 113, f"""{itdeptname}""")
 
 
-        elif itdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_itdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{itdeptname}""")
+    #     elif itdept_stat == "UPLOAD":
+    #         im = "../public_html/Media/"+str_upload_itdept
+    #         p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+    #         p.drawString(105, 113, f"""{itdeptname}""")
 
-        elif itdept_stat == "REGISTRAR":
-            p.setFont("Helvetica", 6)
-            p.drawString(105, 113, "APPROVED")
+    #     elif itdept_stat == "REGISTRAR":
+    #         p.setFont("Helvetica", 6)
+    #         p.drawString(105, 113, "APPROVED")
 
-        else:
-            p.drawString(105, 113, f"""{itdeptname}""")
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "Approved *Manual Signature Required")
+    #     else:
+    #         p.drawString(105, 113, f"""{itdeptname}""")
+    #         p.setFont("Helvetica", 4.5)
+    #         p.setFillColorRGB(1, 0, 0)
+    #         p.drawString(75, 105, "Approved *Manual Signature Required")
             
 
-    elif educ_dept != "_APPROVED":
+    # elif educ_dept != "_APPROVED":
 
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(0, 0, 0)
-        educdept_stat = educ_dept.split(' ')[-1]
-        educdepartments = educ_dept.rsplit(' ', 1)[0]
-        educdept_name = educdepartments.split('_', 1)[0]
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(0, 0, 0)
+    #     educdept_stat = educ_dept.split(' ')[-1]
+    #     educdepartments = educ_dept.rsplit(' ', 1)[0]
+    #     educdept_name = educdepartments.split('_', 1)[0]
 
-        educdept_dept = user_table.objects.get(full_name=educdept_name)
-        upload_educdept_sign = educdept_dept.uploaded_signature
-        str_upload_educdept = str(upload_educdept_sign)
-        esign_educdept_sign = educdept_dept.e_signature
-        str_esign_educdept = str(esign_educdept_sign)
-        p.setFont("Helvetica", 6)
-        p.setFillColorRGB(0, 0, 0)
-        educdeptname = educdept_dept.first_name + " " + educdept_dept.last_name
+    #     educdept_dept = user_table.objects.get(full_name=educdept_name)
+    #     upload_educdept_sign = educdept_dept.uploaded_signature
+    #     str_upload_educdept = str(upload_educdept_sign)
+    #     esign_educdept_sign = educdept_dept.e_signature
+    #     str_esign_educdept = str(esign_educdept_sign)
+    #     p.setFont("Helvetica", 6)
+    #     p.setFillColorRGB(0, 0, 0)
+    #     educdeptname = educdept_dept.first_name + " " + educdept_dept.last_name
 
-        if educdept_stat == "ESIGN":
-            p.drawString(105, 113, f"""{educdeptname}""")
-            im = "../public_html/Media/"+str_esign_educdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+    #     if educdept_stat == "ESIGN":
+    #         p.drawString(105, 113, f"""{educdeptname}""")
+    #         im = "../public_html/Media/"+str_esign_educdept
+    #         p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
 
-        elif educdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_educdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{educdeptname}""")
+    #     elif educdept_stat == "UPLOAD":
+    #         im = "../public_html/Media/"+str_upload_educdept
+    #         p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+    #         p.drawString(105, 113, f"""{educdeptname}""")
 
-        elif educdept_stat == "REGISTRAR":
-            p.setFont("Helvetica", 6)
-            p.drawString(105, 113, "APPROVED")
+    #     elif educdept_stat == "REGISTRAR":
+    #         p.setFont("Helvetica", 6)
+    #         p.drawString(105, 113, "APPROVED")
 
-        else:
-            p.drawString(105, 113, f"""{educdeptname}""")
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "Approved *Manual Signature Required")
+    #     else:
+    #         p.drawString(105, 113, f"""{educdeptname}""")
+    #         p.setFont("Helvetica", 4.5)
+    #         p.setFillColorRGB(1, 0, 0)
+    #         p.drawString(75, 105, "Approved *Manual Signature Required")
 
-    elif eng != "_APPROVED":
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(0, 0, 0)
+    # elif eng != "_APPROVED":
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(0, 0, 0)
 
-        engdept_stat = eng.split(' ')[-1]
-        engdepartments = eng.rsplit(' ', 1)[0]
-        engdept_name = engdepartments.split('_', 1)[0]
+    #     engdept_stat = eng.split(' ')[-1]
+    #     engdepartments = eng.rsplit(' ', 1)[0]
+    #     engdept_name = engdepartments.split('_', 1)[0]
 
-        engdept_dept = user_table.objects.get(full_name=engdept_name)
-        upload_engdept_sign = engdept_dept.uploaded_signature
-        str_upload_engdept = str(upload_engdept_sign)
-        esign_engdept_sign = engdept_dept.e_signature
-        str_esign_engdept = str(esign_engdept_sign)
-        p.setFont("Helvetica", 6)
-        p.setFillColorRGB(0, 0, 0)
-        engdeptname = engdept_dept.first_name + " " + engdept_dept.last_name
+    #     engdept_dept = user_table.objects.get(full_name=engdept_name)
+    #     upload_engdept_sign = engdept_dept.uploaded_signature
+    #     str_upload_engdept = str(upload_engdept_sign)
+    #     esign_engdept_sign = engdept_dept.e_signature
+    #     str_esign_engdept = str(esign_engdept_sign)
+    #     p.setFont("Helvetica", 6)
+    #     p.setFillColorRGB(0, 0, 0)
+    #     engdeptname = engdept_dept.first_name + " " + engdept_dept.last_name
 
-        if engdept_stat == "ESIGN":
-            p.drawString(105, 113, f"""{engdeptname}""")
-            im = "../public_html/Media/"+str_esign_engdept
-            p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
+    #     if engdept_stat == "ESIGN":
+    #         p.drawString(105, 113, f"""{engdeptname}""")
+    #         im = "../public_html/Media/"+str_esign_engdept
+    #         p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
 
-        elif engdept_stat == "UPLOAD":
-            im = "../public_html/Media/"+str_upload_engdept
-            p.drawImage(im, 120, 190, height=25, width=80, mask='auto')
-            p.drawString(105, 113, f"""{engdeptname}""")
+    #     elif engdept_stat == "UPLOAD":
+    #         im = "../public_html/Media/"+str_upload_engdept
+    #         p.drawImage(im, 120, 190, height=25, width=80, mask='auto')
+    #         p.drawString(105, 113, f"""{engdeptname}""")
 
-        elif engdept_stat == "REGISTRAR":
-            p.setFont("Helvetica", 6)
-            p.drawString(105, 113, "APPROVED")
+    #     elif engdept_stat == "REGISTRAR":
+    #         p.setFont("Helvetica", 6)
+    #         p.drawString(105, 113, "APPROVED")
 
-        else:
-            p.drawString(105, 113, f"""{engdeptname}""")
-            p.setFont("Helvetica", 4.5)
-            p.setFillColorRGB(1, 0, 0)
-            p.drawString(75, 105, "Approved *Manual Signature Required")
+    #     else:
+    #         p.drawString(105, 113, f"""{engdeptname}""")
+    #         p.setFont("Helvetica", 4.5)
+    #         p.setFillColorRGB(1, 0, 0)
+    #         p.drawString(75, 105, "Approved *Manual Signature Required")
 
-    # # shop
-    p.setFont("Helvetica", 7)
-    sig_shop = content.course_adviser_signature
-    shop_stat = sig_shop.split(' ')[-1]
-    shops = sig_shop.rsplit(' ', 1)[0]
-    shop_name = shops.split('_', 1)[0]
+    # # # shop
+    # p.setFont("Helvetica", 7)
+    # sig_shop = content.course_adviser_signature
+    # shop_stat = sig_shop.split(' ')[-1]
+    # shops = sig_shop.rsplit(' ', 1)[0]
+    # shop_name = shops.split('_', 1)[0]
 
-    shop_ad = user_table.objects.get(full_name=shop_name)
-    upload_shop_sign = shop_ad.uploaded_signature
-    str_upload_shop = str(upload_shop_sign)
-    esign_shop_sign = shop_ad.e_signature
-    str_esign_shop = str(esign_shop_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    shopname = shop_ad.first_name + " " + shop_ad.last_name
+    # shop_ad = user_table.objects.get(full_name=shop_name)
+    # upload_shop_sign = shop_ad.uploaded_signature
+    # str_upload_shop = str(upload_shop_sign)
+    # esign_shop_sign = shop_ad.e_signature
+    # str_esign_shop = str(esign_shop_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # shopname = shop_ad.first_name + " " + shop_ad.last_name
 
-    if shop_stat == "ESIGN":
-        p.drawString(435, 300, f"""{shopname}""")
-        im = "../public_html/Media/"+str_esign_shop
-        p.drawImage(im, 435, 290, height=15, width=80, mask='auto')
+    # if shop_stat == "ESIGN":
+    #     p.drawString(435, 300, f"""{shopname}""")
+    #     im = "../public_html/Media/"+str_esign_shop
+    #     p.drawImage(im, 435, 290, height=15, width=80, mask='auto')
 
-    elif shop_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_shop
-        p.drawImage(im, 435, 290, height=25, width=80, mask='auto')
-        p.drawString(435, 300, f"""{shopname}""")
+    # elif shop_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_shop
+    #     p.drawImage(im, 435, 290, height=25, width=80, mask='auto')
+    #     p.drawString(435, 300, f"""{shopname}""")
         
-    elif shop_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(435, 300, "APPROVED")
+    # elif shop_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(435, 300, "APPROVED")
 
-    else:
-        p.drawString(435, 300, f"""{shopname}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(320, 290, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(435, 300, f"""{shopname}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(320, 290, "Approved *Manual Signature Required")
 
-    # # library
-    p.setFont("Helvetica", 7)
-    sig_lib = content.library_signature
-    lib_stat = sig_lib.split(' ')[-1]
-    libb = sig_lib.rsplit(' ', 1)[0]
-    lib_name = libb.split('_', 1)[0]
+    # # # library
+    # p.setFont("Helvetica", 7)
+    # sig_lib = content.library_signature
+    # lib_stat = sig_lib.split(' ')[-1]
+    # libb = sig_lib.rsplit(' ', 1)[0]
+    # lib_name = libb.split('_', 1)[0]
 
-    lib_ad = user_table.objects.get(full_name=lib_name)
-    upload_lib_sign = lib_ad.uploaded_signature
-    str_upload_lib = str(upload_lib_sign)
-    esign_lib_sign = lib_ad.e_signature
-    str_esign_lib = str(esign_lib_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    libname = lib_ad.first_name + " " + lib_ad.last_name
+    # lib_ad = user_table.objects.get(full_name=lib_name)
+    # upload_lib_sign = lib_ad.uploaded_signature
+    # str_upload_lib = str(upload_lib_sign)
+    # esign_lib_sign = lib_ad.e_signature
+    # str_esign_lib = str(esign_lib_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # libname = lib_ad.first_name + " " + lib_ad.last_name
 
-    if lib_stat == "ESIGN":
-        p.drawString(425, 269, f"""{libname}""")
-        im = "../public_html/Media/"+str_esign_lib
-        p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
+    # if lib_stat == "ESIGN":
+    #     p.drawString(425, 269, f"""{libname}""")
+    #     im = "../public_html/Media/"+str_esign_lib
+    #     p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
 
-    elif lib_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_lib
-        p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
-        p.drawString(425, 269, f"""{libname}""")
+    # elif lib_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_lib
+    #     p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
+    #     p.drawString(425, 269, f"""{libname}""")
         
-    elif lib_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(425, 265, "APPROVED")
+    # elif lib_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(425, 265, "APPROVED")
 
-    else:
-        p.drawString(425, 269, f"""{libname}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(325, 260, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(425, 269, f"""{libname}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(325, 260, "Approved *Manual Signature Required")
 
-    # guidance
+    # # guidance
 
-    sig_guidance = content.guidance_office_signature
-    guidance_stat = sig_guidance.split(' ')[-1]
-    guidances = sig_guidance.rsplit(' ', 1)[0]
-    guidance_name = guidances.split('_', 1)[0]
+    # sig_guidance = content.guidance_office_signature
+    # guidance_stat = sig_guidance.split(' ')[-1]
+    # guidances = sig_guidance.rsplit(' ', 1)[0]
+    # guidance_name = guidances.split('_', 1)[0]
 
-    guidance = user_table.objects.get(full_name=guidance_name)
-    upload_guidance_sign = guidance.uploaded_signature
-    str_upload_guidance = str(upload_guidance_sign)
-    esign_guidance_sign = guidance.e_signature
-    str_esign_guidance = str(esign_guidance_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    guidancename = guidance.first_name + " " + guidance.last_name
+    # guidance = user_table.objects.get(full_name=guidance_name)
+    # upload_guidance_sign = guidance.uploaded_signature
+    # str_upload_guidance = str(upload_guidance_sign)
+    # esign_guidance_sign = guidance.e_signature
+    # str_esign_guidance = str(esign_guidance_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # guidancename = guidance.first_name + " " + guidance.last_name
 
-    if guidance_stat == "ESIGN":
-        p.drawString(435, 244, f"""{guidancename}""")
-        im = "../public_html/Media/"+str_esign_guidance
-        p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
+    # if guidance_stat == "ESIGN":
+    #     p.drawString(435, 244, f"""{guidancename}""")
+    #     im = "../public_html/Media/"+str_esign_guidance
+    #     p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
 
-    elif guidance_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_guidance
-        p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
-        p.drawString(435, 244, f"""{guidancename}""")
+    # elif guidance_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_guidance
+    #     p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
+    #     p.drawString(435, 244, f"""{guidancename}""")
         
-    elif guidance_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(435, 244, "APPROVED")
+    # elif guidance_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(435, 244, "APPROVED")
 
-    else:
-        p.drawString(435, 244, f"""{guidancename}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(325, 238, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(435, 244, f"""{guidancename}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(325, 238, "Approved *Manual Signature Required")
 
-    # osa
-    p.setFont("Helvetica", 7)
-    sig_osa = content.osa_signature
-    osa_stat = sig_osa.split(' ')[-1]
-    osas = sig_osa.rsplit(' ', 1)[0]
-    osa_name = osas.split('_', 1)[0]
+    # # osa
+    # p.setFont("Helvetica", 7)
+    # sig_osa = content.osa_signature
+    # osa_stat = sig_osa.split(' ')[-1]
+    # osas = sig_osa.rsplit(' ', 1)[0]
+    # osa_name = osas.split('_', 1)[0]
 
-    osa = user_table.objects.get(full_name=osa_name)
-    upload_osa_sign = osa.uploaded_signature
-    str_upload_osa = str(upload_osa_sign)
-    esign_osa_sign = osa.e_signature
-    str_esign_osa = str(esign_osa_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    osaname = osa.first_name + " " + osa.last_name
+    # osa = user_table.objects.get(full_name=osa_name)
+    # upload_osa_sign = osa.uploaded_signature
+    # str_upload_osa = str(upload_osa_sign)
+    # esign_osa_sign = osa.e_signature
+    # str_esign_osa = str(esign_osa_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # osaname = osa.first_name + " " + osa.last_name
 
-    if osa_stat == "ESIGN":
-        p.drawString(455, 217, f"""{osaname}""")
-        im = "../public_html/Media/"+str_esign_osa
-        p.drawImage(im, 455, 210, height=25, width=80, mask='auto')
+    # if osa_stat == "ESIGN":
+    #     p.drawString(455, 217, f"""{osaname}""")
+    #     im = "../public_html/Media/"+str_esign_osa
+    #     p.drawImage(im, 455, 210, height=25, width=80, mask='auto')
 
-    elif osa_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_osa
-        p.drawImage(im, 455, 215, height=25, width=80, mask='auto')
-        p.drawString(455, 217, f"""{osaname}""")
+    # elif osa_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_osa
+    #     p.drawImage(im, 455, 215, height=25, width=80, mask='auto')
+    #     p.drawString(455, 217, f"""{osaname}""")
         
-    elif osa_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(455, 217, "APPROVED")
+    # elif osa_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(455, 217, "APPROVED")
 
-    else:
-        p.drawString(455, 217, f"""{osaname}""")
-        p.setFont("Helvetica", 4.5)
-        p.setFillColorRGB(1, 0, 0)
-        p.drawString(320, 210, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(455, 217, f"""{osaname}""")
+    #     p.setFont("Helvetica", 4.5)
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.drawString(320, 210, "Approved *Manual Signature Required")
 
-    # adaa
+    # # adaa
 
-    sig_adaa = content.academic_affairs_signature
-    adaa_stat = sig_adaa.split(' ')[-1]
-    adaas = sig_adaa.rsplit(' ', 1)[0]
-    adaa_name = adaas.split('_', 1)[0]
+    # sig_adaa = content.academic_affairs_signature
+    # adaa_stat = sig_adaa.split(' ')[-1]
+    # adaas = sig_adaa.rsplit(' ', 1)[0]
+    # adaa_name = adaas.split('_', 1)[0]
 
-    adaa = user_table.objects.get(full_name=adaa_name)
-    upload_adaa_sign = adaa.uploaded_signature
-    str_upload_adaa = str(upload_adaa_sign)
-    esign_adaa_sign = adaa.e_signature
-    str_esign_adaa = str(esign_adaa_sign)
-    p.setFont("Helvetica", 6)
-    p.setFillColorRGB(0, 0, 0)
-    adaaname = adaa.first_name + " " + adaa.last_name
+    # adaa = user_table.objects.get(full_name=adaa_name)
+    # upload_adaa_sign = adaa.uploaded_signature
+    # str_upload_adaa = str(upload_adaa_sign)
+    # esign_adaa_sign = adaa.e_signature
+    # str_esign_adaa = str(esign_adaa_sign)
+    # p.setFont("Helvetica", 6)
+    # p.setFillColorRGB(0, 0, 0)
+    # adaaname = adaa.first_name + " " + adaa.last_name
 
-    if adaa_stat == "ESIGN":
-        p.drawString(482, 190, f"""{adaaname}""")
-        im = "../public_html/Media/"+str_esign_adaa
-        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+    # if adaa_stat == "ESIGN":
+    #     p.drawString(482, 190, f"""{adaaname}""")
+    #     im = "../public_html/Media/"+str_esign_adaa
+    #     p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
 
-    elif adaa_stat == "UPLOAD":
-        im = "../public_html/Media/"+str_upload_adaa
-        p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
-        p.drawString(482, 190, f"""{adaaname}""")
+    # elif adaa_stat == "UPLOAD":
+    #     im = "../public_html/Media/"+str_upload_adaa
+    #     p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
+    #     p.drawString(482, 190, f"""{adaaname}""")
         
-    elif adaa_stat == "REGISTRAR":
-        p.setFont("Helvetica", 6)
-        p.drawString(482, 190, "APPROVED")
+    # elif adaa_stat == "REGISTRAR":
+    #     p.setFont("Helvetica", 6)
+    #     p.drawString(482, 190, "APPROVED")
 
-    else:
-        p.drawString(482, 190, f"""{adaaname}""")
-        p.setFillColorRGB(1, 0, 0)
-        p.setFont("Helvetica", 4.5)
-        p.drawString(325, 185, "Approved *Manual Signature Required")
+    # else:
+    #     p.drawString(482, 190, f"""{adaaname}""")
+    #     p.setFillColorRGB(1, 0, 0)
+    #     p.setFont("Helvetica", 4.5)
+    #     p.drawString(325, 185, "Approved *Manual Signature Required")
 
     for line in lines:
         textob.textLine(line)
@@ -1705,7 +1707,7 @@ def clearance_print(request, id):
 
     with open(r'../public_html/static/pdf/Clearance_form_Generated.pdf', 'rb', ) as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
+        # response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
 
 # FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (CLEARANCE ONLY)
@@ -1713,6 +1715,9 @@ def clearance_print(request, id):
 def appointment(request, id, form):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         gform = form
+        purposerequest = clearance_form_table.objects.filter(
+            id=id).values_list('purpose_of_request', flat=True).distinct()
+        purpose = purposerequest[0]
         if request.method == 'POST':
             email_temp = clearance_form_table.objects.filter(
                 id=id).values_list('student_id', flat=True).distinct()
@@ -1720,7 +1725,7 @@ def appointment(request, id, form):
                 student_id=email_temp[0]).values_list('email', flat=True).distinct()
             rec_email = email[0]
             recipient_list = [rec_email, ]
-            print("RECMAIL TOH", rec_email)
+            print("RECMAIL:", rec_email)
 
             name_temp = clearance_form_table.objects.filter(
                 id=id).values_list('student_id', flat=True).distinct()
@@ -1795,7 +1800,7 @@ def appointment(request, id, form):
             return redirect(faculty_dashboard_clearance_list)
 
         else:
-            return render(request, 'html_files/appointment.html', {'gform': gform})
+            return render(request, 'html_files/appointment.html', {'gform': gform, 'purpose': purpose})
 
 # FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (GRADUATION ONLY)
 @login_required(login_url='/')
@@ -2011,6 +2016,13 @@ def regclear_appointment(request, id):
 # FOR SETTING APPOINTMENTS ON REGISTRAR'S SIDE (APPROVED REQUESTS ONLY)
 @login_required(login_url='/')
 def request_appointment(request, id):
+    purposerequest = request_form_table.objects.filter(
+        id=id).values_list('request', flat=True).distinct()
+    purpose = purposerequest[0]
+    daterequest = request_form_table.objects.filter(
+        id=id).values_list('date', flat=True).distinct()
+    daterequested = daterequest[0]
+        
     if request.method == 'POST':
         email_temp = request_form_table.objects.filter(
             id=id).values_list('student_id', flat=True).distinct()
@@ -2116,7 +2128,7 @@ def request_appointment(request, id):
 
         return redirect('registrar_dashboard_request_list')
     else:
-        return render(request, 'html_files/appointment.html', {})
+        return render(request, 'html_files/appointment.html', {'purpose': purpose, 'daterequested': daterequested})
 
 # LOGIN ALL USERS IN COVER PAGE
 def login_user(request):
@@ -3021,8 +3033,8 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(
                 osa_signature="UNAPPROVED").order_by('-time_requested')
         elif request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(
-                academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
+            st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
+                Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
 
         # CLEARANCE FORM IDENTIFIER FOR COURSE ADVISERS
         if clearance_form_table.objects.filter(course_adviser_signature=unapproved):
@@ -3069,7 +3081,7 @@ def faculty_dashboard(request):
                     osa_signature="UNAPPROVED")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
+                st1 = clearance_form_table.objects.filter(Q(approval_status="8/10"), Q(course_adviser_signature=unapproved) | Q(
                     academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
 
         with_clearance = clearance_form_table.objects.filter(
@@ -3307,7 +3319,7 @@ def faculty_dashboard_clearance_list(request):
                     osa_signature="UNAPPROVED")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
+                st = clearance_form_table.objects.filter( Q(approval_status="8/10") , Q(course_adviser_signature=f_n_unapproved) | Q(
                     academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
 
         elif request.user.department == "HOCS":
@@ -3351,8 +3363,8 @@ def faculty_dashboard_clearance_list(request):
                 osa_signature="UNAPPROVED").order_by('-time_requested')
 
         elif request.user.department == "HADAA":
-            st = clearance_form_table.objects.filter(
-                academic_affairs_signature="UNAPPROVED").order_by('-time_requested')
+            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
+                Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
 
     else:
         messages.error(
@@ -4920,28 +4932,21 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                account_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    account_sig = up_sig[0]
+                else:
+                    account_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                accountant = account_sig[0]
+                accountant = account_sig
                 accountant_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
                 signature_type1 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                account_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                accountant = account_sig[0]
-                accountant_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                signature_type1 = "UPLOAD"
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -4979,26 +4984,22 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                print("esign laman",e_sig)
+                print("upload laman",up_sig)
+                if e_sig[0] == "" :
+                    ca_sig = up_sig[0]
+                else:
+                    ca_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                course_adviser = ca_sig[0]
+                course_adviser = ca_sig
                 adviser_name = faculty_firstName[0] + " " + faculty_lastName[0]
                 signature_type2 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                ca_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                course_adviser = ca_sig[0]
-                adviser_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                signature_type2 = "UPLOAD"
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5034,27 +5035,21 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    libart_sig = up_sig[0]
+                else:
+                    libart_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                liberal_arts = libart_sig[0]
+                liberal_arts = libart_sig
                 liberal_artsName = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
                 signature_type3 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                libart_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                liberal_arts = libart_sig[0]
-                liberal_artsName = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                signature_type3 = "UPLOAD"
+                
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5092,27 +5087,20 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                cam_lib_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    cam_lib_sig = up_sig[0]
+                else:
+                    cam_lib_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                campus_library = cam_lib_sig[0]
+                campus_library = cam_lib_sig
                 librarian_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
                 signature_type4 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                cam_lib_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                campus_library = cam_lib_sig[0]
-                librarian_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                signature_type4 = "UPLOAD"
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5150,27 +5138,21 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                mathsci_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    mathsci_sig = up_sig[0]
+                else:
+                    mathsci_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                math_and_science = mathsci_sig[0]
+                math_and_science = mathsci_sig
                 math_and_science_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
                 signature_type5 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                mathsci_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                math_and_science = mathsci_sig[0]
-                math_and_science_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                signature_type5 = "UPLOAD"
+            
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5208,27 +5190,21 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    gui_sig = up_sig[0]
+                else:
+                    gui_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                guidance = gui_sig[0]
+                guidance = gui_sig
                 guidance_councelor = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
                 signature_type6 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                gui_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                guidance = gui_sig[0]
-                guidance_councelor = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                signature_type6 = "UPLOAD"
+           
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5266,25 +5242,20 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                pe_dept_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    pe_dept_sig = up_sig[0]
+                else:
+                    pe_dept_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                dpecs = pe_dept_sig[0]
+                dpecs = pe_dept_sig
                 dpecs_name = faculty_firstName[0] + " " + faculty_lastName[0]
                 signature_type7 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                pe_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                dpecs = pe_dept_sig[0]
-                dpecs_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                signature_type7 = "UPLOAD"
+            
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5320,25 +5291,20 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                student_affairs_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    student_affairs_sig = up_sig[0]
+                else:
+                    student_affairs_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                osa = student_affairs_sig[0]
+                osa = student_affairs_sig
                 osa_name = faculty_firstName[0] + " " + faculty_lastName[0]
                 signature_type8 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                student_affairs_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                osa = student_affairs_sig[0]
-                osa_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                signature_type8 = "UPLOAD"
+            
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5374,25 +5340,20 @@ def display_clearform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    adaa_sig = up_sig[0]
+                else:
+                    adaa_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                adaa = adaa_sig[0]
+                adaa = adaa_sig
                 adaa_name = faculty_firstName[0] + " " + faculty_lastName[0]
                 signature_type9 = "ESIGN"
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                adaa_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                adaa = adaa_sig[0]
-                adaa_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                signature_type9 = "UPLOAD"
+           
             elif faculty_approved[0].__contains__('REGISTRAR'):
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5439,27 +5400,21 @@ def display_clearform(request, id):
                 print(str_fac_name)
 
                 if faculty_approved[0].__contains__('ESIGN'):
-                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                        'e_signature', flat=True).distinct()
+                    e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    if e_sig[0] == "":
+                        ieduc_sig = up_sig[0]
+                    else:
+                        ieduc_sig = e_sig[0]
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                     faculty_lastName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = ieduc_sig[0]
+                    industrial = ieduc_sig
                     it_department = "EDUCATOR"
                     it_name = faculty_firstName[0] + " " + faculty_lastName[0]
                     signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    ieduc_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                        'uploaded_signature', flat=True).distinct()
-                    faculty_firstName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                    faculty_lastName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = ieduc_sig[0]
-                    it_department = "EDUCATOR"
-                    it_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                    signature_type10 = "UPLOAD"
+                
                 elif faculty_approved[0].__contains__('REGISTRAR'):
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5491,27 +5446,21 @@ def display_clearform(request, id):
                 print(str_fac_name)
 
                 if faculty_approved[0].__contains__('ESIGN'):
-                    it_dept_sig = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    if e_sig[0] == "":
+                        it_dept_sig = up_sig[0]
+                    else:
+                        it_dept_sig = e_sig[0]
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                     faculty_lastName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = it_dept_sig[0]
+                    industrial = it_dept_sig
                     it_department = "TECHNOLOGIES"
                     it_name = faculty_firstName[0] + " " + faculty_lastName[0]
                     signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    it_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                        'uploaded_signature', flat=True).distinct()
-                    faculty_firstName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                    faculty_lastName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = it_dept_sig[0]
-                    it_department = "TECHNOLOGIES"
-                    it_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                    signature_type10 = "UPLOAD"
+                
                 elif faculty_approved[0].__contains__('REGISTRAR'):
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5543,27 +5492,21 @@ def display_clearform(request, id):
                 print(str_fac_name)
 
                 if faculty_approved[0].__contains__('ESIGN'):
-                    eng_dept_sig = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                    up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                    if e_sig[0] == "":
+                        eng_dept_sig = up_sig[0]
+                    else:
+                        eng_dept_sig = e_sig[0]
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                     faculty_lastName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = eng_dept_sig[0]
+                    industrial = eng_dept_sig
                     it_department = "ENGINEERS"
                     it_name = faculty_firstName[0] + " " + faculty_lastName[0]
                     signature_type10 = "ESIGN"
-                elif faculty_approved[0].__contains__('UPLOAD'):
-                    eng_dept_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                        'uploaded_signature', flat=True).distinct()
-                    faculty_firstName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                    faculty_lastName = user_table.objects.filter(
-                        full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                    industrial = eng_dept_sig[0]
-                    it_department = "ENGINEERS"
-                    it_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                    signature_type10 = "UPLOAD"
+                
                 elif faculty_approved[0].__contains__('REGISTRAR'):
                     faculty_firstName = user_table.objects.filter(
                         full_name=str_fac_name).values_list('first_name', flat=True).distinct()
@@ -5664,26 +5607,20 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty1_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "" :
+                    faculty1_sig = up_sig[0]
+                else:
+                    faculty1_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 sit_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                sit = faculty1_sig[0]
+                sit = faculty1_sig
                 sit_type = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                sit_name = faculty_firstName[0] + " " + faculty_lastName[0]
-                sit = faculty1_sig[0]
-                sit_type = "UPLOAD"
             else:
                 faculty1_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -5724,28 +5661,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty1_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty1_sig = up_sig[0]
+                else:
+                    faculty1_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject1_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_1 = faculty1_sig[0]
+                subject_1 = faculty1_sig
                 signature_type1 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject1_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_1 = faculty1_sig[0]
-                signature_type1 = "UPLOAD"
             else:
                 faculty1_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -5787,28 +5717,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty2_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty2_sig = up_sig[0]
+                else:
+                    faculty2_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject2_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_2 = faculty2_sig[0]
+                subject_2 = faculty2_sig
                 signature_type2 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty2_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject2_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_2 = faculty2_sig[0]
-                signature_type2 = "UPLOAD"
             else:
                 faculty2_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -5850,28 +5773,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty3_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty3_sig = up_sig[0]
+                else:
+                    faculty3_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject3_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_3 = faculty3_sig[0]
+                subject_3 = faculty3_sig
                 signature_type3 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty3_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject3_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_3 = faculty3_sig[0]
-                signature_type3 = "UPLOAD"
             else:
                 faculty3_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -5913,28 +5829,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty4_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty4_sig = up_sig[0]
+                else:
+                    faculty4_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject4_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_4 = faculty4_sig[0]
+                subject_4 = faculty4_sig
                 signature_type4 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty4_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject4_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_4 = faculty4_sig[0]
-                signature_type4 = "UPLOAD"
             else:
                 faculty4_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -5976,28 +5885,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty5_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty5_sig = up_sig[0]
+                else:
+                    faculty5_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject5_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_5 = faculty5_sig[0]
+                subject_5 = faculty5_sig
                 signature_type5 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty5_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject5_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_5 = faculty5_sig[0]
-                signature_type5 = "UPLOAD"
             else:
                 faculty5_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6039,28 +5941,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty6_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty6_sig = up_sig[0]
+                else:
+                    faculty6_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject6_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_6 = faculty6_sig[0]
+                subject_6 = faculty6_sig
                 signature_type6 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty6_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject6_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_6 = faculty6_sig[0]
-                signature_type6 = "UPLOAD"
             else:
                 faculty6_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6102,28 +5997,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty7_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty7_sig = up_sig[0]
+                else:
+                    faculty7_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject7_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_7 = faculty7_sig[0]
+                subject_7 = faculty7_sig
                 signature_type7 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty7_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject7_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_7 = faculty7_sig[0]
-                signature_type7 = "UPLOAD"
             else:
                 faculty7_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6165,28 +6053,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty8_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty8_sig = up_sig[0]
+                else:
+                    faculty8_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject8_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_8 = faculty8_sig[0]
+                subject_8 = faculty8_sig
                 signature_type8 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty8_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject8_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_8 = faculty8_sig[0]
-                signature_type8 = "UPLOAD"
             else:
                 faculty8_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6228,28 +6109,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty9_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty9_sig = up_sig[0]
+                else:
+                    faculty9_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject9_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_9 = faculty9_sig[0]
+                subject_9 = faculty9_sig
                 signature_type9 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty9_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject9_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_9 = faculty9_sig[0]
-                signature_type9 = "UPLOAD"
             else:
                 faculty9_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6291,28 +6165,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                faculty10_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    faculty10_sig = up_sig[0]
+                else:
+                    faculty10_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 subject10_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                subject_10 = faculty10_sig[0]
+                subject_10 = faculty10_sig
                 signature_type10 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                faculty10_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                subject10_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                subject_10 = faculty10_sig[0]
-                signature_type10 = "UPLOAD"
             else:
                 faculty10_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6354,28 +6221,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                addfaculty1_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    addfaculty1_sig = up_sig[0]
+                else:
+                    addfaculty1_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 addsubject1_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                addsubject_1 = addfaculty1_sig[0]
+                addsubject_1 = addfaculty1_sig
                 signature_type11 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                addfaculty1_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                addsubject1_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                addsubject_1 = addfaculty1_sig[0]
-                signature_type11 = "UPLOAD"
             else:
                 addfaculty1_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6417,28 +6277,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                addfaculty2_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    addfaculty2_sig = up_sig[0]
+                else:
+                    addfaculty2_sig= e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 addsubject2_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                addsubject_2 = addfaculty2_sig[0]
+                addsubject_2 = addfaculty2_sig
                 signature_type12 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                addfaculty2_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                addsubject2_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                addsubject_2 = addfaculty2_sig[0]
-                signature_type12 = "UPLOAD"
             else:
                 addfaculty2_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6480,28 +6333,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                addfaculty3_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    addfaculty3_sig = up_sig[0]
+                else:
+                    addfaculty3_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 addsubject3_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                addsubject_3 = addfaculty3_sig[0]
+                addsubject_3 = addfaculty3_sig
                 signature_type13 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                addfaculty3_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                addsubject3_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                addsubject_3 = addfaculty3_sig[0]
-                signature_type13 = "UPLOAD"
             else:
                 addfaculty3_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6543,28 +6389,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                addfaculty4_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    addfaculty4_sig = up_sig[0]
+                else:
+                    addfaculty4_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 addsubject4_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                addsubject_4 = addfaculty4_sig[0]
+                addsubject_4 = addfaculty4_sig
                 signature_type14 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                addfaculty4_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                addsubject4_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                addsubject_4 = addfaculty4_sig[0]
-                signature_type14 = "UPLOAD"
             else:
                 addfaculty4_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6606,28 +6445,21 @@ def display_gradform(request, id):
             print(str_fac_name)
 
             if faculty_approved[0].__contains__('ESIGN'):
-                addfaculty5_sig = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                e_sig = user_table.objects.filter(full_name=str_fac_name).values_list('e_signature', flat=True).distinct()
+                up_sig = user_table.objects.filter(full_name=str_fac_name).values_list('uploaded_signature', flat=True).distinct()
+                if e_sig[0] == "":
+                    addfaculty5_sig = up_sig[0]
+                else:
+                    addfaculty5_sig = e_sig[0]
                 faculty_firstName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('first_name', flat=True).distinct()
                 faculty_lastName = user_table.objects.filter(
                     full_name=str_fac_name).values_list('last_name', flat=True).distinct()
                 addsubject5_name = faculty_firstName[0] + \
                     " " + faculty_lastName[0]
-                addsubject_5 = addfaculty5_sig[0]
+                addsubject_5 = addfaculty5_sig
                 signature_type15 = "ESIGN"
 
-            elif faculty_approved[0].__contains__('UPLOAD'):
-                addfaculty5_sig = user_table.objects.filter(full_name=str_fac_name).values_list(
-                    'uploaded_signature', flat=True).distinct()
-                faculty_firstName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('first_name', flat=True).distinct()
-                faculty_lastName = user_table.objects.filter(
-                    full_name=str_fac_name).values_list('last_name', flat=True).distinct()
-                addsubject5_name = faculty_firstName[0] + \
-                    " " + faculty_lastName[0]
-                addsubject_5 = addfaculty5_sig[0]
-                signature_type15 = "UPLOAD"
             else:
                 addfaculty5_sig = user_table.objects.filter(
                     full_name=str_fac_name).values_list('no_signature', flat=True).distinct()
@@ -6829,11 +6661,40 @@ def faculty_designation_update(request, id):
 
 # STUDENT LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
-def registrar_dashboard_student_list(request):
+def registrar_dashboard_student_list(request, id):
     # declaring template
     template = "html_files/Student list.html"
-    student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
-        user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
+    
+    if id == "student":
+        student_data = user_table.objects.filter(
+            user_type="STUDENT").values()
+    elif id == "old":
+        student_data = user_table.objects.filter(
+            user_type="OLD STUDENT").values()
+    elif id == "alumni":
+        student_data = user_table.objects.filter(
+        user_type="ALMUNUS").values()
+    elif id == "4th":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="4").values()
+    elif id == "3rd":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="3").values()
+    elif id == "2nd":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="2").values()
+    elif id == "1st":
+        student_data = user_table.objects.filter(
+        year_and_section__contains="1").values()
+    elif id =="oldest":
+        student_data = user_table.objects.filter(
+        year_graduated__isnull=False).order_by('year_graduated').values()
+    elif id =="latest":
+        student_data = user_table.objects.filter(
+        year_graduated__isnull=False).order_by('-year_graduated').values()
+    else:    
+        student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
+            user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
 
     context = {'data': student_data}
     return render(request, template, context)
@@ -6855,7 +6716,7 @@ def student_list_remove(request, id):
     delete_student.delete()
     messages.success(request, "Student has been deleted.")
 
-    return redirect(registrar_dashboard_student_list)
+    return redirect('All')
 
 # DELETE STAFF ON REGISTRAR'S SIDE
 @login_required(login_url='/')
@@ -6880,6 +6741,39 @@ def registrar_dashboard_organize_request_list(request, id):
         elif id == "UNCLAIMED":
             requests = request_form_table.objects.filter(
                 claim="UNCLAIMED").order_by('-time_requested').values()
+        elif id == "Honorable":
+            requests = request_form_table.objects.filter(
+                request="Honorable Dismissal").order_by('-time_requested').values()
+        elif id == "Subject":
+            requests = request_form_table.objects.filter(
+            request="Subject Description").order_by('-time_requested').values()
+        elif id == "Certification":
+            requests = request_form_table.objects.filter(
+                request__startswith = "Certification:").values()
+        elif id == "Authentication":
+            requests = request_form_table.objects.filter(
+            request="Authentication").order_by('-time_requested').values()
+        elif id == "Diploma":
+            requests = request_form_table.objects.filter(
+            request="Diploma").order_by('-time_requested').values()
+        elif id == "Transcript":
+            requests = request_form_table.objects.filter(
+            request="Transcript").order_by('-time_requested').values()
+        elif id == "CAV":
+            requests = request_form_table.objects.filter(
+            request="CAV").order_by('-time_requested').values()
+        elif id == "Others":
+            requests = request_form_table.objects.filter(
+                request__startswith="Others:").order_by('-time_requested').values()
+        elif id == "Student":
+            requests = request_form_table.objects.filter(
+                current_status="STUDENT").order_by('-time_requested').values()
+        elif id == "Old":
+            requests = request_form_table.objects.filter(
+                current_status="OLD STUDENT").order_by('-time_requested').values()
+        elif id == "Alumni":
+            requests = request_form_table.objects.filter(
+                current_status="ALMUNUS").order_by('-time_requested').values()
         elif id == "OLDEST":
             requests = request_form_table.objects.all().order_by('time_requested').values()
         elif id == "LATEST":
@@ -6893,6 +6787,97 @@ def registrar_dashboard_organize_request_list(request, id):
         return redirect('/')
 
     return render(request, 'html_files/Request List.html', {'data': requests, 'sorter_type': sorter})
+
+
+# CLEARANCE LIST AND DOCUMENT CHECKER LIST
+# CLEARANCE LIST WITH ORGANIZER
+@login_required(login_url='/')
+def registrar_dashboard_organize_clearance_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+
+        sorter = id
+
+        if id == "Honorable":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Honorable Dismissal").order_by('-time_requested').values()
+        elif id == "Subject":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Subject Description").order_by('-time_requested').values()
+        elif id == "Certification":
+            requests = clearance_form_table.objects.filter(
+                purpose_of_request__startswith = "Certification:").values()
+        elif id == "Authentication":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Authentication").order_by('-time_requested').values()
+        elif id == "Diploma":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Diploma").order_by('-time_requested').values()
+        elif id == "Transcript":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="Transcript").order_by('-time_requested').values()
+        elif id == "CAV":
+            requests = clearance_form_table.objects.filter(
+            purpose_of_request="CAV").order_by('-time_requested').values()
+        elif id == "Others":
+            requests = clearance_form_table.objects.filter(
+                purpose_of_request__startswith="Others:").order_by('-time_requested').values()
+        elif id == "approved":
+            requests = clearance_form_table.objects.filter(
+                approval_status="APPROVED").order_by('-time_requested').values()
+
+        else:
+            requests = clearance_form_table.objects.all().order_by('-time_requested').values()
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+
+    return render(request, 'html_files/7.2Registrar Clearance List.html', {'all': requests, 'sorter_type': sorter})
+
+# FACULTY LIST AND DOCUMENT CHECKER LIST
+# FACULTY LIST WITH ORGANIZER
+@login_required(login_url='/')
+def registrar_dashboard_organize_faculty_list(request, id):
+    if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+
+        sorter = id
+
+        if id == "OCL":
+            requests = user_table.objects.filter(department__contains="OCL").values()
+        elif id == "OCS":
+            requests = user_table.objects.filter(department__contains="OCS").values()
+        elif id == "OGS":
+            requests = user_table.objects.filter(department__contains="OGS").values()
+        elif id == "OSA":
+            requests = user_table.objects.filter(department__contains="OSA").values()
+        elif id == "ADAA":
+            requests = user_table.objects.filter(department__contains="ADAA").values()
+        elif id == "OES":
+            requests = user_table.objects.filter(department__contains="OES").values()
+        elif id == "DMS":
+            requests = user_table.objects.filter(department__contains="DMS").values()
+        elif id == "DPECS":
+            requests = user_table.objects.filter(department__contains="DPECS").values()
+        elif id == "DED":
+            requests = user_table.objects.filter(department__contains="DED").values()
+        elif id == "DIT":
+            requests = user_table.objects.filter(department__contains="DIT").values()
+        elif id == "DLA":
+            requests = user_table.objects.filter(department__contains="DLA").values()
+        elif id == "DOE":
+            requests = user_table.objects.filter(department__contains="DOE").values()
+        else:
+            requests = user_table.objects.filter(user_type="FACULTY") .values()
+
+    else:
+        messages.error(
+            request, "You are trying to access an unauthorized page and is forced to logout.")
+        return redirect('/')
+
+    return render(request, 'html_files/7.4Registrar Faculty List.html', {'all': requests, 'sorter_type': sorter})
+
+
 
 # REQUEST LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
@@ -7130,15 +7115,23 @@ def update_clearance_signature(request, id):
                 messages.error(
                     request, "No New Signature Saved. Please Try Again.")
             else:
-                recent_sig = request.user.uploaded_signature
-                if recent_sig:
-                    print(str(recent_sig))
-                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
-                        os.remove(
-                            '/home/tupclget/public_html/Media/' + str(recent_sig))
+                recent_upload_sig = request.user.uploaded_signature
+                recent_create_sig = request.user.e_signature
+                if recent_upload_sig:
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_upload_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_upload_sig))
+                        user_table.objects.filter(id=id).update(uploaded_signature="")
                     else:
                         pass
-                else:
+                elif recent_create_sig:
+                    
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_create_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_create_sig))
+                        user_table.objects.filter(id=id).update(e_signature="")
+                        
+                    else:
+                        pass
+                else: 
                     pass
 
                 file_name = "uploaded signatures/" + str(uploaded_signature)
@@ -7158,15 +7151,21 @@ def update_clearance_signature(request, id):
                     request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
         else:
             # remove recent signature
-            recent_sig = request.user.e_signature
-            if recent_sig:
-                print(str(recent_sig))
-                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
-                    os.remove('/home/tupclget/public_html/Media/' +
-                              str(recent_sig))
+            recent_upload_sig = request.user.uploaded_signature
+            recent_create_sig = request.user.e_signature
+            if recent_upload_sig:
+                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_upload_sig)):
+                    os.remove('/home/tupclget/public_html/Media/' + str(recent_upload_sig))
+                    user_table.objects.filter(id=id).update(uploaded_signature="")
                 else:
                     pass
-            else:
+            elif recent_create_sig:
+                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_create_sig)):
+                    os.remove('/home/tupclget/public_html/Media/' + str(recent_create_sig))
+                    user_table.objects.filter(id=id).update(e_signature="")
+                else:
+                    pass
+            else: 
                 pass
 
             # save signature in the storage
@@ -7199,15 +7198,22 @@ def update_grad_signature(request, id):
                 messages.error(
                     request, "No New Signature Saved. Please Try Again.")
             else:
-                recent_sig = request.user.uploaded_signature
-                if recent_sig:
-                    print(str(recent_sig))
-                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
-                        os.remove(
-                            '/home/tupclget/public_html/Media/' + str(recent_sig))
+                recent_upload_sig = request.user.uploaded_signature
+                recent_create_sig = request.user.e_signature
+                if recent_upload_sig:
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_upload_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_upload_sig))
+                        user_table.objects.filter(id=id).update(uploaded_signature="")
                     else:
                         pass
-                else:
+                        
+                elif recent_create_sig:
+                    if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_create_sig)):
+                        os.remove('/home/tupclget/public_html/Media/' + str(recent_create_sig))
+                        user_table.objects.filter(id=id).update(e_signature="")
+                    else:
+                        pass
+                else: 
                     pass
 
                 file_name = "uploaded signatures/" + \
@@ -7227,15 +7233,21 @@ def update_grad_signature(request, id):
                     request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
         else:
             # remove recent signature
-            recent_sig = request.user.e_signature
-            if recent_sig:
-                print(str(recent_sig))
-                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_sig)):
-                    os.remove('/home/tupclget/public_html/Media/' +
-                              str(recent_sig))
+            recent_upload_sig = request.user.uploaded_signature
+            recent_create_sig = request.user.e_signature
+            if recent_upload_sig:
+                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_upload_sig)):
+                    os.remove('/home/tupclget/public_html/Media/' + str(recent_upload_sig))
+                    user_table.objects.filter(id=id).update(uploaded_signature="")
                 else:
                     pass
-            else:
+            elif recent_create_sig:
+                if os.path.exists('/home/tupclget/public_html/Media/' + str(recent_create_sig)):
+                    os.remove('/home/tupclget/public_html/Media/' + str(recent_create_sig))
+                    user_table.objects.filter(id=id).update(e_signature="")
+                else:
+                    pass
+            else: 
                 pass
 
             # save signature in the storage
@@ -7373,7 +7385,7 @@ def student_status_update(request, id):
         request_form_table.objects.filter(
             student_id=user_id2).update(student_id=update_id)
 
-    return redirect(registrar_dashboard_student_list)
+    return redirect('All')
 
 # DECLARE NEW SCHOOL YEAR ON STUDENTS LIST
 # APPLICABLE TO UNDERGRADUATE STUDENTS ONLY
@@ -7404,7 +7416,7 @@ def school_year_update(request):
             user_table.objects.filter(id=int(x)).update(
                 year_and_section="4th Year")
 
-    return redirect(registrar_dashboard_student_list)
+    return redirect('All')
 
 # SEND EMAIL NOTIFICATIONS ON ALL SIGNATORIES WITH APPLICATION FORMS TO SIGN
 # SCHEDULED EVERY WEEKDAYS AT 4PM

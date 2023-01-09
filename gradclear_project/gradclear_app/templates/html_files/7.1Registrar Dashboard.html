@@ -468,7 +468,7 @@ Adviser:
     .results tr[visible='true'] {
         display: table-row;
     }
-
+    
     .settings_row{
         display: flex;
     }
@@ -697,7 +697,7 @@ Adviser:
         height: 32px;
         min-height: 32px;
     }
-
+    
     #sidebar a:hover{
         color: #fff;
         background-color: #424242;
@@ -736,8 +736,8 @@ Adviser:
             -webkit-transform: rotate(135deg);
             transform: rotate(135deg)
         }
-    } 
-
+    }   
+    
     /* SCREEN RESPONSIVENESS */
     @media (min-width: 768px) {
         td{
@@ -797,7 +797,6 @@ Adviser:
             height : 4vh;
         }
     }
-
 </style>
 
 <!--SIDEBAR -->
@@ -805,12 +804,12 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{graduation_badge}}</span></i><span class="icon-text">Graduation</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{graduation_badge}}</span></a><br>
-    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;">{{clearance_badge}}</span></i><span class="icon-text">Clearance</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{clearance_badge}}</span></a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" >{{request_badge}}</span></i><span class="icon-text">Requests</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;">{{request_badge}}</span></a><br>
+    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;">{% if graduation_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Graduation</span>{% if graduation_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
+    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons">{% if clearance_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2 ml-1" style="font-size: 12px;"> </span>{% endif %}</i><span class="icon-text">Clearance</span>{% if clearance_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons">{% if request_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Requests</span>{% if request_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
     
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list'%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list' id=' '%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     {% endif %}
