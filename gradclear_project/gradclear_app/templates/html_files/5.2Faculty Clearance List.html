@@ -338,6 +338,9 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+        position: sticky;
+        top: 0px;
+        z-index: 2;
     }
 
     #esign_attach_sig_btn, #create_new_esign{
@@ -892,257 +895,251 @@ Adviser:
         </form>
         <button type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
         {% for s in preview_data %}
-         <div id="myDIV"  class = "border bg-white border-dark p-3 m-1" hidden>
-                <div class="row">
-                    <div class="column">
-                    
-                    <tr>
-                        <td ><b>Name:</b> </td><br>
-                        <td >{{s.name}}</td>
-                    </tr><br>
-            
-                    <tr>
-                        <td><b>Date Filed:</b><br>
-                        <td>{{s.date_filed}}</td>
-                    </tr><br>
-            
-                    <tr>
-                        
-                        <td><b>Present Address:</b> </td><br>
-                        <td>{{s.present_address}}</td>
-                        
-                    </tr><br>
-                
-                    <tr>
-                        
-                        <td><b>Date Admitted in TUPC:</b><br>
-                        <td>{{s.date_admitted_in_tup}}</td>
-                        
-                    </tr><br>
-
-                    <tr>
-                        
-                        <td><b>Course:</b> </td><br>
-                        <td>{{s.course}}</td>
-                        
-                    </tr><br>
+        <div id="myDIV"  class = "border bg-white border-dark p-3 m-1" hidden>
+               <div class="row">
+                   <div class="column">
                    
-                    
-                </div>
-                <div class="column">
+                   <tr>
+                       <td ><b>Name:</b> </td><br>
+                       <td >{{s.name}}</td>
+                   </tr><br>
+           
+                   <tr>
+                       <td><b>Date Filed:</b><br>
+                       <td>{{s.date_filed}}</td>
+                   </tr><br>
+           
+                   <tr>
+                       
+                       <td><b>Present Address:</b> </td><br>
+                       <td>{{s.present_address}}</td>
+                       
+                   </tr><br>
+               
+                   <tr>
+                       
+                       <td><b>Date Admitted in TUPC:</b><br>
+                       <td>{{s.date_admitted_in_tup}}</td>
+                       
+                   </tr><br>
 
-                    <tr>
-                        
-                        <td><b>Highschool Graduated:</b><br>
-                        <td>{{s.highschool_graduated}}</td>
-                        
-                    </tr><br>
-
-                    <tr>
-                        <td><b>Did You Graduate at TUPC:</b><br>
-
-                        <td>{% if s.tupc_graduate == "YES" %}
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" checked disabled>Yes
-                        </label>
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
-                        </label>
-                        {% else %}
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" disabled>Yes
-                        </label>
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()"checked disabled>No
-                        </label>
-                        {% endif %}</td>
-                        
-                    </tr><br>
-
-                    <tr>
-                        
-                        <td><b>If Yes indicate the date:</b><br>
-                        <td>{{s.year_graduated_in_tupc}}</td>
-                        
-                    </tr><br>
-
-                    <tr>
-                        
-                        <td><b>Number of Terms in TUPC: Sem./Sum.:</b><br>
-                        <td>{{s.number_of_terms_in_tupc}}</td>
-                        
-                    </tr><br>
+                   <tr>
+                       
+                       <td><b>Course:</b> </td><br>
+                       <td>{{s.course}}</td>
+                       
+                   </tr><br>
+                  
                    
-                  <tr>
-                    <td><b>Amount Paid:</b></td><br>
-                    <td>{{s.amount_paid}}</td>
-                </tr><br>
-                
+               </div>
+               <div class="column">
+
+                   <tr>
+                       
+                       <td><b>Highschool Graduated:</b><br>
+                       <td>{{s.highschool_graduated}}</td>
+                       
+                   </tr><br>
+
+                   <tr>
+                       <td><b>Did You Graduate at TUPC:</b><br>
+
+                       <td>{% if s.tupc_graduate == "YES" %}
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" checked disabled>Yes
+                       </label>
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
+                       </label>
+                       {% else %}
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" disabled>Yes
+                       </label>
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()"checked disabled>No
+                       </label>
+                       {% endif %}</td>
+                       
+                   </tr><br>
+
+                   <tr>
+                       
+                       <td><b>If Yes indicate the date:</b><br>
+                       <td>{{s.year_graduated_in_tupc}}</td>
+                       
+                   </tr><br>
+
+                   <tr>
+                       
+                       <td><b>Number of Terms in TUPC: Sem./Sum.:</b><br>
+                       <td>{{s.number_of_terms_in_tupc}}</td>
+                       
+                   </tr><br>
+                  
                  <tr>
-                    <td><b>Official Receipt Number:</b></td><br>
-                    <td>{{s.or_num}}</td>
-                </tr><br>
-
+                   <td><b>Amount Paid:</b></td><br>
+                   <td>{{s.amount_paid}}</td>
+               </tr><br>
                
-               
-                </div>
-                <div class="column">
-                 
                 <tr>
-                    <td><b>Have you requested for the checked items below previously:</b></td><br>
-                    <td>{% if i.have_previously_requested_form == "NO" %}
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" disabled>Yes
-                        </label>
-                            <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" checked disabled>No
-                        </label>
-                        {% else %}
-                        <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()"checked  disabled>Yes
-                        </label>
-                            <label class="radio-inline">
-                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
-                        </label>
-                        {% endif %}</td>
-                </tr><br>
+                   <td><b>Official Receipt Number:</b></td><br>
+                   <td>{{s.or_num}}</td>
+               </tr><br>
 
-                <tr>
-                    <td><b>If yes, please indicate the date before its respective item(s):</b></td><br>
-                    <td>{{s.date_of_previously_requested_form}}</td>
-                </tr><br>
-                <tr>
-                    <td><b>Last Term in TUPC:</b></td><br>
-                    <td>{{s.last_term_in_tupc}}</td>
-                </tr><br>
-                <tr>
-                    <td><b>Purpose of Request:</b></td><br>
-                    <td>{{s.purpose_of_request_reason}}</td>
-                </tr><br>
-                <tr>
-                    <td><b>Course/ Shop Adviser:</b></td><br>
-                    <td>{{s.course_adviser}}</td>
-                </tr><br>
-
-                 
-                </div>
               
+              
+               </div>
+               <div class="column">
+                
+               <tr>
+                   <td><b>Have you requested for the checked items below previously:</b></td><br>
+                   <td>{% if i.have_previously_requested_form == "NO" %}
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" disabled>Yes
+                       </label>
+                           <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" checked disabled>No
+                       </label>
+                       {% else %}
+                       <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()"checked  disabled>Yes
+                       </label>
+                           <label class="radio-inline">
+                       <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
+                       </label>
+                       {% endif %}</td>
+               </tr><br>
+
+               <tr>
+                   <td><b>If yes, please indicate the date before its respective item(s):</b></td><br>
+                   <td>{{s.date_of_previously_requested_form}}</td>
+               </tr><br>
+               <tr>
+                   <td><b>Last Term in TUPC:</b></td><br>
+                   <td>{{s.last_term_in_tupc}}</td>
+               </tr><br>
+               <tr>
+                   <td><b>Purpose of Request:</b></td><br>
+                   <td>{{s.purpose_of_request_reason}}</td>
+               </tr><br>
+               <tr>
+                   <td><b>Course/ Shop Adviser:</b></td><br>
+                   <td>{{s.course_adviser}}</td>
+               </tr><br>
+
+                
+               </div>
+             
+
+            <div class="column">
+
+               <tr>
+                   <td><b>Clearance Requested for:</b></td><br>
+                   <td>{{s.purpose_of_request}}</td>
+                   </tr><br>
+             
+               <tr>
+                 <td><b>Accountant:</b></td><br>
+                 <td>
+                   {% if s.accountant_signature == "UNAPPROVED" %}
+                       <label >UNAPPROVED</label>
+                   {% else %}
+                       <label >APPROVED</label>
+               {% endif %}</td>
+             </tr><br>
+             <tr>
+               <td><b>Course/ Shop Adviser:</b></td><br>
+               <td> 
+                {% if "_UNAPPROVED" in s.course_adviser_signature %}
+                   <label >UNAPPROVED</label>
+                {% else %}
+                   <label >APPROVED</label>
+            {% endif %}</td>
+               </tr><br>
+             <tr>
+                 <td><b>Head of Liberal Arts:</b></td><br>
+                 <td>{% if s.liberal_arts_signature == "UNAPPROVED" %}
+                   <label >UNAPPROVED</label>
+               {% else %}
+                   <label >APPROVED</label>
+           {% endif %}</td>
+             </tr><br>
+             <tr>
+                 <td><b>Campus Librarian:</b></td><br>
+                 <td>{% if s.library_signature == "UNAPPROVED" %}
+                   <label >UNAPPROVED</label>
+               {% else %}
+                   <label >APPROVED</label>
+           {% endif %}</td>
+             </tr><br>
+             <tr>
+                 <td><b>Head of Math and Science:</b></td><br>
+                 <td>{% if s.mathsci_dept_signature == "UNAPPROVED" %}
+                   <label >UNAPPROVED</label>
+               {% else %}
+                   <label >APPROVED</label>
+           {% endif %}</td>
+             </tr><br>
+             </div>
 
              <div class="column">
-
-                <tr>
-                    <td><b>Clearance Requested for:</b></td><br>
-                    <td>{{s.purpose_of_request}}</td>
-                    </tr><br>
-              
-                <tr>
-                  <td><b>Accountant:</b></td><br>
-                  <td>
-                    {% if s.accountant_signature == "UNAPPROVED" %}
-                        <label >UNAPPROVED</label>
-                    {% else %}
-                        <label >APPROVED</label>
-                {% endif %}</td>
-              </tr><br>
-              <tr>
-                <td><b>Course/ Shop Adviser:</b></td><br>
-                <td> 
-                    {% if s.accountant_signature == "UNAPPROVED" %}
-                    <label >UNAPPROVED</label>
-                {% else %}
-                    <label >APPROVED</label>
-                {% endif %}</td>
-                </tr><br>
-              <tr>
-                  <td><b>Head of Liberal Arts:</b></td><br>
-                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                    <label >UNAPPROVED</label>
-                {% else %}
-                    <label >APPROVED</label>
-            {% endif %}</td>
-              </tr><br>
-              <tr>
-                  <td><b>Campus Librarian:</b></td><br>
-                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                    <label >UNAPPROVED</label>
-                {% else %}
-                    <label >APPROVED</label>
-            {% endif %}</td>
-              </tr><br>
-              <tr>
-                  <td><b>Head of Math and Science:</b></td><br>
-                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                    <label >UNAPPROVED</label>
-                {% else %}
-                    <label >APPROVED</label>
-            {% endif %}</td>
-              </tr><br>
-              </div>
-
-              <div class="column">
-                <tr>
-                    <td><b>Guidance Counselor:</b></td><br>
-                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                        <label >UNAPPROVED</label>
-                    {% else %}
-                        <label >APPROVED</label>
-                {% endif %}</td>
-                </tr><br>
-                
-              <tr>
-                <td><b>Head of DPECS:</b></td><br>
-                <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                    <label >UNAPPROVED</label>
-                {% else %}
-                    <label >APPROVED</label>
-            {% endif %}</td>
-                </tr><br>
-                <tr>
-                    <td><b>Head of Student Affairs:</b></td><br>
-                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                        <label >UNAPPROVED</label>
-                    {% else %}
-                        <label >APPROVED</label>
-                {% endif %}</td>
-                </tr><br>
-                <tr>
-                    <td><b> 
-                    {% if it_department == 'EDUCATOR' %}
-                        Head of Industrial Education Department:</b> 
-                    {% elif it_department == 'TECHNOLOGIES' %}
-                        Head of Industrial Technology Department:</b> 
-                    {% elif it_department == 'ENGINEERS' %}
-                        Head of Engineering Department:</b> 
-                    {% else %}
-                        Head of Industrial Technology/Industrial Education/Engineering:</b> 
-                    {% endif %}</b></td><br>
-                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                        <label >UNAPPROVED</label>
-                    {% else %}
-                        <label >APPROVED</label>
-                {% endif %}</td>
-                </tr><br>
-                <tr>
-                    <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
-                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
-                        <label >UNAPPROVED</label>
-                    {% else %}
-                        <label >APPROVED</label>
-                {% endif %}</td>
-                </tr><br>
-                </div>
-                {% endfor %}
-            </div>
+               <tr>
+                   <td><b>Guidance Counselor:</b></td><br>
+                   <td>{% if s.guidance_office_signature == "UNAPPROVED" %}
+                       <label >UNAPPROVED</label>
+                   {% else %}
+                       <label >APPROVED</label>
+               {% endif %}</td>
+               </tr><br>
+               
+             <tr>
+               <td><b>Head of DPECS:</b></td><br>
+               <td>{% if s.pe_dept_signature == "UNAPPROVED" %}
+                   <label >UNAPPROVED</label>
+               {% else %}
+                   <label >APPROVED</label>
+           {% endif %}</td>
+               </tr><br>
+               <tr>
+                   <td><b>Head of Student Affairs:</b></td><br>
+                   <td>{% if s.osa_signature == "UNAPPROVED" %}
+                       <label >UNAPPROVED</label>
+                   {% else %}
+                       <label >APPROVED</label>
+               {% endif %}</td>
+               </tr><br>
+               <tr>
+                   <td><b> 
+                   {% if it_department == 'EDUCATOR' %}
+                       Head of Industrial Education Department:</b> 
+                   {% elif it_department == 'TECHNOLOGIES' %}
+                       Head of Industrial Technology Department:</b> 
+                   {% elif it_department == 'ENGINEERS' %}
+                       Head of Engineering Department:</b> 
+                   {% else %}
+                       Head of Industrial Technology/Industrial Education/Engineering:</b> 
+                   {% endif %}</b></td><br>
+                   <td>{% if s.it_dept_signature == "UNAPPROVED" %}
+                       <label >UNAPPROVED</label>
+                   {% else %}
+                       <label >APPROVED</label>
+               {% endif %}</td>
+               </tr><br>
+               <tr>
+                   <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
+                   <td>{% if s.academic_affairs_signature == "UNAPPROVED" %}
+                       <label >UNAPPROVED</label>
+                   {% else %}
+                       <label >APPROVED</label>
+               {% endif %}</td>
+               </tr><br>
+               </div>
+               {% endfor %}
            </div>
-    </div>
-
-    
-   
-    
-
-        <p class="text-center text-bold" id="p6_52"></p>
-
-           
+          </div>
+          </div>
+   </div>
+        <p class="text-center text-bold" id="p6_52"></p>     
     </div>
     </hr>
     <p class="text-center text-bold" id="p6_52"></p>
