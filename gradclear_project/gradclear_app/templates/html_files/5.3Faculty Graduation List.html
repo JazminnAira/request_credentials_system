@@ -690,8 +690,6 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_53">
         <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" style="font-size:30px;"><i class="fa fa-home">
             </i> </a>
-        <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}" data-toggle="tooltip" data-placement="right" title="Refresh" style="font-size:25px;"><i class="fa fa-refresh">
-            </i> </a>
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_53" name="search_box_053" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
@@ -1498,6 +1496,7 @@ Adviser:
             sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
         });
     });
+    
     
     // DISABLE APPROVE ALL BUTTON WHEN CHECKBOXES CHECKED
     $(function(){
