@@ -27,6 +27,7 @@ pip install mysql
 pip install matplotlib
 pip install crontab
 pip install django-crontab
+pip install django-auto-logout
 ```
 
 As the system use Python Programming Language and Django Framework platform.

@@ -352,6 +352,15 @@ Adviser:
         margin-left: 5px;
     }
     
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+    }
+    
     .table-sortable .th-sort-asc,
     .table-sortable .th-sort-desc {
         background: rgba(0, 0, 0, 0.1);
@@ -361,6 +370,16 @@ Adviser:
         max-height: 450px;
         overflow-y: scroll;
     }
+
+    .sorting::after{
+        display: inline;
+        font-family:FontAwesome;
+        content:"\f0dc";
+        color: white;
+        font-size: 12px;
+        margin-left:3px;
+    }
+
 
     #account-body_51 {
         background-color: #dedede;
@@ -602,7 +621,6 @@ Adviser:
             display: none;
         }
     }
-    
 </style>
 
 
@@ -776,10 +794,10 @@ Adviser:
                     <thead style="height: 70px;">
                         <tr>
                             <th hidden> # </th>
-                            <th>Student's Name</th>
-                            <th id="cs">Course</th>
-                            <th id="in">ID Number</th>
-                            <th id="pr">Purpose of Request</th>
+                            <th class="sorting" title="Sort by Name" >Student's Name</th>
+                            <th class="sorting" title="Sort by Course" id="cs">Course</th>
+                            <th class="sorting" title = "Sort by ID Number" id="in">ID Number</th>
+                            <th class="sorting" title="Sort by Purpose of Request" id="pr">Purpose of Request</th>
                             <th id="Viewform"> </th>  
                         </tr>
 
@@ -792,8 +810,9 @@ Adviser:
                         </tr>
                     </thead>
                     <!-- GRADUATION FORMS -->
-                    {% for instance in st %}
                     <tbody>
+                    {% for instance in st %}
+                    
                         <tr>        
                             <td hidden onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_gradform/{{ instance.id }}'">{{instance.name}}</td>
@@ -805,8 +824,9 @@ Adviser:
                     </tbody>
                     {% endfor %}
                     <!-- CLEARANCE FORMS -->
+                    
                     {% for instance in st1 %}
-                    <tbody>
+                    
                         <tr>        
                             <td hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
                             <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td>
@@ -825,8 +845,9 @@ Adviser:
         
                             {% endif %}
                         </tr>
+                    {% endfor %}    
                     </tbody>
-                    {% endfor %}
+                    
                 </table>
             </div>
         </div>

@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_auto_logout.middleware.auto_logout',
 ]
 
 ROOT_URLCONF = 'gradclear_project.urls'
@@ -173,9 +174,14 @@ EMAIL_HOST_PASSWORD = 'quoctgatkmfyxgws'
 # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True     # LOGOUT WHEN BROWSER IS CLOSED
-SESSION_COOKIE_AGE = 600                  # 10 MINS INACTIVITY, AUTO LOGOUT
+SESSION_COOKIE_AGE = 1800                  # 30 MINS INACTIVITY, AUTO LOGOUT
 SESSION_SAVE_EVERY_REQUEST = True          # Will prevent from logging you out after 300 seconds
 
+AUTO_LOGOUT = {'IDLE_TIME': 600}  # logout after 10 minutes of downtime
+
+# SET TO WEEKDAYS AT 3 AM IN THE MORNING BASED ON EST
+# BASED ON EST SINCE SERVER IS IN US
+# AUTOMATICALLY CONVERTED TO GMT 800, NO ITERATIONS REQUIRED
 CRONJOBS = [
     ('0 3 * * 1-5', 'gradclear_app.cron.my_scheduled_job')
 ]

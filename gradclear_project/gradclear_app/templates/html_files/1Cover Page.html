@@ -111,6 +111,10 @@ Adviser:
         color: black;
     }
 
+    i.listfordev:hover{
+        background-color: white; 
+    }
+
     li {
         display:inline-block
     }
@@ -196,6 +200,12 @@ Adviser:
     .fa-map-marker:hover {
         color: #c51d3a;
     }
+
+    .follow-us, .listfordev{
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
     
     .icon {
         padding: 10px;
@@ -223,6 +233,84 @@ Adviser:
 
     .open_nav{
         display: none;
+    }
+
+    .our-team .cnt-block{ 
+       float:left; 
+       width:100%; 
+       background:#fff; 
+       padding:30px 20px; 
+       text-align:center; 
+       border:2px solid #d5d5d5;
+       margin: 0 0 28px;
+    }
+    
+    .our-team .cnt-block:hover {
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        border: 0;
+    }
+
+    .our-team .cnt-block figure{
+       width:148px; 
+       height:148px; 
+       border-radius:100%; 
+       display:inline-block;
+       margin-bottom: 15px;
+    }
+
+    .our-team .cnt-block h3{ 
+       color:#2a2a2a; 
+       font-size:20px; 
+       font-weight:500; 
+       padding:6px 0;
+       text-transform:uppercase;
+    }
+
+    .our-team .cnt-block h3 a{
+      text-decoration:none;
+        color:#2a2a2a;
+    }
+
+    .our-team .cnt-block h3 a:hover{
+        color:#000;
+    }
+
+    .our-team .cnt-block .follow-us{
+        margin:20px 0 0;
+    }
+
+    .our-team .cnt-block img{ 
+        width:148px; 
+        height:148px; 
+        border-radius:100%; 
+    }
+
+    .our-team .cnt-block .follow-us li{ 
+        display:inline-block; 
+        width:auto; 
+        margin:0 5px;
+    }
+
+    .our-team .cnt-block .follow-us li .fa{ 
+       font-size:24px; 
+       color:#767676;
+    }
+
+    .our-team .cnt-block .follow-us li .fa:hover{ 
+       color:#000;
+    }
+
+    .our-team .cnt-block p{ 
+        color:#2a2a2a; 
+        font-size:13px; 
+        line-height:20px; 
+        font-weight:400;
+    }
+
+    .padding-lg {
+        display: block;
+        padding-top: 60px;
+        padding-bottom: 60px;
     }
 
     #contact_phonelogo {
@@ -370,6 +458,7 @@ Adviser:
     }
 
     @media screen and (max-width: 575px){        
+        
         .nav_buttons{
             display: block;
         }
@@ -551,7 +640,6 @@ Adviser:
             font-size: 15px;
         }
     }
-
 </style>
 
 <body>
@@ -563,23 +651,28 @@ Adviser:
         <!-- HOW TO USE THE SYSTEM -->
         <span class="nav_buttons">
         <li><a href="" data-toggle="modal" data-target="#HowTo_modal_01">How To</a></li></span>
+        <!-- ABOUT THE OFFICE -->
+        <span class="nav_buttons">
+        <li><a href="" data-toggle="modal" data-target="#AboutOCR_modal_01">About Us</a></li></span>    
         <!-- TO GOOGLE MAPS -->
         <span class="nav_buttons">
-        <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019">Maps</a></li></span>
+        <li><a href="https://www.google.com/maps/place/Technological+University+of+the+Philippines+%E2%80%93+Cavite/@14.3450539,120.9639132,17z/data=!3m1!4b1!4m5!3m4!1s0x3397d43fdf3bf3d3:0x756d61b3739581bc!8m2!3d14.3450539!4d120.9661019" target="_blank" rel="noopener noreferrer">Maps</a></li></span>
         <!-- TO GOOGLE MAIL -->
         <span class="nav_buttons">
-        <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm">Mail</a></li></span>
+        <li><a href="https://mail.google.com/mail/u/0/?fs=1&to=tupc_registrar@tup.edu.ph&tf=cm" target="_blank" rel="noopener noreferrer">Mail</a></li></span>
         <!-- TO FACEBOOK PAGE -->
         <span class="nav_buttons">
-        <li><a href="https://www.facebook.com/TUPCavite.registrar">Facebook</a></li></span>
+        <li><a href="https://www.facebook.com/TUPCavite.registrar" target="_blank" rel="noopener noreferrer">Facebook</a></li></span>
+        <!-- DEVELOPER'S PROFILE -->
+        <span class="nav_buttons">
+        <li><a href="" data-toggle="modal" data-target="#DevelopersProfile_modal_01">Our Team</a></li></span>     
+        <!-- PRIVACY POLICY -->
+        <!--<li><a href="privacy_policy">Privacy Policy</a></li>-->
         <!--CLOSE NAVIGATION IN MOBILE DISPLAY-->
         <span class="nav_buttons" id="collapse_navbar" style="display: none; ">
         <li><a style=" color: #c51d3a; text-decoration: bold;"><!--<i class="fa fa-close"></i>-->Close</a></li></span>
-        <!-- PRIVACY POLICY -->
-        <!--<li><a href="privacy_policy">Privacy Policy</a></li>-->
-        <!-- CREATE AN ACCOUNT -->
-        <li style="float:right;" id ="create_account"><a class="active d-none d-xl-block" data-toggle="modal" data-target="#PreSignUp_modal_01">Create Account</a></li>
-    </ul>
+        
+        </ul>
 
     <!-- MESSAGE BANNER -->
     {% include 'html_files/message.html'%}
@@ -764,6 +857,131 @@ Adviser:
         </div>
     </div>
 
+    <div id="AboutOCR_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-lg modal-md modal-dialog-centered" id="aboutus_modal">
+            <div class="modal-content">
+
+                <!--ABOUT US MODAL HEADER-->
+                <div class="modal-header">
+                    <h3><b>About Us</b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-info-circle"></i>
+                        </i>
+                    </h3>
+
+                    <!--ABOUT US CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">X</button>
+                </div>
+
+                <!--ABOUT US MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+                    <h3>Office of the Campus Registrar</h3>
+                    <br>
+                    <!-- OCR DESCRIPTION -->
+                    <p style="text-align: justify;">
+                        &nbsp; &nbsp;&nbsp;&nbsp;The Office of the Campus Registrar (OCR), with administrative and academic functions, 
+                        is an inherent and integral part of the institution. The Office of the Campus Registrar 
+                        is a member of the recommending bodies of the University: The Administrative Council and 
+                        the Academic Council. The OCR serves as the primary custodian of the school records of all students 
+                        and alumni. It administers operations in the areas of enrolment, load requirements, credits earned, 
+                        subject sequence, promotion, graduation, transfer, suspension and the dismissal of students. 
+                        It is located inside the Vergara Hall (in front of the U-Building).
+                    </p>
+                    <br><br>
+                    <!--OFFICER IN CHARGE LABEL-->
+                    <h5>Campus Registrar:{{RegistrarName}}</h5>
+
+                    <!-- CONTACTS -->
+                    <h5>Contact: +63 (046) 416 4920 </h5>
+                    
+                </div>
+               
+                <!-- ABOUT US MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEVELOPER'S PROFILE -->
+    <div id="DevelopersProfile_modal_01" class="modal fade" style="width: 100%;">
+        <div class="modal-dialog modal-xl modal-lg modal-md modal-dialog-centered" id="DevelopersProfile_modal">
+            <div class="modal-content">
+
+                <!--DEVELOPER'S PROFILE HEADER-->
+                <div class="modal-header">
+                    <h3 style="padding-left: 20px;"><b>J. A. D. E. </b>
+                        <i id="info_cir" aria-hidden="true" class="fa fa-users"></i>
+                        </i>
+                    </h3>
+
+                    <!--DEVELOPER'S PROFILE CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close">X</button>
+                </div>
+
+                <!--DEVELOPER'S PROFILE MODAL BODY-->
+                <div class="modal-body" id="maincontent_01">
+                    <section class="our-team padding-lg">
+                        <div class="container">
+                          
+                          <ul class="row listfordev">
+                            <li class="col-12 col-md-6 col-lg-3">
+                                <div class="cnt-block equal-hight" style="height: 349px;">
+                                  <figure><img src="{% static 'Media/jazminn.png' %}" class="img-responsive" alt=""></figure>
+                                  <h3><b>Jazminn Aira Terencio </b></h3>
+                                  <p>Full Stack Developer</p>
+                                  <ul class="follow-us clearfix" >
+                                    <li><a class="listfordev" href="https://www.facebook.com/jzminn" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook listfordev" aria-hidden="true"></i></a></li>
+                                    <li><a class="listfordev" href="https://github.com/jazmnnnn" target="_blank" rel="noopener noreferrer"><i class="fa fa-github listfordev" aria-hidden="true"></i></a></li>
+                                  </ul>
+                                </div>
+                            </li>
+                            
+                            <li class="col-12 col-md-6 col-lg-3">
+                                <div class="cnt-block equal-hight" style="height: 349px;">
+                                  <figure><img src="{% static 'Media/allora.png' %}" class="img-responsive" alt=""></figure>
+                                  <h3><b>Allora Blesse Lagura</b></h3>
+                                  <p>Full Stack Developer</p>
+                                  <ul class="follow-us clearfix">
+                                    <li><a class="listfordev" href="https://www.facebook.com/allora.lagura.1" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook listfordev" aria-hidden="true"></i></a></li>
+                                    <li><a class="listfordev" href="https://github.com/AlloraBlesse" target="_blank" rel="noopener noreferrer"><i class="fa fa-github listfordev" aria-hidden="true"></i></a></li>
+                                </ul>
+                                </div>
+                            </li>
+                            <li class="col-12 col-md-6 col-lg-3">
+                                <div class="cnt-block equal-hight" style="height: 349px;">
+                                  <figure><img src="{% static 'Media/dana.png' %}" class="img-responsive" alt=""></figure>
+                                  <h3><b>Dana Grace Fulla</b></h3>
+                                  <p>Full Stack Developer</p>
+                                  <ul class="follow-us clearfix">
+                                    <li><a class="listfordev" href="https://www.facebook.com/danagfulla" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook listfordev" aria-hidden="true"></i></a></li>
+                                    <li><a class="listfordev" href="https://github.com/DanaGrace" target="_blank" rel="noopener noreferrer"><i class="fa fa-github listfordev" aria-hidden="true"></i></a></li>
+                                  </ul>
+                                </div>
+                             </li>
+                            <li class="col-12 col-md-6 col-lg-3">
+                                <div class="cnt-block equal-hight" style="height: 349px;">
+                                  <figure><img src="{% static 'Media/eunis.png' %}" class="img-responsive" alt=""></figure>
+                                  <h3><b>Trisha Eunis Elicot</b></h3>
+                                  <p>Full Stack Developer</p>
+                                  <ul class="follow-us clearfix">
+                                    <li><a class="listfordev" href="https://www.facebook.com/eunis.elicot" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook listfordev" aria-hidden="true"></i></a></li>
+                                    <li><a class="listfordev" href="https://github.com/TrishaEunisElicot" target="_blank" rel="noopener noreferrer"><i class="fa fa-github listfordev" aria-hidden="true"></i></a></li>
+                                  </ul>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </section>
+                </div>
+                
+                <!-- DEVELOPER'S PROFILE MODAL FOOTER-->
+                <div class="modal-footer modal-footer1">
+                </div>
+            </div>
+        </div>
+    </div>
 
      <!--SERVICES MODAL-->
      <div id="Services_modal_01" class="modal fade" style="width: 100%;">
@@ -798,14 +1016,7 @@ Adviser:
                         <h5 style="text-indent: 50px;">6. Diploma. (Php 150.00)</h5>
                         <h5 style="text-indent: 50px;">7. Evaluation of Grades. (Php 60.00)</h5>
                         <h5 style="text-indent: 50px;">8.  Authentication of Documents. (Php 100.00)</h5>
-                       
                     </div>
-                    
-                    <!--OFFICER IN CHARGE LABEL-->
-                <div id="person_01" class="container-fluid">
-                    <h3 id="officername_01" style="float: center;"><b>Campus Registrar:{{RegistrarName}}</b></h3>
-                </div>
-                <br><br>
                 </div>
 
                 <!-- SERVICES FOOTER-->
