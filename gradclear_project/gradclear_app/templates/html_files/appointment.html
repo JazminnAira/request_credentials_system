@@ -219,10 +219,10 @@ Adviser:
 
                          <!--MODAL CLOSE BUTTON-->
                         {% if gform == 'clearance' %}
-                        <a href="{% url 'faculty_dashboard_clearance_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" ="Close">x</a>
+                        <a href="{% url 'faculty_dashboard_clearance_list' id=0 %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" ="Close">x</a>
                          
                         {% elif gform == 'graduation'%}
-                        <a href="{% url 'faculty_dashboard_graduation_list' %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Close">x</a>
+                        <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}" class="close_btn" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Close">x</a>
                          
                         {% elif request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF" %}
                         <a href="{% url 'registrar_dashboard_request_list' %}" class="float" data-toggle="tooltip" data-placement="right" style="color: #dedede;" title="Home">
