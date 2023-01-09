@@ -43,7 +43,8 @@ Adviser:
 
 </head>
 
-
+ 
+<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     body {
         margin: 0;
@@ -106,6 +107,37 @@ Adviser:
     .counter {
         padding: 8px;
         color: #ccc;
+    }
+
+    .help-card:hover{
+        background-color:#dedede ;
+    }
+
+    .help_row{
+        display: flex;
+    }
+
+    .help_link:active {
+        color: #dedede;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:hover {
+        color: #fff;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:link {
+        color: #424242;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+    .help_link:visited {
+        color: #c51d3a;
+        background-color: transparent;
+        text-decoration: underline;
     }
 
     .label {
@@ -652,6 +684,10 @@ Adviser:
         #welcome{
             font-size: 16px;
         }
+
+        .help_row{
+            display: block;
+        }
     }
 
     @media screen and (max-width: 700px) {
@@ -687,12 +723,15 @@ Adviser:
     <!-- DISPLAY CLEARANCE IF THERE IS PENDING APPLICATION -->
     {% if clearance_stat == "UNAPPROVED" %}
         <a style="padding-left: 21px;" href="display_clearform/{{clearance_id}}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-file-text-o material-icons">
-        </i><span class="icon-text">Clearance</span></a><br>
+        </i><span class="icon-text">Clearance Form</span></a><br>
     {% endif %}
     
     <!-- REQUEST FORM -->
     <a style="padding-left: 17px;" href="{% url 'request_form'%}"  data-toggle="tooltip" data-placement="right" class="link" class="trigger-btn"><i class="fa fa-files-o material-icons">
         </i><span class="icon-text">Request Form</span></a><br>
+    
+    <!-- HELP -->
+    <a style="padding-left: 20px;" href="" data-toggle="modal" data-target="#Help_modal_41"><i class="fa fa-question-circle material-icons"></i><span class="icon-text">Help<span></a>
     
     <!-- JADE LOGO -->
     <img src="{% static 'Media/left_logo.gif' %}" width="55" height="55" id="left_logo_41" style="position: absolute;bottom: 10px;">  
@@ -983,6 +1022,168 @@ Adviser:
         </div>
         </div>
     </div>
+    </div>
+    </div>
+
+    <!-- HELP MODAL -->
+    <div id="Help_modal_41" class="modal fade" id="exampleModal_41" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" id = "help_modal_size" style="max-width: 800px; min-width: 350px; width: 97vw;" role="document">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Help_modal_41">Help&nbsp;<i class="fa fa-question-circle"></i></h2>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close" onclick="reset_close()">X</button>
+                </div>
+
+                <!--MODAL BODY-->
+                <div class="modal-body">
+                    <div class="container">
+                        <div id="accordion">
+                            <div>
+                                {% if request.user.user_type == "STUDENT" and graduating >= 4 %}
+                                <!-- HELP FOR GRADUATION -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_41">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to apply for graduation</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                    <div id="collapseOne_41" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Graduation Form" in your dashboard's sidebar. <br>
+                                                2. Fill out all the necessary fields.<br>
+                                                3. Submit the form.<br>
+                                                4. Check the status of your application from time to time on the table from your dashboard. <br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:red"> Unapproved</b> - no signatories have signed the form yet.<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:red"> X/ 10</b> - the current number of signatures your application has.<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:green"> Approved</b>- the application is complete and is available for printing.<br>
+                                                &nbsp;&nbsp;&nbsp;<i> You can also view the form in full details by clicking the row or clicking "View Form". </i> <br>
+                                                5. Wait for the email sent to you on your registered email address from the Office of the Campus Registrar for the approval of your form. <br>
+                                                6. Follow the guidelines accordingly.<br>
+                                                7. Select "View Form" on your table from your dashboard.<br>
+                                                8. Click "Print" on the lower left side of the screen to download your form and print according to the guidelines sent to your email.<br>
+                                                9. Submit the printed graduation form to the Office of the Campus Registrar of TUP Cavite.<br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- HELP FOR REQUEST -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseTwo_41">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to request a credential</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseTwo_41" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Request" in your dashboard's sidebar. <br>
+                                                2. Fill out all the necessary fields.<br>
+                                                3. Select the credential you are requesting for.<br>
+                                                4. Submit the form.<br>
+                                                {% if request.user.user_type == "STUDENT" %}
+                                                &nbsp;&nbsp;<i>* If the credential you requested needs a clearance and you don't have a clearance form yet for this semester, you will be redirected to a clearance form.</i><br>
+                                                {% else %}
+                                                &nbsp;&nbsp;<i>* If the credential you requested needs a clearance and you don't have a clearance form yet, you will be redirected to a clearance form.</i><br>
+                                                {% endif %}
+                                                &nbsp;&nbsp;* Fill out the form, then submit. <br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:red"> Unapproved</b> - no signatories have signed the form yet.<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:red"> X/ 10</b> - the current number of signatures your application has.<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color:green"> Approved</b>- the application is complete and is available for printing.<br>
+                                                &nbsp;&nbsp;&nbsp;<i> You can also view the form in full details by clicking the row or clicking "View Form". </i> <br> 
+                                                5. Wait for the email sent to you on your registered email address from the Office of the Campus Registrar for the approval of your form.<br>
+                                                6. Follow the guidelines accordingly. <br>
+                                                7. Select "View Form" on the table from your dashboard. <br>
+                                                8. Click "Print" on the lower left side of the screen to download your form and print according to the guidelines sent to your email.<br>
+                                                9. Bring your requirements as well as the printed required form on your appointment and proceed to the Office of the Campus Registrar for the next procedures. <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                
+                                <!-- HELP FOR CHANGING PASSWORD -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseThree_41">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to change a password</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseThree_41" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Account" in your dashboard's sidebar. <br>
+                                                2. Select "Change Password". <br>
+                                                3. Enter your new password and confirm it. <br>
+                                                4. You will be logged out with your current session automatically, so re-enter your username and your new password. <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR PRINTING A FORM -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseFour_41">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to print a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseFour_41" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "View Form" from the table on your dashboard with the form you wish to print. <br>
+                                                2. Select "Print" on the lower side of your screen and wait until the file has been downloaded. <br>
+                                                3. Open the downloaded file and select the "Print icon". <br>
+                                                4. Change the paper size according to the right size (Folio), then print. <br>
+                                                <br><br>
+                                                <i>Note: Forms can only be printed if the approval status is "APPROVED" </i>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!--MODAL FOOTER-->
+            <div class="modal-footer">
+                <!-- <a href="{% url 'logout' %}" class="btn btn-secondary" id="logout_btn_71" aria-pressed="true">Log Out</a> -->
+            </div>
+        </div>
     </div>
     </div>
 </body>

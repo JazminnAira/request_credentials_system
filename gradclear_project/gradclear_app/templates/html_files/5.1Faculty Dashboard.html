@@ -42,7 +42,8 @@ Adviser:
 
 </head>
 
-
+ 
+<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     body {
         margin: 0;
@@ -116,6 +117,37 @@ Adviser:
 
     .content button {
         border: 3px solid #000000;
+    }
+
+    .help-card:hover{
+        background-color:#dedede ;
+    }
+
+    .help_row{
+        display: flex;
+    }
+
+    .help_link:active {
+        color: #dedede;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:hover {
+        color: #fff;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:link {
+        color: #424242;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+    .help_link:visited {
+        color: #c51d3a;
+        background-color: transparent;
+        text-decoration: underline;
     }
 
     .label {
@@ -608,6 +640,10 @@ Adviser:
         #date_today{
             display: none;
         }
+        
+        .help_row{
+            display: block;
+        }
     }
     @media screen and (max-width: 450px) {
         
@@ -628,12 +664,15 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_51"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_51"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'faculty_dashboard_graduation_list'%}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
+    <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
 {% if request.user.department == "HOCS" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA" or request.user.department == "HOCL" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDED" or request.user.department == "HDIT" or request.user.department == "HDLA" or request.user.department == "HDOE"%}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0 %}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% elif with_clearance %}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0 %}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% endif %}
+    
+    <!-- HELP -->
+    <a style="padding-left: 20px;" href="" data-toggle="modal" data-target="#Help_modal_51"><i class="fa fa-question-circle material-icons"></i><span class="icon-text">Help<span></a>
     
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="left_logo_51" style="position: absolute;bottom: 10px;">
     
@@ -755,6 +794,192 @@ Adviser:
         </div>
     </div>
     
+    <!-- HELP MODAL -->
+    <div id="Help_modal_51" class="modal fade" id="exampleModal_51" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" id = "help_modal_size" style="max-width: 950px; min-width: 350px; width: 97vw;" role="document">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Help_modal_51">Help&nbsp;<i class="fa fa-question-circle"></i></h2>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close" onclick="reset_close()">X</button>
+                </div>
+
+                <!--MODAL BODY-->
+                <div class="modal-body">
+                    <div class="container">
+                        <div id="accordion">
+                            <div>
+                                <!-- HELP FOR APPROVING FORMS -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_51">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to approve a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                    <div id="collapseOne_51" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                {% if with_clearance %}
+                                                1. Click "Graduation Form" or "Clearance Form" in your dashboard's sidebar. <br>
+                                                {% else %}
+                                                1. Click "Graduation Form" in your dashboard's sidebar. <br>
+                                                {% endif %}
+                                                2. There are two ways to approve forms:<br>
+                                                &nbsp;&nbsp;&nbsp; To approve a single form, click "Approve" on the corresponding form you want to sign. <br>
+                                                &nbsp;&nbsp;&nbsp; To approve multiple forms, click the box labeled with "All" on the upper left side of the table or tick the boxes of the forms you wish to approve, then click "Approve All". <br>
+                                                3. Choose your desired type of signature to sign.<br><br><br> 
+                                                <i>Note: For list of graduation forms, all signed and unsigned forms are visible only for the entire year.</i> <br>
+                                                {% if with_clearance %}
+                                                <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For list of clearance forms, once the form has been approved, it will automatically disappears on your list.<br>
+                                                </i>
+                                                {% endif %}
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR CHANGING SIGNATURE -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseTwo_51">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to update a signature</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseTwo_51" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                {% if with_clearance %}
+                                                1. Click "Graduation Form" or "Clearance Form" in your dashboard's sidebar. <br>
+                                                {% else %}
+                                                1. Click "Graduation Form" in your dashboard's sidebar. <br>
+                                                {% endif %}
+                                                2. Click "Approve" on the table.<br>
+                                                3. Select "Edit" next to "Digital Signature".<br>
+                                                4. Choose between "Create new e-signature" or "Attach New Image of Signature".<br>
+                                                &nbsp;&nbsp;&nbsp;a. Create new e-signature- Draw your new electronic signature on the canvas using your device, then "Save".<br>
+                                                &nbsp;&nbsp;&nbsp;b. Attach New Image of Signature- Upload your new image of signature, then "Save". <br>  
+                                                5. Go back to steps 2 and 3 to see your newly updated signature recorded inside the system.<br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR APPOINTMENTS -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseThree_51">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to set an appointment</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseThree_51" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                {% if with_clearance %}
+                                                1. Click "Graduation Form" or "Clearance Form" in your dashboard's sidebar. <br>
+                                                {% else %}
+                                                1. Click "Graduation Form" in your dashboard's sidebar. <br>
+                                                {% endif %}
+                                                2. Click "Message" on the table with the corresponding applicant you wish to email for concerns. <br>
+                                                3. Set the date and time of your appointment. Additionally, you can also include custom messages and attach files to the email. <br>
+                                                4. Click "Send".<br>
+                                                <br><br>
+                                                <i>Note: Once you click "Send", this will be sent to the applicant automatically. Please note that feedbacks from the applicant will not be entertained by the system, 
+                                                    so if you wish to discuss further via email with the applicant, you may include your email address with a note to the applicant in the additional message</i> <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                
+                                <!-- HELP FOR CHANGING PASSWORD -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseFour_51">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to change a password</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseFour_51" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Account" in your dashboard's sidebar. <br>
+                                                2. Select "Change Password". <br>
+                                                3. Enter your new password and confirm it. <br>
+                                                4. You will be logged out with your current session automatically, so re-enter your username and your new password. <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR PRINTING A FORM -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseFive_51">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to print a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseFive_51" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "View Form" from the table on your dashboard with the form you wish to print. <br>
+                                                2. Select "Print" on the lower side of your screen and wait until the file has been downloaded. <br>
+                                                3. Open the downloaded file and select the "Print icon". <br>
+                                                4. Change the paper size according to the right size (Folio), then print. <br>
+                                                <br><br>
+                                                <i>Note: Forms can only be printed if the approval status is "APPROVED" </i> 
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!--MODAL FOOTER-->
+            <div class="modal-footer">
+                <!-- <a href="{% url 'logout' %}" class="btn btn-secondary" id="logout_btn_71" aria-pressed="true">Log Out</a> -->
+            </div>
+        </div>
+    </div>
+    </div>
+
     <!--MAIN-->
     <div class="container-fluid" id="date_today">
         <div class="row" style="padding-right: 0px;">
@@ -950,7 +1175,7 @@ Adviser:
 
     //REDIRECT TO FACULTY CLEARANCE LIST
     function openfdbc() {
-        window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
+        window.location.replace("{% url 'faculty_dashboard_clearance_list' id=0 %}");
     }
 
     //REDIRECT WHEN LOG OUT
@@ -1017,7 +1242,7 @@ Adviser:
                     $('.no-result').hide();
                 }
 
-                var dattable = document.getElementById("list_tbl_41");
+                var dattable = document.getElementById("list_tbl_51");
                 var rowcount = dattable.tBodies[0].rows.length;
 
                 if (rowcount == '0') {
