@@ -1792,7 +1792,7 @@ def appointment(request, id, form):
             msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
 
-            return redirect(faculty_dashboard_clearance_list)
+            return redirect('/faculty_dashboard_clearance_list/0')
 
         else:
             return render(request, 'html_files/appointment.html', {'gform': gform})
@@ -1886,7 +1886,7 @@ def appointmentgrad(request, id, form):
             msg.content_subtype = "html"
             msg.send(fail_silently=True)
             messages.success(request, "Appointment Schedule Sent.")
-            return redirect('faculty_dashboard_graduation_list')
+            return redirect('/faculty_dashboard_graduation_list/0')
         else:
             return render(request, 'html_files/appointment.html', {'gform': gform})
 
@@ -3236,11 +3236,11 @@ def faculty_dashboard_clearance_list_all(request):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return redirect('faculty_dashboard_clearance_list')
+    return redirect('/faculty_dashboard_clearance_list/0')
 
 # DISPLAY CLEARANCE LIST DEPENDING ON DEPARTMENT
 @login_required(login_url='/')
-def faculty_dashboard_clearance_list(request):
+def faculty_dashboard_clearance_list(request, id):
     esignature = request.user.e_signature
     esignature_datetime = request.user.e_signature_timesaved
     uploaded_signature = request.user.uploaded_signature
@@ -3259,6 +3259,9 @@ def faculty_dashboard_clearance_list(request):
         full_name=f_n).values_list('e_signature', flat=True).distinct()
     uploadsig_check = user_table.objects.filter(full_name=f_n).values_list(
         'uploaded_signature', flat=True).distinct()
+    
+    preview_data = clearance_form_table.objects.filter(id=id).values()
+    preview_id = id
 
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
 
@@ -3369,7 +3372,7 @@ def faculty_dashboard_clearance_list(request):
     else:
         upload_checker = ""
 
-    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep': dep, 'f_n_unapproved': f_n_unapproved, 'f_n_approved': f_n_approved, 'course_adv': course_adv, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime,  'id': id_Facultynumber})
+    return render(request, 'html_files/5.2Faculty Clearance List.html', {'st': st, 'dep': dep, 'f_n_unapproved': f_n_unapproved, 'f_n_approved': f_n_approved, 'course_adv': course_adv, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime,  'id': id_Facultynumber, 'preview_data': preview_data, 'preview_id': preview_id})
 
 # SINGLE APPROVAL IN CLEARANCE LIST
 @login_required(login_url='/')
@@ -3503,7 +3506,7 @@ def update_clearance(request, id, dep, sign):
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
-    return redirect(faculty_dashboard_clearance_list)
+    return redirect('/faculty_dashboard_clearance_list/0')
 
 # APPROVE ALL FORMS IN GRADUATION LIST
 @login_required(login_url='/')
@@ -4205,17 +4208,17 @@ def faculty_dashboard_graduation_list_all(request):
                     graduation_form_table.objects.filter(
                         id=int(i)).update(approval_status="APPROVED")
 
-            return redirect(faculty_dashboard_graduation_list)
+            return redirect('/faculty_dashboard_graduation_list/0')
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return redirect('faculty_dashboard_graduation_list')
+    return redirect('/faculty_dashboard_graduation_list/0')
 
 # DISPLAY FORMS IN GRADUATION LIST DEPENDING ON SUBJECTS
 @login_required(login_url='/')
-def faculty_dashboard_graduation_list(request):
+def faculty_dashboard_graduation_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "FACULTY":
         # signature
         esignature = request.user.e_signature
@@ -4231,12 +4234,17 @@ def faculty_dashboard_graduation_list(request):
         f_n_approved_approve = request.user.full_name + "_APPROVED" + " " + "APPROVE"
         todayyear = date.today().year
 
+       
+
         st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) |
                                                   Q(faculty3=full_name) | Q(faculty4=full_name) | Q(faculty5=full_name) | Q(faculty6=full_name) |
                                                   Q(faculty7=full_name) | Q(faculty8=full_name) | Q(faculty9=full_name) | Q(faculty10=full_name) |
                                                   Q(addfaculty1=full_name) | Q(addfaculty2=full_name) | Q(addfaculty3=full_name) | Q(addfaculty4=full_name) |
                                                   Q(addfaculty5=full_name) | Q(instructor_name=full_name), Q(time_requested__startswith=todayyear)).order_by('-time_requested')
 
+        preview_data = graduation_form_table.objects.filter(id=id).values()
+        preview_id = id
+        
         # signature checker
         esign_check = user_table.objects.filter(
             full_name=full_name).values_list('e_signature', flat=True).distinct()
@@ -4257,7 +4265,7 @@ def faculty_dashboard_graduation_list(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved, 'f_n_approved_esign': f_n_approved_esign, 'f_n_approved_upload': f_n_approved_upload, 'f_n_approved_approved': f_n_approved_approve, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime, 'id': id_Facultynumber})
+    return render(request, 'html_files/5.3Faculty Graduation List.html', {'st': st, 'f_n_unapproved': f_n_unapproved, 'f_n_approved_esign': f_n_approved_esign, 'f_n_approved_upload': f_n_approved_upload, 'f_n_approved_approved': f_n_approved_approve, 'e_signature': esignature, 'esignature_datetime': esignature_datetime, 'esign_check': esign_checker, 'uploaded_signature': uploaded_signature, 'uploadsig_check': upload_checker, 'uploaded_datetime': uploaded_signature_datetime, 'id': id_Facultynumber, 'preview_data': preview_data, 'preview_id': preview_id})
 
 # SINGLE APPROVAL IN GRADUATION LIST
 @login_required(login_url='/')
@@ -4448,7 +4456,7 @@ def update_graduation(request, id, sub, sig):
             graduation_form_table.objects.filter(
                 id=id).update(approval_status="APPROVED")
 
-        return redirect(faculty_dashboard_graduation_list)
+        return redirect('/faculty_dashboard_graduation_list/0')
 
     else:
         messages.error(
@@ -7183,7 +7191,7 @@ def update_clearance_signature(request, id):
             messages.success(
                 request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
 
-    return redirect(faculty_dashboard_clearance_list)
+    return redirect('/faculty_dashboard_clearance_list/0')
 
 # UPDATE SIGNATURE FOR GRADUATION LIST IN FACULTY'S SIDE
 @login_required(login_url='/')
@@ -7253,7 +7261,7 @@ def update_grad_signature(request, id):
             messages.success(
                 request, "Your Signature has been updated. It may take a few minutes to update accross the site.")
 
-    return redirect(faculty_dashboard_graduation_list)
+    return redirect('/faculty_dashboard_graduation_list/0')
 
 # DISPLAY REQUEST FORM
 @login_required(login_url='/')

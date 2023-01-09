@@ -110,6 +110,7 @@ Adviser:
 
     table{
         min-width: max-content;
+        
     }
 
     thead{
@@ -220,7 +221,7 @@ Adviser:
 
     .table_list {
         transition: margin-right .5s;
-        padding: 16px;
+        padding: 1px;
     }
 
     .table-sortable th {
@@ -246,7 +247,7 @@ Adviser:
     }
 
     .table-wrapper{
-        max-height: 500px;
+        max-height: 600px;
         overflow-y: scroll;
     }
 
@@ -301,14 +302,16 @@ Adviser:
     }
 
     #btn,
-    #open_signature{
+    #open_signature,
+    #approve_sig_btn {
         border-radius: 10px;
         background-color: #c51d3a;
         color: #fff;
     }
     
     #btn:hover,
-    #open_signature:hover{
+    #open_signature:hover,
+    #approve_sig_btn:hover {
         border-radius: 10px;
         background-color: #c51d3a;
         color: black;
@@ -506,8 +509,37 @@ Adviser:
             display: none;
         }
     }
-</style>
 
+
+    /* ----------Revisions----------------- */
+    #myDIV {
+    width: 100%;
+    padding: 50px 0;
+    text-align: left;
+    background-color: lightblue;
+    height: 350px;
+    
+    }
+
+    * {
+    box-sizing: border-box;
+    }
+
+    /* Create three equal columns that floats next to each other */
+    .column {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+</style>
 
 <body>
     
@@ -515,7 +547,7 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_52">
         <a href="{% url 'faculty_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home" style="font-size:30px;"><i class="fa fa-home">
             </i> </a>
-        <a href="{% url 'faculty_dashboard_clearance_list' %}" id="home_button" data-toggle="tooltip" data-placement="right" title="Refresh" style="font-size:25px;"><i class="fa fa-refresh">
+        <a href="{% url 'faculty_dashboard_clearance_list' id=0 %}" id="home_button" data-toggle="tooltip" data-placement="right" title="Refresh" style="font-size:25px;"><i class="fa fa-refresh">
             </i> </a>
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_52" name="search_box_052" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
@@ -539,7 +571,7 @@ Adviser:
                 
                             <!--MODAL CLOSE BUTTON-->
                             <button type="button" class="close_btn" data-placement="right" title="Close" 
-                            onclick="window.location.assign('faculty_dashboard_clearance_list')">X</button>
+                            onclick="window.location.assign('/faculty_dashboard_clearance_list/0')">X</button>
                     </div>
                     <form method="POST" action="appointment" style="height:100%;" >
                         {% csrf_token %}
@@ -706,7 +738,7 @@ Adviser:
                         <td colspan="10"><i class="fa fa-warning"></i> No result</td>
                     </tr>
                 </thead>
-                
+                <input type ="text" value="{{preview_id}}" id="id_determiner" hidden>
                 {% for instance in st %}
                 <tbody>
                     
@@ -714,11 +746,11 @@ Adviser:
                     <!--DETERMINING DEPARTMENT HEAD-->
                         
                         <td><input type="checkbox" id="boxes" name="boxes" class="check" value={{instance.id}}></td>    
-                        <td class="nr" hidden onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.id}}</td>
-                        <td class="name"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.name}}</td> 
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.course}}</td>
-                        <td onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.student_id}}</td>
-                        <td class="request"onclick="window.location='display_clearform/{{ instance.id }}'">{{instance.purpose_of_request}}</td>
+                        <td class="nr" hidden onclick="window.location='{{ instance.id }}'">{{instance.id}}</td>
+                        <td class="name" onclick="window.location='{{ instance.id }}'">{{instance.name}}</td> 
+                        <td onclick="window.location='{{ instance.id }}'">{{instance.course}}</td>
+                        <td onclick="window.location='{{ instance.id }}'">{{instance.student_id}}</td>
+                        <td class="request" onclick="window.location='{{ instance.id }}'">{{instance.purpose_of_request}}</td>
                         <td><a href="appointment/{{ instance.id }}/clearance"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Message</button></a></td>   
                         
                         {% if dep == "HOCS" %}
@@ -726,83 +758,83 @@ Adviser:
                             {% if instance.accountant_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department1(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'" >APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'" >APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDLA" %}
                             <script>document.querySelector('#department_th').innerText = "DLA";</script>
                             {% if instance.liberal_arts_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department12(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDMS" %}
                             <script>document.querySelector('#department_th').innerText = "DMS";</script>
                             {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department2(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDPECS" %}
                             <script>document.querySelector('#department_th').innerText = "DPECS";</script>
                             {% if instance.pe_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department3(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDED" %}
                             <script>document.querySelector('#department_th').innerText = "DED";</script>
                             {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department4(this)">Approve</button></td>
                             {% elif instance.ieduc_dept_signature == "_APPROVED" %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                            <td onclick="window.location='{{ instance.id }}'">❌</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDIT" %} 
                             <script>document.querySelector('#department_th').innerText = "DIT";</script>
                             {% if instance.it_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department5(this)">Approve</button></td>
                             {% elif instance.it_dept_signature == "_APPROVED" %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                            <td onclick="window.location='{{ instance.id }}'">❌</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HDOE" %}
                             <script>document.querySelector('#department_th').innerText = "DOE";</script>
                             {% if instance.eng_dept_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department6(this)">Approve</button></td>
                             {% elif instance.eng_dept_signature == "_APPROVED" %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                            <td onclick="window.location='{{ instance.id }}'">❌</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOCL" %}
                             <script>document.querySelector('#department_th').innerText = "OCL";</script>
                             {% if instance.library_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department7(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOGS" %}
                             <script>document.querySelector('#department_th').innerText = "OGS";</script>
                             {% if instance.guidance_office_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department8(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HOSA" %}
                             <script>document.querySelector('#department_th').innerText = "OSA";</script>
                             {% if instance.osa_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department9(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% elif dep == "HADAA" %}
                             <script>document.querySelector('#department_th').innerText = "ADAA";</script>
                             {% if instance.academic_affairs_signature == "UNAPPROVED" %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department10(this)">Approve</button></td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% else %}
                             <td></td>   
@@ -812,9 +844,9 @@ Adviser:
                             {% if instance.course_adviser_signature == f_n_unapproved %}
                             <td><button type ="button" class="button user_id apprv" id="open_signature" onclick = "OpenSignature(this), department11(this)">Approve</button></td>
                             {% elif instance.course_adviser_signature != f_n_unapproved and instance.course_adviser != request.user.full_name %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">❌</td>
+                            <td onclick="window.location='{{ instance.id }}'">❌</td>
                             {% else %}
-                            <td onclick="window.location='display_clearform/{{ instance.id }}'">APPROVED</td>
+                            <td onclick="window.location='{{ instance.id }}'">APPROVED</td>
                             {% endif %}
                         {% else %}
                             <td></td>
@@ -826,6 +858,7 @@ Adviser:
                 {% endfor %}
             </table>
             </div>
+           
         </form>
         <!--APPROVE ALL-->
         <form method="POST" action="faculty_dashboard_clearance_list_all" hidden >
@@ -833,10 +866,256 @@ Adviser:
             <input type="text" id="id_list" name="id_list" />
             <input type="text" id="sig" name="sig" />
             
-            <button type="submit" id="submit_btn_all" hidden/>
+            <button type="submit" id="submit_btn_all" hidden />
         </form>
         <button type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        {% for s in preview_data %}
+         <div id="myDIV"  class = "border bg-white border-dark p-3 m-1" hidden>
+                <div class="row">
+                    <div class="column">
+                    
+                    <tr>
+                        <td ><b>Name:</b> </td><br>
+                        <td >{{s.name}}</td>
+                    </tr><br>
+            
+                    <tr>
+                        <td><b>Date Filed:</b><br>
+                        <td>{{s.date_filed}}</td>
+                    </tr><br>
+            
+                    <tr>
+                        
+                        <td><b>Present Address:</b> </td><br>
+                        <td>{{s.present_address}}</td>
+                        
+                    </tr><br>
+                
+                    <tr>
+                        
+                        <td><b>Date Admitted in TUPC:</b><br>
+                        <td>{{s.date_admitted_in_tup}}</td>
+                        
+                    </tr><br>
+
+                    <tr>
+                        
+                        <td><b>Course:</b> </td><br>
+                        <td>{{s.course}}</td>
+                        
+                    </tr><br>
+                   
+                    
+                </div>
+                <div class="column">
+
+                    <tr>
+                        
+                        <td><b>Highschool Graduated:</b><br>
+                        <td>{{s.highschool_graduated}}</td>
+                        
+                    </tr><br>
+
+                    <tr>
+                        <td><b>Did You Graduate at TUPC:</b><br>
+
+                        <td>{% if s.tupc_graduate == "YES" %}
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" checked disabled>Yes
+                        </label>
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()" disabled>No
+                        </label>
+                        {% else %}
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradYes_radio_42" value="YES" onclick="EnableDisableTextBox()" oninput="enter_tupgradYes()" disabled>Yes
+                        </label>
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="grad_option_420" disabled id="gradNo_radio_42" value="NO" onclick="EnableDisableTextBox()" oninput ="enter_tupgradNo()"checked disabled>No
+                        </label>
+                        {% endif %}</td>
+                        
+                    </tr><br>
+
+                    <tr>
+                        
+                        <td><b>If Yes indicate the date:</b><br>
+                        <td>{{s.year_graduated_in_tupc}}</td>
+                        
+                    </tr><br>
+
+                    <tr>
+                        
+                        <td><b>Number of Terms in TUPC: Sem./Sum.:</b><br>
+                        <td>{{s.number_of_terms_in_tupc}}</td>
+                        
+                    </tr><br>
+                   
+                  <tr>
+                    <td><b>Amount Paid:</b></td><br>
+                    <td>{{s.amount_paid}}</td>
+                </tr><br>
+                
+                 <tr>
+                    <td><b>Official Receipt Number:</b></td><br>
+                    <td>{{s.or_num}}</td>
+                </tr><br>
+
+               
+               
+                </div>
+                <div class="column">
+                 
+                <tr>
+                    <td><b>Have you requested for the checked items below previously:</b></td><br>
+                    <td>{% if i.have_previously_requested_form == "NO" %}
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()" disabled>Yes
+                        </label>
+                            <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" checked disabled>No
+                        </label>
+                        {% else %}
+                        <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqYes_radio_42" value="YES" onclick="EnableDisableTextBox1()" oninput="enter_lastreqYes()"checked  disabled>Yes
+                        </label>
+                            <label class="radio-inline">
+                        <input class="my-1 mr-2" type="radio" name="requested_option_420" disabled id="reqNo_radio_42" value="NO" onclick="EnableDisableTextBox1()" oninput="enter_lastreqNo()" disabled>No
+                        </label>
+                        {% endif %}</td>
+                </tr><br>
+
+                <tr>
+                    <td><b>If yes, please indicate the date before its respective item(s):</b></td><br>
+                    <td>{{s.date_of_previously_requested_form}}</td>
+                </tr><br>
+                <tr>
+                    <td><b>Last Term in TUPC:</b></td><br>
+                    <td>{{s.last_term_in_tupc}}</td>
+                </tr><br>
+                <tr>
+                    <td><b>Purpose of Request:</b></td><br>
+                    <td>{{s.purpose_of_request_reason}}</td>
+                </tr><br>
+                <tr>
+                    <td><b>Course/ Shop Adviser:</b></td><br>
+                    <td>{{s.course_adviser}}</td>
+                </tr><br>
+
+                 
+                </div>
+              
+
+             <div class="column">
+
+                <tr>
+                    <td><b>Clearance Requested for:</b></td><br>
+                    <td>{{s.purpose_of_request}}</td>
+                    </tr><br>
+              
+                <tr>
+                  <td><b>Accountant:</b></td><br>
+                  <td>
+                    {% if s.accountant_signature == "UNAPPROVED" %}
+                        <label >UNAPPROVED</label>
+                    {% else %}
+                        <label >APPROVED</label>
+                {% endif %}</td>
+              </tr><br>
+              <tr>
+                <td><b>Course/ Shop Adviser:</b></td><br>
+                <td> 
+                    {% if s.accountant_signature == "UNAPPROVED" %}
+                    <label >UNAPPROVED</label>
+                {% else %}
+                    <label >APPROVED</label>
+                {% endif %}</td>
+                </tr><br>
+              <tr>
+                  <td><b>Head of Liberal Arts:</b></td><br>
+                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                    <label >UNAPPROVED</label>
+                {% else %}
+                    <label >APPROVED</label>
+            {% endif %}</td>
+              </tr><br>
+              <tr>
+                  <td><b>Campus Librarian:</b></td><br>
+                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                    <label >UNAPPROVED</label>
+                {% else %}
+                    <label >APPROVED</label>
+            {% endif %}</td>
+              </tr><br>
+              <tr>
+                  <td><b>Head of Math and Science:</b></td><br>
+                  <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                    <label >UNAPPROVED</label>
+                {% else %}
+                    <label >APPROVED</label>
+            {% endif %}</td>
+              </tr><br>
+              </div>
+
+              <div class="column">
+                <tr>
+                    <td><b>Guidance Counselor:</b></td><br>
+                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                        <label >UNAPPROVED</label>
+                    {% else %}
+                        <label >APPROVED</label>
+                {% endif %}</td>
+                </tr><br>
+                
+              <tr>
+                <td><b>Head of DPECS:</b></td><br>
+                <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                    <label >UNAPPROVED</label>
+                {% else %}
+                    <label >APPROVED</label>
+            {% endif %}</td>
+                </tr><br>
+                <tr>
+                    <td><b>Head of Student Affairs:</b></td><br>
+                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                        <label >UNAPPROVED</label>
+                    {% else %}
+                        <label >APPROVED</label>
+                {% endif %}</td>
+                </tr><br>
+                <tr>
+                    <td><b> 
+                    {% if it_department == 'EDUCATOR' %}
+                        Head of Industrial Education Department:</b> 
+                    {% elif it_department == 'TECHNOLOGIES' %}
+                        Head of Industrial Technology Department:</b> 
+                    {% elif it_department == 'ENGINEERS' %}
+                        Head of Engineering Department:</b> 
+                    {% else %}
+                        Head of Industrial Technology/Industrial Education/Engineering:</b> 
+                    {% endif %}</b></td><br>
+                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                        <label >UNAPPROVED</label>
+                    {% else %}
+                        <label >APPROVED</label>
+                {% endif %}</td>
+                </tr><br>
+                <tr>
+                    <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
+                    <td>{% if s.accountant_signature == "UNAPPROVED" %}
+                        <label >UNAPPROVED</label>
+                    {% else %}
+                        <label >APPROVED</label>
+                {% endif %}</td>
+                </tr><br>
+                </div>
+                {% endfor %}
+            </div>
+           </div>
     </div>
+
+    
+   
     
 
         <p class="text-center text-bold" id="p6_52"></p>
@@ -905,15 +1184,33 @@ Adviser:
 </body>
 
 
+
+
 <footer  id="footer_bottom">
     <div id="footer_div">
         <p>© Technological University of the Philippines-Cavite</p>
     </div>
+    
 </footer>
 
 
 </html>
+<script>
+    if(document.getElementById("id_determiner") != 0){
+        document.getElementById("myDIV").hidden = false;
+    }else{
+        document.getElementById("myDIV").hidden = true;
+    };
 
+    // function myFunction() {
+    //   var x = document.getElementById("myDIV");
+    //   if (x.style.display === "none") {
+    //     x.style.display = "block";
+    //   } else {
+    //     x.style.display = "none";
+    //   }
+    // }
+    // </script>
 
 <script>
   
@@ -1310,7 +1607,7 @@ Adviser:
     }
 
     function openfdbc() {
-        window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
+        window.location.replace("{% url 'faculty_dashboard_clearance_list' id=0 %}");
     }
 
     // TAB JS

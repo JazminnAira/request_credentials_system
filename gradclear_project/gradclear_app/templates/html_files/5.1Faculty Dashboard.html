@@ -610,11 +610,11 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_51"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_51"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'faculty_dashboard_graduation_list'%}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
+    <a href="{% url 'faculty_dashboard_graduation_list' id=0 %}"><i class="fa fa-graduation-cap material-icons" style="margin-right: 24px;"></i><span class="icon-text">Graduation</span></a><br>
 {% if request.user.department == "HOCS" or request.user.department == "HOGS" or request.user.department == "HOSA" or request.user.department == "HADAA" or request.user.department == "HOCL" or request.user.department == "HDMS" or request.user.department == "HDPECS" or request.user.department == "HDED" or request.user.department == "HDIT" or request.user.department == "HDLA" or request.user.department == "HDOE"%}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0 %}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% elif with_clearance %}
-    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list'%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
+    <a style="padding-left: 23px;" href="{% url 'faculty_dashboard_clearance_list' id=0%}"><i class="fa fa-file-text-o material-icons"></i><span class="icon-text">Clearance</span></a><br>
     {% endif %}
     
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="left_logo_51" style="position: absolute;bottom: 10px;">
@@ -929,7 +929,7 @@ Adviser:
 
     //REDIRECT TO FACULTY CLEARANCE LIST
     function openfdbc() {
-        window.location.replace("{% url 'faculty_dashboard_clearance_list' %}");
+        window.location.replace("{% url 'faculty_dashboard_clearance_list' id=0 %}");
     }
 
     //REDIRECT WHEN LOG OUT
