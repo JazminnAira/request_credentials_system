@@ -41,7 +41,6 @@ Adviser:
 </head>
 
 
-<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a {
         font-style: italic;
@@ -107,7 +106,6 @@ Adviser:
     thead{
         position: sticky;
         top: 0px;
-        z-index: 1;
     }
      
     thead,td{
@@ -304,6 +302,23 @@ Adviser:
         opacity: 1;
         visibility: visible;
     }
+    
+    #back_history {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
+        margin-left : 2vw;
+        color:white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #back_history:hover{
+        color: black;
+        background-color: #d3324d;
+    }   
 
     #btn {
         border-radius: 10px;
@@ -324,9 +339,20 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
-        position: sticky;
-        top: 0px;
-        z-index: 2;
+    }
+    
+    #delete_history{
+        background-color : white;
+        text-decoration: underline;
+        color: black;
+        border: none;
+    }
+
+    #delete_history:hover{
+        background-color : white;
+        text-decoration: underline;
+        color: red;
+        border: none;
     }
     
     #dropdownMenuLink{
@@ -463,8 +489,6 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_72">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
 
-        
-
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
         
@@ -497,9 +521,24 @@ Adviser:
     <a id="backtotop_btn_72"></a>
 
     <!-- MAIN-->
+    {% if sorter_type == "DELETED" %}
+    <h3 style="text-align:center;">List of Deleted Clearance Forms</h3>
+    {% else %}
     <h3 style="text-align:center;">List of Clearance Forms</h3>
+    {% endif %}
     {% include 'html_files/message.html'%}
+    
+    {% if sorter_type != "DELETED" %}
+    <div id="delete_history_div" align="right">
+        <a href="/registrar_dashboard_organize_clearance_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
+    </div>
+    {% endif %}
 
+    {% if sorter_type == "DELETED" %}
+    <div id="back_history_div">
+        <a href="/registrar_dashboard_organize_clearance_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
+    </div>
+    {% endif %}
         
         <form method="POST" id="valdet">
             {% csrf_token %}
@@ -526,20 +565,24 @@ Adviser:
                             <th class="sorting" title="Sort by Purpose of Request">Purpose of Request</th>
                             <th class="sorting" title="Sort by Date Requested">Date & Time Requested</th>
                             <th class="sorting" title="Sort by Approval Status">Approval Status</th>
+                            {% if sorter_type == "DELETED" %}
+                            <th>Date and Time Removed</th>
+                            {% else %}
                             <th>Notify</th>
                             {% if request.user.user_type == "REGISTRAR" %}
                             <th></th>
                             <th></th>
                             {% endif %}
+                            {% endif %}
                         </tr>
-                        {% if request.user.user_type == "REGISTRAR" %}
+                        {% if request.user.user_type == "REGISTRAR" and sorter_type != "DELETED" %}
                         <tr class="no_data">
                             <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
                             <td colspan="9"><i class="fa fa-warning"></i> No result</td>
                         </tr>
-                        {% elif request.user.user_type == "STAFF" %}
+                        {% else %}
                         <tr class="no_data">
                             <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
@@ -563,28 +606,42 @@ Adviser:
                             {% else %}
                             <td><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
+                            {% if sorter_type == "DELETED" %}
+                            <td>{{instance.deleted_timestamp}}</td>
+                            {% else %}
                             <td>
                             <!--APPOINTMENT STATUS-->
                             {% if instance.approval_status ==  'APPROVED' %}
                                 {% if instance.clear_notif ==  'NOTIFIED' %}
                                 Notification Sent.
                                 {% else %}
+                                {% if instance.user_removed == "1" %}
+                                The Applicant's Account has been Deleted, Cannot Notify.
+                                {%else%}
                                 <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>   Notify Student</button></a>
                                 {% endif %}
+                                {% endif %}
                             {% else %}
+                            {% if instance.user_removed == "1" %}
+                                The Applicant's Account has been Deleted, Cannot Notify.
+                            {%else%}
                                 ❌
+                            {% endif %}
                             {% endif %}
                             </td>
                             {% if request.user.user_type == "REGISTRAR" %}
                             <td>
                                 {% if instance.approval_status !=  'APPROVED' %}
                                 <!--APPROVED BY REGISTRAR-->
+                                {% if instance.user_removed != "1" %}
                                 <a href="{% url 'approve_clearform' instance.id %}"><button class="table-icon" id="btn" >Approve</button></a>
+                                {% endif %}
                                 {% endif %}
                             </td>
                             <!--DELETE FORM-->
                             <td><a href="{% url 'delete_clearform' instance.id %}"><button class="table-icon" id="btn" >Remove</button></a>
                             </td>
+                            {% endif %}
                             {% endif %}
                         </tr>
                     {% endfor %}    

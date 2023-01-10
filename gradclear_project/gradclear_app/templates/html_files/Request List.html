@@ -41,7 +41,6 @@ Adviser:
 </head>
 
 
-<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a {
         font-style: italic;
@@ -353,6 +352,24 @@ Adviser:
         padding-top: 5px;
         text-align: center;
     }
+    
+    #delete_history{
+        background-color : white;
+        text-decoration: underline;
+        color: black;
+        border: none;
+    }
+
+    #delete_history:hover{
+        background-color : white;
+        text-decoration: underline;
+        color: red;
+        border: none;
+    }
+
+    #delete_history_div{
+        float: right;
+    }
 
     #dropdownMenuLink{
         background-color: #e7dfe4;
@@ -504,7 +521,8 @@ Adviser:
         
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_77" placeholder="Search" onkeyup="searching1()" onsearch="OnSearch (this)">
-
+        
+        {% if sorter_type != "DELETED" %}
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 1px;">
             Sort by
         </a>
@@ -537,6 +555,7 @@ Adviser:
             </li>
         
         </div>
+        {% endif %}
     </div>
 
     <!--BACK TO TOP BUTTON-->
@@ -547,24 +566,44 @@ Adviser:
     <!--TAB BAR-->
         {% include 'html_files/message.html'%}
         <div class = "col-12"  >
+            {% if sorter_type == "DELETED" %}
+            <h3 style="text-align:center;">List of Deleted Request Forms</h3>
+            {% else %}
             <h3 style="text-align:center;">List of Request Forms</h3>
-            <div id ="button_claim_and_unclaim" class="mt-3">
+            {% endif %}
+            <div id ="button_claim_and_unclaim" class="mt-3 col-12">
                 {% if sorter_type == "ALL" %}
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                    <div id="delete_history_div">
+                        <a href="/registrar_dashboard_organize_request_list/DELETED" class = "btn" type = "button" id ="delete_history">Delete History></a>
+                    </div>
                 {% elif sorter_type == "CLAIMED" %}
                     <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter2" >Claimed</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                    <div id="delete_history_div">
+                        <a href="/registrar_dashboard_organize_request_list/DELETED" class = "btn" type = "button" id ="delete_history">Delete History></a>
+                    </div>
                 {% elif sorter_type == "UNCLAIMED" %}
                     <button class="button pl-2 pr-2 " id ="button_sorter" >All</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter3">Unclaimed</button>
+                    <div id="delete_history_div">
+                        <a href="/registrar_dashboard_organize_request_list/DELETED" class = "btn" type = "button" id ="delete_history">Delete History></a>
+                    </div>
+                {% elif sorter_type == "DELETED" %}
+                    <button class="button pl-2 pr-2 " id ="button_sorter" >BACK</button>
+                    <button class="button pl-2 pr-2 " id ="button_sorter2" hidden>Claimed</button>
+                    <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter3" hidden>Unclaimed</button>
                 {% else %}
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter3">Unclaimed</button>
+                    <div id="delete_history_div">
+                        <a href="/registrar_dashboard_organize_request_list/DELETED" class = "btn" type = "button" id ="delete_history">Delete History></a>
+                    </div>
                 {% endif %}
             </div>
             <!--TABLE-->
@@ -577,21 +616,39 @@ Adviser:
                                 <th hidden>#</th>
                                 <th class="sorting" title="Sort by Name">Student's Name</th>
                                 <th class="sorting" title="Sort by Request">Request</th>
+                                <th>Date and Time Requested</th>
+
+                                {% if sorter_type != "DELETED" %}
                                 <th class="sorting" title="Sort">Clearance</th>
                                 <th class="sorting" title="Sort" >Form 137-A</th>
                                 <th class="sorting" title="Sort" colspan="3">Official Receipt</th>
+                                {% endif %}
                                 <th>Account Type</th>
                                 <th>Status</th>
+                                {% if sorter_type == "DELETED" %}
+                                <th>Date and time Removed</th>
+                                {% else %}
                                 <th colspan="2">Appointment</th>
                                 <th> </th>
+                                {% endif %}
                             
                             </tr>
+                            {% if sorter_type == "DELETED" %}
+                            <tr class="no_data">
+                                <td colspan="6"><i class="fa fa-warning"></i> No Data</td>
+                            </tr>
+                            <tr class="warning no-result">
+                                <td colspan="6"><i class="fa fa-warning"></i> No result</td>
+                            </tr>
+
+                            {% else %}
                             <tr class="no_data">
                                 <td colspan="11"><i class="fa fa-warning"></i> No Data</td>
                             </tr>
                             <tr class="warning no-result">
                                 <td colspan="11"><i class="fa fa-warning"></i> No result</td>
                             </tr>
+                            {% endif %}
                         </thead>
                         <tbody>
                             {% for instance in data %}
@@ -600,8 +657,9 @@ Adviser:
                                     <td hidden onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.id}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.name}}</td>
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.request}}</td>
-                                    <!-- <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td> -->
-                                
+                                    <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.time_requested}}</td>
+                                    
+                                    {% if sorter_type != "DELETED" %}
                                     <td>{{instance.clearance}}</td>
                                     <td>
                                         <form name="change_form137" id="change" action="request_form137_update/{{ instance.id }}" method=POST>
@@ -650,11 +708,16 @@ Adviser:
                                     
                                             </td>
 
-                                            
-                                            
                                         </form> 
                                     </td>
+                                    {% endif %}
+
                                     <td onclick="window.location='display_reqform/{{ instance.id }}'">{{instance.current_status}}</td>
+                                     
+                                    {% if sorter_type == "DELETED" %}
+                                    <td>{{instance.claim}}</td>
+                                    <td>{{instance.deleted_timestamp}}
+                                    {% else %}
                                     <td>
                                         <form name="change_position" id="change" action="request_claim_update/{{ instance.id }}" method=POST>
                                             {% csrf_token %}
@@ -677,6 +740,10 @@ Adviser:
                                             {% endif %}
                                             </form> 
                                     </td>  
+                                    {% if instance.user_removed == "1" %}
+                                    <td >{{instance.appointment}}</td>
+                                    <td >The Applicant's Account<br> has been Deleted,<br> Unable to Appoint <br>Schedule of Claiming.</td>
+                                    {% else %}
                                     <td >{{instance.appointment}}</td>
                                     {% if instance.appointment == "NONE" %}
                                     <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set</i></button></a>
@@ -685,9 +752,11 @@ Adviser:
                                     <td><a href="{% url 'request_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true">Set New</i></button></a>
                                     </td>
                                     {% endif%}
+                                    {% endif%}
                                     <td><a href="{% url 'delete_reqform' instance.id %}" class="btn btn-white border-light btn-xl btn-1"
                                         role="button" style="border-radius: 10px; height: 35px;" aria-pressed="true">Remove</a>
                                     </td>
+                                    {% endif%}
                                 </tr>
                             {% endfor %}    
                         </tbody>

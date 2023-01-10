@@ -31,7 +31,6 @@ Adviser:
 </head>
 
 
-<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a {
         font-style: italic;
@@ -294,6 +293,23 @@ Adviser:
         opacity: 1;
         visibility: visible;
     }
+    
+    #back_history {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
+        margin-left : 2vw;
+        color:white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #back_history:hover{
+        color: black;
+        background-color: #d3324d;
+    }
 
     #changer  {
         background-color: #f5f0f6;
@@ -307,6 +323,20 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+    
+    #delete_history{
+        background-color : white;
+        text-decoration: underline;
+        color: black;
+        border: none;
+    }
+
+    #delete_history:hover{
+        background-color : white;
+        text-decoration: underline;
+        color: red;
+        border: none;
     }
     
     #dropdownMenuLink{
@@ -473,8 +503,25 @@ Adviser:
      <a id="backtotop_btn_74"></a>
 
     <!-- MAIN-->
+    {% if sorter_type == "DELETED" %}
+    <h3 style="text-align:center;">List of Deleted Faculties</h3>
+    {% else %}
     <h3 style="text-align:center;">List of Faculties</h3>
+    {% endif %}
+
     {% include 'html_files/message.html'%}
+    
+    {% if sorter_type != "DELETED" %}
+    <div id="delete_history_div" align="right">
+        <a href="/registrar_dashboard_organize_faculty_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
+    </div>
+    {% endif %}
+
+    {% if sorter_type == "DELETED" %}
+    <div id="back_history_div">
+        <a href="/registrar_dashboard_organize_faculty_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
+    </div>
+    {% endif %}
 
     <!--TAB BAR-->
     <div data-tabs="1" id="tabz_74">
@@ -503,8 +550,12 @@ Adviser:
                             <th class="sorting" title="Sort by Department">Department</th>
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th>Email</th>
-                            <th>Designation</th>     
+                            <th>Designation</th>
+                            {% if sorter_type == "DELETED" %}
+                            <th>Date and Time Removed</th>
+                            {% else %}
                             <th></th>
+                            {% endif %}
                             
                         </tr>
                         <tr class="no_data">
@@ -530,6 +581,16 @@ Adviser:
                             <td>{{instance.id_number}}</td>
                             <td>{{instance.email}}</td>
                             
+                            {% if sorter_type == "DELETED" %}
+                            <td>
+                                {% if instance.designation == "---" %}
+                                FACULTY
+                                {% else %}
+                                {{instance.designation}}
+                                {% endif %}
+                            </td>
+                            <td>{{instance.deleted_timestamp}}</td>
+                            {% else %}
                             <td>   
                                 <form name="change_position" id="change" action="faculty_designation_update/{{ instance.id }}" method=POST>
                                     {% csrf_token %}
@@ -562,6 +623,7 @@ Adviser:
                                     <button type ="submit" class="submit">Remove</button>
                                 </form>
                             </td>
+                            {% endif %}
                         </tr>
                         
                     {% endfor %}   
