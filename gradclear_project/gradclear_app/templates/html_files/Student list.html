@@ -113,19 +113,6 @@ Adviser:
         margin: 10px;
     }
 
-    .profile-pic {
-        color: transparent;
-        transition: all .3s ease;
-        transition: all .3s ease;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        top: -70px;
-        border-radius: 30%;
-        z-index: 9;
-        padding: 15px;
-    }
-
     .results tr[visible='false'],
     .no-result {
         display: none;
@@ -510,7 +497,6 @@ Adviser:
                     <thead>
                         <tr>
                             <th hidden>#</th>
-                            <th>Profile Picture</th>
                             <th class="sorting" title="Sort by Name">Name</th>
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th class="sorting" title="Sort by Course">Course</th>
@@ -521,10 +507,10 @@ Adviser:
                             <th></th>
                         </tr>
                         <tr class="no_data">
-                            <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
+                            <td colspan=8"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="8"><i class="fa fa-warning"></i> No result</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -532,7 +518,6 @@ Adviser:
                     
                         <tr>
                             <td hidden>{{instance.id}}</td>
-                            <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
                             <td>{{instance.full_name}}</td>
                             {% if instance.student_id == None %}
                                 <td>-</td>
@@ -601,7 +586,7 @@ Adviser:
                         </tr>
                     {% endfor %}   
                     </tbody>
-                    }
+                    
                 </table>
             </div>
             </div>
