@@ -845,9 +845,9 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;">{% if graduation_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Graduation</span>{% if graduation_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw;">{{graduation_badge}}</label>{% endif %}</a><br>
-    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons">{% if clearance_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2 ml-1" style="font-size: 12px;"> </span>{% endif %}</i><span class="icon-text">Clearance</span>{% if clearance_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw;">{{clearance_badge}}</label>{% endif %}</a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons">{% if request_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Requests</span>{% if request_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw;">{{request_badge}}</label>{% endif %}</a><br>
+    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;">{% if graduation_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Graduation</span>{% if graduation_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw; opacity: 0.4;">{{graduation_badge}}</label>{% endif %}</a><br>
+    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons">{% if clearance_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1 ml-1" style="font-size: 12px;"> </span>{% endif %}</i><span class="icon-text">Clearance</span>{% if clearance_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw; opacity:0.4">{{clearance_badge}}</label>{% endif %}</a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons">{% if request_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Requests</span>{% if request_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw;opacity:0.4;">{{request_badge}}</label>{% endif %}</a><br>
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
     <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list' id='%20' %}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     {% if request.user.user_type == "REGISTRAR" %}
@@ -861,7 +861,7 @@ Adviser:
     {% endif %}
 
     <!-- HELP -->
-    <a style="padding-left: 20px;" href="" data-toggle="modal" data-target="#Help_modal_71"><i class="fa fa-question-circle material-icons"></i><span class="icon-text">Help<span></a>
+    <a style="padding-left: 20px;margin-top: 2vh;" href="" data-toggle="modal" data-target="#Help_modal_71"><i class="fa fa-question-circle material-icons"></i><span class="icon-text">Help<span></a>
     
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="logo_71" style="position: absolute;bottom: 10px;">
 

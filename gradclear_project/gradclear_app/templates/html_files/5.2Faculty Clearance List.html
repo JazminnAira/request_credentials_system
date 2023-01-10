@@ -552,6 +552,12 @@ Adviser:
     display: table;
     clear: both;
     }
+    .signature_color_green{
+        color: green;
+    }
+    .signature_color_red{
+        color: red;
+    }
 </style>
 
 <body>
@@ -1045,42 +1051,42 @@ Adviser:
                  <td><b>Accountant:</b></td><br>
                  <td>
                    {% if s.accountant_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
              </tr><br>
              <tr>
                <td><b>Course/ Shop Adviser:</b></td><br>
                <td> 
                 {% if "_UNAPPROVED" in s.course_adviser_signature %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                 {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
             {% endif %}</td>
                </tr><br>
              <tr>
                  <td><b>Head of Liberal Arts:</b></td><br>
                  <td>{% if s.liberal_arts_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              <tr>
                  <td><b>Campus Librarian:</b></td><br>
                  <td>{% if s.library_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              <tr>
                  <td><b>Head of Math and Science:</b></td><br>
                  <td>{% if s.mathsci_dept_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              </div>
@@ -1089,26 +1095,26 @@ Adviser:
                <tr>
                    <td><b>Guidance Counselor:</b></td><br>
                    <td>{% if s.guidance_office_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                
              <tr>
                <td><b>Head of DPECS:</b></td><br>
                <td>{% if s.pe_dept_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
                </tr><br>
                <tr>
                    <td><b>Head of Student Affairs:</b></td><br>
                    <td>{% if s.osa_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                <tr>
@@ -1123,17 +1129,17 @@ Adviser:
                        Head of Industrial Technology/Industrial Education/Engineering:</b> 
                    {% endif %}</b></td><br>
                    <td>{% if s.it_dept_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                <tr>
                    <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
                    <td>{% if s.academic_affairs_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                </div>

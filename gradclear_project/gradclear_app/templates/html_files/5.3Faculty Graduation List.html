@@ -687,6 +687,12 @@ Adviser:
     display: table;
     clear: both;
     }
+    .signature_color_green{
+        color: green;
+    }
+    .signature_color_red{
+        color: red;
+    }
 </style>
 
 
@@ -1188,9 +1194,9 @@ Adviser:
               <td>{% if s.subject1 != "" %}
                <tr>
                    {% if "_APPROVED" in s.signature1 %}
-                   <td>APPROVED</td> 
+                   <td><label class="signature_color_green"> APPROVED</label></td> 
                    {% else %}
-                   <td>UNAPPROVED</td> 
+                   <td><label class="signature_color_red">UNAPPROVED</label></td> 
                    {% endif %}
                      
                </tr>
@@ -1203,9 +1209,9 @@ Adviser:
               <td>{% if s.subject2 != "" %}
                <tr>
                    {% if "_APPROVED" in s.signature2 %}
-                   <td>APPROVED</td> 
+                   <td><label class="signature_color_green"> APPROVED</label></td> 
                    {% else %}
-                   <td>UNAPPROVED</td> 
+                   <td><label class="signature_color_red">UNAPPROVED</label></td> 
                    {% endif %}
                </tr>
                {% endif %}</td>
@@ -1218,9 +1224,9 @@ Adviser:
               <td>{% if s.subject3 != "" %}
                <tr>
                    {% if "_APPROVED" in s.signature3 %}
-                   <td>APPROVED</td> 
+                   <td><label class="signature_color_green"> APPROVED</label></td> 
                    {% else %}
-                   <td>UNAPPROVED</td> 
+                   <td><label class="signature_color_red">UNAPPROVED</label></td> 
                {% endif %}</td>
                {% endif %}
           </tr><br>
@@ -1232,9 +1238,9 @@ Adviser:
               <td>{% if s.subject4 != "" %}
                <tr>
                    {% if "_APPROVED" in s.signature4 %}
-                   <td>APPROVED</td> 
+                   <td><label class="signature_color_green"> APPROVED</label></td> 
                    {% else %}
-                   <td>UNAPPROVED</td> 
+                   <td><label class="signature_color_red">UNAPPROVED</label></td> 
                    {% endif %}</td>
                {% endif %}
               
@@ -1248,9 +1254,9 @@ Adviser:
                 <td>{% if s.subject5 != "" %}
                 <tr>
                     {% if "_APPROVED" in s.signature5 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
                 
@@ -1262,9 +1268,9 @@ Adviser:
                 <td> {% if s.subject6 != "" %}
                 <tr>
                     {% if "_APPROVED" in s.signature6 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
                 
@@ -1276,9 +1282,9 @@ Adviser:
                 <td>{% if s.subject7 != "" %}
                 <tr>
                     {% if "_APPROVED" in s.signature7 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
             </tr><br>
@@ -1288,9 +1294,9 @@ Adviser:
             <td>{% if s.subject8 != "" %}
             <tr>
                 {% if "_APPROVED" in s.signature8 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
         </tr><br>
@@ -1300,9 +1306,9 @@ Adviser:
             <td>{% if s.subject9 != "" %}
             <tr>
                 {% if "_APPROVED" in s.signature9 %}
-                <td>APPROVED</td> 
+                <td><label class="signature_color_green"> APPROVED</label></td> 
                 {% else %}
-                <td>UNAPPROVED</td> 
+                <td><label class="signature_color_red">UNAPPROVED</label></td> 
                 {% endif %}</td>
             {% endif %}
         </tr><br>
@@ -1313,9 +1319,9 @@ Adviser:
             <td>{% if s.subject10 != "" %}
                 <tr>
                     {% if "_APPROVED" in s.signature10 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td ><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
         </tr><br>
@@ -1334,9 +1340,9 @@ Adviser:
                 {% if s.addsubject1 != "" %}
                 <tr>
                     {% if "_APPROVED" in s.addsignature1 %}
-                    <td>APPROVED</td> 
+                    <td><label class="signature_color_green"> APPROVED</label></td> 
                     {% else %}
-                    <td>UNAPPROVED</td> 
+                    <td><label class="signature_color_red">UNAPPROVED</label></td> 
                     {% endif %}</td>
                 {% endif %}
                </tr><br>
@@ -1345,9 +1351,9 @@ Adviser:
                  <td>{% if s.addsubject2 != "" %}
                     <tr>
                         {% if "_APPROVED" in s.addsignature2 %}
-                            <td>APPROVED</td> 
+                            <td><label class="signature_color_green"> APPROVED</label></td> 
                             {% else %}
-                            <td>UNAPPROVED</td> 
+                            <td><label class="signature_color_red">UNAPPROVED</label></td> 
                             {% endif %}</td>
                         {% endif %}
              </tr><br>
@@ -1356,9 +1362,9 @@ Adviser:
                  <td>{% if s.addsubject3 != "" %}
                     <tr>
                         {% if "_APPROVED" in s.addsignature3 %}
-                            <td>APPROVED</td> 
+                            <td><label class="signature_color_green"> APPROVED</label></td> 
                             {% else %}
-                            <td>UNAPPROVED</td> 
+                            <td><label class="signature_color_red">UNAPPROVED</label></td> 
                             {% endif %}</td>
                         {% endif %}
              </tr><br>
@@ -1367,9 +1373,9 @@ Adviser:
                  <td>{% if s.addsubject4 != "" %}
                     <tr>
                         {% if "_APPROVED" in s.addsignature4 %}
-                            <td>APPROVED</td> 
+                            <td><label class="signature_color_green"> APPROVED</label></td> 
                             {% else %}
-                            <td>UNAPPROVED</td> 
+                            <td><label class="signature_color_red">UNAPPROVED</label></td> 
                             {% endif %}</td>
                         {% endif %}
              </tr><br>
@@ -1379,9 +1385,9 @@ Adviser:
                    <td>{% if s.addsubject5 != "" %}
                     <tr>
                         {% if "_APPROVED" in s.addsignature5 %}
-                            <td>APPROVED</td> 
+                            <td><label class="signature_color_green"> APPROVED</label></td> 
                             {% else %}
-                            <td>UNAPPROVED</td> 
+                            <td><label class="signature_color_red">UNAPPROVED</label></td> 
                             {% endif %}</td>
                         {% endif %}
                </tr><br>

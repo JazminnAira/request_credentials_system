@@ -2591,6 +2591,18 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request, req):
     
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+    
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
@@ -2755,7 +2767,7 @@ def clearance_form(request, req):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'currtime':currtime,'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
 
 # VIEW GRADUATION FORM
 @login_required(login_url='/')
@@ -2791,6 +2803,18 @@ def regclear_back(request, id):
 # GRADUATION FORM
 @login_required(login_url='/')
 def graduation_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
@@ -3075,7 +3099,7 @@ def graduation_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     form = Graduation_form_table(request.POST or None)
-    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a})
+    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a, 'currtime': currtime})
 
 # ALUMNUS DASHBOARD
 @login_required(login_url='/')
@@ -3138,8 +3162,7 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(
                 osa_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
+            st1 = clearance_form_table.objects.filter(approval_status="9/10", user_removed="0").order_by('-time_requested')
 
         # CLEARANCE FORM IDENTIFIER FOR COURSE ADVISERS
         if clearance_form_table.objects.filter(course_adviser_signature=unapproved):
@@ -3186,9 +3209,8 @@ def faculty_dashboard(request):
                     osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st1 = clearance_form_table.objects.filter(Q(approval_status="8/10"), Q(course_adviser_signature=unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
-
+                st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+                
         with_clearance = clearance_form_table.objects.filter(
             course_adviser=request.user.full_name)
         
@@ -3473,9 +3495,8 @@ def faculty_dashboard_clearance_list(request, id):
                     osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st = clearance_form_table.objects.filter( Q(approval_status="8/10") , Q(course_adviser_signature=f_n_unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
-
+                st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+            
         elif request.user.department == "HOCS":
             st = clearance_form_table.objects.filter(
                 accountant_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
@@ -3517,9 +3538,8 @@ def faculty_dashboard_clearance_list(request, id):
                 osa_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HADAA":
-            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED"), Q(user_removed = "0")).order_by('-time_requested')
-
+            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed = "0")).order_by('-time_requested')
+            
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -7352,33 +7372,33 @@ def registrar_dashboard_organize_faculty_list(request, id):
         sorter = id
 
         if id == "OCL":
-            requests = user_table.objects.filter(department__contains="OCL").values()
+            requests = user_table.objects.filter(department__contains="OCL", is_active=True).values()
         elif id == "OCS":
-            requests = user_table.objects.filter(department__contains="OCS").values()
+            requests = user_table.objects.filter(department__contains="OCS", is_active=True).values()
         elif id == "OGS":
-            requests = user_table.objects.filter(department__contains="OGS").values()
+            requests = user_table.objects.filter(department__contains="OGS", is_active=True).values()
         elif id == "OSA":
-            requests = user_table.objects.filter(department__contains="OSA").values()
+            requests = user_table.objects.filter(department__contains="OSA", is_active=True).values()
         elif id == "ADAA":
-            requests = user_table.objects.filter(department__contains="ADAA").values()
+            requests = user_table.objects.filter(department__contains="ADAA", is_active=True).values()
         elif id == "OES":
-            requests = user_table.objects.filter(department__contains="OES").values()
+            requests = user_table.objects.filter(department__contains="OES", is_active=True).values()
         elif id == "DMS":
-            requests = user_table.objects.filter(department__contains="DMS").values()
+            requests = user_table.objects.filter(department__contains="DMS", is_active=True).values()
         elif id == "DPECS":
-            requests = user_table.objects.filter(department__contains="DPECS").values()
+            requests = user_table.objects.filter(department__contains="DPECS", is_active=True).values()
         elif id == "DED":
-            requests = user_table.objects.filter(department__contains="DED").values()
+            requests = user_table.objects.filter(department__contains="DED", is_active=True).values()
         elif id == "DIT":
-            requests = user_table.objects.filter(department__contains="DIT").values()
+            requests = user_table.objects.filter(department__contains="DIT", is_active=True).values()
         elif id == "DLA":
-            requests = user_table.objects.filter(department__contains="DLA").values()
+            requests = user_table.objects.filter(department__contains="DLA", is_active=True).values()
         elif id == "DOE":
-            requests = user_table.objects.filter(department__contains="DOE").values()
+            requests = user_table.objects.filter(department__contains="DOE", is_active=True).values()
         elif id == "DELETED":
             requests = user_deleted_table.objects.filter(Q(user_type = "FACULTY") | Q(user_type="HEAD")).values()
         else:
-            requests = user_table.objects.filter(user_type="FACULTY") .values()
+            requests = user_table.objects.filter(user_type="FACULTY", is_active=True) .values()
 
     else:
         messages.error(
@@ -7447,6 +7467,18 @@ def request_claim_update(request, id):
 # REQUEST FORM
 @login_required(login_url='/')
 def request_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         user = request.user.user_type
@@ -7611,7 +7643,7 @@ def request_form(request):
                 request_other = ""
                 request_cert = ""
 
-            context = {'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
+            context = {'currtime':currtime,'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
                        'request_purpose': request_pur, 'request_other': request_other, 'request_cert': request_cert}
 
     else:

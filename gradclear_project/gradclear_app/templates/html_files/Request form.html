@@ -508,6 +508,10 @@ Adviser:
                 </div>
             </div>
             
+            {% if currtime == "out_of_office_hours" %}
+            <p>Keep in mind that you are applying beyond office hours, the Office of the Campus Registrar can only process forms on weekdays until 4 p.m. so your application cannot be processed at this moment.</p>
+            {% endif %}
+            
             <!--SUBMIT BUTTON onclick="forms_check()"-->
             <p align="right">
                 <button class="btn btn-secondary" type="button" id="submit_btn_pre" name="submit_btn_pre" disabled>Submit</button>
