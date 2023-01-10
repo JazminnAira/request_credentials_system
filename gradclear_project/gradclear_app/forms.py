@@ -15,11 +15,11 @@ class signup_form(UserCreationForm):
     class Meta(UserCreationForm):
         model = user_table
         fields = ['email', 'first_name', 'last_name', 'middle_name', 'address', 'gender', 'birthday', 'course', 'password1',
-                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department', 'profile_picture', 'course_graduated', 'year_graduated', 'uploaded_signature']
+                  'contact_number', 'year_and_section', 'id_number', 'password2', 'department', 'profile_picture', 'course_graduated', 'year_graduated', 'uploaded_signature', 'preffix', 'suffix']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
-            'middle_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Middle Name'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),
+            'middle_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Middle Name'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
@@ -31,7 +31,9 @@ class signup_form(UserCreationForm):
             'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(09)00-000-0000'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
-            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'})
+            'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'}),
+            'preffix': forms.TextInput(attrs={'class': 'form-control col-7', 'placeholder': 'Prefix'}),
+            'suffix': forms.TextInput(attrs={'class': 'form-control  col-7', 'placeholder': 'Suffix'}),
         }
 
 class TimePickerInput(forms.TimeInput):

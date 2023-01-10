@@ -257,6 +257,12 @@ Adviser:
                                 <div class="form-group">
                                     <label for="name">Name:</label><label id="Sname_aste01" style="color:red;">*</label>
                                     <div class="form-row">
+                                        {% if user == "FACULTY" %}
+                                        <div class="col">
+                                            {{form.preffix}}
+                                            <p id="sl_error_01"></p>
+                                        </div>
+                                        {% endif %}
                                         <div class="col">
                                             {{form.last_name}}
                                             <p id="sl_error_01"></p>
@@ -267,6 +273,10 @@ Adviser:
                                         </div>
                                         <div class="col">
                                             {{form.middle_name}}
+                                        </div>
+                                        <div class="col">
+                                            {{form.suffix}}
+                                            <p id="sl_error_01"></p>
                                         </div>
                                     </div>
                                 </div>
