@@ -31,6 +31,7 @@ Adviser:
 </head>
 
 
+<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a {
         font-style: italic;
@@ -110,19 +111,6 @@ Adviser:
 
     .outer-wrapper{
         margin: 10px;
-    }
-
-    .profile-pic {
-        color: transparent;
-        transition: all .3s ease;
-        transition: all .3s ease;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        top: -70px;
-        border-radius: 30%;
-        z-index: 9;
-        padding: 15px;
     }
 
     .results tr[visible='false'],
@@ -300,6 +288,23 @@ Adviser:
         opacity: 1;
         visibility: visible;
     }
+    
+    #back_history {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
+        margin-left : 2vw;
+        color:white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #back_history:hover{
+        color: black;
+        background-color: #d3324d;
+    }
 
     #changer  {
         background-color: #f5f0f6;
@@ -313,6 +318,20 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+    
+    #delete_history{
+        background-color : white;
+        text-decoration: underline;
+        color: black;
+        border: none;
+    }
+
+    #delete_history:hover{
+        background-color : white;
+        text-decoration: underline;
+        color: red;
+        border: none;
     }
     
     #dropdownMenuLink{
@@ -506,8 +525,24 @@ Adviser:
 
 
     <!-- MAIN-->
+    {% if sorter_type == "DELETED" %}
+    <h3 style="text-align:center;">List of Deleted Students</h3>
+    {% else %}
     <h3 style="text-align:center;">List of Students</h3>
+    {% endif %}
     {% include 'html_files/message.html'%}
+    
+    {% if sorter_type != "DELETED" %}
+    <div id="delete_history_div" align="right">
+        <a href="/registrar_dashboard_student_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
+    </div>
+    {% endif %}
+
+    {% if sorter_type == "DELETED" %}
+    <div id="back_history_div">
+        <a href="/registrar_dashboard_student_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
+    </div>
+    {% endif %}
 
     <!-- MAIN TABLE-->
     <div data-tabs="1" id="tabz_75">
@@ -518,7 +553,6 @@ Adviser:
                     <thead style="height: 50px;">
                         <tr>
                             <th hidden>#</th>
-                            <th>Profile Picture</th>
                             <th class="sorting" title="Sort by Name">Name</th>
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th class="sorting" title="Sort by Course">Course</th>
@@ -526,21 +560,33 @@ Adviser:
                             <th class="sorting" title="Sort by Course Graduated" style="font-size: 15px;">Course Graduated</th>
                             <th class="sorting" title="Sort by Year Graduated">Year Graduated</th>
                             <th class="sorting" title="Sort by Application Status">Status</th>
+                            {% if sorter_type == "DELETED" %}
+                            <th>Date and Time Removed</th>
+                            {% else %}
                             <th></th>
+                            {% endif %}
                         </tr>
+                        {% if sorter_type == "DELETED" %}
                         <tr class="no_data">
-                            <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
+                            <td colspan="8"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
-                            <td colspan="9"><i class="fa fa-warning"></i> No result</td>
+                            <td colspan="8"><i class="fa fa-warning"></i> No result</td>
                         </tr>
+                        {% else %}
+                        <tr class="no_data">
+                            <td colspan=8"><i class="fa fa-warning"></i> No Data</td>
+                        </tr>
+                        <tr class="warning no-result">
+                            <td colspan="8"><i class="fa fa-warning"></i> No result</td>
+                        </tr>
+                        {% else %}
                     </thead>
                     <tbody>
                     {% for instance in data %}
                     
                         <tr>
                             <td hidden>{{instance.id}}</td>
-                            <td ><img src="{{instance.profile_picture.url}}" class ="profile-pic" width=80px height = 80px alt="img"></td>
                             <td>{{instance.full_name}}</td>
                             {% if instance.student_id == None %}
                                 <td>-</td>
@@ -572,6 +618,11 @@ Adviser:
                                 <td>{{instance.year_graduated}}</td>
                             {% endif %}
                             
+                            {% if sorter_type == "DELETED" %}
+                            <td>{{instance.user_type}}</td>
+                            <td>{{instance.deleted_timestamp}}</td>
+                            {% else %}
+                            
                             {% if instance.user_type == "STUDENT" and instance.year_and_section == "4th Year"%} 
                             <td>
                                 <!--UPDATE STUDENT'S STATUS-->
@@ -599,13 +650,14 @@ Adviser:
                                 <td>{{instance.user_type}}</td>
                             {% endif %}
 
-
                             <!--DELETE STUDENT-->                            
                             <td><form method ="POST" action ="student_list_remove/{{instance.id}}">
                                 {% csrf_token %}
                                 <input type="text" name="id_from_table" value={{instance.id}} hidden>
                                 <button type ="submit" class="submit">Remove</button>
-                            </form></td>
+                            </form>
+                            </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}   
                     </tbody>

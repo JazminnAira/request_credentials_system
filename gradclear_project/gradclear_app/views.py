@@ -2023,6 +2023,8 @@ def reggrad_appointment(request, id):
     grad_notif = request.POST.get('notification')
     graduation_form_table.objects.filter(
         id=id).update(grad_notif=notification)
+    approve_grad_timestamp = datetime.now()
+    graduation_form_table.objects.filter(id=id).update(approved_timestamp = approve_grad_timestamp)
 
     subject = 'Application for Graduation Form'
     message1 = 'Good day,   ' + gender_final + \
@@ -2082,6 +2084,8 @@ def regclear_appointment(request, id):
     clear_notif = request.POST.get('notification')
     clearance_form_table.objects.filter(
         id=id).update(clear_notif=notification)
+    approve_clear_timestamp = datetime.now()
+    clearance_form_table.objects.filter(id=id).update(approved_timestamp = approve_clear_timestamp)
 
     subject = 'Application for Clearance Form'
     message1 = 'Good day,   ' + gender_final + \
@@ -2183,6 +2187,9 @@ def request_appointment(request, id):
             id=id).update(appointment=date_appointment)
         request_form_table.objects.filter(
             id=id).update(approval_status="APPROVED")
+                #RECORD APPROVED DATE TIME
+        approved_dateTime = datetime.now()
+        request_form_table.objects.filter(id=id).update(approval_timestamp = approved_dateTime)
 
         time_appointment = request.POST.get('time_appointment')
         additionalmessage = request.POST.get('additionalmessage')
@@ -2486,11 +2493,11 @@ def staff_registration(request):
             form.save()
             messages.success(
                 request, "Account Saved. Keep in mind that the staff's username is: " + username)
-            return redirect('registrar_dashboard_staff_list')
+            return redirect('registrar_dashboard_staff_list/%20')
         else:
             messages.error(request, form.errors)
 
-            return redirect('registrar_dashboard_staff_list')
+            return redirect('registrar_dashboard_staff_list/%20')
     img_object = form.instance
     user_identifier = "STAFF"
     context = {'form': form, 'img_object': img_object, 'user': user_identifier}
@@ -2582,6 +2589,18 @@ def student_dashboard(request):
 
 @login_required(login_url='/')
 def clearance_form(request, req):
+    
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
     
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
@@ -2747,7 +2766,7 @@ def clearance_form(request, req):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'currtime':currtime,'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
 
 # VIEW GRADUATION FORM
 @login_required(login_url='/')
@@ -2783,6 +2802,18 @@ def regclear_back(request, id):
 # GRADUATION FORM
 @login_required(login_url='/')
 def graduation_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
@@ -3067,7 +3098,7 @@ def graduation_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     form = Graduation_form_table(request.POST or None)
-    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a})
+    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a, 'currtime': currtime})
 
 # ALUMNUS DASHBOARD
 @login_required(login_url='/')
@@ -3095,63 +3126,62 @@ def faculty_dashboard(request):
                                                   Q(signature4=unapproved) | Q(signature5=unapproved) | Q(signature6=unapproved) |
                                                   Q(signature7=unapproved) | Q(signature8=unapproved) | Q(signature9=unapproved) | Q(signature10=unapproved) |
                                                   Q(addsignature1=unapproved) | Q(addsignature2=unapproved) | Q(addsignature3=unapproved) |
-                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(sitsignature=unapproved)).order_by('-time_requested')
+                                                  Q(addsignature4=unapproved) | Q(addsignature5=unapproved) | Q(sitsignature=unapproved), Q(user_removed="0")).order_by('-time_requested')
         print(unapproved)
 
         # CLEARANCE FORM IDENTIFIER FOR DEPARTMENT HEADS
         if request.user.department == "HOCS":
             st1 = clearance_form_table.objects.filter(
-                accountant_signature="UNAPPROVED").order_by('-time_requested')
+                accountant_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDLA":
             st1 = clearance_form_table.objects.filter(
-                liberal_arts_signature="UNAPPROVED").order_by('-time_requested')
+                liberal_arts_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDMS":
             st1 = clearance_form_table.objects.filter(
-                mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
+                mathsci_dept_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDPECS":
             st1 = clearance_form_table.objects.filter(
-                pe_dept_signature="UNAPPROVED").order_by('-time_requested')
+                pe_dept_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDIT":
             st1 = clearance_form_table.objects.filter(
-                it_dept_signature="UNAPPROVED").order_by('-time_requested')
+                it_dept_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDED":
             st1 = clearance_form_table.objects.filter(
-                ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+                ieduc_dept_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HDOE":
             st1 = clearance_form_table.objects.filter(
-                eng_dept_signature="UNAPPROVED").order_by('-time_requested')
+                eng_dept_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HOCL":
             st1 = clearance_form_table.objects.filter(
-                library_signature="UNAPPROVED").order_by('-time_requested')
+                library_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HOGS":
             st1 = clearance_form_table.objects.filter(
-                guidance_office_signature="UNAPPROVED").order_by('-time_requested')
+                guidance_office_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HOSA":
             st1 = clearance_form_table.objects.filter(
-                osa_signature="UNAPPROVED").order_by('-time_requested')
+                osa_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
+            st1 = clearance_form_table.objects.filter(approval_status="9/10", user_removed="0").order_by('-time_requested')
 
         # CLEARANCE FORM IDENTIFIER FOR COURSE ADVISERS
         if clearance_form_table.objects.filter(course_adviser_signature=unapproved):
             st1 = clearance_form_table.objects.filter(
-                course_adviser_signature=unapproved).order_by('-time_requested')
+                course_adviser_signature=unapproved, user_removed="0").order_by('-time_requested')
             if request.user.department == "HOCS":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    accountant_signature="UNAPPROVED")).order_by('-time_requested')
+                    accountant_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDLA":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    liberal_arts_signature="UNAPPROVED")).order_by('-time_requested')
+                    liberal_arts_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDMS":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    mathsci_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDPECS":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    pe_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    pe_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDIT":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
@@ -3159,28 +3189,27 @@ def faculty_dashboard(request):
 
             if request.user.department == "HDOE":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    eng_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    eng_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDED":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    ieduc_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOCL":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    library_signature="UNAPPROVED")).order_by('-time_requested')
+                    library_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOGS":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    guidance_office_signature="UNAPPROVED")).order_by('-time_requested')
+                    guidance_office_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOSA":
                 st1 = clearance_form_table.objects.filter(Q(course_adviser_signature=unapproved) | Q(
-                    osa_signature="UNAPPROVED")).order_by('-time_requested')
+                    osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st1 = clearance_form_table.objects.filter(Q(approval_status="8/10"), Q(course_adviser_signature=unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
-
+                st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+                
         with_clearance = clearance_form_table.objects.filter(
             course_adviser=request.user.full_name)
         
@@ -3245,6 +3274,8 @@ def faculty_dashboard_clearance_list_all(request):
         adder = str(numerator) + "/10"
         dep = request.user.department
         signature_saved = f_n_approved + " " + sig
+        
+        clearance_dateTime = datetime.now()
 
         print("list:", id_list)
         for i in id_list:
@@ -3254,62 +3285,98 @@ def faculty_dashboard_clearance_list_all(request):
                     liberal_arts_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(liberal_timestamp = clearance_dateTime)
             if dep == "HOCS":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     accountant_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(accountant_timestamp = clearance_dateTime)
             if dep == "HDMS":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     mathsci_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(mathsci_timestamp = clearance_dateTime)
             if dep == "HDPECS":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     pe_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                    
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(pe_timestamp = clearance_dateTime)
             if dep == "HDED":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     ieduc_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                    
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(ieduc_timestamp = clearance_dateTime)
             if dep == "HDIT":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     it_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(it_timestamp = clearance_dateTime)
             if dep == "HDOE":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     eng_dept_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(eng_timestamp = clearance_dateTime)
             if dep == "HOCL":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     library_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(library_timestamp = clearance_dateTime)
             if dep == "HOGS":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     guidance_office_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(guidance_timestamp = clearance_dateTime)
             if dep == "HOSA":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     osa_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                    
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(osa_timestamp = clearance_dateTime)
             if dep == "HADAA":
                 clearance_form_table.objects.filter(id=int(i)).update(
                     academic_affairs_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                    
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(academic_timestamp = clearance_dateTime)
             if clearance_form_table.objects.filter(course_adviser_signature=f_n + "_UNAPPROVED", id=int(i)):
 
                 clearance_form_table.objects.filter(id=int(i)).update(
                     course_adviser_signature=signature_saved)
                 clearance_form_table.objects.filter(id=int(i)).update(
                     approval_status=adder)
+                
+                #RECORD CLEARANCE APPROVED ALL
+                clearance_form_table.objects.filter(id=int(i)).update(course_adviser_timestamp = clearance_dateTime)
 
             # DETECT IF SIGNATURES ARE COMPLETE, UPDATE APPROVAL STATUS
             approved_text = "_APPROVED"
@@ -3334,11 +3401,19 @@ def faculty_dashboard_clearance_list_all(request):
                     getting_names = clearance_form_table.objects.filter(id=int(get_i)).values_list('name', flat=True).distinct()
                     get_requested = clearance_form_table.objects.filter(id=int(get_i)).values_list('purpose_of_request', flat=True).distinct()
                     for get_names in getting_names:
+                        
                         for req in get_requested:
                             if req == "Certification":
                                 request_form_table.objects.filter(name=str(get_names), request__contains="Certification").update(clearance="✔")
+                                #RECORD CLEARANCE APPROVED ALL IN REQUEST
+                                clearance_dateTime = datetime.now()
+                                request_form_table.objects.filter(name=str(get_names), request__contains="Certification").update(clearance_timestamp = clearance_dateTime)
+                        
                             else:
                                 request_form_table.objects.filter(name=str(get_names), request=str(req)).update(clearance="✔")
+                                #RECORD CLEARANCE APPROVED ALL IN REQUEST
+                                clearance_dateTime = datetime.now()
+                                request_form_table.objects.filter(name=str(get_names), request=str(req)).update(clearance_timestamp = clearance_dateTime)
 
             messages.success(request, "Form Approved.")
     else:
@@ -3376,96 +3451,94 @@ def faculty_dashboard_clearance_list(request, id):
 
         if course_adv:
             st = clearance_form_table.objects.filter(
-                Q(course_adviser_signature=f_n_unapproved)).order_by('-time_requested')
+                Q(course_adviser_signature=f_n_unapproved), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOCS":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    accountant_signature="UNAPPROVED")).order_by('-time_requested')
+                    accountant_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDLA":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    liberal_arts_signature="UNAPPROVED")).order_by('-time_requested')
+                    liberal_arts_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDMS":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    mathsci_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    mathsci_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDPECS":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    pe_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    pe_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDIT":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    it_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    it_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDOE":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    eng_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    eng_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HDED":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    ieduc_dept_signature="UNAPPROVED")).order_by('-time_requested')
+                    ieduc_dept_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOCL":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    library_signature="UNAPPROVED")).order_by('-time_requested')
+                    library_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOGS":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    guidance_office_signature="UNAPPROVED")).order_by('-time_requested')
+                    guidance_office_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HOSA":
                 st = clearance_form_table.objects.filter(Q(course_adviser_signature=f_n_unapproved) | Q(
-                    osa_signature="UNAPPROVED")).order_by('-time_requested')
+                    osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st = clearance_form_table.objects.filter( Q(approval_status="8/10") , Q(course_adviser_signature=f_n_unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
-
+                st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+            
         elif request.user.department == "HOCS":
             st = clearance_form_table.objects.filter(
-                accountant_signature="UNAPPROVED").order_by('-time_requested')
+                accountant_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDLA":
             st = clearance_form_table.objects.filter(
-                liberal_arts_signature="UNAPPROVED").order_by('-time_requested')
+                liberal_arts_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDMS":
             st = clearance_form_table.objects.filter(
-                mathsci_dept_signature="UNAPPROVED").order_by('-time_requested')
+                mathsci_dept_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDPECS":
             st = clearance_form_table.objects.filter(
-                pe_dept_signature="UNAPPROVED").order_by('-time_requested')
+                pe_dept_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDIT":
             st = clearance_form_table.objects.filter(
-                it_dept_signature="UNAPPROVED").order_by('-time_requested')
+                it_dept_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDED":
             st = clearance_form_table.objects.filter(
-                ieduc_dept_signature="UNAPPROVED").order_by('-time_requested')
+                ieduc_dept_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HDOE":
             st = clearance_form_table.objects.filter(
-                eng_dept_signature="UNAPPROVED").order_by('-time_requested')
+                eng_dept_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HOCL":
             st = clearance_form_table.objects.filter(
-                library_signature="UNAPPROVED").order_by('-time_requested')
+                library_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HOGS":
             st = clearance_form_table.objects.filter(
-                guidance_office_signature="UNAPPROVED").order_by('-time_requested')
+                guidance_office_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HOSA":
             st = clearance_form_table.objects.filter(
-                osa_signature="UNAPPROVED").order_by('-time_requested')
+                osa_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HADAA":
-            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED")).order_by('-time_requested')
-
+            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed = "0")).order_by('-time_requested')
+            
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -3530,61 +3603,109 @@ def update_clearance(request, id, dep, sign):
                 liberal_arts_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(liberal_timestamp = signature_dateTime)
         if dep == "accountant_signature":
             clearance_form_table.objects.filter(id=id).update(
                 accountant_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(accountant_timestamp = signature_dateTime)
         if dep == "mathsci_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
                 mathsci_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(mathsci_timestamp = signature_dateTime)
         if dep == "pe_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
                 pe_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(pe_timestamp = signature_dateTime)
         if dep == "ieduc_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
                 ieduc_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(ieduc_timestamp = signature_dateTime)
         if dep == "it_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
                 it_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(it_timestamp = signature_dateTime)
         if dep == "eng_dept_signature":
             clearance_form_table.objects.filter(id=id).update(
                 eng_dept_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(eng_timestamp = signature_dateTime)
         if dep == "library_signature":
             clearance_form_table.objects.filter(id=id).update(
                 library_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(library_timestamp = signature_dateTime)
         if dep == "guidance_office_signature":
             clearance_form_table.objects.filter(id=id).update(
                 guidance_office_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(guidance_timestamp = signature_dateTime)
         if dep == "osa_signature":
             clearance_form_table.objects.filter(id=id).update(
                 osa_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(osa_timestamp = signature_dateTime)
         if dep == "academic_affairs_signature":
             clearance_form_table.objects.filter(id=id).update(
                 academic_affairs_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(academic_timestamp = signature_dateTime)
         if dep == "course_adviser_signature":
             clearance_form_table.objects.filter(id=id).update(
                 course_adviser_signature=signature_saved)
             clearance_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD SIGNATURE
+            signature_dateTime = datetime.now()
+            clearance_form_table.objects.filter(id=id).update(course_adviser_timestamp = signature_dateTime)
 
         # DETECT IF SIGNATURES ARE COMPLETE, UPDATE APPROVAL STATUS
         approved_text = "_APPROVED"
@@ -3609,6 +3730,11 @@ def update_clearance(request, id, dep, sign):
                 '-time_requested').values_list('purpose_of_request', flat=True).distinct()
             request_form_table.objects.filter(
                 name=name, request=requested[0]).update(clearance="✔")
+            
+            #RECORD CLEARANCE APPROVED ALL
+            clearance_dateTime = datetime.now()
+            request_form_table.objects.filter(name=name, request=requested[0]).update(clearance_timestamp = clearance_dateTime)
+
 
         messages.success(request, "Form Approved.")
     else:
@@ -3687,6 +3813,8 @@ def faculty_dashboard_graduation_list_all(request):
                 signature_saved = request.user.full_name + "_APPROVED" + " " + sig
                 f_n = request.user.full_name
                 
+                gradsig_dateTime = datetime.now()
+                
                 # FOR SIT INSTRUCTOR
                 if graduation_form_table.objects.filter(
                         sitsignature__contains=f_n1, id=int(i)):
@@ -3723,6 +3851,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                        
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(sit_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 1
                 if graduation_form_table.objects.filter(
@@ -3760,6 +3891,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject1_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 2
                 if graduation_form_table.objects.filter(
@@ -3797,6 +3931,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject2_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 3
                 if graduation_form_table.objects.filter(
@@ -3834,6 +3971,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject3_timestamp = gradsig_dateTime)
+
 
                 # FOR FACULTY 4
                 if graduation_form_table.objects.filter(
@@ -3871,6 +4012,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject4_timestamp = gradsig_dateTime)
+                
                 
                 # FOR FACULTY 5
                 if graduation_form_table.objects.filter(
@@ -3908,6 +4053,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject5_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 6
                 if graduation_form_table.objects.filter(
@@ -3945,6 +4093,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject6_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 7
                 if graduation_form_table.objects.filter(
@@ -3982,6 +4133,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject7_timestamp = gradsig_dateTime)
 
                 # FOR FACULTY 8
                 if graduation_form_table.objects.filter(
@@ -4019,6 +4173,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject8_timestamp = gradsig_dateTime)
+                
                 
                 # FOR FACULTY 9
                 if graduation_form_table.objects.filter(
@@ -4056,6 +4214,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject9_timestamp = gradsig_dateTime)
                 
                 # FOR FACULTY 10
                 if graduation_form_table.objects.filter(
@@ -4093,6 +4254,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(subject10_timestamp = gradsig_dateTime)
+
 
                 # FOR ADD SUBJECT FACULTY 1 
                 if graduation_form_table.objects.filter(
@@ -4130,6 +4295,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(addsubject1_timestamp = gradsig_dateTime)
 
                 # FOR ADD SUBJECT FACULTY 2
                 if graduation_form_table.objects.filter(
@@ -4167,6 +4335,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(addsubject2_timestamp = gradsig_dateTime)
 
                 # FOR ADD SUBJECT FACULTY 3
                 if graduation_form_table.objects.filter(
@@ -4204,6 +4375,9 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(addsubject3_timestamp = gradsig_dateTime)
 
                 # FOR ADD SUBJECT FACULTY 4
                 if graduation_form_table.objects.filter(
@@ -4241,6 +4415,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(addsubject4_timestamp = gradsig_dateTime)
+
 
                 # FOR ADD SUBJECT FACULTY 5
                 if graduation_form_table.objects.filter(
@@ -4278,6 +4456,10 @@ def faculty_dashboard_graduation_list_all(request):
 
                     graduation_form_table.objects.filter(id=int(i)).update(
                         approval_status=adder)
+                    
+                    #RECORD GRADUATION APPROVED 
+                    graduation_form_table.objects.filter(id=int(i)).update(addsubject5_timestamp = gradsig_dateTime)
+
 
                 name_temp = graduation_form_table.objects.filter(
                     id=int(i)).values_list('name', flat=True).distinct()
@@ -4343,14 +4525,12 @@ def faculty_dashboard_graduation_list(request, id):
         f_n_approved_approve = request.user.full_name + "_APPROVED" + " " + "APPROVE"
         todayyear = date.today().year
 
-       
-
         st = graduation_form_table.objects.filter(Q(faculty1=full_name) | Q(faculty2=full_name) |
                                                   Q(faculty3=full_name) | Q(faculty4=full_name) | Q(faculty5=full_name) | Q(faculty6=full_name) |
                                                   Q(faculty7=full_name) | Q(faculty8=full_name) | Q(faculty9=full_name) | Q(faculty10=full_name) |
                                                   Q(addfaculty1=full_name) | Q(addfaculty2=full_name) | Q(addfaculty3=full_name) | Q(addfaculty4=full_name) |
-                                                  Q(addfaculty5=full_name) | Q(instructor_name=full_name), Q(time_requested__startswith=todayyear)).order_by('-time_requested')
-
+                                                  Q(addfaculty5=full_name) | Q(instructor_name=full_name), Q(time_requested__startswith=todayyear), Q(user_removed = "0")).order_by('-time_requested')
+        
         preview_data = graduation_form_table.objects.filter(id=id).values()
         preview_id = id
         
@@ -4462,82 +4642,146 @@ def update_graduation(request, id, sub, sig):
                 signature1=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject1_timestamp = gradsig_dateTime)
 
         if sub == "signature2":
             graduation_form_table.objects.filter(id=id).update(
                 signature2=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject2_timestamp = gradsig_dateTime)
         if sub == "signature3":
             graduation_form_table.objects.filter(id=id).update(
                 signature3=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject3_timestamp = gradsig_dateTime)
         if sub == "signature4":
             graduation_form_table.objects.filter(id=id).update(
                 signature4=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject4_timestamp = gradsig_dateTime)
         if sub == "signature5":
             graduation_form_table.objects.filter(id=id).update(
                 signature5=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject5_timestamp = gradsig_dateTime)
         if sub == "signature6":
             graduation_form_table.objects.filter(id=id).update(
                 signature6=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject6_timestamp = gradsig_dateTime)
         if sub == "signature7":
             graduation_form_table.objects.filter(id=id).update(
                 signature7=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject7_timestamp = gradsig_dateTime)
         if sub == "signature8":
             graduation_form_table.objects.filter(id=id).update(
                 signature8=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject8_timestamp = gradsig_dateTime)
         if sub == "signature9":
             graduation_form_table.objects.filter(id=id).update(
                 signature9=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject9_timestamp = gradsig_dateTime)
         if sub == "signature10":
             graduation_form_table.objects.filter(id=id).update(
                 signature10=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(subject10_timestamp = gradsig_dateTime)
         if sub == "addsignature1":
             graduation_form_table.objects.filter(id=id).update(
                 addsignature1=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(addsubject1_timestamp = gradsig_dateTime)
         if sub == "addsignature2":
             graduation_form_table.objects.filter(id=id).update(
                 addsignature2=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(addsubject2_timestamp = gradsig_dateTime)
         if sub == "addsignature3":
             graduation_form_table.objects.filter(id=id).update(
                 addsignature3=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(addsubject3_timestamp = gradsig_dateTime)
         if sub == "addsignature4":
             graduation_form_table.objects.filter(id=id).update(
                 addsignature4=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(addsubject4_timestamp = gradsig_dateTime)
         if sub == "addsignature5":
             graduation_form_table.objects.filter(id=id).update(
                 addsignature5=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(addsubject5_timestamp = gradsig_dateTime)
         if sub == "sitsignature":
             graduation_form_table.objects.filter(id=id).update(
                 sitsignature=signature_saved)
             graduation_form_table.objects.filter(id=id).update(
                 approval_status=adder)
+            
+            #RECORD GRADUATION APPROVED 
+            gradsig_dateTime = datetime.now()
+            graduation_form_table.objects.filter(id=id).update(sit_timestamp = gradsig_dateTime)
 
         messages.success(request, "Subject Approved.")
 
@@ -4816,6 +5060,12 @@ def updatePassword(request):
 
                 u.set_password(new_password)
                 u.save()
+                
+                #RECORD DATE TIME CHANGE PASSWORD
+                pass_dateTime = datetime.now()
+                id_user = request.user.id
+                user_table.objects.filter(id=id_user).update(change_password_timestamp=pass_dateTime)
+                
                 messages.success(
                     request, 'You have successfully changed your password. Please log in again.')
                 return redirect('/')
@@ -6660,12 +6910,17 @@ def registrar_dashboard_clearance_list(request, id):
 @login_required(login_url='/')
 def registrar_dashboard_graduation_list(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
-
+        
+        sorter = id
+        
         if id == "%20":
             all = graduation_form_table.objects.all().order_by('-time_requested')
             all_list = graduation_form_table.objects.filter(
                 approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list': all_list})
+        elif id == "DELETED" :
+            all = graduation_form_deleted_table.objects.all().order_by('-time_requested')
+            return render(request, 'html_files/7.3Registrar Graduation List.html', {'all': all, "sorter_type" : sorter})
         else:
             string = id.replace('%20', ' ')
             all = graduation_form_table.objects.filter(course=string).order_by('-time_requested')
@@ -6701,11 +6956,69 @@ def registrar_dashboard_faculty_list(request):
 # CHANGE ACTIVE STATUS OF FACULTY INSTEAD OF DELETE (MIGHT AFFECT SAVED SIGNATURES IF DELETED)
 @login_required(login_url='/')
 def faculty_list_remove(request, id):
-    print("hey")
+       
+    full_name = user_table.objects.filter(id=id).values("full_name")
+    preffix = user_table.objects.filter(id=id).values("preffix")
+    last_name = user_table.objects.filter(id=id).values("last_name")
+    middle_name = user_table.objects.filter(id=id).values("middle_name")
+    first_name = user_table.objects.filter(id=id).values("first_name")
+    suffix = user_table.objects.filter(id=id).values("suffix")
+    address = user_table.objects.filter(id=id).values("address")
+    gender = user_table.objects.filter(id=id).values("gender")
+    birthday = user_table.objects.filter(id=id).values("birthday")
+    id_number = user_table.objects.filter(id=id).values("id_number")
+    course = user_table.objects.filter(id=id).values("course")
+    course_graduated = user_table.objects.filter(id=id).values("course_graduated")
+    department = user_table.objects.filter(id=id).values("department")
+    position = user_table.objects.filter(id=id).values("position")
+    asigned_position_timestamp = user_table.objects.filter(id=id).values("asigned_position_timestamp")
+    remove_position_timestamp = user_table.objects.filter(id=id).values("remove_position_timestamp")
+    designation = user_table.objects.filter(id=id).values("designation")
+    year_graduated = user_table.objects.filter(id=id).values("year_graduated")
+    year_and_section = user_table.objects.filter(id=id).values("year_and_section")
+    contact_number = user_table.objects.filter(id=id).values("contact_number")
+    email = user_table.objects.filter(id=id).values("email")
+    user_type = user_table.objects.filter(id=id).values("user_type")
+    student_id = user_table.objects.filter(id=id).values("student_id")
+    username = user_table.objects.filter(id=id).values("username")
+    profile_picture = user_table.objects.filter(id=id).values("profile_picture")
+    e_signature = user_table.objects.filter(id=id).values("e_signature")
+    e_signature_timesaved = user_table.objects.filter(id=id).values("e_signature_timesaved")
+    uploaded_signature = user_table.objects.filter(id=id).values("uploaded_signature")
+    uploaded_signature_timesaved = user_table.objects.filter(id=id).values("uploaded_signature_timesaved")
+    no_signature = user_table.objects.filter(id=id).values("no_signature")
+    
+    change_password_timestamp = user_table.objects.filter(id=id).values("change_password_timestamp")
+    convert_status_timestamp = user_table.objects.filter(id=id).values("convert_status_timestamp")
+    
+    deleted_timestamp = datetime.now()
+    
+    
+    
+    deleted_user = user_deleted_table.objects.create(full_name=full_name, preffix=preffix, last_name=last_name, first_name=first_name, middle_name=middle_name,suffix=suffix,address=address, gender=gender, birthday=birthday, id_number=id_number, course=course, course_graduated=course_graduated, department=department,
+                                                     position=position,asigned_position_timestamp=asigned_position_timestamp,remove_position_timestamp=remove_position_timestamp,designation=designation,year_graduated=year_graduated, year_and_section=year_and_section,contact_number=contact_number, email=email,
+                                                     user_type=user_type,student_id=student_id, username=username,profile_picture=profile_picture, e_signature=e_signature, e_signature_timesaved=e_signature_timesaved,uploaded_signature=uploaded_signature,uploaded_signature_timesaved=uploaded_signature_timesaved,
+                                                     no_signature=no_signature,change_password_timestamp=change_password_timestamp,convert_status_timestamp=convert_status_timestamp,deleted_status="1", deleted_timestamp=deleted_timestamp)
+    
+    deleted_user.save() 
+    
+    removed_uniques = user_table.objects.get(id=id)
+    
+    remove_email = removed_uniques.email + " " + "removed"
+    remove_id_student = removed_uniques.student_id + " " +"removed"
+    remove_id_number = removed_uniques.id_number + " " +"removed"
+    remove_username = removed_uniques.username +" "+ "removed"
+
+ 
+    user_table.objects.filter(id=id).update(email=remove_email)
+    user_table.objects.filter(id=id).update(student_id=remove_id_student)
+    user_table.objects.filter(id=id).update(id_number=remove_id_number)
+    user_table.objects.filter(id=id).update(username=remove_username)
+    
     delete_faculty = user_table.objects.get(id=id)
-    # delete_faculty.delete()
     delete_faculty.is_active = False
     delete_faculty.save()
+    
     messages.success(request, "Faculty has been deleted.")
 
     return redirect(registrar_dashboard_faculty_list)
@@ -6714,6 +7027,7 @@ def faculty_list_remove(request, id):
 @login_required(login_url='/')
 def faculty_designation_update(request, id):
     form_change = request.POST.get('designationSelect')
+    position_dateTime = datetime.now()
 
     if form_change == "---":
         user_table.objects.filter(id=id).update(position="FACULTY")
@@ -6724,9 +7038,15 @@ def faculty_designation_update(request, id):
         print(dep)
         print(hremover)
         user_table.objects.filter(id=id).update(department=hremover)
+        
+        #RECORD REMOVED POSITION DATE TIME
+        user_table.objects.filter(id=id).update(remove_position_timestamp=position_dateTime)
     else:
         user_table.objects.filter(id=id).update(position="HEAD")
         user_table.objects.filter(id=id).update(department=form_change)
+        
+        #RECORD ASSIGNED POSITION DATE TIME
+        user_table.objects.filter(id=id).update(asigned_position_timestamp=position_dateTime)
 
     if form_change == "HOCS":
         user_table.objects.filter(id=id).update(designation="ACCOUNTANT")
@@ -6770,6 +7090,8 @@ def registrar_dashboard_student_list(request, id):
     # declaring template
     template = "html_files/Student list.html"
     
+    sorter= id
+    
     if id == "student":
         student_data = user_table.objects.filter(
             user_type="STUDENT").values()
@@ -6797,40 +7119,137 @@ def registrar_dashboard_student_list(request, id):
     elif id =="latest":
         student_data = user_table.objects.filter(
         year_graduated__isnull=False).order_by('-year_graduated').values()
+    elif id == "DELETED":
+        student_data = user_deleted_table.objects.filter(Q(user_type='STUDENT') | Q(user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
     else:    
         student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
             user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
 
-    context = {'data': student_data}
+    context = {'data': student_data, 'sorter_type' : sorter}
     return render(request, template, context)
 
 # STAFF LIST ON REGISTRAR'S SIDE
 @login_required(login_url='/')
-def registrar_dashboard_staff_list(request):
+def registrar_dashboard_staff_list(request, id):
     # declaring template
-    staff_data = user_table.objects.filter(Q(user_type='STAFF'))
+    sorter = id
+    if id == "DELETED":
+        staff_data = user_deleted_table.objects.filter(Q(user_type='STAFF'))
+    else:
+        staff_data = user_table.objects.filter(Q(user_type='STAFF'))
 
-    context = {'data': staff_data}
+    context = {'data': staff_data, 'sorter_type':sorter}
     return render(request, 'html_files/7.5Registrar Staff List.html', context)
 
 # DELETE STUDENT/REQUESTER ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def student_list_remove(request, id):
-    print("hey")
+     
+    full_name = user_table.objects.filter(id=id).values("full_name")
+    preffix = user_table.objects.filter(id=id).values("preffix")
+    last_name = user_table.objects.filter(id=id).values("last_name")
+    middle_name = user_table.objects.filter(id=id).values("middle_name")
+    first_name = user_table.objects.filter(id=id).values("first_name")
+    suffix = user_table.objects.filter(id=id).values("suffix")
+    address = user_table.objects.filter(id=id).values("address")
+    gender = user_table.objects.filter(id=id).values("gender")
+    birthday = user_table.objects.filter(id=id).values("birthday")
+    id_number = user_table.objects.filter(id=id).values("id_number")
+    course = user_table.objects.filter(id=id).values("course")
+    course_graduated = user_table.objects.filter(id=id).values("course_graduated")
+    department = user_table.objects.filter(id=id).values("department")
+    position = user_table.objects.filter(id=id).values("position")
+    asigned_position_timestamp = user_table.objects.filter(id=id).values("asigned_position_timestamp")
+    remove_position_timestamp = user_table.objects.filter(id=id).values("remove_position_timestamp")
+    designation = user_table.objects.filter(id=id).values("designation")
+    year_graduated = user_table.objects.filter(id=id).values("year_graduated")
+    year_and_section = user_table.objects.filter(id=id).values("year_and_section")
+    contact_number = user_table.objects.filter(id=id).values("contact_number")
+    email = user_table.objects.filter(id=id).values("email")
+    user_type = user_table.objects.filter(id=id).values("user_type")
+    student_id = user_table.objects.filter(id=id).values("student_id")
+    username = user_table.objects.filter(id=id).values("username")
+    profile_picture = user_table.objects.filter(id=id).values("profile_picture")
+    e_signature = user_table.objects.filter(id=id).values("e_signature")
+    e_signature_timesaved = user_table.objects.filter(id=id).values("e_signature_timesaved")
+    uploaded_signature = user_table.objects.filter(id=id).values("uploaded_signature")
+    uploaded_signature_timesaved = user_table.objects.filter(id=id).values("uploaded_signature_timesaved")
+    no_signature = user_table.objects.filter(id=id).values("no_signature")
+    
+    change_password_timestamp = user_table.objects.filter(id=id).values("change_password_timestamp")
+    convert_status_timestamp = user_table.objects.filter(id=id).values("convert_status_timestamp")
+    
+    deleted_timestamp = datetime.now()
+    
+    removed_uniques = user_table.objects.get(id=id)
+    
+    clearance_form_table.objects.filter(student_id=removed_uniques.student_id).update(user_removed="1")
+    request_form_table.objects.filter(student_id=removed_uniques.student_id).update(user_removed="1")
+    graduation_form_table.objects.filter(student_id=removed_uniques.student_id).update(user_removed="1")
+    
+    deleted_user = user_deleted_table.objects.create(full_name=full_name, preffix=preffix, last_name=last_name, first_name=first_name, middle_name=middle_name,suffix=suffix,address=address, gender=gender, birthday=birthday, id_number=id_number, course=course, course_graduated=course_graduated, department=department,
+                                                     position=position,asigned_position_timestamp=asigned_position_timestamp,remove_position_timestamp=remove_position_timestamp,designation=designation,year_graduated=year_graduated, year_and_section=year_and_section,contact_number=contact_number, email=email,
+                                                     user_type=user_type,student_id=student_id, username=username,profile_picture=profile_picture, e_signature=e_signature, e_signature_timesaved=e_signature_timesaved,uploaded_signature=uploaded_signature,uploaded_signature_timesaved=uploaded_signature_timesaved,
+                                                     no_signature=no_signature,change_password_timestamp=change_password_timestamp,convert_status_timestamp=convert_status_timestamp,deleted_status="1", deleted_timestamp=deleted_timestamp)
+    deleted_user.save()
+    
     delete_student = user_table.objects.get(id=id)
     delete_student.delete()
     messages.success(request, "Student has been deleted.")
 
-    return redirect('All')
+    return redirect('/registrar_dashboard_student_list/%20')
 
 # DELETE STAFF ON REGISTRAR'S SIDE
 @login_required(login_url='/')
 def staff_list_remove(request, id):
+    
+    full_name = user_table.objects.filter(id=id).values("full_name")
+    preffix = user_table.objects.filter(id=id).values("preffix")
+    last_name = user_table.objects.filter(id=id).values("last_name")
+    middle_name = user_table.objects.filter(id=id).values("middle_name")
+    first_name = user_table.objects.filter(id=id).values("first_name")
+    suffix = user_table.objects.filter(id=id).values("suffix")
+    address = user_table.objects.filter(id=id).values("address")
+    gender = user_table.objects.filter(id=id).values("gender")
+    birthday = user_table.objects.filter(id=id).values("birthday")
+    id_number = user_table.objects.filter(id=id).values("id_number")
+    course = user_table.objects.filter(id=id).values("course")
+    course_graduated = user_table.objects.filter(id=id).values("course_graduated")
+    department = user_table.objects.filter(id=id).values("department")
+    position = user_table.objects.filter(id=id).values("position")
+    asigned_position_timestamp = user_table.objects.filter(id=id).values("asigned_position_timestamp")
+    remove_position_timestamp = user_table.objects.filter(id=id).values("remove_position_timestamp")
+    designation = user_table.objects.filter(id=id).values("designation")
+    year_graduated = user_table.objects.filter(id=id).values("year_graduated")
+    year_and_section = user_table.objects.filter(id=id).values("year_and_section")
+    contact_number = user_table.objects.filter(id=id).values("contact_number")
+    email = user_table.objects.filter(id=id).values("email")
+    user_type = user_table.objects.filter(id=id).values("user_type")
+    student_id = user_table.objects.filter(id=id).values("student_id")
+    username = user_table.objects.filter(id=id).values("username")
+    profile_picture = user_table.objects.filter(id=id).values("profile_picture")
+    e_signature = user_table.objects.filter(id=id).values("e_signature")
+    e_signature_timesaved = user_table.objects.filter(id=id).values("e_signature_timesaved")
+    uploaded_signature = user_table.objects.filter(id=id).values("uploaded_signature")
+    uploaded_signature_timesaved = user_table.objects.filter(id=id).values("uploaded_signature_timesaved")
+    no_signature = user_table.objects.filter(id=id).values("no_signature")
+    
+    change_password_timestamp = user_table.objects.filter(id=id).values("change_password_timestamp")
+    convert_status_timestamp = user_table.objects.filter(id=id).values("convert_status_timestamp")
+    
+    deleted_timestamp = datetime.now()
+    
+    deleted_user = user_deleted_table.objects.create(full_name=full_name, preffix=preffix, last_name=last_name, first_name=first_name, middle_name=middle_name,suffix=suffix,address=address, gender=gender, birthday=birthday, id_number=id_number, course=course, course_graduated=course_graduated, department=department,
+                                                     position=position,asigned_position_timestamp=asigned_position_timestamp,remove_position_timestamp=remove_position_timestamp,designation=designation,year_graduated=year_graduated, year_and_section=year_and_section,contact_number=contact_number, email=email,
+                                                     user_type=user_type,student_id=student_id, username=username,profile_picture=profile_picture, e_signature=e_signature, e_signature_timesaved=e_signature_timesaved,uploaded_signature=uploaded_signature,uploaded_signature_timesaved=uploaded_signature_timesaved,
+                                                     no_signature=no_signature,change_password_timestamp=change_password_timestamp,convert_status_timestamp=convert_status_timestamp,deleted_status="1", deleted_timestamp=deleted_timestamp)
+    deleted_user.save()
+    
     delete_staff = user_table.objects.get(id=id)
     delete_staff.delete()
     messages.success(request, "Staff has been deleted.")
 
-    return redirect(registrar_dashboard_staff_list)
+    return redirect('/registrar_dashboard_staff_list/%20')
 
 # REQUEST LIST AND DOCUMENT CHECKER LIST
 # REQUEST LIST WITH ORGANIZER
@@ -6883,6 +7302,8 @@ def registrar_dashboard_organize_request_list(request, id):
             requests = request_form_table.objects.all().order_by('time_requested').values()
         elif id == "LATEST":
             requests = request_form_table.objects.all().order_by('-time_requested').values()
+        elif id == "DELETED":
+            requests = request_form_deleted_table.objects.all().order_by('-time_requested').values()
         else:
             requests = request_form_table.objects.all().order_by('-time_requested').values()
 
@@ -6929,7 +7350,8 @@ def registrar_dashboard_organize_clearance_list(request, id):
         elif id == "approved":
             requests = clearance_form_table.objects.filter(
                 approval_status="APPROVED").order_by('-time_requested').values()
-
+        elif id == "DELETED":
+            requests = clearance_form_deleted_table.objects.all().order_by('-time_requested').values()
         else:
             requests = clearance_form_table.objects.all().order_by('-time_requested').values()
 
@@ -6949,31 +7371,33 @@ def registrar_dashboard_organize_faculty_list(request, id):
         sorter = id
 
         if id == "OCL":
-            requests = user_table.objects.filter(department__contains="OCL").values()
+            requests = user_table.objects.filter(department__contains="OCL", is_active=True).values()
         elif id == "OCS":
-            requests = user_table.objects.filter(department__contains="OCS").values()
+            requests = user_table.objects.filter(department__contains="OCS", is_active=True).values()
         elif id == "OGS":
-            requests = user_table.objects.filter(department__contains="OGS").values()
+            requests = user_table.objects.filter(department__contains="OGS", is_active=True).values()
         elif id == "OSA":
-            requests = user_table.objects.filter(department__contains="OSA").values()
+            requests = user_table.objects.filter(department__contains="OSA", is_active=True).values()
         elif id == "ADAA":
-            requests = user_table.objects.filter(department__contains="ADAA").values()
+            requests = user_table.objects.filter(department__contains="ADAA", is_active=True).values()
         elif id == "OES":
-            requests = user_table.objects.filter(department__contains="OES").values()
+            requests = user_table.objects.filter(department__contains="OES", is_active=True).values()
         elif id == "DMS":
-            requests = user_table.objects.filter(department__contains="DMS").values()
+            requests = user_table.objects.filter(department__contains="DMS", is_active=True).values()
         elif id == "DPECS":
-            requests = user_table.objects.filter(department__contains="DPECS").values()
+            requests = user_table.objects.filter(department__contains="DPECS", is_active=True).values()
         elif id == "DED":
-            requests = user_table.objects.filter(department__contains="DED").values()
+            requests = user_table.objects.filter(department__contains="DED", is_active=True).values()
         elif id == "DIT":
-            requests = user_table.objects.filter(department__contains="DIT").values()
+            requests = user_table.objects.filter(department__contains="DIT", is_active=True).values()
         elif id == "DLA":
-            requests = user_table.objects.filter(department__contains="DLA").values()
+            requests = user_table.objects.filter(department__contains="DLA", is_active=True).values()
         elif id == "DOE":
-            requests = user_table.objects.filter(department__contains="DOE").values()
+            requests = user_table.objects.filter(department__contains="DOE", is_active=True).values()
+        elif id == "DELETED":
+            requests = user_deleted_table.objects.filter(Q(user_type = "FACULTY") | Q(user_type="HEAD")).values()
         else:
-            requests = user_table.objects.filter(user_type="FACULTY") .values()
+            requests = user_table.objects.filter(user_type="FACULTY", is_active=True) .values()
 
     else:
         messages.error(
@@ -7006,6 +7430,11 @@ def request_official_update(request, id):
     request_form_table.objects.filter(id=id).update(or_num=or_number)
     or_date = request.POST.get('or_date')
     request_form_table.objects.filter(id=id).update(or_date=or_date)
+    
+    #RECORD OR 
+    or_dateTime = datetime.now()
+    request_form_table.objects.filter(id=id).update(or_timestamp = or_dateTime)
+    
     get_name = request_form_table.objects.filter(
         id=id).values_list('name', flat=True).distinct()
     get_request = request_form_table.objects.filter(
@@ -7019,18 +7448,36 @@ def request_official_update(request, id):
 @login_required(login_url='/')
 def request_form137_update(request, id):
     form_change = request.POST.get('form137_select')
+    #RECORD FORM 137-A DATE TIME
+    form137_dateTime = datetime.now()
     request_form_table.objects.filter(id=id).update(form_137=form_change)
+    request_form_table.objects.filter(id=id).update(form_137_timestamp = form137_dateTime)
     return redirect(registrar_dashboard_request_list)
 
 # UPDATE CLAIM STATUS OF REQUEST FORM ON REGISTRAR'S SIDE
 def request_claim_update(request, id):
     form_change = request.POST.get('claim_select')
+    #RECORD CLAIM OF CREDENTIALS DATE TIME
+    claim_dateTime = datetime.now()
     request_form_table.objects.filter(id=id).update(claim=form_change)
+    request_form_table.objects.filter(id=id).update(claim_timestamp = claim_dateTime)
     return redirect(registrar_dashboard_request_list)
 
 # REQUEST FORM
 @login_required(login_url='/')
 def request_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         user = request.user.user_type
@@ -7195,7 +7642,7 @@ def request_form(request):
                 request_other = ""
                 request_cert = ""
 
-            context = {'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
+            context = {'currtime':currtime,'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
                        'request_purpose': request_pur, 'request_other': request_other, 'request_cert': request_cert}
 
     else:
@@ -7427,6 +7874,201 @@ def display_reqform(request, id):
 @login_required(login_url='/')
 def delete_gradform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        
+        student_id = graduation_form_table.objects.filter(id=id).values("student_id")
+        name = graduation_form_table.objects.filter(id=id).values("name")
+        course = graduation_form_table.objects.filter(id=id).values("course")
+        purpose_of_request = graduation_form_table.objects.filter(id=id).values("purpose_of_request")
+        appointment = graduation_form_table.objects.filter(id=id).values("appointment")
+
+        shift = graduation_form_table.objects.filter(id=id).values("shift")
+        study_load = graduation_form_table.objects.filter(id=id).values("study_load")
+        status = graduation_form_table.objects.filter(id=id).values("status")
+        enrolled_term = graduation_form_table.objects.filter(id=id).values("enrolled_term")
+        unenrolled_application_deadline = graduation_form_table.objects.filter(id=id).values("unenrolled_application_deadline")
+
+        subject1 = graduation_form_table.objects.filter(id=id).values("subject1")
+        room1 = graduation_form_table.objects.filter(id=id).values("room1")
+        faculty1 = graduation_form_table.objects.filter(id=id).values("faculty1")
+        starttime1_1 = graduation_form_table.objects.filter(id=id).values("starttime1_1")
+        endtime1_1 = graduation_form_table.objects.filter(id=id).values("endtime1_1")
+        day1_1 = graduation_form_table.objects.filter(id=id).values("day1_1")
+        subject1_timestamp = graduation_form_table.objects.filter(id=id).values("subject1_timestamp")
+
+        subject2 = graduation_form_table.objects.filter(id=id).values("subject2")
+        room2 = graduation_form_table.objects.filter(id=id).values("room2")
+        faculty2 = graduation_form_table.objects.filter(id=id).values("faculty2")
+        starttime1_2 = graduation_form_table.objects.filter(id=id).values("starttime1_2")
+        endtime1_2 = graduation_form_table.objects.filter(id=id).values("endtime1_2")
+        day1_2 = graduation_form_table.objects.filter(id=id).values("day1_2")
+        subject2_timestamp = graduation_form_table.objects.filter(id=id).values("subject2_timestamp")
+
+        subject3 = graduation_form_table.objects.filter(id=id).values("subject3")
+        room3 =graduation_form_table.objects.filter(id=id).values("room3")
+        faculty3 = graduation_form_table.objects.filter(id=id).values("faculty3")
+        starttime1_3 = graduation_form_table.objects.filter(id=id).values("starttime1_3")
+        endtime1_3 = graduation_form_table.objects.filter(id=id).values("endtime1_3")
+        day1_3 = graduation_form_table.objects.filter(id=id).values("day1_3")
+        subject3_timestamp = graduation_form_table.objects.filter(id=id).values("subject3_timestamp")
+
+        subject4 = graduation_form_table.objects.filter(id=id).values("subject4")
+        room4 = graduation_form_table.objects.filter(id=id).values("room4")
+        faculty4 = graduation_form_table.objects.filter(id=id).values("faculty4")
+        starttime1_4 = graduation_form_table.objects.filter(id=id).values("starttime1_4")
+        endtime1_4 = graduation_form_table.objects.filter(id=id).values("endtime1_4")
+        day1_4 = graduation_form_table.objects.filter(id=id).values("day1_4")
+        subject4_timestamp = graduation_form_table.objects.filter(id=id).values("subject4_timestamp")
+
+        subject5 = graduation_form_table.objects.filter(id=id).values("subject5")
+        room5 = graduation_form_table.objects.filter(id=id).values("room5")
+        faculty5 = graduation_form_table.objects.filter(id=id).values("faculty5")
+        starttime1_5 = graduation_form_table.objects.filter(id=id).values("starttime1_5")
+        endtime1_5 = graduation_form_table.objects.filter(id=id).values("endtime1_5")
+        day1_5 = graduation_form_table.objects.filter(id=id).values("day1_5")
+        subject5_timestamp = graduation_form_table.objects.filter(id=id).values("subject5_timestamp")
+
+        subject6 = graduation_form_table.objects.filter(id=id).values("subject6")
+        room6 = graduation_form_table.objects.filter(id=id).values("room6")
+        faculty6 = graduation_form_table.objects.filter(id=id).values("faculty6")
+        starttime1_6 = graduation_form_table.objects.filter(id=id).values("starttime1_6")
+        endtime1_6 = graduation_form_table.objects.filter(id=id).values("endtime1_6")
+        day1_6 = graduation_form_table.objects.filter(id=id).values("day1_6")
+        subject6_timestamp = graduation_form_table.objects.filter(id=id).values("subject6_timestamp")
+
+        subject7 = graduation_form_table.objects.filter(id=id).values("subject7")
+        room7 = graduation_form_table.objects.filter(id=id).values("room7")
+        faculty7 = graduation_form_table.objects.filter(id=id).values("faculty7")
+        starttime1_7 = graduation_form_table.objects.filter(id=id).values("starttime1_7")
+        endtime1_7 = graduation_form_table.objects.filter(id=id).values("endtime1_7")
+        day1_7 = graduation_form_table.objects.filter(id=id).values("day1_7")
+        subject7_timestamp = graduation_form_table.objects.filter(id=id).values("subject7_timestamp")
+
+        subject8 = graduation_form_table.objects.filter(id=id).values("subject8")
+        room8 = graduation_form_table.objects.filter(id=id).values("room8")
+        faculty8  = graduation_form_table.objects.filter(id=id).values("faculty8")
+        starttime1_8 = graduation_form_table.objects.filter(id=id).values("starttime1_8")
+        endtime1_8 = graduation_form_table.objects.filter(id=id).values("endtime1_8")
+        day1_8 = graduation_form_table.objects.filter(id=id).values("day1_8")
+        subject8_timestamp = graduation_form_table.objects.filter(id=id).values("subject8_timestamp")
+
+        subject9 = graduation_form_table.objects.filter(id=id).values("subject9")
+        room9 = graduation_form_table.objects.filter(id=id).values("room9")
+        faculty9 = graduation_form_table.objects.filter(id=id).values("faculty9")
+        starttime1_9 = graduation_form_table.objects.filter(id=id).values("starttime1_9")
+        endtime1_9 = graduation_form_table.objects.filter(id=id).values("endtime1_9")
+        day1_9 = graduation_form_table.objects.filter(id=id).values("day1_9")
+        subject9_timestamp = graduation_form_table.objects.filter(id=id).values("subject9_timestamp")
+
+        subject10 = graduation_form_table.objects.filter(id=id).values("subject10")
+        room10 = graduation_form_table.objects.filter(id=id).values("room10")
+        faculty10 = graduation_form_table.objects.filter(id=id).values("faculty10")
+        starttime1_10 = graduation_form_table.objects.filter(id=id).values("starttime1_10")
+        endtime1_10 = graduation_form_table.objects.filter(id=id).values("endtime1_10")
+        day1_10 = graduation_form_table.objects.filter(id=id).values("day1_10")
+        subject10_timestamp = graduation_form_table.objects.filter(id=id).values("subject10_timestamp")
+
+        addsubject1 = graduation_form_table.objects.filter(id=id).values("addsubject1")
+        addroom1 = graduation_form_table.objects.filter(id=id).values("addroom1")
+        addfaculty1 = graduation_form_table.objects.filter(id=id).values("addfaculty1")
+        add_starttime1_1 = graduation_form_table.objects.filter(id=id).values("add_starttime1_1")
+        add_endtime1_1 = graduation_form_table.objects.filter(id=id).values("add_endtime1_1")
+        addday1_1 = graduation_form_table.objects.filter(id=id).values("addday1_1")
+        addsubject1_timestamp = graduation_form_table.objects.filter(id=id).values("addsubject1_timestamp")
+
+        addsubject2 = graduation_form_table.objects.filter(id=id).values("addsubject2")
+        addroom2 = graduation_form_table.objects.filter(id=id).values("addroom2")
+        addfaculty2 = graduation_form_table.objects.filter(id=id).values("addfaculty2")
+        add_starttime1_2 = graduation_form_table.objects.filter(id=id).values("add_starttime1_2")
+        add_endtime1_2 = graduation_form_table.objects.filter(id=id).values("add_endtime1_2")
+        addday1_2 = graduation_form_table.objects.filter(id=id).values("addday1_2")
+        addsubject2_timestamp = graduation_form_table.objects.filter(id=id).values("addsubject2_timestamp")
+
+        addsubject3 = graduation_form_table.objects.filter(id=id).values("addsubject3")
+        addroom3 = graduation_form_table.objects.filter(id=id).values("addroom3")
+        addfaculty3 = graduation_form_table.objects.filter(id=id).values("addfaculty3")
+        add_starttime1_3 = graduation_form_table.objects.filter(id=id).values("add_starttime1_3")
+        add_endtime1_3 = graduation_form_table.objects.filter(id=id).values("add_endtime1_3")
+        addday1_3 = graduation_form_table.objects.filter(id=id).values("addday1_3")
+        addsubject3_timestamp = graduation_form_table.objects.filter(id=id).values("addsubject3_timestamp")
+
+        addsubject4 = graduation_form_table.objects.filter(id=id).values("addsubject4")
+        addroom4 = graduation_form_table.objects.filter(id=id).values("addroom4")
+        addfaculty4 = graduation_form_table.objects.filter(id=id).values("addfaculty4")
+        add_starttime1_4 = graduation_form_table.objects.filter(id=id).values("add_starttime1_4")
+        add_endtime1_4 =graduation_form_table.objects.filter(id=id).values("add_endtime1_4")
+        addday1_4 = graduation_form_table.objects.filter(id=id).values("addday1_4")
+        addsubject4_timestamp = graduation_form_table.objects.filter(id=id).values("addsubject4_timestamp")
+
+        addsubject5 = graduation_form_table.objects.filter(id=id).values("addsubject5")
+        addroom5 = graduation_form_table.objects.filter(id=id).values("addroom5")
+        addfaculty5 = graduation_form_table.objects.filter(id=id).values("addfaculty5")
+        add_starttime1_5 = graduation_form_table.objects.filter(id=id).values("add_starttime1_5")
+        add_endtime1_5 = graduation_form_table.objects.filter(id=id).values("add_endtime1_5")
+        addday1_5 = graduation_form_table.objects.filter(id=id).values("addday1_5")
+        addsubject5_timestamp = graduation_form_table.objects.filter(id=id).values("addsubject5_timestamp")
+        
+        trainP_startdate = graduation_form_table.objects.filter(id=id).values("trainP_startdate")
+        trainP_enddate = graduation_form_table.objects.filter(id=id).values("trainP_enddate")
+        instructor_name = graduation_form_table.objects.filter(id=id).values("instructor_name")
+        sit_timestamp = graduation_form_table.objects.filter(id=id).values("sit_timestamp")
+        
+        approval_status = graduation_form_table.objects.filter(id=id).values("approval_status")
+        signature1 = graduation_form_table.objects.filter(id=id).values("signature1")
+        signature2 = graduation_form_table.objects.filter(id=id).values("signature2")
+        signature3 = graduation_form_table.objects.filter(id=id).values("signature3")
+        signature4 = graduation_form_table.objects.filter(id=id).values("signature4")
+        signature5 = graduation_form_table.objects.filter(id=id).values("signature5")
+        signature6 = graduation_form_table.objects.filter(id=id).values("signature6")
+        signature7 = graduation_form_table.objects.filter(id=id).values("signature7")
+        signature8 = graduation_form_table.objects.filter(id=id).values("signature8")
+        signature9 = graduation_form_table.objects.filter(id=id).values("signature9")
+        signature10 = graduation_form_table.objects.filter(id=id).values("signature10")
+        
+        addsignature1 = graduation_form_table.objects.filter(id=id).values("addsignature1")
+        addsignature2 = graduation_form_table.objects.filter(id=id).values("addsignature2")
+        addsignature3 = graduation_form_table.objects.filter(id=id).values("addsignature3")
+        addsignature4 = graduation_form_table.objects.filter(id=id).values("addsignature4")
+        addsignature5 = graduation_form_table.objects.filter(id=id).values("addsignature5")
+
+        sitsignature = graduation_form_table.objects.filter(id=id).values("sitsignature")
+        grad_notif = graduation_form_table.objects.filter(id=id).values("grad_notif")
+        approved_timestamp = graduation_form_table.objects.filter(id=id).values("approved_timestamp")
+        
+        time_requested = graduation_form_table.objects.filter(id=id).values("time_requested")
+    
+        deleted_timestamp = datetime.now()
+        
+        deleted = graduation_form_deleted_table.objects.create(name=name, student_id=student_id, course=course, shift=shift,
+                                                        study_load=study_load, status=status, enrolled_term=enrolled_term, unenrolled_application_deadline=unenrolled_application_deadline,
+                                                        trainP_startdate=trainP_startdate, trainP_enddate=trainP_enddate, instructor_name=instructor_name,purpose_of_request=purpose_of_request,
+                                                        appointment=appointment,subject1_timestamp=subject1_timestamp,subject2_timestamp=subject2_timestamp, subject3_timestamp=subject3_timestamp, subject4_timestamp=subject4_timestamp,
+                                                        subject5_timestamp=subject5_timestamp,subject6_timestamp=subject6_timestamp,subject7_timestamp=subject7_timestamp, subject8_timestamp=subject8_timestamp,subject9_timestamp=subject9_timestamp,
+                                                        subject10_timestamp=subject10_timestamp,addsubject1_timestamp=addsubject1_timestamp, addsubject2_timestamp=addsubject2_timestamp,addsubject3_timestamp=addsubject3_timestamp,addsubject4_timestamp=addsubject4_timestamp, 
+                                                        addsubject5_timestamp=addsubject5_timestamp,sit_timestamp=sit_timestamp, approval_status=approval_status,
+
+                                                        subject1=subject1, room1=room1, faculty1=faculty1, starttime1_1=starttime1_1, endtime1_1=endtime1_1, day1_1=day1_1,
+                                                        subject2=subject2, room2=room2, faculty2=faculty2, starttime1_2=starttime1_2, endtime1_2=endtime1_2, day1_2=day1_2,
+                                                        subject3=subject3, room3=room3, faculty3=faculty3, starttime1_3=starttime1_3, endtime1_3=endtime1_3, day1_3=day1_3,
+                                                        subject4=subject4, room4=room4, faculty4=faculty4, starttime1_4=starttime1_4, endtime1_4=endtime1_4, day1_4=day1_4,
+                                                        subject5=subject5, room5=room5, faculty5=faculty5, starttime1_5=starttime1_5, endtime1_5=endtime1_5, day1_5=day1_5,
+                                                        subject6=subject6, room6=room6, faculty6=faculty6, starttime1_6=starttime1_6, endtime1_6=endtime1_6, day1_6=day1_6,
+                                                        subject7=subject7, room7=room7, faculty7=faculty7, starttime1_7=starttime1_7, endtime1_7=endtime1_7, day1_7=day1_7,
+                                                        subject8=subject8, room8=room8, faculty8=faculty8, starttime1_8=starttime1_8, endtime1_8=endtime1_8, day1_8=day1_8,
+                                                        subject9=subject9, room9=room9, faculty9=faculty9, starttime1_9=starttime1_9, endtime1_9=endtime1_9, day1_9=day1_9,
+                                                        subject10=subject10, room10=room10, faculty10=faculty10, starttime1_10=starttime1_10, endtime1_10=endtime1_10, day1_10=day1_10,
+
+                                                        addsubject1=addsubject1, addroom1=addroom1, addfaculty1=addfaculty1, add_starttime1_1=add_starttime1_1, add_endtime1_1=add_endtime1_1, addday1_1=addday1_1,
+                                                        addsubject2=addsubject2, addroom2=addroom2, addfaculty2=addfaculty2, add_starttime1_2=add_starttime1_2, add_endtime1_2=add_endtime1_2, addday1_2=addday1_2,
+                                                        addsubject3=addsubject3, addroom3=addroom3, addfaculty3=addfaculty3, add_starttime1_3=add_starttime1_3, add_endtime1_3=add_endtime1_3, addday1_3=addday1_3,
+                                                        addsubject4=addsubject4, addroom4=addroom4, addfaculty4=addfaculty4, add_starttime1_4=add_starttime1_4, add_endtime1_4=add_endtime1_4, addday1_4=addday1_4,
+                                                        addsubject5=addsubject5, addroom5=addroom5, addfaculty5=addfaculty5, add_starttime1_5=add_starttime1_5, add_endtime1_5=add_endtime1_5, addday1_5=addday1_5,
+
+                                                        signature1=signature1, signature2=signature2, signature3=signature3, signature4=signature4, signature5=signature5,
+                                                        signature6=signature6, signature7=signature7, signature8=signature8, signature9=signature9, signature10=signature10,
+                                                        addsignature1=addsignature1, addsignature2=addsignature2, addsignature3=addsignature3, addsignature4=addsignature4, addsignature5=addsignature5, sitsignature=sitsignature, 
+                                                        grad_notif=grad_notif, approved_timestamp=approved_timestamp, time_requested=time_requested,deleted_status="1", deleted_timestamp=deleted_timestamp)
+        deleted.save()
+        
         delete_grad = graduation_form_table.objects.get(id=id)
         delete_grad.delete()
         messages.success(request, "Form has been deleted.")
@@ -7436,6 +8078,87 @@ def delete_gradform(request, id):
 @login_required(login_url='/')
 def delete_clearform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR":
+        
+        student_id = clearance_form_table.objects.filter(id=id).values("student_id")
+        name = clearance_form_table.objects.filter(id=id).values("name")
+        present_address = clearance_form_table.objects.filter(id=id).values("present_address")
+        course = clearance_form_table.objects.filter(id=id).values("course")
+        
+        date_filed = clearance_form_table.objects.filter(id=id).values("date_filed")
+        date_admitted_in_tup = clearance_form_table.objects.filter(id=id).values("date_admitted_in_tup")
+        highschool_graduated = clearance_form_table.objects.filter(id=id).values("highschool_graduated")
+        tupc_graduate = clearance_form_table.objects.filter(id=id).values("tupc_graduate")
+        year_graduated_in_tupc = clearance_form_table.objects.filter(id=id).values("year_graduated_in_tupc")
+        number_of_terms_in_tupc = clearance_form_table.objects.filter(id=id).values("number_of_terms_in_tupc")
+        amount_paid = clearance_form_table.objects.filter(id=id).values("amount_paid")
+        have_previously_requested_form = clearance_form_table.objects.filter(id=id).values("have_previously_requested_form")
+        date_of_previously_requested_form = clearance_form_table.objects.filter(id=id).values("date_of_previously_requested_form")
+        last_term_in_tupc = clearance_form_table.objects.filter(id=id).values("last_term_in_tupc")
+        purpose_of_request = clearance_form_table.objects.filter(id=id).values("purpose_of_request")
+        purpose_of_request_reason = clearance_form_table.objects.filter(id=id).values("purpose_of_request_reason")
+        semester_enrolled = clearance_form_table.objects.filter(id=id).values("semester_enrolled")
+        or_num = clearance_form_table.objects.filter(id=id).values("or_num")
+
+        approval_status = clearance_form_table.objects.filter(id=id).values("approval_status")
+        liberal_arts_signature = clearance_form_table.objects.filter(id=id).values("liberal_arts_signature")
+        liberal_timestamp = clearance_form_table.objects.filter(id=id).values("liberal_timestamp")
+        
+        accountant_signature = clearance_form_table.objects.filter(id=id).values("accountant_signature")
+        accountant_timestamp = clearance_form_table.objects.filter(id=id).values("accountant_timestamp")
+        
+        mathsci_dept_signature = clearance_form_table.objects.filter(id=id).values("mathsci_dept_signature")
+        mathsci_timestamp = clearance_form_table.objects.filter(id=id).values("mathsci_timestamp")
+        
+        pe_dept_signature = clearance_form_table.objects.filter(id=id).values("pe_dept_signature")
+        pe_timestamp = clearance_form_table.objects.filter(id=id).values("pe_timestamp")
+        
+        ieduc_dept_signature = clearance_form_table.objects.filter(id=id).values("ieduc_dept_signature")
+        ieduc_timestamp = clearance_form_table.objects.filter(id=id).values("ieduc_timestamp")
+        
+        it_dept_signature = clearance_form_table.objects.filter(id=id).values("it_dept_signature")
+        it_timestamp = clearance_form_table.objects.filter(id=id).values("it_timestamp")
+        
+        eng_dept_signature = clearance_form_table.objects.filter(id=id).values("eng_dept_signature")
+        eng_timestamp = clearance_form_table.objects.filter(id=id).values("eng_timestamp")
+        
+        library_signature = clearance_form_table.objects.filter(id=id).values("library_signature")
+        library_timestamp = clearance_form_table.objects.filter(id=id).values("library_timestamp")
+        
+        guidance_office_signature = clearance_form_table.objects.filter(id=id).values("guidance_office_signature")
+        guidance_timestamp = clearance_form_table.objects.filter(id=id).values("guidance_timestamp")
+        
+        osa_signature = clearance_form_table.objects.filter(id=id).values("osa_signature")
+        osa_timestamp = clearance_form_table.objects.filter(id=id).values("osa_timestamp")
+        
+        academic_affairs_signature = clearance_form_table.objects.filter(id=id).values("academic_affairs_signature")
+        academic_timestamp = clearance_form_table.objects.filter(id=id).values("academic_timestamp")
+        
+        course_adviser = clearance_form_table.objects.filter(id=id).values("course_adviser")
+        course_adviser_signature = clearance_form_table.objects.filter(id=id).values("course_adviser_signature")
+        course_adviser_timestamp = clearance_form_table.objects.filter(id=id).values("course_adviser_timestamp")
+        
+        appointment = clearance_form_table.objects.filter(id=id).values("appointment")
+        clear_notif = clearance_form_table.objects.filter(id=id).values("clear_notif")
+        approved_timestamp = clearance_form_table.objects.filter(id=id).values("approved_timestamp")
+        
+        time_requested = clearance_form_table.objects.filter(id=id).values("time_requested")
+        deleted_timestamp = datetime.now()
+        
+        deleted = clearance_form_deleted_table.objects.create(student_id=student_id, name=name, present_address=present_address, course=course,
+                                                       date_filed=date_filed, date_admitted_in_tup=date_admitted_in_tup,
+                                                       highschool_graduated=highschool_graduated, tupc_graduate=tupc_graduate, year_graduated_in_tupc=year_graduated_in_tupc,
+                                                       number_of_terms_in_tupc=number_of_terms_in_tupc, amount_paid=amount_paid, have_previously_requested_form=have_previously_requested_form,
+                                                       date_of_previously_requested_form=date_of_previously_requested_form, last_term_in_tupc=last_term_in_tupc,
+                                                       course_adviser=course_adviser, course_adviser_signature=course_adviser_signature,
+                                                       purpose_of_request=purpose_of_request, purpose_of_request_reason=purpose_of_request_reason, semester_enrolled=semester_enrolled, ieduc_dept_signature=ieduc_dept_signature, eng_dept_signature=eng_dept_signature, 
+                                                       it_dept_signature=it_dept_signature,or_num=or_num , approval_status=approval_status,liberal_arts_signature=liberal_arts_signature,liberal_timestamp=liberal_timestamp,
+                                                       accountant_signature=accountant_signature,accountant_timestamp=accountant_timestamp, mathsci_dept_signature=mathsci_dept_signature,mathsci_timestamp=mathsci_timestamp,pe_dept_signature=pe_dept_signature,
+                                                       pe_timestamp=pe_timestamp,ieduc_timestamp=ieduc_timestamp, it_timestamp=it_timestamp,eng_timestamp=eng_timestamp,library_signature=library_signature, library_timestamp=library_timestamp,
+                                                       guidance_office_signature=guidance_office_signature,guidance_timestamp=guidance_timestamp,osa_signature=osa_signature,osa_timestamp=osa_timestamp, academic_affairs_signature=academic_affairs_signature,
+                                                       academic_timestamp=academic_timestamp,course_adviser_timestamp=course_adviser_timestamp, appointment=appointment, clear_notif=clear_notif,approved_timestamp=approved_timestamp, time_requested=time_requested,
+                                                       deleted_status="1",deleted_timestamp=deleted_timestamp )
+        deleted.save()
+        
         delete_clear = clearance_form_table.objects.get(id=id)
         delete_clear.delete()
         messages.success(request, "Form has been deleted.")
@@ -7445,8 +8168,48 @@ def delete_clearform(request, id):
 @login_required(login_url='/')
 def delete_reqform(request, id):
     if request.user.is_authenticated and request.user.user_type == "REGISTRAR" or request.user.user_type == "STAFF":
+        
+        
+        student_id = request_form_table.objects.filter(id=id).values("student_id")
+        name = request_form_table.objects.filter(id=id).values("name")
+        name2 = request_form_table.objects.filter(id=id).values("name2")
+        address = request_form_table.objects.filter(id=id).values("address")
+        course = request_form_table.objects.filter(id=id).values("course")
+        date = request_form_table.objects.filter(id=id).values("date")
+        control_number = request_form_table.objects.filter(id=id).values("control_number")
+        contact_number = request_form_table.objects.filter(id=id).values("contact_number")
+        current_status = request_form_table.objects.filter(id=id).values("current_status")
+        requested = request_form_table.objects.filter(id=id).values("request")
+        purpose_of_request_reason = request_form_table.objects.filter(id=id).values("purpose_of_request_reason")
+        amount =request_form_table.objects.filter(id=id).values("amount")
+        form_137 = request_form_table.objects.filter(id=id).values("form_137")
+        form_137_timestamp = request_form_table.objects.filter(id=id).values("form_137_timestamp")
+        clearance = request_form_table.objects.filter(id=id).values("clearance")
+        clearance_timestamp = request_form_table.objects.filter(id=id).values("clearance_timestamp")
+        official_receipt = request_form_table.objects.filter(id=id).values("official_receipt")
+        or_timestamp = request_form_table.objects.filter(id=id).values("or_timestamp")
+        claim = request_form_table.objects.filter(id=id).values("claim")
+        claim_timestamp = request_form_table.objects.filter(id=id).values("claim_timestamp")
+        approval_status = request_form_table.objects.filter(id=id).values("approval_status")
+        approval_timestamp = request_form_table.objects.filter(id=id).values("approval_timestamp")
+        appointment = request_form_table.objects.filter(id=id).values("appointment")
+        or_num = request_form_table.objects.filter(id=id).values("or_num")
+        or_date = request_form_table.objects.filter(id=id).values("or_date")
+        
+        time_requested = request_form_table.objects.filter(id=id).values("time_requested")
+        
+        deleted_timestamp = datetime.now()
+        
+        deleted = request_form_deleted_table.objects.create(student_id=student_id, name=name, name2=name2,
+                                                         address=address, course=course, date=date, control_number=control_number, amount=amount, contact_number=contact_number, current_status=current_status, purpose_of_request_reason=purpose_of_request_reason,
+                                                         request=requested, form_137=form_137, form_137_timestamp=form_137_timestamp,clearance=clearance,clearance_timestamp=clearance_timestamp,official_receipt=official_receipt,
+                                                         or_timestamp=or_timestamp, claim=claim, claim_timestamp=claim_timestamp, approval_status=approval_status,approval_timestamp=approval_timestamp, appointment=appointment, or_num=or_num, or_date=or_date,time_requested=time_requested,
+                                                         deleted_status="1", deleted_timestamp=deleted_timestamp)
+        deleted.save()
+        
         delete_req = request_form_table.objects.get(id=id)
         delete_req.delete()
+        
         messages.success(request, "Form has been deleted.")
         return redirect('registrar_dashboard_request_list')
 
@@ -7457,7 +8220,6 @@ def student_status_update(request, id):
     student_update = request.POST.get('status_select')
     user_table.objects.filter(id=id).update(user_type=student_update)
     
-
     getter = user_table.objects.get(id=id)
     today = date.today().year
     getter = user_table.objects.get(id=id)
@@ -7476,6 +8238,10 @@ def student_status_update(request, id):
     year_id = str(today)
     id_year = year_id[2:]
     
+    convert_dateTime = datetime.now()
+    user_table.objects.filter(id=id).update(convert_status_timestamp=convert_dateTime)
+    
+    
     request_form_table.objects.filter(student_id=user_id2).update(current_status=student_update)
     if student_update == "ALUMNUS":
         
@@ -7490,7 +8256,7 @@ def student_status_update(request, id):
         request_form_table.objects.filter(
             student_id=user_id2).update(student_id=update_id)
 
-    return redirect('All')
+    return redirect('/registrar_dashboard_student_list/%20')
 
 # DECLARE NEW SCHOOL YEAR ON STUDENTS LIST
 # APPLICABLE TO UNDERGRADUATE STUDENTS ONLY
@@ -7521,7 +8287,7 @@ def school_year_update(request):
             user_table.objects.filter(id=int(x)).update(
                 year_and_section="4th Year")
 
-    return redirect('All')
+    return redirect('/registrar_dashboard_student_list/%20')
 
 # SEND EMAIL NOTIFICATIONS ON ALL SIGNATORIES WITH APPLICATION FORMS TO SIGN
 # SCHEDULED EVERY WEEKDAYS AT 4PM
@@ -7602,29 +8368,54 @@ def approve_clearform(request, id):
     registrar_approval = registrar_name[0] + "_APPROVED REGISTRAR"
     
     student_name = clearance_form_table.objects.filter(id=id).values_list('name', flat=True).distinct()
-
+    clearance_dateTime = datetime.now()
     clearance_form_table.objects.filter(id=id).update(
         liberal_arts_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(liberal_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         accountant_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(accountant_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         mathsci_dept_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(mathsci_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         pe_dept_signature=registrar_approval)
-
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(pe_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         library_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(library_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         guidance_office_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(guidance_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         osa_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(osa_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         academic_affairs_signature=registrar_approval)
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(academic_timestamp = clearance_dateTime)
+    
     clearance_form_table.objects.filter(id=id).update(
         course_adviser=registrar_name[0])
     clearance_form_table.objects.filter(id=id).update(
         course_adviser_signature=registrar_approval)
-
+    #RECORD APPROVAL
+    clearance_form_table.objects.filter(id=id).update(course_adviser_timestamp = clearance_dateTime)
+    
     ieduc_dept_signature = clearance_form_table.objects.filter(
         id=id).values_list('ieduc_dept_signature', flat=True).distinct()
     it_dept_signature = clearance_form_table.objects.filter(
@@ -7634,16 +8425,24 @@ def approve_clearform(request, id):
     if ieduc_dept_signature[0] == "_APPROVED" and it_dept_signature[0] == "_APPROVED":
         clearance_form_table.objects.filter(id=id).update(
             eng_dept_signature=registrar_approval)
+        #RECORD APPROVAL
+        clearance_form_table.objects.filter(id=id).update(ieduc_timestamp = clearance_dateTime)
     elif ieduc_dept_signature[0] == "_APPROVED" and eng_dept_signature[0] == "_APPROVED":
         clearance_form_table.objects.filter(id=id).update(
             it_dept_signature=registrar_approval)
+        #RECORD APPROVAL
+        clearance_form_table.objects.filter(id=id).update(it_timestamp = clearance_dateTime)
     else:
         clearance_form_table.objects.filter(id=id).update(
             ieduc_dept_signature=registrar_approval)
+        #RECORD APPROVAL
+        clearance_form_table.objects.filter(id=id).update(eng_timestamp = clearance_dateTime)
 
     clearance_form_table.objects.filter(
         id=id).update(approval_status="APPROVED")
         
     request_form_table.objects.filter(name=student_name[0]).update(clearance="✔")
+    #RECORD CLEARANCE APPROVED ALL
+    request_form_table.objects.filter(name=student_name[0]).update(clearance_timestamp = clearance_dateTime)
 
     return redirect('/registrar_dashboard_clearance_list/%20')

@@ -30,6 +30,8 @@ Adviser:
     <title>Graduation Form</title>
 </head>
 
+
+<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a.float+div.label-container {
         visibility: hidden;
@@ -826,6 +828,9 @@ Adviser:
                     {% endfor %}</select>
             </div>
 
+            {% if currtime == "out_of_office_hours" %}
+            <p>Keep in mind that you are applying beyond office hours, the Office of the Campus Registrar can only process forms on weekdays until 4 p.m. so your application cannot be processed at this moment.</p>
+            {% endif %}
 
             <!--SUBMIT BUTTON-->
             <div style = "display: flex; justify-content:flex-end">

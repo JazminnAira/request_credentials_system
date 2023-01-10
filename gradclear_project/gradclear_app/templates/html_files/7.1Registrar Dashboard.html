@@ -41,7 +41,9 @@ Adviser:
     </script>
 
 </head>
+ 
 
+<!-- ALL CSS ARE CATEGORIZED ACCORDING TO IDs, CLASSES, MEDIA QUERIES AND SORTED ALPHABETICALLY  -->
 <style>
     a {
         text-decoration: none !important;
@@ -166,8 +168,7 @@ Adviser:
         max-height: 100%;
         }
 
-    .card-header {
-        border: 1px solid #000000;
+    .card-header {  
         background-color: #9e9e9e;
         color: #000000;
         cursor: pointer;
@@ -276,6 +277,42 @@ Adviser:
     
     .gridRow {
         padding-bottom: 25px;
+    }
+
+    .help-card{
+        background-color: rgba(0,0,0,.03);
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+
+    .help-card:hover{
+        background-color:#dedede ;
+    }
+
+    .help_row{
+        display: flex;
+    }
+
+    .help_link:active {
+        color: #dedede;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:hover {
+        color: #fff;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .help_link:link {
+        color: #424242;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+    .help_link:visited {
+        color: #c51d3a;
+        background-color: transparent;
+        text-decoration: underline;
     }
     
     .invisible {
@@ -770,6 +807,10 @@ Adviser:
     }
 
     @media screen and (max-width : 500px){
+        .help_row{
+            display: block;
+        }
+
         .settings_row{
             display: block;
         }
@@ -804,13 +845,13 @@ Adviser:
 <div id="sidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     <a style="padding-left: 25px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_71"><i class="fa fa-user material-icons"></i><span class="icon-text">Account</span></a><br>
-    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;">{% if graduation_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Graduation</span>{% if graduation_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
-    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons">{% if clearance_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2 ml-1" style="font-size: 12px;"> </span>{% endif %}</i><span class="icon-text">Clearance</span>{% if clearance_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons">{% if request_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-2" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Requests</span>{% if request_badge >= 1 %}<span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-2" style="font-size: 12px;"> </span>{% endif %}</a><br>
+    <a href="{% url 'registrar_dashboard_graduation_list' id=' ' %}"><i class="fa fa-graduation-cap material-icons position-relative" style="margin-right: 24px;">{% if graduation_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Graduation</span>{% if graduation_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw; opacity: 0.4;">{{graduation_badge}}</label>{% endif %}</a><br>
+    <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_clearance_list' id=' ' %}"><i class="fa fa-file-text-o material-icons">{% if clearance_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1 ml-1" style="font-size: 12px;"> </span>{% endif %}</i><span class="icon-text">Clearance</span>{% if clearance_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw; opacity:0.4">{{clearance_badge}}</label>{% endif %}</a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_request_list'%}"><i class="fa fa fa-comments-o material-icons">{% if request_badge >= 1 %}<span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" > </span>{% endif %}</i><span class="icon-text">Requests</span>{% if request_badge >= 1 %}<label style="font-size:18px;padding-left: 1vw;opacity:0.4;">{{request_badge}}</label>{% endif %}</a><br>
     <a style="padding-left: 23px;" href="{% url 'registrar_dashboard_faculty_list'%}"><i class="fa fa-address-book-o material-icons"></i><span class="icon-text">Faculty</span></a><br>
-    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list' id=' '%}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
+    <a style="padding-left: 21px;" href="{% url 'registrar_dashboard_student_list' id='%20' %}"><i class="fa fa-list material-icons"></i><span class="icon-text">Students</span></a><br>
     {% if request.user.user_type == "REGISTRAR" %}
-    <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list'%}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
+    <a style="padding-left: 20px;" href="{% url 'registrar_dashboard_staff_list' id='%20' %}"><i class="fa fa-users material-icons"></i><span class="icon-text">Staffs</span></a><br>
     {% endif %}
     
     <!--<a href="{% url 'send_email_all' %}"><i class="fa fa-paper-plane material-icons position-relative" style="margin-right: 24px;"><span class="badge bg-danger rounded-circle top-0 position-fixed p-1" style="font-size: 12px;" ></span></i><span class="icon-text">Send Mail</span><span class="badge badge2 bg-danger rounded-circle top-0 position-absolute p-1" style="font-size: 12px;"></span></a><br>-->
@@ -818,6 +859,10 @@ Adviser:
     {% if request.user.user_type == "REGISTRAR" %}
     <a style="padding-left: 19px;" href="" data-toggle="modal" data-target="#Settings_modal_71"><i class="fa fa-cogs material-icons"></i><span class="icon-text">Settings<span></a>
     {% endif %}
+
+    <!-- HELP -->
+    <a style="padding-left: 20px;margin-top: 2vh;" href="" data-toggle="modal" data-target="#Help_modal_71"><i class="fa fa-question-circle material-icons"></i><span class="icon-text">Help<span></a>
+    
     <img src="{% static 'Media/left_logo.gif' %}" width="65" height="65" id="logo_71" style="position: absolute;bottom: 10px;">
 
 </div>
@@ -1224,6 +1269,339 @@ Adviser:
         </div>
     </div>
     {% endif %}
+
+    <!-- HELP MODAL -->
+    <div id="Help_modal_71" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" id = "help_modal_size" style="max-width: 950px; min-width: 350px; width: 97vw;" role="document">
+            <div class="modal-content">
+
+                <!--MODAL HEADER-->
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Help_modal_71">Help&nbsp;<i class="fa fa-question-circle"></i></h2>
+
+                    <!--MODAL CLOSE BUTTON-->
+                    <button type="button" data-dismiss="modal" class="close" data-toggle="tooltip" 
+                    data-placement="right" title="Close" onclick="reset_close()">X</button>
+                </div>
+
+                <!--MODAL BODY-->
+                <div class="modal-body">
+                    <div class="container">
+                        <div id="accordion">
+                            <div>
+                                <!-- HELP FOR APPROVING FORMS -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to approve a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                    <div id="collapseOne_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Graduation" or "Clearance" in your dashboard's sidebar. <br>
+                                                2. If the approval status is "Approved", the "Notify" button will be enabled. Click "Notify" to approve and inform the applicant.<br>
+                                                <br>
+                                                <i>Note: Auto-generated emails are sent to the applicant once the "Notify Student" has been clicked.</i>
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR REMOVING A FORM -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseTwo_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to remove a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseTwo_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Graduation" or "Clearance" in your dashboard's sidebar. <br>
+                                                2. Click "Remove" on the table to remove any form.<br>
+                                                <br>
+                                                <i>Note: Once the form is deleted, it cannot be restored.</i>    
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR PROCESSING A REQUEST -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseThree_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to process a request</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseThree_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Requests" in your dashboard's sidebar. <br>
+                                                2. Select a request you wish to process.<br>
+                                                3. Check the availability of the following requirements:<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Clearance form- if the request has a clearance, the status will automatically updates once the clearance form has been approved.<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Form 137-A- click the box and choose between "✔" or "❌".<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>If Form 137-A is missing, you can send a request letter for the applicant by attaching the letter upon setting appointments.</i><br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Official Receipt- this will be updated upon the date of appointment. Enter the O.R. number and the corresponding date and press "Enter". <br>
+                                                4. Set an appointment for claiming by clicking "Set" (You can also re-schedule appointments by clicking "Set New".)<br>
+                                                5. Select the date and time of appointment. You can also include additional messages and attachments to the email. <br>
+                                                6. Prepare the requested credential before the date of appointment <br>
+                                                7. Once the transaction is completed and the requested credential has been claimed by the applicant, update the status into "Claimed".<br>
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                <!-- HELP FOR UPDATING SCHOOL YEAR -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseFour_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to update current school year</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseFour_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Students" in your dashboard's sidebar. <br>
+                                                2. Select the "Calendar" icon near the search bar at the top of your screen. <br>
+                                                <br>
+                                                <i>Note: Click the button only once as it will automatically adjust the school year.</i><br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR UPDATING STUDENT'S STATUS -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseFive_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to update applicant's status</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseFive_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Students" in your dashboard's sidebar. <br>
+                                                2. Select a user you wish to update.<br>
+                                                3. Choose between converting the applicant's type into "Old Student" or "Alumnus". <br>
+                                                <br>
+                                                <i>Note: Only students who are categorized as "4th years" can only be converted to alumni. Also, this action is irreversible once done.</i><br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                
+                                <!-- HELP FOR REMOVING USER -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseSix_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to remove a user</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseSix_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click any user list e.g ("Students", "Faculty", "Staffs")  in your dashboard's sidebar. <br>
+                                                2. Select "Remove". <br>
+                                                <br>
+                                                <i>Note: This action is irreversible once done.</i><br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR UPDATING FACULTY'S POSITION -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseSeven_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to assign a faculty's designation</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseSeven_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Faculty" in your dashboard's sidebar. <br>
+                                                2. Select a faculty you wish to assign. <br>
+                                                3. Choose any designation. <br>
+                                                4. To re-assign it back to only as faculty, select "---" on the choices. <br>
+                                                <br>
+                                                <i>Note: Assign only one position to a faculty to prevent problems on form approvals.</i><br>
+                                               
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                
+                                {% if request.user.user_type == "REGISTRAR" %}
+                                <!-- HELP FOR ADDING A STAFF -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseEight_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to create a staff account</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseEight_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Staffs" in your dashboard's sidebar. <br>
+                                                2. Select "Add Staff" next to the "Home" and search bar at the top of your screen. <br>
+                                                3. Fill up all the necessary fields. <br>
+                                                4. Click "Sign Up" to create the account. <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- HELP FOR PRINTING A FORM -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseNine_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to print a form</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseNine_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click any form list e.g.("Graduation", "Clearance", "Requests") in your dashboard's sidebar. <br>
+                                                2. Select any row with its corresponding applicant and form to view in full details. <br>
+                                                3. Click "Print" on the lower left side of your screen and wait for the file to be downloaded. <br>
+                                                4. Print the downloaded file according to the correct paper size.<br>
+                                                <br>
+                                                <i>Note: Only approved application forms are available for printing.</i><br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                
+                                <!-- HELP FOR PRINTING LIST OF CANDIDATES FOR GRADUATION -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseTen_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to generate a list of candidates for graduation</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseTen_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Graduation" in your dashboard's sidebar or choose any course in the course cards on your dashboard. <br>
+                                                2. Select "Print" found at the top of your screen next to "Home" and the search bar. <br>
+                                                3. Click "Save". <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+
+                                <!-- HELP FOR CHANGING USER ACCOUNT INFO -->
+                                <div class="card-header help-card">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseEleven_71">
+                                        <table class="table-responsive-sm">
+                                            <div class="settings_row justify-content">
+                                                <div class="p-2 flex-fill " style="color: #000000;">
+                                                    <a href="" class="help_link" >How to update account information</a></div>
+                                                
+                                            </div>
+                                        </table>
+                                    </a>
+                                </div>
+                                
+                                    <div id="collapseEleven_71" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                            <p>
+                                                1. Click "Account" in your dashboard's sidebar. <br>
+                                                2. Select any information you wish to update. <br>
+                                                3. Enter your new data. <br>
+                                                4. Click "Save Changes" to update your information.
+                                                <br>
+                                                <i>Note: For changing passwords, you will be logged out with your current session automatically, so re-enter your username and your new password.</i> <br>
+                                            </p>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!--MODAL FOOTER-->
+            <div class="modal-footer">
+                <!-- <a href="{% url 'logout' %}" class="btn btn-secondary" id="logout_btn_71" aria-pressed="true">Log Out</a> -->
+            </div>
+        </div>
+    </div>
+    </div>
+    
 
     <!--MAIN-->
    

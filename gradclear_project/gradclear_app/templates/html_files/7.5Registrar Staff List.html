@@ -260,6 +260,23 @@ Adviser:
         opacity: 1;
         visibility: visible;
     }
+    
+    #back_history {
+        background-color: #424242;
+        border:none;
+        font-size: 17px;
+        border-radius: 0px;
+        padding: 5px;
+        margin-left : 2vw;
+        color:white;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #back_history:hover{
+        color: black;
+        background-color: #d3324d;
+    }
 
     #changer  {
         background-color: #f5f0f6;
@@ -273,6 +290,20 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+    }
+    
+    #delete_history{
+        background-color : white;
+        text-decoration: underline;
+        color: black;
+        border: none;
+    }
+
+    #delete_history:hover{
+        background-color : white;
+        text-decoration: underline;
+        color: red;
+        border: none;
     }
 
     #list_tbl_75 {
@@ -410,8 +441,25 @@ Adviser:
 
 
     <!-- MAIN-->
+    {% if sorter_type == "DELETED" %}
+    <h3 style="text-align:center;">List of Deleted Staffs</h3>
+    {% else %}
     <h3 style="text-align:center;">List of Staffs</h3>
+    {% endif %}
     <div class="div">{% include 'html_files/message.html'%}</div>
+    
+    
+    {% if sorter_type != "DELETED" %}
+    <div id="delete_history_div" align="right">
+        <a href="/registrar_dashboard_staff_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
+    </div>
+    {% endif %}
+
+    {% if sorter_type == "DELETED" %}
+    <div id="back_history_div">
+        <a href="/registrar_dashboard_staff_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
+    </div>
+    {% endif %}
     
     <div data-tabs="1" id="tabz_75">
         <!-- MAIN TABLE-->
@@ -425,7 +473,11 @@ Adviser:
                             <th class="sorting" title="Sort by Name">Name</th>
                             <th class="sorting" title="Sort by Username">Email/Username</th>
                             <th class="sorting" title="Sort by Gender">Gender</th>
+                            {% if sorter_type == "DELETED" %}
+                            <th>Date and Time Removed</th>
+                            {% else %}
                             <th></th>
+                            {% endif %}
                         </tr>
                         <tr class="no_data">
                             <td colspan="4"><i class="fa fa-warning"></i> No Data</td>
@@ -443,11 +495,16 @@ Adviser:
                             <td>{{instance.full_name}}</td>
                             <td>{{instance.username}}</td>
                             <td>{{instance.gender}}</td>
+                            
+                            {% if sorter_type == "DELETED" %}
+                            <td>{{instance.deleted_timestamp}}</td>
+                            {% else %}
                             <td><form method ="POST" action ="staff_list_remove/{{instance.id}}">
                                 {% csrf_token %}
                                 <input type="text" name="id_from_table" value={{instance.id}} hidden>
                                 <button type ="submit" class="submit">Remove</button>
                             </form></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}   
                     </tbody>

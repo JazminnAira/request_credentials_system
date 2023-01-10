@@ -70,7 +70,7 @@ urlpatterns = [
           name="registrar_dashboard_faculty_list"),
      path('registrar_dashboard_student_list/<str:id>', registrar_dashboard_student_list,
           name="registrar_dashboard_student_list"),
-     path('registrar_dashboard_staff_list', registrar_dashboard_staff_list,
+     path('registrar_dashboard_staff_list/<str:id>', registrar_dashboard_staff_list,
           name="registrar_dashboard_staff_list"),
 
      # FORM LISTS (WITH FUNCTION OF APPROVING ALL)
@@ -96,12 +96,15 @@ urlpatterns = [
           name="faculty_designation_update"),
      path('student_status_update/<int:id>', student_status_update, name='student_status_update'),
      path('school_year_update', school_year_update, name='school_year_update'),
+     path('registrar_dashboard_student_list/student_status_update/<int:id>', student_status_update, name='student_status_update'),
      
      # REMOVE USER
      path('faculty_list_remove/<int:id>', faculty_list_remove, name="faculty_list_remove"),
      path('registrar_dashboard_student_list/student_list_remove/<int:id>', student_list_remove, name="student_list_remove"),
      path('student_list_remove/<int:id>', student_list_remove, name="student_list_remove"),
      path('staff_list_remove/<int:id>', staff_list_remove, name="staff_list_remove"),
+     path('registrar_dashboard_staff_list/staff_list_remove/<int:id>', staff_list_remove, name="staff_list_remove"),
+     path('registrar_dashboard_organize_faculty_list/faculty_list_remove/<int:id>', faculty_list_remove, name="faculty_list_remove"),
 
      # LIST ORGANIZER
      path('registrar_dashboard_organize_request_list/<str:id>', registrar_dashboard_organize_request_list,
