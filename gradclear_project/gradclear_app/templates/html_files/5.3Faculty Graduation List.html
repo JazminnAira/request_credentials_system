@@ -584,7 +584,6 @@ Adviser:
         padding: 6px 15px;
         min-height: 100px;
         animation: fadeEffect 1s;
-        padding-bottom: 50px;
     }
 
     #upload_attach_sig_btn{
@@ -783,15 +782,33 @@ Adviser:
     </script>
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn btn-lg" id ="close_signature" >X</button></div>
-        <div class = "p-4" id="show_details">
+        <br>
+        <div id="show_details">
             <div class="bg-dark p-2"><h3 class = "text-white">APPROVE USING:</h3></div>
         </div>
+        <br>
         
         <input type="text" id="attach_signature_to" hidden>
         <input type = "text" id="subject" hidden>
         <input type ="text" id = "esign_checker" value="{{esign_check}}" hidden>
         <input type = "text" id = "upload_checker" value = "{{uploadsig_check}}" hidden>
-        
+
+        <!-- NOTE ON ATTACHING SIGNATURES-->
+        <div style="border:1px solid #000; margin:0 5 0 5" class="container">
+            <p class="text-align:justify;">
+                
+                <center><b>NOTE:</b></center>
+                <br>
+                If you intend to digitally sign the following form/s, please read this carefully before signing:
+                <br><br>
+                By signing your name electronically on the form/s, you are agreeing that your
+                electronic signature is the legal equivalent of your handwritten signature and consenting
+                the system to use it to signify that you approve the form/s.
+                <br><br>
+                Rest assured that your signature will be securely stored and will not be used without your authorization.
+            </p>
+            </div>
+
         <!--CHOOSING APPROVAL SIGNATURE-->
         <div class= "mx-auto" align="center" id="button_area">
             <br>
@@ -805,23 +822,6 @@ Adviser:
             <!--APPROVE ONLY-->
             <div class="btn-group col-sm-10 col-md-10 col-xl-10">
                 <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 bg-dark border text-white border-dark">PHYSICAL SIGNATURE</button><br>
-            </div>
-            
-            <br><br><br><br><br>
-            <!-- NOTE ON ATTACHING SIGNATURES-->
-            <div style="border:1px solid #000; margin:0 5 0 5" class="container">
-            <p class="text-align:justify;">
-                
-                <center><b>NOTE:</b></center>
-                <br>
-                If you intend to digitally sign the following form/s, please read this carefully before signing:
-                <br><br>
-                By signing your name electronically on the form/s, you are agreeing that your
-                electronic signature is the legal equivalent of your handwritten signature and consenting
-                the system to use it to signify that you approve the form/s.
-                <br><br>
-                Rest assured that your signature will be securely stored and will not be used without your authorization.
-            </p>
             </div>
         </div>
         
@@ -1152,7 +1152,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden/>
         </form>
-        <button type ="button" name="approve_all" style="margin-top:30px;margin-left: 25px;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button type ="button" name="approve_all" style="margin-top:10px;margin-left: 25px;" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
         {% for s in preview_data %}
         <div id="myDIV"  class = "border bg-white border-dark p-3 m-1" hidden>
                <div class="row">
