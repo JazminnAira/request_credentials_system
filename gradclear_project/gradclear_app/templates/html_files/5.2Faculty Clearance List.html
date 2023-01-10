@@ -112,6 +112,7 @@ Adviser:
     table{
         min-width: max-content;
         
+        
     }
 
     thead{
@@ -209,6 +210,23 @@ Adviser:
         min-height: 100px;
         animation: fadeEffect 1s;
         padding-bottom: 50px;
+    }
+
+    #list_tbl_52 td th{
+        border: 1px solid black;
+        border-width: 1px 1px 0 1px;
+
+    }
+
+    .table-hover thead {
+        border: 1px solid black;
+    }
+
+    .table-hover thead,
+    .table-hover tbody td,
+    .table-hover tbody tr {
+        border: 1px solid black;
+        text-align: left;
     }
 
     .table-icon {
@@ -312,6 +330,7 @@ Adviser:
         visibility: visible;
     }
 
+
     #btn,
     #open_signature,
     #approve_sig_btn {
@@ -393,13 +412,24 @@ Adviser:
     }
     
     #list_tbl_52 td {
-        border-width: 1px 0;
+        border-width: 1px;
         border-color: black;
         border-style: solid;
         padding: 2px 10px;
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
+    }
+
+    #list_tbl_52 th{
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_52 {
@@ -414,7 +444,7 @@ Adviser:
     }
 
     #list_tbl_52 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl_52 tbody tr:nth-child(odd) {
@@ -428,7 +458,7 @@ Adviser:
     }
     
     #list_tbl2_52 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl2_52 tbody tr:nth-child(odd) {
@@ -552,6 +582,12 @@ Adviser:
     content: "";
     display: table;
     clear: both;
+    }
+    .signature_color_green{
+        color: green;
+    }
+    .signature_color_red{
+        color: red;
     }
 </style>
 
@@ -739,7 +775,7 @@ Adviser:
             <div class="outer-wrapper">
                 <div class="table-wrapper">
             <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_52">
-                <thead style="height: 70px;">
+                <thead style="height: 50px;">
                     <tr>
                         {% if st %}
                         <th><input type="checkbox" class="check" onchange="checkAll(this)" name="chk[]" id="all_check" />&nbsp;All</th>
@@ -1046,42 +1082,42 @@ Adviser:
                  <td><b>Accountant:</b></td><br>
                  <td>
                    {% if s.accountant_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
              </tr><br>
              <tr>
                <td><b>Course/ Shop Adviser:</b></td><br>
                <td> 
                 {% if "_UNAPPROVED" in s.course_adviser_signature %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                 {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
             {% endif %}</td>
                </tr><br>
              <tr>
                  <td><b>Head of Liberal Arts:</b></td><br>
                  <td>{% if s.liberal_arts_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              <tr>
                  <td><b>Campus Librarian:</b></td><br>
                  <td>{% if s.library_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              <tr>
                  <td><b>Head of Math and Science:</b></td><br>
                  <td>{% if s.mathsci_dept_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
              </tr><br>
              </div>
@@ -1090,26 +1126,26 @@ Adviser:
                <tr>
                    <td><b>Guidance Counselor:</b></td><br>
                    <td>{% if s.guidance_office_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                
              <tr>
                <td><b>Head of DPECS:</b></td><br>
                <td>{% if s.pe_dept_signature == "UNAPPROVED" %}
-                   <label >UNAPPROVED</label>
+                   <label class="signature_color_red">UNAPPROVED</label>
                {% else %}
-                   <label >APPROVED</label>
+                   <label class="signature_color_green">APPROVED</label>
            {% endif %}</td>
                </tr><br>
                <tr>
                    <td><b>Head of Student Affairs:</b></td><br>
                    <td>{% if s.osa_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                <tr>
@@ -1124,17 +1160,17 @@ Adviser:
                        Head of Industrial Technology/Industrial Education/Engineering:</b> 
                    {% endif %}</b></td><br>
                    <td>{% if s.it_dept_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                <tr>
                    <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
                    <td>{% if s.academic_affairs_signature == "UNAPPROVED" %}
-                       <label >UNAPPROVED</label>
+                       <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
-                       <label >APPROVED</label>
+                       <label class="signature_color_green">APPROVED</label>
                {% endif %}</td>
                </tr><br>
                </div>

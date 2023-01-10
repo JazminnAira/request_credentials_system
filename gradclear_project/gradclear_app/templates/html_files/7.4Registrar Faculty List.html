@@ -84,6 +84,12 @@ Adviser:
         font-weight: bolder;
     }
 
+
+    select {
+        max-width:200px;
+        font-size: 12px;
+    }
+
     table{
         min-width: max-content;
     }
@@ -311,6 +317,8 @@ Adviser:
         background-color: #d3324d;
     }
 
+    
+
     #changer  {
         background-color: #f5f0f6;
         border:none;
@@ -377,6 +385,11 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_74 {
@@ -397,7 +410,7 @@ Adviser:
     }
 
     #list_tbl_74 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl_74 tbody tr:nth-child(odd) {
@@ -408,10 +421,14 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_74 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl2_74 tbody tr:nth-child(odd) {
@@ -464,6 +481,35 @@ Adviser:
     
     #search_btn_74:hover {
         color: #c51d3a;
+    }
+
+    /*SCREEN RESPONSIVE*/
+    @media screen and (min-width: 500px){
+    
+
+        select {
+            max-width: 75px;
+            font-size: 7px;
+            text-overflow: ellipsis;
+        }
+    }
+
+    @media screen and (min-width: 800px){
+    
+
+        select {
+            max-width: 100px;
+            font-size: 10px;
+        }
+    }
+
+    @media screen and (min-width: 1000px){
+    
+
+        select {
+            max-width: 150px;
+            font-size: 12px;
+        }
     }
 </style>
 
@@ -541,9 +587,9 @@ Adviser:
         <!--MAIN TABLE-->
         <div id="tab1_74" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
-                <div class="table-wrapper">
+                <div class="table-wrapper div1" style="overflow-x:auto;">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_74">
-                    <thead>
+                    <thead style="height: 50px;">
                         <tr>
                             <th hidden> # </th>
                             <th class="sorting" title="Sort by Name">Name</th>

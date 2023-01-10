@@ -322,6 +322,10 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_75 {
@@ -342,7 +346,7 @@ Adviser:
     }
 
     #list_tbl_75 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl_75 tbody tr:nth-child(odd) {
@@ -353,10 +357,14 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_75 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl2_75 tbody tr:nth-child(odd) {
@@ -410,6 +418,8 @@ Adviser:
     #search_btn_75:hover {
         color: #c51d3a;
     }
+
+    
 </style>
 
 
@@ -455,7 +465,7 @@ Adviser:
         <!-- MAIN TABLE-->
         <div id="tab1_75" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
-                <div class="table-wrapper">
+                <div class="table-wrapper div1" style="overflow-x:auto;"> 
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_75">
                     <thead>
                         <tr>

@@ -305,11 +305,11 @@ def graduation_print(request, id):
             else: 
                 im = "../public_html/Media/" + str_upload1
                 p.drawImage(im, 252, 630, height=15, width=80, mask='auto')
-            p.drawString(410, 625, "Signed:" +"f'{fac1.subject1_timestamp}")
+            p.drawString(410, 625, "Signed:" +f'{content.subject1_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 625, "Approved *Manual Signature Required")
-            p.drawString(410, 630, "Signed:" +"f'{fac1.subject1_timestamp}")
+            p.drawString(410, 630, "Signed:" +f'{content.subject1_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -361,11 +361,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload2
                 p.drawImage(im, 254, 602, height=13, width=80, mask='auto')
-            p.drawString(410, 605, "Signed:" +"f'{fac2.subject2_timestamp}")
+            p.drawString(410, 605, "Signed:" +f'{content.subject2_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 605, "Approved *Manual Signature Required")
-            p.drawString(410, 610, "Signed:" +"f'{fac1.subject1_timestamp}")
+            p.drawString(410, 610, "Signed:" +f'{content.subject1_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -417,12 +417,12 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload3
                 p.drawImage(im, 254, 585, height=15, width=80, mask='auto')
-            p.drawString(410, 580, "Signed:" +"f'{fac3.subject3_timestamp}")
+            p.drawString(410, 580, "Signed:" +f'{content.subject3_timestamp}')
         else:
 
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 580, "Approved *Manual Signature Required")
-            p.drawString(410, 585, "Signed:" +"f'{fac3.subject3_timestamp}")
+            p.drawString(410, 585, "Signed:" +f'{content.subject3_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -477,12 +477,12 @@ def graduation_print(request, id):
             elif stat_sig4 == "UPLOAD":
                 im = "../public_html/Media/" + str_upload4
                 p.drawImage(im, 254, 560, height=15, width=80, mask='auto')
-            p.drawString(410, 560, "Signed:" +"f'{fac4.subject4_timestamp}")
+            p.drawString(410, 560, "Signed:" +f'{content.subject4_timestamp}')
         else:
 
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 560, "Approved *Manual Signature Required")
-            p.drawString(410, 565, "Signed:" +"f'{fac4.subject4_timestamp}")
+            p.drawString(410, 565, "Signed:" +f'{content.subject4_timestamp}')
         
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -535,11 +535,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload5
                 p.drawImage(im, 254, 538, height=15, width=80, mask='auto')
-            p.drawString(410, 535, "Signed:" +"f'{fac5.subject5_timestamp}")
+            p.drawString(410, 535, "Signed:" +f'{content.subject5_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 535, "Approved *Manual Signature Required")
-            p.drawString(410, 540, "Signed:" +"f'{fac5.subject5_timestamp}")
+            p.drawString(410, 540, "Signed:" +f'{content.subject5_timestamp}')
         
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -595,11 +595,11 @@ def graduation_print(request, id):
                 im = "../public_html/Media/" + str_upload6
                 p.drawImage(im, 254, 512, height=15, width=80, mask='auto')
                 
-            p.drawString(410, 512, "Signed:" +"f'{fac6.subject6_timestamp}")
+            p.drawString(410, 512, "Signed:" +f'{content.subject6_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 512, "Approved *Manual Signature Required")
-            p.drawString(410, 517, "Signed:" +"f'{fac6.subject6_timestamp}")
+            p.drawString(410, 517, "Signed:" +f'{content.subject6_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -653,11 +653,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload7
                 p.drawImage(im, 254, 490, height=15, width=80, mask='auto')
-            p.drawString(410, 490, "Signed:" +"f'{fac7.subject7_timestamp}")
+            p.drawString(410, 490, "Signed:" +f'{content.subject7_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 490, "Approved *Manual Signature Required")
-            p.drawString(410, 495, "Signed:" +"f'{fac7.subject7_timestamp}")
+            p.drawString(410, 495, "Signed:" +f'{content.subject7_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -710,11 +710,11 @@ def graduation_print(request, id):
             elif stat_sig8 == "UPLOAD":
                 im = "../public_html/Media/" + str_upload8
                 p.drawImage(im, 254, 470, height=15, width=80, mask='auto')
-            p.drawString(410, 470, "Signed:" +"f'{fac8.subject8_timestamp}")
+            p.drawString(410, 470, "Signed:" +f'{content.subject8_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 470, "Approved *Manual Signature Required")
-            p.drawString(410, 475, "Signed:" +"f'{fac8.subject8_timestamp}")
+            p.drawString(410, 475, "Signed:" +f'{content.subject8_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -767,11 +767,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload9
                 p.drawImage(im, 254, 447, height=15, width=80, mask='auto')
-            p.drawString(410, 447, "Signed:" +"f'{fac9.subject9_timestamp}")
+            p.drawString(410, 447, "Signed:" +f'{content.subject9_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 447, "Approved *Manual Signature Required")
-            p.drawString(410, 452, "Signed:" +"f'{fac9.subject9_timestamp}")
+            p.drawString(410, 452, "Signed:" +f'{content.subject9_timestamp}')
             
             
         p.setFont("Helvetica", 7)
@@ -825,11 +825,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + str_upload10
                 p.drawImage(im, 254, 425, height=15, width=80, mask='auto')
-            p.drawString(410, 425, "Signed:" +"f'{fac10.subject10_timestamp}")
+            p.drawString(410, 425, "Signed:" +f'{content.subject10_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 425, "Approved *Manual Signature Required")
-            p.drawString(410, 430, "Signed:" +"f'{fac10.subject10_timestamp}")
+            p.drawString(410, 430, "Signed:" +f'{content.subject10_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -885,11 +885,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + add_str_upload1
                 p.drawImage(im, 254, 252, height=15, width=80, mask='auto')
-            p.drawString(410, 252, "Signed:" +"f'{addfac1.addsubject1_timestamp}")
+            p.drawString(410, 252, "Signed:" +f'{content.addsubject1_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 252, "Approved *Manual Signature Required")
-            p.drawString(410, 257, "Signed:" +"f'{addfac1.addsubject1_timestamp}")
+            p.drawString(410, 257, "Signed:" +f'{content.addsubject1_timestamp}')
         
             
         p.setFont("Helvetica", 7)
@@ -943,11 +943,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + add_str_upload2
                 p.drawImage(im, 254, 238, height=15, width=80, mask='auto')
-            p.drawString(410, 238, "Signed:" +"f'{addfac2.addsubject2_timestamp}")
+            p.drawString(410, 238, "Signed:" +f'{content.addsubject2_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 238, "Approved *Manual Signature Required")
-            p.drawString(410, 243, "Signed:" +"f'{addfac2.addsubject2_timestamp}")
+            p.drawString(410, 243, "Signed:" +f'{content.addsubject2_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1001,11 +1001,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + add_str_upload3
                 p.drawImage(im, 254, 224, height=15, width=80, mask='auto')
-            p.drawString(410, 224, "Signed:" +"f'{addfac3.addsubject3_timestamp}")
+            p.drawString(410, 224, "Signed:" +f'{content.addsubject3_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 224, "Approved *Manual Signature Required")
-            p.drawString(410, 229, "Signed:" +"f'{addfac3.addsubject3_timestamp}")
+            p.drawString(410, 229, "Signed:" +f'{content.addsubject3_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1059,11 +1059,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + add_str_upload4
                 p.drawImage(im, 254, 210, height=15, width=80, mask='auto')
-            p.drawString(410, 210, "Signed:" +"f'{addfac4.addsubject4_timestamp}")
+            p.drawString(410, 210, "Signed:" +f'{content.addsubject4_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 210, "Approved *Manual Signature Required")
-            p.drawString(410, 215, "Signed:" +"f'{addfac4.addsubject4_timestamp}")
+            p.drawString(410, 215, "Signed:" +f'{content.addsubject4_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1116,11 +1116,11 @@ def graduation_print(request, id):
             else:
                 im = "../public_html/Media/" + add_str_upload5
                 p.drawImage(im, 254, 196, height=15, width=80, mask='auto')
-            p.drawString(410, 196, "Signed:" +"f'{addfac5.addsubject5_timestamp}")
+            p.drawString(410, 196, "Signed:" +f'{content.addsubject5_timestamp}')
         else:
             p.setFont("Helvetica", 5.5)
             p.drawString(410, 196, "Approved *Manual Signature Required")
-            p.drawString(410, 201, "Signed:" +"f'{addfac5.addsubject5_timestamp}")
+            p.drawString(410, 201, "Signed:" +f'{content.addsubject5_timestamp}')
             
         p.setFont("Helvetica", 7)
         p.setFillColorRGB(0, 0, 0)
@@ -1155,12 +1155,12 @@ def graduation_print(request, id):
         else:
             im = "../public_html/Media/" + sit_str_upload1
             p.drawImage(im, 350, 70, height=15, width=80, mask='auto')
-        p.drawString(258, 66, "Signed:" +"f'{fac.sit_timestamp}")
+        p.drawString(258, 66, "Signed:" +f'{content.sit_timestamp}')
         
     else:
         p.setFont("Helvetica", 5.5)
         p.drawString(258, 66, "Approved *Manual Signature Required")
-        p.drawString(363, 66, "Signed:" +"f'{fac.sit_timestamp}")
+        p.drawString(363, 66, "Signed:" +f'{content.sit_timestamp}')
         
     p.setFont("Helvetica", 7)
     p.setFillColorRGB(0, 0, 0)
@@ -1306,15 +1306,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_acc
             p.drawImage(im, 130, 287, height=25, width=80, mask='auto')
             p.drawString(125, 298, f"""{accname}""")
-        p.drawString(115, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
+        p.drawString(115, 290, "Signed:" +f'{content.accountant_timestamp}')
     elif acc_stat == "REGISTRAR":
 
         p.setFont("Helvetica", 6)
         p.drawString(125, 298, "APPROVED")
-        p.drawString(125, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
+        p.drawString(125, 290, "Signed:" +f'{content.accountant_timestamp}')
     else:
         p.drawString(125, 298, f"""{accname}""")
-        p.drawString(160, 290, "Signed:" +"f'{accountant.accountant_timestamp}")
+        p.drawString(160, 290, "Signed:" +f'{content.accountant_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(53, 292, "Approved *Manual Signature Required")
@@ -1348,15 +1348,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_dla
             p.drawImage(im, 150, 240, height=25, width=80, mask='auto')
             p.drawString(147, 243, f"""{dlaname}""")
-        p.drawString(147, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
+        p.drawString(147, 234, "Signed:" +f'{content.liberal_timestamp}')
     elif dla_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(147, 243, "APPROVED")
-        p.drawString(147, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
+        p.drawString(147, 234, "Signed:" +f'{content.liberal_timestamp}')
 
     else:
         p.drawString(147, 243, f"""{dlaname}""")
-        p.drawString(182, 234, "Signed:" +"f'{liberal_arts.liberal_timestamp}")
+        p.drawString(182, 234, "Signed:" +f'{content.liberal_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 234, "Approved *Manual Signature Required")
@@ -1390,16 +1390,16 @@ def clearance_print(request, id):
             p.drawImage(im, 170, 215, height=25, width=80, mask='auto')
             p.drawString(170, 215, f"""{dmsname}""")
             
-        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
+        p.drawString(170, 207, "Signed:" +f'{content.mathsci_timestamp}')
 
     elif dms_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(170, 215, "APPROVED")
-        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
+        p.drawString(170, 207, "Signed:" +f'{content.mathsci_timestamp}')
 
     else:
         p.drawString(170, 215, f"""{dmsname}""")
-        p.drawString(170, 207, "Signed:" +"f'{mathsci.mathsci_timestamp}")
+        p.drawString(170, 207, "Signed:" +f'{content.mathsci_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 209, "Approved *Manual Signature Required")
@@ -1434,15 +1434,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_pe
             p.drawImage(im, 120, 185, height=25, width=80, mask='auto')
             p.drawString(120, 190, f"""{pename}""")
-        p.drawString(120, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
+        p.drawString(120, 183, "Signed:" +f'{content.pe_timestamp}')
     elif pe_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(120, 190, "APPROVED")
-        p.drawString(120, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
+        p.drawString(120, 183, "Signed:" +f'{content.pe_timestamp}')
 
     else:
         p.drawString(120, 190, f"""{pename}""")
-        p.drawString(182, 183, "Signed:" +"f'{pe_dept.pe_timestamp}")
+        p.drawString(182, 183, "Signed:" +f'{content.pe_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(75, 183, "Approved *Manual Signature Required")
@@ -1479,16 +1479,16 @@ def clearance_print(request, id):
                 im = "../public_html/Media/"+str_upload_itdept
                 p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
                 p.drawString(105, 113, f"""{itdeptname}""")
-            p.drawString(105, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
+            p.drawString(105, 105, "Signed:" +f'{content.it_timestamp}')
               
         elif itdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
-            p.drawString(105, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
+            p.drawString(105, 105, "Signed:" +f'{content.it_timestamp}')
 
         else:
             p.drawString(105, 113, f"""{itdeptname}""")
-            p.drawString(182, 105, "Signed:" +"f'{itdept_dept.it_timestamp}")
+            p.drawString(182, 105, "Signed:" +f'{content.it_timestamp}')
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
@@ -1522,17 +1522,17 @@ def clearance_print(request, id):
                 im = "../public_html/Media/"+str_upload_educdept
                 p.drawImage(im, 120, 110, height=25, width=80, mask='auto')
                 p.drawString(105, 113, f"""{educdeptname}""")
-            p.drawString(120, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
+            p.drawString(120, 105, "Signed:" +f'{content.ieduc_timestamp}')
 
 
         elif educdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
-            p.drawString(120, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
+            p.drawString(120, 105, "Signed:" +f'{content.ieduc_timestamp}')
 
         else:
             p.drawString(105, 113, f"""{educdeptname}""")
-            p.drawString(182, 105, "Signed:" +"f'{educdept_dept.ieduc_timestamp}")
+            p.drawString(182, 105, "Signed:" +f'{content.ieduc_timestamp}')
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
@@ -1565,16 +1565,16 @@ def clearance_print(request, id):
                 im = "../public_html/Media/"+str_upload_engdept
                 p.drawImage(im, 120, 190, height=25, width=80, mask='auto')
                 p.drawString(105, 113, f"""{engdeptname}""")
-            p.drawString(105, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
+            p.drawString(105, 105, "Signed:" +f'{content.eng_timestamp}')
 
         elif engdept_stat == "REGISTRAR":
             p.setFont("Helvetica", 6)
             p.drawString(105, 113, "APPROVED")
-            p.drawString(105, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
+            p.drawString(105, 105, "Signed:" +f'{content.eng_timestamp}')
 
         else:
             p.drawString(105, 113, f"""{engdeptname}""")
-            p.drawString(182, 105, "Signed:" +"f'{engdept_dept.eng_timestamp}")
+            p.drawString(182, 105, "Signed:" +f'{content.eng_timestamp}')
             p.setFont("Helvetica", 4.5)
             p.setFillColorRGB(1, 0, 0)
             p.drawString(75, 105, "Approved *Manual Signature Required")
@@ -1607,15 +1607,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_shop
             p.drawImage(im, 435, 290, height=25, width=80, mask='auto')
             p.drawString(435, 300, f"""{shopname}""")
-        p.drawString(435, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
+        p.drawString(435, 290, "Signed:" +f'{content.course_adviser_timestamp}')
     elif shop_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(435, 300, "APPROVED")
-        p.drawString(435, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
+        p.drawString(435, 290, "Signed:" +f'{content.course_adviser_timestamp}')
 
     else:
         p.drawString(435, 300, f"""{shopname}""")
-        p.drawString(427, 290, "Signed:" +"f'{shop_ad.course_adviser_timestamp}")
+        p.drawString(427, 290, "Signed:" +f'{content.course_adviser_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(325, 290, "Approved *Manual Signature Required")
@@ -1646,15 +1646,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_lib
             p.drawImage(im, 425, 265, height=15, width=80, mask='auto')
             p.drawString(425, 269, f"""{libname}""")
-        p.drawString(425, 258, "Signed:" +"f'{lib_ad.library_timestamp}") 
+        p.drawString(425, 258, "Signed:" +f'{content.library_timestamp}') 
     elif lib_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(425, 265, "APPROVED")
-        p.drawString(425, 258, "Signed:" +"f'{lib_ad.library_timestamp}")
+        p.drawString(425, 258, "Signed:" +f'{content.library_timestamp}')
 
     else:
         p.drawString(425, 269, f"""{libname}""")
-        p.drawString(432, 260, "Signed:" +"f'{lib_ad.library_timestamp}")
+        p.drawString(432, 260, "Signed:" +f'{content.library_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(325, 263, "Approved *Manual Signature Required")
@@ -1686,15 +1686,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_guidance
             p.drawImage(im, 435, 240, height=25, width=80, mask='auto')
             p.drawString(435, 244, f"""{guidancename}""")
-        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
+        p.drawString(432, 235, "Signed:" +f'{content.guidance_timestamp}')
     elif guidance_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(435, 244, "APPROVED")
-        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
+        p.drawString(432, 235, "Signed:" +f'{content.guidance_timestamp}')
 
     else:
         p.drawString(435, 244, f"""{guidancename}""")
-        p.drawString(432, 235, "Signed:" +"f'{guidance.guidance_timestamp}")
+        p.drawString(432, 235, "Signed:" +f'{content.guidance_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(325, 238, "Approved *Manual Signature Required")
@@ -1725,15 +1725,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_osa
             p.drawImage(im, 455, 215, height=25, width=80, mask='auto')
             p.drawString(455, 217, f"""{osaname}""")
-        p.drawString(455, 210, "Signed:" +"f'{osa.osa_timestamp}")
+        p.drawString(455, 210, "Signed:" +f'{content.osa_timestamp}')
     elif osa_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(455, 217, "APPROVED")
-        p.drawString(455, 210, "Signed:" +"f'{osa.osa_timestamp}")
+        p.drawString(455, 210, "Signed:" +f'{content.osa_timestamp}')
 
     else:
         p.drawString(455, 217, f"""{osaname}""")
-        p.drawString(432, 210, "Signed:" +"f'{osa.osa_timestamp}")
+        p.drawString(432, 210, "Signed:" +f'{content.osa_timestamp}')
         p.setFont("Helvetica", 4.5)
         p.setFillColorRGB(1, 0, 0)
         p.drawString(320, 210, "Approved *Manual Signature Required")
@@ -1765,15 +1765,15 @@ def clearance_print(request, id):
             im = "../public_html/Media/"+str_upload_adaa
             p.drawImage(im, 475, 180, height=25, width=80, mask='auto')
             p.drawString(482, 190, f"""{adaaname}""")
-        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+        p.drawString(450, 185, "Signed:" +f'{content.academic_timestamp}')
     elif adaa_stat == "REGISTRAR":
         p.setFont("Helvetica", 6)
         p.drawString(482, 190, "APPROVED")
-        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+        p.drawString(450, 185, "Signed:" +f'{content.academic_timestamp}')
 
     else:
         p.drawString(482, 190, f"""{adaaname}""")
-        p.drawString(450, 185, "Signed:" +"f'{adaa.academic_timestamp}")
+        p.drawString(450, 185, "Signed:" +f'{content.academic_timestamp}')
         p.setFillColorRGB(1, 0, 0)
         p.setFont("Helvetica", 4.5)
         p.drawString(325, 185, "Approved *Manual Signature Required")
@@ -1807,7 +1807,6 @@ def clearance_print(request, id):
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
-
 # FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (CLEARANCE ONLY)
 @login_required(login_url='/')
 def appointment(request, id, form):
@@ -2591,6 +2590,18 @@ def student_dashboard(request):
 @login_required(login_url='/')
 def clearance_form(request, req):
     
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+    
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
@@ -2755,7 +2766,7 @@ def clearance_form(request, req):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
 
-    return render(request, 'html_files/4.2Student Clearance Form.html', {'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
+    return render(request, 'html_files/4.2Student Clearance Form.html', {'currtime':currtime,'a': a, 'with_graduation': with_graduation, 'allow': allow_request, 'requested': requested, 'other_data': other_data, 'date_previous': date_previous, 'alumni_course_adviser': alumni_course_adviser})
 
 # VIEW GRADUATION FORM
 @login_required(login_url='/')
@@ -2791,6 +2802,18 @@ def regclear_back(request, id):
 # GRADUATION FORM
 @login_required(login_url='/')
 def graduation_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     # FACULTY LIST FOR DROPDOWN
     a = user_table.objects.filter(user_type="FACULTY", is_active=True).values_list(
         'full_name', flat=True).distinct()
@@ -3075,7 +3098,7 @@ def graduation_form(request):
             request, "You are trying to access an unauthorized page and is forced to logout.")
         return redirect('/')
     form = Graduation_form_table(request.POST or None)
-    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a})
+    return render(request, 'html_files/4.3Student Graduation Form.html', {'form': form, 'a': a, 'currtime': currtime})
 
 # ALUMNUS DASHBOARD
 @login_required(login_url='/')
@@ -3138,8 +3161,7 @@ def faculty_dashboard(request):
             st1 = clearance_form_table.objects.filter(
                 osa_signature="UNAPPROVED", user_removed="0").order_by('-time_requested')
         elif request.user.department == "HADAA":
-            st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
+            st1 = clearance_form_table.objects.filter(approval_status="9/10", user_removed="0").order_by('-time_requested')
 
         # CLEARANCE FORM IDENTIFIER FOR COURSE ADVISERS
         if clearance_form_table.objects.filter(course_adviser_signature=unapproved):
@@ -3186,9 +3208,8 @@ def faculty_dashboard(request):
                     osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st1 = clearance_form_table.objects.filter(Q(approval_status="8/10"), Q(course_adviser_signature=unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
-
+                st1 = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+                
         with_clearance = clearance_form_table.objects.filter(
             course_adviser=request.user.full_name)
         
@@ -3473,9 +3494,8 @@ def faculty_dashboard_clearance_list(request, id):
                     osa_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
 
             if request.user.department == "HADAA":
-                st = clearance_form_table.objects.filter( Q(approval_status="8/10") , Q(course_adviser_signature=f_n_unapproved) | Q(
-                    academic_affairs_signature="UNAPPROVED"), Q(user_removed="0")).order_by('-time_requested')
-
+                st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed="0")).order_by('-time_requested')
+            
         elif request.user.department == "HOCS":
             st = clearance_form_table.objects.filter(
                 accountant_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
@@ -3517,9 +3537,8 @@ def faculty_dashboard_clearance_list(request, id):
                 osa_signature="UNAPPROVED", user_removed = "0").order_by('-time_requested')
 
         elif request.user.department == "HADAA":
-            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(course_adviser_signature__contains="_APPROVED"),
-                Q(academic_affairs_signature="UNAPPROVED"), Q(user_removed = "0")).order_by('-time_requested')
-
+            st = clearance_form_table.objects.filter(Q(approval_status="9/10"), Q(user_removed = "0")).order_by('-time_requested')
+            
     else:
         messages.error(
             request, "You are trying to access an unauthorized page and is forced to logout.")
@@ -7352,33 +7371,33 @@ def registrar_dashboard_organize_faculty_list(request, id):
         sorter = id
 
         if id == "OCL":
-            requests = user_table.objects.filter(department__contains="OCL").values()
+            requests = user_table.objects.filter(department__contains="OCL", is_active=True).values()
         elif id == "OCS":
-            requests = user_table.objects.filter(department__contains="OCS").values()
+            requests = user_table.objects.filter(department__contains="OCS", is_active=True).values()
         elif id == "OGS":
-            requests = user_table.objects.filter(department__contains="OGS").values()
+            requests = user_table.objects.filter(department__contains="OGS", is_active=True).values()
         elif id == "OSA":
-            requests = user_table.objects.filter(department__contains="OSA").values()
+            requests = user_table.objects.filter(department__contains="OSA", is_active=True).values()
         elif id == "ADAA":
-            requests = user_table.objects.filter(department__contains="ADAA").values()
+            requests = user_table.objects.filter(department__contains="ADAA", is_active=True).values()
         elif id == "OES":
-            requests = user_table.objects.filter(department__contains="OES").values()
+            requests = user_table.objects.filter(department__contains="OES", is_active=True).values()
         elif id == "DMS":
-            requests = user_table.objects.filter(department__contains="DMS").values()
+            requests = user_table.objects.filter(department__contains="DMS", is_active=True).values()
         elif id == "DPECS":
-            requests = user_table.objects.filter(department__contains="DPECS").values()
+            requests = user_table.objects.filter(department__contains="DPECS", is_active=True).values()
         elif id == "DED":
-            requests = user_table.objects.filter(department__contains="DED").values()
+            requests = user_table.objects.filter(department__contains="DED", is_active=True).values()
         elif id == "DIT":
-            requests = user_table.objects.filter(department__contains="DIT").values()
+            requests = user_table.objects.filter(department__contains="DIT", is_active=True).values()
         elif id == "DLA":
-            requests = user_table.objects.filter(department__contains="DLA").values()
+            requests = user_table.objects.filter(department__contains="DLA", is_active=True).values()
         elif id == "DOE":
-            requests = user_table.objects.filter(department__contains="DOE").values()
+            requests = user_table.objects.filter(department__contains="DOE", is_active=True).values()
         elif id == "DELETED":
             requests = user_deleted_table.objects.filter(Q(user_type = "FACULTY") | Q(user_type="HEAD")).values()
         else:
-            requests = user_table.objects.filter(user_type="FACULTY") .values()
+            requests = user_table.objects.filter(user_type="FACULTY", is_active=True) .values()
 
     else:
         messages.error(
@@ -7447,6 +7466,18 @@ def request_claim_update(request, id):
 # REQUEST FORM
 @login_required(login_url='/')
 def request_form(request):
+    #DETECT IF TIME IS WITHIN OFFICE HOURS
+    
+    temptime1 = str(datetime.now().time())
+    temptime2=temptime1.split(':')
+    temptime3 = int(temptime2[0])
+    print("temptime2:",temptime2)
+    print("temptime3:",temptime3)
+    if temptime3 >=7 and temptime3 <=16:
+        currtime= "within_office_hours"
+    else:
+        currtime= "out_of_office_hours"
+        
     context = {}
     if request.user.is_authenticated and request.user.user_type == "STUDENT" or request.user.user_type == "ALUMNUS" or request.user.user_type == "OLD STUDENT":
         user = request.user.user_type
@@ -7611,7 +7642,7 @@ def request_form(request):
                 request_other = ""
                 request_cert = ""
 
-            context = {'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
+            context = {'currtime':currtime,'with_graduation': with_graduation, 'allow': allow_request, 'latest_request': latest_req,
                        'request_purpose': request_pur, 'request_other': request_other, 'request_cert': request_cert}
 
     else:
