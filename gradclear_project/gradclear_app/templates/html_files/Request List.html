@@ -96,7 +96,16 @@ Adviser:
 
     table{
         min-width: max-content;
+        border-collapse: separate;
     }
+
+    #list_tbl_77 td:nth-child(2) {
+
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-right-width: 0;
+    }
+
 
     thead{
         position: sticky;
@@ -392,6 +401,12 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
+
+
     }
     
     #list_tbl2_77 {
@@ -411,8 +426,9 @@ Adviser:
         overflow-wrap: break-word;
     }
 
+    
     #list_tbl_77 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl_77 tbody tr:nth-child(odd) {
@@ -423,15 +439,20 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_77 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl2_77 tbody tr:nth-child(odd) {
         background-color: #f5f0f6;
     }
+
     
     #list_tbl2_77 th {
         background-color: #c51d3a;
@@ -622,7 +643,7 @@ Adviser:
                                                 <option value="❌">❌</option>
                                             </select>
                                             
-                                            <td style="padding-left: 0%;">
+                                            <td style="padding-left: 0%; border-right-width: 0; border-left-width: 0;">
                                                 {% if instance.official_receipt == "✔" and instance.or_num is None %}
                                                 <div class="form-group-row" id="course_input">
                                                     <input type=date id="or_date" name="or_date" oninput="enter_lterm()" onkeypress="isNumber(event)">
@@ -635,7 +656,7 @@ Adviser:
                                     
                                             </td>
 
-                                            <td>
+                                            <td style="padding-left: 0%; border-right-width: 0; border-left-width: 0;">
                                                 {% if instance.official_receipt == "✔" and instance.or_num is None %}
 
                                                 <div class="form-group-row" id="course_input">

@@ -353,6 +353,10 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_75 {
@@ -384,6 +388,11 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
+
     }
     
     #list_tbl2_75 tbody tr:nth-child(even) {
@@ -506,7 +515,7 @@ Adviser:
             <div class="outer-wrapper">
                 <div class="table-wrapper">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_75">
-                    <thead>
+                    <thead style="height: 50px;">
                         <tr>
                             <th hidden>#</th>
                             <th>Profile Picture</th>
@@ -514,7 +523,7 @@ Adviser:
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th class="sorting" title="Sort by Course">Course</th>
                             <th class="sorting" title="Sort by Year Level">Year Level</th>
-                            <th class="sorting" title="Sort by Course Graduated">Course Graduated</th>
+                            <th class="sorting" title="Sort by Course Graduated" style="font-size: 15px;">Course Graduated</th>
                             <th class="sorting" title="Sort by Year Graduated">Year Graduated</th>
                             <th class="sorting" title="Sort by Application Status">Status</th>
                             <th></th>
@@ -600,7 +609,7 @@ Adviser:
                         </tr>
                     {% endfor %}   
                     </tbody>
-                    }
+                    
                 </table>
             </div>
             </div>
