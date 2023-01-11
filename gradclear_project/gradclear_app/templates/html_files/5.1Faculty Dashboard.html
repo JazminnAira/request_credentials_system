@@ -711,17 +711,17 @@ Adviser:
                             <tr>
                                 <td><b>Name:</b> </td>
                                 {% if request.user.preffix is not None and request.user.suffix is not None %}
-                                <td>{{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
-                                {% elif request.user.suffix is not None %}
-                                <td>{{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
-                                {% elif request.user.preffix is not None %}
-                                <td>{{request.user.preffix}} {{request.user.first_name}} {{request.user.last_name}}</td>
+                                <td>{{request.user.preffix}} {{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
+                                {% elif request.user.preffix is None and request.user.suffix is None %}
+                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>
                                 {% elif request.user.preffix is None and request.user.suffix is not None %}
                                 <td>{{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
                                 {% elif request.user.preffix is not None and request.user.suffix is None %}
                                 <td>{{request.user.preffix}} {{request.user.first_name}} {{request.user.last_name}}</td>
-                                {% elif request.user.preffix is None and request.user.suffix is None %}
-                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>
+                                {% elif request.user.suffix is not None %}
+                                <td>{{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
+                                {% elif request.user.preffix is not None %}
+                                <td>{{request.user.preffix}} {{request.user.first_name}} {{request.user.last_name}}</td>
                                 {% endif %}    
                             </tr>
 
