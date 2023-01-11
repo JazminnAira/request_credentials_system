@@ -32,8 +32,8 @@ class signup_form(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
             'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'}),
-            'preffix': forms.TextInput(attrs={'class': 'form-control col-7', 'placeholder': 'Prefix'}),
-            'suffix': forms.TextInput(attrs={'class': 'form-control  col-7', 'placeholder': 'Suffix'}),
+            'preffix': forms.TextInput(attrs={'class': 'form-control col-10', 'placeholder': 'Title'}),
+            'suffix': forms.TextInput(attrs={'class': 'form-control  col-8', 'placeholder': 'ext.'}),
         }
 
 class TimePickerInput(forms.TimeInput):
