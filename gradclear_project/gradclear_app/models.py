@@ -132,7 +132,7 @@ class user_table(AbstractUser):
     
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", null=True)
-    prefix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
+    preffix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
@@ -520,7 +520,7 @@ class user_deleted_table(models.Model):
     
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", null=True)
-    prefix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
+    preffix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True, default="None")
     first_name = models.CharField(max_length=100, verbose_name="First Name")

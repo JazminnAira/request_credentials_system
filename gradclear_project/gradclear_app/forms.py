@@ -18,8 +18,8 @@ class signup_form(UserCreationForm):
                   'contact_number', 'year_and_section', 'id_number', 'password2', 'department', 'profile_picture', 'course_graduated', 'year_graduated', 'uploaded_signature', 'preffix', 'suffix']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Last Name'}),
-            'middle_name': forms.TextInput(attrs={'class': 'form-control ', 'placeholder': 'Middle Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+            'middle_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Middle Name'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'House No., Street, Subdivision, Brgy., Province'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
@@ -32,7 +32,7 @@ class signup_form(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
             'department': forms.Select(attrs={'class': 'form-control'}),
             'year_graduated': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g.2000'}),
-            'preffix': forms.TextInput(attrs={'class': 'form-control col-10', 'placeholder': 'Title'}),
+            'preffix': forms.TextInput(attrs={'class': 'form-control col-11', 'placeholder': 'Title'}),
             'suffix': forms.TextInput(attrs={'class': 'form-control  col-8', 'placeholder': 'ext.'}),
         }
 
