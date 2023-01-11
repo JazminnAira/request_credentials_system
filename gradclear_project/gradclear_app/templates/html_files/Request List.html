@@ -588,7 +588,7 @@ Adviser:
             {% else %}
             <h3 style="text-align:center;">List of Request Forms</h3>
             {% endif %}
-            div id ="button_claim_and_unclaim" class="mt-3 col-12">
+            <div id ="button_claim_and_unclaim" class="mt-3 col-12">
                 {% if sorter_type == "ALL" %}
                     <button class="button pl-2 pr-2 " style =" background-color : #c51d3a" id ="button_sorter" >All</button>
                     <button class="button pl-2 pr-2 " id ="button_sorter2" >Claimed</button>
@@ -730,7 +730,7 @@ Adviser:
                                     
                                             </td>
 
-                                            <td border-right-width: 0; border-left-width: 0;>
+                                            <td style= "border-right-width: 0; border-left-width: 0;">
                                                 {% if instance.official_receipt == "✔" and instance.or_num is None %}
 
                                                 <div class="form-group-row" id="course_input">
