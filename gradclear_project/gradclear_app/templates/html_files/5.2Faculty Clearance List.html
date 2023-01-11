@@ -499,7 +499,6 @@ Adviser:
         padding: 6px 15px;
         min-height: 100px;
         animation: fadeEffect 1s;
-        padding-bottom: 50px;
     }
 
     #upload_attach_sig_btn{
@@ -604,7 +603,7 @@ Adviser:
     </div>
     <div class="div">{% include 'html_files/message.html'%}</div>
     <!--BACK TO TOP BUTTON-->
-    <a id="backtotop_btn_52"></a>
+    <a id="backtotop_btn_52" data-toggle="tooltip" title="Back to Top"></a>
 
     
     <!--APPOINTMENT MODAL-->
@@ -670,14 +669,31 @@ Adviser:
     <h3 style="text-align:center; margin-top: 10px;" id="h3_title">List of Clearance Forms</h3>
     <div class="border pt-2 signature_section" id ="signature_section">
         <div align="right"><button type ="button" class="closebtn bg-danger btn-lg text-white" id ="close_signature" >X</button></div>
-        <div class = "p-4" id="show_details">
+        <br>
+        <div id="show_details">
             <div class="bg-dark p-2"><h3 class = "text-white">APPROVE USING:</h3></div>
         </div>
-        
+        <br>
         <input type="text" id="attach_signature_to" hidden>
         <input type = "text" id="department" hidden>
         <input type ="text" id = "esign_checker" value="{{esign_check}}" hidden>
         <input type = "text" id = "upload_checker" value = "{{uploadsig_check}}" hidden>
+        
+        <!-- NOTE ON ATTACHING SIGNATURES-->
+        <div style="border:1px solid #000; margin:0 5 0 5" class="container">
+            <p class="text-align:justify;">
+                
+                <center><b>NOTE:</b></center>
+                <br>
+                If you intend to digitally sign the following form/s, please read this carefully before signing:
+                <br><br>
+                By signing your name electronically on the form/s, you are agreeing that your
+                electronic signature is the legal equivalent of your handwritten signature and is consenting
+                the system to use it to signify that you approve the form/s.
+                <br><br>
+                Rest assured that your signature will be securely stored and will not be used without your authorization.
+            </p>
+            </div>
         
         <!--CHOOSING APPROVAL SIGNATURE-->
         <div class= "mx-auto" align="center" id="button_area">
@@ -694,22 +710,6 @@ Adviser:
                 <button type = "button" id = "approve_sig_btn" class ="btn btn-lg p-3 bg-dark border text-white border-dark">PHYSICAL SIGNATURE</button><br>
             </div>
             
-            <br><br><br><br><br>
-            <!-- NOTE ON ATTACHING SIGNATURES-->
-            <div style="border:1px solid #000; margin:0 5 0 5" class="container">
-            <p class="text-align:justify;">
-                
-                <center><b>NOTE:</b></center>
-                <br>
-                If you intend to digitally sign the following form/s, please read this carefully before signing:
-                <br><br>
-                By signing your name electronically on the form/s, you are agreeing that your
-                electronic signature is the legal equivalent of your handwritten signature and consenting
-                the system to use it to signify that you approve the form/s.
-                <br><br>
-                Rest assured that your signature will be securely stored and will not be used without your authorization.
-            </p>
-            </div>
         </div>
         
         <div id="create_signature_area" class="p-1" hidden>
@@ -933,7 +933,7 @@ Adviser:
             
             <button type="submit" id="submit_btn_all" hidden />
         </form>
-        <button type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
+        <button style="margin-top:10px" type ="button" disabled="disabled" name="approve_all" class="button btn-m user_id approve_all" id="open_signature" onclick = "OpenSignature(this)">Approve All</button>
         {% for s in preview_data %}
         <div id="myDIV"  class = "border bg-white border-dark p-3 m-1" hidden>
                <div class="row">
@@ -1166,7 +1166,7 @@ Adviser:
                {% endif %}</td>
                </tr><br>
                <tr>
-                   <td><b>Asst. DIR. for Academic Affairs::</b></td><br>
+                   <td><b>Asst. DIR. for Academic Affairs:</b></td><br>
                    <td>{% if s.academic_affairs_signature == "UNAPPROVED" %}
                        <label class="signature_color_red">UNAPPROVED</label>
                    {% else %}
