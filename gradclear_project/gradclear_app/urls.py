@@ -36,6 +36,7 @@ urlpatterns = [
      # FORM DISPLAY
      path('display_reqform/<int:id>', display_reqform, name='display_reqform'),
      path('display_clearform/<int:id>', display_clearform, name='display_clearform'),
+     path('registrar_dashboard_organize_clearance_list/display_clearform/<int:id>', display_clearform, name='display_clearform'),
      path('display_gradform/<int:id>', display_gradform, name='display_gradform'),
      path('registrar_dashboard_graduation_list/display_gradform/<str:id>', display_gradform,), 
      path('registrar_dashboard_clearance_list/display_clearform/<str:id>', display_clearform,), 

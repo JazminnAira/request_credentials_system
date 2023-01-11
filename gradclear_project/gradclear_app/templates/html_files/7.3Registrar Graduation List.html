@@ -105,6 +105,7 @@ Adviser:
     thead{
         position: sticky;
         top: 0px;
+        z-index: 1;
     }
     
     thead,td{
@@ -292,6 +293,9 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+        position: sticky;
+        top: 0px;
+        z-index: 2;
     }
     
     #delete_history{
@@ -324,7 +328,7 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
-
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
@@ -360,7 +364,7 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
-
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
@@ -447,6 +451,10 @@ Adviser:
         <a href="#" style ="font-size: 25px; margin: 0 0 10px 6px;" onclick="to_beprinted('grad_list_print')" data-toggle="tooltip" data-placement="right" title="Print">
             <i class="fa fa-print"></i>
         </a>
+        <a href="/registrar_dashboard_graduation_list/Transaction_Log" data-toggle="tooltip" data-placement="right" title="Transaction Logs"><i class="fa fa-history" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+        <a href="/registrar_dashboard_graduation_list/Delete_History" data-toggle="tooltip" data-placement="right" title="Delete History"><i class="fa fa-trash" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+        
+
         
 
         <!--SEARCH BAR-->
@@ -454,25 +462,19 @@ Adviser:
     </div>
 
     <!--BACK TO TOP BUTTON-->
-    <a id="backtotop_btn_72"></a>
+    <a id="backtotop_btn_72" data-toggle="tooltip" title="Back to Top"></a>
 
  
 
     <!-- MAIN-->
-    {% if sorter_type == "DELETED" %}
+   {% if sorter_type == "Delete_History" %}
     <h3 style="text-align:center;">List of Deleted Graduation Forms</h3>
     {% else %}
     <h3 style="text-align:center;">List of Graduation Forms</h3>
     {% endif %}
     {% include 'html_files/message.html'%}
-    
-    {% if sorter_type != "DELETED" %}
-    <div id="delete_history_div" align="right">
-        <a href="/registrar_dashboard_graduation_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
-    </div>
-    {% endif %}
 
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" or sorter_type == "Transaction_Log" %}
     <div id="back_history_div">
         <a href="/registrar_dashboard_graduation_list/%20" class = "btn" type = "button" id ="back_history">Back</a>
     </div>
@@ -504,7 +506,27 @@ Adviser:
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th class="sorting" title="Sort by Date Requested">Date & Time Requested</th>  
                             <th class="sorting" title="Sort by Approval Status">Approval Status</th>
-                            {% if sorter_type != "DELETED" %}
+                            
+                             {% if sorter_type == "Transaction_Log" %}
+                            <th>Date and Time Approved</th>
+                            <th>SIT</th>
+                            <th>Subject 1</th>
+                            <th>Subject 2</th>
+                            <th>Subject 3</th>
+                            <th>Subject 4</th>
+                            <th>Subject 5</th>
+                            <th>Subject 6</th>
+                            <th>Subject 7</th>
+                            <th>Subject 8</th>
+                            <th>Subject 9</th>
+                            <th>Subject 10</th>
+                            <th>Additional Subject 1</th>
+                            <th>Addistional Subject 2</th>
+                            <th>Additional Subject 3</th>
+                            <th>Additional Subject 4</th>
+                            <th>Additional Subject 5</th>
+                            
+                            {% elif sorter_type != "Delete_History" %}
                             <th>Notify</th>
                             {% if request.user.user_type == "REGISTRAR"%}
                             <th></th>
@@ -513,7 +535,7 @@ Adviser:
                             <th>Date and Time Removed</th>
                             {% endif %}
                         </tr>
-                        {% if request.user.user_type == "REGISTRAR" and sorter_type != "DELETED" %}
+                        {% if request.user.user_type == "REGISTRAR" and sorter_type != "Delete_History" %}
                         <tr class="no_data">
                             <td colspan="7"><i class="fa fa-warning"></i> No Data</td>
                         <tr class="warning no-result">
@@ -544,7 +566,170 @@ Adviser:
                             <td onclick="window.location='display_gradform/{{ instance.id }}'"><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
                             
-                            {% if sorter_type == "DELETED" %}
+                            {%if sorter_type == "Transaction_Log" %}
+                            <td>{{instance.approved_timestamp}}</td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.sitsignature %}
+                                UNAPPROVED
+                                {%elif instance.sitsignature == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.sit_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature1 %}
+                                UNAPPROVED
+                                {%elif instance.signature1 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject1_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature2 %}
+                                UNAPPROVED
+                                {%elif instance.signature2 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject2_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature3 %}
+                                UNAPPROVED
+                                {%elif instance.signature3 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject3_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature4 %}
+                                UNAPPROVED
+                                {%elif instance.signature4 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject4_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature5 %}
+                                UNAPPROVED
+                                {%elif instance.signature5 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject5_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature6 %}
+                                UNAPPROVED
+                                {%elif instance.signature6 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject6_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature7 %}
+                                UNAPPROVED
+                                {%elif instance.signature7 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject7_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature8 %}
+                                UNAPPROVED
+                                {%elif instance.signature8 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject8_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature9 %}
+                                UNAPPROVED
+                                {%elif instance.signature9 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject9_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.signature10 %}
+                                UNAPPROVED
+                                {%elif instance.signature10 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.subject10_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.addsignature1 %}
+                                UNAPPROVED
+                                {%elif instance.addsignature1 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.addsubject1_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.addsignature2 %}
+                                UNAPPROVED
+                                {%elif instance.addsignature2 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.addsubject2_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.addsignature3 %}
+                                UNAPPROVED
+                                {%elif instance.addsignature3 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.addsubject3_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.addsignature4 %}
+                                UNAPPROVED
+                                {%elif instance.addsignature4 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.addsubject4_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if 'UNAPPROVED' in instance.addsignature5 %}
+                                UNAPPROVED
+                                {%elif instance.addsignature5 == "NO_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.addsubject5_timestamp}}
+                                {% endif %}
+                            </td>
+
+                            {% elif sorter_type == "Delete_History" %}
                             <td>{{instance.deleted_timestamp}}</td>
                             {% else %}
                             <td>
@@ -554,14 +739,14 @@ Adviser:
                                 {% else %}
                                 <!--SEND EMAIL-->
                                 {% if instance.user_removed == "1" %}
-                                The Applicant's Account has been Deleted, Cannot Notify
+                                DISABLED
                                 {% else %}
                                 <a href="{% url 'reggrad_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>  Notify Student</button></a>
                                 {% endif %}
                                 {% endif %}
                             {% else %}
                             {% if instance.user_removed == "1" %}
-                                The Applicant's Account has been Deleted, Cannot Notify
+                                DISABLED
                             {% else %}
                                 ❌
                             {% endif %}

@@ -418,8 +418,6 @@ Adviser:
     #search_btn_75:hover {
         color: #c51d3a;
     }
-
-    
 </style>
 
 
@@ -428,9 +426,8 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_75">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px;"></i></a>
         <a href="{% url 'staff_signup'%}" data-toggle="tooltip" data-placement="right" title="Add Staff"><i class="fa fa-user-plus" aria-hidden="true" style="font-size:25px;"></i></a>
-
-        
-
+        <a href="/registrar_dashboard_staff_list/Delete_History" data-toggle="tooltip" data-placement="right" title="Delete History"><i class="fa fa-trash" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+    
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_75" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
     </div>
@@ -441,21 +438,14 @@ Adviser:
 
 
     <!-- MAIN-->
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <h3 style="text-align:center;">List of Deleted Staffs</h3>
     {% else %}
     <h3 style="text-align:center;">List of Staffs</h3>
     {% endif %}
     <div class="div">{% include 'html_files/message.html'%}</div>
-    
-    
-    {% if sorter_type != "DELETED" %}
-    <div id="delete_history_div" align="right">
-        <a href="/registrar_dashboard_staff_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
-    </div>
-    {% endif %}
 
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <div id="back_history_div">
         <a href="/registrar_dashboard_staff_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
     </div>
@@ -465,7 +455,7 @@ Adviser:
         <!-- MAIN TABLE-->
         <div id="tab1_75" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
-                <div class="table-wrapper div1" style="overflow-x:auto;"> 
+                <div class="table-wrapper">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_75">
                     <thead>
                         <tr>
@@ -473,7 +463,7 @@ Adviser:
                             <th class="sorting" title="Sort by Name">Name</th>
                             <th class="sorting" title="Sort by Username">Email/Username</th>
                             <th class="sorting" title="Sort by Gender">Gender</th>
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History" %}
                             <th>Date and Time Removed</th>
                             {% else %}
                             <th></th>
@@ -496,7 +486,7 @@ Adviser:
                             <td>{{instance.username}}</td>
                             <td>{{instance.gender}}</td>
                             
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History" %}
                             <td>{{instance.deleted_timestamp}}</td>
                             {% else %}
                             <td><form method ="POST" action ="staff_list_remove/{{instance.id}}">

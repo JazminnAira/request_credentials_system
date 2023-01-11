@@ -372,6 +372,7 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
@@ -396,7 +397,7 @@ Adviser:
     }
 
     #list_tbl_75 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl_75 tbody tr:nth-child(odd) {
@@ -407,15 +408,15 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
         border-width: 1px 0 1px 1px;
-
     }
     
     #list_tbl2_75 tbody tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: #f5f0f6;
     }
     
     #list_tbl2_75 tbody tr:nth-child(odd) {
@@ -477,8 +478,7 @@ Adviser:
     <div class="container-fluid" id="dashboard_header_75">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
         <a href="{% url 'school_year_update'%}" data-toggle="tooltip" data-placement="right" title="New School Year"><i class="fa fa-calendar-o" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
-
-        
+        <a href="/registrar_dashboard_student_list/Delete_History" data-toggle="tooltip" data-placement="right" title="Delete History"><i class="fa fa-trash" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
 
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_75" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
@@ -525,20 +525,14 @@ Adviser:
 
 
     <!-- MAIN-->
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <h3 style="text-align:center;">List of Deleted Students</h3>
     {% else %}
     <h3 style="text-align:center;">List of Students</h3>
     {% endif %}
     {% include 'html_files/message.html'%}
-    
-    {% if sorter_type != "DELETED" %}
-    <div id="delete_history_div" align="right">
-        <a href="/registrar_dashboard_student_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
-    </div>
-    {% endif %}
 
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <div id="back_history_div">
         <a href="/registrar_dashboard_student_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
     </div>
@@ -557,16 +551,16 @@ Adviser:
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th class="sorting" title="Sort by Course">Course</th>
                             <th class="sorting" title="Sort by Year Level">Year Level</th>
-                            <th class="sorting" title="Sort by Course Graduated" style="font-size: 15px;">Course Graduated</th>
+                            <th class="sorting" title="Sort by Course Graduated"  style="font-size: 15px;">Course Graduated</th>
                             <th class="sorting" title="Sort by Year Graduated">Year Graduated</th>
                             <th class="sorting" title="Sort by Application Status">Status</th>
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History" %}
                             <th>Date and Time Removed</th>
                             {% else %}
                             <th></th>
                             {% endif %}
                         </tr>
-                        {% if sorter_type == "DELETED" %}
+                        {% if sorter_type == "Delete_History" %}
                         <tr class="no_data">
                             <td colspan="8"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
@@ -575,12 +569,12 @@ Adviser:
                         </tr>
                         {% else %}
                         <tr class="no_data">
-                            <td colspan=8"><i class="fa fa-warning"></i> No Data</td>
+                            <td colspan="8"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
                         <tr class="warning no-result">
                             <td colspan="8"><i class="fa fa-warning"></i> No result</td>
                         </tr>
-                        {% else %}
+                        {% endif %}
                     </thead>
                     <tbody>
                     {% for instance in data %}
@@ -618,7 +612,7 @@ Adviser:
                                 <td>{{instance.year_graduated}}</td>
                             {% endif %}
                             
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History" %}
                             <td>{{instance.user_type}}</td>
                             <td>{{instance.deleted_timestamp}}</td>
                             {% else %}
