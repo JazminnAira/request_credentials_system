@@ -84,7 +84,6 @@ Adviser:
         font-weight: bolder;
     }
 
-
     select {
         max-width:200px;
         font-size: 12px;
@@ -317,8 +316,6 @@ Adviser:
         background-color: #d3324d;
     }
 
-    
-
     #changer  {
         background-color: #f5f0f6;
         border:none;
@@ -421,6 +418,7 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
@@ -482,7 +480,7 @@ Adviser:
     #search_btn_74:hover {
         color: #c51d3a;
     }
-
+    
     /*SCREEN RESPONSIVE*/
     @media screen and (min-width: 500px){
     
@@ -518,7 +516,8 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_74">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-
+                <a href="/registrar_dashboard_organize_faculty_list/Delete_History" data-toggle="tooltip" data-placement="right" title="Delete History"><i class="fa fa-trash" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+                
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_74" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
 
@@ -549,21 +548,15 @@ Adviser:
      <a id="backtotop_btn_74"></a>
 
     <!-- MAIN-->
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <h3 style="text-align:center;">List of Deleted Faculties</h3>
     {% else %}
     <h3 style="text-align:center;">List of Faculties</h3>
     {% endif %}
 
     {% include 'html_files/message.html'%}
-    
-    {% if sorter_type != "DELETED" %}
-    <div id="delete_history_div" align="right">
-        <a href="/registrar_dashboard_organize_faculty_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
-    </div>
-    {% endif %}
 
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <div id="back_history_div">
         <a href="/registrar_dashboard_organize_faculty_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
     </div>
@@ -587,7 +580,7 @@ Adviser:
         <!--MAIN TABLE-->
         <div id="tab1_74" class="tab-content" style="background-color:#fff">
             <div class="outer-wrapper">
-                <div class="table-wrapper div1" style="overflow-x:auto;">
+                <div class="table-wrapper div1">
                 <table class="table results table-hover table-sortable table-responsive-sm" id="list_tbl_74">
                     <thead style="height: 50px;">
                         <tr>
@@ -597,7 +590,7 @@ Adviser:
                             <th class="sorting" title="Sort by ID Number">ID Number</th>
                             <th>Email</th>
                             <th>Designation</th>
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History"  %}
                             <th>Date and Time Removed</th>
                             {% else %}
                             <th></th>
@@ -627,7 +620,7 @@ Adviser:
                             <td>{{instance.id_number}}</td>
                             <td>{{instance.email}}</td>
                             
-                            {% if sorter_type == "DELETED" %}
+                            {% if sorter_type == "Delete_History"  %}
                             <td>
                                 {% if instance.designation == "---" %}
                                 FACULTY

@@ -356,7 +356,7 @@ Adviser:
     }
     
     .table-hover tbody tr:nth-child(even) {
-        background-color: #transparent;
+        background-color: transparent;
     }
 
     .table-sortable th {
@@ -711,7 +711,7 @@ Adviser:
     <img src="{% static 'Media/tup_logo.png' %}" width="55" height="55" id="logo_41"><span class="icon-text"style="padding-left: 15px; font-size:30px; color: #fff;">TUP-Cavite</span></a><br><br><br>
     
     <!-- ACCOUNT MODAL -->
-    <a style="padding-left: 23px;" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
+    <a style="padding-left: 23px;" href="" data-toggle="modal" data-target="#AccountSettings_modal_41" class="link" class="trigger-btn"><i class="fa fa-user material-icons" style="margin-right: 33px;">
         </i><span class="icon-text" style="padding-left: 3px;">Account</span></a><br>
     
     <!-- GRADUATION FORM FOR GRADUATING STUDENTS -->
@@ -770,7 +770,11 @@ Adviser:
                         <table id="table" class="table-responsive-sm table-responsive-sm" >
                             <tr>
                                 <td><b>Name:</b></td>
+                                {% if request.user.suffix is not None %}
                                 <td>{{request.user.first_name}} {{request.user.last_name}} {{request.user.suffix}}</td>
+                                {% else %}
+                                <td>{{request.user.first_name}} {{request.user.last_name}}</td>
+                                {% endif %}
                             </tr>
 
                             <tr>

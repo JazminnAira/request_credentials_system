@@ -106,6 +106,7 @@ Adviser:
     thead{
         position: sticky;
         top: 0px;
+        z-index: 1;
     }
      
     thead,td{
@@ -339,6 +340,9 @@ Adviser:
         background-color: #636363;
         padding-top: 5px;
         text-align: center;
+        position: sticky;
+        top: 0px;
+        z-index: 2;
     }
     
     #delete_history{
@@ -393,6 +397,11 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
+        
+        border: 1px solid black;
+        border-collapse: separate;
+        border-spacing: 0px;
+        border-width: 1px 0 1px 1px;
     }
     
     #list_tbl2_72 {
@@ -410,13 +419,6 @@ Adviser:
         text-align: center;
         vertical-align: middle;
         overflow-wrap: break-word;
-
-        
-        border: 1px solid black;
-        border-collapse: separate;
-        border-spacing: 0px;
-        border-width: 1px 0 1px 1px;
-
     }
 
     #list_tbl_72 tbody tr:nth-child(even) {
@@ -431,7 +433,7 @@ Adviser:
         background-color: #c51d3a;
         color: #ffff;
         text-align: center;
-
+        
         border: 1px solid black;
         border-collapse: separate;
         border-spacing: 0px;
@@ -500,7 +502,9 @@ Adviser:
     <!--NAVIGATION BAR-->
     <div class="container-fluid" id="dashboard_header_72">
         <a href="{% url 'registrar_dashboard' %}" data-toggle="tooltip" data-placement="right" title="Home"><i class="fa fa-home" aria-hidden="true" style="font-size:30px; margin: 0 0 10px 6px;"></i></a>
-
+        <a href="/registrar_dashboard_organize_clearance_list/Transaction_Log" data-toggle="tooltip" data-placement="right" title="Transaction Logs"><i class="fa fa-history" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+        <a href="/registrar_dashboard_organize_clearance_list/Delete_History" data-toggle="tooltip" data-placement="right" title="Delete History"><i class="fa fa-trash" aria-hidden="true" style="font-size:25px; margin: 0 0 10px 6px;"></i></a>
+        
         <!--SEARCH BAR-->
         <input type="search" class="search" style="width:50%; padding-left: 15px;" id="search_box_72" placeholder="Search" onkeyup="searching1(), searching2()" onsearch="OnSearch (this)">
         
@@ -533,24 +537,20 @@ Adviser:
     <a id="backtotop_btn_72" data-toggle="tooltip" title="Back to Top"></a>
 
     <!-- MAIN-->
-    {% if sorter_type == "DELETED" %}
+    {% if sorter_type == "Delete_History" %}
     <h3 style="text-align:center;">List of Deleted Clearance Forms</h3>
     {% else %}
     <h3 style="text-align:center;">List of Clearance Forms</h3>
     {% endif %}
     {% include 'html_files/message.html'%}
-    
-    {% if sorter_type != "DELETED" %}
-    <div id="delete_history_div" align="right">
-        <a href="/registrar_dashboard_organize_clearance_list/DELETED" class = "btn" type ="button" id ="delete_history">Delete History></a>
-    </div>
-    {% endif %}
 
-    {% if sorter_type == "DELETED" %}
-    <div id="back_history_div">
+    {% if sorter_type == "Delete_History" or sorter_type == "Transaction_Log" %}
+        <div id="back_history_div">
         <a href="/registrar_dashboard_organize_clearance_list/ALL" class = "btn" type = "button" id ="back_history">Back</a>
     </div>
     {% endif %}
+
+        
         
         <form method="POST" id="valdet">
             {% csrf_token %}
@@ -577,7 +577,23 @@ Adviser:
                             <th class="sorting" title="Sort by Purpose of Request">Purpose of Request</th>
                             <th class="sorting" title="Sort by Date Requested">Date & Time Requested</th>
                             <th class="sorting" title="Sort by Approval Status">Approval Status</th>
-                            {% if sorter_type == "DELETED" %}
+                            
+                            {% if sorter_type == "Transaction_Log" %}
+                            <th>Date and Time Approved</th>
+                            <th>Accountant</th>
+                            <th>Head of Liberal Arts</th>
+                            <th>Head of Math and Science</th>
+                            <th>Head of DpECS</th>
+                            <th>Head of Industrial Education</th>
+                            <th>Head of Industrial Technology</th>
+                            <th>Head of Engineering</th>
+                            <th>Course/Shop Adviser</th>
+                            <th>Campus Librarian</th>
+                            <th>Guidance Councelor</th>
+                            <th>Head of the Student Affairs</th>
+                            <th>Asst. Dir. for Academic Affairs</th>
+                            
+                            {% elif sorter_type == "Delete_History" %}
                             <th>Date and Time Removed</th>
                             {% else %}
                             <th>Notify</th>
@@ -587,7 +603,7 @@ Adviser:
                             {% endif %}
                             {% endif %}
                         </tr>
-                        {% if request.user.user_type == "REGISTRAR" and sorter_type != "DELETED" %}
+                        {% if request.user.user_type == "REGISTRAR" and sorter_type != "Delete_History" %}
                         <tr class="no_data">
                             <td colspan="9"><i class="fa fa-warning"></i> No Data</td>
                         </tr>
@@ -618,8 +634,114 @@ Adviser:
                             {% else %}
                             <td><strong>{{instance.approval_status}}</strong> Signatures</td>
                             {% endif %}
-                            {% if sorter_type == "DELETED" %}
+                            
+                            {% if sorter_type == "Delete_History" %}
                             <td>{{instance.deleted_timestamp}}</td>
+
+                            {% elif sorter_type == "Transaction_Log" %}
+                            <td>{{instance.approved_timestamp}}</td>
+                            <td> 
+                                {% if instance.accountant_signature == "UNAPPROVED" %}
+                                {{instance.accountant_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.accountant_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.liberal_arts_signature == "UNAPPROVED" %}
+                                {{instance.liberal_arts_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.liberal_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.mathsci_dept_signature == "UNAPPROVED" %}
+                                {{instance.mathsci_dept_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.mathsci_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.pe_dept_signature == "UNAPPROVED" %}
+                                {{instance.pe_dept_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.pe_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.ieduc_dept_signature == "UNAPPROVED" %}
+                                {{instance.ieduc_dept_signature}}
+                                {% elif instance.ieduc_dept_signature == "_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.ieduc_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.it_dept_signature == "UNAPPROVED" %}
+                                {{instance.it_dept_signature}}
+                                {% elif instance.it_dept_signature == "_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.it_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.eng_dept_signature == "UNAPPROVED" %}
+                                {{instance.eng_dept_signature}}
+                                {% elif instance.eng_dept_signature == "_APPROVED" %}
+                                -
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.eng_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.course_adviser_signature == "UNAPPROVED" %}
+                                {{instance.course_adviser_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.course_adviser_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.library_signature == "UNAPPROVED" %}
+                                {{instance.library_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.library_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.guidance_office_signature == "UNAPPROVED" %}
+                                {{instance.guidance_office_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.guidance_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.osa_signature == "UNAPPROVED" %}
+                                {{instance.osa_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.osa_timestamp}}
+                                {% endif %}
+                            </td>
+                            <td> 
+                                {% if instance.academic_affairs_signature == "UNAPPROVED" %}
+                                {{instance.academic_affairs_signature}}
+                                {% else %}
+                                APPROVED<br>
+                                {{instance.academic_timestamp}}
+                                {% endif %}
+                            </td>
                             {% else %}
                             <td>
                             <!--APPOINTMENT STATUS-->
@@ -628,14 +750,14 @@ Adviser:
                                 Notification Sent.
                                 {% else %}
                                 {% if instance.user_removed == "1" %}
-                                The Applicant's Account has been Deleted, Cannot Notify.
+                                DISABLED
                                 {%else%}
                                 <a href="{% url 'regclear_appointment' instance.id %}"><button type="button" class="table-icon"><i class="fa fa-comments table-i" aria-hidden="true"></i>   Notify Student</button></a>
                                 {% endif %}
                                 {% endif %}
                             {% else %}
                             {% if instance.user_removed == "1" %}
-                                The Applicant's Account has been Deleted, Cannot Notify.
+                                DISABLED
                             {%else%}
                                 ❌
                             {% endif %}

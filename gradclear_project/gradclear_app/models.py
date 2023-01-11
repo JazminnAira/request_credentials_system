@@ -132,11 +132,11 @@ class user_table(AbstractUser):
     
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", null=True)
-    preffix = models.CharField(max_length=100, verbose_name="Preffix", null=True, blank=True, default="None")
+    prefix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    suffix = models.CharField(max_length=100, verbose_name="Preffix", null=True, blank=True)
+    suffix = models.CharField(max_length=100, verbose_name="Suffix", null=True, blank=True)
     address = models.CharField(max_length=100, verbose_name="Address", null=True, blank=True)
     gender = models.CharField(max_length=100, choices=gender)
     birthday = models.CharField(max_length=8,verbose_name="Birthday")
@@ -520,11 +520,11 @@ class user_deleted_table(models.Model):
     
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", null=True)
-    preffix = models.CharField(max_length=100, verbose_name="Preffix", null=True, blank=True, default="None")
+    prefix = models.CharField(max_length=100, verbose_name="Prefix", null=True, blank=True)
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     middle_name = models.CharField(max_length=100, verbose_name="Middle Name", null=True, blank=True, default="None")
     first_name = models.CharField(max_length=100, verbose_name="First Name")
-    suffix = models.CharField(max_length=100, verbose_name="Preffix", null=True, blank=True)
+    suffix = models.CharField(max_length=100, verbose_name="Suffix", null=True, blank=True)
     address = models.CharField(max_length=100, verbose_name="Address", null=True, blank=True)
     gender = models.CharField(max_length=100)
     birthday = models.CharField(max_length=8,verbose_name="Birthday")
@@ -566,7 +566,6 @@ class user_deleted_table(models.Model):
     deleted_status = models.CharField(max_length=50, blank = True, null= True, default="0")
     deleted_timestamp = models.DateTimeField(auto_now_add=False, null=True, blank=True)
     
-    # WHAT SHOWS IN ADMIN PAGE
     def __str__(self):
         return self.username
 

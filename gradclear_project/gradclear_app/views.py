@@ -1807,6 +1807,7 @@ def clearance_print(request, id):
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment;filename=Clearance Form.pdf'
         return response
+
 # FOR SETTING APPOINTMENTS ON FACULTY'S SIDE (CLEARANCE ONLY)
 @login_required(login_url='/')
 def appointment(request, id, form):
@@ -2385,6 +2386,8 @@ def faculty_registration(request):
             last = form.cleaned_data.get("last_name")
             first = form.cleaned_data.get("first_name")
             middle = form.cleaned_data.get("middle_name")
+            preffix = form.cleaned_data.get("preffix")
+            suffix = form.cleaned_data.get("suffix")
             form.instance.student_id = "TUPC-" + id_num
             form.instance.position = "FACULTY"
             form.instance.username = username
@@ -6918,9 +6921,12 @@ def registrar_dashboard_graduation_list(request, id):
             all_list = graduation_form_table.objects.filter(
                 approval_status="APPROVED")
             return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, 'all_list': all_list})
-        elif id == "DELETED" :
+        elif id == "Delete_History" :
             all = graduation_form_deleted_table.objects.all().order_by('-time_requested')
             return render(request, 'html_files/7.3Registrar Graduation List.html', {'all': all, "sorter_type" : sorter})
+        elif id == "Transaction_Log":
+            all = graduation_form_table.objects.all().order_by('-time_requested')
+            return render(request,  'html_files/7.3Registrar Graduation List.html', {'all': all, "sorter_type" : sorter})
         else:
             string = id.replace('%20', ' ')
             all = graduation_form_table.objects.filter(course=string).order_by('-time_requested')
@@ -7119,7 +7125,7 @@ def registrar_dashboard_student_list(request, id):
     elif id =="latest":
         student_data = user_table.objects.filter(
         year_graduated__isnull=False).order_by('-year_graduated').values()
-    elif id == "DELETED":
+    elif id == "Delete_History":
         student_data = user_deleted_table.objects.filter(Q(user_type='STUDENT') | Q(user_type='OLD STUDENT') | Q(user_type='ALUMNUS'))
     else:    
         student_data = user_table.objects.filter(Q(user_type='STUDENT') | Q(
@@ -7133,7 +7139,7 @@ def registrar_dashboard_student_list(request, id):
 def registrar_dashboard_staff_list(request, id):
     # declaring template
     sorter = id
-    if id == "DELETED":
+    if id == "Delete_History":
         staff_data = user_deleted_table.objects.filter(Q(user_type='STAFF'))
     else:
         staff_data = user_table.objects.filter(Q(user_type='STAFF'))
@@ -7302,7 +7308,7 @@ def registrar_dashboard_organize_request_list(request, id):
             requests = request_form_table.objects.all().order_by('time_requested').values()
         elif id == "LATEST":
             requests = request_form_table.objects.all().order_by('-time_requested').values()
-        elif id == "DELETED":
+        elif id == "Delete_History":
             requests = request_form_deleted_table.objects.all().order_by('-time_requested').values()
         else:
             requests = request_form_table.objects.all().order_by('-time_requested').values()
@@ -7350,7 +7356,7 @@ def registrar_dashboard_organize_clearance_list(request, id):
         elif id == "approved":
             requests = clearance_form_table.objects.filter(
                 approval_status="APPROVED").order_by('-time_requested').values()
-        elif id == "DELETED":
+        elif id == "Delete_History":
             requests = clearance_form_deleted_table.objects.all().order_by('-time_requested').values()
         else:
             requests = clearance_form_table.objects.all().order_by('-time_requested').values()
@@ -7394,7 +7400,7 @@ def registrar_dashboard_organize_faculty_list(request, id):
             requests = user_table.objects.filter(department__contains="DLA", is_active=True).values()
         elif id == "DOE":
             requests = user_table.objects.filter(department__contains="DOE", is_active=True).values()
-        elif id == "DELETED":
+        elif id == "Delete_History":
             requests = user_deleted_table.objects.filter(Q(user_type = "FACULTY") | Q(user_type="HEAD")).values()
         else:
             requests = user_table.objects.filter(user_type="FACULTY", is_active=True) .values()

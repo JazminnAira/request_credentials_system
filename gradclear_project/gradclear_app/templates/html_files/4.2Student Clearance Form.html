@@ -649,10 +649,11 @@ Adviser:
                 <p>Note:</p>
                 <p>1. This clearance form should be accomplished within the semester it was initially requested.</p>
                 <p>2. Not valid with alteration.</p>
-                {% if currtime == "out_of_office_hours" %}
-                <p id="note">Note: Keep in mind that you are applying beyond office hours, the Office of the Campus Registrar can only process forms on weekdays until 4 p.m. so your application cannot be processed at this moment.</p>
-                {% endif %}
             </div>
+            <br>
+            {% if currtime == "out_of_office_hours" %}
+            <p style="color: #c51d3a;"><b>Keep in mind that you are applying beyond office hours, the Office of the Campus Registrar can only process forms on weekdays from 8 a.m. until 4 p.m. so your application cannot be processed at this moment.</b></p>
+            {% endif %}
 
             <br>
             
